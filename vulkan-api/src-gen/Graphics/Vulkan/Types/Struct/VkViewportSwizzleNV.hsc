@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkViewportCoordinateSwizzleNV          w;
 --   > } VkViewportSwizzleNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViewportSwizzleNVVkViewportSwizzleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViewportSwizzleNV VkViewportSwizzleNV registry at www.khronos.org>
 data VkViewportSwizzleNV = VkViewportSwizzleNV## Addr## ByteArray##
 
 instance Eq VkViewportSwizzleNV where

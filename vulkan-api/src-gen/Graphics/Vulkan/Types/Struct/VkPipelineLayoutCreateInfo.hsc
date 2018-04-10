@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     const VkPushConstantRange* pPushConstantRanges;
 --   > } VkPipelineLayoutCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineLayoutCreateInfoVkPipelineLayoutCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineLayoutCreateInfo VkPipelineLayoutCreateInfo registry at www.khronos.org>
 data VkPipelineLayoutCreateInfo = VkPipelineLayoutCreateInfo## Addr##
                                                               ByteArray##
 

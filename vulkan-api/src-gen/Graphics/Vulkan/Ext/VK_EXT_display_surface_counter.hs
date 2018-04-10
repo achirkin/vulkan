@@ -97,7 +97,7 @@ type VkGetPhysicalDeviceSurfaceCapabilities2EXT =
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2EXTvkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

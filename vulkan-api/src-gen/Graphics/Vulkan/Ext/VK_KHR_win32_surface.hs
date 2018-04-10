@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
+{-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_win32_surface
@@ -60,7 +63,7 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
        where
 import           GHC.Ptr                                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                             (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -72,6 +75,7 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkWin32SurfaceCreateInfoKHR
+import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 pattern VkCreateWin32SurfaceKHR :: CString
 
@@ -92,18 +96,20 @@ is_VkCreateWin32SurfaceKHR
 
 type VkCreateWin32SurfaceKHR = "vkCreateWin32SurfaceKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateWin32SurfaceKHR
---   >     ( VkInstance instance
---   >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
+-- > VkResult vkCreateWin32SurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHRvkCreateWin32SurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHR ::
                VkInstance -- ^ instance
@@ -114,18 +120,43 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateWin32SurfaceKHR ::
+                        VkInstance -- ^ instance
+                                   ->
+                          Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                          ->
+                            Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                      -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                          -> IO VkResult
+vkCreateWin32SurfaceKHR d
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkCreateWin32SurfaceKHR d)
+      d
+
+{-# INLINE vkCreateWin32SurfaceKHR #-}
+
+{-# WARNING
+vkCreateWin32SurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateWin32SurfaceKHR
---   >     ( VkInstance instance
---   >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
+-- > VkResult vkCreateWin32SurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHRvkCreateWin32SurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -135,6 +166,26 @@ foreign import ccall safe "vkCreateWin32SurfaceKHR"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateWin32SurfaceKHRSafe ::
+                            VkInstance -- ^ instance
+                                       ->
+                              Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                              ->
+                                Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                              -> IO VkResult
+vkCreateWin32SurfaceKHRSafe = vkCreateWin32SurfaceKHR
+
+{-# INLINE vkCreateWin32SurfaceKHRSafe #-}
+
+{-# WARNING
+vkCreateWin32SurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -147,7 +198,7 @@ foreign import ccall safe "vkCreateWin32SurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHRvkCreateWin32SurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
 type HS_vkCreateWin32SurfaceKHR =
      VkInstance -- ^ instance
                 ->
@@ -197,12 +248,14 @@ is_VkGetPhysicalDeviceWin32PresentationSupportKHR
 type VkGetPhysicalDeviceWin32PresentationSupportKHR =
      "vkGetPhysicalDeviceWin32PresentationSupportKHR"
 
--- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     )
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHRvkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHR ::
@@ -210,12 +263,32 @@ foreign import ccall unsafe
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> IO VkBool32
 
--- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     )
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceWin32PresentationSupportKHR ::
+                                               VkPhysicalDevice -- ^ physicalDevice
+                                                                -> Word32 -- ^ queueFamilyIndex
+                                                                          -> IO VkBool32
+vkGetPhysicalDeviceWin32PresentationSupportKHR
+  = error $
+      "vkGetPhysicalDeviceWin32PresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceWin32PresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHRvkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
@@ -223,12 +296,29 @@ foreign import ccall safe
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> IO VkBool32
 
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
+                                                   VkPhysicalDevice -- ^ physicalDevice
+                                                                    -> Word32 -- ^ queueFamilyIndex
+                                                                              -> IO VkBool32
+vkGetPhysicalDeviceWin32PresentationSupportKHRSafe
+  = vkGetPhysicalDeviceWin32PresentationSupportKHR
+
+{-# INLINE vkGetPhysicalDeviceWin32PresentationSupportKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceWin32PresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
 -- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHRvkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceWin32PresentationSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Word32 -- ^ queueFamilyIndex

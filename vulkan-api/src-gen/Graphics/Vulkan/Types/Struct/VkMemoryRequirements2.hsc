@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkMemoryRequirements                                                 memoryRequirements;
 --   > } VkMemoryRequirements2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryRequirements2VkMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryRequirements2 VkMemoryRequirements2 registry at www.khronos.org>
 data VkMemoryRequirements2 = VkMemoryRequirements2## Addr##
                                                     ByteArray##
 

@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32 quadOperationsInAllStages;
 --   > } VkPhysicalDeviceSubgroupProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSubgroupPropertiesVkPhysicalDeviceSubgroupProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSubgroupProperties VkPhysicalDeviceSubgroupProperties registry at www.khronos.org>
 data VkPhysicalDeviceSubgroupProperties = VkPhysicalDeviceSubgroupProperties## Addr##
                                                                               ByteArray##
 

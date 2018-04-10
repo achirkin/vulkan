@@ -110,7 +110,7 @@ type VkCreateValidationCacheEXT = "vkCreateValidationCacheEXT"
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateValidationCacheEXTvkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateValidationCacheEXT vkCreateValidationCacheEXT registry at www.khronos.org>
 type HS_vkCreateValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -163,7 +163,7 @@ type VkDestroyValidationCacheEXT = "vkDestroyValidationCacheEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyValidationCacheEXTvkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT registry at www.khronos.org>
 type HS_vkDestroyValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -217,7 +217,7 @@ type VkMergeValidationCachesEXT = "vkMergeValidationCachesEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergeValidationCachesEXTvkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergeValidationCachesEXT vkMergeValidationCachesEXT registry at www.khronos.org>
 type HS_vkMergeValidationCachesEXT =
      VkDevice -- ^ device
               ->
@@ -274,7 +274,7 @@ type VkGetValidationCacheDataEXT = "vkGetValidationCacheDataEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetValidationCacheDataEXTvkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetValidationCacheDataEXT vkGetValidationCacheDataEXT registry at www.khronos.org>
 type HS_vkGetValidationCacheDataEXT =
      VkDevice -- ^ device
               ->

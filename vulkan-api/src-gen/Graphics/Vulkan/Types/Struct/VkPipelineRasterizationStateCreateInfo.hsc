@@ -39,7 +39,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float                  lineWidth;
 --   > } VkPipelineRasterizationStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineRasterizationStateCreateInfoVkPipelineRasterizationStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineRasterizationStateCreateInfo VkPipelineRasterizationStateCreateInfo registry at www.khronos.org>
 data VkPipelineRasterizationStateCreateInfo = VkPipelineRasterizationStateCreateInfo## Addr##
                                                                                       ByteArray##
 

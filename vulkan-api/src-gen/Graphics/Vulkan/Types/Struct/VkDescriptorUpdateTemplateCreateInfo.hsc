@@ -38,7 +38,7 @@ import           System.IO.Unsafe                                             (u
 --   >     uint32_t set;
 --   > } VkDescriptorUpdateTemplateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorUpdateTemplateCreateInfoVkDescriptorUpdateTemplateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorUpdateTemplateCreateInfo VkDescriptorUpdateTemplateCreateInfo registry at www.khronos.org>
 data VkDescriptorUpdateTemplateCreateInfo = VkDescriptorUpdateTemplateCreateInfo## Addr##
                                                                                   ByteArray##
 

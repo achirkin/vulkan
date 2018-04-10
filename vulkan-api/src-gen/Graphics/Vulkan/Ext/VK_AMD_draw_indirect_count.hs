@@ -77,7 +77,7 @@ type VkCmdDrawIndirectCountAMD = "vkCmdDrawIndirectCountAMD"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirectCountAMDvkCmdDrawIndirectCountAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirectCountAMD vkCmdDrawIndirectCountAMD registry at www.khronos.org>
 type HS_vkCmdDrawIndirectCountAMD =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -145,7 +145,7 @@ type VkCmdDrawIndexedIndirectCountAMD =
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirectCountAMDvkCmdDrawIndexedIndirectCountAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirectCountAMD vkCmdDrawIndexedIndirectCountAMD registry at www.khronos.org>
 type HS_vkCmdDrawIndexedIndirectCountAMD =
      VkCommandBuffer -- ^ commandBuffer
                      ->

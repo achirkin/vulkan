@@ -32,7 +32,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const VkClearValue*    pClearValues;
 --   > } VkRenderPassBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRenderPassBeginInfoVkRenderPassBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRenderPassBeginInfo VkRenderPassBeginInfo registry at www.khronos.org>
 data VkRenderPassBeginInfo = VkRenderPassBeginInfo## Addr##
                                                     ByteArray##
 

@@ -35,7 +35,7 @@ import           System.IO.Unsafe                          (unsafeDupablePerform
 --   >     VkMemoryHeap           memoryHeaps[VK_MAX_MEMORY_HEAPS];
 --   > } VkPhysicalDeviceMemoryProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMemoryPropertiesVkPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMemoryProperties VkPhysicalDeviceMemoryProperties registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties = VkPhysicalDeviceMemoryProperties## Addr##
                                                                           ByteArray##
 

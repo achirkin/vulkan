@@ -158,7 +158,7 @@ type VkGetAndroidHardwareBufferPropertiesANDROID =
 --   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetAndroidHardwareBufferPropertiesANDROIDvkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
 type HS_vkGetAndroidHardwareBufferPropertiesANDROID =
      VkDevice -- ^ device
               ->
@@ -218,7 +218,7 @@ type VkGetMemoryAndroidHardwareBufferANDROID =
 --   >     , struct AHardwareBuffer** pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryAndroidHardwareBufferANDROIDvkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryAndroidHardwareBufferANDROID vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
 type HS_vkGetMemoryAndroidHardwareBufferANDROID =
      VkDevice -- ^ device
               ->

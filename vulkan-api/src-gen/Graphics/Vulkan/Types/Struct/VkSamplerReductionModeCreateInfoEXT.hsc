@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkSamplerReductionModeEXT reductionMode;
 --   > } VkSamplerReductionModeCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerReductionModeCreateInfoEXTVkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerReductionModeCreateInfoEXT VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
 data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## Addr##
                                                                                 ByteArray##
 

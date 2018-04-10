@@ -75,7 +75,7 @@ type VkTrimCommandPoolKHR = "vkTrimCommandPoolKHR"
 --   >     , VkCommandPoolTrimFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPoolKHRvkTrimCommandPoolKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPoolKHR vkTrimCommandPoolKHR registry at www.khronos.org>
 type HS_vkTrimCommandPoolKHR =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool

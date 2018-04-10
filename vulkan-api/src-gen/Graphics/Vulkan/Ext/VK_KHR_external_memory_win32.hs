@@ -102,7 +102,7 @@ type VkGetMemoryWin32HandleKHR = "vkGetMemoryWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleKHRvkGetMemoryWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleKHR vkGetMemoryWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandleKHR =
      VkDevice -- ^ device
               ->
@@ -159,7 +159,7 @@ type VkGetMemoryWin32HandlePropertiesKHR =
 --   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandlePropertiesKHRvkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandlePropertiesKHR vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandlePropertiesKHR =
      VkDevice -- ^ device
               ->

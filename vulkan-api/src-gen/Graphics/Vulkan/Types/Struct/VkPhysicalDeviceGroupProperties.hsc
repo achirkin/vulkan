@@ -36,7 +36,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkBool32                         subsetAllocation;
 --   > } VkPhysicalDeviceGroupProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceGroupPropertiesVkPhysicalDeviceGroupProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceGroupProperties VkPhysicalDeviceGroupProperties registry at www.khronos.org>
 data VkPhysicalDeviceGroupProperties = VkPhysicalDeviceGroupProperties## Addr##
                                                                         ByteArray##
 

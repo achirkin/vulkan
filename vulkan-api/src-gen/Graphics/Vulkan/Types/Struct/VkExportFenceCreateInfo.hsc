@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlags handleTypes;
 --   > } VkExportFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportFenceCreateInfoVkExportFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportFenceCreateInfo VkExportFenceCreateInfo registry at www.khronos.org>
 data VkExportFenceCreateInfo = VkExportFenceCreateInfo## Addr##
                                                         ByteArray##
 

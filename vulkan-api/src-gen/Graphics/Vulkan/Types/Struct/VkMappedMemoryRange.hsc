@@ -28,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkDeviceSize           size;
 --   > } VkMappedMemoryRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMappedMemoryRangeVkMappedMemoryRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMappedMemoryRange VkMappedMemoryRange registry at www.khronos.org>
 data VkMappedMemoryRange = VkMappedMemoryRange## Addr## ByteArray##
 
 instance Eq VkMappedMemoryRange where

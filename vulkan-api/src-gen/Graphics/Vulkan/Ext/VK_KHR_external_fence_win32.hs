@@ -100,7 +100,7 @@ type VkImportFenceWin32HandleKHR = "vkImportFenceWin32HandleKHR"
 --   >     , const VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceWin32HandleKHRvkImportFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceWin32HandleKHR vkImportFenceWin32HandleKHR registry at www.khronos.org>
 type HS_vkImportFenceWin32HandleKHR =
      VkDevice -- ^ device
               -> Ptr VkImportFenceWin32HandleInfoKHR -- ^ pImportFenceWin32HandleInfo
@@ -151,7 +151,7 @@ type VkGetFenceWin32HandleKHR = "vkGetFenceWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceWin32HandleKHRvkGetFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceWin32HandleKHR vkGetFenceWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetFenceWin32HandleKHR =
      VkDevice -- ^ device
               ->

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkImage                                                              image;
 --   > } VkImageSparseMemoryRequirementsInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageSparseMemoryRequirementsInfo2VkImageSparseMemoryRequirementsInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageSparseMemoryRequirementsInfo2 VkImageSparseMemoryRequirementsInfo2 registry at www.khronos.org>
 data VkImageSparseMemoryRequirementsInfo2 = VkImageSparseMemoryRequirementsInfo2## Addr##
                                                                                   ByteArray##
 

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                             (unsafeDupablePerf
 --   >     VkVertexInputRate      inputRate;
 --   > } VkVertexInputBindingDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkVertexInputBindingDescriptionVkVertexInputBindingDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkVertexInputBindingDescription VkVertexInputBindingDescription registry at www.khronos.org>
 data VkVertexInputBindingDescription = VkVertexInputBindingDescription## Addr##
                                                                         ByteArray##
 

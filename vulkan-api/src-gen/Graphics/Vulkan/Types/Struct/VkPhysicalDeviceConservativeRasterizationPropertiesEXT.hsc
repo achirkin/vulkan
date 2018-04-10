@@ -35,7 +35,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32               conservativeRasterizationPostDepthCoverage;
 --   > } VkPhysicalDeviceConservativeRasterizationPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceConservativeRasterizationPropertiesEXTVkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceConservativeRasterizationPropertiesEXT VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## Addr##
                                                                                                                       ByteArray##
 

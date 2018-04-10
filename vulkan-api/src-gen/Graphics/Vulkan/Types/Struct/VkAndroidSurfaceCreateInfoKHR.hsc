@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     struct ANativeWindow*    window;
 --   > } VkAndroidSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAndroidSurfaceCreateInfoKHRVkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAndroidSurfaceCreateInfoKHR VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkAndroidSurfaceCreateInfoKHR = VkAndroidSurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 

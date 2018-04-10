@@ -131,7 +131,7 @@ type VkDisplayPowerControlEXT = "vkDisplayPowerControlEXT"
 --   >     , const VkDisplayPowerInfoEXT* pDisplayPowerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDisplayPowerControlEXTvkDisplayPowerControlEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDisplayPowerControlEXT vkDisplayPowerControlEXT registry at www.khronos.org>
 type HS_vkDisplayPowerControlEXT =
      VkDevice -- ^ device
               ->
@@ -183,7 +183,7 @@ type VkRegisterDeviceEventEXT = "vkRegisterDeviceEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDeviceEventEXTvkRegisterDeviceEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDeviceEventEXT vkRegisterDeviceEventEXT registry at www.khronos.org>
 type HS_vkRegisterDeviceEventEXT =
      VkDevice -- ^ device
               ->
@@ -238,7 +238,7 @@ type VkRegisterDisplayEventEXT = "vkRegisterDisplayEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDisplayEventEXTvkRegisterDisplayEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDisplayEventEXT vkRegisterDisplayEventEXT registry at www.khronos.org>
 type HS_vkRegisterDisplayEventEXT =
      VkDevice -- ^ device
               ->
@@ -296,7 +296,7 @@ type VkGetSwapchainCounterEXT = "vkGetSwapchainCounterEXT"
 --   >     , uint64_t* pCounterValue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainCounterEXTvkGetSwapchainCounterEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainCounterEXT vkGetSwapchainCounterEXT registry at www.khronos.org>
 type HS_vkGetSwapchainCounterEXT =
      VkDevice -- ^ device
               ->

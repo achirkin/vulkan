@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t                         deviceMask;
 --   > } VkDeviceGroupCommandBufferBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupCommandBufferBeginInfoVkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupCommandBufferBeginInfo VkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
 data VkDeviceGroupCommandBufferBeginInfo = VkDeviceGroupCommandBufferBeginInfo## Addr##
                                                                                 ByteArray##
 

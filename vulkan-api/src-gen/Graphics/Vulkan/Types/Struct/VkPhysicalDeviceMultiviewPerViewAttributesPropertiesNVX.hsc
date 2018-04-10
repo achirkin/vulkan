@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         perViewPositionAllComponents;
 --   > } VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXVkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## Addr##
                                                                                                                         ByteArray##
 

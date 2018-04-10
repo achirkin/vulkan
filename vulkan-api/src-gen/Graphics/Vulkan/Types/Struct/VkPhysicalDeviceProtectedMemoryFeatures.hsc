@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                            protectedMemory;
 --   > } VkPhysicalDeviceProtectedMemoryFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceProtectedMemoryFeaturesVkPhysicalDeviceProtectedMemoryFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceProtectedMemoryFeatures VkPhysicalDeviceProtectedMemoryFeatures registry at www.khronos.org>
 data VkPhysicalDeviceProtectedMemoryFeatures = VkPhysicalDeviceProtectedMemoryFeatures## Addr##
                                                                                         ByteArray##
 

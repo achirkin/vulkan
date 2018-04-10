@@ -34,7 +34,7 @@ import           System.IO.Unsafe
 --   >     const VkVertexInputBindingDivisorDescriptionEXT*      pVertexBindingDivisors;
 --   > } VkPipelineVertexInputDivisorStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineVertexInputDivisorStateCreateInfoEXTVkPipelineVertexInputDivisorStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineVertexInputDivisorStateCreateInfoEXT VkPipelineVertexInputDivisorStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineVertexInputDivisorStateCreateInfoEXT = VkPipelineVertexInputDivisorStateCreateInfoEXT## Addr##
                                                                                                       ByteArray##
 

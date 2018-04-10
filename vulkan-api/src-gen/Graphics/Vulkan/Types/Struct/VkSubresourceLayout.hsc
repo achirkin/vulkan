@@ -26,7 +26,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDeviceSize           depthPitch;
 --   > } VkSubresourceLayout;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubresourceLayoutVkSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubresourceLayout VkSubresourceLayout registry at www.khronos.org>
 data VkSubresourceLayout = VkSubresourceLayout## Addr## ByteArray##
 
 instance Eq VkSubresourceLayout where

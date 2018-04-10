@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkDeviceMemory                     memory;
 --   > } VkMemoryGetAndroidHardwareBufferInfoANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryGetAndroidHardwareBufferInfoANDROIDVkMemoryGetAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryGetAndroidHardwareBufferInfoANDROID VkMemoryGetAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
 data VkMemoryGetAndroidHardwareBufferInfoANDROID = VkMemoryGetAndroidHardwareBufferInfoANDROID## Addr##
                                                                                                 ByteArray##
 

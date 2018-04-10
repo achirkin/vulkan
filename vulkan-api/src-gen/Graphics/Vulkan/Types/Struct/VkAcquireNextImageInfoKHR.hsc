@@ -31,7 +31,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t                         deviceMask;
 --   > } VkAcquireNextImageInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAcquireNextImageInfoKHRVkAcquireNextImageInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAcquireNextImageInfoKHR VkAcquireNextImageInfoKHR registry at www.khronos.org>
 data VkAcquireNextImageInfoKHR = VkAcquireNextImageInfoKHR## Addr##
                                                             ByteArray##
 

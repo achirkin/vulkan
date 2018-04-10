@@ -73,7 +73,7 @@ type VkCmdWriteBufferMarkerAMD = "vkCmdWriteBufferMarkerAMD"
 --   >     , uint32_t marker
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteBufferMarkerAMDvkCmdWriteBufferMarkerAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteBufferMarkerAMD vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
 type HS_vkCmdWriteBufferMarkerAMD =
      VkCommandBuffer -- ^ commandBuffer
                      ->

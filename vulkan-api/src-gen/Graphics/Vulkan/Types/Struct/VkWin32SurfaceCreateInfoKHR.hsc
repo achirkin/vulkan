@@ -28,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     HWND                             hwnd;
 --   > } VkWin32SurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWin32SurfaceCreateInfoKHRVkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWin32SurfaceCreateInfoKHR VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
 data VkWin32SurfaceCreateInfoKHR = VkWin32SurfaceCreateInfoKHR## Addr##
                                                                 ByteArray##
 

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkPointClippingBehavior      pointClippingBehavior;
 --   > } VkPhysicalDevicePointClippingProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevicePointClippingPropertiesVkPhysicalDevicePointClippingProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevicePointClippingProperties VkPhysicalDevicePointClippingProperties registry at www.khronos.org>
 data VkPhysicalDevicePointClippingProperties = VkPhysicalDevicePointClippingProperties## Addr##
                                                                                         ByteArray##
 

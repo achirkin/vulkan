@@ -93,7 +93,7 @@ type VkEnumeratePhysicalDeviceGroupsKHR =
 --   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroupsKHRvkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroupsKHR vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDeviceGroupsKHR =
      VkInstance -- ^ instance
                 ->

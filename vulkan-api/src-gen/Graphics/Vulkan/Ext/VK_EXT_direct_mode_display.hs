@@ -66,7 +66,7 @@ type VkReleaseDisplayEXT = "vkReleaseDisplayEXT"
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkReleaseDisplayEXTvkReleaseDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkReleaseDisplayEXT vkReleaseDisplayEXT registry at www.khronos.org>
 type HS_vkReleaseDisplayEXT =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkDisplayKHR -- ^ display

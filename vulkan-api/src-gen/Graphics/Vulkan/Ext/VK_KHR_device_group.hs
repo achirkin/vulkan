@@ -243,7 +243,7 @@ type VkGetDeviceGroupPeerMemoryFeaturesKHR =
 --   >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeaturesKHRvkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeaturesKHR vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupPeerMemoryFeaturesKHR =
      VkDevice -- ^ device
               ->
@@ -300,7 +300,7 @@ type VkCmdSetDeviceMaskKHR = "vkCmdSetDeviceMaskKHR"
 --   >     , uint32_t deviceMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMaskKHRvkCmdSetDeviceMaskKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMaskKHR vkCmdSetDeviceMaskKHR registry at www.khronos.org>
 type HS_vkCmdSetDeviceMaskKHR = VkCommandBuffer -- ^ commandBuffer
                                                 -> Word32 -- ^ deviceMask
                                                           -> IO ()
@@ -353,7 +353,7 @@ type VkCmdDispatchBaseKHR = "vkCmdDispatchBaseKHR"
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBaseKHRvkCmdDispatchBaseKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBaseKHR vkCmdDispatchBaseKHR registry at www.khronos.org>
 type HS_vkCmdDispatchBaseKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->

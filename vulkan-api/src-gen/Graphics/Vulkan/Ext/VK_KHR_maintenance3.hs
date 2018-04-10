@@ -101,7 +101,7 @@ type VkGetDescriptorSetLayoutSupportKHR =
 --   >     , VkDescriptorSetLayoutSupport* pSupport
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupportKHRvkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupportKHR vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
 type HS_vkGetDescriptorSetLayoutSupportKHR =
      VkDevice -- ^ device
               ->

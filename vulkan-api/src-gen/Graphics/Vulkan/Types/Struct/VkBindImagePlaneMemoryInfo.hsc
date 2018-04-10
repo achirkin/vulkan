@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkBindImagePlaneMemoryInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImagePlaneMemoryInfoVkBindImagePlaneMemoryInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImagePlaneMemoryInfo VkBindImagePlaneMemoryInfo registry at www.khronos.org>
 data VkBindImagePlaneMemoryInfo = VkBindImagePlaneMemoryInfo## Addr##
                                                               ByteArray##
 

@@ -3,12 +3,14 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Core_1_0
@@ -721,7 +723,6 @@ import           Graphics.Vulkan.Constants
                                                                                       pattern VK_WHOLE_SIZE)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
-                                                                                      (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
@@ -902,6 +903,8 @@ import           Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription
 import           Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription
 import           Graphics.Vulkan.Types.Struct.VkViewport
 import           Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
+import           System.IO.Unsafe
+                                                                                      (unsafeDupablePerformIO)
 
 pattern VkCreateInstance :: CString
 
@@ -920,17 +923,19 @@ is_VkCreateInstance = (EQ ==) . cmpCStrings _VkCreateInstance
 
 type VkCreateInstance = "vkCreateInstance"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_LAYER_NOT_PRESENT', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_INCOMPATIBLE_DRIVER'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_LAYER_NOT_PRESENT', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_INCOMPATIBLE_DRIVER'.
 --
---   > VkResult vkCreateInstance
---   >     ( const VkInstanceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkInstance* pInstance
---   >     )
+-- > VkResult vkCreateInstance
+-- >     ( const VkInstanceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkInstance* pInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstance vkCreateInstance registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
                Ptr VkInstanceCreateInfo -- ^ pCreateInfo
                                         ->
@@ -938,17 +943,39 @@ foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
                                            -> Ptr VkInstance -- ^ pInstance
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateInstance ::
+                 Ptr VkInstanceCreateInfo -- ^ pCreateInfo
+                                          ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkInstance -- ^ pInstance
+                                                               -> IO VkResult
+vkCreateInstance
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkCreateInstance VK_NULL)
+
+{-# INLINE vkCreateInstance #-}
+
+{-# WARNING
+vkCreateInstance"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_LAYER_NOT_PRESENT', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_INCOMPATIBLE_DRIVER'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_LAYER_NOT_PRESENT', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_INCOMPATIBLE_DRIVER'.
 --
---   > VkResult vkCreateInstance
---   >     ( const VkInstanceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkInstance* pInstance
---   >     )
+-- > VkResult vkCreateInstance
+-- >     ( const VkInstanceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkInstance* pInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstance vkCreateInstance registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateInstance" vkCreateInstanceSafe
                ::
                Ptr VkInstanceCreateInfo -- ^ pCreateInfo
@@ -957,6 +984,24 @@ foreign import ccall safe "vkCreateInstance" vkCreateInstanceSafe
                                            -> Ptr VkInstance -- ^ pInstance
                                                              -> IO VkResult
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateInstanceSafe ::
+                     Ptr VkInstanceCreateInfo -- ^ pCreateInfo
+                                              ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkInstance -- ^ pInstance
+                                                                   -> IO VkResult
+vkCreateInstanceSafe = vkCreateInstance
+
+{-# INLINE vkCreateInstanceSafe #-}
+
+{-# WARNING
+vkCreateInstanceSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_LAYER_NOT_PRESENT', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_INCOMPATIBLE_DRIVER'.
@@ -967,7 +1012,7 @@ foreign import ccall safe "vkCreateInstance" vkCreateInstanceSafe
 --   >     , VkInstance* pInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstance vkCreateInstance registry at www.khronos.org>
 type HS_vkCreateInstance =
      Ptr VkInstanceCreateInfo -- ^ pCreateInfo
                               ->
@@ -1006,34 +1051,71 @@ is_VkDestroyInstance = (EQ ==) . cmpCStrings _VkDestroyInstance
 
 type VkDestroyInstance = "vkDestroyInstance"
 
--- | > () vkDestroyInstance
---   >     ( VkInstance instance
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyInstance
+-- >     ( VkInstance instance
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyInstance" vkDestroyInstance
                :: VkInstance -- ^ instance
                              -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                           -> IO ()
 
--- | > () vkDestroyInstance
---   >     ( VkInstance instance
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyInstance ::
+                  VkInstance -- ^ instance
+                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> IO ()
+vkDestroyInstance d
+  = unsafeDupablePerformIO (vkGetInstanceProc @VkDestroyInstance d) d
+
+{-# INLINE vkDestroyInstance #-}
+
+{-# WARNING
+vkDestroyInstance"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyInstance
+-- >     ( VkInstance instance
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyInstance" vkDestroyInstanceSafe
                :: VkInstance -- ^ instance
                              -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                           -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyInstanceSafe ::
+                      VkInstance -- ^ instance
+                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                              -> IO ()
+vkDestroyInstanceSafe = vkDestroyInstance
+
+{-# INLINE vkDestroyInstanceSafe #-}
+
+{-# WARNING
+vkDestroyInstanceSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyInstance
 --   >     ( VkInstance instance
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
 type HS_vkDestroyInstance =
      VkInstance -- ^ instance
                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1072,17 +1154,19 @@ is_VkEnumeratePhysicalDevices
 
 type VkEnumeratePhysicalDevices = "vkEnumeratePhysicalDevices"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
---   > VkResult vkEnumeratePhysicalDevices
---   >     ( VkInstance instance
---   >     , uint32_t* pPhysicalDeviceCount
---   >     , VkPhysicalDevice* pPhysicalDevices
---   >     )
+-- > VkResult vkEnumeratePhysicalDevices
+-- >     ( VkInstance instance
+-- >     , uint32_t* pPhysicalDeviceCount
+-- >     , VkPhysicalDevice* pPhysicalDevices
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkEnumeratePhysicalDevices"
                vkEnumeratePhysicalDevices ::
                VkInstance -- ^ instance
@@ -1090,23 +1174,62 @@ foreign import ccall unsafe "vkEnumeratePhysicalDevices"
                                         -> Ptr VkPhysicalDevice -- ^ pPhysicalDevices
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumeratePhysicalDevices ::
+                           VkInstance -- ^ instance
+                                      -> Ptr Word32 -- ^ pPhysicalDeviceCount
+                                                    -> Ptr VkPhysicalDevice -- ^ pPhysicalDevices
+                                                                            -> IO VkResult
+vkEnumeratePhysicalDevices d
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkEnumeratePhysicalDevices d)
+      d
+
+{-# INLINE vkEnumeratePhysicalDevices #-}
+
+{-# WARNING
+vkEnumeratePhysicalDevices"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
---   > VkResult vkEnumeratePhysicalDevices
---   >     ( VkInstance instance
---   >     , uint32_t* pPhysicalDeviceCount
---   >     , VkPhysicalDevice* pPhysicalDevices
---   >     )
+-- > VkResult vkEnumeratePhysicalDevices
+-- >     ( VkInstance instance
+-- >     , uint32_t* pPhysicalDeviceCount
+-- >     , VkPhysicalDevice* pPhysicalDevices
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEnumeratePhysicalDevices"
                vkEnumeratePhysicalDevicesSafe ::
                VkInstance -- ^ instance
                           -> Ptr Word32 -- ^ pPhysicalDeviceCount
                                         -> Ptr VkPhysicalDevice -- ^ pPhysicalDevices
                                                                 -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumeratePhysicalDevicesSafe ::
+                               VkInstance -- ^ instance
+                                          -> Ptr Word32 -- ^ pPhysicalDeviceCount
+                                                        -> Ptr VkPhysicalDevice -- ^ pPhysicalDevices
+                                                                                -> IO VkResult
+vkEnumeratePhysicalDevicesSafe = vkEnumeratePhysicalDevices
+
+{-# INLINE vkEnumeratePhysicalDevicesSafe #-}
+
+{-# WARNING
+vkEnumeratePhysicalDevicesSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1118,7 +1241,7 @@ foreign import ccall safe "vkEnumeratePhysicalDevices"
 --   >     , VkPhysicalDevice* pPhysicalDevices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDevices =
      VkInstance -- ^ instance
                 -> Ptr Word32 -- ^ pPhysicalDeviceCount
@@ -1161,36 +1284,74 @@ is_VkGetPhysicalDeviceFeatures
 
 type VkGetPhysicalDeviceFeatures = "vkGetPhysicalDeviceFeatures"
 
--- | > () vkGetPhysicalDeviceFeatures
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceFeatures* pFeatures
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceFeatures
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceFeatures* pFeatures
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceFeatures"
                vkGetPhysicalDeviceFeatures ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
                                                                 -> IO ()
 
--- | > () vkGetPhysicalDeviceFeatures
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceFeatures* pFeatures
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceFeatures ::
+                            VkPhysicalDevice -- ^ physicalDevice
+                                             -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
+                                                                             -> IO ()
+vkGetPhysicalDeviceFeatures
+  = error $
+      "vkGetPhysicalDeviceFeatures: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceFeatures"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceFeatures
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceFeatures* pFeatures
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceFeatures"
                vkGetPhysicalDeviceFeaturesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
                                                                 -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceFeaturesSafe ::
+                                VkPhysicalDevice -- ^ physicalDevice
+                                                 -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
+                                                                                 -> IO ()
+vkGetPhysicalDeviceFeaturesSafe = vkGetPhysicalDeviceFeatures
+
+{-# INLINE vkGetPhysicalDeviceFeaturesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceFeaturesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceFeatures
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceFeatures* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFeatures =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
@@ -1234,13 +1395,15 @@ is_VkGetPhysicalDeviceFormatProperties
 type VkGetPhysicalDeviceFormatProperties =
      "vkGetPhysicalDeviceFormatProperties"
 
--- | > () vkGetPhysicalDeviceFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkFormatProperties* pFormatProperties
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkFormatProperties* pFormatProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties"
                vkGetPhysicalDeviceFormatProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1248,13 +1411,34 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties"
                                             -> Ptr VkFormatProperties -- ^ pFormatProperties
                                                                       -> IO ()
 
--- | > () vkGetPhysicalDeviceFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkFormatProperties* pFormatProperties
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceFormatProperties ::
+                                    VkPhysicalDevice -- ^ physicalDevice
+                                                     -> VkFormat -- ^ format
+                                                                 -> Ptr VkFormatProperties -- ^ pFormatProperties
+                                                                                           -> IO ()
+vkGetPhysicalDeviceFormatProperties
+  = error $
+      "vkGetPhysicalDeviceFormatProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceFormatProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkFormatProperties* pFormatProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceFormatProperties"
                vkGetPhysicalDeviceFormatPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1262,13 +1446,32 @@ foreign import ccall safe "vkGetPhysicalDeviceFormatProperties"
                                             -> Ptr VkFormatProperties -- ^ pFormatProperties
                                                                       -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceFormatPropertiesSafe ::
+                                        VkPhysicalDevice -- ^ physicalDevice
+                                                         ->
+                                          VkFormat -- ^ format
+                                                   -> Ptr VkFormatProperties -- ^ pFormatProperties
+                                                                             -> IO ()
+vkGetPhysicalDeviceFormatPropertiesSafe
+  = vkGetPhysicalDeviceFormatProperties
+
+{-# INLINE vkGetPhysicalDeviceFormatPropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceFormatPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceFormatProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkFormat format
 --   >     , VkFormatProperties* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkFormat -- ^ format
@@ -1315,21 +1518,23 @@ is_VkGetPhysicalDeviceImageFormatProperties
 type VkGetPhysicalDeviceImageFormatProperties =
      "vkGetPhysicalDeviceImageFormatProperties"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
 --
---   > VkResult vkGetPhysicalDeviceImageFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkImageTiling tiling
---   >     , VkImageUsageFlags usage
---   >     , VkImageCreateFlags flags
---   >     , VkImageFormatProperties* pImageFormatProperties
---   >     )
+-- > VkResult vkGetPhysicalDeviceImageFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkImageType type
+-- >     , VkImageTiling tiling
+-- >     , VkImageUsageFlags usage
+-- >     , VkImageCreateFlags flags
+-- >     , VkImageFormatProperties* pImageFormatProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceImageFormatProperties"
                vkGetPhysicalDeviceImageFormatProperties ::
@@ -1347,21 +1552,52 @@ foreign import ccall unsafe
                                             -> Ptr VkImageFormatProperties -- ^ pImageFormatProperties
                                                                            -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceImageFormatProperties ::
+                                         VkPhysicalDevice -- ^ physicalDevice
+                                                          ->
+                                           VkFormat -- ^ format
+                                                    ->
+                                             VkImageType -- ^ type
+                                                         ->
+                                               VkImageTiling -- ^ tiling
+                                                             ->
+                                                 VkImageUsageFlags -- ^ usage
+                                                                   ->
+                                                   VkImageCreateFlags -- ^ flags
+                                                                      ->
+                                                     Ptr VkImageFormatProperties -- ^ pImageFormatProperties
+                                                                                 -> IO VkResult
+vkGetPhysicalDeviceImageFormatProperties
+  = error $
+      "vkGetPhysicalDeviceImageFormatProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceImageFormatProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
 --
---   > VkResult vkGetPhysicalDeviceImageFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkImageTiling tiling
---   >     , VkImageUsageFlags usage
---   >     , VkImageCreateFlags flags
---   >     , VkImageFormatProperties* pImageFormatProperties
---   >     )
+-- > VkResult vkGetPhysicalDeviceImageFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkImageType type
+-- >     , VkImageTiling tiling
+-- >     , VkImageUsageFlags usage
+-- >     , VkImageCreateFlags flags
+-- >     , VkImageFormatProperties* pImageFormatProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceImageFormatProperties"
                vkGetPhysicalDeviceImageFormatPropertiesSafe ::
@@ -1379,6 +1615,34 @@ foreign import ccall safe
                                             -> Ptr VkImageFormatProperties -- ^ pImageFormatProperties
                                                                            -> IO VkResult
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceImageFormatPropertiesSafe ::
+                                             VkPhysicalDevice -- ^ physicalDevice
+                                                              ->
+                                               VkFormat -- ^ format
+                                                        ->
+                                                 VkImageType -- ^ type
+                                                             ->
+                                                   VkImageTiling -- ^ tiling
+                                                                 ->
+                                                     VkImageUsageFlags -- ^ usage
+                                                                       ->
+                                                       VkImageCreateFlags -- ^ flags
+                                                                          ->
+                                                         Ptr VkImageFormatProperties -- ^ pImageFormatProperties
+                                                                                     -> IO VkResult
+vkGetPhysicalDeviceImageFormatPropertiesSafe
+  = vkGetPhysicalDeviceImageFormatProperties
+
+{-# INLINE vkGetPhysicalDeviceImageFormatPropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceImageFormatPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
@@ -1393,7 +1657,7 @@ foreign import ccall safe
 --   >     , VkImageFormatProperties* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1450,36 +1714,74 @@ is_VkGetPhysicalDeviceProperties
 type VkGetPhysicalDeviceProperties =
      "vkGetPhysicalDeviceProperties"
 
--- | > () vkGetPhysicalDeviceProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceProperties* pProperties
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceProperties"
                vkGetPhysicalDeviceProperties ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
                                                                   -> IO ()
 
--- | > () vkGetPhysicalDeviceProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceProperties* pProperties
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceProperties ::
+                              VkPhysicalDevice -- ^ physicalDevice
+                                               -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
+                                                                                 -> IO ()
+vkGetPhysicalDeviceProperties
+  = error $
+      "vkGetPhysicalDeviceProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceProperties"
                vkGetPhysicalDevicePropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
                                                                   -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDevicePropertiesSafe ::
+                                  VkPhysicalDevice -- ^ physicalDevice
+                                                   -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
+                                                                                     -> IO ()
+vkGetPhysicalDevicePropertiesSafe = vkGetPhysicalDeviceProperties
+
+{-# INLINE vkGetPhysicalDevicePropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDevicePropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
@@ -1525,13 +1827,15 @@ is_VkGetPhysicalDeviceQueueFamilyProperties
 type VkGetPhysicalDeviceQueueFamilyProperties =
      "vkGetPhysicalDeviceQueueFamilyProperties"
 
--- | > () vkGetPhysicalDeviceQueueFamilyProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t* pQueueFamilyPropertyCount
---   >     , VkQueueFamilyProperties* pQueueFamilyProperties
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceQueueFamilyProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pQueueFamilyPropertyCount
+-- >     , VkQueueFamilyProperties* pQueueFamilyProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceQueueFamilyProperties"
                vkGetPhysicalDeviceQueueFamilyProperties ::
@@ -1541,13 +1845,35 @@ foreign import ccall unsafe
                             -> Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
                                                            -> IO ()
 
--- | > () vkGetPhysicalDeviceQueueFamilyProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t* pQueueFamilyPropertyCount
---   >     , VkQueueFamilyProperties* pQueueFamilyProperties
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceQueueFamilyProperties ::
+                                         VkPhysicalDevice -- ^ physicalDevice
+                                                          ->
+                                           Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                                                      -> Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
+                                                                                     -> IO ()
+vkGetPhysicalDeviceQueueFamilyProperties
+  = error $
+      "vkGetPhysicalDeviceQueueFamilyProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceQueueFamilyProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceQueueFamilyProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pQueueFamilyPropertyCount
+-- >     , VkQueueFamilyProperties* pQueueFamilyProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceQueueFamilyProperties"
                vkGetPhysicalDeviceQueueFamilyPropertiesSafe ::
@@ -1557,13 +1883,32 @@ foreign import ccall safe
                             -> Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
                                                            -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceQueueFamilyPropertiesSafe ::
+                                             VkPhysicalDevice -- ^ physicalDevice
+                                                              ->
+                                               Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                                                          -> Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
+                                                                                         -> IO ()
+vkGetPhysicalDeviceQueueFamilyPropertiesSafe
+  = vkGetPhysicalDeviceQueueFamilyProperties
+
+{-# INLINE vkGetPhysicalDeviceQueueFamilyPropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceQueueFamilyPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceQueueFamilyProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pQueueFamilyPropertyCount
 --   >     , VkQueueFamilyProperties* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceQueueFamilyProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1612,36 +1957,77 @@ is_VkGetPhysicalDeviceMemoryProperties
 type VkGetPhysicalDeviceMemoryProperties =
      "vkGetPhysicalDeviceMemoryProperties"
 
--- | > () vkGetPhysicalDeviceMemoryProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceMemoryProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties"
                vkGetPhysicalDeviceMemoryProperties ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
                                                                         -> IO ()
 
--- | > () vkGetPhysicalDeviceMemoryProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceMemoryProperties ::
+                                    VkPhysicalDevice -- ^ physicalDevice
+                                                     ->
+                                      Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
+                                                                           -> IO ()
+vkGetPhysicalDeviceMemoryProperties
+  = error $
+      "vkGetPhysicalDeviceMemoryProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceMemoryProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceMemoryProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties"
                vkGetPhysicalDeviceMemoryPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
                                                                         -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceMemoryPropertiesSafe ::
+                                        VkPhysicalDevice -- ^ physicalDevice
+                                                         ->
+                                          Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
+                                                                               -> IO ()
+vkGetPhysicalDeviceMemoryPropertiesSafe
+  = vkGetPhysicalDeviceMemoryProperties
+
+{-# INLINE vkGetPhysicalDeviceMemoryPropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceMemoryPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceMemoryProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMemoryProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
@@ -1683,36 +2069,75 @@ is_VkGetInstanceProcAddr
 
 type VkGetInstanceProcAddr = "vkGetInstanceProcAddr"
 
--- | > PFN_vkVoidFunction vkGetInstanceProcAddr
---   >     ( VkInstance instance
---   >     , const char* pName
---   >     )
+-- |
+-- > PFN_vkVoidFunction vkGetInstanceProcAddr
+-- >     ( VkInstance instance
+-- >     , const char* pName
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetInstanceProcAddr"
                vkGetInstanceProcAddr ::
                VkInstance -- ^ instance
                           -> CString -- ^ pName
                                      -> IO PFN_vkVoidFunction
 
--- | > PFN_vkVoidFunction vkGetInstanceProcAddr
---   >     ( VkInstance instance
---   >     , const char* pName
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetInstanceProcAddr ::
+                      VkInstance -- ^ instance
+                                 -> CString -- ^ pName
+                                            -> IO PFN_vkVoidFunction
+vkGetInstanceProcAddr d
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkGetInstanceProcAddr d)
+      d
+
+{-# INLINE vkGetInstanceProcAddr #-}
+
+{-# WARNING
+vkGetInstanceProcAddr"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > PFN_vkVoidFunction vkGetInstanceProcAddr
+-- >     ( VkInstance instance
+-- >     , const char* pName
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetInstanceProcAddr"
                vkGetInstanceProcAddrSafe ::
                VkInstance -- ^ instance
                           -> CString -- ^ pName
                                      -> IO PFN_vkVoidFunction
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetInstanceProcAddrSafe ::
+                          VkInstance -- ^ instance
+                                     -> CString -- ^ pName
+                                                -> IO PFN_vkVoidFunction
+vkGetInstanceProcAddrSafe = vkGetInstanceProcAddr
+
+{-# INLINE vkGetInstanceProcAddrSafe #-}
+
+{-# WARNING
+vkGetInstanceProcAddrSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > PFN_vkVoidFunction vkGetInstanceProcAddr
 --   >     ( VkInstance instance
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
 type HS_vkGetInstanceProcAddr =
      VkInstance -- ^ instance
                 -> CString -- ^ pName
@@ -1749,35 +2174,71 @@ is_VkGetDeviceProcAddr = (EQ ==) . cmpCStrings _VkGetDeviceProcAddr
 
 type VkGetDeviceProcAddr = "vkGetDeviceProcAddr"
 
--- | > PFN_vkVoidFunction vkGetDeviceProcAddr
---   >     ( VkDevice device
---   >     , const char* pName
---   >     )
+-- |
+-- > PFN_vkVoidFunction vkGetDeviceProcAddr
+-- >     ( VkDevice device
+-- >     , const char* pName
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDeviceProcAddr"
                vkGetDeviceProcAddr :: VkDevice -- ^ device
                                                -> CString -- ^ pName
                                                           -> IO PFN_vkVoidFunction
 
--- | > PFN_vkVoidFunction vkGetDeviceProcAddr
---   >     ( VkDevice device
---   >     , const char* pName
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceProcAddr :: VkDevice -- ^ device
+                                -> CString -- ^ pName
+                                           -> IO PFN_vkVoidFunction
+vkGetDeviceProcAddr d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkGetDeviceProcAddr d) d
+
+{-# INLINE vkGetDeviceProcAddr #-}
+
+{-# WARNING
+vkGetDeviceProcAddr"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > PFN_vkVoidFunction vkGetDeviceProcAddr
+-- >     ( VkDevice device
+-- >     , const char* pName
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDeviceProcAddr"
                vkGetDeviceProcAddrSafe ::
                VkDevice -- ^ device
                         -> CString -- ^ pName
                                    -> IO PFN_vkVoidFunction
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceProcAddrSafe ::
+                        VkDevice -- ^ device
+                                 -> CString -- ^ pName
+                                            -> IO PFN_vkVoidFunction
+vkGetDeviceProcAddrSafe = vkGetDeviceProcAddr
+
+{-# INLINE vkGetDeviceProcAddrSafe #-}
+
+{-# WARNING
+vkGetDeviceProcAddrSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > PFN_vkVoidFunction vkGetDeviceProcAddr
 --   >     ( VkDevice device
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
 type HS_vkGetDeviceProcAddr =
      VkDevice -- ^ device
               -> CString -- ^ pName
@@ -1814,18 +2275,20 @@ is_VkCreateDevice = (EQ ==) . cmpCStrings _VkCreateDevice
 
 type VkCreateDevice = "vkCreateDevice"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkCreateDevice
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkDeviceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDevice* pDevice
---   >     )
+-- > VkResult vkCreateDevice
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkDeviceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDevice* pDevice
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevice vkCreateDevice registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -1835,18 +2298,42 @@ foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
                                              -> Ptr VkDevice -- ^ pDevice
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCreateDevice ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr VkDeviceCreateInfo -- ^ pCreateInfo
+                                        ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkDevice -- ^ pDevice
+                                                             -> IO VkResult
+vkCreateDevice
+  = error $
+      "vkCreateDevice: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCreateDevice"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED', 'VK_ERROR_EXTENSION_NOT_PRESENT', 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkCreateDevice
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkDeviceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDevice* pDevice
---   >     )
+-- > VkResult vkCreateDevice
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkDeviceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDevice* pDevice
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevice vkCreateDevice registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateDevice" vkCreateDeviceSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -1855,6 +2342,26 @@ foreign import ccall safe "vkCreateDevice" vkCreateDeviceSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkDevice -- ^ pDevice
                                                              -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCreateDeviceSafe ::
+                   VkPhysicalDevice -- ^ physicalDevice
+                                    ->
+                     Ptr VkDeviceCreateInfo -- ^ pCreateInfo
+                                            ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkDevice -- ^ pDevice
+                                                                 -> IO VkResult
+vkCreateDeviceSafe = vkCreateDevice
+
+{-# INLINE vkCreateDeviceSafe #-}
+
+{-# WARNING
+vkCreateDeviceSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1867,7 +2374,7 @@ foreign import ccall safe "vkCreateDevice" vkCreateDeviceSafe ::
 --   >     , VkDevice* pDevice
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevice vkCreateDevice registry at www.khronos.org>
 type HS_vkCreateDevice =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1908,34 +2415,70 @@ is_VkDestroyDevice = (EQ ==) . cmpCStrings _VkDestroyDevice
 
 type VkDestroyDevice = "vkDestroyDevice"
 
--- | > () vkDestroyDevice
---   >     ( VkDevice device
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyDevice
+-- >     ( VkDevice device
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyDevice" vkDestroyDevice ::
                VkDevice -- ^ device
                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                      -> IO ()
 
--- | > () vkDestroyDevice
---   >     ( VkDevice device
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDevice :: VkDevice -- ^ device
+                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> IO ()
+vkDestroyDevice d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyDevice d) d
+
+{-# INLINE vkDestroyDevice #-}
+
+{-# WARNING
+vkDestroyDevice"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyDevice
+-- >     ( VkDevice device
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyDevice" vkDestroyDeviceSafe ::
                VkDevice -- ^ device
                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                      -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDeviceSafe ::
+                    VkDevice -- ^ device
+                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> IO ()
+vkDestroyDeviceSafe = vkDestroyDevice
+
+{-# INLINE vkDestroyDeviceSafe #-}
+
+{-# WARNING
+vkDestroyDeviceSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyDevice
 --   >     ( VkDevice device
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
 type HS_vkDestroyDevice =
      VkDevice -- ^ device
               -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1977,17 +2520,19 @@ is_VkEnumerateInstanceExtensionProperties
 type VkEnumerateInstanceExtensionProperties =
      "vkEnumerateInstanceExtensionProperties"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
 --
---   > VkResult vkEnumerateInstanceExtensionProperties
---   >     ( const char* pLayerName
---   >     , uint32_t* pPropertyCount
---   >     , VkExtensionProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateInstanceExtensionProperties
+-- >     ( const char* pLayerName
+-- >     , uint32_t* pPropertyCount
+-- >     , VkExtensionProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkEnumerateInstanceExtensionProperties"
                vkEnumerateInstanceExtensionProperties ::
@@ -1996,23 +2541,64 @@ foreign import ccall unsafe
                                      -> Ptr VkExtensionProperties -- ^ pProperties
                                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumerateInstanceExtensionProperties ::
+                                       CString -- ^ pLayerName
+                                               ->
+                                         Ptr Word32 -- ^ pPropertyCount
+                                                    -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                                 -> IO VkResult
+vkEnumerateInstanceExtensionProperties
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkEnumerateInstanceExtensionProperties VK_NULL)
+
+{-# INLINE vkEnumerateInstanceExtensionProperties #-}
+
+{-# WARNING
+vkEnumerateInstanceExtensionProperties"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
 --
---   > VkResult vkEnumerateInstanceExtensionProperties
---   >     ( const char* pLayerName
---   >     , uint32_t* pPropertyCount
---   >     , VkExtensionProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateInstanceExtensionProperties
+-- >     ( const char* pLayerName
+-- >     , uint32_t* pPropertyCount
+-- >     , VkExtensionProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEnumerateInstanceExtensionProperties"
                vkEnumerateInstanceExtensionPropertiesSafe ::
                CString -- ^ pLayerName
                        -> Ptr Word32 -- ^ pPropertyCount
                                      -> Ptr VkExtensionProperties -- ^ pProperties
                                                                   -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumerateInstanceExtensionPropertiesSafe ::
+                                           CString -- ^ pLayerName
+                                                   ->
+                                             Ptr Word32 -- ^ pPropertyCount
+                                                        -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                                     -> IO VkResult
+vkEnumerateInstanceExtensionPropertiesSafe
+  = vkEnumerateInstanceExtensionProperties
+
+{-# INLINE vkEnumerateInstanceExtensionPropertiesSafe #-}
+
+{-# WARNING
+vkEnumerateInstanceExtensionPropertiesSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -2024,7 +2610,7 @@ foreign import ccall safe "vkEnumerateInstanceExtensionProperties"
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceExtensionProperties =
      CString -- ^ pLayerName
              -> Ptr Word32 -- ^ pPropertyCount
@@ -2071,18 +2657,20 @@ is_VkEnumerateDeviceExtensionProperties
 type VkEnumerateDeviceExtensionProperties =
      "vkEnumerateDeviceExtensionProperties"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
 --
---   > VkResult vkEnumerateDeviceExtensionProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const char* pLayerName
---   >     , uint32_t* pPropertyCount
---   >     , VkExtensionProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateDeviceExtensionProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const char* pLayerName
+-- >     , uint32_t* pPropertyCount
+-- >     , VkExtensionProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
                vkEnumerateDeviceExtensionProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2092,18 +2680,42 @@ foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
                                        -> Ptr VkExtensionProperties -- ^ pProperties
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEnumerateDeviceExtensionProperties ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       CString -- ^ pLayerName
+                                               ->
+                                         Ptr Word32 -- ^ pPropertyCount
+                                                    -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                                 -> IO VkResult
+vkEnumerateDeviceExtensionProperties
+  = error $
+      "vkEnumerateDeviceExtensionProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkEnumerateDeviceExtensionProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_LAYER_NOT_PRESENT'.
 --
---   > VkResult vkEnumerateDeviceExtensionProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const char* pLayerName
---   >     , uint32_t* pPropertyCount
---   >     , VkExtensionProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateDeviceExtensionProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const char* pLayerName
+-- >     , uint32_t* pPropertyCount
+-- >     , VkExtensionProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEnumerateDeviceExtensionProperties"
                vkEnumerateDeviceExtensionPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2112,6 +2724,27 @@ foreign import ccall safe "vkEnumerateDeviceExtensionProperties"
                          -> Ptr Word32 -- ^ pPropertyCount
                                        -> Ptr VkExtensionProperties -- ^ pProperties
                                                                     -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEnumerateDeviceExtensionPropertiesSafe ::
+                                         VkPhysicalDevice -- ^ physicalDevice
+                                                          ->
+                                           CString -- ^ pLayerName
+                                                   ->
+                                             Ptr Word32 -- ^ pPropertyCount
+                                                        -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                                     -> IO VkResult
+vkEnumerateDeviceExtensionPropertiesSafe
+  = vkEnumerateDeviceExtensionProperties
+
+{-# INLINE vkEnumerateDeviceExtensionPropertiesSafe #-}
+
+{-# WARNING
+vkEnumerateDeviceExtensionPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -2124,7 +2757,7 @@ foreign import ccall safe "vkEnumerateDeviceExtensionProperties"
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceExtensionProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2173,37 +2806,76 @@ is_VkEnumerateInstanceLayerProperties
 type VkEnumerateInstanceLayerProperties =
      "vkEnumerateInstanceLayerProperties"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEnumerateInstanceLayerProperties
---   >     ( uint32_t* pPropertyCount
---   >     , VkLayerProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateInstanceLayerProperties
+-- >     ( uint32_t* pPropertyCount
+-- >     , VkLayerProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkEnumerateInstanceLayerProperties"
                vkEnumerateInstanceLayerProperties ::
                Ptr Word32 -- ^ pPropertyCount
                           -> Ptr VkLayerProperties -- ^ pProperties
                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumerateInstanceLayerProperties ::
+                                   Ptr Word32 -- ^ pPropertyCount
+                                              -> Ptr VkLayerProperties -- ^ pProperties
+                                                                       -> IO VkResult
+vkEnumerateInstanceLayerProperties
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkEnumerateInstanceLayerProperties VK_NULL)
+
+{-# INLINE vkEnumerateInstanceLayerProperties #-}
+
+{-# WARNING
+vkEnumerateInstanceLayerProperties"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEnumerateInstanceLayerProperties
---   >     ( uint32_t* pPropertyCount
---   >     , VkLayerProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateInstanceLayerProperties
+-- >     ( uint32_t* pPropertyCount
+-- >     , VkLayerProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEnumerateInstanceLayerProperties"
                vkEnumerateInstanceLayerPropertiesSafe ::
                Ptr Word32 -- ^ pPropertyCount
                           -> Ptr VkLayerProperties -- ^ pProperties
                                                    -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkEnumerateInstanceLayerPropertiesSafe ::
+                                       Ptr Word32 -- ^ pPropertyCount
+                                                  -> Ptr VkLayerProperties -- ^ pProperties
+                                                                           -> IO VkResult
+vkEnumerateInstanceLayerPropertiesSafe
+  = vkEnumerateInstanceLayerProperties
+
+{-# INLINE vkEnumerateInstanceLayerPropertiesSafe #-}
+
+{-# WARNING
+vkEnumerateInstanceLayerPropertiesSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -2214,7 +2886,7 @@ foreign import ccall safe "vkEnumerateInstanceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceLayerProperties =
      Ptr Word32 -- ^ pPropertyCount
                 -> Ptr VkLayerProperties -- ^ pProperties
@@ -2260,17 +2932,19 @@ is_VkEnumerateDeviceLayerProperties
 type VkEnumerateDeviceLayerProperties =
      "vkEnumerateDeviceLayerProperties"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEnumerateDeviceLayerProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t* pPropertyCount
---   >     , VkLayerProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateDeviceLayerProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pPropertyCount
+-- >     , VkLayerProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkEnumerateDeviceLayerProperties"
                vkEnumerateDeviceLayerProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2279,17 +2953,39 @@ foreign import ccall unsafe "vkEnumerateDeviceLayerProperties"
                             -> Ptr VkLayerProperties -- ^ pProperties
                                                      -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEnumerateDeviceLayerProperties ::
+                                 VkPhysicalDevice -- ^ physicalDevice
+                                                  ->
+                                   Ptr Word32 -- ^ pPropertyCount
+                                              -> Ptr VkLayerProperties -- ^ pProperties
+                                                                       -> IO VkResult
+vkEnumerateDeviceLayerProperties
+  = error $
+      "vkEnumerateDeviceLayerProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkEnumerateDeviceLayerProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEnumerateDeviceLayerProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t* pPropertyCount
---   >     , VkLayerProperties* pProperties
---   >     )
+-- > VkResult vkEnumerateDeviceLayerProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pPropertyCount
+-- >     , VkLayerProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEnumerateDeviceLayerProperties"
                vkEnumerateDeviceLayerPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2297,6 +2993,25 @@ foreign import ccall safe "vkEnumerateDeviceLayerProperties"
                  Ptr Word32 -- ^ pPropertyCount
                             -> Ptr VkLayerProperties -- ^ pProperties
                                                      -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEnumerateDeviceLayerPropertiesSafe ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       Ptr Word32 -- ^ pPropertyCount
+                                                  -> Ptr VkLayerProperties -- ^ pProperties
+                                                                           -> IO VkResult
+vkEnumerateDeviceLayerPropertiesSafe
+  = vkEnumerateDeviceLayerProperties
+
+{-# INLINE vkEnumerateDeviceLayerPropertiesSafe #-}
+
+{-# WARNING
+vkEnumerateDeviceLayerPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -2308,7 +3023,7 @@ foreign import ccall safe "vkEnumerateDeviceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceLayerProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2351,14 +3066,16 @@ is_VkGetDeviceQueue = (EQ ==) . cmpCStrings _VkGetDeviceQueue
 
 type VkGetDeviceQueue = "vkGetDeviceQueue"
 
--- | > () vkGetDeviceQueue
---   >     ( VkDevice device
---   >     , uint32_t queueFamilyIndex
---   >     , uint32_t queueIndex
---   >     , VkQueue* pQueue
---   >     )
+-- |
+-- > () vkGetDeviceQueue
+-- >     ( VkDevice device
+-- >     , uint32_t queueFamilyIndex
+-- >     , uint32_t queueIndex
+-- >     , VkQueue* pQueue
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDeviceQueue" vkGetDeviceQueue ::
                VkDevice -- ^ device
                         -> Word32 -- ^ queueFamilyIndex
@@ -2366,20 +3083,59 @@ foreign import ccall unsafe "vkGetDeviceQueue" vkGetDeviceQueue ::
                                             -> Ptr VkQueue -- ^ pQueue
                                                            -> IO ()
 
--- | > () vkGetDeviceQueue
---   >     ( VkDevice device
---   >     , uint32_t queueFamilyIndex
---   >     , uint32_t queueIndex
---   >     , VkQueue* pQueue
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceQueue ::
+                 VkDevice -- ^ device
+                          -> Word32 -- ^ queueFamilyIndex
+                                    -> Word32 -- ^ queueIndex
+                                              -> Ptr VkQueue -- ^ pQueue
+                                                             -> IO ()
+vkGetDeviceQueue d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkGetDeviceQueue d) d
+
+{-# INLINE vkGetDeviceQueue #-}
+
+{-# WARNING
+vkGetDeviceQueue"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetDeviceQueue
+-- >     ( VkDevice device
+-- >     , uint32_t queueFamilyIndex
+-- >     , uint32_t queueIndex
+-- >     , VkQueue* pQueue
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDeviceQueue" vkGetDeviceQueueSafe
                :: VkDevice -- ^ device
                            -> Word32 -- ^ queueFamilyIndex
                                      -> Word32 -- ^ queueIndex
                                                -> Ptr VkQueue -- ^ pQueue
                                                               -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceQueueSafe ::
+                     VkDevice -- ^ device
+                              -> Word32 -- ^ queueFamilyIndex
+                                        -> Word32 -- ^ queueIndex
+                                                  -> Ptr VkQueue -- ^ pQueue
+                                                                 -> IO ()
+vkGetDeviceQueueSafe = vkGetDeviceQueue
+
+{-# INLINE vkGetDeviceQueueSafe #-}
+
+{-# WARNING
+vkGetDeviceQueueSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkGetDeviceQueue
 --   >     ( VkDevice device
@@ -2388,7 +3144,7 @@ foreign import ccall safe "vkGetDeviceQueue" vkGetDeviceQueueSafe
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
 type HS_vkGetDeviceQueue =
      VkDevice -- ^ device
               -> Word32 -- ^ queueFamilyIndex
@@ -2427,18 +3183,20 @@ is_VkQueueSubmit = (EQ ==) . cmpCStrings _VkQueueSubmit
 
 type VkQueueSubmit = "vkQueueSubmit"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkQueueSubmit
---   >     ( VkQueue queue
---   >     , uint32_t submitCount
---   >     , const VkSubmitInfo* pSubmits
---   >     , VkFence fence
---   >     )
+-- > VkResult vkQueueSubmit
+-- >     ( VkQueue queue
+-- >     , uint32_t submitCount
+-- >     , const VkSubmitInfo* pSubmits
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkQueueSubmit" vkQueueSubmit ::
                VkQueue -- ^ queue
                        -> Word32 -- ^ submitCount
@@ -2446,24 +3204,64 @@ foreign import ccall unsafe "vkQueueSubmit" vkQueueSubmit ::
                                                      -> VkFence -- ^ fence
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueSubmit ::
+              VkQueue -- ^ queue
+                      -> Word32 -- ^ submitCount
+                                -> Ptr VkSubmitInfo -- ^ pSubmits
+                                                    -> VkFence -- ^ fence
+                                                               -> IO VkResult
+vkQueueSubmit
+  = error $
+      "vkQueueSubmit: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkQueueSubmit"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkQueueSubmit
---   >     ( VkQueue queue
---   >     , uint32_t submitCount
---   >     , const VkSubmitInfo* pSubmits
---   >     , VkFence fence
---   >     )
+-- > VkResult vkQueueSubmit
+-- >     ( VkQueue queue
+-- >     , uint32_t submitCount
+-- >     , const VkSubmitInfo* pSubmits
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkQueueSubmit" vkQueueSubmitSafe ::
                VkQueue -- ^ queue
                        -> Word32 -- ^ submitCount
                                  -> Ptr VkSubmitInfo -- ^ pSubmits
                                                      -> VkFence -- ^ fence
                                                                 -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueSubmitSafe ::
+                  VkQueue -- ^ queue
+                          -> Word32 -- ^ submitCount
+                                    -> Ptr VkSubmitInfo -- ^ pSubmits
+                                                        -> VkFence -- ^ fence
+                                                                   -> IO VkResult
+vkQueueSubmitSafe = vkQueueSubmit
+
+{-# INLINE vkQueueSubmitSafe #-}
+
+{-# WARNING
+vkQueueSubmitSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2476,7 +3274,7 @@ foreign import ccall safe "vkQueueSubmit" vkQueueSubmitSafe ::
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
 type HS_vkQueueSubmit =
      VkQueue -- ^ queue
              -> Word32 -- ^ submitCount
@@ -2515,31 +3313,65 @@ is_VkQueueWaitIdle = (EQ ==) . cmpCStrings _VkQueueWaitIdle
 
 type VkQueueWaitIdle = "vkQueueWaitIdle"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkQueueWaitIdle
---   >     ( VkQueue queue
---   >     )
+-- > VkResult vkQueueWaitIdle
+-- >     ( VkQueue queue
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkQueueWaitIdle" vkQueueWaitIdle ::
                VkQueue -- ^ queue
                        -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueWaitIdle :: VkQueue -- ^ queue
+                           -> IO VkResult
+vkQueueWaitIdle
+  = error $
+      "vkQueueWaitIdle: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkQueueWaitIdle"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkQueueWaitIdle
---   >     ( VkQueue queue
---   >     )
+-- > VkResult vkQueueWaitIdle
+-- >     ( VkQueue queue
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkQueueWaitIdle" vkQueueWaitIdleSafe ::
                VkQueue -- ^ queue
                        -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueWaitIdleSafe :: VkQueue -- ^ queue
+                               -> IO VkResult
+vkQueueWaitIdleSafe = vkQueueWaitIdle
+
+{-# INLINE vkQueueWaitIdleSafe #-}
+
+{-# WARNING
+vkQueueWaitIdleSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2549,7 +3381,7 @@ foreign import ccall safe "vkQueueWaitIdle" vkQueueWaitIdleSafe ::
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
 type HS_vkQueueWaitIdle = VkQueue -- ^ queue
                                   -> IO VkResult
 
@@ -2584,31 +3416,64 @@ is_VkDeviceWaitIdle = (EQ ==) . cmpCStrings _VkDeviceWaitIdle
 
 type VkDeviceWaitIdle = "vkDeviceWaitIdle"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkDeviceWaitIdle
---   >     ( VkDevice device
---   >     )
+-- > VkResult vkDeviceWaitIdle
+-- >     ( VkDevice device
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDeviceWaitIdle" vkDeviceWaitIdle ::
                VkDevice -- ^ device
                         -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDeviceWaitIdle :: VkDevice -- ^ device
+                             -> IO VkResult
+vkDeviceWaitIdle d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDeviceWaitIdle d) d
+
+{-# INLINE vkDeviceWaitIdle #-}
+
+{-# WARNING
+vkDeviceWaitIdle"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkDeviceWaitIdle
---   >     ( VkDevice device
---   >     )
+-- > VkResult vkDeviceWaitIdle
+-- >     ( VkDevice device
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDeviceWaitIdle" vkDeviceWaitIdleSafe
                :: VkDevice -- ^ device
                            -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDeviceWaitIdleSafe :: VkDevice -- ^ device
+                                 -> IO VkResult
+vkDeviceWaitIdleSafe = vkDeviceWaitIdle
+
+{-# INLINE vkDeviceWaitIdleSafe #-}
+
+{-# WARNING
+vkDeviceWaitIdleSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2618,7 +3483,7 @@ foreign import ccall safe "vkDeviceWaitIdle" vkDeviceWaitIdleSafe
 --   >     ( VkDevice device
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
 type HS_vkDeviceWaitIdle = VkDevice -- ^ device
                                     -> IO VkResult
 
@@ -2653,18 +3518,20 @@ is_VkAllocateMemory = (EQ ==) . cmpCStrings _VkAllocateMemory
 
 type VkAllocateMemory = "vkAllocateMemory"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
---   > VkResult vkAllocateMemory
---   >     ( VkDevice device
---   >     , const VkMemoryAllocateInfo* pAllocateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDeviceMemory* pMemory
---   >     )
+-- > VkResult vkAllocateMemory
+-- >     ( VkDevice device
+-- >     , const VkMemoryAllocateInfo* pAllocateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDeviceMemory* pMemory
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
                VkDevice -- ^ device
                         ->
@@ -2674,18 +3541,41 @@ foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
                                              -> Ptr VkDeviceMemory -- ^ pMemory
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateMemory ::
+                 VkDevice -- ^ device
+                          ->
+                   Ptr VkMemoryAllocateInfo -- ^ pAllocateInfo
+                                            ->
+                     Ptr VkAllocationCallbacks -- ^ pAllocator
+                                               -> Ptr VkDeviceMemory -- ^ pMemory
+                                                                     -> IO VkResult
+vkAllocateMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkAllocateMemory d) d
+
+{-# INLINE vkAllocateMemory #-}
+
+{-# WARNING
+vkAllocateMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
---   > VkResult vkAllocateMemory
---   >     ( VkDevice device
---   >     , const VkMemoryAllocateInfo* pAllocateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDeviceMemory* pMemory
---   >     )
+-- > VkResult vkAllocateMemory
+-- >     ( VkDevice device
+-- >     , const VkMemoryAllocateInfo* pAllocateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDeviceMemory* pMemory
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkAllocateMemory" vkAllocateMemorySafe
                ::
                VkDevice -- ^ device
@@ -2696,6 +3586,26 @@ foreign import ccall safe "vkAllocateMemory" vkAllocateMemorySafe
                                              -> Ptr VkDeviceMemory -- ^ pMemory
                                                                    -> IO VkResult
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateMemorySafe ::
+                     VkDevice -- ^ device
+                              ->
+                       Ptr VkMemoryAllocateInfo -- ^ pAllocateInfo
+                                                ->
+                         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                   -> Ptr VkDeviceMemory -- ^ pMemory
+                                                                         -> IO VkResult
+vkAllocateMemorySafe = vkAllocateMemory
+
+{-# INLINE vkAllocateMemorySafe #-}
+
+{-# WARNING
+vkAllocateMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
@@ -2707,7 +3617,7 @@ foreign import ccall safe "vkAllocateMemory" vkAllocateMemorySafe
 --   >     , VkDeviceMemory* pMemory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
 type HS_vkAllocateMemory =
      VkDevice -- ^ device
               ->
@@ -2748,31 +3658,70 @@ is_VkFreeMemory = (EQ ==) . cmpCStrings _VkFreeMemory
 
 type VkFreeMemory = "vkFreeMemory"
 
--- | > () vkFreeMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkFreeMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemory vkFreeMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkFreeMemory" vkFreeMemory ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkFreeMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeMemory ::
+             VkDevice -- ^ device
+                      -> VkDeviceMemory -- ^ memory
+                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                     -> IO ()
+vkFreeMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkFreeMemory d) d
+
+{-# INLINE vkFreeMemory #-}
+
+{-# WARNING
+vkFreeMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkFreeMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemory vkFreeMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkFreeMemory" vkFreeMemorySafe ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeMemorySafe ::
+                 VkDevice -- ^ device
+                          -> VkDeviceMemory -- ^ memory
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
+vkFreeMemorySafe = vkFreeMemory
+
+{-# INLINE vkFreeMemorySafe #-}
+
+{-# WARNING
+vkFreeMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkFreeMemory
 --   >     ( VkDevice device
@@ -2780,7 +3729,7 @@ foreign import ccall safe "vkFreeMemory" vkFreeMemorySafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemory vkFreeMemory registry at www.khronos.org>
 type HS_vkFreeMemory =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -2818,20 +3767,22 @@ is_VkMapMemory = (EQ ==) . cmpCStrings _VkMapMemory
 
 type VkMapMemory = "vkMapMemory"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_MEMORY_MAP_FAILED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_MEMORY_MAP_FAILED'.
 --
---   > VkResult vkMapMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize offset
---   >     , VkDeviceSize size
---   >     , VkMemoryMapFlags flags
---   >     , void** ppData
---   >     )
+-- > VkResult vkMapMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize offset
+-- >     , VkDeviceSize size
+-- >     , VkMemoryMapFlags flags
+-- >     , void** ppData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemory vkMapMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkMapMemory" vkMapMemory ::
                VkDevice -- ^ device
                         ->
@@ -2844,20 +3795,46 @@ foreign import ccall unsafe "vkMapMemory" vkMapMemory ::
                                                       -> Ptr (Ptr Void) -- ^ ppData
                                                                         -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkMapMemory ::
+            VkDevice -- ^ device
+                     ->
+              VkDeviceMemory -- ^ memory
+                             ->
+                VkDeviceSize -- ^ offset
+                             ->
+                  VkDeviceSize -- ^ size
+                               -> VkMemoryMapFlags -- ^ flags
+                                                   -> Ptr (Ptr Void) -- ^ ppData
+                                                                     -> IO VkResult
+vkMapMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkMapMemory d) d
+
+{-# INLINE vkMapMemory #-}
+
+{-# WARNING
+vkMapMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_MEMORY_MAP_FAILED'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_MEMORY_MAP_FAILED'.
 --
---   > VkResult vkMapMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize offset
---   >     , VkDeviceSize size
---   >     , VkMemoryMapFlags flags
---   >     , void** ppData
---   >     )
+-- > VkResult vkMapMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize offset
+-- >     , VkDeviceSize size
+-- >     , VkMemoryMapFlags flags
+-- >     , void** ppData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemory vkMapMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkMapMemory" vkMapMemorySafe ::
                VkDevice -- ^ device
                         ->
@@ -2869,6 +3846,29 @@ foreign import ccall safe "vkMapMemory" vkMapMemorySafe ::
                                   -> VkMemoryMapFlags -- ^ flags
                                                       -> Ptr (Ptr Void) -- ^ ppData
                                                                         -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkMapMemorySafe ::
+                VkDevice -- ^ device
+                         ->
+                  VkDeviceMemory -- ^ memory
+                                 ->
+                    VkDeviceSize -- ^ offset
+                                 ->
+                      VkDeviceSize -- ^ size
+                                   -> VkMemoryMapFlags -- ^ flags
+                                                       -> Ptr (Ptr Void) -- ^ ppData
+                                                                         -> IO VkResult
+vkMapMemorySafe = vkMapMemory
+
+{-# INLINE vkMapMemorySafe #-}
+
+{-# WARNING
+vkMapMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2883,7 +3883,7 @@ foreign import ccall safe "vkMapMemory" vkMapMemorySafe ::
 --   >     , void** ppData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemory vkMapMemory registry at www.khronos.org>
 type HS_vkMapMemory =
      VkDevice -- ^ device
               ->
@@ -2927,34 +3927,69 @@ is_VkUnmapMemory = (EQ ==) . cmpCStrings _VkUnmapMemory
 
 type VkUnmapMemory = "vkUnmapMemory"
 
--- | > () vkUnmapMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     )
+-- |
+-- > () vkUnmapMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkUnmapMemory" vkUnmapMemory ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
                                           -> IO ()
 
--- | > () vkUnmapMemory
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkUnmapMemory :: VkDevice -- ^ device
+                          -> VkDeviceMemory -- ^ memory
+                                            -> IO ()
+vkUnmapMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkUnmapMemory d) d
+
+{-# INLINE vkUnmapMemory #-}
+
+{-# WARNING
+vkUnmapMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkUnmapMemory
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkUnmapMemory" vkUnmapMemorySafe ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
                                           -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkUnmapMemorySafe :: VkDevice -- ^ device
+                              -> VkDeviceMemory -- ^ memory
+                                                -> IO ()
+vkUnmapMemorySafe = vkUnmapMemory
+
+{-# INLINE vkUnmapMemorySafe #-}
+
+{-# WARNING
+vkUnmapMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkUnmapMemory
 --   >     ( VkDevice device
 --   >     , VkDeviceMemory memory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
 type HS_vkUnmapMemory = VkDevice -- ^ device
                                  -> VkDeviceMemory -- ^ memory
                                                    -> IO ()
@@ -2992,17 +4027,19 @@ is_VkFlushMappedMemoryRanges
 
 type VkFlushMappedMemoryRanges = "vkFlushMappedMemoryRanges"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkFlushMappedMemoryRanges
---   >     ( VkDevice device
---   >     , uint32_t memoryRangeCount
---   >     , const VkMappedMemoryRange* pMemoryRanges
---   >     )
+-- > VkResult vkFlushMappedMemoryRanges
+-- >     ( VkDevice device
+-- >     , uint32_t memoryRangeCount
+-- >     , const VkMappedMemoryRange* pMemoryRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkFlushMappedMemoryRanges"
                vkFlushMappedMemoryRanges ::
                VkDevice -- ^ device
@@ -3010,23 +4047,62 @@ foreign import ccall unsafe "vkFlushMappedMemoryRanges"
                                   -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFlushMappedMemoryRanges ::
+                          VkDevice -- ^ device
+                                   -> Word32 -- ^ memoryRangeCount
+                                             -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                                        -> IO VkResult
+vkFlushMappedMemoryRanges d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkFlushMappedMemoryRanges d)
+      d
+
+{-# INLINE vkFlushMappedMemoryRanges #-}
+
+{-# WARNING
+vkFlushMappedMemoryRanges"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkFlushMappedMemoryRanges
---   >     ( VkDevice device
---   >     , uint32_t memoryRangeCount
---   >     , const VkMappedMemoryRange* pMemoryRanges
---   >     )
+-- > VkResult vkFlushMappedMemoryRanges
+-- >     ( VkDevice device
+-- >     , uint32_t memoryRangeCount
+-- >     , const VkMappedMemoryRange* pMemoryRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkFlushMappedMemoryRanges"
                vkFlushMappedMemoryRangesSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ memoryRangeCount
                                   -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
                                                              -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFlushMappedMemoryRangesSafe ::
+                              VkDevice -- ^ device
+                                       -> Word32 -- ^ memoryRangeCount
+                                                 -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                                            -> IO VkResult
+vkFlushMappedMemoryRangesSafe = vkFlushMappedMemoryRanges
+
+{-# INLINE vkFlushMappedMemoryRangesSafe #-}
+
+{-# WARNING
+vkFlushMappedMemoryRangesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3038,7 +4114,7 @@ foreign import ccall safe "vkFlushMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
 type HS_vkFlushMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -3083,17 +4159,19 @@ is_VkInvalidateMappedMemoryRanges
 type VkInvalidateMappedMemoryRanges =
      "vkInvalidateMappedMemoryRanges"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkInvalidateMappedMemoryRanges
---   >     ( VkDevice device
---   >     , uint32_t memoryRangeCount
---   >     , const VkMappedMemoryRange* pMemoryRanges
---   >     )
+-- > VkResult vkInvalidateMappedMemoryRanges
+-- >     ( VkDevice device
+-- >     , uint32_t memoryRangeCount
+-- >     , const VkMappedMemoryRange* pMemoryRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkInvalidateMappedMemoryRanges"
                vkInvalidateMappedMemoryRanges ::
                VkDevice -- ^ device
@@ -3101,23 +4179,62 @@ foreign import ccall unsafe "vkInvalidateMappedMemoryRanges"
                                   -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkInvalidateMappedMemoryRanges ::
+                               VkDevice -- ^ device
+                                        -> Word32 -- ^ memoryRangeCount
+                                                  -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                                             -> IO VkResult
+vkInvalidateMappedMemoryRanges d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkInvalidateMappedMemoryRanges d)
+      d
+
+{-# INLINE vkInvalidateMappedMemoryRanges #-}
+
+{-# WARNING
+vkInvalidateMappedMemoryRanges"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkInvalidateMappedMemoryRanges
---   >     ( VkDevice device
---   >     , uint32_t memoryRangeCount
---   >     , const VkMappedMemoryRange* pMemoryRanges
---   >     )
+-- > VkResult vkInvalidateMappedMemoryRanges
+-- >     ( VkDevice device
+-- >     , uint32_t memoryRangeCount
+-- >     , const VkMappedMemoryRange* pMemoryRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkInvalidateMappedMemoryRanges"
                vkInvalidateMappedMemoryRangesSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ memoryRangeCount
                                   -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
                                                              -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkInvalidateMappedMemoryRangesSafe ::
+                                   VkDevice -- ^ device
+                                            -> Word32 -- ^ memoryRangeCount
+                                                      -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                                                 -> IO VkResult
+vkInvalidateMappedMemoryRangesSafe = vkInvalidateMappedMemoryRanges
+
+{-# INLINE vkInvalidateMappedMemoryRangesSafe #-}
+
+{-# WARNING
+vkInvalidateMappedMemoryRangesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3129,7 +4246,7 @@ foreign import ccall safe "vkInvalidateMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
 type HS_vkInvalidateMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -3174,13 +4291,15 @@ is_VkGetDeviceMemoryCommitment
 
 type VkGetDeviceMemoryCommitment = "vkGetDeviceMemoryCommitment"
 
--- | > () vkGetDeviceMemoryCommitment
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize* pCommittedMemoryInBytes
---   >     )
+-- |
+-- > () vkGetDeviceMemoryCommitment
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize* pCommittedMemoryInBytes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDeviceMemoryCommitment"
                vkGetDeviceMemoryCommitment ::
                VkDevice -- ^ device
@@ -3188,13 +4307,35 @@ foreign import ccall unsafe "vkGetDeviceMemoryCommitment"
                                           -> Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
                                                               -> IO ()
 
--- | > () vkGetDeviceMemoryCommitment
---   >     ( VkDevice device
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize* pCommittedMemoryInBytes
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceMemoryCommitment ::
+                            VkDevice -- ^ device
+                                     -> VkDeviceMemory -- ^ memory
+                                                       -> Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
+                                                                           -> IO ()
+vkGetDeviceMemoryCommitment d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetDeviceMemoryCommitment d)
+      d
+
+{-# INLINE vkGetDeviceMemoryCommitment #-}
+
+{-# WARNING
+vkGetDeviceMemoryCommitment"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetDeviceMemoryCommitment
+-- >     ( VkDevice device
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize* pCommittedMemoryInBytes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDeviceMemoryCommitment"
                vkGetDeviceMemoryCommitmentSafe ::
                VkDevice -- ^ device
@@ -3202,13 +4343,30 @@ foreign import ccall safe "vkGetDeviceMemoryCommitment"
                                           -> Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
                                                               -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceMemoryCommitmentSafe ::
+                                VkDevice -- ^ device
+                                         -> VkDeviceMemory -- ^ memory
+                                                           -> Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
+                                                                               -> IO ()
+vkGetDeviceMemoryCommitmentSafe = vkGetDeviceMemoryCommitment
+
+{-# INLINE vkGetDeviceMemoryCommitmentSafe #-}
+
+{-# WARNING
+vkGetDeviceMemoryCommitmentSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetDeviceMemoryCommitment
 --   >     ( VkDevice device
 --   >     , VkDeviceMemory memory
 --   >     , VkDeviceSize* pCommittedMemoryInBytes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
 type HS_vkGetDeviceMemoryCommitment =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -3248,18 +4406,20 @@ is_VkBindBufferMemory = (EQ ==) . cmpCStrings _VkBindBufferMemory
 
 type VkBindBufferMemory = "vkBindBufferMemory"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBindBufferMemory
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize memoryOffset
---   >     )
+-- > VkResult vkBindBufferMemory
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize memoryOffset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkBindBufferMemory" vkBindBufferMemory
                ::
                VkDevice -- ^ device
@@ -3269,18 +4429,40 @@ foreign import ccall unsafe "vkBindBufferMemory" vkBindBufferMemory
                                             -> VkDeviceSize -- ^ memoryOffset
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkBindBufferMemory ::
+                   VkDevice -- ^ device
+                            ->
+                     VkBuffer -- ^ buffer
+                              -> VkDeviceMemory -- ^ memory
+                                                -> VkDeviceSize -- ^ memoryOffset
+                                                                -> IO VkResult
+vkBindBufferMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkBindBufferMemory d) d
+
+{-# INLINE vkBindBufferMemory #-}
+
+{-# WARNING
+vkBindBufferMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBindBufferMemory
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize memoryOffset
---   >     )
+-- > VkResult vkBindBufferMemory
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize memoryOffset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkBindBufferMemory"
                vkBindBufferMemorySafe ::
                VkDevice -- ^ device
@@ -3289,6 +4471,25 @@ foreign import ccall safe "vkBindBufferMemory"
                           -> VkDeviceMemory -- ^ memory
                                             -> VkDeviceSize -- ^ memoryOffset
                                                             -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkBindBufferMemorySafe ::
+                       VkDevice -- ^ device
+                                ->
+                         VkBuffer -- ^ buffer
+                                  -> VkDeviceMemory -- ^ memory
+                                                    -> VkDeviceSize -- ^ memoryOffset
+                                                                    -> IO VkResult
+vkBindBufferMemorySafe = vkBindBufferMemory
+
+{-# INLINE vkBindBufferMemorySafe #-}
+
+{-# WARNING
+vkBindBufferMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3301,7 +4502,7 @@ foreign import ccall safe "vkBindBufferMemory"
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
 type HS_vkBindBufferMemory =
      VkDevice -- ^ device
               ->
@@ -3341,18 +4542,20 @@ is_VkBindImageMemory = (EQ ==) . cmpCStrings _VkBindImageMemory
 
 type VkBindImageMemory = "vkBindImageMemory"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBindImageMemory
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize memoryOffset
---   >     )
+-- > VkResult vkBindImageMemory
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize memoryOffset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkBindImageMemory" vkBindImageMemory
                ::
                VkDevice -- ^ device
@@ -3362,18 +4565,40 @@ foreign import ccall unsafe "vkBindImageMemory" vkBindImageMemory
                                            -> VkDeviceSize -- ^ memoryOffset
                                                            -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkBindImageMemory ::
+                  VkDevice -- ^ device
+                           ->
+                    VkImage -- ^ image
+                            -> VkDeviceMemory -- ^ memory
+                                              -> VkDeviceSize -- ^ memoryOffset
+                                                              -> IO VkResult
+vkBindImageMemory d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkBindImageMemory d) d
+
+{-# INLINE vkBindImageMemory #-}
+
+{-# WARNING
+vkBindImageMemory"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBindImageMemory
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , VkDeviceMemory memory
---   >     , VkDeviceSize memoryOffset
---   >     )
+-- > VkResult vkBindImageMemory
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , VkDeviceMemory memory
+-- >     , VkDeviceSize memoryOffset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkBindImageMemory" vkBindImageMemorySafe
                ::
                VkDevice -- ^ device
@@ -3382,6 +4607,25 @@ foreign import ccall safe "vkBindImageMemory" vkBindImageMemorySafe
                          -> VkDeviceMemory -- ^ memory
                                            -> VkDeviceSize -- ^ memoryOffset
                                                            -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkBindImageMemorySafe ::
+                      VkDevice -- ^ device
+                               ->
+                        VkImage -- ^ image
+                                -> VkDeviceMemory -- ^ memory
+                                                  -> VkDeviceSize -- ^ memoryOffset
+                                                                  -> IO VkResult
+vkBindImageMemorySafe = vkBindImageMemory
+
+{-# INLINE vkBindImageMemorySafe #-}
+
+{-# WARNING
+vkBindImageMemorySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3394,7 +4638,7 @@ foreign import ccall safe "vkBindImageMemory" vkBindImageMemorySafe
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
 type HS_vkBindImageMemory =
      VkDevice -- ^ device
               ->
@@ -3439,13 +4683,15 @@ is_VkGetBufferMemoryRequirements
 type VkGetBufferMemoryRequirements =
      "vkGetBufferMemoryRequirements"
 
--- | > () vkGetBufferMemoryRequirements
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , VkMemoryRequirements* pMemoryRequirements
---   >     )
+-- |
+-- > () vkGetBufferMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , VkMemoryRequirements* pMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetBufferMemoryRequirements"
                vkGetBufferMemoryRequirements ::
                VkDevice -- ^ device
@@ -3453,13 +4699,35 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements"
                                     -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
                                                                 -> IO ()
 
--- | > () vkGetBufferMemoryRequirements
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , VkMemoryRequirements* pMemoryRequirements
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetBufferMemoryRequirements ::
+                              VkDevice -- ^ device
+                                       -> VkBuffer -- ^ buffer
+                                                   -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                                               -> IO ()
+vkGetBufferMemoryRequirements d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetBufferMemoryRequirements d)
+      d
+
+{-# INLINE vkGetBufferMemoryRequirements #-}
+
+{-# WARNING
+vkGetBufferMemoryRequirements"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetBufferMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , VkMemoryRequirements* pMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetBufferMemoryRequirements"
                vkGetBufferMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3467,13 +4735,30 @@ foreign import ccall safe "vkGetBufferMemoryRequirements"
                                     -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
                                                                 -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetBufferMemoryRequirementsSafe ::
+                                  VkDevice -- ^ device
+                                           -> VkBuffer -- ^ buffer
+                                                       -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                                                   -> IO ()
+vkGetBufferMemoryRequirementsSafe = vkGetBufferMemoryRequirements
+
+{-# INLINE vkGetBufferMemoryRequirementsSafe #-}
+
+{-# WARNING
+vkGetBufferMemoryRequirementsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetBufferMemoryRequirements
 --   >     ( VkDevice device
 --   >     , VkBuffer buffer
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -3518,13 +4803,15 @@ is_VkGetImageMemoryRequirements
 
 type VkGetImageMemoryRequirements = "vkGetImageMemoryRequirements"
 
--- | > () vkGetImageMemoryRequirements
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , VkMemoryRequirements* pMemoryRequirements
---   >     )
+-- |
+-- > () vkGetImageMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , VkMemoryRequirements* pMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetImageMemoryRequirements"
                vkGetImageMemoryRequirements ::
                VkDevice -- ^ device
@@ -3532,13 +4819,35 @@ foreign import ccall unsafe "vkGetImageMemoryRequirements"
                                    -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
                                                                -> IO ()
 
--- | > () vkGetImageMemoryRequirements
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , VkMemoryRequirements* pMemoryRequirements
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageMemoryRequirements ::
+                             VkDevice -- ^ device
+                                      -> VkImage -- ^ image
+                                                 -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                                             -> IO ()
+vkGetImageMemoryRequirements d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetImageMemoryRequirements d)
+      d
+
+{-# INLINE vkGetImageMemoryRequirements #-}
+
+{-# WARNING
+vkGetImageMemoryRequirements"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetImageMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , VkMemoryRequirements* pMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetImageMemoryRequirements"
                vkGetImageMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3546,13 +4855,30 @@ foreign import ccall safe "vkGetImageMemoryRequirements"
                                    -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
                                                                -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageMemoryRequirementsSafe ::
+                                 VkDevice -- ^ device
+                                          -> VkImage -- ^ image
+                                                     -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                                                 -> IO ()
+vkGetImageMemoryRequirementsSafe = vkGetImageMemoryRequirements
+
+{-# INLINE vkGetImageMemoryRequirementsSafe #-}
+
+{-# WARNING
+vkGetImageMemoryRequirementsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetImageMemoryRequirements
 --   >     ( VkDevice device
 --   >     , VkImage image
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -3598,14 +4924,16 @@ is_VkGetImageSparseMemoryRequirements
 type VkGetImageSparseMemoryRequirements =
      "vkGetImageSparseMemoryRequirements"
 
--- | > () vkGetImageSparseMemoryRequirements
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , uint32_t* pSparseMemoryRequirementCount
---   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
---   >     )
+-- |
+-- > () vkGetImageSparseMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , uint32_t* pSparseMemoryRequirementCount
+-- >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetImageSparseMemoryRequirements"
                vkGetImageSparseMemoryRequirements ::
                VkDevice -- ^ device
@@ -3616,14 +4944,39 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements"
                               -> Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
                                                                      -> IO ()
 
--- | > () vkGetImageSparseMemoryRequirements
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , uint32_t* pSparseMemoryRequirementCount
---   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageSparseMemoryRequirements ::
+                                   VkDevice -- ^ device
+                                            ->
+                                     VkImage -- ^ image
+                                             ->
+                                       Ptr Word32 -- ^ pSparseMemoryRequirementCount
+                                                  -> Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
+                                                                                         -> IO ()
+vkGetImageSparseMemoryRequirements d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetImageSparseMemoryRequirements d)
+      d
+
+{-# INLINE vkGetImageSparseMemoryRequirements #-}
+
+{-# WARNING
+vkGetImageSparseMemoryRequirements"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetImageSparseMemoryRequirements
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , uint32_t* pSparseMemoryRequirementCount
+-- >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetImageSparseMemoryRequirements"
                vkGetImageSparseMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3634,6 +4987,28 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements"
                               -> Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
                                                                      -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageSparseMemoryRequirementsSafe ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         VkImage -- ^ image
+                                                 ->
+                                           Ptr Word32 -- ^ pSparseMemoryRequirementCount
+                                                      ->
+                                             Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
+                                                                                 -> IO ()
+vkGetImageSparseMemoryRequirementsSafe
+  = vkGetImageSparseMemoryRequirements
+
+{-# INLINE vkGetImageSparseMemoryRequirementsSafe #-}
+
+{-# WARNING
+vkGetImageSparseMemoryRequirementsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetImageSparseMemoryRequirements
 --   >     ( VkDevice device
 --   >     , VkImage image
@@ -3641,7 +5016,7 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements"
 --   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements =
      VkDevice -- ^ device
               ->
@@ -3693,18 +5068,20 @@ is_VkGetPhysicalDeviceSparseImageFormatProperties
 type VkGetPhysicalDeviceSparseImageFormatProperties =
      "vkGetPhysicalDeviceSparseImageFormatProperties"
 
--- | > () vkGetPhysicalDeviceSparseImageFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkSampleCountFlagBits samples
---   >     , VkImageUsageFlags usage
---   >     , VkImageTiling tiling
---   >     , uint32_t* pPropertyCount
---   >     , VkSparseImageFormatProperties* pProperties
---   >     )
+-- |
+-- > () vkGetPhysicalDeviceSparseImageFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkImageType type
+-- >     , VkSampleCountFlagBits samples
+-- >     , VkImageUsageFlags usage
+-- >     , VkImageTiling tiling
+-- >     , uint32_t* pPropertyCount
+-- >     , VkSparseImageFormatProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSparseImageFormatProperties"
                vkGetPhysicalDeviceSparseImageFormatProperties ::
@@ -3724,18 +5101,52 @@ foreign import ccall unsafe
                                       -> Ptr VkSparseImageFormatProperties -- ^ pProperties
                                                                            -> IO ()
 
--- | > () vkGetPhysicalDeviceSparseImageFormatProperties
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkSampleCountFlagBits samples
---   >     , VkImageUsageFlags usage
---   >     , VkImageTiling tiling
---   >     , uint32_t* pPropertyCount
---   >     , VkSparseImageFormatProperties* pProperties
---   >     )
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSparseImageFormatProperties ::
+                                               VkPhysicalDevice -- ^ physicalDevice
+                                                                ->
+                                                 VkFormat -- ^ format
+                                                          ->
+                                                   VkImageType -- ^ type
+                                                               ->
+                                                     VkSampleCountFlagBits -- ^ samples
+                                                                           ->
+                                                       VkImageUsageFlags -- ^ usage
+                                                                         ->
+                                                         VkImageTiling -- ^ tiling
+                                                                       ->
+                                                           Ptr Word32 -- ^ pPropertyCount
+                                                                      ->
+                                                             Ptr VkSparseImageFormatProperties -- ^ pProperties
+                                                                                               ->
+                                                               IO ()
+vkGetPhysicalDeviceSparseImageFormatProperties
+  = error $
+      "vkGetPhysicalDeviceSparseImageFormatProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceSparseImageFormatProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetPhysicalDeviceSparseImageFormatProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkImageType type
+-- >     , VkSampleCountFlagBits samples
+-- >     , VkImageUsageFlags usage
+-- >     , VkImageTiling tiling
+-- >     , uint32_t* pPropertyCount
+-- >     , VkSparseImageFormatProperties* pProperties
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceSparseImageFormatProperties"
                vkGetPhysicalDeviceSparseImageFormatPropertiesSafe ::
@@ -3755,6 +5166,36 @@ foreign import ccall safe
                                       -> Ptr VkSparseImageFormatProperties -- ^ pProperties
                                                                            -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSparseImageFormatPropertiesSafe ::
+                                                   VkPhysicalDevice -- ^ physicalDevice
+                                                                    ->
+                                                     VkFormat -- ^ format
+                                                              ->
+                                                       VkImageType -- ^ type
+                                                                   ->
+                                                         VkSampleCountFlagBits -- ^ samples
+                                                                               ->
+                                                           VkImageUsageFlags -- ^ usage
+                                                                             ->
+                                                             VkImageTiling -- ^ tiling
+                                                                           ->
+                                                               Ptr Word32 -- ^ pPropertyCount
+                                                                          ->
+                                                                 Ptr VkSparseImageFormatProperties -- ^ pProperties
+                                                                   -> IO ()
+vkGetPhysicalDeviceSparseImageFormatPropertiesSafe
+  = vkGetPhysicalDeviceSparseImageFormatProperties
+
+{-# INLINE vkGetPhysicalDeviceSparseImageFormatPropertiesSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceSparseImageFormatPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetPhysicalDeviceSparseImageFormatProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkFormat format
@@ -3766,7 +5207,7 @@ foreign import ccall safe
 --   >     , VkSparseImageFormatProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSparseImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -3822,20 +5263,22 @@ is_VkQueueBindSparse = (EQ ==) . cmpCStrings _VkQueueBindSparse
 
 type VkQueueBindSparse = "vkQueueBindSparse"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   queues: 'sparse_binding'.
+-- queues: 'sparse_binding'.
 --
---   > VkResult vkQueueBindSparse
---   >     ( VkQueue queue
---   >     , uint32_t bindInfoCount
---   >     , const VkBindSparseInfo* pBindInfo
---   >     , VkFence fence
---   >     )
+-- > VkResult vkQueueBindSparse
+-- >     ( VkQueue queue
+-- >     , uint32_t bindInfoCount
+-- >     , const VkBindSparseInfo* pBindInfo
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
                ::
                VkQueue -- ^ queue
@@ -3844,20 +5287,42 @@ foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
                                                          -> VkFence -- ^ fence
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueBindSparse ::
+                  VkQueue -- ^ queue
+                          -> Word32 -- ^ bindInfoCount
+                                    -> Ptr VkBindSparseInfo -- ^ pBindInfo
+                                                            -> VkFence -- ^ fence
+                                                                       -> IO VkResult
+vkQueueBindSparse
+  = error $
+      "vkQueueBindSparse: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkQueueBindSparse"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   queues: 'sparse_binding'.
+-- queues: 'sparse_binding'.
 --
---   > VkResult vkQueueBindSparse
---   >     ( VkQueue queue
---   >     , uint32_t bindInfoCount
---   >     , const VkBindSparseInfo* pBindInfo
---   >     , VkFence fence
---   >     )
+-- > VkResult vkQueueBindSparse
+-- >     ( VkQueue queue
+-- >     , uint32_t bindInfoCount
+-- >     , const VkBindSparseInfo* pBindInfo
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkQueueBindSparse" vkQueueBindSparseSafe
                ::
                VkQueue -- ^ queue
@@ -3865,6 +5330,24 @@ foreign import ccall safe "vkQueueBindSparse" vkQueueBindSparseSafe
                                  -> Ptr VkBindSparseInfo -- ^ pBindInfo
                                                          -> VkFence -- ^ fence
                                                                     -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueueBindSparseSafe ::
+                      VkQueue -- ^ queue
+                              -> Word32 -- ^ bindInfoCount
+                                        -> Ptr VkBindSparseInfo -- ^ pBindInfo
+                                                                -> VkFence -- ^ fence
+                                                                           -> IO VkResult
+vkQueueBindSparseSafe = vkQueueBindSparse
+
+{-# INLINE vkQueueBindSparseSafe #-}
+
+{-# WARNING
+vkQueueBindSparseSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3879,7 +5362,7 @@ foreign import ccall safe "vkQueueBindSparse" vkQueueBindSparseSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
 type HS_vkQueueBindSparse =
      VkQueue -- ^ queue
              -> Word32 -- ^ bindInfoCount
@@ -3918,18 +5401,20 @@ is_VkCreateFence = (EQ ==) . cmpCStrings _VkCreateFence
 
 type VkCreateFence = "vkCreateFence"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateFence
---   >     ( VkDevice device
---   >     , const VkFenceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkFence* pFence
---   >     )
+-- > VkResult vkCreateFence
+-- >     ( VkDevice device
+-- >     , const VkFenceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkFence* pFence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFence vkCreateFence registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
                VkDevice -- ^ device
                         ->
@@ -3939,18 +5424,41 @@ foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
                                              -> Ptr VkFence -- ^ pFence
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateFence ::
+              VkDevice -- ^ device
+                       ->
+                Ptr VkFenceCreateInfo -- ^ pCreateInfo
+                                      ->
+                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                            -> Ptr VkFence -- ^ pFence
+                                                           -> IO VkResult
+vkCreateFence d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateFence d) d
+
+{-# INLINE vkCreateFence #-}
+
+{-# WARNING
+vkCreateFence"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateFence
---   >     ( VkDevice device
---   >     , const VkFenceCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkFence* pFence
---   >     )
+-- > VkResult vkCreateFence
+-- >     ( VkDevice device
+-- >     , const VkFenceCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkFence* pFence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFence vkCreateFence registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateFence" vkCreateFenceSafe ::
                VkDevice -- ^ device
                         ->
@@ -3959,6 +5467,26 @@ foreign import ccall safe "vkCreateFence" vkCreateFenceSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkFence -- ^ pFence
                                                             -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateFenceSafe ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkFenceCreateInfo -- ^ pCreateInfo
+                                          ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkFence -- ^ pFence
+                                                               -> IO VkResult
+vkCreateFenceSafe = vkCreateFence
+
+{-# INLINE vkCreateFenceSafe #-}
+
+{-# WARNING
+vkCreateFenceSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3971,7 +5499,7 @@ foreign import ccall safe "vkCreateFence" vkCreateFenceSafe ::
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFence vkCreateFence registry at www.khronos.org>
 type HS_vkCreateFence =
      VkDevice -- ^ device
               ->
@@ -4012,31 +5540,70 @@ is_VkDestroyFence = (EQ ==) . cmpCStrings _VkDestroyFence
 
 type VkDestroyFence = "vkDestroyFence"
 
--- | > () vkDestroyFence
---   >     ( VkDevice device
---   >     , VkFence fence
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyFence
+-- >     ( VkDevice device
+-- >     , VkFence fence
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFence vkDestroyFence registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyFence" vkDestroyFence ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
 
--- | > () vkDestroyFence
---   >     ( VkDevice device
---   >     , VkFence fence
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyFence ::
+               VkDevice -- ^ device
+                        -> VkFence -- ^ fence
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
+vkDestroyFence d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyFence d) d
+
+{-# INLINE vkDestroyFence #-}
+
+{-# WARNING
+vkDestroyFence"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyFence
+-- >     ( VkDevice device
+-- >     , VkFence fence
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFence vkDestroyFence registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyFence" vkDestroyFenceSafe ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyFenceSafe ::
+                   VkDevice -- ^ device
+                            -> VkFence -- ^ fence
+                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
+vkDestroyFenceSafe = vkDestroyFence
+
+{-# INLINE vkDestroyFenceSafe #-}
+
+{-# WARNING
+vkDestroyFenceSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyFence
 --   >     ( VkDevice device
@@ -4044,7 +5611,7 @@ foreign import ccall safe "vkDestroyFence" vkDestroyFenceSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFence vkDestroyFence registry at www.khronos.org>
 type HS_vkDestroyFence =
      VkDevice -- ^ device
               -> VkFence -- ^ fence
@@ -4082,39 +5649,77 @@ is_VkResetFences = (EQ ==) . cmpCStrings _VkResetFences
 
 type VkResetFences = "vkResetFences"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetFences
---   >     ( VkDevice device
---   >     , uint32_t fenceCount
---   >     , const VkFence* pFences
---   >     )
+-- > VkResult vkResetFences
+-- >     ( VkDevice device
+-- >     , uint32_t fenceCount
+-- >     , const VkFence* pFences
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFences vkResetFences registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkResetFences" vkResetFences ::
                VkDevice -- ^ device
                         -> Word32 -- ^ fenceCount
                                   -> Ptr VkFence -- ^ pFences
                                                  -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetFences :: VkDevice -- ^ device
+                          -> Word32 -- ^ fenceCount
+                                    -> Ptr VkFence -- ^ pFences
+                                                   -> IO VkResult
+vkResetFences d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkResetFences d) d
+
+{-# INLINE vkResetFences #-}
+
+{-# WARNING
+vkResetFences"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetFences
---   >     ( VkDevice device
---   >     , uint32_t fenceCount
---   >     , const VkFence* pFences
---   >     )
+-- > VkResult vkResetFences
+-- >     ( VkDevice device
+-- >     , uint32_t fenceCount
+-- >     , const VkFence* pFences
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFences vkResetFences registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkResetFences" vkResetFencesSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ fenceCount
                                   -> Ptr VkFence -- ^ pFences
                                                  -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetFencesSafe ::
+                  VkDevice -- ^ device
+                           -> Word32 -- ^ fenceCount
+                                     -> Ptr VkFence -- ^ pFences
+                                                    -> IO VkResult
+vkResetFencesSafe = vkResetFences
+
+{-# INLINE vkResetFencesSafe #-}
+
+{-# WARNING
+vkResetFencesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4126,7 +5731,7 @@ foreign import ccall safe "vkResetFences" vkResetFencesSafe ::
 --   >     , const VkFence* pFences
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFences vkResetFences registry at www.khronos.org>
 type HS_vkResetFences =
      VkDevice -- ^ device
               -> Word32 -- ^ fenceCount
@@ -4164,35 +5769,70 @@ is_VkGetFenceStatus = (EQ ==) . cmpCStrings _VkGetFenceStatus
 
 type VkGetFenceStatus = "vkGetFenceStatus"
 
--- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetFenceStatus
---   >     ( VkDevice device
---   >     , VkFence fence
---   >     )
+-- > VkResult vkGetFenceStatus
+-- >     ( VkDevice device
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetFenceStatus" vkGetFenceStatus ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetFenceStatus :: VkDevice -- ^ device
+                             -> VkFence -- ^ fence
+                                        -> IO VkResult
+vkGetFenceStatus d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkGetFenceStatus d) d
+
+{-# INLINE vkGetFenceStatus #-}
+
+{-# WARNING
+vkGetFenceStatus"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetFenceStatus
---   >     ( VkDevice device
---   >     , VkFence fence
---   >     )
+-- > VkResult vkGetFenceStatus
+-- >     ( VkDevice device
+-- >     , VkFence fence
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetFenceStatus" vkGetFenceStatusSafe
                :: VkDevice -- ^ device
                            -> VkFence -- ^ fence
                                       -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetFenceStatusSafe :: VkDevice -- ^ device
+                                 -> VkFence -- ^ fence
+                                            -> IO VkResult
+vkGetFenceStatusSafe = vkGetFenceStatus
+
+{-# INLINE vkGetFenceStatusSafe #-}
+
+{-# WARNING
+vkGetFenceStatusSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
@@ -4203,7 +5843,7 @@ foreign import ccall safe "vkGetFenceStatus" vkGetFenceStatusSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
 type HS_vkGetFenceStatus = VkDevice -- ^ device
                                     -> VkFence -- ^ fence
                                                -> IO VkResult
@@ -4239,19 +5879,21 @@ is_VkWaitForFences = (EQ ==) . cmpCStrings _VkWaitForFences
 
 type VkWaitForFences = "vkWaitForFences"
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkWaitForFences
---   >     ( VkDevice device
---   >     , uint32_t fenceCount
---   >     , const VkFence* pFences
---   >     , VkBool32 waitAll
---   >     , uint64_t timeout
---   >     )
+-- > VkResult vkWaitForFences
+-- >     ( VkDevice device
+-- >     , uint32_t fenceCount
+-- >     , const VkFence* pFences
+-- >     , VkBool32 waitAll
+-- >     , uint64_t timeout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFences vkWaitForFences registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkWaitForFences" vkWaitForFences ::
                VkDevice -- ^ device
                         ->
@@ -4261,19 +5903,42 @@ foreign import ccall unsafe "vkWaitForFences" vkWaitForFences ::
                                                    -> Word64 -- ^ timeout
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkWaitForFences ::
+                VkDevice -- ^ device
+                         ->
+                  Word32 -- ^ fenceCount
+                         -> Ptr VkFence -- ^ pFences
+                                        -> VkBool32 -- ^ waitAll
+                                                    -> Word64 -- ^ timeout
+                                                              -> IO VkResult
+vkWaitForFences d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkWaitForFences d) d
+
+{-# INLINE vkWaitForFences #-}
+
+{-# WARNING
+vkWaitForFences"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkWaitForFences
---   >     ( VkDevice device
---   >     , uint32_t fenceCount
---   >     , const VkFence* pFences
---   >     , VkBool32 waitAll
---   >     , uint64_t timeout
---   >     )
+-- > VkResult vkWaitForFences
+-- >     ( VkDevice device
+-- >     , uint32_t fenceCount
+-- >     , const VkFence* pFences
+-- >     , VkBool32 waitAll
+-- >     , uint64_t timeout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFences vkWaitForFences registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkWaitForFences" vkWaitForFencesSafe ::
                VkDevice -- ^ device
                         ->
@@ -4282,6 +5947,26 @@ foreign import ccall safe "vkWaitForFences" vkWaitForFencesSafe ::
                                        -> VkBool32 -- ^ waitAll
                                                    -> Word64 -- ^ timeout
                                                              -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkWaitForFencesSafe ::
+                    VkDevice -- ^ device
+                             ->
+                      Word32 -- ^ fenceCount
+                             -> Ptr VkFence -- ^ pFences
+                                            -> VkBool32 -- ^ waitAll
+                                                        -> Word64 -- ^ timeout
+                                                                  -> IO VkResult
+vkWaitForFencesSafe = vkWaitForFences
+
+{-# INLINE vkWaitForFencesSafe #-}
+
+{-# WARNING
+vkWaitForFencesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT'.
 --
@@ -4295,7 +5980,7 @@ foreign import ccall safe "vkWaitForFences" vkWaitForFencesSafe ::
 --   >     , uint64_t timeout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFences vkWaitForFences registry at www.khronos.org>
 type HS_vkWaitForFences =
      VkDevice -- ^ device
               ->
@@ -4336,18 +6021,20 @@ is_VkCreateSemaphore = (EQ ==) . cmpCStrings _VkCreateSemaphore
 
 type VkCreateSemaphore = "vkCreateSemaphore"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateSemaphore
---   >     ( VkDevice device
---   >     , const VkSemaphoreCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSemaphore* pSemaphore
---   >     )
+-- > VkResult vkCreateSemaphore
+-- >     ( VkDevice device
+-- >     , const VkSemaphoreCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSemaphore* pSemaphore
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
                ::
                VkDevice -- ^ device
@@ -4358,18 +6045,41 @@ foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
                                              -> Ptr VkSemaphore -- ^ pSemaphore
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSemaphore ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkSemaphoreCreateInfo -- ^ pCreateInfo
+                                              ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkSemaphore -- ^ pSemaphore
+                                                                   -> IO VkResult
+vkCreateSemaphore d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateSemaphore d) d
+
+{-# INLINE vkCreateSemaphore #-}
+
+{-# WARNING
+vkCreateSemaphore"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateSemaphore
---   >     ( VkDevice device
---   >     , const VkSemaphoreCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSemaphore* pSemaphore
---   >     )
+-- > VkResult vkCreateSemaphore
+-- >     ( VkDevice device
+-- >     , const VkSemaphoreCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSemaphore* pSemaphore
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSemaphore" vkCreateSemaphoreSafe
                ::
                VkDevice -- ^ device
@@ -4379,6 +6089,26 @@ foreign import ccall safe "vkCreateSemaphore" vkCreateSemaphoreSafe
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSemaphore -- ^ pSemaphore
                                                                 -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSemaphoreSafe ::
+                      VkDevice -- ^ device
+                               ->
+                        Ptr VkSemaphoreCreateInfo -- ^ pCreateInfo
+                                                  ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkSemaphore -- ^ pSemaphore
+                                                                       -> IO VkResult
+vkCreateSemaphoreSafe = vkCreateSemaphore
+
+{-# INLINE vkCreateSemaphoreSafe #-}
+
+{-# WARNING
+vkCreateSemaphoreSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4391,7 +6121,7 @@ foreign import ccall safe "vkCreateSemaphore" vkCreateSemaphoreSafe
 --   >     , VkSemaphore* pSemaphore
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
 type HS_vkCreateSemaphore =
      VkDevice -- ^ device
               ->
@@ -4432,26 +6162,48 @@ is_VkDestroySemaphore = (EQ ==) . cmpCStrings _VkDestroySemaphore
 
 type VkDestroySemaphore = "vkDestroySemaphore"
 
--- | > () vkDestroySemaphore
---   >     ( VkDevice device
---   >     , VkSemaphore semaphore
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroySemaphore
+-- >     ( VkDevice device
+-- >     , VkSemaphore semaphore
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroySemaphore" vkDestroySemaphore
                :: VkDevice -- ^ device
                            -> VkSemaphore -- ^ semaphore
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroySemaphore
---   >     ( VkDevice device
---   >     , VkSemaphore semaphore
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySemaphore ::
+                   VkDevice -- ^ device
+                            -> VkSemaphore -- ^ semaphore
+                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                        -> IO ()
+vkDestroySemaphore d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroySemaphore d) d
+
+{-# INLINE vkDestroySemaphore #-}
+
+{-# WARNING
+vkDestroySemaphore"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroySemaphore
+-- >     ( VkDevice device
+-- >     , VkSemaphore semaphore
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroySemaphore"
                vkDestroySemaphoreSafe ::
                VkDevice -- ^ device
@@ -4459,13 +6211,30 @@ foreign import ccall safe "vkDestroySemaphore"
                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySemaphoreSafe ::
+                       VkDevice -- ^ device
+                                -> VkSemaphore -- ^ semaphore
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroySemaphoreSafe = vkDestroySemaphore
+
+{-# INLINE vkDestroySemaphoreSafe #-}
+
+{-# WARNING
+vkDestroySemaphoreSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroySemaphore
 --   >     ( VkDevice device
 --   >     , VkSemaphore semaphore
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
 type HS_vkDestroySemaphore =
      VkDevice -- ^ device
               -> VkSemaphore -- ^ semaphore
@@ -4503,18 +6272,20 @@ is_VkCreateEvent = (EQ ==) . cmpCStrings _VkCreateEvent
 
 type VkCreateEvent = "vkCreateEvent"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateEvent
---   >     ( VkDevice device
---   >     , const VkEventCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkEvent* pEvent
---   >     )
+-- > VkResult vkCreateEvent
+-- >     ( VkDevice device
+-- >     , const VkEventCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkEvent* pEvent
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEvent vkCreateEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
                VkDevice -- ^ device
                         ->
@@ -4524,18 +6295,41 @@ foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
                                              -> Ptr VkEvent -- ^ pEvent
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateEvent ::
+              VkDevice -- ^ device
+                       ->
+                Ptr VkEventCreateInfo -- ^ pCreateInfo
+                                      ->
+                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                            -> Ptr VkEvent -- ^ pEvent
+                                                           -> IO VkResult
+vkCreateEvent d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateEvent d) d
+
+{-# INLINE vkCreateEvent #-}
+
+{-# WARNING
+vkCreateEvent"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateEvent
---   >     ( VkDevice device
---   >     , const VkEventCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkEvent* pEvent
---   >     )
+-- > VkResult vkCreateEvent
+-- >     ( VkDevice device
+-- >     , const VkEventCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkEvent* pEvent
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEvent vkCreateEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateEvent" vkCreateEventSafe ::
                VkDevice -- ^ device
                         ->
@@ -4544,6 +6338,26 @@ foreign import ccall safe "vkCreateEvent" vkCreateEventSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkEvent -- ^ pEvent
                                                             -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateEventSafe ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkEventCreateInfo -- ^ pCreateInfo
+                                          ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkEvent -- ^ pEvent
+                                                               -> IO VkResult
+vkCreateEventSafe = vkCreateEvent
+
+{-# INLINE vkCreateEventSafe #-}
+
+{-# WARNING
+vkCreateEventSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4556,7 +6370,7 @@ foreign import ccall safe "vkCreateEvent" vkCreateEventSafe ::
 --   >     , VkEvent* pEvent
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEvent vkCreateEvent registry at www.khronos.org>
 type HS_vkCreateEvent =
      VkDevice -- ^ device
               ->
@@ -4597,31 +6411,70 @@ is_VkDestroyEvent = (EQ ==) . cmpCStrings _VkDestroyEvent
 
 type VkDestroyEvent = "vkDestroyEvent"
 
--- | > () vkDestroyEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyEvent" vkDestroyEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
 
--- | > () vkDestroyEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyEvent ::
+               VkDevice -- ^ device
+                        -> VkEvent -- ^ event
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
+vkDestroyEvent d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyEvent d) d
+
+{-# INLINE vkDestroyEvent #-}
+
+{-# WARNING
+vkDestroyEvent"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyEvent" vkDestroyEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyEventSafe ::
+                   VkDevice -- ^ device
+                            -> VkEvent -- ^ event
+                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
+vkDestroyEventSafe = vkDestroyEvent
+
+{-# INLINE vkDestroyEventSafe #-}
+
+{-# WARNING
+vkDestroyEventSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyEvent
 --   >     ( VkDevice device
@@ -4629,7 +6482,7 @@ foreign import ccall safe "vkDestroyEvent" vkDestroyEventSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
 type HS_vkDestroyEvent =
      VkDevice -- ^ device
               -> VkEvent -- ^ event
@@ -4667,35 +6520,70 @@ is_VkGetEventStatus = (EQ ==) . cmpCStrings _VkGetEventStatus
 
 type VkGetEventStatus = "vkGetEventStatus"
 
--- | Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
+-- |
+-- Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetEventStatus
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkGetEventStatus
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetEventStatus" vkGetEventStatus ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> IO VkResult
 
--- | Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetEventStatus :: VkDevice -- ^ device
+                             -> VkEvent -- ^ event
+                                        -> IO VkResult
+vkGetEventStatus d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkGetEventStatus d) d
+
+{-# INLINE vkGetEventStatus #-}
+
+{-# WARNING
+vkGetEventStatus"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetEventStatus
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkGetEventStatus
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetEventStatus" vkGetEventStatusSafe
                :: VkDevice -- ^ device
                            -> VkEvent -- ^ event
                                       -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetEventStatusSafe :: VkDevice -- ^ device
+                                 -> VkEvent -- ^ event
+                                            -> IO VkResult
+vkGetEventStatusSafe = vkGetEventStatus
+
+{-# INLINE vkGetEventStatusSafe #-}
+
+{-# WARNING
+vkGetEventStatusSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
 --
@@ -4706,7 +6594,7 @@ foreign import ccall safe "vkGetEventStatus" vkGetEventStatusSafe
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
 type HS_vkGetEventStatus = VkDevice -- ^ device
                                     -> VkEvent -- ^ event
                                                -> IO VkResult
@@ -4742,35 +6630,70 @@ is_VkSetEvent = (EQ ==) . cmpCStrings _VkSetEvent
 
 type VkSetEvent = "vkSetEvent"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkSetEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkSetEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEvent vkSetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkSetEvent" vkSetEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkSetEvent :: VkDevice -- ^ device
+                       -> VkEvent -- ^ event
+                                  -> IO VkResult
+vkSetEvent d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkSetEvent d) d
+
+{-# INLINE vkSetEvent #-}
+
+{-# WARNING
+vkSetEvent"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkSetEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkSetEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEvent vkSetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkSetEvent" vkSetEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkSetEventSafe :: VkDevice -- ^ device
+                           -> VkEvent -- ^ event
+                                      -> IO VkResult
+vkSetEventSafe = vkSetEvent
+
+{-# INLINE vkSetEventSafe #-}
+
+{-# WARNING
+vkSetEventSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4781,7 +6704,7 @@ foreign import ccall safe "vkSetEvent" vkSetEventSafe ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEvent vkSetEvent registry at www.khronos.org>
 type HS_vkSetEvent = VkDevice -- ^ device
                               -> VkEvent -- ^ event
                                          -> IO VkResult
@@ -4817,35 +6740,70 @@ is_VkResetEvent = (EQ ==) . cmpCStrings _VkResetEvent
 
 type VkResetEvent = "vkResetEvent"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkResetEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEvent vkResetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkResetEvent" vkResetEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetEvent :: VkDevice -- ^ device
+                         -> VkEvent -- ^ event
+                                    -> IO VkResult
+vkResetEvent d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkResetEvent d) d
+
+{-# INLINE vkResetEvent #-}
+
+{-# WARNING
+vkResetEvent"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetEvent
---   >     ( VkDevice device
---   >     , VkEvent event
---   >     )
+-- > VkResult vkResetEvent
+-- >     ( VkDevice device
+-- >     , VkEvent event
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEvent vkResetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkResetEvent" vkResetEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
                                    -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetEventSafe :: VkDevice -- ^ device
+                             -> VkEvent -- ^ event
+                                        -> IO VkResult
+vkResetEventSafe = vkResetEvent
+
+{-# INLINE vkResetEventSafe #-}
+
+{-# WARNING
+vkResetEventSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4856,7 +6814,7 @@ foreign import ccall safe "vkResetEvent" vkResetEventSafe ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEvent vkResetEvent registry at www.khronos.org>
 type HS_vkResetEvent = VkDevice -- ^ device
                                 -> VkEvent -- ^ event
                                            -> IO VkResult
@@ -4892,18 +6850,20 @@ is_VkCreateQueryPool = (EQ ==) . cmpCStrings _VkCreateQueryPool
 
 type VkCreateQueryPool = "vkCreateQueryPool"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateQueryPool
---   >     ( VkDevice device
---   >     , const VkQueryPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkQueryPool* pQueryPool
---   >     )
+-- > VkResult vkCreateQueryPool
+-- >     ( VkDevice device
+-- >     , const VkQueryPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkQueryPool* pQueryPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
                ::
                VkDevice -- ^ device
@@ -4914,18 +6874,41 @@ foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
                                              -> Ptr VkQueryPool -- ^ pQueryPool
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateQueryPool ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkQueryPoolCreateInfo -- ^ pCreateInfo
+                                              ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkQueryPool -- ^ pQueryPool
+                                                                   -> IO VkResult
+vkCreateQueryPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateQueryPool d) d
+
+{-# INLINE vkCreateQueryPool #-}
+
+{-# WARNING
+vkCreateQueryPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateQueryPool
---   >     ( VkDevice device
---   >     , const VkQueryPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkQueryPool* pQueryPool
---   >     )
+-- > VkResult vkCreateQueryPool
+-- >     ( VkDevice device
+-- >     , const VkQueryPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkQueryPool* pQueryPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateQueryPool" vkCreateQueryPoolSafe
                ::
                VkDevice -- ^ device
@@ -4935,6 +6918,26 @@ foreign import ccall safe "vkCreateQueryPool" vkCreateQueryPoolSafe
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkQueryPool -- ^ pQueryPool
                                                                 -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateQueryPoolSafe ::
+                      VkDevice -- ^ device
+                               ->
+                        Ptr VkQueryPoolCreateInfo -- ^ pCreateInfo
+                                                  ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkQueryPool -- ^ pQueryPool
+                                                                       -> IO VkResult
+vkCreateQueryPoolSafe = vkCreateQueryPool
+
+{-# INLINE vkCreateQueryPoolSafe #-}
+
+{-# WARNING
+vkCreateQueryPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -4947,7 +6950,7 @@ foreign import ccall safe "vkCreateQueryPool" vkCreateQueryPoolSafe
 --   >     , VkQueryPool* pQueryPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
 type HS_vkCreateQueryPool =
      VkDevice -- ^ device
               ->
@@ -4988,26 +6991,48 @@ is_VkDestroyQueryPool = (EQ ==) . cmpCStrings _VkDestroyQueryPool
 
 type VkDestroyQueryPool = "vkDestroyQueryPool"
 
--- | > () vkDestroyQueryPool
---   >     ( VkDevice device
---   >     , VkQueryPool queryPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyQueryPool
+-- >     ( VkDevice device
+-- >     , VkQueryPool queryPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyQueryPool" vkDestroyQueryPool
                :: VkDevice -- ^ device
                            -> VkQueryPool -- ^ queryPool
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroyQueryPool
---   >     ( VkDevice device
---   >     , VkQueryPool queryPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyQueryPool ::
+                   VkDevice -- ^ device
+                            -> VkQueryPool -- ^ queryPool
+                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                        -> IO ()
+vkDestroyQueryPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyQueryPool d) d
+
+{-# INLINE vkDestroyQueryPool #-}
+
+{-# WARNING
+vkDestroyQueryPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyQueryPool
+-- >     ( VkDevice device
+-- >     , VkQueryPool queryPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyQueryPool"
                vkDestroyQueryPoolSafe ::
                VkDevice -- ^ device
@@ -5015,13 +7040,30 @@ foreign import ccall safe "vkDestroyQueryPool"
                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyQueryPoolSafe ::
+                       VkDevice -- ^ device
+                                -> VkQueryPool -- ^ queryPool
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroyQueryPoolSafe = vkDestroyQueryPool
+
+{-# INLINE vkDestroyQueryPoolSafe #-}
+
+{-# WARNING
+vkDestroyQueryPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyQueryPool
 --   >     ( VkDevice device
 --   >     , VkQueryPool queryPool
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
 type HS_vkDestroyQueryPool =
      VkDevice -- ^ device
               -> VkQueryPool -- ^ queryPool
@@ -5060,22 +7102,24 @@ is_VkGetQueryPoolResults
 
 type VkGetQueryPoolResults = "vkGetQueryPoolResults"
 
--- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetQueryPoolResults
---   >     ( VkDevice device
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     , size_t dataSize
---   >     , void* pData
---   >     , VkDeviceSize stride
---   >     , VkQueryResultFlags flags
---   >     )
+-- > VkResult vkGetQueryPoolResults
+-- >     ( VkDevice device
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     , size_t dataSize
+-- >     , void* pData
+-- >     , VkDeviceSize stride
+-- >     , VkQueryResultFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetQueryPoolResults"
                vkGetQueryPoolResults ::
                VkDevice -- ^ device
@@ -5093,22 +7137,53 @@ foreign import ccall unsafe "vkGetQueryPoolResults"
                                                   -> VkQueryResultFlags -- ^ flags
                                                                         -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetQueryPoolResults ::
+                      VkDevice -- ^ device
+                               ->
+                        VkQueryPool -- ^ queryPool
+                                    ->
+                          Word32 -- ^ firstQuery
+                                 ->
+                            Word32 -- ^ queryCount
+                                   ->
+                              CSize -- ^ dataSize
+                                    ->
+                                Ptr Void -- ^ pData
+                                         -> VkDeviceSize -- ^ stride
+                                                         -> VkQueryResultFlags -- ^ flags
+                                                                               -> IO VkResult
+vkGetQueryPoolResults d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkGetQueryPoolResults d)
+      d
+
+{-# INLINE vkGetQueryPoolResults #-}
+
+{-# WARNING
+vkGetQueryPoolResults"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
 --
---   > VkResult vkGetQueryPoolResults
---   >     ( VkDevice device
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     , size_t dataSize
---   >     , void* pData
---   >     , VkDeviceSize stride
---   >     , VkQueryResultFlags flags
---   >     )
+-- > VkResult vkGetQueryPoolResults
+-- >     ( VkDevice device
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     , size_t dataSize
+-- >     , void* pData
+-- >     , VkDeviceSize stride
+-- >     , VkQueryResultFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetQueryPoolResults"
                vkGetQueryPoolResultsSafe ::
                VkDevice -- ^ device
@@ -5126,6 +7201,33 @@ foreign import ccall safe "vkGetQueryPoolResults"
                                                   -> VkQueryResultFlags -- ^ flags
                                                                         -> IO VkResult
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetQueryPoolResultsSafe ::
+                          VkDevice -- ^ device
+                                   ->
+                            VkQueryPool -- ^ queryPool
+                                        ->
+                              Word32 -- ^ firstQuery
+                                     ->
+                                Word32 -- ^ queryCount
+                                       ->
+                                  CSize -- ^ dataSize
+                                        ->
+                                    Ptr Void -- ^ pData
+                                             -> VkDeviceSize -- ^ stride
+                                                             -> VkQueryResultFlags -- ^ flags
+                                                                                   -> IO VkResult
+vkGetQueryPoolResultsSafe = vkGetQueryPoolResults
+
+{-# INLINE vkGetQueryPoolResultsSafe #-}
+
+{-# WARNING
+vkGetQueryPoolResultsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST'.
@@ -5141,7 +7243,7 @@ foreign import ccall safe "vkGetQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
 type HS_vkGetQueryPoolResults =
      VkDevice -- ^ device
               ->
@@ -5189,18 +7291,20 @@ is_VkCreateBuffer = (EQ ==) . cmpCStrings _VkCreateBuffer
 
 type VkCreateBuffer = "vkCreateBuffer"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateBuffer
---   >     ( VkDevice device
---   >     , const VkBufferCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkBuffer* pBuffer
---   >     )
+-- > VkResult vkCreateBuffer
+-- >     ( VkDevice device
+-- >     , const VkBufferCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkBuffer* pBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
                VkDevice -- ^ device
                         ->
@@ -5210,18 +7314,41 @@ foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
                                              -> Ptr VkBuffer -- ^ pBuffer
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateBuffer ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkBufferCreateInfo -- ^ pCreateInfo
+                                        ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkBuffer -- ^ pBuffer
+                                                             -> IO VkResult
+vkCreateBuffer d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateBuffer d) d
+
+{-# INLINE vkCreateBuffer #-}
+
+{-# WARNING
+vkCreateBuffer"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateBuffer
---   >     ( VkDevice device
---   >     , const VkBufferCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkBuffer* pBuffer
---   >     )
+-- > VkResult vkCreateBuffer
+-- >     ( VkDevice device
+-- >     , const VkBufferCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkBuffer* pBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateBuffer" vkCreateBufferSafe ::
                VkDevice -- ^ device
                         ->
@@ -5230,6 +7357,26 @@ foreign import ccall safe "vkCreateBuffer" vkCreateBufferSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkBuffer -- ^ pBuffer
                                                              -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateBufferSafe ::
+                   VkDevice -- ^ device
+                            ->
+                     Ptr VkBufferCreateInfo -- ^ pCreateInfo
+                                            ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkBuffer -- ^ pBuffer
+                                                                 -> IO VkResult
+vkCreateBufferSafe = vkCreateBuffer
+
+{-# INLINE vkCreateBufferSafe #-}
+
+{-# WARNING
+vkCreateBufferSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -5242,7 +7389,7 @@ foreign import ccall safe "vkCreateBuffer" vkCreateBufferSafe ::
 --   >     , VkBuffer* pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
 type HS_vkCreateBuffer =
      VkDevice -- ^ device
               ->
@@ -5283,31 +7430,70 @@ is_VkDestroyBuffer = (EQ ==) . cmpCStrings _VkDestroyBuffer
 
 type VkDestroyBuffer = "vkDestroyBuffer"
 
--- | > () vkDestroyBuffer
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyBuffer
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyBuffer" vkDestroyBuffer ::
                VkDevice -- ^ device
                         -> VkBuffer -- ^ buffer
                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                  -> IO ()
 
--- | > () vkDestroyBuffer
---   >     ( VkDevice device
---   >     , VkBuffer buffer
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyBuffer ::
+                VkDevice -- ^ device
+                         -> VkBuffer -- ^ buffer
+                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                  -> IO ()
+vkDestroyBuffer d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyBuffer d) d
+
+{-# INLINE vkDestroyBuffer #-}
+
+{-# WARNING
+vkDestroyBuffer"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyBuffer
+-- >     ( VkDevice device
+-- >     , VkBuffer buffer
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyBuffer" vkDestroyBufferSafe ::
                VkDevice -- ^ device
                         -> VkBuffer -- ^ buffer
                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                  -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyBufferSafe ::
+                    VkDevice -- ^ device
+                             -> VkBuffer -- ^ buffer
+                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
+vkDestroyBufferSafe = vkDestroyBuffer
+
+{-# INLINE vkDestroyBufferSafe #-}
+
+{-# WARNING
+vkDestroyBufferSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyBuffer
 --   >     ( VkDevice device
@@ -5315,7 +7501,7 @@ foreign import ccall safe "vkDestroyBuffer" vkDestroyBufferSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
 type HS_vkDestroyBuffer =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -5353,18 +7539,20 @@ is_VkCreateBufferView = (EQ ==) . cmpCStrings _VkCreateBufferView
 
 type VkCreateBufferView = "vkCreateBufferView"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateBufferView
---   >     ( VkDevice device
---   >     , const VkBufferViewCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkBufferView* pView
---   >     )
+-- > VkResult vkCreateBufferView
+-- >     ( VkDevice device
+-- >     , const VkBufferViewCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkBufferView* pView
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
                ::
                VkDevice -- ^ device
@@ -5375,18 +7563,41 @@ foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
                                              -> Ptr VkBufferView -- ^ pView
                                                                  -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateBufferView ::
+                   VkDevice -- ^ device
+                            ->
+                     Ptr VkBufferViewCreateInfo -- ^ pCreateInfo
+                                                ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkBufferView -- ^ pView
+                                                                     -> IO VkResult
+vkCreateBufferView d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateBufferView d) d
+
+{-# INLINE vkCreateBufferView #-}
+
+{-# WARNING
+vkCreateBufferView"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateBufferView
---   >     ( VkDevice device
---   >     , const VkBufferViewCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkBufferView* pView
---   >     )
+-- > VkResult vkCreateBufferView
+-- >     ( VkDevice device
+-- >     , const VkBufferViewCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkBufferView* pView
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateBufferView"
                vkCreateBufferViewSafe ::
                VkDevice -- ^ device
@@ -5396,6 +7607,26 @@ foreign import ccall safe "vkCreateBufferView"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkBufferView -- ^ pView
                                                                  -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateBufferViewSafe ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkBufferViewCreateInfo -- ^ pCreateInfo
+                                                    ->
+                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> Ptr VkBufferView -- ^ pView
+                                                                         -> IO VkResult
+vkCreateBufferViewSafe = vkCreateBufferView
+
+{-# INLINE vkCreateBufferViewSafe #-}
+
+{-# WARNING
+vkCreateBufferViewSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -5408,7 +7639,7 @@ foreign import ccall safe "vkCreateBufferView"
 --   >     , VkBufferView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
 type HS_vkCreateBufferView =
      VkDevice -- ^ device
               ->
@@ -5449,13 +7680,15 @@ is_VkDestroyBufferView = (EQ ==) . cmpCStrings _VkDestroyBufferView
 
 type VkDestroyBufferView = "vkDestroyBufferView"
 
--- | > () vkDestroyBufferView
---   >     ( VkDevice device
---   >     , VkBufferView bufferView
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyBufferView
+-- >     ( VkDevice device
+-- >     , VkBufferView bufferView
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyBufferView"
                vkDestroyBufferView ::
                VkDevice -- ^ device
@@ -5463,13 +7696,33 @@ foreign import ccall unsafe "vkDestroyBufferView"
                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                      -> IO ()
 
--- | > () vkDestroyBufferView
---   >     ( VkDevice device
---   >     , VkBufferView bufferView
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyBufferView ::
+                    VkDevice -- ^ device
+                             -> VkBufferView -- ^ bufferView
+                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                          -> IO ()
+vkDestroyBufferView d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyBufferView d) d
+
+{-# INLINE vkDestroyBufferView #-}
+
+{-# WARNING
+vkDestroyBufferView"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyBufferView
+-- >     ( VkDevice device
+-- >     , VkBufferView bufferView
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyBufferView"
                vkDestroyBufferViewSafe ::
                VkDevice -- ^ device
@@ -5477,13 +7730,30 @@ foreign import ccall safe "vkDestroyBufferView"
                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                      -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyBufferViewSafe ::
+                        VkDevice -- ^ device
+                                 -> VkBufferView -- ^ bufferView
+                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                              -> IO ()
+vkDestroyBufferViewSafe = vkDestroyBufferView
+
+{-# INLINE vkDestroyBufferViewSafe #-}
+
+{-# WARNING
+vkDestroyBufferViewSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyBufferView
 --   >     ( VkDevice device
 --   >     , VkBufferView bufferView
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
 type HS_vkDestroyBufferView =
      VkDevice -- ^ device
               -> VkBufferView -- ^ bufferView
@@ -5521,18 +7791,20 @@ is_VkCreateImage = (EQ ==) . cmpCStrings _VkCreateImage
 
 type VkCreateImage = "vkCreateImage"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateImage
---   >     ( VkDevice device
---   >     , const VkImageCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkImage* pImage
---   >     )
+-- > VkResult vkCreateImage
+-- >     ( VkDevice device
+-- >     , const VkImageCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkImage* pImage
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImage vkCreateImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
                VkDevice -- ^ device
                         ->
@@ -5542,18 +7814,41 @@ foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
                                              -> Ptr VkImage -- ^ pImage
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateImage ::
+              VkDevice -- ^ device
+                       ->
+                Ptr VkImageCreateInfo -- ^ pCreateInfo
+                                      ->
+                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                            -> Ptr VkImage -- ^ pImage
+                                                           -> IO VkResult
+vkCreateImage d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateImage d) d
+
+{-# INLINE vkCreateImage #-}
+
+{-# WARNING
+vkCreateImage"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateImage
---   >     ( VkDevice device
---   >     , const VkImageCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkImage* pImage
---   >     )
+-- > VkResult vkCreateImage
+-- >     ( VkDevice device
+-- >     , const VkImageCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkImage* pImage
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImage vkCreateImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateImage" vkCreateImageSafe ::
                VkDevice -- ^ device
                         ->
@@ -5562,6 +7857,26 @@ foreign import ccall safe "vkCreateImage" vkCreateImageSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkImage -- ^ pImage
                                                             -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateImageSafe ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkImageCreateInfo -- ^ pCreateInfo
+                                          ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkImage -- ^ pImage
+                                                               -> IO VkResult
+vkCreateImageSafe = vkCreateImage
+
+{-# INLINE vkCreateImageSafe #-}
+
+{-# WARNING
+vkCreateImageSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -5574,7 +7889,7 @@ foreign import ccall safe "vkCreateImage" vkCreateImageSafe ::
 --   >     , VkImage* pImage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImage vkCreateImage registry at www.khronos.org>
 type HS_vkCreateImage =
      VkDevice -- ^ device
               ->
@@ -5615,31 +7930,70 @@ is_VkDestroyImage = (EQ ==) . cmpCStrings _VkDestroyImage
 
 type VkDestroyImage = "vkDestroyImage"
 
--- | > () vkDestroyImage
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyImage
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImage vkDestroyImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyImage" vkDestroyImage ::
                VkDevice -- ^ device
                         -> VkImage -- ^ image
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
 
--- | > () vkDestroyImage
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyImage ::
+               VkDevice -- ^ device
+                        -> VkImage -- ^ image
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
+vkDestroyImage d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyImage d) d
+
+{-# INLINE vkDestroyImage #-}
+
+{-# WARNING
+vkDestroyImage"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyImage
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImage vkDestroyImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyImage" vkDestroyImageSafe ::
                VkDevice -- ^ device
                         -> VkImage -- ^ image
                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyImageSafe ::
+                   VkDevice -- ^ device
+                            -> VkImage -- ^ image
+                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
+vkDestroyImageSafe = vkDestroyImage
+
+{-# INLINE vkDestroyImageSafe #-}
+
+{-# WARNING
+vkDestroyImageSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyImage
 --   >     ( VkDevice device
@@ -5647,7 +8001,7 @@ foreign import ccall safe "vkDestroyImage" vkDestroyImageSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImage vkDestroyImage registry at www.khronos.org>
 type HS_vkDestroyImage =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -5688,14 +8042,16 @@ is_VkGetImageSubresourceLayout
 
 type VkGetImageSubresourceLayout = "vkGetImageSubresourceLayout"
 
--- | > () vkGetImageSubresourceLayout
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , const VkImageSubresource* pSubresource
---   >     , VkSubresourceLayout* pLayout
---   >     )
+-- |
+-- > () vkGetImageSubresourceLayout
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , const VkImageSubresource* pSubresource
+-- >     , VkSubresourceLayout* pLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetImageSubresourceLayout"
                vkGetImageSubresourceLayout ::
                VkDevice -- ^ device
@@ -5706,14 +8062,39 @@ foreign import ccall unsafe "vkGetImageSubresourceLayout"
                                           -> Ptr VkSubresourceLayout -- ^ pLayout
                                                                      -> IO ()
 
--- | > () vkGetImageSubresourceLayout
---   >     ( VkDevice device
---   >     , VkImage image
---   >     , const VkImageSubresource* pSubresource
---   >     , VkSubresourceLayout* pLayout
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageSubresourceLayout ::
+                            VkDevice -- ^ device
+                                     ->
+                              VkImage -- ^ image
+                                      ->
+                                Ptr VkImageSubresource -- ^ pSubresource
+                                                       -> Ptr VkSubresourceLayout -- ^ pLayout
+                                                                                  -> IO ()
+vkGetImageSubresourceLayout d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetImageSubresourceLayout d)
+      d
+
+{-# INLINE vkGetImageSubresourceLayout #-}
+
+{-# WARNING
+vkGetImageSubresourceLayout"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetImageSubresourceLayout
+-- >     ( VkDevice device
+-- >     , VkImage image
+-- >     , const VkImageSubresource* pSubresource
+-- >     , VkSubresourceLayout* pLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetImageSubresourceLayout"
                vkGetImageSubresourceLayoutSafe ::
                VkDevice -- ^ device
@@ -5724,6 +8105,26 @@ foreign import ccall safe "vkGetImageSubresourceLayout"
                                           -> Ptr VkSubresourceLayout -- ^ pLayout
                                                                      -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetImageSubresourceLayoutSafe ::
+                                VkDevice -- ^ device
+                                         ->
+                                  VkImage -- ^ image
+                                          ->
+                                    Ptr VkImageSubresource -- ^ pSubresource
+                                                           -> Ptr VkSubresourceLayout -- ^ pLayout
+                                                                                      -> IO ()
+vkGetImageSubresourceLayoutSafe = vkGetImageSubresourceLayout
+
+{-# INLINE vkGetImageSubresourceLayoutSafe #-}
+
+{-# WARNING
+vkGetImageSubresourceLayoutSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetImageSubresourceLayout
 --   >     ( VkDevice device
 --   >     , VkImage image
@@ -5731,7 +8132,7 @@ foreign import ccall safe "vkGetImageSubresourceLayout"
 --   >     , VkSubresourceLayout* pLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
 type HS_vkGetImageSubresourceLayout =
      VkDevice -- ^ device
               ->
@@ -5774,18 +8175,20 @@ is_VkCreateImageView = (EQ ==) . cmpCStrings _VkCreateImageView
 
 type VkCreateImageView = "vkCreateImageView"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateImageView
---   >     ( VkDevice device
---   >     , const VkImageViewCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkImageView* pView
---   >     )
+-- > VkResult vkCreateImageView
+-- >     ( VkDevice device
+-- >     , const VkImageViewCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkImageView* pView
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageView vkCreateImageView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
                ::
                VkDevice -- ^ device
@@ -5796,18 +8199,41 @@ foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
                                              -> Ptr VkImageView -- ^ pView
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateImageView ::
+                  VkDevice -- ^ device
+                           ->
+                    Ptr VkImageViewCreateInfo -- ^ pCreateInfo
+                                              ->
+                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                -> Ptr VkImageView -- ^ pView
+                                                                   -> IO VkResult
+vkCreateImageView d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateImageView d) d
+
+{-# INLINE vkCreateImageView #-}
+
+{-# WARNING
+vkCreateImageView"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateImageView
---   >     ( VkDevice device
---   >     , const VkImageViewCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkImageView* pView
---   >     )
+-- > VkResult vkCreateImageView
+-- >     ( VkDevice device
+-- >     , const VkImageViewCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkImageView* pView
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageView vkCreateImageView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateImageView" vkCreateImageViewSafe
                ::
                VkDevice -- ^ device
@@ -5817,6 +8243,26 @@ foreign import ccall safe "vkCreateImageView" vkCreateImageViewSafe
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkImageView -- ^ pView
                                                                 -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateImageViewSafe ::
+                      VkDevice -- ^ device
+                               ->
+                        Ptr VkImageViewCreateInfo -- ^ pCreateInfo
+                                                  ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkImageView -- ^ pView
+                                                                       -> IO VkResult
+vkCreateImageViewSafe = vkCreateImageView
+
+{-# INLINE vkCreateImageViewSafe #-}
+
+{-# WARNING
+vkCreateImageViewSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -5829,7 +8275,7 @@ foreign import ccall safe "vkCreateImageView" vkCreateImageViewSafe
 --   >     , VkImageView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageView vkCreateImageView registry at www.khronos.org>
 type HS_vkCreateImageView =
      VkDevice -- ^ device
               ->
@@ -5870,26 +8316,48 @@ is_VkDestroyImageView = (EQ ==) . cmpCStrings _VkDestroyImageView
 
 type VkDestroyImageView = "vkDestroyImageView"
 
--- | > () vkDestroyImageView
---   >     ( VkDevice device
---   >     , VkImageView imageView
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyImageView
+-- >     ( VkDevice device
+-- >     , VkImageView imageView
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyImageView" vkDestroyImageView
                :: VkDevice -- ^ device
                            -> VkImageView -- ^ imageView
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroyImageView
---   >     ( VkDevice device
---   >     , VkImageView imageView
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyImageView ::
+                   VkDevice -- ^ device
+                            -> VkImageView -- ^ imageView
+                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                        -> IO ()
+vkDestroyImageView d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyImageView d) d
+
+{-# INLINE vkDestroyImageView #-}
+
+{-# WARNING
+vkDestroyImageView"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyImageView
+-- >     ( VkDevice device
+-- >     , VkImageView imageView
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyImageView"
                vkDestroyImageViewSafe ::
                VkDevice -- ^ device
@@ -5897,13 +8365,30 @@ foreign import ccall safe "vkDestroyImageView"
                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyImageViewSafe ::
+                       VkDevice -- ^ device
+                                -> VkImageView -- ^ imageView
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroyImageViewSafe = vkDestroyImageView
+
+{-# INLINE vkDestroyImageViewSafe #-}
+
+{-# WARNING
+vkDestroyImageViewSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyImageView
 --   >     ( VkDevice device
 --   >     , VkImageView imageView
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
 type HS_vkDestroyImageView =
      VkDevice -- ^ device
               -> VkImageView -- ^ imageView
@@ -5942,18 +8427,20 @@ is_VkCreateShaderModule
 
 type VkCreateShaderModule = "vkCreateShaderModule"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateShaderModule
---   >     ( VkDevice device
---   >     , const VkShaderModuleCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkShaderModule* pShaderModule
---   >     )
+-- > VkResult vkCreateShaderModule
+-- >     ( VkDevice device
+-- >     , const VkShaderModuleCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkShaderModule* pShaderModule
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateShaderModule"
                vkCreateShaderModule ::
                VkDevice -- ^ device
@@ -5964,18 +8451,42 @@ foreign import ccall unsafe "vkCreateShaderModule"
                                              -> Ptr VkShaderModule -- ^ pShaderModule
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateShaderModule ::
+                     VkDevice -- ^ device
+                              ->
+                       Ptr VkShaderModuleCreateInfo -- ^ pCreateInfo
+                                                    ->
+                         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                   -> Ptr VkShaderModule -- ^ pShaderModule
+                                                                         -> IO VkResult
+vkCreateShaderModule d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateShaderModule d)
+      d
+
+{-# INLINE vkCreateShaderModule #-}
+
+{-# WARNING
+vkCreateShaderModule"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateShaderModule
---   >     ( VkDevice device
---   >     , const VkShaderModuleCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkShaderModule* pShaderModule
---   >     )
+-- > VkResult vkCreateShaderModule
+-- >     ( VkDevice device
+-- >     , const VkShaderModuleCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkShaderModule* pShaderModule
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateShaderModule"
                vkCreateShaderModuleSafe ::
                VkDevice -- ^ device
@@ -5985,6 +8496,26 @@ foreign import ccall safe "vkCreateShaderModule"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkShaderModule -- ^ pShaderModule
                                                                    -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateShaderModuleSafe ::
+                         VkDevice -- ^ device
+                                  ->
+                           Ptr VkShaderModuleCreateInfo -- ^ pCreateInfo
+                                                        ->
+                             Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                       -> Ptr VkShaderModule -- ^ pShaderModule
+                                                                             -> IO VkResult
+vkCreateShaderModuleSafe = vkCreateShaderModule
+
+{-# INLINE vkCreateShaderModuleSafe #-}
+
+{-# WARNING
+vkCreateShaderModuleSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -5997,7 +8528,7 @@ foreign import ccall safe "vkCreateShaderModule"
 --   >     , VkShaderModule* pShaderModule
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
 type HS_vkCreateShaderModule =
      VkDevice -- ^ device
               ->
@@ -6039,13 +8570,15 @@ is_VkDestroyShaderModule
 
 type VkDestroyShaderModule = "vkDestroyShaderModule"
 
--- | > () vkDestroyShaderModule
---   >     ( VkDevice device
---   >     , VkShaderModule shaderModule
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyShaderModule
+-- >     ( VkDevice device
+-- >     , VkShaderModule shaderModule
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyShaderModule"
                vkDestroyShaderModule ::
                VkDevice -- ^ device
@@ -6053,13 +8586,34 @@ foreign import ccall unsafe "vkDestroyShaderModule"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroyShaderModule
---   >     ( VkDevice device
---   >     , VkShaderModule shaderModule
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyShaderModule ::
+                      VkDevice -- ^ device
+                               -> VkShaderModule -- ^ shaderModule
+                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                              -> IO ()
+vkDestroyShaderModule d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyShaderModule d)
+      d
+
+{-# INLINE vkDestroyShaderModule #-}
+
+{-# WARNING
+vkDestroyShaderModule"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyShaderModule
+-- >     ( VkDevice device
+-- >     , VkShaderModule shaderModule
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyShaderModule"
                vkDestroyShaderModuleSafe ::
                VkDevice -- ^ device
@@ -6067,13 +8621,30 @@ foreign import ccall safe "vkDestroyShaderModule"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyShaderModuleSafe ::
+                          VkDevice -- ^ device
+                                   -> VkShaderModule -- ^ shaderModule
+                                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                  -> IO ()
+vkDestroyShaderModuleSafe = vkDestroyShaderModule
+
+{-# INLINE vkDestroyShaderModuleSafe #-}
+
+{-# WARNING
+vkDestroyShaderModuleSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyShaderModule
 --   >     ( VkDevice device
 --   >     , VkShaderModule shaderModule
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
 type HS_vkDestroyShaderModule =
      VkDevice -- ^ device
               -> VkShaderModule -- ^ shaderModule
@@ -6112,18 +8683,20 @@ is_VkCreatePipelineCache
 
 type VkCreatePipelineCache = "vkCreatePipelineCache"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreatePipelineCache
---   >     ( VkDevice device
---   >     , const VkPipelineCacheCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipelineCache* pPipelineCache
---   >     )
+-- > VkResult vkCreatePipelineCache
+-- >     ( VkDevice device
+-- >     , const VkPipelineCacheCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipelineCache* pPipelineCache
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreatePipelineCache"
                vkCreatePipelineCache ::
                VkDevice -- ^ device
@@ -6134,18 +8707,42 @@ foreign import ccall unsafe "vkCreatePipelineCache"
                                              -> Ptr VkPipelineCache -- ^ pPipelineCache
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreatePipelineCache ::
+                      VkDevice -- ^ device
+                               ->
+                        Ptr VkPipelineCacheCreateInfo -- ^ pCreateInfo
+                                                      ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkPipelineCache -- ^ pPipelineCache
+                                                                           -> IO VkResult
+vkCreatePipelineCache d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreatePipelineCache d)
+      d
+
+{-# INLINE vkCreatePipelineCache #-}
+
+{-# WARNING
+vkCreatePipelineCache"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreatePipelineCache
---   >     ( VkDevice device
---   >     , const VkPipelineCacheCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipelineCache* pPipelineCache
---   >     )
+-- > VkResult vkCreatePipelineCache
+-- >     ( VkDevice device
+-- >     , const VkPipelineCacheCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipelineCache* pPipelineCache
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreatePipelineCache"
                vkCreatePipelineCacheSafe ::
                VkDevice -- ^ device
@@ -6155,6 +8752,26 @@ foreign import ccall safe "vkCreatePipelineCache"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkPipelineCache -- ^ pPipelineCache
                                                                     -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreatePipelineCacheSafe ::
+                          VkDevice -- ^ device
+                                   ->
+                            Ptr VkPipelineCacheCreateInfo -- ^ pCreateInfo
+                                                          ->
+                              Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                        -> Ptr VkPipelineCache -- ^ pPipelineCache
+                                                                               -> IO VkResult
+vkCreatePipelineCacheSafe = vkCreatePipelineCache
+
+{-# INLINE vkCreatePipelineCacheSafe #-}
+
+{-# WARNING
+vkCreatePipelineCacheSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -6167,7 +8784,7 @@ foreign import ccall safe "vkCreatePipelineCache"
 --   >     , VkPipelineCache* pPipelineCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
 type HS_vkCreatePipelineCache =
      VkDevice -- ^ device
               ->
@@ -6210,13 +8827,15 @@ is_VkDestroyPipelineCache
 
 type VkDestroyPipelineCache = "vkDestroyPipelineCache"
 
--- | > () vkDestroyPipelineCache
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyPipelineCache
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyPipelineCache"
                vkDestroyPipelineCache ::
                VkDevice -- ^ device
@@ -6224,13 +8843,35 @@ foreign import ccall unsafe "vkDestroyPipelineCache"
                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                         -> IO ()
 
--- | > () vkDestroyPipelineCache
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipelineCache ::
+                       VkDevice -- ^ device
+                                -> VkPipelineCache -- ^ pipelineCache
+                                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                -> IO ()
+vkDestroyPipelineCache d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkDestroyPipelineCache d)
+      d
+
+{-# INLINE vkDestroyPipelineCache #-}
+
+{-# WARNING
+vkDestroyPipelineCache"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyPipelineCache
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyPipelineCache"
                vkDestroyPipelineCacheSafe ::
                VkDevice -- ^ device
@@ -6238,13 +8879,30 @@ foreign import ccall safe "vkDestroyPipelineCache"
                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                         -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipelineCacheSafe ::
+                           VkDevice -- ^ device
+                                    -> VkPipelineCache -- ^ pipelineCache
+                                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                    -> IO ()
+vkDestroyPipelineCacheSafe = vkDestroyPipelineCache
+
+{-# INLINE vkDestroyPipelineCacheSafe #-}
+
+{-# WARNING
+vkDestroyPipelineCacheSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyPipelineCache
 --   >     ( VkDevice device
 --   >     , VkPipelineCache pipelineCache
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
 type HS_vkDestroyPipelineCache =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -6285,18 +8943,20 @@ is_VkGetPipelineCacheData
 
 type VkGetPipelineCacheData = "vkGetPipelineCacheData"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetPipelineCacheData
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , size_t* pDataSize
---   >     , void* pData
---   >     )
+-- > VkResult vkGetPipelineCacheData
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , size_t* pDataSize
+-- >     , void* pData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPipelineCacheData"
                vkGetPipelineCacheData ::
                VkDevice -- ^ device
@@ -6305,18 +8965,41 @@ foreign import ccall unsafe "vkGetPipelineCacheData"
                                                         -> Ptr Void -- ^ pData
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetPipelineCacheData ::
+                       VkDevice -- ^ device
+                                -> VkPipelineCache -- ^ pipelineCache
+                                                   -> Ptr CSize -- ^ pDataSize
+                                                                -> Ptr Void -- ^ pData
+                                                                            -> IO VkResult
+vkGetPipelineCacheData d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetPipelineCacheData d)
+      d
+
+{-# INLINE vkGetPipelineCacheData #-}
+
+{-# WARNING
+vkGetPipelineCacheData"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetPipelineCacheData
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , size_t* pDataSize
---   >     , void* pData
---   >     )
+-- > VkResult vkGetPipelineCacheData
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , size_t* pDataSize
+-- >     , void* pData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPipelineCacheData"
                vkGetPipelineCacheDataSafe ::
                VkDevice -- ^ device
@@ -6324,6 +9007,24 @@ foreign import ccall safe "vkGetPipelineCacheData"
                                            -> Ptr CSize -- ^ pDataSize
                                                         -> Ptr Void -- ^ pData
                                                                     -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetPipelineCacheDataSafe ::
+                           VkDevice -- ^ device
+                                    -> VkPipelineCache -- ^ pipelineCache
+                                                       -> Ptr CSize -- ^ pDataSize
+                                                                    -> Ptr Void -- ^ pData
+                                                                                -> IO VkResult
+vkGetPipelineCacheDataSafe = vkGetPipelineCacheData
+
+{-# INLINE vkGetPipelineCacheDataSafe #-}
+
+{-# WARNING
+vkGetPipelineCacheDataSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -6336,7 +9037,7 @@ foreign import ccall safe "vkGetPipelineCacheData"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
 type HS_vkGetPipelineCacheData =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -6377,18 +9078,20 @@ is_VkMergePipelineCaches
 
 type VkMergePipelineCaches = "vkMergePipelineCaches"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkMergePipelineCaches
---   >     ( VkDevice device
---   >     , VkPipelineCache dstCache
---   >     , uint32_t srcCacheCount
---   >     , const VkPipelineCache* pSrcCaches
---   >     )
+-- > VkResult vkMergePipelineCaches
+-- >     ( VkDevice device
+-- >     , VkPipelineCache dstCache
+-- >     , uint32_t srcCacheCount
+-- >     , const VkPipelineCache* pSrcCaches
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkMergePipelineCaches"
                vkMergePipelineCaches ::
                VkDevice -- ^ device
@@ -6398,18 +9101,41 @@ foreign import ccall unsafe "vkMergePipelineCaches"
                                            -> Ptr VkPipelineCache -- ^ pSrcCaches
                                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkMergePipelineCaches ::
+                      VkDevice -- ^ device
+                               ->
+                        VkPipelineCache -- ^ dstCache
+                                        -> Word32 -- ^ srcCacheCount
+                                                  -> Ptr VkPipelineCache -- ^ pSrcCaches
+                                                                         -> IO VkResult
+vkMergePipelineCaches d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkMergePipelineCaches d)
+      d
+
+{-# INLINE vkMergePipelineCaches #-}
+
+{-# WARNING
+vkMergePipelineCaches"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkMergePipelineCaches
---   >     ( VkDevice device
---   >     , VkPipelineCache dstCache
---   >     , uint32_t srcCacheCount
---   >     , const VkPipelineCache* pSrcCaches
---   >     )
+-- > VkResult vkMergePipelineCaches
+-- >     ( VkDevice device
+-- >     , VkPipelineCache dstCache
+-- >     , uint32_t srcCacheCount
+-- >     , const VkPipelineCache* pSrcCaches
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkMergePipelineCaches"
                vkMergePipelineCachesSafe ::
                VkDevice -- ^ device
@@ -6418,6 +9144,25 @@ foreign import ccall safe "vkMergePipelineCaches"
                                  -> Word32 -- ^ srcCacheCount
                                            -> Ptr VkPipelineCache -- ^ pSrcCaches
                                                                   -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkMergePipelineCachesSafe ::
+                          VkDevice -- ^ device
+                                   ->
+                            VkPipelineCache -- ^ dstCache
+                                            -> Word32 -- ^ srcCacheCount
+                                                      -> Ptr VkPipelineCache -- ^ pSrcCaches
+                                                                             -> IO VkResult
+vkMergePipelineCachesSafe = vkMergePipelineCaches
+
+{-# INLINE vkMergePipelineCachesSafe #-}
+
+{-# WARNING
+vkMergePipelineCachesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -6430,7 +9175,7 @@ foreign import ccall safe "vkMergePipelineCaches"
 --   >     , const VkPipelineCache* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
 type HS_vkMergePipelineCaches =
      VkDevice -- ^ device
               ->
@@ -6472,20 +9217,22 @@ is_VkCreateGraphicsPipelines
 
 type VkCreateGraphicsPipelines = "vkCreateGraphicsPipelines"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateGraphicsPipelines
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , uint32_t createInfoCount
---   >     , const VkGraphicsPipelineCreateInfo* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipeline* pPipelines
---   >     )
+-- > VkResult vkCreateGraphicsPipelines
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , uint32_t createInfoCount
+-- >     , const VkGraphicsPipelineCreateInfo* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipeline* pPipelines
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateGraphicsPipelines"
                vkCreateGraphicsPipelines ::
                VkDevice -- ^ device
@@ -6500,20 +9247,49 @@ foreign import ccall unsafe "vkCreateGraphicsPipelines"
                                                  -> Ptr VkPipeline -- ^ pPipelines
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateGraphicsPipelines ::
+                          VkDevice -- ^ device
+                                   ->
+                            VkPipelineCache -- ^ pipelineCache
+                                            ->
+                              Word32 -- ^ createInfoCount
+                                     ->
+                                Ptr VkGraphicsPipelineCreateInfo -- ^ pCreateInfos
+                                                                 ->
+                                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                            -> Ptr VkPipeline -- ^ pPipelines
+                                                                              -> IO VkResult
+vkCreateGraphicsPipelines d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreateGraphicsPipelines d)
+      d
+
+{-# INLINE vkCreateGraphicsPipelines #-}
+
+{-# WARNING
+vkCreateGraphicsPipelines"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateGraphicsPipelines
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , uint32_t createInfoCount
---   >     , const VkGraphicsPipelineCreateInfo* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipeline* pPipelines
---   >     )
+-- > VkResult vkCreateGraphicsPipelines
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , uint32_t createInfoCount
+-- >     , const VkGraphicsPipelineCreateInfo* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipeline* pPipelines
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateGraphicsPipelines"
                vkCreateGraphicsPipelinesSafe ::
                VkDevice -- ^ device
@@ -6528,6 +9304,30 @@ foreign import ccall safe "vkCreateGraphicsPipelines"
                                                  -> Ptr VkPipeline -- ^ pPipelines
                                                                    -> IO VkResult
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateGraphicsPipelinesSafe ::
+                              VkDevice -- ^ device
+                                       ->
+                                VkPipelineCache -- ^ pipelineCache
+                                                ->
+                                  Word32 -- ^ createInfoCount
+                                         ->
+                                    Ptr VkGraphicsPipelineCreateInfo -- ^ pCreateInfos
+                                                                     ->
+                                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> Ptr VkPipeline -- ^ pPipelines
+                                                                                  -> IO VkResult
+vkCreateGraphicsPipelinesSafe = vkCreateGraphicsPipelines
+
+{-# INLINE vkCreateGraphicsPipelinesSafe #-}
+
+{-# WARNING
+vkCreateGraphicsPipelinesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
@@ -6541,7 +9341,7 @@ foreign import ccall safe "vkCreateGraphicsPipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
 type HS_vkCreateGraphicsPipelines =
      VkDevice -- ^ device
               ->
@@ -6590,20 +9390,22 @@ is_VkCreateComputePipelines
 
 type VkCreateComputePipelines = "vkCreateComputePipelines"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateComputePipelines
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , uint32_t createInfoCount
---   >     , const VkComputePipelineCreateInfo* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipeline* pPipelines
---   >     )
+-- > VkResult vkCreateComputePipelines
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , uint32_t createInfoCount
+-- >     , const VkComputePipelineCreateInfo* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipeline* pPipelines
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateComputePipelines"
                vkCreateComputePipelines ::
                VkDevice -- ^ device
@@ -6618,20 +9420,49 @@ foreign import ccall unsafe "vkCreateComputePipelines"
                                                  -> Ptr VkPipeline -- ^ pPipelines
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateComputePipelines ::
+                         VkDevice -- ^ device
+                                  ->
+                           VkPipelineCache -- ^ pipelineCache
+                                           ->
+                             Word32 -- ^ createInfoCount
+                                    ->
+                               Ptr VkComputePipelineCreateInfo -- ^ pCreateInfos
+                                                               ->
+                                 Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                           -> Ptr VkPipeline -- ^ pPipelines
+                                                                             -> IO VkResult
+vkCreateComputePipelines d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreateComputePipelines d)
+      d
+
+{-# INLINE vkCreateComputePipelines #-}
+
+{-# WARNING
+vkCreateComputePipelines"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
---   > VkResult vkCreateComputePipelines
---   >     ( VkDevice device
---   >     , VkPipelineCache pipelineCache
---   >     , uint32_t createInfoCount
---   >     , const VkComputePipelineCreateInfo* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipeline* pPipelines
---   >     )
+-- > VkResult vkCreateComputePipelines
+-- >     ( VkDevice device
+-- >     , VkPipelineCache pipelineCache
+-- >     , uint32_t createInfoCount
+-- >     , const VkComputePipelineCreateInfo* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipeline* pPipelines
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateComputePipelines"
                vkCreateComputePipelinesSafe ::
                VkDevice -- ^ device
@@ -6646,6 +9477,30 @@ foreign import ccall safe "vkCreateComputePipelines"
                                                  -> Ptr VkPipeline -- ^ pPipelines
                                                                    -> IO VkResult
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateComputePipelinesSafe ::
+                             VkDevice -- ^ device
+                                      ->
+                               VkPipelineCache -- ^ pipelineCache
+                                               ->
+                                 Word32 -- ^ createInfoCount
+                                        ->
+                                   Ptr VkComputePipelineCreateInfo -- ^ pCreateInfos
+                                                                   ->
+                                     Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                               -> Ptr VkPipeline -- ^ pPipelines
+                                                                                 -> IO VkResult
+vkCreateComputePipelinesSafe = vkCreateComputePipelines
+
+{-# INLINE vkCreateComputePipelinesSafe #-}
+
+{-# WARNING
+vkCreateComputePipelinesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
@@ -6659,7 +9514,7 @@ foreign import ccall safe "vkCreateComputePipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
 type HS_vkCreateComputePipelines =
      VkDevice -- ^ device
               ->
@@ -6706,31 +9561,70 @@ is_VkDestroyPipeline = (EQ ==) . cmpCStrings _VkDestroyPipeline
 
 type VkDestroyPipeline = "vkDestroyPipeline"
 
--- | > () vkDestroyPipeline
---   >     ( VkDevice device
---   >     , VkPipeline pipeline
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyPipeline
+-- >     ( VkDevice device
+-- >     , VkPipeline pipeline
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyPipeline" vkDestroyPipeline
                :: VkDevice -- ^ device
                            -> VkPipeline -- ^ pipeline
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
 
--- | > () vkDestroyPipeline
---   >     ( VkDevice device
---   >     , VkPipeline pipeline
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipeline ::
+                  VkDevice -- ^ device
+                           -> VkPipeline -- ^ pipeline
+                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
+vkDestroyPipeline d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyPipeline d) d
+
+{-# INLINE vkDestroyPipeline #-}
+
+{-# WARNING
+vkDestroyPipeline"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyPipeline
+-- >     ( VkDevice device
+-- >     , VkPipeline pipeline
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyPipeline" vkDestroyPipelineSafe
                :: VkDevice -- ^ device
                            -> VkPipeline -- ^ pipeline
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipelineSafe ::
+                      VkDevice -- ^ device
+                               -> VkPipeline -- ^ pipeline
+                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                          -> IO ()
+vkDestroyPipelineSafe = vkDestroyPipeline
+
+{-# INLINE vkDestroyPipelineSafe #-}
+
+{-# WARNING
+vkDestroyPipelineSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroyPipeline
 --   >     ( VkDevice device
@@ -6738,7 +9632,7 @@ foreign import ccall safe "vkDestroyPipeline" vkDestroyPipelineSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
 type HS_vkDestroyPipeline =
      VkDevice -- ^ device
               -> VkPipeline -- ^ pipeline
@@ -6778,18 +9672,20 @@ is_VkCreatePipelineLayout
 
 type VkCreatePipelineLayout = "vkCreatePipelineLayout"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreatePipelineLayout
---   >     ( VkDevice device
---   >     , const VkPipelineLayoutCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipelineLayout* pPipelineLayout
---   >     )
+-- > VkResult vkCreatePipelineLayout
+-- >     ( VkDevice device
+-- >     , const VkPipelineLayoutCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipelineLayout* pPipelineLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreatePipelineLayout"
                vkCreatePipelineLayout ::
                VkDevice -- ^ device
@@ -6800,18 +9696,43 @@ foreign import ccall unsafe "vkCreatePipelineLayout"
                                              -> Ptr VkPipelineLayout -- ^ pPipelineLayout
                                                                      -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreatePipelineLayout ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkPipelineLayoutCreateInfo -- ^ pCreateInfo
+                                                        ->
+                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> Ptr VkPipelineLayout -- ^ pPipelineLayout
+                                                                             -> IO VkResult
+vkCreatePipelineLayout d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreatePipelineLayout d)
+      d
+
+{-# INLINE vkCreatePipelineLayout #-}
+
+{-# WARNING
+vkCreatePipelineLayout"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreatePipelineLayout
---   >     ( VkDevice device
---   >     , const VkPipelineLayoutCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkPipelineLayout* pPipelineLayout
---   >     )
+-- > VkResult vkCreatePipelineLayout
+-- >     ( VkDevice device
+-- >     , const VkPipelineLayoutCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkPipelineLayout* pPipelineLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreatePipelineLayout"
                vkCreatePipelineLayoutSafe ::
                VkDevice -- ^ device
@@ -6821,6 +9742,26 @@ foreign import ccall safe "vkCreatePipelineLayout"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkPipelineLayout -- ^ pPipelineLayout
                                                                      -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreatePipelineLayoutSafe ::
+                           VkDevice -- ^ device
+                                    ->
+                             Ptr VkPipelineLayoutCreateInfo -- ^ pCreateInfo
+                                                            ->
+                               Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> Ptr VkPipelineLayout -- ^ pPipelineLayout
+                                                                                 -> IO VkResult
+vkCreatePipelineLayoutSafe = vkCreatePipelineLayout
+
+{-# INLINE vkCreatePipelineLayoutSafe #-}
+
+{-# WARNING
+vkCreatePipelineLayoutSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -6833,7 +9774,7 @@ foreign import ccall safe "vkCreatePipelineLayout"
 --   >     , VkPipelineLayout* pPipelineLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
 type HS_vkCreatePipelineLayout =
      VkDevice -- ^ device
               ->
@@ -6877,13 +9818,15 @@ is_VkDestroyPipelineLayout
 
 type VkDestroyPipelineLayout = "vkDestroyPipelineLayout"
 
--- | > () vkDestroyPipelineLayout
---   >     ( VkDevice device
---   >     , VkPipelineLayout pipelineLayout
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyPipelineLayout
+-- >     ( VkDevice device
+-- >     , VkPipelineLayout pipelineLayout
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyPipelineLayout"
                vkDestroyPipelineLayout ::
                VkDevice -- ^ device
@@ -6891,13 +9834,35 @@ foreign import ccall unsafe "vkDestroyPipelineLayout"
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
 
--- | > () vkDestroyPipelineLayout
---   >     ( VkDevice device
---   >     , VkPipelineLayout pipelineLayout
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipelineLayout ::
+                        VkDevice -- ^ device
+                                 -> VkPipelineLayout -- ^ pipelineLayout
+                                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                  -> IO ()
+vkDestroyPipelineLayout d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkDestroyPipelineLayout d)
+      d
+
+{-# INLINE vkDestroyPipelineLayout #-}
+
+{-# WARNING
+vkDestroyPipelineLayout"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyPipelineLayout
+-- >     ( VkDevice device
+-- >     , VkPipelineLayout pipelineLayout
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyPipelineLayout"
                vkDestroyPipelineLayoutSafe ::
                VkDevice -- ^ device
@@ -6905,13 +9870,30 @@ foreign import ccall safe "vkDestroyPipelineLayout"
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyPipelineLayoutSafe ::
+                            VkDevice -- ^ device
+                                     -> VkPipelineLayout -- ^ pipelineLayout
+                                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                      -> IO ()
+vkDestroyPipelineLayoutSafe = vkDestroyPipelineLayout
+
+{-# INLINE vkDestroyPipelineLayoutSafe #-}
+
+{-# WARNING
+vkDestroyPipelineLayoutSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyPipelineLayout
 --   >     ( VkDevice device
 --   >     , VkPipelineLayout pipelineLayout
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
 type HS_vkDestroyPipelineLayout =
      VkDevice -- ^ device
               -> VkPipelineLayout -- ^ pipelineLayout
@@ -6951,18 +9933,20 @@ is_VkCreateSampler = (EQ ==) . cmpCStrings _VkCreateSampler
 
 type VkCreateSampler = "vkCreateSampler"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
 --
---   > VkResult vkCreateSampler
---   >     ( VkDevice device
---   >     , const VkSamplerCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSampler* pSampler
---   >     )
+-- > VkResult vkCreateSampler
+-- >     ( VkDevice device
+-- >     , const VkSamplerCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSampler* pSampler
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSampler vkCreateSampler registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
                VkDevice -- ^ device
                         ->
@@ -6972,18 +9956,41 @@ foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
                                              -> Ptr VkSampler -- ^ pSampler
                                                               -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSampler ::
+                VkDevice -- ^ device
+                         ->
+                  Ptr VkSamplerCreateInfo -- ^ pCreateInfo
+                                          ->
+                    Ptr VkAllocationCallbacks -- ^ pAllocator
+                                              -> Ptr VkSampler -- ^ pSampler
+                                                               -> IO VkResult
+vkCreateSampler d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateSampler d) d
+
+{-# INLINE vkCreateSampler #-}
+
+{-# WARNING
+vkCreateSampler"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
 --
---   > VkResult vkCreateSampler
---   >     ( VkDevice device
---   >     , const VkSamplerCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSampler* pSampler
---   >     )
+-- > VkResult vkCreateSampler
+-- >     ( VkDevice device
+-- >     , const VkSamplerCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSampler* pSampler
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSampler vkCreateSampler registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSampler" vkCreateSamplerSafe ::
                VkDevice -- ^ device
                         ->
@@ -6992,6 +9999,26 @@ foreign import ccall safe "vkCreateSampler" vkCreateSamplerSafe ::
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSampler -- ^ pSampler
                                                               -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSamplerSafe ::
+                    VkDevice -- ^ device
+                             ->
+                      Ptr VkSamplerCreateInfo -- ^ pCreateInfo
+                                              ->
+                        Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                  -> Ptr VkSampler -- ^ pSampler
+                                                                   -> IO VkResult
+vkCreateSamplerSafe = vkCreateSampler
+
+{-# INLINE vkCreateSamplerSafe #-}
+
+{-# WARNING
+vkCreateSamplerSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7004,7 +10031,7 @@ foreign import ccall safe "vkCreateSampler" vkCreateSamplerSafe ::
 --   >     , VkSampler* pSampler
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSampler vkCreateSampler registry at www.khronos.org>
 type HS_vkCreateSampler =
      VkDevice -- ^ device
               ->
@@ -7045,31 +10072,70 @@ is_VkDestroySampler = (EQ ==) . cmpCStrings _VkDestroySampler
 
 type VkDestroySampler = "vkDestroySampler"
 
--- | > () vkDestroySampler
---   >     ( VkDevice device
---   >     , VkSampler sampler
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroySampler
+-- >     ( VkDevice device
+-- >     , VkSampler sampler
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySampler vkDestroySampler registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroySampler" vkDestroySampler ::
                VkDevice -- ^ device
                         -> VkSampler -- ^ sampler
                                      -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                   -> IO ()
 
--- | > () vkDestroySampler
---   >     ( VkDevice device
---   >     , VkSampler sampler
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySampler ::
+                 VkDevice -- ^ device
+                          -> VkSampler -- ^ sampler
+                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
+vkDestroySampler d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroySampler d) d
+
+{-# INLINE vkDestroySampler #-}
+
+{-# WARNING
+vkDestroySampler"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroySampler
+-- >     ( VkDevice device
+-- >     , VkSampler sampler
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySampler vkDestroySampler registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroySampler" vkDestroySamplerSafe
                :: VkDevice -- ^ device
                            -> VkSampler -- ^ sampler
                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                      -> IO ()
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySamplerSafe ::
+                     VkDevice -- ^ device
+                              -> VkSampler -- ^ sampler
+                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                        -> IO ()
+vkDestroySamplerSafe = vkDestroySampler
+
+{-# INLINE vkDestroySamplerSafe #-}
+
+{-# WARNING
+vkDestroySamplerSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | > () vkDestroySampler
 --   >     ( VkDevice device
@@ -7077,7 +10143,7 @@ foreign import ccall safe "vkDestroySampler" vkDestroySamplerSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySampler vkDestroySampler registry at www.khronos.org>
 type HS_vkDestroySampler =
      VkDevice -- ^ device
               -> VkSampler -- ^ sampler
@@ -7118,18 +10184,20 @@ is_VkCreateDescriptorSetLayout
 
 type VkCreateDescriptorSetLayout = "vkCreateDescriptorSetLayout"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateDescriptorSetLayout
---   >     ( VkDevice device
---   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDescriptorSetLayout* pSetLayout
---   >     )
+-- > VkResult vkCreateDescriptorSetLayout
+-- >     ( VkDevice device
+-- >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDescriptorSetLayout* pSetLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateDescriptorSetLayout"
                vkCreateDescriptorSetLayout ::
                VkDevice -- ^ device
@@ -7141,18 +10209,44 @@ foreign import ccall unsafe "vkCreateDescriptorSetLayout"
                      Ptr VkDescriptorSetLayout -- ^ pSetLayout
                                                -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateDescriptorSetLayout ::
+                            VkDevice -- ^ device
+                                     ->
+                              Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                                                  ->
+                                Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          ->
+                                  Ptr VkDescriptorSetLayout -- ^ pSetLayout
+                                                            -> IO VkResult
+vkCreateDescriptorSetLayout d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreateDescriptorSetLayout d)
+      d
+
+{-# INLINE vkCreateDescriptorSetLayout #-}
+
+{-# WARNING
+vkCreateDescriptorSetLayout"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateDescriptorSetLayout
---   >     ( VkDevice device
---   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDescriptorSetLayout* pSetLayout
---   >     )
+-- > VkResult vkCreateDescriptorSetLayout
+-- >     ( VkDevice device
+-- >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDescriptorSetLayout* pSetLayout
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateDescriptorSetLayout"
                vkCreateDescriptorSetLayoutSafe ::
                VkDevice -- ^ device
@@ -7163,6 +10257,27 @@ foreign import ccall safe "vkCreateDescriptorSetLayout"
                                              ->
                      Ptr VkDescriptorSetLayout -- ^ pSetLayout
                                                -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateDescriptorSetLayoutSafe ::
+                                VkDevice -- ^ device
+                                         ->
+                                  Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                                                      ->
+                                    Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                              ->
+                                      Ptr VkDescriptorSetLayout -- ^ pSetLayout
+                                                                -> IO VkResult
+vkCreateDescriptorSetLayoutSafe = vkCreateDescriptorSetLayout
+
+{-# INLINE vkCreateDescriptorSetLayoutSafe #-}
+
+{-# WARNING
+vkCreateDescriptorSetLayoutSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7175,7 +10290,7 @@ foreign import ccall safe "vkCreateDescriptorSetLayout"
 --   >     , VkDescriptorSetLayout* pSetLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
 type HS_vkCreateDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -7222,13 +10337,15 @@ is_VkDestroyDescriptorSetLayout
 
 type VkDestroyDescriptorSetLayout = "vkDestroyDescriptorSetLayout"
 
--- | > () vkDestroyDescriptorSetLayout
---   >     ( VkDevice device
---   >     , VkDescriptorSetLayout descriptorSetLayout
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyDescriptorSetLayout
+-- >     ( VkDevice device
+-- >     , VkDescriptorSetLayout descriptorSetLayout
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyDescriptorSetLayout"
                vkDestroyDescriptorSetLayout ::
                VkDevice -- ^ device
@@ -7237,13 +10354,36 @@ foreign import ccall unsafe "vkDestroyDescriptorSetLayout"
                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 
--- | > () vkDestroyDescriptorSetLayout
---   >     ( VkDevice device
---   >     , VkDescriptorSetLayout descriptorSetLayout
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDescriptorSetLayout ::
+                             VkDevice -- ^ device
+                                      ->
+                               VkDescriptorSetLayout -- ^ descriptorSetLayout
+                                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                  -> IO ()
+vkDestroyDescriptorSetLayout d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkDestroyDescriptorSetLayout d)
+      d
+
+{-# INLINE vkDestroyDescriptorSetLayout #-}
+
+{-# WARNING
+vkDestroyDescriptorSetLayout"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyDescriptorSetLayout
+-- >     ( VkDevice device
+-- >     , VkDescriptorSetLayout descriptorSetLayout
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyDescriptorSetLayout"
                vkDestroyDescriptorSetLayoutSafe ::
                VkDevice -- ^ device
@@ -7252,13 +10392,31 @@ foreign import ccall safe "vkDestroyDescriptorSetLayout"
                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDescriptorSetLayoutSafe ::
+                                 VkDevice -- ^ device
+                                          ->
+                                   VkDescriptorSetLayout -- ^ descriptorSetLayout
+                                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                      -> IO ()
+vkDestroyDescriptorSetLayoutSafe = vkDestroyDescriptorSetLayout
+
+{-# INLINE vkDestroyDescriptorSetLayoutSafe #-}
+
+{-# WARNING
+vkDestroyDescriptorSetLayoutSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyDescriptorSetLayout
 --   >     ( VkDevice device
 --   >     , VkDescriptorSetLayout descriptorSetLayout
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
 type HS_vkDestroyDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -7302,18 +10460,20 @@ is_VkCreateDescriptorPool
 
 type VkCreateDescriptorPool = "vkCreateDescriptorPool"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTATION_EXT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTATION_EXT'.
 --
---   > VkResult vkCreateDescriptorPool
---   >     ( VkDevice device
---   >     , const VkDescriptorPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDescriptorPool* pDescriptorPool
---   >     )
+-- > VkResult vkCreateDescriptorPool
+-- >     ( VkDevice device
+-- >     , const VkDescriptorPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDescriptorPool* pDescriptorPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateDescriptorPool"
                vkCreateDescriptorPool ::
                VkDevice -- ^ device
@@ -7324,18 +10484,43 @@ foreign import ccall unsafe "vkCreateDescriptorPool"
                                              -> Ptr VkDescriptorPool -- ^ pDescriptorPool
                                                                      -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateDescriptorPool ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkDescriptorPoolCreateInfo -- ^ pCreateInfo
+                                                        ->
+                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> Ptr VkDescriptorPool -- ^ pDescriptorPool
+                                                                             -> IO VkResult
+vkCreateDescriptorPool d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreateDescriptorPool d)
+      d
+
+{-# INLINE vkCreateDescriptorPool #-}
+
+{-# WARNING
+vkCreateDescriptorPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTATION_EXT'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTATION_EXT'.
 --
---   > VkResult vkCreateDescriptorPool
---   >     ( VkDevice device
---   >     , const VkDescriptorPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDescriptorPool* pDescriptorPool
---   >     )
+-- > VkResult vkCreateDescriptorPool
+-- >     ( VkDevice device
+-- >     , const VkDescriptorPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDescriptorPool* pDescriptorPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateDescriptorPool"
                vkCreateDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7345,6 +10530,26 @@ foreign import ccall safe "vkCreateDescriptorPool"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkDescriptorPool -- ^ pDescriptorPool
                                                                      -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateDescriptorPoolSafe ::
+                           VkDevice -- ^ device
+                                    ->
+                             Ptr VkDescriptorPoolCreateInfo -- ^ pCreateInfo
+                                                            ->
+                               Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> Ptr VkDescriptorPool -- ^ pDescriptorPool
+                                                                                 -> IO VkResult
+vkCreateDescriptorPoolSafe = vkCreateDescriptorPool
+
+{-# INLINE vkCreateDescriptorPoolSafe #-}
+
+{-# WARNING
+vkCreateDescriptorPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7357,7 +10562,7 @@ foreign import ccall safe "vkCreateDescriptorPool"
 --   >     , VkDescriptorPool* pDescriptorPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
 type HS_vkCreateDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -7401,13 +10606,15 @@ is_VkDestroyDescriptorPool
 
 type VkDestroyDescriptorPool = "vkDestroyDescriptorPool"
 
--- | > () vkDestroyDescriptorPool
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyDescriptorPool
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyDescriptorPool"
                vkDestroyDescriptorPool ::
                VkDevice -- ^ device
@@ -7415,13 +10622,35 @@ foreign import ccall unsafe "vkDestroyDescriptorPool"
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
 
--- | > () vkDestroyDescriptorPool
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDescriptorPool ::
+                        VkDevice -- ^ device
+                                 -> VkDescriptorPool -- ^ descriptorPool
+                                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                  -> IO ()
+vkDestroyDescriptorPool d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkDestroyDescriptorPool d)
+      d
+
+{-# INLINE vkDestroyDescriptorPool #-}
+
+{-# WARNING
+vkDestroyDescriptorPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyDescriptorPool
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyDescriptorPool"
                vkDestroyDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7429,13 +10658,30 @@ foreign import ccall safe "vkDestroyDescriptorPool"
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyDescriptorPoolSafe ::
+                            VkDevice -- ^ device
+                                     -> VkDescriptorPool -- ^ descriptorPool
+                                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                      -> IO ()
+vkDestroyDescriptorPoolSafe = vkDestroyDescriptorPool
+
+{-# INLINE vkDestroyDescriptorPoolSafe #-}
+
+{-# WARNING
+vkDestroyDescriptorPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyDescriptorPool
 --   >     ( VkDevice device
 --   >     , VkDescriptorPool descriptorPool
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
 type HS_vkDestroyDescriptorPool =
      VkDevice -- ^ device
               -> VkDescriptorPool -- ^ descriptorPool
@@ -7476,17 +10722,19 @@ is_VkResetDescriptorPool
 
 type VkResetDescriptorPool = "vkResetDescriptorPool"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetDescriptorPool
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , VkDescriptorPoolResetFlags flags
---   >     )
+-- > VkResult vkResetDescriptorPool
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , VkDescriptorPoolResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkResetDescriptorPool"
                vkResetDescriptorPool ::
                VkDevice -- ^ device
@@ -7495,17 +10743,39 @@ foreign import ccall unsafe "vkResetDescriptorPool"
                                   -> VkDescriptorPoolResetFlags -- ^ flags
                                                                 -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetDescriptorPool ::
+                      VkDevice -- ^ device
+                               ->
+                        VkDescriptorPool -- ^ descriptorPool
+                                         -> VkDescriptorPoolResetFlags -- ^ flags
+                                                                       -> IO VkResult
+vkResetDescriptorPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkResetDescriptorPool d)
+      d
+
+{-# INLINE vkResetDescriptorPool #-}
+
+{-# WARNING
+vkResetDescriptorPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetDescriptorPool
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , VkDescriptorPoolResetFlags flags
---   >     )
+-- > VkResult vkResetDescriptorPool
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , VkDescriptorPoolResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkResetDescriptorPool"
                vkResetDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7513,6 +10783,24 @@ foreign import ccall safe "vkResetDescriptorPool"
                  VkDescriptorPool -- ^ descriptorPool
                                   -> VkDescriptorPoolResetFlags -- ^ flags
                                                                 -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetDescriptorPoolSafe ::
+                          VkDevice -- ^ device
+                                   ->
+                            VkDescriptorPool -- ^ descriptorPool
+                                             -> VkDescriptorPoolResetFlags -- ^ flags
+                                                                           -> IO VkResult
+vkResetDescriptorPoolSafe = vkResetDescriptorPool
+
+{-# INLINE vkResetDescriptorPoolSafe #-}
+
+{-# WARNING
+vkResetDescriptorPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7524,7 +10812,7 @@ foreign import ccall safe "vkResetDescriptorPool"
 --   >     , VkDescriptorPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
 type HS_vkResetDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -7565,17 +10853,19 @@ is_VkAllocateDescriptorSets
 
 type VkAllocateDescriptorSets = "vkAllocateDescriptorSets"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTED_POOL', 'VK_ERROR_OUT_OF_POOL_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTED_POOL', 'VK_ERROR_OUT_OF_POOL_MEMORY'.
 --
---   > VkResult vkAllocateDescriptorSets
---   >     ( VkDevice device
---   >     , const VkDescriptorSetAllocateInfo* pAllocateInfo
---   >     , VkDescriptorSet* pDescriptorSets
---   >     )
+-- > VkResult vkAllocateDescriptorSets
+-- >     ( VkDevice device
+-- >     , const VkDescriptorSetAllocateInfo* pAllocateInfo
+-- >     , VkDescriptorSet* pDescriptorSets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkAllocateDescriptorSets"
                vkAllocateDescriptorSets ::
                VkDevice -- ^ device
@@ -7585,17 +10875,41 @@ foreign import ccall unsafe "vkAllocateDescriptorSets"
                    Ptr VkDescriptorSet -- ^ pDescriptorSets
                                        -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateDescriptorSets ::
+                         VkDevice -- ^ device
+                                  ->
+                           Ptr VkDescriptorSetAllocateInfo -- ^ pAllocateInfo
+                                                           ->
+                             Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                 -> IO VkResult
+vkAllocateDescriptorSets d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkAllocateDescriptorSets d)
+      d
+
+{-# INLINE vkAllocateDescriptorSets #-}
+
+{-# WARNING
+vkAllocateDescriptorSets"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTED_POOL', 'VK_ERROR_OUT_OF_POOL_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FRAGMENTED_POOL', 'VK_ERROR_OUT_OF_POOL_MEMORY'.
 --
---   > VkResult vkAllocateDescriptorSets
---   >     ( VkDevice device
---   >     , const VkDescriptorSetAllocateInfo* pAllocateInfo
---   >     , VkDescriptorSet* pDescriptorSets
---   >     )
+-- > VkResult vkAllocateDescriptorSets
+-- >     ( VkDevice device
+-- >     , const VkDescriptorSetAllocateInfo* pAllocateInfo
+-- >     , VkDescriptorSet* pDescriptorSets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkAllocateDescriptorSets"
                vkAllocateDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7604,6 +10918,25 @@ foreign import ccall safe "vkAllocateDescriptorSets"
                                                  ->
                    Ptr VkDescriptorSet -- ^ pDescriptorSets
                                        -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateDescriptorSetsSafe ::
+                             VkDevice -- ^ device
+                                      ->
+                               Ptr VkDescriptorSetAllocateInfo -- ^ pAllocateInfo
+                                                               ->
+                                 Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                     -> IO VkResult
+vkAllocateDescriptorSetsSafe = vkAllocateDescriptorSets
+
+{-# INLINE vkAllocateDescriptorSetsSafe #-}
+
+{-# WARNING
+vkAllocateDescriptorSetsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7615,7 +10948,7 @@ foreign import ccall safe "vkAllocateDescriptorSets"
 --   >     , VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
 type HS_vkAllocateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7658,18 +10991,20 @@ is_VkFreeDescriptorSets
 
 type VkFreeDescriptorSets = "vkFreeDescriptorSets"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkFreeDescriptorSets
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , uint32_t descriptorSetCount
---   >     , const VkDescriptorSet* pDescriptorSets
---   >     )
+-- > VkResult vkFreeDescriptorSets
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , uint32_t descriptorSetCount
+-- >     , const VkDescriptorSet* pDescriptorSets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkFreeDescriptorSets"
                vkFreeDescriptorSets ::
                VkDevice -- ^ device
@@ -7679,18 +11014,41 @@ foreign import ccall unsafe "vkFreeDescriptorSets"
                                             -> Ptr VkDescriptorSet -- ^ pDescriptorSets
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeDescriptorSets ::
+                     VkDevice -- ^ device
+                              ->
+                       VkDescriptorPool -- ^ descriptorPool
+                                        -> Word32 -- ^ descriptorSetCount
+                                                  -> Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                                         -> IO VkResult
+vkFreeDescriptorSets d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkFreeDescriptorSets d)
+      d
+
+{-# INLINE vkFreeDescriptorSets #-}
+
+{-# WARNING
+vkFreeDescriptorSets"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkFreeDescriptorSets
---   >     ( VkDevice device
---   >     , VkDescriptorPool descriptorPool
---   >     , uint32_t descriptorSetCount
---   >     , const VkDescriptorSet* pDescriptorSets
---   >     )
+-- > VkResult vkFreeDescriptorSets
+-- >     ( VkDevice device
+-- >     , VkDescriptorPool descriptorPool
+-- >     , uint32_t descriptorSetCount
+-- >     , const VkDescriptorSet* pDescriptorSets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkFreeDescriptorSets"
                vkFreeDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7699,6 +11057,25 @@ foreign import ccall safe "vkFreeDescriptorSets"
                                   -> Word32 -- ^ descriptorSetCount
                                             -> Ptr VkDescriptorSet -- ^ pDescriptorSets
                                                                    -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeDescriptorSetsSafe ::
+                         VkDevice -- ^ device
+                                  ->
+                           VkDescriptorPool -- ^ descriptorPool
+                                            -> Word32 -- ^ descriptorSetCount
+                                                      -> Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                                             -> IO VkResult
+vkFreeDescriptorSetsSafe = vkFreeDescriptorSets
+
+{-# INLINE vkFreeDescriptorSetsSafe #-}
+
+{-# WARNING
+vkFreeDescriptorSetsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7711,7 +11088,7 @@ foreign import ccall safe "vkFreeDescriptorSets"
 --   >     , const VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
 type HS_vkFreeDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7753,15 +11130,17 @@ is_VkUpdateDescriptorSets
 
 type VkUpdateDescriptorSets = "vkUpdateDescriptorSets"
 
--- | > () vkUpdateDescriptorSets
---   >     ( VkDevice device
---   >     , uint32_t descriptorWriteCount
---   >     , const VkWriteDescriptorSet* pDescriptorWrites
---   >     , uint32_t descriptorCopyCount
---   >     , const VkCopyDescriptorSet* pDescriptorCopies
---   >     )
+-- |
+-- > () vkUpdateDescriptorSets
+-- >     ( VkDevice device
+-- >     , uint32_t descriptorWriteCount
+-- >     , const VkWriteDescriptorSet* pDescriptorWrites
+-- >     , uint32_t descriptorCopyCount
+-- >     , const VkCopyDescriptorSet* pDescriptorCopies
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkUpdateDescriptorSets"
                vkUpdateDescriptorSets ::
                VkDevice -- ^ device
@@ -7774,15 +11153,42 @@ foreign import ccall unsafe "vkUpdateDescriptorSets"
                             -> Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
                                                        -> IO ()
 
--- | > () vkUpdateDescriptorSets
---   >     ( VkDevice device
---   >     , uint32_t descriptorWriteCount
---   >     , const VkWriteDescriptorSet* pDescriptorWrites
---   >     , uint32_t descriptorCopyCount
---   >     , const VkCopyDescriptorSet* pDescriptorCopies
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkUpdateDescriptorSets ::
+                       VkDevice -- ^ device
+                                ->
+                         Word32 -- ^ descriptorWriteCount
+                                ->
+                           Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                                    ->
+                             Word32 -- ^ descriptorCopyCount
+                                    -> Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
+                                                               -> IO ()
+vkUpdateDescriptorSets d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkUpdateDescriptorSets d)
+      d
+
+{-# INLINE vkUpdateDescriptorSets #-}
+
+{-# WARNING
+vkUpdateDescriptorSets"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkUpdateDescriptorSets
+-- >     ( VkDevice device
+-- >     , uint32_t descriptorWriteCount
+-- >     , const VkWriteDescriptorSet* pDescriptorWrites
+-- >     , uint32_t descriptorCopyCount
+-- >     , const VkCopyDescriptorSet* pDescriptorCopies
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkUpdateDescriptorSets"
                vkUpdateDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7795,6 +11201,28 @@ foreign import ccall safe "vkUpdateDescriptorSets"
                             -> Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
                                                        -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkUpdateDescriptorSetsSafe ::
+                           VkDevice -- ^ device
+                                    ->
+                             Word32 -- ^ descriptorWriteCount
+                                    ->
+                               Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                                        ->
+                                 Word32 -- ^ descriptorCopyCount
+                                        -> Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
+                                                                   -> IO ()
+vkUpdateDescriptorSetsSafe = vkUpdateDescriptorSets
+
+{-# INLINE vkUpdateDescriptorSetsSafe #-}
+
+{-# WARNING
+vkUpdateDescriptorSetsSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkUpdateDescriptorSets
 --   >     ( VkDevice device
 --   >     , uint32_t descriptorWriteCount
@@ -7803,7 +11231,7 @@ foreign import ccall safe "vkUpdateDescriptorSets"
 --   >     , const VkCopyDescriptorSet* pDescriptorCopies
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
 type HS_vkUpdateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7847,18 +11275,20 @@ is_VkCreateFramebuffer = (EQ ==) . cmpCStrings _VkCreateFramebuffer
 
 type VkCreateFramebuffer = "vkCreateFramebuffer"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateFramebuffer
---   >     ( VkDevice device
---   >     , const VkFramebufferCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkFramebuffer* pFramebuffer
---   >     )
+-- > VkResult vkCreateFramebuffer
+-- >     ( VkDevice device
+-- >     , const VkFramebufferCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkFramebuffer* pFramebuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateFramebuffer"
                vkCreateFramebuffer ::
                VkDevice -- ^ device
@@ -7869,18 +11299,41 @@ foreign import ccall unsafe "vkCreateFramebuffer"
                                              -> Ptr VkFramebuffer -- ^ pFramebuffer
                                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateFramebuffer ::
+                    VkDevice -- ^ device
+                             ->
+                      Ptr VkFramebufferCreateInfo -- ^ pCreateInfo
+                                                  ->
+                        Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                  -> Ptr VkFramebuffer -- ^ pFramebuffer
+                                                                       -> IO VkResult
+vkCreateFramebuffer d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateFramebuffer d) d
+
+{-# INLINE vkCreateFramebuffer #-}
+
+{-# WARNING
+vkCreateFramebuffer"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateFramebuffer
---   >     ( VkDevice device
---   >     , const VkFramebufferCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkFramebuffer* pFramebuffer
---   >     )
+-- > VkResult vkCreateFramebuffer
+-- >     ( VkDevice device
+-- >     , const VkFramebufferCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkFramebuffer* pFramebuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateFramebuffer"
                vkCreateFramebufferSafe ::
                VkDevice -- ^ device
@@ -7890,6 +11343,26 @@ foreign import ccall safe "vkCreateFramebuffer"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkFramebuffer -- ^ pFramebuffer
                                                                   -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateFramebufferSafe ::
+                        VkDevice -- ^ device
+                                 ->
+                          Ptr VkFramebufferCreateInfo -- ^ pCreateInfo
+                                                      ->
+                            Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                      -> Ptr VkFramebuffer -- ^ pFramebuffer
+                                                                           -> IO VkResult
+vkCreateFramebufferSafe = vkCreateFramebuffer
+
+{-# INLINE vkCreateFramebufferSafe #-}
+
+{-# WARNING
+vkCreateFramebufferSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -7902,7 +11375,7 @@ foreign import ccall safe "vkCreateFramebuffer"
 --   >     , VkFramebuffer* pFramebuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
 type HS_vkCreateFramebuffer =
      VkDevice -- ^ device
               ->
@@ -7944,13 +11417,15 @@ is_VkDestroyFramebuffer
 
 type VkDestroyFramebuffer = "vkDestroyFramebuffer"
 
--- | > () vkDestroyFramebuffer
---   >     ( VkDevice device
---   >     , VkFramebuffer framebuffer
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyFramebuffer
+-- >     ( VkDevice device
+-- >     , VkFramebuffer framebuffer
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyFramebuffer"
                vkDestroyFramebuffer ::
                VkDevice -- ^ device
@@ -7958,13 +11433,34 @@ foreign import ccall unsafe "vkDestroyFramebuffer"
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
 
--- | > () vkDestroyFramebuffer
---   >     ( VkDevice device
---   >     , VkFramebuffer framebuffer
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyFramebuffer ::
+                     VkDevice -- ^ device
+                              -> VkFramebuffer -- ^ framebuffer
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroyFramebuffer d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyFramebuffer d)
+      d
+
+{-# INLINE vkDestroyFramebuffer #-}
+
+{-# WARNING
+vkDestroyFramebuffer"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyFramebuffer
+-- >     ( VkDevice device
+-- >     , VkFramebuffer framebuffer
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyFramebuffer"
                vkDestroyFramebufferSafe ::
                VkDevice -- ^ device
@@ -7972,13 +11468,30 @@ foreign import ccall safe "vkDestroyFramebuffer"
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyFramebufferSafe ::
+                         VkDevice -- ^ device
+                                  -> VkFramebuffer -- ^ framebuffer
+                                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                -> IO ()
+vkDestroyFramebufferSafe = vkDestroyFramebuffer
+
+{-# INLINE vkDestroyFramebufferSafe #-}
+
+{-# WARNING
+vkDestroyFramebufferSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyFramebuffer
 --   >     ( VkDevice device
 --   >     , VkFramebuffer framebuffer
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
 type HS_vkDestroyFramebuffer =
      VkDevice -- ^ device
               -> VkFramebuffer -- ^ framebuffer
@@ -8016,18 +11529,20 @@ is_VkCreateRenderPass = (EQ ==) . cmpCStrings _VkCreateRenderPass
 
 type VkCreateRenderPass = "vkCreateRenderPass"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateRenderPass
---   >     ( VkDevice device
---   >     , const VkRenderPassCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkRenderPass* pRenderPass
---   >     )
+-- > VkResult vkCreateRenderPass
+-- >     ( VkDevice device
+-- >     , const VkRenderPassCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkRenderPass* pRenderPass
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
                ::
                VkDevice -- ^ device
@@ -8038,18 +11553,41 @@ foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
                                              -> Ptr VkRenderPass -- ^ pRenderPass
                                                                  -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateRenderPass ::
+                   VkDevice -- ^ device
+                            ->
+                     Ptr VkRenderPassCreateInfo -- ^ pCreateInfo
+                                                ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkRenderPass -- ^ pRenderPass
+                                                                     -> IO VkResult
+vkCreateRenderPass d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateRenderPass d) d
+
+{-# INLINE vkCreateRenderPass #-}
+
+{-# WARNING
+vkCreateRenderPass"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateRenderPass
---   >     ( VkDevice device
---   >     , const VkRenderPassCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkRenderPass* pRenderPass
---   >     )
+-- > VkResult vkCreateRenderPass
+-- >     ( VkDevice device
+-- >     , const VkRenderPassCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkRenderPass* pRenderPass
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateRenderPass"
                vkCreateRenderPassSafe ::
                VkDevice -- ^ device
@@ -8059,6 +11597,26 @@ foreign import ccall safe "vkCreateRenderPass"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkRenderPass -- ^ pRenderPass
                                                                  -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateRenderPassSafe ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkRenderPassCreateInfo -- ^ pCreateInfo
+                                                    ->
+                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> Ptr VkRenderPass -- ^ pRenderPass
+                                                                         -> IO VkResult
+vkCreateRenderPassSafe = vkCreateRenderPass
+
+{-# INLINE vkCreateRenderPassSafe #-}
+
+{-# WARNING
+vkCreateRenderPassSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8071,7 +11629,7 @@ foreign import ccall safe "vkCreateRenderPass"
 --   >     , VkRenderPass* pRenderPass
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
 type HS_vkCreateRenderPass =
      VkDevice -- ^ device
               ->
@@ -8112,13 +11670,15 @@ is_VkDestroyRenderPass = (EQ ==) . cmpCStrings _VkDestroyRenderPass
 
 type VkDestroyRenderPass = "vkDestroyRenderPass"
 
--- | > () vkDestroyRenderPass
---   >     ( VkDevice device
---   >     , VkRenderPass renderPass
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyRenderPass
+-- >     ( VkDevice device
+-- >     , VkRenderPass renderPass
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyRenderPass"
                vkDestroyRenderPass ::
                VkDevice -- ^ device
@@ -8126,13 +11686,33 @@ foreign import ccall unsafe "vkDestroyRenderPass"
                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                      -> IO ()
 
--- | > () vkDestroyRenderPass
---   >     ( VkDevice device
---   >     , VkRenderPass renderPass
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyRenderPass ::
+                    VkDevice -- ^ device
+                             -> VkRenderPass -- ^ renderPass
+                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                          -> IO ()
+vkDestroyRenderPass d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyRenderPass d) d
+
+{-# INLINE vkDestroyRenderPass #-}
+
+{-# WARNING
+vkDestroyRenderPass"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyRenderPass
+-- >     ( VkDevice device
+-- >     , VkRenderPass renderPass
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyRenderPass"
                vkDestroyRenderPassSafe ::
                VkDevice -- ^ device
@@ -8140,13 +11720,30 @@ foreign import ccall safe "vkDestroyRenderPass"
                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                      -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyRenderPassSafe ::
+                        VkDevice -- ^ device
+                                 -> VkRenderPass -- ^ renderPass
+                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                              -> IO ()
+vkDestroyRenderPassSafe = vkDestroyRenderPass
+
+{-# INLINE vkDestroyRenderPassSafe #-}
+
+{-# WARNING
+vkDestroyRenderPassSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyRenderPass
 --   >     ( VkDevice device
 --   >     , VkRenderPass renderPass
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
 type HS_vkDestroyRenderPass =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -8186,13 +11783,15 @@ is_VkGetRenderAreaGranularity
 
 type VkGetRenderAreaGranularity = "vkGetRenderAreaGranularity"
 
--- | > () vkGetRenderAreaGranularity
---   >     ( VkDevice device
---   >     , VkRenderPass renderPass
---   >     , VkExtent2D* pGranularity
---   >     )
+-- |
+-- > () vkGetRenderAreaGranularity
+-- >     ( VkDevice device
+-- >     , VkRenderPass renderPass
+-- >     , VkExtent2D* pGranularity
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetRenderAreaGranularity"
                vkGetRenderAreaGranularity ::
                VkDevice -- ^ device
@@ -8200,13 +11799,35 @@ foreign import ccall unsafe "vkGetRenderAreaGranularity"
                                         -> Ptr VkExtent2D -- ^ pGranularity
                                                           -> IO ()
 
--- | > () vkGetRenderAreaGranularity
---   >     ( VkDevice device
---   >     , VkRenderPass renderPass
---   >     , VkExtent2D* pGranularity
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetRenderAreaGranularity ::
+                           VkDevice -- ^ device
+                                    -> VkRenderPass -- ^ renderPass
+                                                    -> Ptr VkExtent2D -- ^ pGranularity
+                                                                      -> IO ()
+vkGetRenderAreaGranularity d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetRenderAreaGranularity d)
+      d
+
+{-# INLINE vkGetRenderAreaGranularity #-}
+
+{-# WARNING
+vkGetRenderAreaGranularity"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkGetRenderAreaGranularity
+-- >     ( VkDevice device
+-- >     , VkRenderPass renderPass
+-- >     , VkExtent2D* pGranularity
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetRenderAreaGranularity"
                vkGetRenderAreaGranularitySafe ::
                VkDevice -- ^ device
@@ -8214,13 +11835,30 @@ foreign import ccall safe "vkGetRenderAreaGranularity"
                                         -> Ptr VkExtent2D -- ^ pGranularity
                                                           -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetRenderAreaGranularitySafe ::
+                               VkDevice -- ^ device
+                                        -> VkRenderPass -- ^ renderPass
+                                                        -> Ptr VkExtent2D -- ^ pGranularity
+                                                                          -> IO ()
+vkGetRenderAreaGranularitySafe = vkGetRenderAreaGranularity
+
+{-# INLINE vkGetRenderAreaGranularitySafe #-}
+
+{-# WARNING
+vkGetRenderAreaGranularitySafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkGetRenderAreaGranularity
 --   >     ( VkDevice device
 --   >     , VkRenderPass renderPass
 --   >     , VkExtent2D* pGranularity
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
 type HS_vkGetRenderAreaGranularity =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -8260,18 +11898,20 @@ is_VkCreateCommandPool = (EQ ==) . cmpCStrings _VkCreateCommandPool
 
 type VkCreateCommandPool = "vkCreateCommandPool"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateCommandPool
---   >     ( VkDevice device
---   >     , const VkCommandPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkCommandPool* pCommandPool
---   >     )
+-- > VkResult vkCreateCommandPool
+-- >     ( VkDevice device
+-- >     , const VkCommandPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkCommandPool* pCommandPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateCommandPool"
                vkCreateCommandPool ::
                VkDevice -- ^ device
@@ -8282,18 +11922,41 @@ foreign import ccall unsafe "vkCreateCommandPool"
                                              -> Ptr VkCommandPool -- ^ pCommandPool
                                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateCommandPool ::
+                    VkDevice -- ^ device
+                             ->
+                      Ptr VkCommandPoolCreateInfo -- ^ pCreateInfo
+                                                  ->
+                        Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                  -> Ptr VkCommandPool -- ^ pCommandPool
+                                                                       -> IO VkResult
+vkCreateCommandPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateCommandPool d) d
+
+{-# INLINE vkCreateCommandPool #-}
+
+{-# WARNING
+vkCreateCommandPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateCommandPool
---   >     ( VkDevice device
---   >     , const VkCommandPoolCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkCommandPool* pCommandPool
---   >     )
+-- > VkResult vkCreateCommandPool
+-- >     ( VkDevice device
+-- >     , const VkCommandPoolCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkCommandPool* pCommandPool
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateCommandPool"
                vkCreateCommandPoolSafe ::
                VkDevice -- ^ device
@@ -8303,6 +11966,26 @@ foreign import ccall safe "vkCreateCommandPool"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkCommandPool -- ^ pCommandPool
                                                                   -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateCommandPoolSafe ::
+                        VkDevice -- ^ device
+                                 ->
+                          Ptr VkCommandPoolCreateInfo -- ^ pCreateInfo
+                                                      ->
+                            Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                      -> Ptr VkCommandPool -- ^ pCommandPool
+                                                                           -> IO VkResult
+vkCreateCommandPoolSafe = vkCreateCommandPool
+
+{-# INLINE vkCreateCommandPoolSafe #-}
+
+{-# WARNING
+vkCreateCommandPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8315,7 +11998,7 @@ foreign import ccall safe "vkCreateCommandPool"
 --   >     , VkCommandPool* pCommandPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
 type HS_vkCreateCommandPool =
      VkDevice -- ^ device
               ->
@@ -8357,13 +12040,15 @@ is_VkDestroyCommandPool
 
 type VkDestroyCommandPool = "vkDestroyCommandPool"
 
--- | > () vkDestroyCommandPool
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroyCommandPool
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroyCommandPool"
                vkDestroyCommandPool ::
                VkDevice -- ^ device
@@ -8371,13 +12056,34 @@ foreign import ccall unsafe "vkDestroyCommandPool"
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
 
--- | > () vkDestroyCommandPool
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyCommandPool ::
+                     VkDevice -- ^ device
+                              -> VkCommandPool -- ^ commandPool
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroyCommandPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroyCommandPool d)
+      d
+
+{-# INLINE vkDestroyCommandPool #-}
+
+{-# WARNING
+vkDestroyCommandPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkDestroyCommandPool
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroyCommandPool"
                vkDestroyCommandPoolSafe ::
                VkDevice -- ^ device
@@ -8385,13 +12091,30 @@ foreign import ccall safe "vkDestroyCommandPool"
                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                       -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroyCommandPoolSafe ::
+                         VkDevice -- ^ device
+                                  -> VkCommandPool -- ^ commandPool
+                                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                -> IO ()
+vkDestroyCommandPoolSafe = vkDestroyCommandPool
+
+{-# INLINE vkDestroyCommandPoolSafe #-}
+
+{-# WARNING
+vkDestroyCommandPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkDestroyCommandPool
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
 type HS_vkDestroyCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8429,17 +12152,19 @@ is_VkResetCommandPool = (EQ ==) . cmpCStrings _VkResetCommandPool
 
 type VkResetCommandPool = "vkResetCommandPool"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetCommandPool
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , VkCommandPoolResetFlags flags
---   >     )
+-- > VkResult vkResetCommandPool
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , VkCommandPoolResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkResetCommandPool" vkResetCommandPool
                ::
                VkDevice -- ^ device
@@ -8447,23 +12172,60 @@ foreign import ccall unsafe "vkResetCommandPool" vkResetCommandPool
                                          -> VkCommandPoolResetFlags -- ^ flags
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetCommandPool ::
+                   VkDevice -- ^ device
+                            -> VkCommandPool -- ^ commandPool
+                                             -> VkCommandPoolResetFlags -- ^ flags
+                                                                        -> IO VkResult
+vkResetCommandPool d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkResetCommandPool d) d
+
+{-# INLINE vkResetCommandPool #-}
+
+{-# WARNING
+vkResetCommandPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetCommandPool
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , VkCommandPoolResetFlags flags
---   >     )
+-- > VkResult vkResetCommandPool
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , VkCommandPoolResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkResetCommandPool"
                vkResetCommandPoolSafe ::
                VkDevice -- ^ device
                         -> VkCommandPool -- ^ commandPool
                                          -> VkCommandPoolResetFlags -- ^ flags
                                                                     -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkResetCommandPoolSafe ::
+                       VkDevice -- ^ device
+                                -> VkCommandPool -- ^ commandPool
+                                                 -> VkCommandPoolResetFlags -- ^ flags
+                                                                            -> IO VkResult
+vkResetCommandPoolSafe = vkResetCommandPool
+
+{-# INLINE vkResetCommandPoolSafe #-}
+
+{-# WARNING
+vkResetCommandPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8475,7 +12237,7 @@ foreign import ccall safe "vkResetCommandPool"
 --   >     , VkCommandPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
 type HS_vkResetCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8515,17 +12277,19 @@ is_VkAllocateCommandBuffers
 
 type VkAllocateCommandBuffers = "vkAllocateCommandBuffers"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkAllocateCommandBuffers
---   >     ( VkDevice device
---   >     , const VkCommandBufferAllocateInfo* pAllocateInfo
---   >     , VkCommandBuffer* pCommandBuffers
---   >     )
+-- > VkResult vkAllocateCommandBuffers
+-- >     ( VkDevice device
+-- >     , const VkCommandBufferAllocateInfo* pAllocateInfo
+-- >     , VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkAllocateCommandBuffers"
                vkAllocateCommandBuffers ::
                VkDevice -- ^ device
@@ -8535,17 +12299,41 @@ foreign import ccall unsafe "vkAllocateCommandBuffers"
                    Ptr VkCommandBuffer -- ^ pCommandBuffers
                                        -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateCommandBuffers ::
+                         VkDevice -- ^ device
+                                  ->
+                           Ptr VkCommandBufferAllocateInfo -- ^ pAllocateInfo
+                                                           ->
+                             Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                 -> IO VkResult
+vkAllocateCommandBuffers d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkAllocateCommandBuffers d)
+      d
+
+{-# INLINE vkAllocateCommandBuffers #-}
+
+{-# WARNING
+vkAllocateCommandBuffers"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkAllocateCommandBuffers
---   >     ( VkDevice device
---   >     , const VkCommandBufferAllocateInfo* pAllocateInfo
---   >     , VkCommandBuffer* pCommandBuffers
---   >     )
+-- > VkResult vkAllocateCommandBuffers
+-- >     ( VkDevice device
+-- >     , const VkCommandBufferAllocateInfo* pAllocateInfo
+-- >     , VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkAllocateCommandBuffers"
                vkAllocateCommandBuffersSafe ::
                VkDevice -- ^ device
@@ -8554,6 +12342,25 @@ foreign import ccall safe "vkAllocateCommandBuffers"
                                                  ->
                    Ptr VkCommandBuffer -- ^ pCommandBuffers
                                        -> IO VkResult
+
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAllocateCommandBuffersSafe ::
+                             VkDevice -- ^ device
+                                      ->
+                               Ptr VkCommandBufferAllocateInfo -- ^ pAllocateInfo
+                                                               ->
+                                 Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                     -> IO VkResult
+vkAllocateCommandBuffersSafe = vkAllocateCommandBuffers
+
+{-# INLINE vkAllocateCommandBuffersSafe #-}
+
+{-# WARNING
+vkAllocateCommandBuffersSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8565,7 +12372,7 @@ foreign import ccall safe "vkAllocateCommandBuffers"
 --   >     , VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
 type HS_vkAllocateCommandBuffers =
      VkDevice -- ^ device
               ->
@@ -8608,14 +12415,16 @@ is_VkFreeCommandBuffers
 
 type VkFreeCommandBuffers = "vkFreeCommandBuffers"
 
--- | > () vkFreeCommandBuffers
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , uint32_t commandBufferCount
---   >     , const VkCommandBuffer* pCommandBuffers
---   >     )
+-- |
+-- > () vkFreeCommandBuffers
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , uint32_t commandBufferCount
+-- >     , const VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkFreeCommandBuffers"
                vkFreeCommandBuffers ::
                VkDevice -- ^ device
@@ -8624,14 +12433,36 @@ foreign import ccall unsafe "vkFreeCommandBuffers"
                                                    -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                           -> IO ()
 
--- | > () vkFreeCommandBuffers
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , uint32_t commandBufferCount
---   >     , const VkCommandBuffer* pCommandBuffers
---   >     )
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeCommandBuffers ::
+                     VkDevice -- ^ device
+                              -> VkCommandPool -- ^ commandPool
+                                               -> Word32 -- ^ commandBufferCount
+                                                         -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                                -> IO ()
+vkFreeCommandBuffers d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkFreeCommandBuffers d)
+      d
+
+{-# INLINE vkFreeCommandBuffers #-}
+
+{-# WARNING
+vkFreeCommandBuffers"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- > () vkFreeCommandBuffers
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , uint32_t commandBufferCount
+-- >     , const VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkFreeCommandBuffers"
                vkFreeCommandBuffersSafe ::
                VkDevice -- ^ device
@@ -8640,6 +12471,24 @@ foreign import ccall safe "vkFreeCommandBuffers"
                                                    -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                           -> IO ()
 
+##else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkFreeCommandBuffersSafe ::
+                         VkDevice -- ^ device
+                                  -> VkCommandPool -- ^ commandPool
+                                                   -> Word32 -- ^ commandBufferCount
+                                                             -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                                    -> IO ()
+vkFreeCommandBuffersSafe = vkFreeCommandBuffers
+
+{-# INLINE vkFreeCommandBuffersSafe #-}
+
+{-# WARNING
+vkFreeCommandBuffersSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | > () vkFreeCommandBuffers
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
@@ -8647,7 +12496,7 @@ foreign import ccall safe "vkFreeCommandBuffers"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
 type HS_vkFreeCommandBuffers =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8687,37 +12536,75 @@ is_VkBeginCommandBuffer
 
 type VkBeginCommandBuffer = "vkBeginCommandBuffer"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBeginCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkCommandBufferBeginInfo* pBeginInfo
---   >     )
+-- > VkResult vkBeginCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const VkCommandBufferBeginInfo* pBeginInfo
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkBeginCommandBuffer"
                vkBeginCommandBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
                                                                -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkBeginCommandBuffer ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
+                                                                     -> IO VkResult
+vkBeginCommandBuffer
+  = error $
+      "vkBeginCommandBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkBeginCommandBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkBeginCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkCommandBufferBeginInfo* pBeginInfo
---   >     )
+-- > VkResult vkBeginCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const VkCommandBufferBeginInfo* pBeginInfo
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkBeginCommandBuffer"
                vkBeginCommandBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
                                                                -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkBeginCommandBufferSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
+                                                                         -> IO VkResult
+vkBeginCommandBufferSafe = vkBeginCommandBuffer
+
+{-# INLINE vkBeginCommandBufferSafe #-}
+
+{-# WARNING
+vkBeginCommandBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8728,7 +12615,7 @@ foreign import ccall safe "vkBeginCommandBuffer"
 --   >     , const VkCommandBufferBeginInfo* pBeginInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
 type HS_vkBeginCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
@@ -8765,31 +12652,65 @@ is_VkEndCommandBuffer = (EQ ==) . cmpCStrings _VkEndCommandBuffer
 
 type VkEndCommandBuffer = "vkEndCommandBuffer"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEndCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     )
+-- > VkResult vkEndCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkEndCommandBuffer" vkEndCommandBuffer
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEndCommandBuffer :: VkCommandBuffer -- ^ commandBuffer
+                                      -> IO VkResult
+vkEndCommandBuffer
+  = error $
+      "vkEndCommandBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkEndCommandBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkEndCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     )
+-- > VkResult vkEndCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkEndCommandBuffer"
                vkEndCommandBufferSafe :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkEndCommandBufferSafe :: VkCommandBuffer -- ^ commandBuffer
+                                          -> IO VkResult
+vkEndCommandBufferSafe = vkEndCommandBuffer
+
+{-# INLINE vkEndCommandBufferSafe #-}
+
+{-# WARNING
+vkEndCommandBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8799,7 +12720,7 @@ foreign import ccall safe "vkEndCommandBuffer"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
 type HS_vkEndCommandBuffer = VkCommandBuffer -- ^ commandBuffer
                                              -> IO VkResult
 
@@ -8835,37 +12756,75 @@ is_VkResetCommandBuffer
 
 type VkResetCommandBuffer = "vkResetCommandBuffer"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkCommandBufferResetFlags flags
---   >     )
+-- > VkResult vkResetCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkCommandBufferResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkResetCommandBuffer"
                vkResetCommandBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkCommandBufferResetFlags -- ^ flags
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkResetCommandBuffer ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> VkCommandBufferResetFlags -- ^ flags
+                                                                  -> IO VkResult
+vkResetCommandBuffer
+  = error $
+      "vkResetCommandBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkResetCommandBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkResetCommandBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkCommandBufferResetFlags flags
---   >     )
+-- > VkResult vkResetCommandBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkCommandBufferResetFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkResetCommandBuffer"
                vkResetCommandBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkCommandBufferResetFlags -- ^ flags
                                                             -> IO VkResult
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkResetCommandBufferSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> VkCommandBufferResetFlags -- ^ flags
+                                                                      -> IO VkResult
+vkResetCommandBufferSafe = vkResetCommandBuffer
+
+{-# INLINE vkResetCommandBufferSafe #-}
+
+{-# WARNING
+vkResetCommandBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -8876,7 +12835,7 @@ foreign import ccall safe "vkResetCommandBuffer"
 --   >     , VkCommandBufferResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
 type HS_vkResetCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkCommandBufferResetFlags -- ^ flags
@@ -8913,39 +12872,79 @@ is_VkCmdBindPipeline = (EQ ==) . cmpCStrings _VkCmdBindPipeline
 
 type VkCmdBindPipeline = "vkCmdBindPipeline"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindPipeline
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipeline pipeline
---   >     )
+-- > () vkCmdBindPipeline
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineBindPoint pipelineBindPoint
+-- >     , VkPipeline pipeline
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBindPipeline" vkCmdBindPipeline
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkPipelineBindPoint -- ^ pipelineBindPoint
                                                          -> VkPipeline -- ^ pipeline
                                                                        -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindPipeline ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  -> VkPipelineBindPoint -- ^ pipelineBindPoint
+                                                         -> VkPipeline -- ^ pipeline
+                                                                       -> IO ()
+vkCmdBindPipeline
+  = error $
+      "vkCmdBindPipeline: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBindPipeline"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindPipeline
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipeline pipeline
---   >     )
+-- > () vkCmdBindPipeline
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineBindPoint pipelineBindPoint
+-- >     , VkPipeline pipeline
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBindPipeline" vkCmdBindPipelineSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkPipelineBindPoint -- ^ pipelineBindPoint
                                                          -> VkPipeline -- ^ pipeline
                                                                        -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindPipelineSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      -> VkPipelineBindPoint -- ^ pipelineBindPoint
+                                                             -> VkPipeline -- ^ pipeline
+                                                                           -> IO ()
+vkCmdBindPipelineSafe = vkCmdBindPipeline
+
+{-# INLINE vkCmdBindPipelineSafe #-}
+
+{-# WARNING
+vkCmdBindPipelineSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -8957,7 +12956,7 @@ foreign import ccall safe "vkCmdBindPipeline" vkCmdBindPipelineSafe
 --   >     , VkPipeline pipeline
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
 type HS_vkCmdBindPipeline =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkPipelineBindPoint -- ^ pipelineBindPoint
@@ -8995,18 +12994,20 @@ is_VkCmdSetViewport = (EQ ==) . cmpCStrings _VkCmdSetViewport
 
 type VkCmdSetViewport = "vkCmdSetViewport"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetViewport
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstViewport
---   >     , uint32_t viewportCount
---   >     , const VkViewport* pViewports
---   >     )
+-- > () vkCmdSetViewport
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstViewport
+-- >     , uint32_t viewportCount
+-- >     , const VkViewport* pViewports
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetViewport" vkCmdSetViewport ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstViewport
@@ -9014,24 +13015,64 @@ foreign import ccall unsafe "vkCmdSetViewport" vkCmdSetViewport ::
                                                    -> Ptr VkViewport -- ^ pViewports
                                                                      -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetViewport ::
+                 VkCommandBuffer -- ^ commandBuffer
+                                 -> Word32 -- ^ firstViewport
+                                           -> Word32 -- ^ viewportCount
+                                                     -> Ptr VkViewport -- ^ pViewports
+                                                                       -> IO ()
+vkCmdSetViewport
+  = error $
+      "vkCmdSetViewport: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetViewport"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetViewport
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstViewport
---   >     , uint32_t viewportCount
---   >     , const VkViewport* pViewports
---   >     )
+-- > () vkCmdSetViewport
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstViewport
+-- >     , uint32_t viewportCount
+-- >     , const VkViewport* pViewports
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetViewport" vkCmdSetViewportSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> Word32 -- ^ firstViewport
                                             -> Word32 -- ^ viewportCount
                                                       -> Ptr VkViewport -- ^ pViewports
                                                                         -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetViewportSafe ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> Word32 -- ^ firstViewport
+                                               -> Word32 -- ^ viewportCount
+                                                         -> Ptr VkViewport -- ^ pViewports
+                                                                           -> IO ()
+vkCmdSetViewportSafe = vkCmdSetViewport
+
+{-# INLINE vkCmdSetViewportSafe #-}
+
+{-# WARNING
+vkCmdSetViewportSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9044,7 +13085,7 @@ foreign import ccall safe "vkCmdSetViewport" vkCmdSetViewportSafe
 --   >     , const VkViewport* pViewports
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
 type HS_vkCmdSetViewport =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstViewport
@@ -9083,18 +13124,20 @@ is_VkCmdSetScissor = (EQ ==) . cmpCStrings _VkCmdSetScissor
 
 type VkCmdSetScissor = "vkCmdSetScissor"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetScissor
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstScissor
---   >     , uint32_t scissorCount
---   >     , const VkRect2D* pScissors
---   >     )
+-- > () vkCmdSetScissor
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstScissor
+-- >     , uint32_t scissorCount
+-- >     , const VkRect2D* pScissors
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstScissor
@@ -9102,24 +13145,64 @@ foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
                                                    -> Ptr VkRect2D -- ^ pScissors
                                                                    -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetScissor ::
+                VkCommandBuffer -- ^ commandBuffer
+                                -> Word32 -- ^ firstScissor
+                                          -> Word32 -- ^ scissorCount
+                                                    -> Ptr VkRect2D -- ^ pScissors
+                                                                    -> IO ()
+vkCmdSetScissor
+  = error $
+      "vkCmdSetScissor: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetScissor"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetScissor
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstScissor
---   >     , uint32_t scissorCount
---   >     , const VkRect2D* pScissors
---   >     )
+-- > () vkCmdSetScissor
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstScissor
+-- >     , uint32_t scissorCount
+-- >     , const VkRect2D* pScissors
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetScissor" vkCmdSetScissorSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstScissor
                                          -> Word32 -- ^ scissorCount
                                                    -> Ptr VkRect2D -- ^ pScissors
                                                                    -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetScissorSafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    -> Word32 -- ^ firstScissor
+                                              -> Word32 -- ^ scissorCount
+                                                        -> Ptr VkRect2D -- ^ pScissors
+                                                                        -> IO ()
+vkCmdSetScissorSafe = vkCmdSetScissor
+
+{-# INLINE vkCmdSetScissorSafe #-}
+
+{-# WARNING
+vkCmdSetScissorSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9132,7 +13215,7 @@ foreign import ccall safe "vkCmdSetScissor" vkCmdSetScissorSafe ::
 --   >     , const VkRect2D* pScissors
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
 type HS_vkCmdSetScissor =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstScissor
@@ -9171,33 +13254,69 @@ is_VkCmdSetLineWidth = (EQ ==) . cmpCStrings _VkCmdSetLineWidth
 
 type VkCmdSetLineWidth = "vkCmdSetLineWidth"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetLineWidth
---   >     ( VkCommandBuffer commandBuffer
---   >     , float lineWidth
---   >     )
+-- > () vkCmdSetLineWidth
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float lineWidth
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetLineWidth" vkCmdSetLineWidth
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> #{type float} -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetLineWidth ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  -> #{type float} -> IO ()
+vkCmdSetLineWidth
+  = error $
+      "vkCmdSetLineWidth: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetLineWidth"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetLineWidth
---   >     ( VkCommandBuffer commandBuffer
---   >     , float lineWidth
---   >     )
+-- > () vkCmdSetLineWidth
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float lineWidth
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetLineWidth" vkCmdSetLineWidthSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> #{type float} -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetLineWidthSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      -> #{type float} -> IO ()
+vkCmdSetLineWidthSafe = vkCmdSetLineWidth
+
+{-# INLINE vkCmdSetLineWidthSafe #-}
+
+{-# WARNING
+vkCmdSetLineWidthSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9208,7 +13327,7 @@ foreign import ccall safe "vkCmdSetLineWidth" vkCmdSetLineWidthSafe
 --   >     , float lineWidth
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
 type HS_vkCmdSetLineWidth =
      VkCommandBuffer -- ^ commandBuffer
                      -> #{type float} -> IO ()
@@ -9244,18 +13363,20 @@ is_VkCmdSetDepthBias = (EQ ==) . cmpCStrings _VkCmdSetDepthBias
 
 type VkCmdSetDepthBias = "vkCmdSetDepthBias"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetDepthBias
---   >     ( VkCommandBuffer commandBuffer
---   >     , float depthBiasConstantFactor
---   >     , float depthBiasClamp
---   >     , float depthBiasSlopeFactor
---   >     )
+-- > () vkCmdSetDepthBias
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float depthBiasConstantFactor
+-- >     , float depthBiasClamp
+-- >     , float depthBiasSlopeFactor
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9263,24 +13384,62 @@ foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
                  #{type float} ->
                    #{type float} -> #{type float} -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetDepthBias ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  ->
+                    #{type float} ->
+                      #{type float} -> #{type float} -> IO ()
+vkCmdSetDepthBias
+  = error $
+      "vkCmdSetDepthBias: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetDepthBias"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetDepthBias
---   >     ( VkCommandBuffer commandBuffer
---   >     , float depthBiasConstantFactor
---   >     , float depthBiasClamp
---   >     , float depthBiasSlopeFactor
---   >     )
+-- > () vkCmdSetDepthBias
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float depthBiasConstantFactor
+-- >     , float depthBiasClamp
+-- >     , float depthBiasSlopeFactor
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetDepthBias" vkCmdSetDepthBiasSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  #{type float} ->
                    #{type float} -> #{type float} -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetDepthBiasSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      ->
+                        #{type float} ->
+                          #{type float} -> #{type float} -> IO ()
+vkCmdSetDepthBiasSafe = vkCmdSetDepthBias
+
+{-# INLINE vkCmdSetDepthBiasSafe #-}
+
+{-# WARNING
+vkCmdSetDepthBiasSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9293,7 +13452,7 @@ foreign import ccall safe "vkCmdSetDepthBias" vkCmdSetDepthBiasSafe
 --   >     , float depthBiasSlopeFactor
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
 type HS_vkCmdSetDepthBias =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9333,37 +13492,75 @@ is_VkCmdSetBlendConstants
 
 type VkCmdSetBlendConstants = "vkCmdSetBlendConstants"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetBlendConstants
---   >     ( VkCommandBuffer commandBuffer
---   >     , const float blendConstants[4]
---   >     )
+-- > () vkCmdSetBlendConstants
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const float blendConstants[4]
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetBlendConstants"
                vkCmdSetBlendConstants ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr #{type float} -- ^ blendConstants
                                                                 -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetBlendConstants ::
+                       VkCommandBuffer -- ^ commandBuffer
+                                       -> Ptr #{type float} -- ^ blendConstants
+                                                                        -> IO ()
+vkCmdSetBlendConstants
+  = error $
+      "vkCmdSetBlendConstants: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetBlendConstants"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetBlendConstants
---   >     ( VkCommandBuffer commandBuffer
---   >     , const float blendConstants[4]
---   >     )
+-- > () vkCmdSetBlendConstants
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const float blendConstants[4]
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetBlendConstants"
                vkCmdSetBlendConstantsSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr #{type float} -- ^ blendConstants
                                                                 -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetBlendConstantsSafe ::
+                           VkCommandBuffer -- ^ commandBuffer
+                                           -> Ptr #{type float} -- ^ blendConstants
+                                                                            -> IO ()
+vkCmdSetBlendConstantsSafe = vkCmdSetBlendConstants
+
+{-# INLINE vkCmdSetBlendConstantsSafe #-}
+
+{-# WARNING
+vkCmdSetBlendConstantsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9374,7 +13571,7 @@ foreign import ccall safe "vkCmdSetBlendConstants"
 --   >     , const float blendConstants[4]
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
 type HS_vkCmdSetBlendConstants =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr #{type float} -- ^ blendConstants
@@ -9412,39 +13609,77 @@ is_VkCmdSetDepthBounds = (EQ ==) . cmpCStrings _VkCmdSetDepthBounds
 
 type VkCmdSetDepthBounds = "vkCmdSetDepthBounds"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetDepthBounds
---   >     ( VkCommandBuffer commandBuffer
---   >     , float minDepthBounds
---   >     , float maxDepthBounds
---   >     )
+-- > () vkCmdSetDepthBounds
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float minDepthBounds
+-- >     , float maxDepthBounds
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetDepthBounds"
                vkCmdSetDepthBounds ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  #{type float} -> #{type float} -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetDepthBounds ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      #{type float} -> #{type float} -> IO ()
+vkCmdSetDepthBounds
+  = error $
+      "vkCmdSetDepthBounds: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetDepthBounds"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetDepthBounds
---   >     ( VkCommandBuffer commandBuffer
---   >     , float minDepthBounds
---   >     , float maxDepthBounds
---   >     )
+-- > () vkCmdSetDepthBounds
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , float minDepthBounds
+-- >     , float maxDepthBounds
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetDepthBounds"
                vkCmdSetDepthBoundsSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  #{type float} -> #{type float} -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetDepthBoundsSafe ::
+                        VkCommandBuffer -- ^ commandBuffer
+                                        ->
+                          #{type float} -> #{type float} -> IO ()
+vkCmdSetDepthBoundsSafe = vkCmdSetDepthBounds
+
+{-# INLINE vkCmdSetDepthBoundsSafe #-}
+
+{-# WARNING
+vkCmdSetDepthBoundsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9456,7 +13691,7 @@ foreign import ccall safe "vkCmdSetDepthBounds"
 --   >     , float maxDepthBounds
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
 type HS_vkCmdSetDepthBounds =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9495,17 +13730,19 @@ is_VkCmdSetStencilCompareMask
 
 type VkCmdSetStencilCompareMask = "vkCmdSetStencilCompareMask"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilCompareMask
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t compareMask
---   >     )
+-- > () vkCmdSetStencilCompareMask
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t compareMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetStencilCompareMask"
                vkCmdSetStencilCompareMask ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9513,23 +13750,61 @@ foreign import ccall unsafe "vkCmdSetStencilCompareMask"
                                                      -> Word32 -- ^ compareMask
                                                                -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilCompareMask ::
+                           VkCommandBuffer -- ^ commandBuffer
+                                           -> VkStencilFaceFlags -- ^ faceMask
+                                                                 -> Word32 -- ^ compareMask
+                                                                           -> IO ()
+vkCmdSetStencilCompareMask
+  = error $
+      "vkCmdSetStencilCompareMask: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetStencilCompareMask"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilCompareMask
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t compareMask
---   >     )
+-- > () vkCmdSetStencilCompareMask
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t compareMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetStencilCompareMask"
                vkCmdSetStencilCompareMaskSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkStencilFaceFlags -- ^ faceMask
                                                      -> Word32 -- ^ compareMask
                                                                -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilCompareMaskSafe ::
+                               VkCommandBuffer -- ^ commandBuffer
+                                               -> VkStencilFaceFlags -- ^ faceMask
+                                                                     -> Word32 -- ^ compareMask
+                                                                               -> IO ()
+vkCmdSetStencilCompareMaskSafe = vkCmdSetStencilCompareMask
+
+{-# INLINE vkCmdSetStencilCompareMaskSafe #-}
+
+{-# WARNING
+vkCmdSetStencilCompareMaskSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9541,7 +13816,7 @@ foreign import ccall safe "vkCmdSetStencilCompareMask"
 --   >     , uint32_t compareMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
 type HS_vkCmdSetStencilCompareMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9583,17 +13858,19 @@ is_VkCmdSetStencilWriteMask
 
 type VkCmdSetStencilWriteMask = "vkCmdSetStencilWriteMask"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilWriteMask
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t writeMask
---   >     )
+-- > () vkCmdSetStencilWriteMask
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t writeMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetStencilWriteMask"
                vkCmdSetStencilWriteMask ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9601,23 +13878,61 @@ foreign import ccall unsafe "vkCmdSetStencilWriteMask"
                                                      -> Word32 -- ^ writeMask
                                                                -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilWriteMask ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> VkStencilFaceFlags -- ^ faceMask
+                                                               -> Word32 -- ^ writeMask
+                                                                         -> IO ()
+vkCmdSetStencilWriteMask
+  = error $
+      "vkCmdSetStencilWriteMask: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetStencilWriteMask"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilWriteMask
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t writeMask
---   >     )
+-- > () vkCmdSetStencilWriteMask
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t writeMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetStencilWriteMask"
                vkCmdSetStencilWriteMaskSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkStencilFaceFlags -- ^ faceMask
                                                      -> Word32 -- ^ writeMask
                                                                -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilWriteMaskSafe ::
+                             VkCommandBuffer -- ^ commandBuffer
+                                             -> VkStencilFaceFlags -- ^ faceMask
+                                                                   -> Word32 -- ^ writeMask
+                                                                             -> IO ()
+vkCmdSetStencilWriteMaskSafe = vkCmdSetStencilWriteMask
+
+{-# INLINE vkCmdSetStencilWriteMaskSafe #-}
+
+{-# WARNING
+vkCmdSetStencilWriteMaskSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9629,7 +13944,7 @@ foreign import ccall safe "vkCmdSetStencilWriteMask"
 --   >     , uint32_t writeMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
 type HS_vkCmdSetStencilWriteMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9671,17 +13986,19 @@ is_VkCmdSetStencilReference
 
 type VkCmdSetStencilReference = "vkCmdSetStencilReference"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilReference
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t reference
---   >     )
+-- > () vkCmdSetStencilReference
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t reference
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetStencilReference"
                vkCmdSetStencilReference ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9689,23 +14006,61 @@ foreign import ccall unsafe "vkCmdSetStencilReference"
                                                      -> Word32 -- ^ reference
                                                                -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilReference ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> VkStencilFaceFlags -- ^ faceMask
+                                                               -> Word32 -- ^ reference
+                                                                         -> IO ()
+vkCmdSetStencilReference
+  = error $
+      "vkCmdSetStencilReference: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetStencilReference"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdSetStencilReference
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkStencilFaceFlags faceMask
---   >     , uint32_t reference
---   >     )
+-- > () vkCmdSetStencilReference
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkStencilFaceFlags faceMask
+-- >     , uint32_t reference
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetStencilReference"
                vkCmdSetStencilReferenceSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkStencilFaceFlags -- ^ faceMask
                                                      -> Word32 -- ^ reference
                                                                -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetStencilReferenceSafe ::
+                             VkCommandBuffer -- ^ commandBuffer
+                                             -> VkStencilFaceFlags -- ^ faceMask
+                                                                   -> Word32 -- ^ reference
+                                                                             -> IO ()
+vkCmdSetStencilReferenceSafe = vkCmdSetStencilReference
+
+{-# INLINE vkCmdSetStencilReferenceSafe #-}
+
+{-# WARNING
+vkCmdSetStencilReferenceSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9717,7 +14072,7 @@ foreign import ccall safe "vkCmdSetStencilReference"
 --   >     , uint32_t reference
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
 type HS_vkCmdSetStencilReference =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9759,22 +14114,24 @@ is_VkCmdBindDescriptorSets
 
 type VkCmdBindDescriptorSets = "vkCmdBindDescriptorSets"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindDescriptorSets
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipelineLayout layout
---   >     , uint32_t firstSet
---   >     , uint32_t descriptorSetCount
---   >     , const VkDescriptorSet* pDescriptorSets
---   >     , uint32_t dynamicOffsetCount
---   >     , const uint32_t* pDynamicOffsets
---   >     )
+-- > () vkCmdBindDescriptorSets
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineBindPoint pipelineBindPoint
+-- >     , VkPipelineLayout layout
+-- >     , uint32_t firstSet
+-- >     , uint32_t descriptorSetCount
+-- >     , const VkDescriptorSet* pDescriptorSets
+-- >     , uint32_t dynamicOffsetCount
+-- >     , const uint32_t* pDynamicOffsets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBindDescriptorSets"
                vkCmdBindDescriptorSets ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9791,22 +14148,52 @@ foreign import ccall unsafe "vkCmdBindDescriptorSets"
                                                                -> Ptr Word32 -- ^ pDynamicOffsets
                                                                              -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindDescriptorSets ::
+                        VkCommandBuffer -- ^ commandBuffer
+                                        ->
+                          VkPipelineBindPoint -- ^ pipelineBindPoint
+                                              ->
+                            VkPipelineLayout -- ^ layout
+                                             ->
+                              Word32 -- ^ firstSet
+                                     ->
+                                Word32 -- ^ descriptorSetCount
+                                       -> Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                              -> Word32 -- ^ dynamicOffsetCount
+                                                                        -> Ptr Word32 -- ^ pDynamicOffsets
+                                                                                      -> IO ()
+vkCmdBindDescriptorSets
+  = error $
+      "vkCmdBindDescriptorSets: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBindDescriptorSets"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindDescriptorSets
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipelineLayout layout
---   >     , uint32_t firstSet
---   >     , uint32_t descriptorSetCount
---   >     , const VkDescriptorSet* pDescriptorSets
---   >     , uint32_t dynamicOffsetCount
---   >     , const uint32_t* pDynamicOffsets
---   >     )
+-- > () vkCmdBindDescriptorSets
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineBindPoint pipelineBindPoint
+-- >     , VkPipelineLayout layout
+-- >     , uint32_t firstSet
+-- >     , uint32_t descriptorSetCount
+-- >     , const VkDescriptorSet* pDescriptorSets
+-- >     , uint32_t dynamicOffsetCount
+-- >     , const uint32_t* pDynamicOffsets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBindDescriptorSets"
                vkCmdBindDescriptorSetsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9823,6 +14210,32 @@ foreign import ccall safe "vkCmdBindDescriptorSets"
                                                                -> Ptr Word32 -- ^ pDynamicOffsets
                                                                              -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindDescriptorSetsSafe ::
+                            VkCommandBuffer -- ^ commandBuffer
+                                            ->
+                              VkPipelineBindPoint -- ^ pipelineBindPoint
+                                                  ->
+                                VkPipelineLayout -- ^ layout
+                                                 ->
+                                  Word32 -- ^ firstSet
+                                         ->
+                                    Word32 -- ^ descriptorSetCount
+                                           -> Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                                  -> Word32 -- ^ dynamicOffsetCount
+                                                                            -> Ptr Word32 -- ^ pDynamicOffsets
+                                                                                          -> IO ()
+vkCmdBindDescriptorSetsSafe = vkCmdBindDescriptorSets
+
+{-# INLINE vkCmdBindDescriptorSetsSafe #-}
+
+{-# WARNING
+vkCmdBindDescriptorSetsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
@@ -9838,7 +14251,7 @@ foreign import ccall safe "vkCmdBindDescriptorSets"
 --   >     , const uint32_t* pDynamicOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
 type HS_vkCmdBindDescriptorSets =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9888,18 +14301,20 @@ is_VkCmdBindIndexBuffer
 
 type VkCmdBindIndexBuffer = "vkCmdBindIndexBuffer"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindIndexBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , VkIndexType indexType
---   >     )
+-- > () vkCmdBindIndexBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , VkIndexType indexType
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBindIndexBuffer"
                vkCmdBindIndexBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9908,18 +14323,40 @@ foreign import ccall unsafe "vkCmdBindIndexBuffer"
                                                            -> VkIndexType -- ^ indexType
                                                                           -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindIndexBuffer ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> VkBuffer -- ^ buffer
+                                                 -> VkDeviceSize -- ^ offset
+                                                                 -> VkIndexType -- ^ indexType
+                                                                                -> IO ()
+vkCmdBindIndexBuffer
+  = error $
+      "vkCmdBindIndexBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBindIndexBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindIndexBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , VkIndexType indexType
---   >     )
+-- > () vkCmdBindIndexBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , VkIndexType indexType
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBindIndexBuffer"
                vkCmdBindIndexBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9927,6 +14364,24 @@ foreign import ccall safe "vkCmdBindIndexBuffer"
                                            -> VkDeviceSize -- ^ offset
                                                            -> VkIndexType -- ^ indexType
                                                                           -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindIndexBufferSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> VkBuffer -- ^ buffer
+                                                     -> VkDeviceSize -- ^ offset
+                                                                     -> VkIndexType -- ^ indexType
+                                                                                    -> IO ()
+vkCmdBindIndexBufferSafe = vkCmdBindIndexBuffer
+
+{-# INLINE vkCmdBindIndexBufferSafe #-}
+
+{-# WARNING
+vkCmdBindIndexBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -9939,7 +14394,7 @@ foreign import ccall safe "vkCmdBindIndexBuffer"
 --   >     , VkIndexType indexType
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
 type HS_vkCmdBindIndexBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -9980,19 +14435,21 @@ is_VkCmdBindVertexBuffers
 
 type VkCmdBindVertexBuffers = "vkCmdBindVertexBuffers"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindVertexBuffers
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstBinding
---   >     , uint32_t bindingCount
---   >     , const VkBuffer* pBuffers
---   >     , const VkDeviceSize* pOffsets
---   >     )
+-- > () vkCmdBindVertexBuffers
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstBinding
+-- >     , uint32_t bindingCount
+-- >     , const VkBuffer* pBuffers
+-- >     , const VkDeviceSize* pOffsets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBindVertexBuffers"
                vkCmdBindVertexBuffers ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10003,19 +14460,43 @@ foreign import ccall unsafe "vkCmdBindVertexBuffers"
                                                   -> Ptr VkDeviceSize -- ^ pOffsets
                                                                       -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindVertexBuffers ::
+                       VkCommandBuffer -- ^ commandBuffer
+                                       ->
+                         Word32 -- ^ firstBinding
+                                -> Word32 -- ^ bindingCount
+                                          -> Ptr VkBuffer -- ^ pBuffers
+                                                          -> Ptr VkDeviceSize -- ^ pOffsets
+                                                                              -> IO ()
+vkCmdBindVertexBuffers
+  = error $
+      "vkCmdBindVertexBuffers: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBindVertexBuffers"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBindVertexBuffers
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstBinding
---   >     , uint32_t bindingCount
---   >     , const VkBuffer* pBuffers
---   >     , const VkDeviceSize* pOffsets
---   >     )
+-- > () vkCmdBindVertexBuffers
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t firstBinding
+-- >     , uint32_t bindingCount
+-- >     , const VkBuffer* pBuffers
+-- >     , const VkDeviceSize* pOffsets
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBindVertexBuffers"
                vkCmdBindVertexBuffersSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10025,6 +14506,26 @@ foreign import ccall safe "vkCmdBindVertexBuffers"
                                   -> Ptr VkBuffer -- ^ pBuffers
                                                   -> Ptr VkDeviceSize -- ^ pOffsets
                                                                       -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBindVertexBuffersSafe ::
+                           VkCommandBuffer -- ^ commandBuffer
+                                           ->
+                             Word32 -- ^ firstBinding
+                                    -> Word32 -- ^ bindingCount
+                                              -> Ptr VkBuffer -- ^ pBuffers
+                                                              -> Ptr VkDeviceSize -- ^ pOffsets
+                                                                                  -> IO ()
+vkCmdBindVertexBuffersSafe = vkCmdBindVertexBuffers
+
+{-# INLINE vkCmdBindVertexBuffersSafe #-}
+
+{-# WARNING
+vkCmdBindVertexBuffersSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -10038,7 +14539,7 @@ foreign import ccall safe "vkCmdBindVertexBuffers"
 --   >     , const VkDeviceSize* pOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
 type HS_vkCmdBindVertexBuffers =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10080,21 +14581,23 @@ is_VkCmdDraw = (EQ ==) . cmpCStrings _VkCmdDraw
 
 type VkCmdDraw = "vkCmdDraw"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDraw
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t vertexCount
---   >     , uint32_t instanceCount
---   >     , uint32_t firstVertex
---   >     , uint32_t firstInstance
---   >     )
+-- > () vkCmdDraw
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t vertexCount
+-- >     , uint32_t instanceCount
+-- >     , uint32_t firstVertex
+-- >     , uint32_t firstInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDraw vkCmdDraw registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDraw" vkCmdDraw ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ vertexCount
@@ -10103,21 +14606,44 @@ foreign import ccall unsafe "vkCmdDraw" vkCmdDraw ::
                                                              -> Word32 -- ^ firstInstance
                                                                        -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDraw ::
+          VkCommandBuffer -- ^ commandBuffer
+                          -> Word32 -- ^ vertexCount
+                                    -> Word32 -- ^ instanceCount
+                                              -> Word32 -- ^ firstVertex
+                                                        -> Word32 -- ^ firstInstance
+                                                                  -> IO ()
+vkCmdDraw
+  = error $
+      "vkCmdDraw: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDraw"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDraw
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t vertexCount
---   >     , uint32_t instanceCount
---   >     , uint32_t firstVertex
---   >     , uint32_t firstInstance
---   >     )
+-- > () vkCmdDraw
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t vertexCount
+-- >     , uint32_t instanceCount
+-- >     , uint32_t firstVertex
+-- >     , uint32_t firstInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDraw vkCmdDraw registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDraw" vkCmdDrawSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ vertexCount
@@ -10125,6 +14651,25 @@ foreign import ccall safe "vkCmdDraw" vkCmdDrawSafe ::
                                                    -> Word32 -- ^ firstVertex
                                                              -> Word32 -- ^ firstInstance
                                                                        -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawSafe ::
+              VkCommandBuffer -- ^ commandBuffer
+                              -> Word32 -- ^ vertexCount
+                                        -> Word32 -- ^ instanceCount
+                                                  -> Word32 -- ^ firstVertex
+                                                            -> Word32 -- ^ firstInstance
+                                                                      -> IO ()
+vkCmdDrawSafe = vkCmdDraw
+
+{-# INLINE vkCmdDrawSafe #-}
+
+{-# WARNING
+vkCmdDrawSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -10140,7 +14685,7 @@ foreign import ccall safe "vkCmdDraw" vkCmdDrawSafe ::
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDraw vkCmdDraw registry at www.khronos.org>
 type HS_vkCmdDraw =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ vertexCount
@@ -10180,22 +14725,24 @@ is_VkCmdDrawIndexed = (EQ ==) . cmpCStrings _VkCmdDrawIndexed
 
 type VkCmdDrawIndexed = "vkCmdDrawIndexed"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndexed
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t indexCount
---   >     , uint32_t instanceCount
---   >     , uint32_t firstIndex
---   >     , int32_t vertexOffset
---   >     , uint32_t firstInstance
---   >     )
+-- > () vkCmdDrawIndexed
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t indexCount
+-- >     , uint32_t instanceCount
+-- >     , uint32_t firstIndex
+-- >     , int32_t vertexOffset
+-- >     , uint32_t firstInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDrawIndexed" vkCmdDrawIndexed ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10206,22 +14753,47 @@ foreign import ccall unsafe "vkCmdDrawIndexed" vkCmdDrawIndexed ::
                                                      -> Word32 -- ^ firstInstance
                                                                -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndexed ::
+                 VkCommandBuffer -- ^ commandBuffer
+                                 ->
+                   Word32 -- ^ indexCount
+                          -> Word32 -- ^ instanceCount
+                                    -> Word32 -- ^ firstIndex
+                                              -> Int32 -- ^ vertexOffset
+                                                       -> Word32 -- ^ firstInstance
+                                                                 -> IO ()
+vkCmdDrawIndexed
+  = error $
+      "vkCmdDrawIndexed: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDrawIndexed"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndexed
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t indexCount
---   >     , uint32_t instanceCount
---   >     , uint32_t firstIndex
---   >     , int32_t vertexOffset
---   >     , uint32_t firstInstance
---   >     )
+-- > () vkCmdDrawIndexed
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t indexCount
+-- >     , uint32_t instanceCount
+-- >     , uint32_t firstIndex
+-- >     , int32_t vertexOffset
+-- >     , uint32_t firstInstance
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDrawIndexed" vkCmdDrawIndexedSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10233,6 +14805,27 @@ foreign import ccall safe "vkCmdDrawIndexed" vkCmdDrawIndexedSafe
                                                      -> Word32 -- ^ firstInstance
                                                                -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndexedSafe ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     ->
+                       Word32 -- ^ indexCount
+                              -> Word32 -- ^ instanceCount
+                                        -> Word32 -- ^ firstIndex
+                                                  -> Int32 -- ^ vertexOffset
+                                                           -> Word32 -- ^ firstInstance
+                                                                     -> IO ()
+vkCmdDrawIndexedSafe = vkCmdDrawIndexed
+
+{-# INLINE vkCmdDrawIndexedSafe #-}
+
+{-# WARNING
+vkCmdDrawIndexedSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | queues: 'graphics'.
 --
 --   renderpass: @inside@
@@ -10248,7 +14841,7 @@ foreign import ccall safe "vkCmdDrawIndexed" vkCmdDrawIndexedSafe
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
 type HS_vkCmdDrawIndexed =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10290,21 +14883,23 @@ is_VkCmdDrawIndirect = (EQ ==) . cmpCStrings _VkCmdDrawIndirect
 
 type VkCmdDrawIndirect = "vkCmdDrawIndirect"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , uint32_t drawCount
---   >     , uint32_t stride
---   >     )
+-- > () vkCmdDrawIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , uint32_t drawCount
+-- >     , uint32_t stride
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDrawIndirect" vkCmdDrawIndirect
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10315,21 +14910,45 @@ foreign import ccall unsafe "vkCmdDrawIndirect" vkCmdDrawIndirect
                                                     -> Word32 -- ^ stride
                                                               -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndirect ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  ->
+                    VkBuffer -- ^ buffer
+                             -> VkDeviceSize -- ^ offset
+                                             -> Word32 -- ^ drawCount
+                                                       -> Word32 -- ^ stride
+                                                                 -> IO ()
+vkCmdDrawIndirect
+  = error $
+      "vkCmdDrawIndirect: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDrawIndirect"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , uint32_t drawCount
---   >     , uint32_t stride
---   >     )
+-- > () vkCmdDrawIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , uint32_t drawCount
+-- >     , uint32_t stride
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDrawIndirect" vkCmdDrawIndirectSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10339,6 +14958,26 @@ foreign import ccall safe "vkCmdDrawIndirect" vkCmdDrawIndirectSafe
                                           -> Word32 -- ^ drawCount
                                                     -> Word32 -- ^ stride
                                                               -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndirectSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      ->
+                        VkBuffer -- ^ buffer
+                                 -> VkDeviceSize -- ^ offset
+                                                 -> Word32 -- ^ drawCount
+                                                           -> Word32 -- ^ stride
+                                                                     -> IO ()
+vkCmdDrawIndirectSafe = vkCmdDrawIndirect
+
+{-# INLINE vkCmdDrawIndirectSafe #-}
+
+{-# WARNING
+vkCmdDrawIndirectSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -10354,7 +14993,7 @@ foreign import ccall safe "vkCmdDrawIndirect" vkCmdDrawIndirectSafe
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10397,21 +15036,23 @@ is_VkCmdDrawIndexedIndirect
 
 type VkCmdDrawIndexedIndirect = "vkCmdDrawIndexedIndirect"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndexedIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , uint32_t drawCount
---   >     , uint32_t stride
---   >     )
+-- > () vkCmdDrawIndexedIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , uint32_t drawCount
+-- >     , uint32_t stride
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDrawIndexedIndirect"
                vkCmdDrawIndexedIndirect ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10422,21 +15063,45 @@ foreign import ccall unsafe "vkCmdDrawIndexedIndirect"
                                                     -> Word32 -- ^ stride
                                                               -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndexedIndirect ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         ->
+                           VkBuffer -- ^ buffer
+                                    -> VkDeviceSize -- ^ offset
+                                                    -> Word32 -- ^ drawCount
+                                                              -> Word32 -- ^ stride
+                                                                        -> IO ()
+vkCmdDrawIndexedIndirect
+  = error $
+      "vkCmdDrawIndexedIndirect: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDrawIndexedIndirect"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdDrawIndexedIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     , uint32_t drawCount
---   >     , uint32_t stride
---   >     )
+-- > () vkCmdDrawIndexedIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     , uint32_t drawCount
+-- >     , uint32_t stride
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDrawIndexedIndirect"
                vkCmdDrawIndexedIndirectSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10446,6 +15111,26 @@ foreign import ccall safe "vkCmdDrawIndexedIndirect"
                                           -> Word32 -- ^ drawCount
                                                     -> Word32 -- ^ stride
                                                               -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDrawIndexedIndirectSafe ::
+                             VkCommandBuffer -- ^ commandBuffer
+                                             ->
+                               VkBuffer -- ^ buffer
+                                        -> VkDeviceSize -- ^ offset
+                                                        -> Word32 -- ^ drawCount
+                                                                  -> Word32 -- ^ stride
+                                                                            -> IO ()
+vkCmdDrawIndexedIndirectSafe = vkCmdDrawIndexedIndirect
+
+{-# INLINE vkCmdDrawIndexedIndirectSafe #-}
+
+{-# WARNING
+vkCmdDrawIndexedIndirectSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -10461,7 +15146,7 @@ foreign import ccall safe "vkCmdDrawIndexedIndirect"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndexedIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10504,20 +15189,22 @@ is_VkCmdDispatch = (EQ ==) . cmpCStrings _VkCmdDispatch
 
 type VkCmdDispatch = "vkCmdDispatch"
 
--- | queues: 'compute'.
+-- |
+-- queues: 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @compute@
+-- pipeline: @compute@
 --
---   > () vkCmdDispatch
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t groupCountX
---   >     , uint32_t groupCountY
---   >     , uint32_t groupCountZ
---   >     )
+-- > () vkCmdDispatch
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t groupCountX
+-- >     , uint32_t groupCountY
+-- >     , uint32_t groupCountZ
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDispatch" vkCmdDispatch ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ groupCountX
@@ -10525,26 +15212,66 @@ foreign import ccall unsafe "vkCmdDispatch" vkCmdDispatch ::
                                                    -> Word32 -- ^ groupCountZ
                                                              -> IO ()
 
--- | queues: 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDispatch ::
+              VkCommandBuffer -- ^ commandBuffer
+                              -> Word32 -- ^ groupCountX
+                                        -> Word32 -- ^ groupCountY
+                                                  -> Word32 -- ^ groupCountZ
+                                                            -> IO ()
+vkCmdDispatch
+  = error $
+      "vkCmdDispatch: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDispatch"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @compute@
+-- pipeline: @compute@
 --
---   > () vkCmdDispatch
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t groupCountX
---   >     , uint32_t groupCountY
---   >     , uint32_t groupCountZ
---   >     )
+-- > () vkCmdDispatch
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t groupCountX
+-- >     , uint32_t groupCountY
+-- >     , uint32_t groupCountZ
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDispatch" vkCmdDispatchSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ groupCountX
                                          -> Word32 -- ^ groupCountY
                                                    -> Word32 -- ^ groupCountZ
                                                              -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDispatchSafe ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  -> Word32 -- ^ groupCountX
+                                            -> Word32 -- ^ groupCountY
+                                                      -> Word32 -- ^ groupCountZ
+                                                                -> IO ()
+vkCmdDispatchSafe = vkCmdDispatch
+
+{-# INLINE vkCmdDispatchSafe #-}
+
+{-# WARNING
+vkCmdDispatchSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'compute'.
 --
@@ -10559,7 +15286,7 @@ foreign import ccall safe "vkCmdDispatch" vkCmdDispatchSafe ::
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
 type HS_vkCmdDispatch =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ groupCountX
@@ -10599,19 +15326,21 @@ is_VkCmdDispatchIndirect
 
 type VkCmdDispatchIndirect = "vkCmdDispatchIndirect"
 
--- | queues: 'compute'.
+-- |
+-- queues: 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @compute@
+-- pipeline: @compute@
 --
---   > () vkCmdDispatchIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     )
+-- > () vkCmdDispatchIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdDispatchIndirect"
                vkCmdDispatchIndirect ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10619,25 +15348,63 @@ foreign import ccall unsafe "vkCmdDispatchIndirect"
                                            -> VkDeviceSize -- ^ offset
                                                            -> IO ()
 
--- | queues: 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDispatchIndirect ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      -> VkBuffer -- ^ buffer
+                                                  -> VkDeviceSize -- ^ offset
+                                                                  -> IO ()
+vkCmdDispatchIndirect
+  = error $
+      "vkCmdDispatchIndirect: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdDispatchIndirect"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @compute@
+-- pipeline: @compute@
 --
---   > () vkCmdDispatchIndirect
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer buffer
---   >     , VkDeviceSize offset
---   >     )
+-- > () vkCmdDispatchIndirect
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer buffer
+-- >     , VkDeviceSize offset
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdDispatchIndirect"
                vkCmdDispatchIndirectSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkBuffer -- ^ buffer
                                            -> VkDeviceSize -- ^ offset
                                                            -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdDispatchIndirectSafe ::
+                          VkCommandBuffer -- ^ commandBuffer
+                                          -> VkBuffer -- ^ buffer
+                                                      -> VkDeviceSize -- ^ offset
+                                                                      -> IO ()
+vkCmdDispatchIndirectSafe = vkCmdDispatchIndirect
+
+{-# INLINE vkCmdDispatchIndirectSafe #-}
+
+{-# WARNING
+vkCmdDispatchIndirectSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'compute'.
 --
@@ -10651,7 +15418,7 @@ foreign import ccall safe "vkCmdDispatchIndirect"
 --   >     , VkDeviceSize offset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
 type HS_vkCmdDispatchIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -10689,21 +15456,23 @@ is_VkCmdCopyBuffer = (EQ ==) . cmpCStrings _VkCmdCopyBuffer
 
 type VkCmdCopyBuffer = "vkCmdCopyBuffer"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer srcBuffer
---   >     , VkBuffer dstBuffer
---   >     , uint32_t regionCount
---   >     , const VkBufferCopy* pRegions
---   >     )
+-- > () vkCmdCopyBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer srcBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , uint32_t regionCount
+-- >     , const VkBufferCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdCopyBuffer" vkCmdCopyBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10713,21 +15482,45 @@ foreign import ccall unsafe "vkCmdCopyBuffer" vkCmdCopyBuffer ::
                                                 -> Ptr VkBufferCopy -- ^ pRegions
                                                                     -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyBuffer ::
+                VkCommandBuffer -- ^ commandBuffer
+                                ->
+                  VkBuffer -- ^ srcBuffer
+                           -> VkBuffer -- ^ dstBuffer
+                                       -> Word32 -- ^ regionCount
+                                                 -> Ptr VkBufferCopy -- ^ pRegions
+                                                                     -> IO ()
+vkCmdCopyBuffer
+  = error $
+      "vkCmdCopyBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdCopyBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer srcBuffer
---   >     , VkBuffer dstBuffer
---   >     , uint32_t regionCount
---   >     , const VkBufferCopy* pRegions
---   >     )
+-- > () vkCmdCopyBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer srcBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , uint32_t regionCount
+-- >     , const VkBufferCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdCopyBuffer" vkCmdCopyBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10736,6 +15529,26 @@ foreign import ccall safe "vkCmdCopyBuffer" vkCmdCopyBufferSafe ::
                                       -> Word32 -- ^ regionCount
                                                 -> Ptr VkBufferCopy -- ^ pRegions
                                                                     -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyBufferSafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      VkBuffer -- ^ srcBuffer
+                               -> VkBuffer -- ^ dstBuffer
+                                           -> Word32 -- ^ regionCount
+                                                     -> Ptr VkBufferCopy -- ^ pRegions
+                                                                         -> IO ()
+vkCmdCopyBufferSafe = vkCmdCopyBuffer
+
+{-# INLINE vkCmdCopyBufferSafe #-}
+
+{-# WARNING
+vkCmdCopyBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -10751,7 +15564,7 @@ foreign import ccall safe "vkCmdCopyBuffer" vkCmdCopyBufferSafe ::
 --   >     , const VkBufferCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
 type HS_vkCmdCopyBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10792,23 +15605,25 @@ is_VkCmdCopyImage = (EQ ==) . cmpCStrings _VkCmdCopyImage
 
 type VkCmdCopyImage = "vkCmdCopyImage"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdCopyImage" vkCmdCopyImage ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10822,23 +15637,51 @@ foreign import ccall unsafe "vkCmdCopyImage" vkCmdCopyImage ::
                                                         -> Ptr VkImageCopy -- ^ pRegions
                                                                            -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyImage ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 VkImage -- ^ srcImage
+                         ->
+                   VkImageLayout -- ^ srcImageLayout
+                                 ->
+                     VkImage -- ^ dstImage
+                             -> VkImageLayout -- ^ dstImageLayout
+                                              -> Word32 -- ^ regionCount
+                                                        -> Ptr VkImageCopy -- ^ pRegions
+                                                                           -> IO ()
+vkCmdCopyImage
+  = error $
+      "vkCmdCopyImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdCopyImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdCopyImage" vkCmdCopyImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10851,6 +15694,30 @@ foreign import ccall safe "vkCmdCopyImage" vkCmdCopyImageSafe ::
                                               -> Word32 -- ^ regionCount
                                                         -> Ptr VkImageCopy -- ^ pRegions
                                                                            -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyImageSafe ::
+                   VkCommandBuffer -- ^ commandBuffer
+                                   ->
+                     VkImage -- ^ srcImage
+                             ->
+                       VkImageLayout -- ^ srcImageLayout
+                                     ->
+                         VkImage -- ^ dstImage
+                                 -> VkImageLayout -- ^ dstImageLayout
+                                                  -> Word32 -- ^ regionCount
+                                                            -> Ptr VkImageCopy -- ^ pRegions
+                                                                               -> IO ()
+vkCmdCopyImageSafe = vkCmdCopyImage
+
+{-# INLINE vkCmdCopyImageSafe #-}
+
+{-# WARNING
+vkCmdCopyImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -10868,7 +15735,7 @@ foreign import ccall safe "vkCmdCopyImage" vkCmdCopyImageSafe ::
 --   >     , const VkImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
 type HS_vkCmdCopyImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10913,24 +15780,26 @@ is_VkCmdBlitImage = (EQ ==) . cmpCStrings _VkCmdBlitImage
 
 type VkCmdBlitImage = "vkCmdBlitImage"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdBlitImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageBlit* pRegions
---   >     , VkFilter filter
---   >     )
+-- > () vkCmdBlitImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageBlit* pRegions
+-- >     , VkFilter filter
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBlitImage" vkCmdBlitImage ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10946,24 +15815,54 @@ foreign import ccall unsafe "vkCmdBlitImage" vkCmdBlitImage ::
                                                                   -> VkFilter -- ^ filter
                                                                               -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBlitImage ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 VkImage -- ^ srcImage
+                         ->
+                   VkImageLayout -- ^ srcImageLayout
+                                 ->
+                     VkImage -- ^ dstImage
+                             ->
+                       VkImageLayout -- ^ dstImageLayout
+                                     -> Word32 -- ^ regionCount
+                                               -> Ptr VkImageBlit -- ^ pRegions
+                                                                  -> VkFilter -- ^ filter
+                                                                              -> IO ()
+vkCmdBlitImage
+  = error $
+      "vkCmdBlitImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBlitImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdBlitImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageBlit* pRegions
---   >     , VkFilter filter
---   >     )
+-- > () vkCmdBlitImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageBlit* pRegions
+-- >     , VkFilter filter
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBlitImage" vkCmdBlitImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10978,6 +15877,32 @@ foreign import ccall safe "vkCmdBlitImage" vkCmdBlitImageSafe ::
                                                -> Ptr VkImageBlit -- ^ pRegions
                                                                   -> VkFilter -- ^ filter
                                                                               -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBlitImageSafe ::
+                   VkCommandBuffer -- ^ commandBuffer
+                                   ->
+                     VkImage -- ^ srcImage
+                             ->
+                       VkImageLayout -- ^ srcImageLayout
+                                     ->
+                         VkImage -- ^ dstImage
+                                 ->
+                           VkImageLayout -- ^ dstImageLayout
+                                         -> Word32 -- ^ regionCount
+                                                   -> Ptr VkImageBlit -- ^ pRegions
+                                                                      -> VkFilter -- ^ filter
+                                                                                  -> IO ()
+vkCmdBlitImageSafe = vkCmdBlitImage
+
+{-# INLINE vkCmdBlitImageSafe #-}
+
+{-# WARNING
+vkCmdBlitImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -10996,7 +15921,7 @@ foreign import ccall safe "vkCmdBlitImage" vkCmdBlitImageSafe ::
 --   >     , VkFilter filter
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
 type HS_vkCmdBlitImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11045,22 +15970,24 @@ is_VkCmdCopyBufferToImage
 
 type VkCmdCopyBufferToImage = "vkCmdCopyBufferToImage"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyBufferToImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer srcBuffer
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkBufferImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyBufferToImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer srcBuffer
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkBufferImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdCopyBufferToImage"
                vkCmdCopyBufferToImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11074,22 +16001,49 @@ foreign import ccall unsafe "vkCmdCopyBufferToImage"
                                              -> Ptr VkBufferImageCopy -- ^ pRegions
                                                                       -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyBufferToImage ::
+                       VkCommandBuffer -- ^ commandBuffer
+                                       ->
+                         VkBuffer -- ^ srcBuffer
+                                  ->
+                           VkImage -- ^ dstImage
+                                   ->
+                             VkImageLayout -- ^ dstImageLayout
+                                           -> Word32 -- ^ regionCount
+                                                     -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                              -> IO ()
+vkCmdCopyBufferToImage
+  = error $
+      "vkCmdCopyBufferToImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdCopyBufferToImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyBufferToImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer srcBuffer
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkBufferImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyBufferToImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer srcBuffer
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkBufferImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdCopyBufferToImage"
                vkCmdCopyBufferToImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11102,6 +16056,29 @@ foreign import ccall safe "vkCmdCopyBufferToImage"
                                    -> Word32 -- ^ regionCount
                                              -> Ptr VkBufferImageCopy -- ^ pRegions
                                                                       -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyBufferToImageSafe ::
+                           VkCommandBuffer -- ^ commandBuffer
+                                           ->
+                             VkBuffer -- ^ srcBuffer
+                                      ->
+                               VkImage -- ^ dstImage
+                                       ->
+                                 VkImageLayout -- ^ dstImageLayout
+                                               -> Word32 -- ^ regionCount
+                                                         -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                                  -> IO ()
+vkCmdCopyBufferToImageSafe = vkCmdCopyBufferToImage
+
+{-# INLINE vkCmdCopyBufferToImageSafe #-}
+
+{-# WARNING
+vkCmdCopyBufferToImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -11118,7 +16095,7 @@ foreign import ccall safe "vkCmdCopyBufferToImage"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
 type HS_vkCmdCopyBufferToImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11165,22 +16142,24 @@ is_VkCmdCopyImageToBuffer
 
 type VkCmdCopyImageToBuffer = "vkCmdCopyImageToBuffer"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyImageToBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkBuffer dstBuffer
---   >     , uint32_t regionCount
---   >     , const VkBufferImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyImageToBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkBuffer dstBuffer
+-- >     , uint32_t regionCount
+-- >     , const VkBufferImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdCopyImageToBuffer"
                vkCmdCopyImageToBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11194,22 +16173,49 @@ foreign import ccall unsafe "vkCmdCopyImageToBuffer"
                                         -> Ptr VkBufferImageCopy -- ^ pRegions
                                                                  -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyImageToBuffer ::
+                       VkCommandBuffer -- ^ commandBuffer
+                                       ->
+                         VkImage -- ^ srcImage
+                                 ->
+                           VkImageLayout -- ^ srcImageLayout
+                                         ->
+                             VkBuffer -- ^ dstBuffer
+                                      -> Word32 -- ^ regionCount
+                                                -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                         -> IO ()
+vkCmdCopyImageToBuffer
+  = error $
+      "vkCmdCopyImageToBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdCopyImageToBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyImageToBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkBuffer dstBuffer
---   >     , uint32_t regionCount
---   >     , const VkBufferImageCopy* pRegions
---   >     )
+-- > () vkCmdCopyImageToBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkBuffer dstBuffer
+-- >     , uint32_t regionCount
+-- >     , const VkBufferImageCopy* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdCopyImageToBuffer"
                vkCmdCopyImageToBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11222,6 +16228,29 @@ foreign import ccall safe "vkCmdCopyImageToBuffer"
                               -> Word32 -- ^ regionCount
                                         -> Ptr VkBufferImageCopy -- ^ pRegions
                                                                  -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyImageToBufferSafe ::
+                           VkCommandBuffer -- ^ commandBuffer
+                                           ->
+                             VkImage -- ^ srcImage
+                                     ->
+                               VkImageLayout -- ^ srcImageLayout
+                                             ->
+                                 VkBuffer -- ^ dstBuffer
+                                          -> Word32 -- ^ regionCount
+                                                    -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                             -> IO ()
+vkCmdCopyImageToBufferSafe = vkCmdCopyImageToBuffer
+
+{-# INLINE vkCmdCopyImageToBufferSafe #-}
+
+{-# WARNING
+vkCmdCopyImageToBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -11238,7 +16267,7 @@ foreign import ccall safe "vkCmdCopyImageToBuffer"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
 type HS_vkCmdCopyImageToBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11283,21 +16312,23 @@ is_VkCmdUpdateBuffer = (EQ ==) . cmpCStrings _VkCmdUpdateBuffer
 
 type VkCmdUpdateBuffer = "vkCmdUpdateBuffer"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdUpdateBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize dataSize
---   >     , const void* pData
---   >     )
+-- > () vkCmdUpdateBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize dataSize
+-- >     , const void* pData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdUpdateBuffer" vkCmdUpdateBuffer
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11308,21 +16339,45 @@ foreign import ccall unsafe "vkCmdUpdateBuffer" vkCmdUpdateBuffer
                                                           -> Ptr Void -- ^ pData
                                                                       -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdUpdateBuffer ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  ->
+                    VkBuffer -- ^ dstBuffer
+                             -> VkDeviceSize -- ^ dstOffset
+                                             -> VkDeviceSize -- ^ dataSize
+                                                             -> Ptr Void -- ^ pData
+                                                                         -> IO ()
+vkCmdUpdateBuffer
+  = error $
+      "vkCmdUpdateBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdUpdateBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdUpdateBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize dataSize
---   >     , const void* pData
---   >     )
+-- > () vkCmdUpdateBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize dataSize
+-- >     , const void* pData
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdUpdateBuffer" vkCmdUpdateBufferSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11332,6 +16387,26 @@ foreign import ccall safe "vkCmdUpdateBuffer" vkCmdUpdateBufferSafe
                                           -> VkDeviceSize -- ^ dataSize
                                                           -> Ptr Void -- ^ pData
                                                                       -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdUpdateBufferSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      ->
+                        VkBuffer -- ^ dstBuffer
+                                 -> VkDeviceSize -- ^ dstOffset
+                                                 -> VkDeviceSize -- ^ dataSize
+                                                                 -> Ptr Void -- ^ pData
+                                                                             -> IO ()
+vkCmdUpdateBufferSafe = vkCmdUpdateBuffer
+
+{-# INLINE vkCmdUpdateBufferSafe #-}
+
+{-# WARNING
+vkCmdUpdateBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -11347,7 +16422,7 @@ foreign import ccall safe "vkCmdUpdateBuffer" vkCmdUpdateBufferSafe
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
 type HS_vkCmdUpdateBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11388,23 +16463,25 @@ is_VkCmdFillBuffer = (EQ ==) . cmpCStrings _VkCmdFillBuffer
 
 type VkCmdFillBuffer = "vkCmdFillBuffer"
 
--- | transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
+-- |
+-- transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
 --
---   queues: 'transfer', 'graphics', 'compute'.
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdFillBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize size
---   >     , uint32_t data
---   >     )
+-- > () vkCmdFillBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize size
+-- >     , uint32_t data
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdFillBuffer" vkCmdFillBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -11414,23 +16491,47 @@ foreign import ccall unsafe "vkCmdFillBuffer" vkCmdFillBuffer ::
                                                           -> Word32 -- ^ data
                                                                     -> IO ()
 
--- | transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdFillBuffer ::
+                VkCommandBuffer -- ^ commandBuffer
+                                ->
+                  VkBuffer -- ^ dstBuffer
+                           -> VkDeviceSize -- ^ dstOffset
+                                           -> VkDeviceSize -- ^ size
+                                                           -> Word32 -- ^ data
+                                                                     -> IO ()
+vkCmdFillBuffer
+  = error $
+      "vkCmdFillBuffer: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdFillBuffer"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
 --
---   queues: 'transfer', 'graphics', 'compute'.
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdFillBuffer
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize size
---   >     , uint32_t data
---   >     )
+-- > () vkCmdFillBuffer
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize size
+-- >     , uint32_t data
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdFillBuffer" vkCmdFillBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -11439,6 +16540,26 @@ foreign import ccall safe "vkCmdFillBuffer" vkCmdFillBufferSafe ::
                                           -> VkDeviceSize -- ^ size
                                                           -> Word32 -- ^ data
                                                                     -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdFillBufferSafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      VkBuffer -- ^ dstBuffer
+                               -> VkDeviceSize -- ^ dstOffset
+                                               -> VkDeviceSize -- ^ size
+                                                               -> Word32 -- ^ data
+                                                                         -> IO ()
+vkCmdFillBufferSafe = vkCmdFillBuffer
+
+{-# INLINE vkCmdFillBufferSafe #-}
+
+{-# WARNING
+vkCmdFillBufferSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
 --
@@ -11456,7 +16577,7 @@ foreign import ccall safe "vkCmdFillBuffer" vkCmdFillBufferSafe ::
 --   >     , uint32_t data
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
 type HS_vkCmdFillBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11498,22 +16619,24 @@ is_VkCmdClearColorImage
 
 type VkCmdClearColorImage = "vkCmdClearColorImage"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdClearColorImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage image
---   >     , VkImageLayout imageLayout
---   >     , const VkClearColorValue* pColor
---   >     , uint32_t rangeCount
---   >     , const VkImageSubresourceRange* pRanges
---   >     )
+-- > () vkCmdClearColorImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage image
+-- >     , VkImageLayout imageLayout
+-- >     , const VkClearColorValue* pColor
+-- >     , uint32_t rangeCount
+-- >     , const VkImageSubresourceRange* pRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdClearColorImage"
                vkCmdClearColorImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11528,22 +16651,50 @@ foreign import ccall unsafe "vkCmdClearColorImage"
                               -> Ptr VkImageSubresourceRange -- ^ pRanges
                                                              -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearColorImage ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     ->
+                       VkImage -- ^ image
+                               ->
+                         VkImageLayout -- ^ imageLayout
+                                       ->
+                           Ptr VkClearColorValue -- ^ pColor
+                                                 ->
+                             Word32 -- ^ rangeCount
+                                    -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                   -> IO ()
+vkCmdClearColorImage
+  = error $
+      "vkCmdClearColorImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdClearColorImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdClearColorImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage image
---   >     , VkImageLayout imageLayout
---   >     , const VkClearColorValue* pColor
---   >     , uint32_t rangeCount
---   >     , const VkImageSubresourceRange* pRanges
---   >     )
+-- > () vkCmdClearColorImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage image
+-- >     , VkImageLayout imageLayout
+-- >     , const VkClearColorValue* pColor
+-- >     , uint32_t rangeCount
+-- >     , const VkImageSubresourceRange* pRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdClearColorImage"
                vkCmdClearColorImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11557,6 +16708,30 @@ foreign import ccall safe "vkCmdClearColorImage"
                        Word32 -- ^ rangeCount
                               -> Ptr VkImageSubresourceRange -- ^ pRanges
                                                              -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearColorImageSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         ->
+                           VkImage -- ^ image
+                                   ->
+                             VkImageLayout -- ^ imageLayout
+                                           ->
+                               Ptr VkClearColorValue -- ^ pColor
+                                                     ->
+                                 Word32 -- ^ rangeCount
+                                        -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                       -> IO ()
+vkCmdClearColorImageSafe = vkCmdClearColorImage
+
+{-# INLINE vkCmdClearColorImageSafe #-}
+
+{-# WARNING
+vkCmdClearColorImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -11573,7 +16748,7 @@ foreign import ccall safe "vkCmdClearColorImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
 type HS_vkCmdClearColorImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11621,22 +16796,24 @@ is_VkCmdClearDepthStencilImage
 
 type VkCmdClearDepthStencilImage = "vkCmdClearDepthStencilImage"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdClearDepthStencilImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage image
---   >     , VkImageLayout imageLayout
---   >     , const VkClearDepthStencilValue* pDepthStencil
---   >     , uint32_t rangeCount
---   >     , const VkImageSubresourceRange* pRanges
---   >     )
+-- > () vkCmdClearDepthStencilImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage image
+-- >     , VkImageLayout imageLayout
+-- >     , const VkClearDepthStencilValue* pDepthStencil
+-- >     , uint32_t rangeCount
+-- >     , const VkImageSubresourceRange* pRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdClearDepthStencilImage"
                vkCmdClearDepthStencilImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11651,22 +16828,50 @@ foreign import ccall unsafe "vkCmdClearDepthStencilImage"
                               -> Ptr VkImageSubresourceRange -- ^ pRanges
                                                              -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearDepthStencilImage ::
+                            VkCommandBuffer -- ^ commandBuffer
+                                            ->
+                              VkImage -- ^ image
+                                      ->
+                                VkImageLayout -- ^ imageLayout
+                                              ->
+                                  Ptr VkClearDepthStencilValue -- ^ pDepthStencil
+                                                               ->
+                                    Word32 -- ^ rangeCount
+                                           -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                          -> IO ()
+vkCmdClearDepthStencilImage
+  = error $
+      "vkCmdClearDepthStencilImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdClearDepthStencilImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdClearDepthStencilImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage image
---   >     , VkImageLayout imageLayout
---   >     , const VkClearDepthStencilValue* pDepthStencil
---   >     , uint32_t rangeCount
---   >     , const VkImageSubresourceRange* pRanges
---   >     )
+-- > () vkCmdClearDepthStencilImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage image
+-- >     , VkImageLayout imageLayout
+-- >     , const VkClearDepthStencilValue* pDepthStencil
+-- >     , uint32_t rangeCount
+-- >     , const VkImageSubresourceRange* pRanges
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdClearDepthStencilImage"
                vkCmdClearDepthStencilImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11680,6 +16885,30 @@ foreign import ccall safe "vkCmdClearDepthStencilImage"
                        Word32 -- ^ rangeCount
                               -> Ptr VkImageSubresourceRange -- ^ pRanges
                                                              -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearDepthStencilImageSafe ::
+                                VkCommandBuffer -- ^ commandBuffer
+                                                ->
+                                  VkImage -- ^ image
+                                          ->
+                                    VkImageLayout -- ^ imageLayout
+                                                  ->
+                                      Ptr VkClearDepthStencilValue -- ^ pDepthStencil
+                                                                   ->
+                                        Word32 -- ^ rangeCount
+                                               -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                              -> IO ()
+vkCmdClearDepthStencilImageSafe = vkCmdClearDepthStencilImage
+
+{-# INLINE vkCmdClearDepthStencilImageSafe #-}
+
+{-# WARNING
+vkCmdClearDepthStencilImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -11696,7 +16925,7 @@ foreign import ccall safe "vkCmdClearDepthStencilImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
 type HS_vkCmdClearDepthStencilImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11744,21 +16973,23 @@ is_VkCmdClearAttachments
 
 type VkCmdClearAttachments = "vkCmdClearAttachments"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdClearAttachments
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t attachmentCount
---   >     , const VkClearAttachment* pAttachments
---   >     , uint32_t rectCount
---   >     , const VkClearRect* pRects
---   >     )
+-- > () vkCmdClearAttachments
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t attachmentCount
+-- >     , const VkClearAttachment* pAttachments
+-- >     , uint32_t rectCount
+-- >     , const VkClearRect* pRects
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdClearAttachments"
                vkCmdClearAttachments ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11770,21 +17001,46 @@ foreign import ccall unsafe "vkCmdClearAttachments"
                                                    -> Ptr VkClearRect -- ^ pRects
                                                                       -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearAttachments ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      ->
+                        Word32 -- ^ attachmentCount
+                               ->
+                          Ptr VkClearAttachment -- ^ pAttachments
+                                                -> Word32 -- ^ rectCount
+                                                          -> Ptr VkClearRect -- ^ pRects
+                                                                             -> IO ()
+vkCmdClearAttachments
+  = error $
+      "vkCmdClearAttachments: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdClearAttachments"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdClearAttachments
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t attachmentCount
---   >     , const VkClearAttachment* pAttachments
---   >     , uint32_t rectCount
---   >     , const VkClearRect* pRects
---   >     )
+-- > () vkCmdClearAttachments
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t attachmentCount
+-- >     , const VkClearAttachment* pAttachments
+-- >     , uint32_t rectCount
+-- >     , const VkClearRect* pRects
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdClearAttachments"
                vkCmdClearAttachmentsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11795,6 +17051,27 @@ foreign import ccall safe "vkCmdClearAttachments"
                                          -> Word32 -- ^ rectCount
                                                    -> Ptr VkClearRect -- ^ pRects
                                                                       -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdClearAttachmentsSafe ::
+                          VkCommandBuffer -- ^ commandBuffer
+                                          ->
+                            Word32 -- ^ attachmentCount
+                                   ->
+                              Ptr VkClearAttachment -- ^ pAttachments
+                                                    -> Word32 -- ^ rectCount
+                                                              -> Ptr VkClearRect -- ^ pRects
+                                                                                 -> IO ()
+vkCmdClearAttachmentsSafe = vkCmdClearAttachments
+
+{-# INLINE vkCmdClearAttachmentsSafe #-}
+
+{-# WARNING
+vkCmdClearAttachmentsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -11810,7 +17087,7 @@ foreign import ccall safe "vkCmdClearAttachments"
 --   >     , const VkClearRect* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
 type HS_vkCmdClearAttachments =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11852,23 +17129,25 @@ is_VkCmdResolveImage = (EQ ==) . cmpCStrings _VkCmdResolveImage
 
 type VkCmdResolveImage = "vkCmdResolveImage"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdResolveImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageResolve* pRegions
---   >     )
+-- > () vkCmdResolveImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageResolve* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdResolveImage" vkCmdResolveImage
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11883,23 +17162,51 @@ foreign import ccall unsafe "vkCmdResolveImage" vkCmdResolveImage
                                                         -> Ptr VkImageResolve -- ^ pRegions
                                                                               -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResolveImage ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  ->
+                    VkImage -- ^ srcImage
+                            ->
+                      VkImageLayout -- ^ srcImageLayout
+                                    ->
+                        VkImage -- ^ dstImage
+                                -> VkImageLayout -- ^ dstImageLayout
+                                                 -> Word32 -- ^ regionCount
+                                                           -> Ptr VkImageResolve -- ^ pRegions
+                                                                                 -> IO ()
+vkCmdResolveImage
+  = error $
+      "vkCmdResolveImage: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdResolveImage"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdResolveImage
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkImage srcImage
---   >     , VkImageLayout srcImageLayout
---   >     , VkImage dstImage
---   >     , VkImageLayout dstImageLayout
---   >     , uint32_t regionCount
---   >     , const VkImageResolve* pRegions
---   >     )
+-- > () vkCmdResolveImage
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkImage srcImage
+-- >     , VkImageLayout srcImageLayout
+-- >     , VkImage dstImage
+-- >     , VkImageLayout dstImageLayout
+-- >     , uint32_t regionCount
+-- >     , const VkImageResolve* pRegions
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdResolveImage" vkCmdResolveImageSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11913,6 +17220,30 @@ foreign import ccall safe "vkCmdResolveImage" vkCmdResolveImageSafe
                                               -> Word32 -- ^ regionCount
                                                         -> Ptr VkImageResolve -- ^ pRegions
                                                                               -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResolveImageSafe ::
+                      VkCommandBuffer -- ^ commandBuffer
+                                      ->
+                        VkImage -- ^ srcImage
+                                ->
+                          VkImageLayout -- ^ srcImageLayout
+                                        ->
+                            VkImage -- ^ dstImage
+                                    -> VkImageLayout -- ^ dstImageLayout
+                                                     -> Word32 -- ^ regionCount
+                                                               -> Ptr VkImageResolve -- ^ pRegions
+                                                                                     -> IO ()
+vkCmdResolveImageSafe = vkCmdResolveImage
+
+{-# INLINE vkCmdResolveImageSafe #-}
+
+{-# WARNING
+vkCmdResolveImageSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -11930,7 +17261,7 @@ foreign import ccall safe "vkCmdResolveImage" vkCmdResolveImageSafe
 --   >     , const VkImageResolve* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
 type HS_vkCmdResolveImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11975,39 +17306,79 @@ is_VkCmdSetEvent = (EQ ==) . cmpCStrings _VkCmdSetEvent
 
 type VkCmdSetEvent = "vkCmdSetEvent"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdSetEvent
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkEvent event
---   >     , VkPipelineStageFlags stageMask
---   >     )
+-- > () vkCmdSetEvent
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkEvent event
+-- >     , VkPipelineStageFlags stageMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdSetEvent" vkCmdSetEvent ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
                                           -> VkPipelineStageFlags -- ^ stageMask
                                                                   -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetEvent ::
+              VkCommandBuffer -- ^ commandBuffer
+                              -> VkEvent -- ^ event
+                                         -> VkPipelineStageFlags -- ^ stageMask
+                                                                 -> IO ()
+vkCmdSetEvent
+  = error $
+      "vkCmdSetEvent: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdSetEvent"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdSetEvent
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkEvent event
---   >     , VkPipelineStageFlags stageMask
---   >     )
+-- > () vkCmdSetEvent
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkEvent event
+-- >     , VkPipelineStageFlags stageMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdSetEvent" vkCmdSetEventSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
                                           -> VkPipelineStageFlags -- ^ stageMask
                                                                   -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdSetEventSafe ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  -> VkEvent -- ^ event
+                                             -> VkPipelineStageFlags -- ^ stageMask
+                                                                     -> IO ()
+vkCmdSetEventSafe = vkCmdSetEvent
+
+{-# INLINE vkCmdSetEventSafe #-}
+
+{-# WARNING
+vkCmdSetEventSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12019,7 +17390,7 @@ foreign import ccall safe "vkCmdSetEvent" vkCmdSetEventSafe ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
 type HS_vkCmdSetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -12057,39 +17428,79 @@ is_VkCmdResetEvent = (EQ ==) . cmpCStrings _VkCmdResetEvent
 
 type VkCmdResetEvent = "vkCmdResetEvent"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdResetEvent
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkEvent event
---   >     , VkPipelineStageFlags stageMask
---   >     )
+-- > () vkCmdResetEvent
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkEvent event
+-- >     , VkPipelineStageFlags stageMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdResetEvent" vkCmdResetEvent ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
                                           -> VkPipelineStageFlags -- ^ stageMask
                                                                   -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResetEvent ::
+                VkCommandBuffer -- ^ commandBuffer
+                                -> VkEvent -- ^ event
+                                           -> VkPipelineStageFlags -- ^ stageMask
+                                                                   -> IO ()
+vkCmdResetEvent
+  = error $
+      "vkCmdResetEvent: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdResetEvent"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdResetEvent
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkEvent event
---   >     , VkPipelineStageFlags stageMask
---   >     )
+-- > () vkCmdResetEvent
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkEvent event
+-- >     , VkPipelineStageFlags stageMask
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdResetEvent" vkCmdResetEventSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
                                           -> VkPipelineStageFlags -- ^ stageMask
                                                                   -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResetEventSafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    -> VkEvent -- ^ event
+                                               -> VkPipelineStageFlags -- ^ stageMask
+                                                                       -> IO ()
+vkCmdResetEventSafe = vkCmdResetEvent
+
+{-# INLINE vkCmdResetEventSafe #-}
+
+{-# WARNING
+vkCmdResetEventSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12101,7 +17512,7 @@ foreign import ccall safe "vkCmdResetEvent" vkCmdResetEventSafe ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
 type HS_vkCmdResetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -12139,25 +17550,27 @@ is_VkCmdWaitEvents = (EQ ==) . cmpCStrings _VkCmdWaitEvents
 
 type VkCmdWaitEvents = "vkCmdWaitEvents"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdWaitEvents
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t eventCount
---   >     , const VkEvent* pEvents
---   >     , VkPipelineStageFlags srcStageMask
---   >     , VkPipelineStageFlags dstStageMask
---   >     , uint32_t memoryBarrierCount
---   >     , const VkMemoryBarrier* pMemoryBarriers
---   >     , uint32_t bufferMemoryBarrierCount
---   >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
---   >     , uint32_t imageMemoryBarrierCount
---   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
---   >     )
+-- > () vkCmdWaitEvents
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t eventCount
+-- >     , const VkEvent* pEvents
+-- >     , VkPipelineStageFlags srcStageMask
+-- >     , VkPipelineStageFlags dstStageMask
+-- >     , uint32_t memoryBarrierCount
+-- >     , const VkMemoryBarrier* pMemoryBarriers
+-- >     , uint32_t bufferMemoryBarrierCount
+-- >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
+-- >     , uint32_t imageMemoryBarrierCount
+-- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdWaitEvents" vkCmdWaitEvents ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12181,25 +17594,63 @@ foreign import ccall unsafe "vkCmdWaitEvents" vkCmdWaitEvents ::
                                         -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
                                                                     -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdWaitEvents ::
+                VkCommandBuffer -- ^ commandBuffer
+                                ->
+                  Word32 -- ^ eventCount
+                         ->
+                    Ptr VkEvent -- ^ pEvents
+                                ->
+                      VkPipelineStageFlags -- ^ srcStageMask
+                                           ->
+                        VkPipelineStageFlags -- ^ dstStageMask
+                                             ->
+                          Word32 -- ^ memoryBarrierCount
+                                 ->
+                            Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                                ->
+                              Word32 -- ^ bufferMemoryBarrierCount
+                                     ->
+                                Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                          ->
+                                  Word32 -- ^ imageMemoryBarrierCount
+                                         -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                     -> IO ()
+vkCmdWaitEvents
+  = error $
+      "vkCmdWaitEvents: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdWaitEvents"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdWaitEvents
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t eventCount
---   >     , const VkEvent* pEvents
---   >     , VkPipelineStageFlags srcStageMask
---   >     , VkPipelineStageFlags dstStageMask
---   >     , uint32_t memoryBarrierCount
---   >     , const VkMemoryBarrier* pMemoryBarriers
---   >     , uint32_t bufferMemoryBarrierCount
---   >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
---   >     , uint32_t imageMemoryBarrierCount
---   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
---   >     )
+-- > () vkCmdWaitEvents
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t eventCount
+-- >     , const VkEvent* pEvents
+-- >     , VkPipelineStageFlags srcStageMask
+-- >     , VkPipelineStageFlags dstStageMask
+-- >     , uint32_t memoryBarrierCount
+-- >     , const VkMemoryBarrier* pMemoryBarriers
+-- >     , uint32_t bufferMemoryBarrierCount
+-- >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
+-- >     , uint32_t imageMemoryBarrierCount
+-- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdWaitEvents" vkCmdWaitEventsSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12223,6 +17674,40 @@ foreign import ccall safe "vkCmdWaitEvents" vkCmdWaitEventsSafe ::
                                         -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
                                                                     -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdWaitEventsSafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      Word32 -- ^ eventCount
+                             ->
+                        Ptr VkEvent -- ^ pEvents
+                                    ->
+                          VkPipelineStageFlags -- ^ srcStageMask
+                                               ->
+                            VkPipelineStageFlags -- ^ dstStageMask
+                                                 ->
+                              Word32 -- ^ memoryBarrierCount
+                                     ->
+                                Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                                    ->
+                                  Word32 -- ^ bufferMemoryBarrierCount
+                                         ->
+                                    Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                              ->
+                                      Word32 -- ^ imageMemoryBarrierCount
+                                             -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                         -> IO ()
+vkCmdWaitEventsSafe = vkCmdWaitEvents
+
+{-# INLINE vkCmdWaitEventsSafe #-}
+
+{-# WARNING
+vkCmdWaitEventsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
@@ -12241,7 +17726,7 @@ foreign import ccall safe "vkCmdWaitEvents" vkCmdWaitEventsSafe ::
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
 type HS_vkCmdWaitEvents =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12297,24 +17782,26 @@ is_VkCmdPipelineBarrier
 
 type VkCmdPipelineBarrier = "vkCmdPipelineBarrier"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdPipelineBarrier
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineStageFlags srcStageMask
---   >     , VkPipelineStageFlags dstStageMask
---   >     , VkDependencyFlags dependencyFlags
---   >     , uint32_t memoryBarrierCount
---   >     , const VkMemoryBarrier* pMemoryBarriers
---   >     , uint32_t bufferMemoryBarrierCount
---   >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
---   >     , uint32_t imageMemoryBarrierCount
---   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
---   >     )
+-- > () vkCmdPipelineBarrier
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineStageFlags srcStageMask
+-- >     , VkPipelineStageFlags dstStageMask
+-- >     , VkDependencyFlags dependencyFlags
+-- >     , uint32_t memoryBarrierCount
+-- >     , const VkMemoryBarrier* pMemoryBarriers
+-- >     , uint32_t bufferMemoryBarrierCount
+-- >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
+-- >     , uint32_t imageMemoryBarrierCount
+-- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdPipelineBarrier"
                vkCmdPipelineBarrier ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12337,24 +17824,60 @@ foreign import ccall unsafe "vkCmdPipelineBarrier"
                                       -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
                                                                   -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdPipelineBarrier ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     ->
+                       VkPipelineStageFlags -- ^ srcStageMask
+                                            ->
+                         VkPipelineStageFlags -- ^ dstStageMask
+                                              ->
+                           VkDependencyFlags -- ^ dependencyFlags
+                                             ->
+                             Word32 -- ^ memoryBarrierCount
+                                    ->
+                               Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                                   ->
+                                 Word32 -- ^ bufferMemoryBarrierCount
+                                        ->
+                                   Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                             ->
+                                     Word32 -- ^ imageMemoryBarrierCount
+                                            -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                        -> IO ()
+vkCmdPipelineBarrier
+  = error $
+      "vkCmdPipelineBarrier: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdPipelineBarrier"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdPipelineBarrier
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineStageFlags srcStageMask
---   >     , VkPipelineStageFlags dstStageMask
---   >     , VkDependencyFlags dependencyFlags
---   >     , uint32_t memoryBarrierCount
---   >     , const VkMemoryBarrier* pMemoryBarriers
---   >     , uint32_t bufferMemoryBarrierCount
---   >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
---   >     , uint32_t imageMemoryBarrierCount
---   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
---   >     )
+-- > () vkCmdPipelineBarrier
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineStageFlags srcStageMask
+-- >     , VkPipelineStageFlags dstStageMask
+-- >     , VkDependencyFlags dependencyFlags
+-- >     , uint32_t memoryBarrierCount
+-- >     , const VkMemoryBarrier* pMemoryBarriers
+-- >     , uint32_t bufferMemoryBarrierCount
+-- >     , const VkBufferMemoryBarrier* pBufferMemoryBarriers
+-- >     , uint32_t imageMemoryBarrierCount
+-- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdPipelineBarrier"
                vkCmdPipelineBarrierSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12377,6 +17900,38 @@ foreign import ccall safe "vkCmdPipelineBarrier"
                                       -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
                                                                   -> IO ()
 
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdPipelineBarrierSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         ->
+                           VkPipelineStageFlags -- ^ srcStageMask
+                                                ->
+                             VkPipelineStageFlags -- ^ dstStageMask
+                                                  ->
+                               VkDependencyFlags -- ^ dependencyFlags
+                                                 ->
+                                 Word32 -- ^ memoryBarrierCount
+                                        ->
+                                   Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                                       ->
+                                     Word32 -- ^ bufferMemoryBarrierCount
+                                            ->
+                                       Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                                 ->
+                                         Word32 -- ^ imageMemoryBarrierCount
+                                                -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                            -> IO ()
+vkCmdPipelineBarrierSafe = vkCmdPipelineBarrier
+
+{-# INLINE vkCmdPipelineBarrierSafe #-}
+
+{-# WARNING
+vkCmdPipelineBarrierSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
 --   renderpass: @both@
@@ -12394,7 +17949,7 @@ foreign import ccall safe "vkCmdPipelineBarrier"
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
 type HS_vkCmdPipelineBarrier =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12447,18 +18002,20 @@ is_VkCmdBeginQuery = (EQ ==) . cmpCStrings _VkCmdBeginQuery
 
 type VkCmdBeginQuery = "vkCmdBeginQuery"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBeginQuery
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     , VkQueryControlFlags flags
---   >     )
+-- > () vkCmdBeginQuery
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     , VkQueryControlFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBeginQuery" vkCmdBeginQuery ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12467,18 +18024,41 @@ foreign import ccall unsafe "vkCmdBeginQuery" vkCmdBeginQuery ::
                                        -> VkQueryControlFlags -- ^ flags
                                                               -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBeginQuery ::
+                VkCommandBuffer -- ^ commandBuffer
+                                ->
+                  VkQueryPool -- ^ queryPool
+                              -> Word32 -- ^ query
+                                        -> VkQueryControlFlags -- ^ flags
+                                                               -> IO ()
+vkCmdBeginQuery
+  = error $
+      "vkCmdBeginQuery: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBeginQuery"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdBeginQuery
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     , VkQueryControlFlags flags
---   >     )
+-- > () vkCmdBeginQuery
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     , VkQueryControlFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBeginQuery" vkCmdBeginQuerySafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12486,6 +18066,25 @@ foreign import ccall safe "vkCmdBeginQuery" vkCmdBeginQuerySafe ::
                              -> Word32 -- ^ query
                                        -> VkQueryControlFlags -- ^ flags
                                                               -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBeginQuerySafe ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      VkQueryPool -- ^ queryPool
+                                  -> Word32 -- ^ query
+                                            -> VkQueryControlFlags -- ^ flags
+                                                                   -> IO ()
+vkCmdBeginQuerySafe = vkCmdBeginQuery
+
+{-# INLINE vkCmdBeginQuerySafe #-}
+
+{-# WARNING
+vkCmdBeginQuerySafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12498,7 +18097,7 @@ foreign import ccall safe "vkCmdBeginQuery" vkCmdBeginQuerySafe ::
 --   >     , VkQueryControlFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
 type HS_vkCmdBeginQuery =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12538,39 +18137,78 @@ is_VkCmdEndQuery = (EQ ==) . cmpCStrings _VkCmdEndQuery
 
 type VkCmdEndQuery = "vkCmdEndQuery"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdEndQuery
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     )
+-- > () vkCmdEndQuery
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdEndQuery" vkCmdEndQuery ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkQueryPool -- ^ queryPool
                                               -> Word32 -- ^ query
                                                         -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdEndQuery :: VkCommandBuffer -- ^ commandBuffer
+                                 -> VkQueryPool -- ^ queryPool
+                                                -> Word32 -- ^ query
+                                                          -> IO ()
+vkCmdEndQuery
+  = error $
+      "vkCmdEndQuery: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdEndQuery"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdEndQuery
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     )
+-- > () vkCmdEndQuery
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdEndQuery" vkCmdEndQuerySafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkQueryPool -- ^ queryPool
                                               -> Word32 -- ^ query
                                                         -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdEndQuerySafe ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  -> VkQueryPool -- ^ queryPool
+                                                 -> Word32 -- ^ query
+                                                           -> IO ()
+vkCmdEndQuerySafe = vkCmdEndQuery
+
+{-# INLINE vkCmdEndQuerySafe #-}
+
+{-# WARNING
+vkCmdEndQuerySafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12582,7 +18220,7 @@ foreign import ccall safe "vkCmdEndQuery" vkCmdEndQuerySafe ::
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
 type HS_vkCmdEndQuery =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -12620,18 +18258,20 @@ is_VkCmdResetQueryPool = (EQ ==) . cmpCStrings _VkCmdResetQueryPool
 
 type VkCmdResetQueryPool = "vkCmdResetQueryPool"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdResetQueryPool
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     )
+-- > () vkCmdResetQueryPool
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdResetQueryPool"
                vkCmdResetQueryPool ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12640,18 +18280,40 @@ foreign import ccall unsafe "vkCmdResetQueryPool"
                                                         -> Word32 -- ^ queryCount
                                                                   -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResetQueryPool ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    -> VkQueryPool -- ^ queryPool
+                                                   -> Word32 -- ^ firstQuery
+                                                             -> Word32 -- ^ queryCount
+                                                                       -> IO ()
+vkCmdResetQueryPool
+  = error $
+      "vkCmdResetQueryPool: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdResetQueryPool"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   > () vkCmdResetQueryPool
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     )
+-- > () vkCmdResetQueryPool
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdResetQueryPool"
                vkCmdResetQueryPoolSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12659,6 +18321,24 @@ foreign import ccall safe "vkCmdResetQueryPool"
                                               -> Word32 -- ^ firstQuery
                                                         -> Word32 -- ^ queryCount
                                                                   -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdResetQueryPoolSafe ::
+                        VkCommandBuffer -- ^ commandBuffer
+                                        -> VkQueryPool -- ^ queryPool
+                                                       -> Word32 -- ^ firstQuery
+                                                                 -> Word32 -- ^ queryCount
+                                                                           -> IO ()
+vkCmdResetQueryPoolSafe = vkCmdResetQueryPool
+
+{-# INLINE vkCmdResetQueryPoolSafe #-}
+
+{-# WARNING
+vkCmdResetQueryPoolSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12671,7 +18351,7 @@ foreign import ccall safe "vkCmdResetQueryPool"
 --   >     , uint32_t queryCount
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
 type HS_vkCmdResetQueryPool =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -12710,20 +18390,22 @@ is_VkCmdWriteTimestamp = (EQ ==) . cmpCStrings _VkCmdWriteTimestamp
 
 type VkCmdWriteTimestamp = "vkCmdWriteTimestamp"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdWriteTimestamp
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineStageFlagBits pipelineStage
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     )
+-- > () vkCmdWriteTimestamp
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineStageFlagBits pipelineStage
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdWriteTimestamp"
                vkCmdWriteTimestamp ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12733,20 +18415,43 @@ foreign import ccall unsafe "vkCmdWriteTimestamp"
                                                         -> Word32 -- ^ query
                                                                   -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdWriteTimestamp ::
+                    VkCommandBuffer -- ^ commandBuffer
+                                    ->
+                      VkPipelineStageFlagBits -- ^ pipelineStage
+                                              -> VkQueryPool -- ^ queryPool
+                                                             -> Word32 -- ^ query
+                                                                       -> IO ()
+vkCmdWriteTimestamp
+  = error $
+      "vkCmdWriteTimestamp: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdWriteTimestamp"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdWriteTimestamp
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineStageFlagBits pipelineStage
---   >     , VkQueryPool queryPool
---   >     , uint32_t query
---   >     )
+-- > () vkCmdWriteTimestamp
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineStageFlagBits pipelineStage
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t query
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdWriteTimestamp"
                vkCmdWriteTimestampSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12755,6 +18460,25 @@ foreign import ccall safe "vkCmdWriteTimestamp"
                                          -> VkQueryPool -- ^ queryPool
                                                         -> Word32 -- ^ query
                                                                   -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdWriteTimestampSafe ::
+                        VkCommandBuffer -- ^ commandBuffer
+                                        ->
+                          VkPipelineStageFlagBits -- ^ pipelineStage
+                                                  -> VkQueryPool -- ^ queryPool
+                                                                 -> Word32 -- ^ query
+                                                                           -> IO ()
+vkCmdWriteTimestampSafe = vkCmdWriteTimestamp
+
+{-# INLINE vkCmdWriteTimestampSafe #-}
+
+{-# WARNING
+vkCmdWriteTimestampSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -12769,7 +18493,7 @@ foreign import ccall safe "vkCmdWriteTimestamp"
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
 type HS_vkCmdWriteTimestamp =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12811,24 +18535,26 @@ is_VkCmdCopyQueryPoolResults
 
 type VkCmdCopyQueryPoolResults = "vkCmdCopyQueryPoolResults"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyQueryPoolResults
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize stride
---   >     , VkQueryResultFlags flags
---   >     )
+-- > () vkCmdCopyQueryPoolResults
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize stride
+-- >     , VkQueryResultFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdCopyQueryPoolResults"
                vkCmdCopyQueryPoolResults ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12846,24 +18572,55 @@ foreign import ccall unsafe "vkCmdCopyQueryPoolResults"
                                                       -> VkQueryResultFlags -- ^ flags
                                                                             -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyQueryPoolResults ::
+                          VkCommandBuffer -- ^ commandBuffer
+                                          ->
+                            VkQueryPool -- ^ queryPool
+                                        ->
+                              Word32 -- ^ firstQuery
+                                     ->
+                                Word32 -- ^ queryCount
+                                       ->
+                                  VkBuffer -- ^ dstBuffer
+                                           ->
+                                    VkDeviceSize -- ^ dstOffset
+                                                 -> VkDeviceSize -- ^ stride
+                                                                 -> VkQueryResultFlags -- ^ flags
+                                                                                       -> IO ()
+vkCmdCopyQueryPoolResults
+  = error $
+      "vkCmdCopyQueryPoolResults: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdCopyQueryPoolResults"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @transfer@
+-- pipeline: @transfer@
 --
---   > () vkCmdCopyQueryPoolResults
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkQueryPool queryPool
---   >     , uint32_t firstQuery
---   >     , uint32_t queryCount
---   >     , VkBuffer dstBuffer
---   >     , VkDeviceSize dstOffset
---   >     , VkDeviceSize stride
---   >     , VkQueryResultFlags flags
---   >     )
+-- > () vkCmdCopyQueryPoolResults
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkQueryPool queryPool
+-- >     , uint32_t firstQuery
+-- >     , uint32_t queryCount
+-- >     , VkBuffer dstBuffer
+-- >     , VkDeviceSize dstOffset
+-- >     , VkDeviceSize stride
+-- >     , VkQueryResultFlags flags
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdCopyQueryPoolResults"
                vkCmdCopyQueryPoolResultsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12880,6 +18637,33 @@ foreign import ccall safe "vkCmdCopyQueryPoolResults"
                                       -> VkDeviceSize -- ^ stride
                                                       -> VkQueryResultFlags -- ^ flags
                                                                             -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdCopyQueryPoolResultsSafe ::
+                              VkCommandBuffer -- ^ commandBuffer
+                                              ->
+                                VkQueryPool -- ^ queryPool
+                                            ->
+                                  Word32 -- ^ firstQuery
+                                         ->
+                                    Word32 -- ^ queryCount
+                                           ->
+                                      VkBuffer -- ^ dstBuffer
+                                               ->
+                                        VkDeviceSize -- ^ dstOffset
+                                                     -> VkDeviceSize -- ^ stride
+                                                                     -> VkQueryResultFlags -- ^ flags
+                                                                                           -> IO ()
+vkCmdCopyQueryPoolResultsSafe = vkCmdCopyQueryPoolResults
+
+{-# INLINE vkCmdCopyQueryPoolResultsSafe #-}
+
+{-# WARNING
+vkCmdCopyQueryPoolResultsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -12898,7 +18682,7 @@ foreign import ccall safe "vkCmdCopyQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
 type HS_vkCmdCopyQueryPoolResults =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12948,20 +18732,22 @@ is_VkCmdPushConstants = (EQ ==) . cmpCStrings _VkCmdPushConstants
 
 type VkCmdPushConstants = "vkCmdPushConstants"
 
--- | queues: 'graphics', 'compute'.
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdPushConstants
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineLayout layout
---   >     , VkShaderStageFlags stageFlags
---   >     , uint32_t offset
---   >     , uint32_t size
---   >     , const void* pValues
---   >     )
+-- > () vkCmdPushConstants
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineLayout layout
+-- >     , VkShaderStageFlags stageFlags
+-- >     , uint32_t offset
+-- >     , uint32_t size
+-- >     , const void* pValues
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdPushConstants" vkCmdPushConstants
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12974,20 +18760,46 @@ foreign import ccall unsafe "vkCmdPushConstants" vkCmdPushConstants
                                                           -> Ptr Void -- ^ pValues
                                                                       -> IO ()
 
--- | queues: 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdPushConstants ::
+                   VkCommandBuffer -- ^ commandBuffer
+                                   ->
+                     VkPipelineLayout -- ^ layout
+                                      ->
+                       VkShaderStageFlags -- ^ stageFlags
+                                          -> Word32 -- ^ offset
+                                                    -> Word32 -- ^ size
+                                                              -> Ptr Void -- ^ pValues
+                                                                          -> IO ()
+vkCmdPushConstants
+  = error $
+      "vkCmdPushConstants: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdPushConstants"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdPushConstants
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineLayout layout
---   >     , VkShaderStageFlags stageFlags
---   >     , uint32_t offset
---   >     , uint32_t size
---   >     , const void* pValues
---   >     )
+-- > () vkCmdPushConstants
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkPipelineLayout layout
+-- >     , VkShaderStageFlags stageFlags
+-- >     , uint32_t offset
+-- >     , uint32_t size
+-- >     , const void* pValues
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdPushConstants"
                vkCmdPushConstantsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12999,6 +18811,28 @@ foreign import ccall safe "vkCmdPushConstants"
                                                 -> Word32 -- ^ size
                                                           -> Ptr Void -- ^ pValues
                                                                       -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdPushConstantsSafe ::
+                       VkCommandBuffer -- ^ commandBuffer
+                                       ->
+                         VkPipelineLayout -- ^ layout
+                                          ->
+                           VkShaderStageFlags -- ^ stageFlags
+                                              -> Word32 -- ^ offset
+                                                        -> Word32 -- ^ size
+                                                                  -> Ptr Void -- ^ pValues
+                                                                              -> IO ()
+vkCmdPushConstantsSafe = vkCmdPushConstants
+
+{-# INLINE vkCmdPushConstantsSafe #-}
+
+{-# WARNING
+vkCmdPushConstantsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -13013,7 +18847,7 @@ foreign import ccall safe "vkCmdPushConstants"
 --   >     , const void* pValues
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
 type HS_vkCmdPushConstants =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -13057,19 +18891,21 @@ is_VkCmdBeginRenderPass
 
 type VkCmdBeginRenderPass = "vkCmdBeginRenderPass"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdBeginRenderPass
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkRenderPassBeginInfo* pRenderPassBegin
---   >     , VkSubpassContents contents
---   >     )
+-- > () vkCmdBeginRenderPass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const VkRenderPassBeginInfo* pRenderPassBegin
+-- >     , VkSubpassContents contents
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdBeginRenderPass"
                vkCmdBeginRenderPass ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13078,19 +18914,41 @@ foreign import ccall unsafe "vkCmdBeginRenderPass"
                                            -> VkSubpassContents -- ^ contents
                                                                 -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBeginRenderPass ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     ->
+                       Ptr VkRenderPassBeginInfo -- ^ pRenderPassBegin
+                                                 -> VkSubpassContents -- ^ contents
+                                                                      -> IO ()
+vkCmdBeginRenderPass
+  = error $
+      "vkCmdBeginRenderPass: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdBeginRenderPass"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @outside@
+-- renderpass: @outside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdBeginRenderPass
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkRenderPassBeginInfo* pRenderPassBegin
---   >     , VkSubpassContents contents
---   >     )
+-- > () vkCmdBeginRenderPass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , const VkRenderPassBeginInfo* pRenderPassBegin
+-- >     , VkSubpassContents contents
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdBeginRenderPass"
                vkCmdBeginRenderPassSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13098,6 +18956,24 @@ foreign import ccall safe "vkCmdBeginRenderPass"
                  Ptr VkRenderPassBeginInfo -- ^ pRenderPassBegin
                                            -> VkSubpassContents -- ^ contents
                                                                 -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdBeginRenderPassSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         ->
+                           Ptr VkRenderPassBeginInfo -- ^ pRenderPassBegin
+                                                     -> VkSubpassContents -- ^ contents
+                                                                          -> IO ()
+vkCmdBeginRenderPassSafe = vkCmdBeginRenderPass
+
+{-# INLINE vkCmdBeginRenderPassSafe #-}
+
+{-# WARNING
+vkCmdBeginRenderPassSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -13111,7 +18987,7 @@ foreign import ccall safe "vkCmdBeginRenderPass"
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
 type HS_vkCmdBeginRenderPass =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -13150,39 +19026,76 @@ is_VkCmdNextSubpass = (EQ ==) . cmpCStrings _VkCmdNextSubpass
 
 type VkCmdNextSubpass = "vkCmdNextSubpass"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdNextSubpass
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkSubpassContents contents
---   >     )
+-- > () vkCmdNextSubpass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkSubpassContents contents
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdNextSubpass" vkCmdNextSubpass ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkSubpassContents -- ^ contents
                                                     -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdNextSubpass :: VkCommandBuffer -- ^ commandBuffer
+                                    -> VkSubpassContents -- ^ contents
+                                                         -> IO ()
+vkCmdNextSubpass
+  = error $
+      "vkCmdNextSubpass: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdNextSubpass"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdNextSubpass
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkSubpassContents contents
---   >     )
+-- > () vkCmdNextSubpass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , VkSubpassContents contents
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdNextSubpass" vkCmdNextSubpassSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkSubpassContents -- ^ contents
                                                        -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdNextSubpassSafe ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> VkSubpassContents -- ^ contents
+                                                          -> IO ()
+vkCmdNextSubpassSafe = vkCmdNextSubpass
+
+{-# INLINE vkCmdNextSubpassSafe #-}
+
+{-# WARNING
+vkCmdNextSubpassSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -13195,7 +19108,7 @@ foreign import ccall safe "vkCmdNextSubpass" vkCmdNextSubpassSafe
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
 type HS_vkCmdNextSubpass =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkSubpassContents -- ^ contents
@@ -13232,35 +19145,69 @@ is_VkCmdEndRenderPass = (EQ ==) . cmpCStrings _VkCmdEndRenderPass
 
 type VkCmdEndRenderPass = "vkCmdEndRenderPass"
 
--- | queues: 'graphics'.
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdEndRenderPass
---   >     ( VkCommandBuffer commandBuffer
---   >     )
+-- > () vkCmdEndRenderPass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdEndRenderPass" vkCmdEndRenderPass
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> IO ()
 
--- | queues: 'graphics'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdEndRenderPass :: VkCommandBuffer -- ^ commandBuffer
+                                      -> IO ()
+vkCmdEndRenderPass
+  = error $
+      "vkCmdEndRenderPass: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdEndRenderPass"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'graphics'.
 --
---   renderpass: @inside@
+-- renderpass: @inside@
 --
---   pipeline: @graphics@
+-- pipeline: @graphics@
 --
---   > () vkCmdEndRenderPass
---   >     ( VkCommandBuffer commandBuffer
---   >     )
+-- > () vkCmdEndRenderPass
+-- >     ( VkCommandBuffer commandBuffer
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdEndRenderPass"
                vkCmdEndRenderPassSafe :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdEndRenderPassSafe :: VkCommandBuffer -- ^ commandBuffer
+                                          -> IO ()
+vkCmdEndRenderPassSafe = vkCmdEndRenderPass
+
+{-# INLINE vkCmdEndRenderPassSafe #-}
+
+{-# WARNING
+vkCmdEndRenderPassSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'graphics'.
 --
@@ -13272,7 +19219,7 @@ foreign import ccall safe "vkCmdEndRenderPass"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
 type HS_vkCmdEndRenderPass = VkCommandBuffer -- ^ commandBuffer
                                              -> IO ()
 
@@ -13308,17 +19255,19 @@ is_VkCmdExecuteCommands
 
 type VkCmdExecuteCommands = "vkCmdExecuteCommands"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdExecuteCommands
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t commandBufferCount
---   >     , const VkCommandBuffer* pCommandBuffers
---   >     )
+-- > () vkCmdExecuteCommands
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t commandBufferCount
+-- >     , const VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCmdExecuteCommands"
                vkCmdExecuteCommands ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13326,23 +19275,61 @@ foreign import ccall unsafe "vkCmdExecuteCommands"
                                          -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                 -> IO ()
 
--- | queues: 'transfer', 'graphics', 'compute'.
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdExecuteCommands ::
+                     VkCommandBuffer -- ^ commandBuffer
+                                     -> Word32 -- ^ commandBufferCount
+                                               -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                      -> IO ()
+vkCmdExecuteCommands
+  = error $
+      "vkCmdExecuteCommands: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkCmdExecuteCommands"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
+
+-- |
+-- queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+-- renderpass: @both@
 --
---   > () vkCmdExecuteCommands
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t commandBufferCount
---   >     , const VkCommandBuffer* pCommandBuffers
---   >     )
+-- > () vkCmdExecuteCommands
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t commandBufferCount
+-- >     , const VkCommandBuffer* pCommandBuffers
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+##ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCmdExecuteCommands"
                vkCmdExecuteCommandsSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ commandBufferCount
                                          -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                 -> IO ()
+
+##else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkCmdExecuteCommandsSafe ::
+                         VkCommandBuffer -- ^ commandBuffer
+                                         -> Word32 -- ^ commandBufferCount
+                                                   -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                          -> IO ()
+vkCmdExecuteCommandsSafe = vkCmdExecuteCommands
+
+{-# INLINE vkCmdExecuteCommandsSafe #-}
+
+{-# WARNING
+vkCmdExecuteCommandsSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+##endif
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -13354,7 +19341,7 @@ foreign import ccall safe "vkCmdExecuteCommands"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
 type HS_vkCmdExecuteCommands =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ commandBufferCount

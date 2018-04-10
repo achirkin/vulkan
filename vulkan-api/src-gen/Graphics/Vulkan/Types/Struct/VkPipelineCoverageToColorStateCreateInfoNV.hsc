@@ -37,7 +37,7 @@ import           System.IO.Unsafe
 --   >     uint32_t         coverageToColorLocation;
 --   > } VkPipelineCoverageToColorStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineCoverageToColorStateCreateInfoNVVkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineCoverageToColorStateCreateInfoNV VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV## Addr##
                                                                                               ByteArray##
 

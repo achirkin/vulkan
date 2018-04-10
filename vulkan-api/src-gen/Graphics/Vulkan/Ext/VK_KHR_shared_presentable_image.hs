@@ -99,7 +99,7 @@ type VkGetSwapchainStatusKHR = "vkGetSwapchainStatusKHR"
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainStatusKHRvkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainStatusKHR vkGetSwapchainStatusKHR registry at www.khronos.org>
 type HS_vkGetSwapchainStatusKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain

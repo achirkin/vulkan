@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const void*                                    pView;
 --   > } VkMacOSSurfaceCreateInfoMVK;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMacOSSurfaceCreateInfoMVKVkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMacOSSurfaceCreateInfoMVK VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
 data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## Addr##
                                                                 ByteArray##
 

@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     LPCWSTR          name;
 --   > } VkImportMemoryWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportMemoryWin32HandleInfoKHRVkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportMemoryWin32HandleInfoKHR VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoKHR = VkImportMemoryWin32HandleInfoKHR## Addr##
                                                                           ByteArray##
 

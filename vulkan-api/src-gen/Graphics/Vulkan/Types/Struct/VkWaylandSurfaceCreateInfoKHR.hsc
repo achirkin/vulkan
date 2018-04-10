@@ -29,7 +29,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     struct wl_surface*               surface;
 --   > } VkWaylandSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWaylandSurfaceCreateInfoKHRVkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWaylandSurfaceCreateInfoKHR VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkWaylandSurfaceCreateInfoKHR = VkWaylandSurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 

@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         storageInputOutput16;
 --   > } VkPhysicalDevice16BitStorageFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevice16BitStorageFeaturesVkPhysicalDevice16BitStorageFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevice16BitStorageFeatures VkPhysicalDevice16BitStorageFeatures registry at www.khronos.org>
 data VkPhysicalDevice16BitStorageFeatures = VkPhysicalDevice16BitStorageFeatures## Addr##
                                                                                   ByteArray##
 

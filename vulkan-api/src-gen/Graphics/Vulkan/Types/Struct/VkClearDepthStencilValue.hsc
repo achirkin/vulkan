@@ -22,7 +22,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               stencil;
 --   > } VkClearDepthStencilValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearDepthStencilValueVkClearDepthStencilValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearDepthStencilValue VkClearDepthStencilValue registry at www.khronos.org>
 data VkClearDepthStencilValue = VkClearDepthStencilValue## Addr##
                                                           ByteArray##
 

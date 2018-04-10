@@ -174,7 +174,7 @@ type VkCmdSetDiscardRectangleEXT = "vkCmdSetDiscardRectangleEXT"
 --   >     , const VkRect2D* pDiscardRectangles
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDiscardRectangleEXTvkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDiscardRectangleEXT vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 type HS_vkCmdSetDiscardRectangleEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstDiscardRectangle

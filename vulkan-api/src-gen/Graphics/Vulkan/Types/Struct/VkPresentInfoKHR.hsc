@@ -32,7 +32,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkResult* pResults;
 --   > } VkPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPresentInfoKHRVkPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPresentInfoKHR VkPresentInfoKHR registry at www.khronos.org>
 data VkPresentInfoKHR = VkPresentInfoKHR## Addr## ByteArray##
 
 instance Eq VkPresentInfoKHR where

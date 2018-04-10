@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkExternalMemoryProperties    externalMemoryProperties;
 --   > } VkExternalBufferProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalBufferPropertiesVkExternalBufferProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalBufferProperties VkExternalBufferProperties registry at www.khronos.org>
 data VkExternalBufferProperties = VkExternalBufferProperties## Addr##
                                                               ByteArray##
 

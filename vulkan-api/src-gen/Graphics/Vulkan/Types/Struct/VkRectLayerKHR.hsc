@@ -25,7 +25,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     uint32_t                         layer;
 --   > } VkRectLayerKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRectLayerKHRVkRectLayerKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRectLayerKHR VkRectLayerKHR registry at www.khronos.org>
 data VkRectLayerKHR = VkRectLayerKHR## Addr## ByteArray##
 
 instance Eq VkRectLayerKHR where

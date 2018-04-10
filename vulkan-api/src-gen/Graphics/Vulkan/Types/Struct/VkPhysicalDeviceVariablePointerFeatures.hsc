@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         variablePointers;
 --   > } VkPhysicalDeviceVariablePointerFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceVariablePointerFeaturesVkPhysicalDeviceVariablePointerFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceVariablePointerFeatures VkPhysicalDeviceVariablePointerFeatures registry at www.khronos.org>
 data VkPhysicalDeviceVariablePointerFeatures = VkPhysicalDeviceVariablePointerFeatures## Addr##
                                                                                         ByteArray##
 

@@ -24,7 +24,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               firstInstance;
 --   > } VkDrawIndirectCommand;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDrawIndirectCommandVkDrawIndirectCommand registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDrawIndirectCommand VkDrawIndirectCommand registry at www.khronos.org>
 data VkDrawIndirectCommand = VkDrawIndirectCommand## Addr##
                                                     ByteArray##
 

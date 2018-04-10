@@ -92,7 +92,7 @@ type VkCmdSetViewportWScalingNV = "vkCmdSetViewportWScalingNV"
 --   >     , const VkViewportWScalingNV* pViewportWScalings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewportWScalingNVvkCmdSetViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewportWScalingNV vkCmdSetViewportWScalingNV registry at www.khronos.org>
 type HS_vkCmdSetViewportWScalingNV =
      VkCommandBuffer -- ^ commandBuffer
                      ->

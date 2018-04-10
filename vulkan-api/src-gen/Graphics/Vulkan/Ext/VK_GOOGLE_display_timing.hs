@@ -96,7 +96,7 @@ type VkGetRefreshCycleDurationGOOGLE =
 --   >     , VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRefreshCycleDurationGOOGLEvkGetRefreshCycleDurationGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRefreshCycleDurationGOOGLE vkGetRefreshCycleDurationGOOGLE registry at www.khronos.org>
 type HS_vkGetRefreshCycleDurationGOOGLE =
      VkDevice -- ^ device
               ->
@@ -155,7 +155,7 @@ type VkGetPastPresentationTimingGOOGLE =
 --   >     , VkPastPresentationTimingGOOGLE* pPresentationTimings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPastPresentationTimingGOOGLEvkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPastPresentationTimingGOOGLE vkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
 type HS_vkGetPastPresentationTimingGOOGLE =
      VkDevice -- ^ device
               ->

@@ -149,7 +149,7 @@ type VkSetDebugUtilsObjectNameEXT = "vkSetDebugUtilsObjectNameEXT"
 --   >     , const VkDebugUtilsObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectNameEXTvkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectNameEXT vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectNameInfoEXT -- ^ pNameInfo
@@ -201,7 +201,7 @@ type VkSetDebugUtilsObjectTagEXT = "vkSetDebugUtilsObjectTagEXT"
 --   >     , const VkDebugUtilsObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectTagEXTvkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectTagEXT vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectTagInfoEXT -- ^ pTagInfo
@@ -250,7 +250,7 @@ type VkQueueBeginDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBeginDebugUtilsLabelEXTvkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBeginDebugUtilsLabelEXT vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueBeginDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -298,7 +298,7 @@ type VkQueueEndDebugUtilsLabelEXT = "vkQueueEndDebugUtilsLabelEXT"
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueEndDebugUtilsLabelEXTvkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueEndDebugUtilsLabelEXT vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueEndDebugUtilsLabelEXT = VkQueue -- ^ queue
                                                -> IO ()
 
@@ -346,7 +346,7 @@ type VkQueueInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueInsertDebugUtilsLabelEXTvkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueInsertDebugUtilsLabelEXT vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueInsertDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -399,7 +399,7 @@ type VkCmdBeginDebugUtilsLabelEXT = "vkCmdBeginDebugUtilsLabelEXT"
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginDebugUtilsLabelEXTvkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginDebugUtilsLabelEXT vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdBeginDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -449,7 +449,7 @@ type VkCmdEndDebugUtilsLabelEXT = "vkCmdEndDebugUtilsLabelEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndDebugUtilsLabelEXTvkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndDebugUtilsLabelEXT vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdEndDebugUtilsLabelEXT = VkCommandBuffer -- ^ commandBuffer
                                                      -> IO ()
 
@@ -500,7 +500,7 @@ type VkCmdInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdInsertDebugUtilsLabelEXTvkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdInsertDebugUtilsLabelEXT vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdInsertDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -557,7 +557,7 @@ type VkCreateDebugUtilsMessengerEXT =
 --   >     , VkDebugUtilsMessengerEXT* pMessenger
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugUtilsMessengerEXTvkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkCreateDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -614,7 +614,7 @@ type VkDestroyDebugUtilsMessengerEXT =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugUtilsMessengerEXTvkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkDestroyDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -667,7 +667,7 @@ type VkSubmitDebugUtilsMessageEXT = "vkSubmitDebugUtilsMessageEXT"
 --   >     , const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSubmitDebugUtilsMessageEXTvkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
 type HS_vkSubmitDebugUtilsMessageEXT =
      VkInstance -- ^ instance
                 ->

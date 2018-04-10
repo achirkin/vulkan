@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
+{-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
@@ -62,7 +65,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        where
 import           GHC.Ptr                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -85,6 +88,7 @@ import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkRect2D
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
+import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 pattern VkCreateSharedSwapchainsKHR :: CString
 
@@ -106,19 +110,21 @@ is_VkCreateSharedSwapchainsKHR
 
 type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkCreateSharedSwapchainsKHR
---   >     ( VkDevice device
---   >     , uint32_t swapchainCount
---   >     , const VkSwapchainCreateInfoKHR* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSwapchainKHR* pSwapchains
---   >     )
+-- > VkResult vkCreateSharedSwapchainsKHR
+-- >     ( VkDevice device
+-- >     , uint32_t swapchainCount
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchains
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device
@@ -131,19 +137,46 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                                                -> Ptr VkSwapchainKHR -- ^ pSwapchains
                                                                      -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSharedSwapchainsKHR ::
+                            VkDevice -- ^ device
+                                     ->
+                              Word32 -- ^ swapchainCount
+                                     ->
+                                Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                                             ->
+                                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                            -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                                                  -> IO VkResult
+vkCreateSharedSwapchainsKHR d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkCreateSharedSwapchainsKHR d)
+      d
+
+{-# INLINE vkCreateSharedSwapchainsKHR #-}
+
+{-# WARNING
+vkCreateSharedSwapchainsKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkCreateSharedSwapchainsKHR
---   >     ( VkDevice device
---   >     , uint32_t swapchainCount
---   >     , const VkSwapchainCreateInfoKHR* pCreateInfos
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSwapchainKHR* pSwapchains
---   >     )
+-- > VkResult vkCreateSharedSwapchainsKHR
+-- >     ( VkDevice device
+-- >     , uint32_t swapchainCount
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchains
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHRSafe ::
                VkDevice -- ^ device
@@ -155,6 +188,28 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                      Ptr VkAllocationCallbacks -- ^ pAllocator
                                                -> Ptr VkSwapchainKHR -- ^ pSwapchains
                                                                      -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSharedSwapchainsKHRSafe ::
+                                VkDevice -- ^ device
+                                         ->
+                                  Word32 -- ^ swapchainCount
+                                         ->
+                                    Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                                                 ->
+                                      Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                                                      -> IO VkResult
+vkCreateSharedSwapchainsKHRSafe = vkCreateSharedSwapchainsKHR
+
+{-# INLINE vkCreateSharedSwapchainsKHRSafe #-}
+
+{-# WARNING
+vkCreateSharedSwapchainsKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -168,7 +223,7 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 type HS_vkCreateSharedSwapchainsKHR =
      VkDevice -- ^ device
               ->

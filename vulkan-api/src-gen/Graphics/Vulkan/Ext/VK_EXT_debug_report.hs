@@ -115,7 +115,7 @@ type VkCreateDebugReportCallbackEXT =
 --   >     , VkDebugReportCallbackEXT* pCallback
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugReportCallbackEXTvkCreateDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT registry at www.khronos.org>
 type HS_vkCreateDebugReportCallbackEXT =
      VkInstance -- ^ instance
                 ->
@@ -172,7 +172,7 @@ type VkDestroyDebugReportCallbackEXT =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugReportCallbackEXTvkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
 type HS_vkDestroyDebugReportCallbackEXT =
      VkInstance -- ^ instance
                 ->
@@ -228,7 +228,7 @@ type VkDebugReportMessageEXT = "vkDebugReportMessageEXT"
 --   >     , const char* pMessage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugReportMessageEXTvkDebugReportMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugReportMessageEXT vkDebugReportMessageEXT registry at www.khronos.org>
 type HS_vkDebugReportMessageEXT =
      VkInstance -- ^ instance
                 ->

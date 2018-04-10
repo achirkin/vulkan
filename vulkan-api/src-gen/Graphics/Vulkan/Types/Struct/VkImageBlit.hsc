@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkOffset3D             dstOffsets[2];
 --   > } VkImageBlit;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageBlitVkImageBlit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageBlit VkImageBlit registry at www.khronos.org>
 data VkImageBlit = VkImageBlit## Addr## ByteArray##
 
 instance Eq VkImageBlit where

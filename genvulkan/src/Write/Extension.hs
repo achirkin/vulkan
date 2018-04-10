@@ -19,6 +19,7 @@ import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Extensions
 import           VkXml.Sections.Platforms
+import           Write.Commands
 import           Write.Feature
 import           Write.ModuleWriter
 
@@ -32,7 +33,9 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
         cmds = globCommands vkXml
         pfs = platforms $ globPlatforms vkXml
         mplatform = extPlatform >>= \pn -> Map.lookup pn pfs
-        genFFI = extName `elem` whitelistedExtensions
+        genFFI = if extName `elem` whitelistedExtensions
+                 then Nothing
+                 else Just NFFIDisable
 
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")

@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                             (u
 --   >     const VkDescriptorBindingFlagsEXT* pBindingFlags;
 --   > } VkDescriptorSetLayoutBindingFlagsCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetLayoutBindingFlagsCreateInfoEXTVkDescriptorSetLayoutBindingFlagsCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetLayoutBindingFlagsCreateInfoEXT VkDescriptorSetLayoutBindingFlagsCreateInfoEXT registry at www.khronos.org>
 data VkDescriptorSetLayoutBindingFlagsCreateInfoEXT = VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## Addr##
                                                                                                       ByteArray##
 

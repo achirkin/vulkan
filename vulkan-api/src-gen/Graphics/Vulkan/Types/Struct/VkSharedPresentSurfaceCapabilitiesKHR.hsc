@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkImageUsageFlags sharedPresentSupportedUsageFlags;
 --   > } VkSharedPresentSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSharedPresentSurfaceCapabilitiesKHRVkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSharedPresentSurfaceCapabilitiesKHR VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR## Addr##
                                                                                     ByteArray##
 

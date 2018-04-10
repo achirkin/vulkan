@@ -112,7 +112,7 @@ type VkGetPhysicalDeviceSurfaceCapabilities2KHR =
 --   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2KHRvkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2KHR vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -173,7 +173,7 @@ type VkGetPhysicalDeviceSurfaceFormats2KHR =
 --   >     , VkSurfaceFormat2KHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormats2KHRvkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormats2KHR vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceFormats2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

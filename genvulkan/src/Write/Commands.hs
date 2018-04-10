@@ -1,37 +1,51 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
-{-# LANGUAGE QuasiQuotes                #-}
 module Write.Commands
-  ( genCommand
+  ( genCommand, NativeFFI (..)
   ) where
 
 import           Control.Monad                        (forM_, when)
 import           Control.Monad.Reader.Class
+import           Data.Char                            (toUpper)
 import qualified Data.Map.Strict                      as Map
-import           Data.Maybe                           (isJust)
+import           Data.Maybe                           (fromMaybe, isJust)
 import           Data.Semigroup
 import           Data.Set                             (Set)
 import qualified Data.Set                             as Set
 import qualified Data.Text                            as T
-import           Data.Char (toUpper)
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
+import           VkXml.Sections
 import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
-import           VkXml.Sections
 
-import           Write.Types.Enum
 import           Write.ModuleWriter
+import           Write.Types.Enum
+
+-- | Ways to generate FFI code for vulkan commands.
+data NativeFFI
+  = NFFIDisable
+    -- ^ Do not generate FFI callbacks at all
+  | NFFIGuarded ProtectDef
+    -- ^ Generate FFI callbacks if CPP definition is present
+  deriving (Eq, Ord, Show)
+
+data StubType
+  = InstanceOp Bool -- is instance null?
+  | DeviceOp
+  | ErrorOp
+  deriving Eq
 
 
-genCommand :: Monad m => Bool -> VkCommand -> ModuleWriter m (Set VkTypeName)
-genCommand genFFI command@VkCommand
+genCommand :: Monad m => NativeFFI -> VkCommand -> ModuleWriter m (Set VkTypeName)
+genCommand nativeFFI command@VkCommand
   { cName = vkname
   , cNameOrig = cnameOrigTxt
   , cReturnType = vkrt
@@ -58,8 +72,8 @@ genCommand genFFI command@VkCommand
     return Set.empty
   else do
     regLink <- vkRegistryLink $ unVkCommandName vkname
-    let rezComment = appendComLine rezComment' regLink
-                 >>= preComment . T.unpack
+    let funComment = appendComLine rezComment' regLink
+        rezComment = funComment >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
     writeFullImport "Graphics.Vulkan.Marshal"
@@ -74,14 +88,91 @@ genCommand genFFI command@VkCommand
           writeImport $ DIThing "VkFlags" DITAll
         writeImport $ DIThing t dit
 
-    when genFFI $ do
-      -- foreign import unsafe
-      writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
-                        (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
+    case nativeFFI of
+      NFFIDisable -> pure ()
+      NFFIGuarded pDef -> do
 
-      -- foreign import safe
-      writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlaySafe Nothing False))
-                        (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
+        writePragma "CPP"
+        writePragma "TypeApplications"
+        writeImport $ DIVar "unsafeDupablePerformIO"
+        writeFullImport "Graphics.Vulkan.Marshal.Proc"
+        writeOptionsPragma (Just GHC) "-fno-warn-unused-imports"
+
+        let pFlagTxt = unProtectFlag (protectFlag pDef)
+            pCppTxt  = unProtectCPP  (protectCPP pDef)
+            comment1 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
+                     [ "|"
+                     , fromMaybe mempty funComment
+                     , "###ifdef " <> pCppTxt
+                     ]
+            comment2 = Just . CodeComment AboveCode ' ' $ T.unpack $ case stubType of
+                InstanceOp _ ->
+                  [text|
+                    ###else
+                    Note: without @$pFlagTxt@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag to call it natively to make sure you get the best performance.
+                  |]
+                DeviceOp ->
+                  [text|
+                    ###else
+                    Note: without @$pFlagTxt@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag to call it natively to make sure you get the best performance.
+                  |]
+                ErrorOp ->
+                  [text|
+                    ###else
+                    Warning: without @$pFlagTxt@ cabal flag this function returns error!
+                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag.
+                  |]
+            comment3 = Just $ CodeComment BelowCode ' ' "###endif"
+            annWarn = case stubType of
+              InstanceOp _ ->
+                "This function could be very inefficient. "
+                  ++ "It may call vkGetInstanceProcAddr every time you call it. "
+                  ++ "I suggest you to either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
+              DeviceOp ->
+                "This function could be very inefficient. "
+                  ++ "It may call vkGetDeviceProcAddr every time you call it. "
+                  ++ "I suggest you to either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
+              ErrorOp ->
+                "This function will return error! "
+                ++ "Either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
+
+
+        -- foreign import unsafe
+        writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlayRisky Nothing))
+                          (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
+        writeDecl $ TypeSig comment2 [Nothing <$ unqualify cname] funtype
+        writeDecl $ parseDecl' $ case stubType of
+            InstanceOp False -> [text|
+                $cnameTxt d =
+                   unsafeDupablePerformIO (vkGetInstanceProc @$vkInstanceProcSymbolT d) d
+              |]
+            InstanceOp True -> [text|
+                $cnameTxt =
+                   unsafeDupablePerformIO (vkGetInstanceProc @$vkInstanceProcSymbolT VK_NULL)
+              |]
+            DeviceOp -> [text|
+                $cnameTxt d =
+                   unsafeDupablePerformIO (vkGetDeviceProc @$vkInstanceProcSymbolT d) d
+              |]
+            ErrorOp -> [text|
+                $cnameTxt = error $ "$cnameTxt: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+                         ++ "Either lookup the function manually or enable $pFlagTxt cabal flag."
+              |]
+        when (stubType /= ErrorOp) $
+          writeDecl $ InlineSig Nothing True Nothing (Nothing <$ cname)
+        writeDecl $ WarnPragmaDecl comment3 [([Nothing <$ unqualify cname], annWarn)]
+
+        -- foreign import safe
+        writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlaySafe Nothing False))
+                          (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
+        writeDecl $ TypeSig comment2 [Nothing <$ unqualify cnameSafe] funtype
+        writeDecl $ parseDecl'
+          [text|$cnameSafeTxt = $cnameTxt|]
+        writeDecl $ InlineSig Nothing True Nothing (Nothing <$ cnameSafe)
+        writeDecl $ WarnPragmaDecl comment3 [([Nothing <$ unqualify cnameSafe], annWarn)]
+
 
     -- type synonym
     writeDecl $ TypeDecl rezComment
@@ -119,11 +210,29 @@ genCommand genFFI command@VkCommand
            . filter (T.isInfixOf "Vk" . unVkTypeName)
            $ requiresTypes command
   where
+    -- find out if we can use vkGetInstanceProcAddr or alike
+    stubType = case (cnameOrigTxt, map paramT vkpams) of
+      ("vkCreateInstance", _)
+        -> InstanceOp True
+      ("vkEnumerateInstanceLayerProperties", _)
+        -> InstanceOp True
+      ("vkEnumerateInstanceExtensionProperties", _)
+        -> InstanceOp True
+      (_, TyCon _ (UnQual _ (Ident _ "VkInstance")) : _)
+        -> InstanceOp False
+      (_, TyCon _ (UnQual _ (Ident _ "VkDevice")) : _)
+        -> DeviceOp
+      (_, _)
+        -> ErrorOp
+
+    genFFI = nativeFFI /= NFFIDisable
     vknameSafe = VkCommandName $ unVkCommandName vkname <> "Safe"
     cnameSafe = toQName vknameSafe
-    cnameSafeStr = T.unpack $ qNameTxt cnameSafe
+    cnameSafeTxt = qNameTxt cnameSafe
+    cnameSafeStr = T.unpack cnameSafeTxt
     cname = toQName vkname
-    cnameStr = T.unpack $ qNameTxt cname
+    cnameTxt = qNameTxt cname
+    cnameStr = T.unpack cnameTxt
     cnameOrigStr = T.unpack cnameOrigTxt
     funTypeNameStrHS = "HS_" <> cnameStr
     funTypeNameStrPFN = "PFN_" <> cnameStr
@@ -179,10 +288,11 @@ genCommand genFFI command@VkCommand
 
 
     firstUpCName = case T.unpack (unVkCommandName vkname) of
-      "" -> ""
+      ""     -> ""
       (x:xs) -> toUpper x : xs
     unwrapFun = T.pack $ "unwrap" <> firstUpCName
     vkInstanceProcSymbol = T.pack $ '_' : firstUpCName
+    vkInstanceProcSymbolT = T.pack firstUpCName
 
     writeAllImports = do
       writeImport $ DIThing funTypeNameTxtHS DITNo

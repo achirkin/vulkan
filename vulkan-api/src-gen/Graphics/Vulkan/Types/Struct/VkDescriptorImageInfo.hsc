@@ -26,7 +26,7 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   >     VkImageLayout   imageLayout;
 --   > } VkDescriptorImageInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorImageInfoVkDescriptorImageInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorImageInfo VkDescriptorImageInfo registry at www.khronos.org>
 data VkDescriptorImageInfo = VkDescriptorImageInfo## Addr##
                                                     ByteArray##
 

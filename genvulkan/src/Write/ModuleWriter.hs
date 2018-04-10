@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -fno-warn-orphans       #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DuplicateRecordFields      #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE FlexibleInstances          #-}
@@ -50,14 +51,15 @@ import qualified Data.Set                             as Set
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Data.Traversable                     (mapAccumL)
+import           GHC.Generics                         (Generic)
 import           GHC.Stack                            (HasCallStack)
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
-import           Write.Util.NFData ()
 import           Write.Util.DeclaredNames
+import           Write.Util.NFData                    ()
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
@@ -80,7 +82,9 @@ data ModuleWriting
   , mExports      :: Seq (ExportSpec A)
   , pendingSec    :: Seq (Int, Text)
   , currentSecLvl :: Int
-  }
+  } deriving (Generic)
+
+instance NFData ModuleWriting
 
 newtype ModuleWriter m a
   = ModuleWriter
@@ -173,7 +177,7 @@ writeImport' :: Monad m
             -> (ModuleName (), [ImportSpec ()])
             -> ModuleWriter m ()
 writeImport' di (m,[]) = writeImport'' m (diToImportSpec di)
-writeImport' _ (m,xs) = mapM_ (writeImport'' m) xs
+writeImport' _ (m,xs)  = mapM_ (writeImport'' m) xs
 
 writeImport'' :: Monad m
               => ModuleName ()
@@ -243,7 +247,7 @@ writeExport di = do
    \mr -> mr
      { globalNames =
        foldr (\n m -> case Map.lookup n m of
-                Just _ -> m
+                Just _  -> m
                 Nothing -> Map.insert n (mName mr, [diToImportSpec n]) m
              ) (globalNames mr) dis
       }
@@ -513,13 +517,13 @@ vkRegistryLink tname = do
     vkXml <- ask
     pure $ "<https://www.khronos.org/registry/vulkan/specs/"
         <> Feature.number (last $ globFeature vkXml)
-        <> "-extensions/html/vkspec.html#" <> tname
+        <> "-extensions/html/vkspec.html#" <> tname <> " "
         <> tname <> " registry at www.khronos.org>"
 
 
 
 i2espec :: ImportSpec a -> ExportSpec a
-i2espec (IVar a n) = EVar a (UnQual a n)
-i2espec (IAbs a n m) = EAbs a n (UnQual a m)
-i2espec (IThingAll a n) = EThingWith a (EWildcard a 0) (UnQual a n) []
+i2espec (IVar a n)          = EVar a (UnQual a n)
+i2espec (IAbs a n m)        = EAbs a n (UnQual a m)
+i2espec (IThingAll a n)     = EThingWith a (EWildcard a 0) (UnQual a n) []
 i2espec (IThingWith a n cn) = EThingWith a (NoWildcard a) (UnQual a n) cn

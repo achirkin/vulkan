@@ -80,7 +80,7 @@ type VkGetShaderInfoAMD = "vkGetShaderInfoAMD"
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetShaderInfoAMDvkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetShaderInfoAMD vkGetShaderInfoAMD registry at www.khronos.org>
 type HS_vkGetShaderInfoAMD =
      VkDevice -- ^ device
               ->

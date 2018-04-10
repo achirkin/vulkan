@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     DWORD                            dwAccess;
 --   > } VkExportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportMemoryWin32HandleInfoNVVkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportMemoryWin32HandleInfoNV VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## Addr##
                                                                         ByteArray##
 

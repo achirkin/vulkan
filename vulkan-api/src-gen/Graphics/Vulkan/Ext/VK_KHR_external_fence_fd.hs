@@ -85,7 +85,7 @@ type VkImportFenceFdKHR = "vkImportFenceFdKHR"
 --   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceFdKHRvkImportFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceFdKHR vkImportFenceFdKHR registry at www.khronos.org>
 type HS_vkImportFenceFdKHR =
      VkDevice -- ^ device
               -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
@@ -132,7 +132,7 @@ type VkGetFenceFdKHR = "vkGetFenceFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceFdKHRvkGetFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceFdKHR vkGetFenceFdKHR registry at www.khronos.org>
 type HS_vkGetFenceFdKHR =
      VkDevice -- ^ device
               -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         samplerYcbcrConversion;
 --   > } VkPhysicalDeviceSamplerYcbcrConversionFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSamplerYcbcrConversionFeaturesVkPhysicalDeviceSamplerYcbcrConversionFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSamplerYcbcrConversionFeatures VkPhysicalDeviceSamplerYcbcrConversionFeatures registry at www.khronos.org>
 data VkPhysicalDeviceSamplerYcbcrConversionFeatures = VkPhysicalDeviceSamplerYcbcrConversionFeatures## Addr##
                                                                                                       ByteArray##
 

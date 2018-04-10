@@ -21,7 +21,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerStateEXTVkDisplayPowerStateEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerStateEXT VkDisplayPowerStateEXT registry at www.khronos.org>
 newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
                                    deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

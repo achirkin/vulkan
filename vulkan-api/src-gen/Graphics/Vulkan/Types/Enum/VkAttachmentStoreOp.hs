@@ -20,7 +20,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentStoreOpVkAttachmentStoreOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentStoreOp VkAttachmentStoreOp registry at www.khronos.org>
 newtype VkAttachmentStoreOp = VkAttachmentStoreOp Int32
                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

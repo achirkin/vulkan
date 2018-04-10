@@ -27,7 +27,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsTokenTypeNVXVkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsTokenTypeNVX VkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
 newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
                                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
                                                      Generic)

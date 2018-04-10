@@ -29,7 +29,7 @@ import           System.IO.Unsafe                       (unsafeDupablePerformIO)
 --   >     uint32_t               reference;
 --   > } VkStencilOpState;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkStencilOpStateVkStencilOpState registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkStencilOpState VkStencilOpState registry at www.khronos.org>
 data VkStencilOpState = VkStencilOpState## Addr## ByteArray##
 
 instance Eq VkStencilOpState where
