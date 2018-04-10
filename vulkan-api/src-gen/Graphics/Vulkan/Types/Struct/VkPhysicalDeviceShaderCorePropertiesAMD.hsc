@@ -39,7 +39,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     uint32_t vgprAllocationGranularity;
 --   > } VkPhysicalDeviceShaderCorePropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceShaderCorePropertiesAMDVkPhysicalDeviceShaderCorePropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceShaderCorePropertiesAMD VkPhysicalDeviceShaderCorePropertiesAMD registry at www.khronos.org>
 data VkPhysicalDeviceShaderCorePropertiesAMD = VkPhysicalDeviceShaderCorePropertiesAMD## Addr##
                                                                                         ByteArray##
 

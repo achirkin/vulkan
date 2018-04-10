@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkDeviceSize                     maxMemoryAllocationSize;
 --   > } VkPhysicalDeviceMaintenance3Properties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMaintenance3PropertiesVkPhysicalDeviceMaintenance3Properties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMaintenance3Properties VkPhysicalDeviceMaintenance3Properties registry at www.khronos.org>
 data VkPhysicalDeviceMaintenance3Properties = VkPhysicalDeviceMaintenance3Properties## Addr##
                                                                                       ByteArray##
 

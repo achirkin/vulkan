@@ -140,7 +140,7 @@ type VkCreateDescriptorUpdateTemplateKHR =
 --   >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplateKHRvkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplateKHR vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
 type HS_vkCreateDescriptorUpdateTemplateKHR =
      VkDevice -- ^ device
               ->
@@ -199,7 +199,7 @@ type VkDestroyDescriptorUpdateTemplateKHR =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplateKHRvkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplateKHR vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
 type HS_vkDestroyDescriptorUpdateTemplateKHR =
      VkDevice -- ^ device
               ->
@@ -256,7 +256,7 @@ type VkUpdateDescriptorSetWithTemplateKHR =
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplateKHRvkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplateKHR vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
 type HS_vkUpdateDescriptorSetWithTemplateKHR =
      VkDevice -- ^ device
               ->

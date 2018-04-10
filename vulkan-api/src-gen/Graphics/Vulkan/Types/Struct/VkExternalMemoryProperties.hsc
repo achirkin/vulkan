@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkExternalMemoryHandleTypeFlags compatibleHandleTypes;
 --   > } VkExternalMemoryProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalMemoryPropertiesVkExternalMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalMemoryProperties VkExternalMemoryProperties registry at www.khronos.org>
 data VkExternalMemoryProperties = VkExternalMemoryProperties## Addr##
                                                               ByteArray##
 

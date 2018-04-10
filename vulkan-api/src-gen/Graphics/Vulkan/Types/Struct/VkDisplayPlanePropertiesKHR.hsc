@@ -23,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t                         currentStackIndex;
 --   > } VkDisplayPlanePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPlanePropertiesKHRVkDisplayPlanePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPlanePropertiesKHR VkDisplayPlanePropertiesKHR registry at www.khronos.org>
 data VkDisplayPlanePropertiesKHR = VkDisplayPlanePropertiesKHR## Addr##
                                                                 ByteArray##
 

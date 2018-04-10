@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceGroupPresentModeFlagBitsKHR mode;
 --   > } VkDeviceGroupPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupPresentInfoKHRVkDeviceGroupPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupPresentInfoKHR VkDeviceGroupPresentInfoKHR registry at www.khronos.org>
 data VkDeviceGroupPresentInfoKHR = VkDeviceGroupPresentInfoKHR## Addr##
                                                                 ByteArray##
 

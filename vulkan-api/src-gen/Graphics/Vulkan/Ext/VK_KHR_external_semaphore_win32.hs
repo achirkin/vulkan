@@ -113,7 +113,7 @@ type VkImportSemaphoreWin32HandleKHR =
 --   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreWin32HandleKHRvkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
@@ -167,7 +167,7 @@ type VkGetSemaphoreWin32HandleKHR = "vkGetSemaphoreWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreWin32HandleKHRvkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               ->

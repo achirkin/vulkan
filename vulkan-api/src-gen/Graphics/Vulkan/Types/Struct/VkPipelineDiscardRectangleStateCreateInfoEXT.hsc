@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     const VkRect2D* pDiscardRectangles;
 --   > } VkPipelineDiscardRectangleStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineDiscardRectangleStateCreateInfoEXTVkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineDiscardRectangleStateCreateInfoEXT VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## Addr##
                                                                                                   ByteArray##
 

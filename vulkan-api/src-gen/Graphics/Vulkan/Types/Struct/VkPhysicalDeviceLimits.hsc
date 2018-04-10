@@ -138,7 +138,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkDeviceSize           nonCoherentAtomSize;
 --   > } VkPhysicalDeviceLimits;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceLimitsVkPhysicalDeviceLimits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceLimits VkPhysicalDeviceLimits registry at www.khronos.org>
 data VkPhysicalDeviceLimits = VkPhysicalDeviceLimits## Addr##
                                                       ByteArray##
 

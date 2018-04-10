@@ -92,7 +92,7 @@ type VkCreateMacOSSurfaceMVK = "vkCreateMacOSSurfaceMVK"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMacOSSurfaceMVKvkCreateMacOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMacOSSurfaceMVK vkCreateMacOSSurfaceMVK registry at www.khronos.org>
 type HS_vkCreateMacOSSurfaceMVK =
      VkInstance -- ^ instance
                 ->

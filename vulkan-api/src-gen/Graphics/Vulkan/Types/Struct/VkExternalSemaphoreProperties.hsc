@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkExternalSemaphoreFeatureFlags externalSemaphoreFeatures;
 --   > } VkExternalSemaphoreProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalSemaphorePropertiesVkExternalSemaphoreProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalSemaphoreProperties VkExternalSemaphoreProperties registry at www.khronos.org>
 data VkExternalSemaphoreProperties = VkExternalSemaphoreProperties## Addr##
                                                                     ByteArray##
 

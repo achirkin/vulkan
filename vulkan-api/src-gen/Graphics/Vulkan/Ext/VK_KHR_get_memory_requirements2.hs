@@ -128,7 +128,7 @@ type VkGetImageMemoryRequirements2KHR =
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2KHRvkGetImageMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2KHR vkGetImageMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->
@@ -185,7 +185,7 @@ type VkGetBufferMemoryRequirements2KHR =
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2KHRvkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2KHR vkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->
@@ -243,7 +243,7 @@ type VkGetImageSparseMemoryRequirements2KHR =
 --   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2KHRvkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2KHR vkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->

@@ -29,13 +29,11 @@ import           VkXml.Sections
 import           VkXml.Sections.Extensions
 import           VkXml.Sections.Feature
 import           Write.Cabal
--- import           Write.Commands
 import           Write.Extension
 import           Write.Feature
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
--- import           Write.Types.Struct
 import           Write.Util.DeclaredNames
 
 
@@ -68,20 +66,20 @@ generateVkSource outputDir outCabalFile vkXml = do
     (\(m, mpdf) -> flip (,) mpdf <$> writeModule outputDir m) genTModules
 
 
-  (exportedNamesCore, fModules)
+  (exportedNamesCore, fModules, featureVersions)
     <- fmap mconcat . forM (globFeature vkXml) $ \feature -> do
       let eName = T.unpack $ "Core_" <>  T.map (\c -> if isDigit c
                                                       then c
                                                       else '_'
                                                ) (number feature)
           modName = "Graphics.Vulkan." <> eName
-      (_, mr) <- runModuleWriter vkXml modName exportedNamesTypes $ do
+      (featureVer, mr) <- runModuleWriter vkXml modName exportedNamesTypes $ do
          writePragma "Strict"
          writePragma "DataKinds"
          genFeature feature
       _ <- writeModule outputDir mr
-      pure (globalNames mr, [(T.pack modName, Nothing)])
-
+      pure (globalNames mr, [(T.pack modName, Nothing)], [featureVer])
+  print featureVersions
 
   (_exportedNamesExts, eModules)
     <- aggregateExts exportedNamesCore

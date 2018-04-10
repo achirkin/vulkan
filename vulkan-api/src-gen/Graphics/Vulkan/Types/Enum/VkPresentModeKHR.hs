@@ -21,7 +21,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentModeKHRVkPresentModeKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentModeKHR VkPresentModeKHR registry at www.khronos.org>
 newtype VkPresentModeKHR = VkPresentModeKHR Int32
                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkShaderStageFlags           stageFlags;
 --   > } VkObjectTablePushConstantEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTablePushConstantEntryNVXVkObjectTablePushConstantEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTablePushConstantEntryNVX VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
 data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX## Addr##
                                                                             ByteArray##
 

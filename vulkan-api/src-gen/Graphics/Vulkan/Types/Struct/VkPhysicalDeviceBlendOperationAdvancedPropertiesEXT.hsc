@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         advancedBlendAllOperations;
 --   > } VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTVkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## Addr##
                                                                                                                 ByteArray##
 

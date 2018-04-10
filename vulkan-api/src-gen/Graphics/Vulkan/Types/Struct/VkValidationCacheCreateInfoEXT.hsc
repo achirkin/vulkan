@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const void*            pInitialData;
 --   > } VkValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkValidationCacheCreateInfoEXTVkValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkValidationCacheCreateInfoEXT VkValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## Addr##
                                                                       ByteArray##
 

@@ -145,7 +145,7 @@ type VkCmdSetSampleLocationsEXT = "vkCmdSetSampleLocationsEXT"
 --   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetSampleLocationsEXTvkCmdSetSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetSampleLocationsEXT vkCmdSetSampleLocationsEXT registry at www.khronos.org>
 type HS_vkCmdSetSampleLocationsEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
@@ -196,7 +196,7 @@ type VkGetPhysicalDeviceMultisamplePropertiesEXT =
 --   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMultisamplePropertiesEXTvkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMultisamplePropertiesEXT vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMultisamplePropertiesEXT =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkPhysicalDeviceFeatures         features;
 --   > } VkPhysicalDeviceFeatures2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceFeatures2VkPhysicalDeviceFeatures2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceFeatures2 VkPhysicalDeviceFeatures2 registry at www.khronos.org>
 data VkPhysicalDeviceFeatures2 = VkPhysicalDeviceFeatures2## Addr##
                                                             ByteArray##
 

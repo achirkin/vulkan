@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     const VkSparseImageMemoryBind* pBinds;
 --   > } VkSparseImageMemoryBindInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageMemoryBindInfoVkSparseImageMemoryBindInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageMemoryBindInfo VkSparseImageMemoryBindInfo registry at www.khronos.org>
 data VkSparseImageMemoryBindInfo = VkSparseImageMemoryBindInfo## Addr##
                                                                 ByteArray##
 

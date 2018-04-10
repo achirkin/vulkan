@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkDeviceSize minImportedHostPointerAlignment;
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceExternalMemoryHostPropertiesEXTVkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceExternalMemoryHostPropertiesEXT VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
                                                                                                         ByteArray##
 

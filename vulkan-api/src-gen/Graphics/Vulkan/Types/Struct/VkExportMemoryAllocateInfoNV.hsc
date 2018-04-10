@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                             (u
 --   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
 --   > } VkExportMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportMemoryAllocateInfoNVVkExportMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportMemoryAllocateInfoNV VkExportMemoryAllocateInfoNV registry at www.khronos.org>
 data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV## Addr##
                                                                   ByteArray##
 

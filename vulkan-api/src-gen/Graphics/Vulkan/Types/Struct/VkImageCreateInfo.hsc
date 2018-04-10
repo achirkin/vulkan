@@ -46,7 +46,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageLayout          initialLayout;
 --   > } VkImageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageCreateInfoVkImageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageCreateInfo VkImageCreateInfo registry at www.khronos.org>
 data VkImageCreateInfo = VkImageCreateInfo## Addr## ByteArray##
 
 instance Eq VkImageCreateInfo where

@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t maxPipelineLayouts;
 --   > } VkObjectTableCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTableCreateInfoNVXVkObjectTableCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTableCreateInfoNVX VkObjectTableCreateInfoNVX registry at www.khronos.org>
 data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX## Addr##
                                                               ByteArray##
 

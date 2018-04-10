@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass    #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE Strict            #-}
 module Write.Util.DeclaredNames
@@ -7,13 +9,14 @@ module Write.Util.DeclaredNames
   ) where
 
 
+import           Control.DeepSeq
 import qualified Data.Map                     as Map
 import           Data.Map.Strict              (Map)
 import           Data.Semigroup
 import           Data.Text                    (Text)
 import qualified Data.Text                    as T
+import           GHC.Generics                 (Generic)
 import           Language.Haskell.Exts.Syntax
-
 
 
 
@@ -33,10 +36,10 @@ data DeclaredIdent
     -- ^ pattern synonyms
   | DIThing       { diName :: Text, diWithMembers :: DIThingMembers}
     -- ^ Class or data or type (starts with upper case)
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord, Show, Generic, NFData)
 
 data DIThingMembers = DITNo | DITEmpty | DITAll
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord, Show, Generic, NFData)
 
 
 diToImportSpec :: DeclaredIdent -> ImportSpec ()

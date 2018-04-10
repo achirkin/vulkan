@@ -107,7 +107,7 @@ type VkGetPhysicalDeviceExternalImageFormatPropertiesNV =
 --   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalImageFormatPropertiesNVvkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

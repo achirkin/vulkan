@@ -26,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkFenceCreateFlags     flags;
 --   > } VkFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceCreateInfoVkFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceCreateInfo VkFenceCreateInfo registry at www.khronos.org>
 data VkFenceCreateInfo = VkFenceCreateInfo## Addr## ByteArray##
 
 instance Eq VkFenceCreateInfo where

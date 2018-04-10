@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     const VkSampleLocationEXT* pSampleLocations;
 --   > } VkSampleLocationsInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSampleLocationsInfoEXTVkSampleLocationsInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSampleLocationsInfoEXT VkSampleLocationsInfoEXT registry at www.khronos.org>
 data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## Addr##
                                                           ByteArray##
 

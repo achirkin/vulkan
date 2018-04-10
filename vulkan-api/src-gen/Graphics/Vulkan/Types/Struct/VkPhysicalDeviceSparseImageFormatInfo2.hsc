@@ -34,7 +34,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageTiling                    tiling;
 --   > } VkPhysicalDeviceSparseImageFormatInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSparseImageFormatInfo2VkPhysicalDeviceSparseImageFormatInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSparseImageFormatInfo2 VkPhysicalDeviceSparseImageFormatInfo2 registry at www.khronos.org>
 data VkPhysicalDeviceSparseImageFormatInfo2 = VkPhysicalDeviceSparseImageFormatInfo2## Addr##
                                                                                       ByteArray##
 

@@ -171,7 +171,7 @@ type VkCmdProcessCommandsNVX = "vkCmdProcessCommandsNVX"
 --   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdProcessCommandsNVXvkCmdProcessCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdProcessCommandsNVX vkCmdProcessCommandsNVX registry at www.khronos.org>
 type HS_vkCmdProcessCommandsNVX =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkCmdProcessCommandsInfoNVX -- ^ pProcessCommandsInfo
@@ -224,7 +224,7 @@ type VkCmdReserveSpaceForCommandsNVX =
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdReserveSpaceForCommandsNVXvkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdReserveSpaceForCommandsNVX vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
 type HS_vkCmdReserveSpaceForCommandsNVX =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkCmdReserveSpaceForCommandsInfoNVX -- ^ pReserveSpaceInfo
@@ -281,7 +281,7 @@ type VkCreateIndirectCommandsLayoutNVX =
 --   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateIndirectCommandsLayoutNVXvkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateIndirectCommandsLayoutNVX vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
 type HS_vkCreateIndirectCommandsLayoutNVX =
      VkDevice -- ^ device
               ->
@@ -338,7 +338,7 @@ type VkDestroyIndirectCommandsLayoutNVX =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyIndirectCommandsLayoutNVXvkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyIndirectCommandsLayoutNVX vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
 type HS_vkDestroyIndirectCommandsLayoutNVX =
      VkDevice -- ^ device
               ->
@@ -394,7 +394,7 @@ type VkCreateObjectTableNVX = "vkCreateObjectTableNVX"
 --   >     , VkObjectTableNVX* pObjectTable
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateObjectTableNVXvkCreateObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateObjectTableNVX vkCreateObjectTableNVX registry at www.khronos.org>
 type HS_vkCreateObjectTableNVX =
      VkDevice -- ^ device
               ->
@@ -444,7 +444,7 @@ type VkDestroyObjectTableNVX = "vkDestroyObjectTableNVX"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyObjectTableNVXvkDestroyObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyObjectTableNVX vkDestroyObjectTableNVX registry at www.khronos.org>
 type HS_vkDestroyObjectTableNVX =
      VkDevice -- ^ device
               -> VkObjectTableNVX -- ^ objectTable
@@ -497,7 +497,7 @@ type VkRegisterObjectsNVX = "vkRegisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterObjectsNVXvkRegisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterObjectsNVX vkRegisterObjectsNVX registry at www.khronos.org>
 type HS_vkRegisterObjectsNVX =
      VkDevice -- ^ device
               ->
@@ -554,7 +554,7 @@ type VkUnregisterObjectsNVX = "vkUnregisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnregisterObjectsNVXvkUnregisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnregisterObjectsNVX vkUnregisterObjectsNVX registry at www.khronos.org>
 type HS_vkUnregisterObjectsNVX =
      VkDevice -- ^ device
               ->
@@ -611,7 +611,7 @@ type VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
 --   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceGeneratedCommandsPropertiesNVXvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

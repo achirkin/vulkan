@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const VkDescriptorSetLayout* pSetLayouts;
 --   > } VkDescriptorSetAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetAllocateInfoVkDescriptorSetAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetAllocateInfo VkDescriptorSetAllocateInfo registry at www.khronos.org>
 data VkDescriptorSetAllocateInfo = VkDescriptorSetAllocateInfo## Addr##
                                                                 ByteArray##
 

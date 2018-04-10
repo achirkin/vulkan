@@ -23,7 +23,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     uint32_t               descriptorCount;
 --   > } VkDescriptorPoolSize;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorPoolSizeVkDescriptorPoolSize registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorPoolSize VkDescriptorPoolSize registry at www.khronos.org>
 data VkDescriptorPoolSize = VkDescriptorPoolSize## Addr## ByteArray##
 
 instance Eq VkDescriptorPoolSize where

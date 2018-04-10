@@ -76,7 +76,7 @@ type VkAcquireXlibDisplayEXT = "vkAcquireXlibDisplayEXT"
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireXlibDisplayEXTvkAcquireXlibDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireXlibDisplayEXT vkAcquireXlibDisplayEXT registry at www.khronos.org>
 type HS_vkAcquireXlibDisplayEXT =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr Display -- ^ dpy
@@ -127,7 +127,7 @@ type VkGetRandROutputDisplayEXT = "vkGetRandROutputDisplayEXT"
 --   >     , VkDisplayKHR* pDisplay
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRandROutputDisplayEXTvkGetRandROutputDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRandROutputDisplayEXT vkGetRandROutputDisplayEXT registry at www.khronos.org>
 type HS_vkGetRandROutputDisplayEXT =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

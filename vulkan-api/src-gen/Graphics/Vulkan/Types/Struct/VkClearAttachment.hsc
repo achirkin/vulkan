@@ -26,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkClearValue           clearValue;
 --   > } VkClearAttachment;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearAttachmentVkClearAttachment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearAttachment VkClearAttachment registry at www.khronos.org>
 data VkClearAttachment = VkClearAttachment## Addr## ByteArray##
 
 instance Eq VkClearAttachment where

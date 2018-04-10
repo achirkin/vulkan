@@ -47,7 +47,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkBool32               unnormalizedCoordinates;
 --   > } VkSamplerCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerCreateInfoVkSamplerCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerCreateInfo VkSamplerCreateInfo registry at www.khronos.org>
 data VkSamplerCreateInfo = VkSamplerCreateInfo## Addr## ByteArray##
 
 instance Eq VkSamplerCreateInfo where

@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkAccessFlags          dstAccessMask;
 --   > } VkMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryBarrierVkMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryBarrier VkMemoryBarrier registry at www.khronos.org>
 data VkMemoryBarrier = VkMemoryBarrier## Addr## ByteArray##
 
 instance Eq VkMemoryBarrier where

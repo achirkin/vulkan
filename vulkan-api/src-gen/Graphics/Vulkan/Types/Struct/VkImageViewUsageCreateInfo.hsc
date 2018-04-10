@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkImageUsageFlags usage;
 --   > } VkImageViewUsageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageViewUsageCreateInfoVkImageViewUsageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageViewUsageCreateInfo VkImageViewUsageCreateInfo registry at www.khronos.org>
 data VkImageViewUsageCreateInfo = VkImageViewUsageCreateInfo## Addr##
                                                               ByteArray##
 

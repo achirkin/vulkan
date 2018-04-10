@@ -25,7 +25,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageAspectFlags              aspectMask;
 --   > } VkInputAttachmentAspectReference;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkInputAttachmentAspectReferenceVkInputAttachmentAspectReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkInputAttachmentAspectReference VkInputAttachmentAspectReference registry at www.khronos.org>
 data VkInputAttachmentAspectReference = VkInputAttachmentAspectReference## Addr##
                                                                           ByteArray##
 

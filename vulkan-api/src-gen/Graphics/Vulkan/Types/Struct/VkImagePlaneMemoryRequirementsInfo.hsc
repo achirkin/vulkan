@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkImagePlaneMemoryRequirementsInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImagePlaneMemoryRequirementsInfoVkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImagePlaneMemoryRequirementsInfo VkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
 data VkImagePlaneMemoryRequirementsInfo = VkImagePlaneMemoryRequirementsInfo## Addr##
                                                                               ByteArray##
 

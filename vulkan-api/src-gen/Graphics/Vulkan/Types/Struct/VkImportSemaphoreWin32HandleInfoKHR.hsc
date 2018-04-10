@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                              (
 --   >     LPCWSTR          name;
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportSemaphoreWin32HandleInfoKHRVkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportSemaphoreWin32HandleInfoKHR VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## Addr##
                                                                                 ByteArray##
 

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     VkSwapchainKHR   swapchain;
 --   > } VkImageSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageSwapchainCreateInfoKHRVkImageSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageSwapchainCreateInfoKHR VkImageSwapchainCreateInfoKHR registry at www.khronos.org>
 data VkImageSwapchainCreateInfoKHR = VkImageSwapchainCreateInfoKHR## Addr##
                                                                     ByteArray##
 

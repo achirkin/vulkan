@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     uint32_t                         imageIndex;
 --   > } VkBindImageMemorySwapchainInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImageMemorySwapchainInfoKHRVkBindImageMemorySwapchainInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImageMemorySwapchainInfoKHR VkBindImageMemorySwapchainInfoKHR registry at www.khronos.org>
 data VkBindImageMemorySwapchainInfoKHR = VkBindImageMemorySwapchainInfoKHR## Addr##
                                                                             ByteArray##
 

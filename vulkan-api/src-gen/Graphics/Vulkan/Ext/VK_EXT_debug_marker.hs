@@ -97,7 +97,7 @@ type VkDebugMarkerSetObjectTagEXT = "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectTagEXTvkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
@@ -151,7 +151,7 @@ type VkDebugMarkerSetObjectNameEXT =
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectNameEXTvkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
@@ -203,7 +203,7 @@ type VkCmdDebugMarkerBeginEXT = "vkCmdDebugMarkerBeginEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerBeginEXTvkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerBeginEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
@@ -252,7 +252,7 @@ type VkCmdDebugMarkerEndEXT = "vkCmdDebugMarkerEndEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerEndEXTvkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
                                                  -> IO ()
 
@@ -299,7 +299,7 @@ type VkCmdDebugMarkerInsertEXT = "vkCmdDebugMarkerInsertEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerInsertEXTvkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerInsertEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo

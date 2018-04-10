@@ -31,7 +31,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float                  color[4];
 --   > } VkDebugUtilsLabelEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsLabelEXTVkDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsLabelEXT VkDebugUtilsLabelEXT registry at www.khronos.org>
 data VkDebugUtilsLabelEXT = VkDebugUtilsLabelEXT## Addr## ByteArray##
 
 instance Eq VkDebugUtilsLabelEXT where

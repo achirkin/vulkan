@@ -118,7 +118,7 @@ type VkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
 --   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphorePropertiesKHRvkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphorePropertiesKHR vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

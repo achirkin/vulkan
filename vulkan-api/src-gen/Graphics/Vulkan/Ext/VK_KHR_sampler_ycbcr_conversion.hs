@@ -253,7 +253,7 @@ type VkCreateSamplerYcbcrConversionKHR =
 --   >     , VkSamplerYcbcrConversion* pYcbcrConversion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversionKHRvkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversionKHR vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkCreateSamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->
@@ -312,7 +312,7 @@ type VkDestroySamplerYcbcrConversionKHR =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversionKHRvkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversionKHR vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkDestroySamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->

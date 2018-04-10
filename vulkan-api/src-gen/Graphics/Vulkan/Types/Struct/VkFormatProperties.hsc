@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkFormatFeatureFlags   bufferFeatures;
 --   > } VkFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFormatPropertiesVkFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFormatProperties VkFormatProperties registry at www.khronos.org>
 data VkFormatProperties = VkFormatProperties## Addr## ByteArray##
 
 instance Eq VkFormatProperties where

@@ -71,7 +71,7 @@ type VkSetHdrMetadataEXT = "vkSetHdrMetadataEXT"
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetHdrMetadataEXTvkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetHdrMetadataEXT vkSetHdrMetadataEXT registry at www.khronos.org>
 type HS_vkSetHdrMetadataEXT =
      VkDevice -- ^ device
               ->

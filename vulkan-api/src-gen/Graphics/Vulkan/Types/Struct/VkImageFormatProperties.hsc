@@ -29,7 +29,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkDeviceSize           maxResourceSize;
 --   > } VkImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageFormatPropertiesVkImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageFormatProperties VkImageFormatProperties registry at www.khronos.org>
 data VkImageFormatProperties = VkImageFormatProperties## Addr##
                                                         ByteArray##
 

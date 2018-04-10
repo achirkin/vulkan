@@ -41,7 +41,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         variableSampleLocations;
 --   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSampleLocationsPropertiesEXTVkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSampleLocationsPropertiesEXT VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## Addr##
                                                                                                   ByteArray##
 

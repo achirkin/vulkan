@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkDependencyFlags      dependencyFlags;
 --   > } VkSubpassDependency;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubpassDependencyVkSubpassDependency registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubpassDependency VkSubpassDependency registry at www.khronos.org>
 data VkSubpassDependency = VkSubpassDependency## Addr## ByteArray##
 
 instance Eq VkSubpassDependency where

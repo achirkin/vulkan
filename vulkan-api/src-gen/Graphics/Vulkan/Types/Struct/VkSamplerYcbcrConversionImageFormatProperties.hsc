@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t                         combinedImageSamplerDescriptorCount;
 --   > } VkSamplerYcbcrConversionImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerYcbcrConversionImageFormatPropertiesVkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerYcbcrConversionImageFormatProperties VkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
 data VkSamplerYcbcrConversionImageFormatProperties = VkSamplerYcbcrConversionImageFormatProperties## Addr##
                                                                                                     ByteArray##
 

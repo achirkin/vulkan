@@ -91,7 +91,7 @@ type VkGetMemoryWin32HandleNV = "vkGetMemoryWin32HandleNV"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleNVvkGetMemoryWin32HandleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleNV vkGetMemoryWin32HandleNV registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandleNV =
      VkDevice -- ^ device
               ->

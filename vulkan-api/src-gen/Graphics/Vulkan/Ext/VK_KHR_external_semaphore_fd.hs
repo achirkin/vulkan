@@ -88,7 +88,7 @@ type VkImportSemaphoreFdKHR = "vkImportSemaphoreFdKHR"
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreFdKHRvkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreFdKHR vkImportSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreFdInfoKHR -- ^ pImportSemaphoreFdInfo
@@ -136,7 +136,7 @@ type VkGetSemaphoreFdKHR = "vkGetSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreFdKHRvkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreFdKHR vkGetSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo

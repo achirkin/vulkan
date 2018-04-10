@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                            (un
 --   >     const VkCommandBufferInheritanceInfo*       pInheritanceInfo;
 --   > } VkCommandBufferBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandBufferBeginInfoVkCommandBufferBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandBufferBeginInfo VkCommandBufferBeginInfo registry at www.khronos.org>
 data VkCommandBufferBeginInfo = VkCommandBufferBeginInfo## Addr##
                                                           ByteArray##
 

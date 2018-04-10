@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     const float*    pQueuePriorities;
 --   > } VkDeviceQueueCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceQueueCreateInfoVkDeviceQueueCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceQueueCreateInfo VkDeviceQueueCreateInfo registry at www.khronos.org>
 data VkDeviceQueueCreateInfo = VkDeviceQueueCreateInfo## Addr##
                                                         ByteArray##
 

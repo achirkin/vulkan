@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkBuffer         buffer;
 --   > } VkDedicatedAllocationMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDedicatedAllocationMemoryAllocateInfoNVVkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDedicatedAllocationMemoryAllocateInfoNV VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV## Addr##
                                                                                             ByteArray##
 

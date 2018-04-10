@@ -91,7 +91,7 @@ type VkGetMemoryFdKHR = "vkGetMemoryFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdKHRvkGetMemoryFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdKHR vkGetMemoryFdKHR registry at www.khronos.org>
 type HS_vkGetMemoryFdKHR =
      VkDevice -- ^ device
               -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
@@ -142,7 +142,7 @@ type VkGetMemoryFdPropertiesKHR = "vkGetMemoryFdPropertiesKHR"
 --   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdPropertiesKHRvkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
 type HS_vkGetMemoryFdPropertiesKHR =
      VkDevice -- ^ device
               ->

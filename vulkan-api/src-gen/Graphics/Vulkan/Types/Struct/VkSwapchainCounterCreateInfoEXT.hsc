@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSurfaceCounterFlagsEXT         surfaceCounters;
 --   > } VkSwapchainCounterCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSwapchainCounterCreateInfoEXTVkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSwapchainCounterCreateInfoEXT VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
 data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## Addr##
                                                                         ByteArray##
 

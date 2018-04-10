@@ -26,7 +26,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     VkExtent3D             minImageTransferGranularity;
 --   > } VkQueueFamilyProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkQueueFamilyPropertiesVkQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkQueueFamilyProperties VkQueueFamilyProperties registry at www.khronos.org>
 data VkQueueFamilyProperties = VkQueueFamilyProperties## Addr##
                                                         ByteArray##
 

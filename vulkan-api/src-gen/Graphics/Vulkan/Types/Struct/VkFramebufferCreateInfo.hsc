@@ -33,7 +33,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t               layers;
 --   > } VkFramebufferCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFramebufferCreateInfoVkFramebufferCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFramebufferCreateInfo VkFramebufferCreateInfo registry at www.khronos.org>
 data VkFramebufferCreateInfo = VkFramebufferCreateInfo## Addr##
                                                         ByteArray##
 

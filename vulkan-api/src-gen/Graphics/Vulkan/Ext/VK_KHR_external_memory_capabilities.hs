@@ -138,7 +138,7 @@ type VkGetPhysicalDeviceExternalBufferPropertiesKHR =
 --   >     , VkExternalBufferProperties* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferPropertiesKHRvkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferPropertiesKHR vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

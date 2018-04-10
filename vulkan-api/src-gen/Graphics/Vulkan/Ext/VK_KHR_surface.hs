@@ -1,12 +1,15 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
+{-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_surface
@@ -80,7 +83,7 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
        where
 import           GHC.Ptr                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -98,6 +101,7 @@ import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkExtent2D
 import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
 import           Graphics.Vulkan.Types.Struct.VkSurfaceFormatKHR
+import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 pattern VkDestroySurfaceKHR :: CString
 
@@ -116,13 +120,15 @@ is_VkDestroySurfaceKHR = (EQ ==) . cmpCStrings _VkDestroySurfaceKHR
 
 type VkDestroySurfaceKHR = "vkDestroySurfaceKHR"
 
--- | > () vkDestroySurfaceKHR
---   >     ( VkInstance instance
---   >     , VkSurfaceKHR surface
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroySurfaceKHR
+-- >     ( VkInstance instance
+-- >     , VkSurfaceKHR surface
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHRvkDestroySurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHR vkDestroySurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroySurfaceKHR"
                vkDestroySurfaceKHR ::
                VkInstance -- ^ instance
@@ -130,13 +136,34 @@ foreign import ccall unsafe "vkDestroySurfaceKHR"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroySurfaceKHR
---   >     ( VkInstance instance
---   >     , VkSurfaceKHR surface
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySurfaceKHR ::
+                    VkInstance -- ^ instance
+                               -> VkSurfaceKHR -- ^ surface
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+vkDestroySurfaceKHR d
+  = unsafeDupablePerformIO (vkGetInstanceProc @VkDestroySurfaceKHR d)
+      d
+
+{-# INLINE vkDestroySurfaceKHR #-}
+
+{-# WARNING
+vkDestroySurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- > () vkDestroySurfaceKHR
+-- >     ( VkInstance instance
+-- >     , VkSurfaceKHR surface
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHRvkDestroySurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHR vkDestroySurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroySurfaceKHR"
                vkDestroySurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -144,13 +171,30 @@ foreign import ccall safe "vkDestroySurfaceKHR"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySurfaceKHRSafe ::
+                        VkInstance -- ^ instance
+                                   -> VkSurfaceKHR -- ^ surface
+                                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                -> IO ()
+vkDestroySurfaceKHRSafe = vkDestroySurfaceKHR
+
+{-# INLINE vkDestroySurfaceKHRSafe #-}
+
+{-# WARNING
+vkDestroySurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
 -- | > () vkDestroySurfaceKHR
 --   >     ( VkInstance instance
 --   >     , VkSurfaceKHR surface
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHRvkDestroySurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySurfaceKHR vkDestroySurfaceKHR registry at www.khronos.org>
 type HS_vkDestroySurfaceKHR =
      VkInstance -- ^ instance
                 -> VkSurfaceKHR -- ^ surface
@@ -193,18 +237,20 @@ is_VkGetPhysicalDeviceSurfaceSupportKHR
 type VkGetPhysicalDeviceSurfaceSupportKHR =
      "vkGetPhysicalDeviceSurfaceSupportKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     , VkSurfaceKHR surface
---   >     , VkBool32* pSupported
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , VkSurfaceKHR surface
+-- >     , VkBool32* pSupported
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHRvkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
                vkGetPhysicalDeviceSurfaceSupportKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -214,18 +260,41 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
                                         -> Ptr VkBool32 -- ^ pSupported
                                                         -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceSupportKHR ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       Word32 -- ^ queueFamilyIndex
+                                              -> VkSurfaceKHR -- ^ surface
+                                                              -> Ptr VkBool32 -- ^ pSupported
+                                                                              -> IO VkResult
+vkGetPhysicalDeviceSurfaceSupportKHR
+  = error $
+      "vkGetPhysicalDeviceSurfaceSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     , VkSurfaceKHR surface
---   >     , VkBool32* pSupported
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , VkSurfaceKHR surface
+-- >     , VkBool32* pSupported
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHRvkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceSurfaceSupportKHR"
                vkGetPhysicalDeviceSurfaceSupportKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -234,6 +303,26 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceSupportKHR"
                         -> VkSurfaceKHR -- ^ surface
                                         -> Ptr VkBool32 -- ^ pSupported
                                                         -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceSupportKHRSafe ::
+                                         VkPhysicalDevice -- ^ physicalDevice
+                                                          ->
+                                           Word32 -- ^ queueFamilyIndex
+                                                  -> VkSurfaceKHR -- ^ surface
+                                                                  -> Ptr VkBool32 -- ^ pSupported
+                                                                                  -> IO VkResult
+vkGetPhysicalDeviceSurfaceSupportKHRSafe
+  = vkGetPhysicalDeviceSurfaceSupportKHR
+
+{-# INLINE vkGetPhysicalDeviceSurfaceSupportKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -246,7 +335,7 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceSupportKHR"
 --   >     , VkBool32* pSupported
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHRvkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -295,17 +384,19 @@ is_VkGetPhysicalDeviceSurfaceCapabilitiesKHR
 type VkGetPhysicalDeviceSurfaceCapabilitiesKHR =
      "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHRvkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
                vkGetPhysicalDeviceSurfaceCapabilitiesKHR ::
@@ -315,17 +406,40 @@ foreign import ccall unsafe
                               -> Ptr VkSurfaceCapabilitiesKHR -- ^ pSurfaceCapabilities
                                                               -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceCapabilitiesKHR ::
+                                          VkPhysicalDevice -- ^ physicalDevice
+                                                           ->
+                                            VkSurfaceKHR -- ^ surface
+                                                         ->
+                                              Ptr VkSurfaceCapabilitiesKHR -- ^ pSurfaceCapabilities
+                                                                           -> IO VkResult
+vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+  = error $
+      "vkGetPhysicalDeviceSurfaceCapabilitiesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceCapabilitiesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHRvkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
                vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe ::
@@ -334,6 +448,26 @@ foreign import ccall safe
                  VkSurfaceKHR -- ^ surface
                               -> Ptr VkSurfaceCapabilitiesKHR -- ^ pSurfaceCapabilities
                                                               -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe ::
+                                              VkPhysicalDevice -- ^ physicalDevice
+                                                               ->
+                                                VkSurfaceKHR -- ^ surface
+                                                             ->
+                                                  Ptr VkSurfaceCapabilitiesKHR -- ^ pSurfaceCapabilities
+                                                                               -> IO VkResult
+vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe
+  = vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+
+{-# INLINE vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -345,7 +479,7 @@ foreign import ccall safe
 --   >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHRvkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -394,18 +528,20 @@ is_VkGetPhysicalDeviceSurfaceFormatsKHR
 type VkGetPhysicalDeviceSurfaceFormatsKHR =
      "vkGetPhysicalDeviceSurfaceFormatsKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceFormatsKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pSurfaceFormatCount
---   >     , VkSurfaceFormatKHR* pSurfaceFormats
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceFormatsKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pSurfaceFormatCount
+-- >     , VkSurfaceFormatKHR* pSurfaceFormats
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHRvkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                vkGetPhysicalDeviceSurfaceFormatsKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -415,18 +551,42 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                                             -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
                                                                       -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceFormatsKHR ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       VkSurfaceKHR -- ^ surface
+                                                    ->
+                                         Ptr Word32 -- ^ pSurfaceFormatCount
+                                                    -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
+                                                                              -> IO VkResult
+vkGetPhysicalDeviceSurfaceFormatsKHR
+  = error $
+      "vkGetPhysicalDeviceSurfaceFormatsKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceFormatsKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfaceFormatsKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pSurfaceFormatCount
---   >     , VkSurfaceFormatKHR* pSurfaceFormats
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfaceFormatsKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pSurfaceFormatCount
+-- >     , VkSurfaceFormatKHR* pSurfaceFormats
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHRvkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                vkGetPhysicalDeviceSurfaceFormatsKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -435,6 +595,27 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                               -> Ptr Word32 -- ^ pSurfaceFormatCount
                                             -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
                                                                       -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfaceFormatsKHRSafe ::
+                                         VkPhysicalDevice -- ^ physicalDevice
+                                                          ->
+                                           VkSurfaceKHR -- ^ surface
+                                                        ->
+                                             Ptr Word32 -- ^ pSurfaceFormatCount
+                                                        -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
+                                                                                  -> IO VkResult
+vkGetPhysicalDeviceSurfaceFormatsKHRSafe
+  = vkGetPhysicalDeviceSurfaceFormatsKHR
+
+{-# INLINE vkGetPhysicalDeviceSurfaceFormatsKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceSurfaceFormatsKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -447,7 +628,7 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormatsKHR"
 --   >     , VkSurfaceFormatKHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHRvkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceFormatsKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -496,18 +677,20 @@ is_VkGetPhysicalDeviceSurfacePresentModesKHR
 type VkGetPhysicalDeviceSurfacePresentModesKHR =
      "vkGetPhysicalDeviceSurfacePresentModesKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pPresentModeCount
---   >     , VkPresentModeKHR* pPresentModes
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pPresentModeCount
+-- >     , VkPresentModeKHR* pPresentModes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHRvkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfacePresentModesKHR"
                vkGetPhysicalDeviceSurfacePresentModesKHR ::
@@ -518,18 +701,42 @@ foreign import ccall unsafe
                                             -> Ptr VkPresentModeKHR -- ^ pPresentModes
                                                                     -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfacePresentModesKHR ::
+                                          VkPhysicalDevice -- ^ physicalDevice
+                                                           ->
+                                            VkSurfaceKHR -- ^ surface
+                                                         ->
+                                              Ptr Word32 -- ^ pPresentModeCount
+                                                         -> Ptr VkPresentModeKHR -- ^ pPresentModes
+                                                                                 -> IO VkResult
+vkGetPhysicalDeviceSurfacePresentModesKHR
+  = error $
+      "vkGetPhysicalDeviceSurfacePresentModesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceSurfacePresentModesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pPresentModeCount
---   >     , VkPresentModeKHR* pPresentModes
---   >     )
+-- > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pPresentModeCount
+-- >     , VkPresentModeKHR* pPresentModes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHRvkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceSurfacePresentModesKHR"
                vkGetPhysicalDeviceSurfacePresentModesKHRSafe ::
@@ -539,6 +746,27 @@ foreign import ccall safe
                               -> Ptr Word32 -- ^ pPresentModeCount
                                             -> Ptr VkPresentModeKHR -- ^ pPresentModes
                                                                     -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceSurfacePresentModesKHRSafe ::
+                                              VkPhysicalDevice -- ^ physicalDevice
+                                                               ->
+                                                VkSurfaceKHR -- ^ surface
+                                                             ->
+                                                  Ptr Word32 -- ^ pPresentModeCount
+                                                             -> Ptr VkPresentModeKHR -- ^ pPresentModes
+                                                                                     -> IO VkResult
+vkGetPhysicalDeviceSurfacePresentModesKHRSafe
+  = vkGetPhysicalDeviceSurfacePresentModesKHR
+
+{-# INLINE vkGetPhysicalDeviceSurfacePresentModesKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceSurfacePresentModesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -551,7 +779,7 @@ foreign import ccall safe
 --   >     , VkPresentModeKHR* pPresentModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHRvkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfacePresentModesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                               
 --   >     uint64_t                           externalFormat;
 --   > } VkExternalFormatANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalFormatANDROIDVkExternalFormatANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalFormatANDROID VkExternalFormatANDROID registry at www.khronos.org>
 data VkExternalFormatANDROID = VkExternalFormatANDROID## Addr##
                                                         ByteArray##
 

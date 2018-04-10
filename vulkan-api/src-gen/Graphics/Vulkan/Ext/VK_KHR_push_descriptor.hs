@@ -120,7 +120,7 @@ type VkCmdPushDescriptorSetKHR = "vkCmdPushDescriptorSetKHR"
 --   >     , const VkWriteDescriptorSet* pDescriptorWrites
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetKHRvkCmdPushDescriptorSetKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetKHR vkCmdPushDescriptorSetKHR registry at www.khronos.org>
 type HS_vkCmdPushDescriptorSetKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -226,7 +226,7 @@ type VkCmdPushDescriptorSetWithTemplateKHR =
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetWithTemplateKHRvkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
 type HS_vkCmdPushDescriptorSetWithTemplateKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->

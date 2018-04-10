@@ -1,12 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -129,7 +131,6 @@ import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
-                                                                                   (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -168,6 +169,8 @@ import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkRect2D
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
+import           System.IO.Unsafe
+                                                                                   (unsafeDupablePerformIO)
 
 pattern VkCreateSwapchainKHR :: CString
 
@@ -187,18 +190,20 @@ is_VkCreateSwapchainKHR
 
 type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
 --
---   > VkResult vkCreateSwapchainKHR
---   >     ( VkDevice device
---   >     , const VkSwapchainCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSwapchainKHR* pSwapchain
---   >     )
+-- > VkResult vkCreateSwapchainKHR
+-- >     ( VkDevice device
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchain
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSwapchainKHR"
                vkCreateSwapchainKHR ::
                VkDevice -- ^ device
@@ -209,18 +214,42 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
                                              -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSwapchainKHR ::
+                     VkDevice -- ^ device
+                              ->
+                       Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                                    ->
+                         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                   -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                                         -> IO VkResult
+vkCreateSwapchainKHR d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateSwapchainKHR d)
+      d
+
+{-# INLINE vkCreateSwapchainKHR #-}
+
+{-# WARNING
+vkCreateSwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
 --
---   > VkResult vkCreateSwapchainKHR
---   >     ( VkDevice device
---   >     , const VkSwapchainCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSwapchainKHR* pSwapchain
---   >     )
+-- > VkResult vkCreateSwapchainKHR
+-- >     ( VkDevice device
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchain
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSwapchainKHR"
                vkCreateSwapchainKHRSafe ::
                VkDevice -- ^ device
@@ -230,6 +259,26 @@ foreign import ccall safe "vkCreateSwapchainKHR"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                    -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateSwapchainKHRSafe ::
+                         VkDevice -- ^ device
+                                  ->
+                           Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                                        ->
+                             Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                       -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                                             -> IO VkResult
+vkCreateSwapchainKHRSafe = vkCreateSwapchainKHR
+
+{-# INLINE vkCreateSwapchainKHRSafe #-}
+
+{-# WARNING
+vkCreateSwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -242,7 +291,7 @@ foreign import ccall safe "vkCreateSwapchainKHR"
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 type HS_vkCreateSwapchainKHR =
      VkDevice -- ^ device
               ->
@@ -284,13 +333,15 @@ is_VkDestroySwapchainKHR
 
 type VkDestroySwapchainKHR = "vkDestroySwapchainKHR"
 
--- | > () vkDestroySwapchainKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+-- |
+-- > () vkDestroySwapchainKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHR ::
                VkDevice -- ^ device
@@ -298,13 +349,34 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > () vkDestroySwapchainKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySwapchainKHR ::
+                      VkDevice -- ^ device
+                               -> VkSwapchainKHR -- ^ swapchain
+                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                              -> IO ()
+vkDestroySwapchainKHR d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroySwapchainKHR d)
+      d
+
+{-# INLINE vkDestroySwapchainKHR #-}
+
+{-# WARNING
+vkDestroySwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- > () vkDestroySwapchainKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHRSafe ::
                VkDevice -- ^ device
@@ -312,13 +384,30 @@ foreign import ccall safe "vkDestroySwapchainKHR"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkDestroySwapchainKHRSafe ::
+                          VkDevice -- ^ device
+                                   -> VkSwapchainKHR -- ^ swapchain
+                                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                  -> IO ()
+vkDestroySwapchainKHRSafe = vkDestroySwapchainKHR
+
+{-# INLINE vkDestroySwapchainKHRSafe #-}
+
+{-# WARNING
+vkDestroySwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
 -- | > () vkDestroySwapchainKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 type HS_vkDestroySwapchainKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain
@@ -358,18 +447,20 @@ is_VkGetSwapchainImagesKHR
 
 type VkGetSwapchainImagesKHR = "vkGetSwapchainImagesKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetSwapchainImagesKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , uint32_t* pSwapchainImageCount
---   >     , VkImage* pSwapchainImages
---   >     )
+-- > VkResult vkGetSwapchainImagesKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint32_t* pSwapchainImageCount
+-- >     , VkImage* pSwapchainImages
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHR ::
                VkDevice -- ^ device
@@ -379,18 +470,42 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                                               -> Ptr VkImage -- ^ pSwapchainImages
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetSwapchainImagesKHR ::
+                        VkDevice -- ^ device
+                                 ->
+                          VkSwapchainKHR -- ^ swapchain
+                                         -> Ptr Word32 -- ^ pSwapchainImageCount
+                                                       -> Ptr VkImage -- ^ pSwapchainImages
+                                                                      -> IO VkResult
+vkGetSwapchainImagesKHR d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetSwapchainImagesKHR d)
+      d
+
+{-# INLINE vkGetSwapchainImagesKHR #-}
+
+{-# WARNING
+vkGetSwapchainImagesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetSwapchainImagesKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , uint32_t* pSwapchainImageCount
---   >     , VkImage* pSwapchainImages
---   >     )
+-- > VkResult vkGetSwapchainImagesKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint32_t* pSwapchainImageCount
+-- >     , VkImage* pSwapchainImages
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHRSafe ::
                VkDevice -- ^ device
@@ -399,6 +514,25 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
                                 -> Ptr Word32 -- ^ pSwapchainImageCount
                                               -> Ptr VkImage -- ^ pSwapchainImages
                                                              -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkGetSwapchainImagesKHRSafe ::
+                            VkDevice -- ^ device
+                                     ->
+                              VkSwapchainKHR -- ^ swapchain
+                                             -> Ptr Word32 -- ^ pSwapchainImageCount
+                                                           -> Ptr VkImage -- ^ pSwapchainImages
+                                                                          -> IO VkResult
+vkGetSwapchainImagesKHRSafe = vkGetSwapchainImagesKHR
+
+{-# INLINE vkGetSwapchainImagesKHRSafe #-}
+
+{-# WARNING
+vkGetSwapchainImagesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -411,7 +545,7 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 type HS_vkGetSwapchainImagesKHR =
      VkDevice -- ^ device
               ->
@@ -454,20 +588,22 @@ is_VkAcquireNextImageKHR
 
 type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkAcquireNextImageKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , uint64_t timeout
---   >     , VkSemaphore semaphore
---   >     , VkFence fence
---   >     , uint32_t* pImageIndex
---   >     )
+-- > VkResult vkAcquireNextImageKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint64_t timeout
+-- >     , VkSemaphore semaphore
+-- >     , VkFence fence
+-- >     , uint32_t* pImageIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkAcquireNextImageKHR"
                vkAcquireNextImageKHR ::
                VkDevice -- ^ device
@@ -480,20 +616,46 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
                                                     -> Ptr Word32 -- ^ pImageIndex
                                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAcquireNextImageKHR ::
+                      VkDevice -- ^ device
+                               ->
+                        VkSwapchainKHR -- ^ swapchain
+                                       ->
+                          Word64 -- ^ timeout
+                                 -> VkSemaphore -- ^ semaphore
+                                                -> VkFence -- ^ fence
+                                                           -> Ptr Word32 -- ^ pImageIndex
+                                                                         -> IO VkResult
+vkAcquireNextImageKHR d
+  = unsafeDupablePerformIO (vkGetDeviceProc @VkAcquireNextImageKHR d)
+      d
+
+{-# INLINE vkAcquireNextImageKHR #-}
+
+{-# WARNING
+vkAcquireNextImageKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkAcquireNextImageKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     , uint64_t timeout
---   >     , VkSemaphore semaphore
---   >     , VkFence fence
---   >     , uint32_t* pImageIndex
---   >     )
+-- > VkResult vkAcquireNextImageKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint64_t timeout
+-- >     , VkSemaphore semaphore
+-- >     , VkFence fence
+-- >     , uint32_t* pImageIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkAcquireNextImageKHR"
                vkAcquireNextImageKHRSafe ::
                VkDevice -- ^ device
@@ -505,6 +667,28 @@ foreign import ccall safe "vkAcquireNextImageKHR"
                                          -> VkFence -- ^ fence
                                                     -> Ptr Word32 -- ^ pImageIndex
                                                                   -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkAcquireNextImageKHRSafe ::
+                          VkDevice -- ^ device
+                                   ->
+                            VkSwapchainKHR -- ^ swapchain
+                                           ->
+                              Word64 -- ^ timeout
+                                     -> VkSemaphore -- ^ semaphore
+                                                    -> VkFence -- ^ fence
+                                                               -> Ptr Word32 -- ^ pImageIndex
+                                                                             -> IO VkResult
+vkAcquireNextImageKHRSafe = vkAcquireNextImageKHR
+
+{-# INLINE vkAcquireNextImageKHRSafe #-}
+
+{-# WARNING
+vkAcquireNextImageKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -519,7 +703,7 @@ foreign import ccall safe "vkAcquireNextImageKHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 type HS_vkAcquireNextImageKHR =
      VkDevice -- ^ device
               ->
@@ -562,35 +746,72 @@ is_VkQueuePresentKHR = (EQ ==) . cmpCStrings _VkQueuePresentKHR
 
 type VkQueuePresentKHR = "vkQueuePresentKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkQueuePresentKHR
---   >     ( VkQueue queue
---   >     , const VkPresentInfoKHR* pPresentInfo
---   >     )
+-- > VkResult vkQueuePresentKHR
+-- >     ( VkQueue queue
+-- >     , const VkPresentInfoKHR* pPresentInfo
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                   -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueuePresentKHR :: VkQueue -- ^ queue
+                             -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                                     -> IO VkResult
+vkQueuePresentKHR
+  = error $
+      "vkQueuePresentKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkQueuePresentKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkQueuePresentKHR
---   >     ( VkQueue queue
---   >     , const VkPresentInfoKHR* pPresentInfo
---   >     )
+-- > VkResult vkQueuePresentKHR
+-- >     ( VkQueue queue
+-- >     , const VkPresentInfoKHR* pPresentInfo
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                   -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkQueuePresentKHRSafe ::
+                      VkQueue -- ^ queue
+                              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                                      -> IO VkResult
+vkQueuePresentKHRSafe = vkQueuePresentKHR
+
+{-# INLINE vkQueuePresentKHRSafe #-}
+
+{-# WARNING
+vkQueuePresentKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -601,7 +822,7 @@ foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 type HS_vkQueuePresentKHR =
      VkQueue -- ^ queue
              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -697,16 +918,18 @@ is_VkGetDeviceGroupPresentCapabilitiesKHR
 type VkGetDeviceGroupPresentCapabilitiesKHR =
      "vkGetDeviceGroupPresentCapabilitiesKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
---   >     ( VkDevice device
---   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
---   >     )
+-- > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
+-- >     ( VkDevice device
+-- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetDeviceGroupPresentCapabilitiesKHR"
                vkGetDeviceGroupPresentCapabilitiesKHR ::
@@ -714,21 +937,61 @@ foreign import ccall unsafe
                         -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
                                                                    -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceGroupPresentCapabilitiesKHR ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
+                                                                                 -> IO VkResult
+vkGetDeviceGroupPresentCapabilitiesKHR d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetDeviceGroupPresentCapabilitiesKHR d)
+      d
+
+{-# INLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
+
+{-# WARNING
+vkGetDeviceGroupPresentCapabilitiesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
---   >     ( VkDevice device
---   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
---   >     )
+-- > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
+-- >     ( VkDevice device
+-- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
                vkGetDeviceGroupPresentCapabilitiesKHRSafe ::
                VkDevice -- ^ device
                         -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
                                                                    -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceGroupPresentCapabilitiesKHRSafe ::
+                                           VkDevice -- ^ device
+                                                    ->
+                                             Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
+                                                                                     -> IO VkResult
+vkGetDeviceGroupPresentCapabilitiesKHRSafe
+  = vkGetDeviceGroupPresentCapabilitiesKHR
+
+{-# INLINE vkGetDeviceGroupPresentCapabilitiesKHRSafe #-}
+
+{-# WARNING
+vkGetDeviceGroupPresentCapabilitiesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -739,7 +1002,7 @@ foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
 --   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupPresentCapabilitiesKHR =
      VkDevice -- ^ device
               -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
@@ -785,17 +1048,19 @@ is_VkGetDeviceGroupSurfacePresentModesKHR
 type VkGetDeviceGroupSurfacePresentModesKHR =
      "vkGetDeviceGroupSurfacePresentModesKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetDeviceGroupSurfacePresentModesKHR
---   >     ( VkDevice device
---   >     , VkSurfaceKHR surface
---   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
---   >     )
+-- > VkResult vkGetDeviceGroupSurfacePresentModesKHR
+-- >     ( VkDevice device
+-- >     , VkSurfaceKHR surface
+-- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetDeviceGroupSurfacePresentModesKHR"
                vkGetDeviceGroupSurfacePresentModesKHR ::
@@ -805,17 +1070,41 @@ foreign import ccall unsafe
                               -> Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
                                                                       -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceGroupSurfacePresentModesKHR ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         VkSurfaceKHR -- ^ surface
+                                                      ->
+                                           Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
+                                                                                -> IO VkResult
+vkGetDeviceGroupSurfacePresentModesKHR d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkGetDeviceGroupSurfacePresentModesKHR d)
+      d
+
+{-# INLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
+
+{-# WARNING
+vkGetDeviceGroupSurfacePresentModesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkGetDeviceGroupSurfacePresentModesKHR
---   >     ( VkDevice device
---   >     , VkSurfaceKHR surface
---   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
---   >     )
+-- > VkResult vkGetDeviceGroupSurfacePresentModesKHR
+-- >     ( VkDevice device
+-- >     , VkSurfaceKHR surface
+-- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
                vkGetDeviceGroupSurfacePresentModesKHRSafe ::
                VkDevice -- ^ device
@@ -823,6 +1112,26 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
                  VkSurfaceKHR -- ^ surface
                               -> Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
                                                                       -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkGetDeviceGroupSurfacePresentModesKHRSafe ::
+                                           VkDevice -- ^ device
+                                                    ->
+                                             VkSurfaceKHR -- ^ surface
+                                                          ->
+                                               Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
+                                                                                    -> IO VkResult
+vkGetDeviceGroupSurfacePresentModesKHRSafe
+  = vkGetDeviceGroupSurfacePresentModesKHR
+
+{-# INLINE vkGetDeviceGroupSurfacePresentModesKHRSafe #-}
+
+{-# WARNING
+vkGetDeviceGroupSurfacePresentModesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -834,7 +1143,7 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
 --   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupSurfacePresentModesKHR =
      VkDevice -- ^ device
               ->
@@ -882,18 +1191,20 @@ is_VkGetPhysicalDevicePresentRectanglesKHR
 type VkGetPhysicalDevicePresentRectanglesKHR =
      "vkGetPhysicalDevicePresentRectanglesKHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetPhysicalDevicePresentRectanglesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pRectCount
---   >     , VkRect2D* pRects
---   >     )
+-- > VkResult vkGetPhysicalDevicePresentRectanglesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pRectCount
+-- >     , VkRect2D* pRects
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDevicePresentRectanglesKHR"
                vkGetPhysicalDevicePresentRectanglesKHR ::
@@ -904,18 +1215,41 @@ foreign import ccall unsafe
                                             -> Ptr VkRect2D -- ^ pRects
                                                             -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+vkGetPhysicalDevicePresentRectanglesKHR ::
+                                        VkPhysicalDevice -- ^ physicalDevice
+                                                         ->
+                                          VkSurfaceKHR -- ^ surface
+                                                       -> Ptr Word32 -- ^ pRectCount
+                                                                     -> Ptr VkRect2D -- ^ pRects
+                                                                                     -> IO VkResult
+vkGetPhysicalDevicePresentRectanglesKHR
+  = error $
+      "vkGetPhysicalDevicePresentRectanglesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDevicePresentRectanglesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkGetPhysicalDevicePresentRectanglesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , uint32_t* pRectCount
---   >     , VkRect2D* pRects
---   >     )
+-- > VkResult vkGetPhysicalDevicePresentRectanglesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pRectCount
+-- >     , VkRect2D* pRects
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
                vkGetPhysicalDevicePresentRectanglesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -924,6 +1258,27 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
                               -> Ptr Word32 -- ^ pRectCount
                                             -> Ptr VkRect2D -- ^ pRects
                                                             -> IO VkResult
+
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+vkGetPhysicalDevicePresentRectanglesKHRSafe ::
+                                            VkPhysicalDevice -- ^ physicalDevice
+                                                             ->
+                                              VkSurfaceKHR -- ^ surface
+                                                           ->
+                                                Ptr Word32 -- ^ pRectCount
+                                                           -> Ptr VkRect2D -- ^ pRects
+                                                                           -> IO VkResult
+vkGetPhysicalDevicePresentRectanglesKHRSafe
+  = vkGetPhysicalDevicePresentRectanglesKHR
+
+{-# INLINE vkGetPhysicalDevicePresentRectanglesKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDevicePresentRectanglesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -936,7 +1291,7 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDevicePresentRectanglesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -982,17 +1337,19 @@ is_VkAcquireNextImage2KHR
 
 type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkAcquireNextImage2KHR
---   >     ( VkDevice device
---   >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
---   >     , uint32_t* pImageIndex
---   >     )
+-- > VkResult vkAcquireNextImage2KHR
+-- >     ( VkDevice device
+-- >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
+-- >     , uint32_t* pImageIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkAcquireNextImage2KHR"
                vkAcquireNextImage2KHR ::
                VkDevice -- ^ device
@@ -1001,17 +1358,40 @@ foreign import ccall unsafe "vkAcquireNextImage2KHR"
                                                -> Ptr Word32 -- ^ pImageIndex
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkAcquireNextImage2KHR ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
+                                                       -> Ptr Word32 -- ^ pImageIndex
+                                                                     -> IO VkResult
+vkAcquireNextImage2KHR d
+  = unsafeDupablePerformIO
+      (vkGetDeviceProc @VkAcquireNextImage2KHR d)
+      d
+
+{-# INLINE vkAcquireNextImage2KHR #-}
+
+{-# WARNING
+vkAcquireNextImage2KHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
---   > VkResult vkAcquireNextImage2KHR
---   >     ( VkDevice device
---   >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
---   >     , uint32_t* pImageIndex
---   >     )
+-- > VkResult vkAcquireNextImage2KHR
+-- >     ( VkDevice device
+-- >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
+-- >     , uint32_t* pImageIndex
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkAcquireNextImage2KHR"
                vkAcquireNextImage2KHRSafe ::
                VkDevice -- ^ device
@@ -1019,6 +1399,24 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
                  Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
                                                -> Ptr Word32 -- ^ pImageIndex
                                                              -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+vkAcquireNextImage2KHRSafe ::
+                           VkDevice -- ^ device
+                                    ->
+                             Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
+                                                           -> Ptr Word32 -- ^ pImageIndex
+                                                                         -> IO VkResult
+vkAcquireNextImage2KHRSafe = vkAcquireNextImage2KHR
+
+{-# INLINE vkAcquireNextImage2KHRSafe #-}
+
+{-# WARNING
+vkAcquireNextImage2KHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -1030,7 +1428,7 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 type HS_vkAcquireNextImage2KHR =
      VkDevice -- ^ device
               ->

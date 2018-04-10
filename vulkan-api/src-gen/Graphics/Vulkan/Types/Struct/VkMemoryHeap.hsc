@@ -25,7 +25,7 @@ import           System.IO.Unsafe                             (unsafeDupablePerf
 --   >     VkMemoryHeapFlags      flags;
 --   > } VkMemoryHeap;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryHeapVkMemoryHeap registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryHeap VkMemoryHeap registry at www.khronos.org>
 data VkMemoryHeap = VkMemoryHeap## Addr## ByteArray##
 
 instance Eq VkMemoryHeap where

@@ -90,7 +90,7 @@ type VkBindBufferMemory2KHR = "vkBindBufferMemory2KHR"
 --   >     , const VkBindBufferMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2KHRvkBindBufferMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2KHR vkBindBufferMemory2KHR registry at www.khronos.org>
 type HS_vkBindBufferMemory2KHR =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount
@@ -142,7 +142,7 @@ type VkBindImageMemory2KHR = "vkBindImageMemory2KHR"
 --   >     , const VkBindImageMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2KHRvkBindImageMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2KHR vkBindImageMemory2KHR registry at www.khronos.org>
 type HS_vkBindImageMemory2KHR =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount

@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkExtent2D                       maxDstExtent;
 --   > } VkDisplayPlaneCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPlaneCapabilitiesKHRVkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPlaneCapabilitiesKHR VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 data VkDisplayPlaneCapabilitiesKHR = VkDisplayPlaneCapabilitiesKHR## Addr##
                                                                     ByteArray##
 

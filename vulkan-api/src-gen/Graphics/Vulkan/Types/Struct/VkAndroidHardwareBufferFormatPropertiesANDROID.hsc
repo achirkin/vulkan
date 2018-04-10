@@ -50,7 +50,7 @@ import           System.IO.Unsafe
 --   >     VkChromaLocation                   suggestedYChromaOffset;
 --   > } VkAndroidHardwareBufferFormatPropertiesANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAndroidHardwareBufferFormatPropertiesANDROIDVkAndroidHardwareBufferFormatPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAndroidHardwareBufferFormatPropertiesANDROID VkAndroidHardwareBufferFormatPropertiesANDROID registry at www.khronos.org>
 data VkAndroidHardwareBufferFormatPropertiesANDROID = VkAndroidHardwareBufferFormatPropertiesANDROID## Addr##
                                                                                                       ByteArray##
 

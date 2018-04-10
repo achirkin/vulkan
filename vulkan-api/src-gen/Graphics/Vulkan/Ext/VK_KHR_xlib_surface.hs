@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
+{-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeApplications         #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
@@ -60,7 +63,7 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
        where
 import           GHC.Ptr                                                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                            (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -72,6 +75,7 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR
+import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
 pattern VkCreateXlibSurfaceKHR :: CString
 
@@ -92,18 +96,20 @@ is_VkCreateXlibSurfaceKHR
 
 type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 
--- | Success codes: 'VK_SUCCESS'.
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateXlibSurfaceKHR
---   >     ( VkInstance instance
---   >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
+-- > VkResult vkCreateXlibSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHRvkCreateXlibSurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHR ::
                VkInstance -- ^ instance
@@ -114,18 +120,43 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS'.
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateXlibSurfaceKHR ::
+                       VkInstance -- ^ instance
+                                  ->
+                         Ptr VkXlibSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                        ->
+                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                         -> IO VkResult
+vkCreateXlibSurfaceKHR d
+  = unsafeDupablePerformIO
+      (vkGetInstanceProc @VkCreateXlibSurfaceKHR d)
+      d
+
+{-# INLINE vkCreateXlibSurfaceKHR #-}
+
+{-# WARNING
+vkCreateXlibSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
---   > VkResult vkCreateXlibSurfaceKHR
---   >     ( VkInstance instance
---   >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
+-- > VkResult vkCreateXlibSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHRvkCreateXlibSurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -135,6 +166,26 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+#else
+-- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+vkCreateXlibSurfaceKHRSafe ::
+                           VkInstance -- ^ instance
+                                      ->
+                             Ptr VkXlibSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                            ->
+                               Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                             -> IO VkResult
+vkCreateXlibSurfaceKHRSafe = vkCreateXlibSurfaceKHR
+
+{-# INLINE vkCreateXlibSurfaceKHRSafe #-}
+
+{-# WARNING
+vkCreateXlibSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -147,7 +198,7 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHRvkCreateXlibSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 type HS_vkCreateXlibSurfaceKHR =
      VkInstance -- ^ instance
                 ->
@@ -195,14 +246,16 @@ is_VkGetPhysicalDeviceXlibPresentationSupportKHR
 type VkGetPhysicalDeviceXlibPresentationSupportKHR =
      "vkGetPhysicalDeviceXlibPresentationSupportKHR"
 
--- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     , Display* dpy
---   >     , VisualID visualID
---   >     )
+-- |
+-- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , Display* dpy
+-- >     , VisualID visualID
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHRvkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::
@@ -213,14 +266,37 @@ foreign import ccall unsafe
                                        -> VisualID -- ^ visualID
                                                    -> IO VkBool32
 
--- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , uint32_t queueFamilyIndex
---   >     , Display* dpy
---   >     , VisualID visualID
---   >     )
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceXlibPresentationSupportKHR ::
+                                              VkPhysicalDevice -- ^ physicalDevice
+                                                               ->
+                                                Word32 -- ^ queueFamilyIndex
+                                                       -> Ptr Display -- ^ dpy
+                                                                      -> VisualID -- ^ visualID
+                                                                                  -> IO VkBool32
+vkGetPhysicalDeviceXlibPresentationSupportKHR
+  = error $
+      "vkGetPhysicalDeviceXlibPresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+        ++
+        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+
+{-# WARNING
+vkGetPhysicalDeviceXlibPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
+-- |
+-- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , Display* dpy
+-- >     , VisualID visualID
+-- >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHRvkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
@@ -231,6 +307,26 @@ foreign import ccall safe
                                        -> VisualID -- ^ visualID
                                                    -> IO VkBool32
 
+#else
+-- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
+                                                  VkPhysicalDevice -- ^ physicalDevice
+                                                                   ->
+                                                    Word32 -- ^ queueFamilyIndex
+                                                           -> Ptr Display -- ^ dpy
+                                                                          -> VisualID -- ^ visualID
+                                                                                      -> IO VkBool32
+vkGetPhysicalDeviceXlibPresentationSupportKHRSafe
+  = vkGetPhysicalDeviceXlibPresentationSupportKHR
+
+{-# INLINE vkGetPhysicalDeviceXlibPresentationSupportKHRSafe #-}
+
+{-# WARNING
+vkGetPhysicalDeviceXlibPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+ #-}
+#endif
+
 -- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -238,7 +334,7 @@ foreign import ccall safe
 --   >     , VisualID visualID
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHRvkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceXlibPresentationSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

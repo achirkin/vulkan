@@ -21,7 +21,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRasterizationOrderAMDVkRasterizationOrderAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRasterizationOrderAMD VkRasterizationOrderAMD registry at www.khronos.org>
 newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD Int32
                                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

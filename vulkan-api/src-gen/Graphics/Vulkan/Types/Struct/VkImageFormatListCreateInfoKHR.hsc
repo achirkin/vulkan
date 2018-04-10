@@ -28,7 +28,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     const VkFormat*      pViewFormats;
 --   > } VkImageFormatListCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageFormatListCreateInfoKHRVkImageFormatListCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageFormatListCreateInfoKHR VkImageFormatListCreateInfoKHR registry at www.khronos.org>
 data VkImageFormatListCreateInfoKHR = VkImageFormatListCreateInfoKHR## Addr##
                                                                       ByteArray##
 
