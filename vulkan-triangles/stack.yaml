@@ -1,8 +1,14 @@
 resolver: nightly-2018-04-09
+
 ghc-options:
   vulkan-api:    -O2 -split-sections
   GLFW-b:        -O2
   bindings-GLFW: -O2
+
+flags:
+  vulkan-api:
+    useNativeFFI-1-0: true
+    useNativeFFI-1-1: false
 
 packages:
   - .

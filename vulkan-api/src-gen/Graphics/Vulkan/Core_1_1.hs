@@ -802,18 +802,18 @@ foreign import ccall unsafe "vkEnumerateInstanceVersion"
                                                         -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
                                          -> IO VkResult
 vkEnumerateInstanceVersion
   = error $
-      "vkEnumerateInstanceVersion: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkEnumerateInstanceVersion\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkEnumerateInstanceVersion"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkEnumerateInstanceVersion"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -831,8 +831,8 @@ foreign import ccall safe "vkEnumerateInstanceVersion"
                                                             -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkEnumerateInstanceVersionSafe :: Ptr Word32 -- ^ pApiVersion
                                              -> IO VkResult
 vkEnumerateInstanceVersionSafe = vkEnumerateInstanceVersion
@@ -840,7 +840,7 @@ vkEnumerateInstanceVersionSafe = vkEnumerateInstanceVersion
 {-# INLINE vkEnumerateInstanceVersionSafe #-}
 
 {-# WARNING
-vkEnumerateInstanceVersionSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkEnumerateInstanceVersionSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -914,8 +914,8 @@ foreign import ccall unsafe "vkBindBufferMemory2"
                                                                 -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkBindBufferMemory2 ::
                     VkDevice -- ^ device
                              -> Word32 -- ^ bindInfoCount
@@ -927,7 +927,7 @@ vkBindBufferMemory2 d
 {-# INLINE vkBindBufferMemory2 #-}
 
 {-# WARNING
-vkBindBufferMemory2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkBindBufferMemory2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -952,8 +952,8 @@ foreign import ccall safe "vkBindBufferMemory2"
                                                                 -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkBindBufferMemory2Safe ::
                         VkDevice -- ^ device
                                  -> Word32 -- ^ bindInfoCount
@@ -964,7 +964,7 @@ vkBindBufferMemory2Safe = vkBindBufferMemory2
 {-# INLINE vkBindBufferMemory2Safe #-}
 
 {-# WARNING
-vkBindBufferMemory2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkBindBufferMemory2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1036,8 +1036,8 @@ foreign import ccall unsafe "vkBindImageMemory2" vkBindImageMemory2
                                                                   -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkBindImageMemory2 ::
                    VkDevice -- ^ device
                             -> Word32 -- ^ bindInfoCount
@@ -1049,7 +1049,7 @@ vkBindImageMemory2 d
 {-# INLINE vkBindImageMemory2 #-}
 
 {-# WARNING
-vkBindImageMemory2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkBindImageMemory2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1074,8 +1074,8 @@ foreign import ccall safe "vkBindImageMemory2"
                                                                -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkBindImageMemory2Safe ::
                        VkDevice -- ^ device
                                 -> Word32 -- ^ bindInfoCount
@@ -1086,7 +1086,7 @@ vkBindImageMemory2Safe = vkBindImageMemory2
 {-# INLINE vkBindImageMemory2Safe #-}
 
 {-# WARNING
-vkBindImageMemory2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkBindImageMemory2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1199,8 +1199,8 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
                                                                             -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupPeerMemoryFeatures ::
                                    VkDevice -- ^ device
                                             ->
@@ -1218,7 +1218,7 @@ vkGetDeviceGroupPeerMemoryFeatures d
 {-# INLINE vkGetDeviceGroupPeerMemoryFeatures #-}
 
 {-# WARNING
-vkGetDeviceGroupPeerMemoryFeatures"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupPeerMemoryFeatures"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1244,8 +1244,8 @@ foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
                                                                             -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupPeerMemoryFeaturesSafe ::
                                        VkDevice -- ^ device
                                                 ->
@@ -1261,7 +1261,7 @@ vkGetDeviceGroupPeerMemoryFeaturesSafe
 {-# INLINE vkGetDeviceGroupPeerMemoryFeaturesSafe #-}
 
 {-# WARNING
-vkGetDeviceGroupPeerMemoryFeaturesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupPeerMemoryFeaturesSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1336,19 +1336,19 @@ foreign import ccall unsafe "vkCmdSetDeviceMask" vkCmdSetDeviceMask
                                             -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkCmdSetDeviceMask :: VkCommandBuffer -- ^ commandBuffer
                                       -> Word32 -- ^ deviceMask
                                                 -> IO ()
 vkCmdSetDeviceMask
   = error $
-      "vkCmdSetDeviceMask: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkCmdSetDeviceMask\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkCmdSetDeviceMask"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCmdSetDeviceMask"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1370,8 +1370,8 @@ foreign import ccall safe "vkCmdSetDeviceMask"
                                                                    -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkCmdSetDeviceMaskSafe :: VkCommandBuffer -- ^ commandBuffer
                                           -> Word32 -- ^ deviceMask
                                                     -> IO ()
@@ -1380,7 +1380,7 @@ vkCmdSetDeviceMaskSafe = vkCmdSetDeviceMask
 {-# INLINE vkCmdSetDeviceMaskSafe #-}
 
 {-# WARNING
-vkCmdSetDeviceMaskSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCmdSetDeviceMaskSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1459,8 +1459,8 @@ foreign import ccall unsafe "vkCmdDispatchBase" vkCmdDispatchBase
                                                                           -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkCmdDispatchBase ::
                   VkCommandBuffer -- ^ commandBuffer
                                   ->
@@ -1473,12 +1473,12 @@ vkCmdDispatchBase ::
                                                                              -> IO ()
 vkCmdDispatchBase
   = error $
-      "vkCmdDispatchBase: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkCmdDispatchBase\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkCmdDispatchBase"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCmdDispatchBase"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1512,8 +1512,8 @@ foreign import ccall safe "vkCmdDispatchBase" vkCmdDispatchBaseSafe
                                                                           -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkCmdDispatchBaseSafe ::
                       VkCommandBuffer -- ^ commandBuffer
                                       ->
@@ -1529,7 +1529,7 @@ vkCmdDispatchBaseSafe = vkCmdDispatchBase
 {-# INLINE vkCmdDispatchBaseSafe #-}
 
 {-# WARNING
-vkCmdDispatchBaseSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCmdDispatchBaseSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1689,8 +1689,8 @@ foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkEnumeratePhysicalDeviceGroups ::
                                 VkInstance -- ^ instance
                                            ->
@@ -1705,7 +1705,7 @@ vkEnumeratePhysicalDeviceGroups d
 {-# INLINE vkEnumeratePhysicalDeviceGroups #-}
 
 {-# WARNING
-vkEnumeratePhysicalDeviceGroups"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkEnumeratePhysicalDeviceGroups"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1731,8 +1731,8 @@ foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkEnumeratePhysicalDeviceGroupsSafe ::
                                     VkInstance -- ^ instance
                                                ->
@@ -1746,7 +1746,7 @@ vkEnumeratePhysicalDeviceGroupsSafe
 {-# INLINE vkEnumeratePhysicalDeviceGroupsSafe #-}
 
 {-# WARNING
-vkEnumeratePhysicalDeviceGroupsSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkEnumeratePhysicalDeviceGroupsSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1846,8 +1846,8 @@ foreign import ccall unsafe "vkGetImageMemoryRequirements2"
                                              -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetImageMemoryRequirements2 ::
                               VkDevice -- ^ device
                                        ->
@@ -1863,7 +1863,7 @@ vkGetImageMemoryRequirements2 d
 {-# INLINE vkGetImageMemoryRequirements2 #-}
 
 {-# WARNING
-vkGetImageMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetImageMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1886,8 +1886,8 @@ foreign import ccall safe "vkGetImageMemoryRequirements2"
                                              -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetImageMemoryRequirements2Safe ::
                                   VkDevice -- ^ device
                                            ->
@@ -1900,7 +1900,7 @@ vkGetImageMemoryRequirements2Safe = vkGetImageMemoryRequirements2
 {-# INLINE vkGetImageMemoryRequirements2Safe #-}
 
 {-# WARNING
-vkGetImageMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetImageMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1978,8 +1978,8 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements2"
                                              -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetBufferMemoryRequirements2 ::
                                VkDevice -- ^ device
                                         ->
@@ -1995,7 +1995,7 @@ vkGetBufferMemoryRequirements2 d
 {-# INLINE vkGetBufferMemoryRequirements2 #-}
 
 {-# WARNING
-vkGetBufferMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetBufferMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2018,8 +2018,8 @@ foreign import ccall safe "vkGetBufferMemoryRequirements2"
                                              -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetBufferMemoryRequirements2Safe ::
                                    VkDevice -- ^ device
                                             ->
@@ -2032,7 +2032,7 @@ vkGetBufferMemoryRequirements2Safe = vkGetBufferMemoryRequirements2
 {-# INLINE vkGetBufferMemoryRequirements2Safe #-}
 
 {-# WARNING
-vkGetBufferMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetBufferMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2112,8 +2112,8 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements2"
                                                                       -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetImageSparseMemoryRequirements2 ::
                                     VkDevice -- ^ device
                                              ->
@@ -2130,7 +2130,7 @@ vkGetImageSparseMemoryRequirements2 d
 {-# INLINE vkGetImageSparseMemoryRequirements2 #-}
 
 {-# WARNING
-vkGetImageSparseMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetImageSparseMemoryRequirements2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2155,8 +2155,8 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements2"
                                                                       -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetImageSparseMemoryRequirements2Safe ::
                                         VkDevice -- ^ device
                                                  ->
@@ -2172,7 +2172,7 @@ vkGetImageSparseMemoryRequirements2Safe
 {-# INLINE vkGetImageSparseMemoryRequirements2Safe #-}
 
 {-# WARNING
-vkGetImageSparseMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetImageSparseMemoryRequirements2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2275,20 +2275,20 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2"
                                                                  -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceFeatures2 ::
                              VkPhysicalDevice -- ^ physicalDevice
                                               -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
                                                                                -> IO ()
 vkGetPhysicalDeviceFeatures2
   = error $
-      "vkGetPhysicalDeviceFeatures2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceFeatures2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceFeatures2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceFeatures2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2307,8 +2307,8 @@ foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
                                                                  -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceFeatures2Safe ::
                                  VkPhysicalDevice -- ^ physicalDevice
                                                   -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
@@ -2318,7 +2318,7 @@ vkGetPhysicalDeviceFeatures2Safe = vkGetPhysicalDeviceFeatures2
 {-# INLINE vkGetPhysicalDeviceFeatures2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceFeatures2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceFeatures2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2387,20 +2387,20 @@ foreign import ccall unsafe "vkGetPhysicalDeviceProperties2"
                                                                    -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceProperties2 ::
                                VkPhysicalDevice -- ^ physicalDevice
                                                 -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
                                                                                    -> IO ()
 vkGetPhysicalDeviceProperties2
   = error $
-      "vkGetPhysicalDeviceProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2419,8 +2419,8 @@ foreign import ccall safe "vkGetPhysicalDeviceProperties2"
                                                                    -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceProperties2Safe ::
                                    VkPhysicalDevice -- ^ physicalDevice
                                                     -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
@@ -2430,7 +2430,7 @@ vkGetPhysicalDeviceProperties2Safe = vkGetPhysicalDeviceProperties2
 {-# INLINE vkGetPhysicalDeviceProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2502,8 +2502,8 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties2"
                                                                        -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceFormatProperties2 ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -2512,12 +2512,12 @@ vkGetPhysicalDeviceFormatProperties2 ::
                                                                            -> IO ()
 vkGetPhysicalDeviceFormatProperties2
   = error $
-      "vkGetPhysicalDeviceFormatProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceFormatProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2538,8 +2538,8 @@ foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
                                                                        -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceFormatProperties2Safe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
@@ -2552,7 +2552,7 @@ vkGetPhysicalDeviceFormatProperties2Safe
 {-# INLINE vkGetPhysicalDeviceFormatProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2633,8 +2633,8 @@ foreign import ccall unsafe
                                                 -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceImageFormatProperties2 ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -2644,12 +2644,12 @@ vkGetPhysicalDeviceImageFormatProperties2 ::
                                                                            -> IO VkResult
 vkGetPhysicalDeviceImageFormatProperties2
   = error $
-      "vkGetPhysicalDeviceImageFormatProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceImageFormatProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceImageFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceImageFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2677,8 +2677,8 @@ foreign import ccall safe
                                                 -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceImageFormatProperties2Safe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -2692,7 +2692,7 @@ vkGetPhysicalDeviceImageFormatProperties2Safe
 {-# INLINE vkGetPhysicalDeviceImageFormatProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceImageFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceImageFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2775,8 +2775,8 @@ foreign import ccall unsafe
                                                             -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceQueueFamilyProperties2 ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -2785,12 +2785,12 @@ vkGetPhysicalDeviceQueueFamilyProperties2 ::
                                                                                        -> IO ()
 vkGetPhysicalDeviceQueueFamilyProperties2
   = error $
-      "vkGetPhysicalDeviceQueueFamilyProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceQueueFamilyProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceQueueFamilyProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceQueueFamilyProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2813,8 +2813,8 @@ foreign import ccall safe
                                                             -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceQueueFamilyProperties2Safe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -2827,7 +2827,7 @@ vkGetPhysicalDeviceQueueFamilyProperties2Safe
 {-# INLINE vkGetPhysicalDeviceQueueFamilyProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceQueueFamilyProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceQueueFamilyProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2901,8 +2901,8 @@ foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties2"
                                                                          -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceMemoryProperties2 ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -2910,12 +2910,12 @@ vkGetPhysicalDeviceMemoryProperties2 ::
                                                                              -> IO ()
 vkGetPhysicalDeviceMemoryProperties2
   = error $
-      "vkGetPhysicalDeviceMemoryProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceMemoryProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceMemoryProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceMemoryProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -2934,8 +2934,8 @@ foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
                                                                          -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceMemoryProperties2Safe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
@@ -2947,7 +2947,7 @@ vkGetPhysicalDeviceMemoryProperties2Safe
 {-# INLINE vkGetPhysicalDeviceMemoryProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceMemoryProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceMemoryProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3026,8 +3026,8 @@ foreign import ccall unsafe
                                                                     -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceSparseImageFormatProperties2 ::
                                                 VkPhysicalDevice -- ^ physicalDevice
                                                                  ->
@@ -3039,12 +3039,12 @@ vkGetPhysicalDeviceSparseImageFormatProperties2 ::
                                                                                          -> IO ()
 vkGetPhysicalDeviceSparseImageFormatProperties2
   = error $
-      "vkGetPhysicalDeviceSparseImageFormatProperties2: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceSparseImageFormatProperties2\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceSparseImageFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceSparseImageFormatProperties2"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3070,8 +3070,8 @@ foreign import ccall safe
                                                                     -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceSparseImageFormatProperties2Safe ::
                                                     VkPhysicalDevice -- ^ physicalDevice
                                                                      ->
@@ -3088,7 +3088,7 @@ vkGetPhysicalDeviceSparseImageFormatProperties2Safe
 {-# INLINE vkGetPhysicalDeviceSparseImageFormatProperties2Safe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceSparseImageFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceSparseImageFormatProperties2Safe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3216,8 +3216,8 @@ foreign import ccall unsafe "vkTrimCommandPool" vkTrimCommandPool
                                                                       -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkTrimCommandPool ::
                   VkDevice -- ^ device
                            -> VkCommandPool -- ^ commandPool
@@ -3229,7 +3229,7 @@ vkTrimCommandPool d
 {-# INLINE vkTrimCommandPool #-}
 
 {-# WARNING
-vkTrimCommandPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkTrimCommandPool"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3249,8 +3249,8 @@ foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
                                                                       -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkTrimCommandPoolSafe ::
                       VkDevice -- ^ device
                                -> VkCommandPool -- ^ commandPool
@@ -3261,7 +3261,7 @@ vkTrimCommandPoolSafe = vkTrimCommandPool
 {-# INLINE vkTrimCommandPoolSafe #-}
 
 {-# WARNING
-vkTrimCommandPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkTrimCommandPoolSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3434,8 +3434,8 @@ foreign import ccall unsafe "vkGetDeviceQueue2" vkGetDeviceQueue2
                                                                     -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceQueue2 ::
                   VkDevice -- ^ device
                            -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
@@ -3447,7 +3447,7 @@ vkGetDeviceQueue2 d
 {-# INLINE vkGetDeviceQueue2 #-}
 
 {-# WARNING
-vkGetDeviceQueue2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceQueue2"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3467,8 +3467,8 @@ foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
                                                                     -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceQueue2Safe ::
                       VkDevice -- ^ device
                                -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
@@ -3479,7 +3479,7 @@ vkGetDeviceQueue2Safe = vkGetDeviceQueue2
 {-# INLINE vkGetDeviceQueue2Safe #-}
 
 {-# WARNING
-vkGetDeviceQueue2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceQueue2Safe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3628,8 +3628,8 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
                                                   -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateSamplerYcbcrConversion ::
                                VkDevice -- ^ device
                                         ->
@@ -3647,7 +3647,7 @@ vkCreateSamplerYcbcrConversion d
 {-# INLINE vkCreateSamplerYcbcrConversion #-}
 
 {-# WARNING
-vkCreateSamplerYcbcrConversion"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCreateSamplerYcbcrConversion"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3677,8 +3677,8 @@ foreign import ccall safe "vkCreateSamplerYcbcrConversion"
                                                   -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateSamplerYcbcrConversionSafe ::
                                    VkDevice -- ^ device
                                             ->
@@ -3693,7 +3693,7 @@ vkCreateSamplerYcbcrConversionSafe = vkCreateSamplerYcbcrConversion
 {-# INLINE vkCreateSamplerYcbcrConversionSafe #-}
 
 {-# WARNING
-vkCreateSamplerYcbcrConversionSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCreateSamplerYcbcrConversionSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3777,8 +3777,8 @@ foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySamplerYcbcrConversion ::
                                 VkDevice -- ^ device
                                          ->
@@ -3793,7 +3793,7 @@ vkDestroySamplerYcbcrConversion d
 {-# INLINE vkDestroySamplerYcbcrConversion #-}
 
 {-# WARNING
-vkDestroySamplerYcbcrConversion"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkDestroySamplerYcbcrConversion"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -3815,8 +3815,8 @@ foreign import ccall safe "vkDestroySamplerYcbcrConversion"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySamplerYcbcrConversionSafe ::
                                     VkDevice -- ^ device
                                              ->
@@ -3829,7 +3829,7 @@ vkDestroySamplerYcbcrConversionSafe
 {-# INLINE vkDestroySamplerYcbcrConversionSafe #-}
 
 {-# WARNING
-vkDestroySamplerYcbcrConversionSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkDestroySamplerYcbcrConversionSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4201,8 +4201,8 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
                                                     -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateDescriptorUpdateTemplate ::
                                  VkDevice -- ^ device
                                           ->
@@ -4220,7 +4220,7 @@ vkCreateDescriptorUpdateTemplate d
 {-# INLINE vkCreateDescriptorUpdateTemplate #-}
 
 {-# WARNING
-vkCreateDescriptorUpdateTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCreateDescriptorUpdateTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4250,8 +4250,8 @@ foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
                                                     -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateDescriptorUpdateTemplateSafe ::
                                      VkDevice -- ^ device
                                               ->
@@ -4267,7 +4267,7 @@ vkCreateDescriptorUpdateTemplateSafe
 {-# INLINE vkCreateDescriptorUpdateTemplateSafe #-}
 
 {-# WARNING
-vkCreateDescriptorUpdateTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkCreateDescriptorUpdateTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4351,8 +4351,8 @@ foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
                                                                          -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroyDescriptorUpdateTemplate ::
                                   VkDevice -- ^ device
                                            ->
@@ -4367,7 +4367,7 @@ vkDestroyDescriptorUpdateTemplate d
 {-# INLINE vkDestroyDescriptorUpdateTemplate #-}
 
 {-# WARNING
-vkDestroyDescriptorUpdateTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkDestroyDescriptorUpdateTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4389,8 +4389,8 @@ foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
                                                                          -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroyDescriptorUpdateTemplateSafe ::
                                       VkDevice -- ^ device
                                                ->
@@ -4404,7 +4404,7 @@ vkDestroyDescriptorUpdateTemplateSafe
 {-# INLINE vkDestroyDescriptorUpdateTemplateSafe #-}
 
 {-# WARNING
-vkDestroyDescriptorUpdateTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkDestroyDescriptorUpdateTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4482,8 +4482,8 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
                                                                            -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkUpdateDescriptorSetWithTemplate ::
                                   VkDevice -- ^ device
                                            ->
@@ -4500,7 +4500,7 @@ vkUpdateDescriptorSetWithTemplate d
 {-# INLINE vkUpdateDescriptorSetWithTemplate #-}
 
 {-# WARNING
-vkUpdateDescriptorSetWithTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkUpdateDescriptorSetWithTemplate"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4524,8 +4524,8 @@ foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
                                                                            -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkUpdateDescriptorSetWithTemplateSafe ::
                                       VkDevice -- ^ device
                                                ->
@@ -4540,7 +4540,7 @@ vkUpdateDescriptorSetWithTemplateSafe
 {-# INLINE vkUpdateDescriptorSetWithTemplateSafe #-}
 
 {-# WARNING
-vkUpdateDescriptorSetWithTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkUpdateDescriptorSetWithTemplateSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4632,8 +4632,8 @@ foreign import ccall unsafe
                                                   -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalBufferProperties ::
                                             VkPhysicalDevice -- ^ physicalDevice
                                                              ->
@@ -4643,12 +4643,12 @@ vkGetPhysicalDeviceExternalBufferProperties ::
                                                                                -> IO ()
 vkGetPhysicalDeviceExternalBufferProperties
   = error $
-      "vkGetPhysicalDeviceExternalBufferProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceExternalBufferProperties\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceExternalBufferProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalBufferProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4672,8 +4672,8 @@ foreign import ccall safe
                                                   -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalBufferPropertiesSafe ::
                                                 VkPhysicalDevice -- ^ physicalDevice
                                                                  ->
@@ -4687,7 +4687,7 @@ vkGetPhysicalDeviceExternalBufferPropertiesSafe
 {-# INLINE vkGetPhysicalDeviceExternalBufferPropertiesSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceExternalBufferPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalBufferPropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4819,8 +4819,8 @@ foreign import ccall unsafe
                                                  -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalFenceProperties ::
                                            VkPhysicalDevice -- ^ physicalDevice
                                                             ->
@@ -4830,12 +4830,12 @@ vkGetPhysicalDeviceExternalFenceProperties ::
                                                                              -> IO ()
 vkGetPhysicalDeviceExternalFenceProperties
   = error $
-      "vkGetPhysicalDeviceExternalFenceProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceExternalFenceProperties\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceExternalFenceProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalFenceProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4859,8 +4859,8 @@ foreign import ccall safe
                                                  -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalFencePropertiesSafe ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 ->
@@ -4874,7 +4874,7 @@ vkGetPhysicalDeviceExternalFencePropertiesSafe
 {-# INLINE vkGetPhysicalDeviceExternalFencePropertiesSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceExternalFencePropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalFencePropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -4980,8 +4980,8 @@ foreign import ccall unsafe
                                                      -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalSemaphoreProperties ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 ->
@@ -4991,12 +4991,12 @@ vkGetPhysicalDeviceExternalSemaphoreProperties ::
                                                                                      -> IO ()
 vkGetPhysicalDeviceExternalSemaphoreProperties
   = error $
-      "vkGetPhysicalDeviceExternalSemaphoreProperties: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceExternalSemaphoreProperties\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceExternalSemaphoreProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalSemaphoreProperties"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -5020,8 +5020,8 @@ foreign import ccall safe
                                                      -> IO ()
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDeviceExternalSemaphorePropertiesSafe ::
                                                    VkPhysicalDevice -- ^ physicalDevice
                                                                     ->
@@ -5035,7 +5035,7 @@ vkGetPhysicalDeviceExternalSemaphorePropertiesSafe
 {-# INLINE vkGetPhysicalDeviceExternalSemaphorePropertiesSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceExternalSemaphorePropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDeviceExternalSemaphorePropertiesSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -5128,8 +5128,8 @@ foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
                                                     -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDescriptorSetLayoutSupport ::
                                 VkDevice -- ^ device
                                          ->
@@ -5145,7 +5145,7 @@ vkGetDescriptorSetLayoutSupport d
 {-# INLINE vkGetDescriptorSetLayoutSupport #-}
 
 {-# WARNING
-vkGetDescriptorSetLayoutSupport"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDescriptorSetLayoutSupport"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -5168,8 +5168,8 @@ foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
                                                     -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDescriptorSetLayoutSupportSafe ::
                                     VkDevice -- ^ device
                                              ->
@@ -5183,7 +5183,7 @@ vkGetDescriptorSetLayoutSupportSafe
 {-# INLINE vkGetDescriptorSetLayoutSupportSafe #-}
 
 {-# WARNING
-vkGetDescriptorSetLayoutSupportSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDescriptorSetLayoutSupportSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 

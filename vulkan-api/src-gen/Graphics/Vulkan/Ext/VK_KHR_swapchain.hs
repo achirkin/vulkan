@@ -215,8 +215,8 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateSwapchainKHR ::
                      VkDevice -- ^ device
                               ->
@@ -232,7 +232,7 @@ vkCreateSwapchainKHR d
 {-# INLINE vkCreateSwapchainKHR #-}
 
 {-# WARNING
-vkCreateSwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateSwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -261,8 +261,8 @@ foreign import ccall safe "vkCreateSwapchainKHR"
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateSwapchainKHRSafe ::
                          VkDevice -- ^ device
                                   ->
@@ -276,7 +276,7 @@ vkCreateSwapchainKHRSafe = vkCreateSwapchainKHR
 {-# INLINE vkCreateSwapchainKHRSafe #-}
 
 {-# WARNING
-vkCreateSwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateSwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -350,8 +350,8 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySwapchainKHR ::
                       VkDevice -- ^ device
                                -> VkSwapchainKHR -- ^ swapchain
@@ -364,7 +364,7 @@ vkDestroySwapchainKHR d
 {-# INLINE vkDestroySwapchainKHR #-}
 
 {-# WARNING
-vkDestroySwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkDestroySwapchainKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -385,8 +385,8 @@ foreign import ccall safe "vkDestroySwapchainKHR"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySwapchainKHRSafe ::
                           VkDevice -- ^ device
                                    -> VkSwapchainKHR -- ^ swapchain
@@ -397,7 +397,7 @@ vkDestroySwapchainKHRSafe = vkDestroySwapchainKHR
 {-# INLINE vkDestroySwapchainKHRSafe #-}
 
 {-# WARNING
-vkDestroySwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkDestroySwapchainKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -471,8 +471,8 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                                                              -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkGetSwapchainImagesKHR ::
                         VkDevice -- ^ device
                                  ->
@@ -488,7 +488,7 @@ vkGetSwapchainImagesKHR d
 {-# INLINE vkGetSwapchainImagesKHR #-}
 
 {-# WARNING
-vkGetSwapchainImagesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetSwapchainImagesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -516,8 +516,8 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
                                                              -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkGetSwapchainImagesKHRSafe ::
                             VkDevice -- ^ device
                                      ->
@@ -530,7 +530,7 @@ vkGetSwapchainImagesKHRSafe = vkGetSwapchainImagesKHR
 {-# INLINE vkGetSwapchainImagesKHRSafe #-}
 
 {-# WARNING
-vkGetSwapchainImagesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetSwapchainImagesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -617,8 +617,8 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
                                                                   -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkAcquireNextImageKHR ::
                       VkDevice -- ^ device
                                ->
@@ -636,7 +636,7 @@ vkAcquireNextImageKHR d
 {-# INLINE vkAcquireNextImageKHR #-}
 
 {-# WARNING
-vkAcquireNextImageKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkAcquireNextImageKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -669,8 +669,8 @@ foreign import ccall safe "vkAcquireNextImageKHR"
                                                                   -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkAcquireNextImageKHRSafe ::
                           VkDevice -- ^ device
                                    ->
@@ -686,7 +686,7 @@ vkAcquireNextImageKHRSafe = vkAcquireNextImageKHR
 {-# INLINE vkAcquireNextImageKHRSafe #-}
 
 {-# WARNING
-vkAcquireNextImageKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkAcquireNextImageKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -764,19 +764,19 @@ foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
                                                   -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkQueuePresentKHR :: VkQueue -- ^ queue
                              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                      -> IO VkResult
 vkQueuePresentKHR
   = error $
-      "vkQueuePresentKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkQueuePresentKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkQueuePresentKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkQueuePresentKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -798,8 +798,8 @@ foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
                                                   -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkQueuePresentKHRSafe ::
                       VkQueue -- ^ queue
                               -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -809,7 +809,7 @@ vkQueuePresentKHRSafe = vkQueuePresentKHR
 {-# INLINE vkQueuePresentKHRSafe #-}
 
 {-# WARNING
-vkQueuePresentKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkQueuePresentKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -938,8 +938,8 @@ foreign import ccall unsafe
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupPresentCapabilitiesKHR ::
                                        VkDevice -- ^ device
                                                 ->
@@ -953,7 +953,7 @@ vkGetDeviceGroupPresentCapabilitiesKHR d
 {-# INLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
 
 {-# WARNING
-vkGetDeviceGroupPresentCapabilitiesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupPresentCapabilitiesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -976,8 +976,8 @@ foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
                                                                    -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupPresentCapabilitiesKHRSafe ::
                                            VkDevice -- ^ device
                                                     ->
@@ -989,7 +989,7 @@ vkGetDeviceGroupPresentCapabilitiesKHRSafe
 {-# INLINE vkGetDeviceGroupPresentCapabilitiesKHRSafe #-}
 
 {-# WARNING
-vkGetDeviceGroupPresentCapabilitiesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupPresentCapabilitiesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1071,8 +1071,8 @@ foreign import ccall unsafe
                                                                       -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupSurfacePresentModesKHR ::
                                        VkDevice -- ^ device
                                                 ->
@@ -1088,7 +1088,7 @@ vkGetDeviceGroupSurfacePresentModesKHR d
 {-# INLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
 
 {-# WARNING
-vkGetDeviceGroupSurfacePresentModesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupSurfacePresentModesKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1114,8 +1114,8 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
                                                                       -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkGetDeviceGroupSurfacePresentModesKHRSafe ::
                                            VkDevice -- ^ device
                                                     ->
@@ -1129,7 +1129,7 @@ vkGetDeviceGroupSurfacePresentModesKHRSafe
 {-# INLINE vkGetDeviceGroupSurfacePresentModesKHRSafe #-}
 
 {-# WARNING
-vkGetDeviceGroupSurfacePresentModesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetDeviceGroupSurfacePresentModesKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1216,8 +1216,8 @@ foreign import ccall unsafe
                                                             -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDevicePresentRectanglesKHR ::
                                         VkPhysicalDevice -- ^ physicalDevice
                                                          ->
@@ -1227,12 +1227,12 @@ vkGetPhysicalDevicePresentRectanglesKHR ::
                                                                                      -> IO VkResult
 vkGetPhysicalDevicePresentRectanglesKHR
   = error $
-      "vkGetPhysicalDevicePresentRectanglesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDevicePresentRectanglesKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_1 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDevicePresentRectanglesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDevicePresentRectanglesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1260,8 +1260,8 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
                                                             -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag.
+-- Warning: without @useNativeFFI-1-1@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag.
 vkGetPhysicalDevicePresentRectanglesKHRSafe ::
                                             VkPhysicalDevice -- ^ physicalDevice
                                                              ->
@@ -1276,7 +1276,7 @@ vkGetPhysicalDevicePresentRectanglesKHRSafe
 {-# INLINE vkGetPhysicalDevicePresentRectanglesKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDevicePresentRectanglesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkGetPhysicalDevicePresentRectanglesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1359,8 +1359,8 @@ foreign import ccall unsafe "vkAcquireNextImage2KHR"
                                                              -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkAcquireNextImage2KHR ::
                        VkDevice -- ^ device
                                 ->
@@ -1375,7 +1375,7 @@ vkAcquireNextImage2KHR d
 {-# INLINE vkAcquireNextImage2KHR #-}
 
 {-# WARNING
-vkAcquireNextImage2KHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkAcquireNextImage2KHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 
@@ -1401,8 +1401,8 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
                                                              -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_1@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-1@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-1@ cabal flag to call it natively to make sure you get the best performance.
 vkAcquireNextImage2KHRSafe ::
                            VkDevice -- ^ device
                                     ->
@@ -1414,7 +1414,7 @@ vkAcquireNextImage2KHRSafe = vkAcquireNextImage2KHR
 {-# INLINE vkAcquireNextImage2KHRSafe #-}
 
 {-# WARNING
-vkAcquireNextImage2KHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_1"
+vkAcquireNextImage2KHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-1"
  #-}
 #endif
 

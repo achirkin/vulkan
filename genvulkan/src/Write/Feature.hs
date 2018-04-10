@@ -5,7 +5,7 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 module Write.Feature
-  ( genFeature, genRequire, showExts
+  ( genFeature, genRequire, showExts, coreVersion
   ) where
 
 import           Control.Monad
@@ -14,8 +14,9 @@ import           Control.Monad.Reader.Class
 import           Control.Monad.State.Class        (MonadState (..))
 import           Control.Monad.Trans.Class        (lift)
 import           Control.Monad.Trans.State.Strict (evalStateT)
+import qualified Data.Char                        as C
 import qualified Data.Map                         as Map
-import           Data.Maybe                       (maybe, fromMaybe)
+import           Data.Maybe                       (fromMaybe, maybe)
 import           Data.Semigroup
 import           Data.Set                         (Set)
 import qualified Data.Set                         as Set
@@ -140,6 +141,16 @@ showExts as = "Required extensions: " <> showExts' as
 
 nativeFFIProtectDef :: T.Text -> ProtectDef
 nativeFFIProtectDef t = ProtectDef
-  { protectFlag = ProtectFlag $ "useNativeFFI-" <> t
+  { protectFlag = ProtectFlag $ "useNativeFFI-" <> T.map f (T.dropWhile (not . C.isDigit) t)
   , protectCPP  = ProtectCPP $ "NATIVE_FFI_" <> t
   }
+  where
+    f c | C.isDigit c = c
+        | otherwise = '-'
+
+
+coreVersion :: ProtectDef -> T.Text
+coreVersion = T.map f . T.dropWhile (not . C.isDigit) . unProtectCPP . protectCPP
+  where
+    f c | C.isDigit c = c
+        | otherwise = '.'

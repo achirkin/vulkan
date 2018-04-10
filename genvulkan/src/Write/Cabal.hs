@@ -15,6 +15,7 @@ import qualified Data.Text                            as T
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
+import           Write.Feature
 
 hardcodedModules :: [Text]
 hardcodedModules =
@@ -27,10 +28,12 @@ hardcodedModules =
   , "Graphics.Vulkan.Ext"
   ]
 
-genCabalFile :: [(Text, Maybe ProtectDef)]
+genCabalFile :: [ProtectDef]
+                -- ^ Flags to enable native FFI for vulkan versions
+             -> [(Text, Maybe ProtectDef)]
                 -- ^ module names and if they are protected by compilation flags
              -> Text
-genCabalFile eModules = T.unlines $
+genCabalFile coreVersions eModules = T.unlines $
       ( [text|
           --
           -- Do not modify this file directly
@@ -59,7 +62,7 @@ genCabalFile eModules = T.unlines $
               include/vulkan/*.h
 
         |]
-      : map mkFlagDef protectedGroups
+      : map mkFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
       )
    <> ( [text|
           library
@@ -69,6 +72,7 @@ genCabalFile eModules = T.unlines $
       : map (spaces <>) (L.sort $ unprotected ++ hardcodedModules)
       )
    <> map (mkModules . second L.sort) protectedGroups
+   <> map mkVersionPragma coreVersions
    <> tail ( T.lines
         [text|
           DUMMY (have to keep it here for NeatInterpolation to work properly)
@@ -121,3 +125,21 @@ genCabalFile eModules = T.unlines $
       : ("      cpp-options: -D" <> g)
       :  "      exposed-modules:"
       : map (spaces <>) ms
+
+    mkVersionFlagDef p
+      | f <- unProtectFlag $ protectFlag p
+      , v <- coreVersion p
+      = [text|
+          flag $f
+              description:
+                Enable foreign-imported functions from Vulkan $v feature set
+              default: False
+        |]
+
+    mkVersionPragma p
+      | f <- unProtectFlag $ protectFlag p
+      , g <- unProtectCPP $ protectCPP p
+      = T.unlines
+      [ "    if flag(" <> f <> ")"
+      , "      cpp-options: -D" <> g
+      ]

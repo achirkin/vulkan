@@ -137,8 +137,8 @@ foreign import ccall unsafe "vkDestroySurfaceKHR"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySurfaceKHR ::
                     VkInstance -- ^ instance
                                -> VkSurfaceKHR -- ^ surface
@@ -151,7 +151,7 @@ vkDestroySurfaceKHR d
 {-# INLINE vkDestroySurfaceKHR #-}
 
 {-# WARNING
-vkDestroySurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkDestroySurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -172,8 +172,8 @@ foreign import ccall safe "vkDestroySurfaceKHR"
                                                                        -> IO ()
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkDestroySurfaceKHRSafe ::
                         VkInstance -- ^ instance
                                    -> VkSurfaceKHR -- ^ surface
@@ -184,7 +184,7 @@ vkDestroySurfaceKHRSafe = vkDestroySurfaceKHR
 {-# INLINE vkDestroySurfaceKHRSafe #-}
 
 {-# WARNING
-vkDestroySurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkDestroySurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -261,8 +261,8 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
                                                         -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceSupportKHR ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -272,12 +272,12 @@ vkGetPhysicalDeviceSurfaceSupportKHR ::
                                                                               -> IO VkResult
 vkGetPhysicalDeviceSurfaceSupportKHR
   = error $
-      "vkGetPhysicalDeviceSurfaceSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceSurfaceSupportKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -305,8 +305,8 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceSupportKHR"
                                                         -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceSupportKHRSafe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
@@ -320,7 +320,7 @@ vkGetPhysicalDeviceSurfaceSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceSurfaceSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -407,8 +407,8 @@ foreign import ccall unsafe
                                                               -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceCapabilitiesKHR ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -418,12 +418,12 @@ vkGetPhysicalDeviceSurfaceCapabilitiesKHR ::
                                                                            -> IO VkResult
 vkGetPhysicalDeviceSurfaceCapabilitiesKHR
   = error $
-      "vkGetPhysicalDeviceSurfaceCapabilitiesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceSurfaceCapabilitiesKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceCapabilitiesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceCapabilitiesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -450,8 +450,8 @@ foreign import ccall safe
                                                               -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -465,7 +465,7 @@ vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe
 {-# INLINE vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -552,8 +552,8 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                                                                       -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceFormatsKHR ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -564,12 +564,12 @@ vkGetPhysicalDeviceSurfaceFormatsKHR ::
                                                                               -> IO VkResult
 vkGetPhysicalDeviceSurfaceFormatsKHR
   = error $
-      "vkGetPhysicalDeviceSurfaceFormatsKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceSurfaceFormatsKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceFormatsKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceFormatsKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -597,8 +597,8 @@ foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                                                                       -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfaceFormatsKHRSafe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
@@ -613,7 +613,7 @@ vkGetPhysicalDeviceSurfaceFormatsKHRSafe
 {-# INLINE vkGetPhysicalDeviceSurfaceFormatsKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceSurfaceFormatsKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfaceFormatsKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -702,8 +702,8 @@ foreign import ccall unsafe
                                                                     -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfacePresentModesKHR ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -714,12 +714,12 @@ vkGetPhysicalDeviceSurfacePresentModesKHR ::
                                                                                  -> IO VkResult
 vkGetPhysicalDeviceSurfacePresentModesKHR
   = error $
-      "vkGetPhysicalDeviceSurfacePresentModesKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceSurfacePresentModesKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceSurfacePresentModesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfacePresentModesKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -748,8 +748,8 @@ foreign import ccall safe
                                                                     -> IO VkResult
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceSurfacePresentModesKHRSafe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -764,7 +764,7 @@ vkGetPhysicalDeviceSurfacePresentModesKHRSafe
 {-# INLINE vkGetPhysicalDeviceSurfacePresentModesKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceSurfacePresentModesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceSurfacePresentModesKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 

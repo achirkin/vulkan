@@ -1,5 +1,10 @@
 resolver: lts-8.21
 
+flags:
+  vulkan-api:
+    useNativeFFI-1-0: true
+    useNativeFFI-1-1: false
+
 packages:
   - .
   - location: ../vulkan-api

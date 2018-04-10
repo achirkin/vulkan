@@ -121,8 +121,8 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateWin32SurfaceKHR ::
                         VkInstance -- ^ instance
                                    ->
@@ -139,7 +139,7 @@ vkCreateWin32SurfaceKHR d
 {-# INLINE vkCreateWin32SurfaceKHR #-}
 
 {-# WARNING
-vkCreateWin32SurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateWin32SurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -168,8 +168,8 @@ foreign import ccall safe "vkCreateWin32SurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateWin32SurfaceKHRSafe ::
                             VkInstance -- ^ instance
                                        ->
@@ -183,7 +183,7 @@ vkCreateWin32SurfaceKHRSafe = vkCreateWin32SurfaceKHR
 {-# INLINE vkCreateWin32SurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateWin32SurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateWin32SurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -264,20 +264,20 @@ foreign import ccall unsafe
                                           -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceWin32PresentationSupportKHR ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 -> Word32 -- ^ queueFamilyIndex
                                                                           -> IO VkBool32
 vkGetPhysicalDeviceWin32PresentationSupportKHR
   = error $
-      "vkGetPhysicalDeviceWin32PresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceWin32PresentationSupportKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceWin32PresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceWin32PresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -297,8 +297,8 @@ foreign import ccall safe
                                           -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
                                                    VkPhysicalDevice -- ^ physicalDevice
                                                                     -> Word32 -- ^ queueFamilyIndex
@@ -309,7 +309,7 @@ vkGetPhysicalDeviceWin32PresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceWin32PresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceWin32PresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceWin32PresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 

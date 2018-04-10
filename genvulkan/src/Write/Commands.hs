@@ -157,7 +157,7 @@ genCommand nativeFFI command@VkCommand
                    unsafeDupablePerformIO (vkGetDeviceProc @$vkInstanceProcSymbolT d) d
               |]
             ErrorOp -> [text|
-                $cnameTxt = error $ "$cnameTxt: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+                $cnameTxt = error $ "Cannot lookup C symbol \"$cnameTxt\" because its signature does not provide VkInstance argument. "
                          ++ "Either lookup the function manually or enable $pFlagTxt cabal flag."
               |]
         when (stubType /= ErrorOp) $
