@@ -113,8 +113,8 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateAndroidSurfaceKHR ::
                           VkInstance -- ^ instance
                                      ->
@@ -131,7 +131,7 @@ vkCreateAndroidSurfaceKHR d
 {-# INLINE vkCreateAndroidSurfaceKHR #-}
 
 {-# WARNING
-vkCreateAndroidSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateAndroidSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -160,8 +160,8 @@ foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateAndroidSurfaceKHRSafe ::
                               VkInstance -- ^ instance
                                          ->
@@ -175,7 +175,7 @@ vkCreateAndroidSurfaceKHRSafe = vkCreateAndroidSurfaceKHR
 {-# INLINE vkCreateAndroidSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateAndroidSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateAndroidSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 

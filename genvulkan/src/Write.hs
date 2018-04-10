@@ -79,7 +79,6 @@ generateVkSource outputDir outCabalFile vkXml = do
          genFeature feature
       _ <- writeModule outputDir mr
       pure (globalNames mr, [(T.pack modName, Nothing)], [featureVer])
-  print featureVersions
 
   (_exportedNamesExts, eModules)
     <- aggregateExts exportedNamesCore
@@ -120,7 +119,7 @@ generateVkSource outputDir outCabalFile vkXml = do
      <> map importLine eModules
 
 
-  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile
+  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile featureVersions
     $ fModules <> eModules0 <> eModules
 
 

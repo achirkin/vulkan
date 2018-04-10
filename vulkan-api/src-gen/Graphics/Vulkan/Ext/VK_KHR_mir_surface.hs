@@ -120,8 +120,8 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateMirSurfaceKHR ::
                       VkInstance -- ^ instance
                                  ->
@@ -138,7 +138,7 @@ vkCreateMirSurfaceKHR d
 {-# INLINE vkCreateMirSurfaceKHR #-}
 
 {-# WARNING
-vkCreateMirSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateMirSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -167,8 +167,8 @@ foreign import ccall safe "vkCreateMirSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateMirSurfaceKHRSafe ::
                           VkInstance -- ^ instance
                                      ->
@@ -182,7 +182,7 @@ vkCreateMirSurfaceKHRSafe = vkCreateMirSurfaceKHR
 {-# INLINE vkCreateMirSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateMirSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateMirSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -262,8 +262,8 @@ foreign import ccall unsafe
                                                                -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceMirPresentationSupportKHR ::
                                              VkPhysicalDevice -- ^ physicalDevice
                                                               ->
@@ -272,12 +272,12 @@ vkGetPhysicalDeviceMirPresentationSupportKHR ::
                                                                            -> IO VkBool32
 vkGetPhysicalDeviceMirPresentationSupportKHR
   = error $
-      "vkGetPhysicalDeviceMirPresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceMirPresentationSupportKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceMirPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceMirPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -299,8 +299,8 @@ foreign import ccall safe
                                                                -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
                                                  VkPhysicalDevice -- ^ physicalDevice
                                                                   ->
@@ -313,7 +313,7 @@ vkGetPhysicalDeviceMirPresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceMirPresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceMirPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceMirPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 

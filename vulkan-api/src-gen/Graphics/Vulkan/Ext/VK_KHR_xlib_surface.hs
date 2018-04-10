@@ -121,8 +121,8 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateXlibSurfaceKHR ::
                        VkInstance -- ^ instance
                                   ->
@@ -139,7 +139,7 @@ vkCreateXlibSurfaceKHR d
 {-# INLINE vkCreateXlibSurfaceKHR #-}
 
 {-# WARNING
-vkCreateXlibSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateXlibSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -168,8 +168,8 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateXlibSurfaceKHRSafe ::
                            VkInstance -- ^ instance
                                       ->
@@ -183,7 +183,7 @@ vkCreateXlibSurfaceKHRSafe = vkCreateXlibSurfaceKHR
 {-# INLINE vkCreateXlibSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateXlibSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateXlibSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -267,8 +267,8 @@ foreign import ccall unsafe
                                                    -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceXlibPresentationSupportKHR ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -278,12 +278,12 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR ::
                                                                                   -> IO VkBool32
 vkGetPhysicalDeviceXlibPresentationSupportKHR
   = error $
-      "vkGetPhysicalDeviceXlibPresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceXlibPresentationSupportKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceXlibPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceXlibPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -308,8 +308,8 @@ foreign import ccall safe
                                                    -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                                                   VkPhysicalDevice -- ^ physicalDevice
                                                                    ->
@@ -323,7 +323,7 @@ vkGetPhysicalDeviceXlibPresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceXlibPresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceXlibPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceXlibPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 

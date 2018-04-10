@@ -121,8 +121,8 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateWaylandSurfaceKHR ::
                           VkInstance -- ^ instance
                                      ->
@@ -139,7 +139,7 @@ vkCreateWaylandSurfaceKHR d
 {-# INLINE vkCreateWaylandSurfaceKHR #-}
 
 {-# WARNING
-vkCreateWaylandSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateWaylandSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -168,8 +168,8 @@ foreign import ccall safe "vkCreateWaylandSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag to call it natively to make sure you get the best performance.
+-- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
 vkCreateWaylandSurfaceKHRSafe ::
                               VkInstance -- ^ instance
                                          ->
@@ -183,7 +183,7 @@ vkCreateWaylandSurfaceKHRSafe = vkCreateWaylandSurfaceKHR
 {-# INLINE vkCreateWaylandSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateWaylandSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkCreateWaylandSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -266,8 +266,8 @@ foreign import ccall unsafe
                                                            -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
                                                  VkPhysicalDevice -- ^ physicalDevice
                                                                   ->
@@ -276,12 +276,12 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
                                                                            -> IO VkBool32
 vkGetPhysicalDeviceWaylandPresentationSupportKHR
   = error $
-      "vkGetPhysicalDeviceWaylandPresentationSupportKHR: Could not lookup function symbol, because its signature does not provide VkInstance argument. "
+      "Cannot lookup C symbol \"vkGetPhysicalDeviceWaylandPresentationSupportKHR\" because its signature does not provide VkInstance argument. "
         ++
-        "Either lookup the function manually or enable useNativeFFI-VK_VERSION_1_0 cabal flag."
+        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceWaylandPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceWaylandPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
@@ -303,8 +303,8 @@ foreign import ccall safe
                                                            -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-VK_VERSION_1_0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-VK_VERSION_1_0@ cabal flag.
+-- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
+-- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
 vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe ::
                                                      VkPhysicalDevice -- ^ physicalDevice
                                                                       ->
@@ -317,7 +317,7 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-VK_VERSION_1_0"
+vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
  #-}
 #endif
 
