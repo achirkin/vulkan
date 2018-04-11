@@ -22,9 +22,9 @@ import           Lib.Vulkan.Shader.TH
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
-    window <- initGLFWWindow 800 600 "05-GraphicsPipeline-Window"
+    window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
 
-    vulkanInstance <- createGLFWVulkanInstance "05-GraphicsPipeline"
+    vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
 
     vulkanSurface <- createSurface vulkanInstance window
     logInfo $ "Createad surface: " ++ show vulkanSurface
