@@ -43,12 +43,12 @@ genCabalFile coreVersions eModules = T.unlines $
           version:             $library_version
           synopsis:            Low-level low-overhead vulkan api bindings
           description:
-            Haskell bindings for vulkan api as described in vk.xml.
-            .
-            You can find some simple examples at <https://github.com/achirkin/vulkan/tree/master/vulkan-examples vulkan-examples> page
-            or a more complete triangle rendering program at <https://github.com/achirkin/vulkan/tree/master/vulkan-triangles vulkan-triangles> page.
-            .
-            For further information, please refer to <https://github.com/achirkin/vulkan#readme README.md>.
+              Haskell bindings for vulkan api as described in vk.xml.
+              .
+              You can find some simple examples at <https://github.com/achirkin/vulkan/tree/master/vulkan-examples vulkan-examples> page
+              or a more complete triangle rendering program at <https://github.com/achirkin/vulkan/tree/master/vulkan-triangles vulkan-triangles> page.
+              .
+              For further information, please refer to <https://github.com/achirkin/vulkan#readme README.md>.
           homepage:            https://github.com/achirkin/vulkan#readme
           license:             BSD3
           license-file:        LICENSE
@@ -56,8 +56,8 @@ genCabalFile coreVersions eModules = T.unlines $
           maintainer:          chirkin@arch.ethz.ch
           copyright:           Copyright: (c) 2018 Artem Chirkin
           category:            vulkan, bsd3, graphics, library, opengl
-          build-type:          Simple
-          cabal-version:       >=1.22
+          build-type:          Custom
+          cabal-version:       >=1.24
           extra-source-files:
               include/vulkan/*.h
 
@@ -65,6 +65,11 @@ genCabalFile coreVersions eModules = T.unlines $
       : map mkFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
       )
    <> ( [text|
+          custom-setup
+              setup-depends:
+                  base >= 4.7 && < 5,
+                  Cabal >=1.24
+
           library
               hs-source-dirs:      src, src-gen
               exposed-modules:
