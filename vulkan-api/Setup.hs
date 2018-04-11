@@ -1,11 +1,12 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Distribution.PackageDescription
-import Distribution.Simple
-import Distribution.Simple.Setup
-import Distribution.Simple.LocalBuildInfo
-import Distribution.ModuleName (components)
-import Data.List
+import           Data.List
+import           Distribution.ModuleName            (components)
+import           Distribution.PackageDescription
+import           Distribution.Simple
+import           Distribution.Simple.LocalBuildInfo
+import           Distribution.Simple.Setup
+import           Distribution.Simple.Utils          (setupMessage)
 
 main :: IO ()
 main = defaultMainWithHooks simpleUserHooks { buildHook = buildInChunks (buildHook simpleUserHooks) }
@@ -26,11 +27,11 @@ buildInChunks
       }
     }
   locBI uHooks bflags = do
-    origBuildHook (withMods (modulesMarshal ++ modulesBaseTypes) ) locBINoExposedMods uHooks bflags
-    origBuildHook (withMods modulesEnums  ) locBINoExposedMods uHooks bflags
-    origBuildHook (withMods modulesStruct ) locBINoExposedMods uHooks bflags
-    origBuildHook (withMods modulesExt    ) locBINoExposedMods uHooks bflags
-    origBuildHook (withMods modulesRest   ) locBI uHooks bflags
+    myBuildHook locBINoExposedMods modulesBase
+    myBuildHook locBINoExposedMods modulesEnums
+    myBuildHook locBINoExposedMods modulesStruct
+    myBuildHook locBINoExposedMods modulesExt
+    myBuildHook locBI              modulesRest
   where
     -- remove exposedModules from the library info for all but last build passes
     locBINoExposedMods
@@ -47,7 +48,13 @@ buildInChunks
     (modulesStruct,    modulesRest2) = partition (isStructModule . components) modulesRest1
     (modulesBaseTypes, modulesRest3) = partition (isBaseTypesModule . components) modulesRest2
     (modulesExt,       modulesRest ) = partition (isExtModule . components) modulesRest3
+    modulesBase = modulesMarshal ++ modulesBaseTypes
 
+    myBuildHook lbi ms = do
+      setupMessage (fromFlag (buildVerbosity bflags))
+                   ("Building " ++ show (length ms) ++ " modules")
+                   (packageId pDesc)
+      origBuildHook (withMods ms) lbi uHooks bflags
 
     isMarshalModule = isPrefixOf ["Graphics", "Vulkan", "Marshal"]
     isEnumModule ["Graphics","Vulkan","Types","Bitmasks"] = True
