@@ -5,6 +5,9 @@ flags:
     useNativeFFI-1-0: true
     useNativeFFI-1-1: false
 
+extra-deps:
+  - bindings-GLFW-3.2.1.0
+
 packages:
   - .
   - location: ../vulkan-api
