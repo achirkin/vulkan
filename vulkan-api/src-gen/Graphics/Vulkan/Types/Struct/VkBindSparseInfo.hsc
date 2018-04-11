@@ -38,7 +38,7 @@ import           System.IO.Unsafe                                               
 --   >     const VkSemaphore*     pSignalSemaphores;
 --   > } VkBindSparseInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindSparseInfo VkBindSparseInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindSparseInfo VkBindSparseInfo registry at www.khronos.org>
 data VkBindSparseInfo = VkBindSparseInfo## Addr## ByteArray##
 
 instance Eq VkBindSparseInfo where

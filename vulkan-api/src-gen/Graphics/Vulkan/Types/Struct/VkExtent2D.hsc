@@ -22,7 +22,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t        height;
 --   > } VkExtent2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExtent2D VkExtent2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtent2D VkExtent2D registry at www.khronos.org>
 data VkExtent2D = VkExtent2D## Addr## ByteArray##
 
 instance Eq VkExtent2D where

@@ -30,17 +30,14 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VkCreateDescriptorUpdateTemplateKHR,
         HS_vkCreateDescriptorUpdateTemplateKHR,
         PFN_vkCreateDescriptorUpdateTemplateKHR,
-        unwrapVkCreateDescriptorUpdateTemplateKHR,
         VkDestroyDescriptorUpdateTemplateKHR,
         pattern VkDestroyDescriptorUpdateTemplateKHR,
         HS_vkDestroyDescriptorUpdateTemplateKHR,
         PFN_vkDestroyDescriptorUpdateTemplateKHR,
-        unwrapVkDestroyDescriptorUpdateTemplateKHR,
         VkUpdateDescriptorSetWithTemplateKHR,
         pattern VkUpdateDescriptorSetWithTemplateKHR,
         HS_vkUpdateDescriptorSetWithTemplateKHR,
         PFN_vkUpdateDescriptorSetWithTemplateKHR,
-        unwrapVkUpdateDescriptorSetWithTemplateKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkDescriptorType,
@@ -66,7 +63,6 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VkCmdPushDescriptorSetWithTemplateKHR,
         HS_vkCmdPushDescriptorSetWithTemplateKHR,
         PFN_vkCmdPushDescriptorSetWithTemplateKHR,
-        unwrapVkCmdPushDescriptorSetWithTemplateKHR,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
         -- ** Required extensions: 'VK_EXT_debug_report'.
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR_EXT)
@@ -82,8 +78,7 @@ import           Graphics.Vulkan.Ext.VK_KHR_push_descriptor
                                                                                        (HS_vkCmdPushDescriptorSetWithTemplateKHR,
                                                                                        PFN_vkCmdPushDescriptorSetWithTemplateKHR,
                                                                                        pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
-                                                                                       pattern VkCmdPushDescriptorSetWithTemplateKHR,
-                                                                                       unwrapVkCmdPushDescriptorSetWithTemplateKHR)
+                                                                                       pattern VkCmdPushDescriptorSetWithTemplateKHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
                                                                                        (VulkanProc (..))
@@ -193,7 +188,7 @@ type VkDestroyDescriptorUpdateTemplateKHR =
 
 -- | This is an alias for `vkDestroyDescriptorUpdateTemplate`.
 --
---   > () vkDestroyDescriptorUpdateTemplateKHR
+--   > void vkDestroyDescriptorUpdateTemplateKHR
 --   >     ( VkDevice device
 --   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
 --   >     , const VkAllocationCallbacks* pAllocator
@@ -249,7 +244,7 @@ type VkUpdateDescriptorSetWithTemplateKHR =
 
 -- | This is an alias for `vkUpdateDescriptorSetWithTemplate`.
 --
---   > () vkUpdateDescriptorSetWithTemplateKHR
+--   > void vkUpdateDescriptorSetWithTemplateKHR
 --   >     ( VkDevice device
 --   >     , VkDescriptorSet descriptorSet
 --   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate

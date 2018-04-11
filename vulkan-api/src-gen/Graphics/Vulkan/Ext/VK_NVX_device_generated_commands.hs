@@ -47,36 +47,30 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         -- > #include "vk_platform.h"
         VkCmdProcessCommandsNVX, pattern VkCmdProcessCommandsNVX,
         HS_vkCmdProcessCommandsNVX, PFN_vkCmdProcessCommandsNVX,
-        unwrapVkCmdProcessCommandsNVX, VkCmdReserveSpaceForCommandsNVX,
+        VkCmdReserveSpaceForCommandsNVX,
         pattern VkCmdReserveSpaceForCommandsNVX,
         HS_vkCmdReserveSpaceForCommandsNVX,
         PFN_vkCmdReserveSpaceForCommandsNVX,
-        unwrapVkCmdReserveSpaceForCommandsNVX,
         VkCreateIndirectCommandsLayoutNVX,
         pattern VkCreateIndirectCommandsLayoutNVX,
         HS_vkCreateIndirectCommandsLayoutNVX,
         PFN_vkCreateIndirectCommandsLayoutNVX,
-        unwrapVkCreateIndirectCommandsLayoutNVX,
         VkDestroyIndirectCommandsLayoutNVX,
         pattern VkDestroyIndirectCommandsLayoutNVX,
         HS_vkDestroyIndirectCommandsLayoutNVX,
-        PFN_vkDestroyIndirectCommandsLayoutNVX,
-        unwrapVkDestroyIndirectCommandsLayoutNVX, VkCreateObjectTableNVX,
+        PFN_vkDestroyIndirectCommandsLayoutNVX, VkCreateObjectTableNVX,
         pattern VkCreateObjectTableNVX, HS_vkCreateObjectTableNVX,
-        PFN_vkCreateObjectTableNVX, unwrapVkCreateObjectTableNVX,
-        VkDestroyObjectTableNVX, pattern VkDestroyObjectTableNVX,
-        HS_vkDestroyObjectTableNVX, PFN_vkDestroyObjectTableNVX,
-        unwrapVkDestroyObjectTableNVX, VkRegisterObjectsNVX,
+        PFN_vkCreateObjectTableNVX, VkDestroyObjectTableNVX,
+        pattern VkDestroyObjectTableNVX, HS_vkDestroyObjectTableNVX,
+        PFN_vkDestroyObjectTableNVX, VkRegisterObjectsNVX,
         pattern VkRegisterObjectsNVX, HS_vkRegisterObjectsNVX,
-        PFN_vkRegisterObjectsNVX, unwrapVkRegisterObjectsNVX,
-        VkUnregisterObjectsNVX, pattern VkUnregisterObjectsNVX,
-        HS_vkUnregisterObjectsNVX, PFN_vkUnregisterObjectsNVX,
-        unwrapVkUnregisterObjectsNVX,
+        PFN_vkRegisterObjectsNVX, VkUnregisterObjectsNVX,
+        pattern VkUnregisterObjectsNVX, HS_vkUnregisterObjectsNVX,
+        PFN_vkUnregisterObjectsNVX,
         VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
-        unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -162,11 +156,11 @@ is_VkCmdProcessCommandsNVX
 
 type VkCmdProcessCommandsNVX = "vkCmdProcessCommandsNVX"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @inside@
+--   Renderpass: @inside@
 --
---   > () vkCmdProcessCommandsNVX
+--   > void vkCmdProcessCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
 --   >     )
@@ -215,11 +209,11 @@ is_VkCmdReserveSpaceForCommandsNVX
 type VkCmdReserveSpaceForCommandsNVX =
      "vkCmdReserveSpaceForCommandsNVX"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @inside@
+--   Renderpass: @inside@
 --
---   > () vkCmdReserveSpaceForCommandsNVX
+--   > void vkCmdReserveSpaceForCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
 --   >     )
@@ -332,7 +326,7 @@ is_VkDestroyIndirectCommandsLayoutNVX
 type VkDestroyIndirectCommandsLayoutNVX =
      "vkDestroyIndirectCommandsLayoutNVX"
 
--- | > () vkDestroyIndirectCommandsLayoutNVX
+-- | > void vkDestroyIndirectCommandsLayoutNVX
 --   >     ( VkDevice device
 --   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
 --   >     , const VkAllocationCallbacks* pAllocator
@@ -438,7 +432,7 @@ is_VkDestroyObjectTableNVX
 
 type VkDestroyObjectTableNVX = "vkDestroyObjectTableNVX"
 
--- | > () vkDestroyObjectTableNVX
+-- | > void vkDestroyObjectTableNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
 --   >     , const VkAllocationCallbacks* pAllocator
@@ -605,7 +599,7 @@ is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 type VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
      "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
 
--- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+-- | > void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
 --   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDedicatedAllocationImageCreateInfoNV VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationImageCreateInfoNV VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV## Addr##
                                                                                       ByteArray##
 

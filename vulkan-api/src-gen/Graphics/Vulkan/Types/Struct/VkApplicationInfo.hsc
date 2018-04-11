@@ -28,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t        apiVersion;
 --   > } VkApplicationInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkApplicationInfo VkApplicationInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkApplicationInfo VkApplicationInfo registry at www.khronos.org>
 data VkApplicationInfo = VkApplicationInfo## Addr## ByteArray##
 
 instance Eq VkApplicationInfo where

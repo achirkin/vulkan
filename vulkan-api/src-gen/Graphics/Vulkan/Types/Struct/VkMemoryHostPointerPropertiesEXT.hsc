@@ -24,7 +24,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t memoryTypeBits;
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryHostPointerPropertiesEXT VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryHostPointerPropertiesEXT VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## Addr##
                                                                           ByteArray##
 

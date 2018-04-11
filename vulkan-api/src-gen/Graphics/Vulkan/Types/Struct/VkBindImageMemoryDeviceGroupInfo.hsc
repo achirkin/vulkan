@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     const VkRect2D*  pSplitInstanceBindRegions;
 --   > } VkBindImageMemoryDeviceGroupInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImageMemoryDeviceGroupInfo VkBindImageMemoryDeviceGroupInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImageMemoryDeviceGroupInfo VkBindImageMemoryDeviceGroupInfo registry at www.khronos.org>
 data VkBindImageMemoryDeviceGroupInfo = VkBindImageMemoryDeviceGroupInfo## Addr##
                                                                           ByteArray##
 

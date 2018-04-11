@@ -39,6 +39,8 @@ data VkCommand
   = VkCommand
     { cReturnType :: VkTypeName
       -- ^ Always, either () or VkResult; so no pointers expected.
+    , cReturnTypeOrig :: Text
+      -- ^ Keep original return type here for the documentation
     , cName       :: VkCommandName
       -- ^ Maybe a little bit adjusted to fit haskell var logic
     , cNameOrig   :: Text
@@ -123,13 +125,14 @@ parseVkCommand =
       -- first element of command is always a "proto" tag
       --  the rest are "param" tags
       mtn <- parseTagForceAttrs "proto" (pure ()) $ \() -> do
-        mt <- tagIgnoreAttrs "type" content >>= mapM toHaskellType
+        mcReturnTypeOrig <- tagIgnoreAttrs "type" content
+        mt <-  mapM toHaskellType mcReturnTypeOrig
         mon <- tagIgnoreAttrs "name" content
         mn <- mapM toHaskellComm mon
-        pure $ (,,) <$> mt <*> mn <*> mon
+        pure $ (,,,) <$> mcReturnTypeOrig <*> mt <*> mn <*> mon
       case join mtn of
         Nothing -> parseFailed "Could not parse type/name from command.proto"
-        Just (cReturnType, cName, cNameOrig) -> do
+        Just (cReturnTypeOrig, cReturnType, cName, cNameOrig) -> do
           cParameters <- many $ do
              mi <- ignoreTreeContent "implicitexternsyncparams"
              case mi of

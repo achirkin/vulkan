@@ -33,7 +33,6 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         pattern VkGetDescriptorSetLayoutSupportKHR,
         HS_vkGetDescriptorSetLayoutSupportKHR,
         PFN_vkGetDescriptorSetLayoutSupportKHR,
-        unwrapVkGetDescriptorSetLayoutSupportKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
@@ -95,7 +94,7 @@ type VkGetDescriptorSetLayoutSupportKHR =
 
 -- | This is an alias for `vkGetDescriptorSetLayoutSupport`.
 --
---   > () vkGetDescriptorSetLayoutSupportKHR
+--   > void vkGetDescriptorSetLayoutSupportKHR
 --   >     ( VkDevice device
 --   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
 --   >     , VkDescriptorSetLayoutSupport* pSupport

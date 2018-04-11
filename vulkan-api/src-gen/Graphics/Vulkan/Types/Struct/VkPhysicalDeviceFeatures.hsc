@@ -76,7 +76,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32               inheritedQueries;
 --   > } VkPhysicalDeviceFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceFeatures VkPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceFeatures VkPhysicalDeviceFeatures registry at www.khronos.org>
 data VkPhysicalDeviceFeatures = VkPhysicalDeviceFeatures## Addr##
                                                           ByteArray##
 

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkDeviceSize                     offset;
 --   > } VkIndirectCommandsTokenNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkIndirectCommandsTokenNVX VkIndirectCommandsTokenNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsTokenNVX VkIndirectCommandsTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsTokenNVX = VkIndirectCommandsTokenNVX## Addr##
                                                               ByteArray##
 

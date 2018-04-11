@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                            (un
 --   >     const VkSubpassSampleLocationsEXT* pPostSubpassSampleLocations;
 --   > } VkRenderPassSampleLocationsBeginInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRenderPassSampleLocationsBeginInfoEXT VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassSampleLocationsBeginInfoEXT VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
 data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## Addr##
                                                                                         ByteArray##
 

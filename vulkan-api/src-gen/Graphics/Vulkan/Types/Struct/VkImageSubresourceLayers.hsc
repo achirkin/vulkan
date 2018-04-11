@@ -26,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     uint32_t               layerCount;
 --   > } VkImageSubresourceLayers;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageSubresourceLayers VkImageSubresourceLayers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSubresourceLayers VkImageSubresourceLayers registry at www.khronos.org>
 data VkImageSubresourceLayers = VkImageSubresourceLayers## Addr##
                                                           ByteArray##
 

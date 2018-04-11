@@ -37,7 +37,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceGroupPresentModeFlagsKHR modes;
 --   > } VkDeviceGroupPresentCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupPresentCapabilitiesKHR VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupPresentCapabilitiesKHR VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 data VkDeviceGroupPresentCapabilitiesKHR = VkDeviceGroupPresentCapabilitiesKHR## Addr##
                                                                                 ByteArray##
 

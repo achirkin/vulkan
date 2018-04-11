@@ -33,7 +33,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     const VkSpecializationInfo* pSpecializationInfo;
 --   > } VkPipelineShaderStageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineShaderStageCreateInfo VkPipelineShaderStageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineShaderStageCreateInfo VkPipelineShaderStageCreateInfo registry at www.khronos.org>
 data VkPipelineShaderStageCreateInfo = VkPipelineShaderStageCreateInfo## Addr##
                                                                         ByteArray##
 

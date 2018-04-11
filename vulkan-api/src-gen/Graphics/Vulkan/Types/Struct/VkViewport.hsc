@@ -26,7 +26,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float          maxDepth;
 --   > } VkViewport;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViewport VkViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewport VkViewport registry at www.khronos.org>
 data VkViewport = VkViewport## Addr## ByteArray##
 
 instance Eq VkViewport where

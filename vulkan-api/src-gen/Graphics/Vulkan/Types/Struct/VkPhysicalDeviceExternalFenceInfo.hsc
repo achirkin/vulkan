@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlagBits handleType;
 --   > } VkPhysicalDeviceExternalFenceInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceExternalFenceInfo VkPhysicalDeviceExternalFenceInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalFenceInfo VkPhysicalDeviceExternalFenceInfo registry at www.khronos.org>
 data VkPhysicalDeviceExternalFenceInfo = VkPhysicalDeviceExternalFenceInfo## Addr##
                                                                             ByteArray##
 

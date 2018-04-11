@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkExternalMemoryHandleTypeFlags handleTypes;
 --   > } VkExternalMemoryImageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalMemoryImageCreateInfo VkExternalMemoryImageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfo VkExternalMemoryImageCreateInfo registry at www.khronos.org>
 data VkExternalMemoryImageCreateInfo = VkExternalMemoryImageCreateInfo## Addr##
                                                                         ByteArray##
 

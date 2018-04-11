@@ -32,7 +32,7 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         -- > #include "vk_platform.h"
         VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
         HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT,
-        unwrapVkSetHdrMetadataEXT, module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Handles,
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
@@ -64,7 +64,7 @@ is_VkSetHdrMetadataEXT = (EQ ==) . cmpCStrings _VkSetHdrMetadataEXT
 
 type VkSetHdrMetadataEXT = "vkSetHdrMetadataEXT"
 
--- | > () vkSetHdrMetadataEXT
+-- | > void vkSetHdrMetadataEXT
 --   >     ( VkDevice device
 --   >     , uint32_t swapchainCount
 --   >     , const VkSwapchainKHR* pSwapchains

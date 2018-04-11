@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   > } VkMemoryGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryGetWin32HandleInfoKHR VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetWin32HandleInfoKHR VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkMemoryGetWin32HandleInfoKHR = VkMemoryGetWin32HandleInfoKHR## Addr##
                                                                     ByteArray##
 

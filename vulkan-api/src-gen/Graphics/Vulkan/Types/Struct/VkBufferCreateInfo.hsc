@@ -34,7 +34,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     const uint32_t*        pQueueFamilyIndices;
 --   > } VkBufferCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBufferCreateInfo VkBufferCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCreateInfo VkBufferCreateInfo registry at www.khronos.org>
 data VkBufferCreateInfo = VkBufferCreateInfo## Addr## ByteArray##
 
 instance Eq VkBufferCreateInfo where

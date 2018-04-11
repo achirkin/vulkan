@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     const VkPresentRegionKHR*   pRegions;
 --   > } VkPresentRegionsKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPresentRegionsKHR VkPresentRegionsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionsKHR VkPresentRegionsKHR registry at www.khronos.org>
 data VkPresentRegionsKHR = VkPresentRegionsKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionsKHR where

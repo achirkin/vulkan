@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         multiviewTessellationShader;
 --   > } VkPhysicalDeviceMultiviewFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMultiviewFeatures VkPhysicalDeviceMultiviewFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMultiviewFeatures VkPhysicalDeviceMultiviewFeatures registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewFeatures = VkPhysicalDeviceMultiviewFeatures## Addr##
                                                                             ByteArray##
 

@@ -28,7 +28,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t        specVersion;
 --   > } VkExtensionProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExtensionProperties VkExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtensionProperties VkExtensionProperties registry at www.khronos.org>
 data VkExtensionProperties = VkExtensionProperties## Addr##
                                                     ByteArray##
 

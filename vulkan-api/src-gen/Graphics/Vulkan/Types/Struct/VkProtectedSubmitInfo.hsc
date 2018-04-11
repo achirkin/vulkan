@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkBool32                        protectedSubmit;
 --   > } VkProtectedSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkProtectedSubmitInfo VkProtectedSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkProtectedSubmitInfo VkProtectedSubmitInfo registry at www.khronos.org>
 data VkProtectedSubmitInfo = VkProtectedSubmitInfo## Addr##
                                                     ByteArray##
 

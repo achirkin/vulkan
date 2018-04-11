@@ -35,7 +35,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkImageSubresourceRange subresourceRange;
 --   > } VkImageViewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageViewCreateInfo VkImageViewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewCreateInfo VkImageViewCreateInfo registry at www.khronos.org>
 data VkImageViewCreateInfo = VkImageViewCreateInfo## Addr##
                                                     ByteArray##
 

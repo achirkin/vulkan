@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkBool32                         persistentContent;
 --   > } VkDisplayPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPropertiesKHR VkDisplayPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPropertiesKHR VkDisplayPropertiesKHR registry at www.khronos.org>
 data VkDisplayPropertiesKHR = VkDisplayPropertiesKHR## Addr##
                                                       ByteArray##
 

@@ -24,7 +24,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDeviceSize           size;
 --   > } VkBufferCopy;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBufferCopy VkBufferCopy registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCopy VkBufferCopy registry at www.khronos.org>
 data VkBufferCopy = VkBufferCopy## Addr## ByteArray##
 
 instance Eq VkBufferCopy where

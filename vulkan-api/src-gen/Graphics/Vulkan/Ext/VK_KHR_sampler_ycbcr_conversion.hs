@@ -40,12 +40,10 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VkCreateSamplerYcbcrConversionKHR,
         HS_vkCreateSamplerYcbcrConversionKHR,
         PFN_vkCreateSamplerYcbcrConversionKHR,
-        unwrapVkCreateSamplerYcbcrConversionKHR,
         VkDestroySamplerYcbcrConversionKHR,
         pattern VkDestroySamplerYcbcrConversionKHR,
         HS_vkDestroySamplerYcbcrConversionKHR,
         PFN_vkDestroySamplerYcbcrConversionKHR,
-        unwrapVkDestroySamplerYcbcrConversionKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkChromaLocation,
@@ -306,7 +304,7 @@ type VkDestroySamplerYcbcrConversionKHR =
 
 -- | This is an alias for `vkDestroySamplerYcbcrConversion`.
 --
---   > () vkDestroySamplerYcbcrConversionKHR
+--   > void vkDestroySamplerYcbcrConversionKHR
 --   >     ( VkDevice device
 --   >     , VkSamplerYcbcrConversion ycbcrConversion
 --   >     , const VkAllocationCallbacks* pAllocator

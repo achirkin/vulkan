@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceGetWin32HandleInfoKHR VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceGetWin32HandleInfoKHR VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## Addr##
                                                                   ByteArray##
 

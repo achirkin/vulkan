@@ -25,7 +25,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint64_t                         presentMargin;
 --   > } VkPastPresentationTimingGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPastPresentationTimingGOOGLE VkPastPresentationTimingGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPastPresentationTimingGOOGLE VkPastPresentationTimingGOOGLE registry at www.khronos.org>
 data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## Addr##
                                                                       ByteArray##
 

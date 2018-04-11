@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     int                              fd;
 --   > } VkImportMemoryFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportMemoryFdInfoKHR VkImportMemoryFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryFdInfoKHR VkImportMemoryFdInfoKHR registry at www.khronos.org>
 data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR## Addr##
                                                         ByteArray##
 

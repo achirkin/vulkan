@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkBuffer                     buffer;
 --   > } VkObjectTableVertexBufferEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTableVertexBufferEntryNVX VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableVertexBufferEntryNVX VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableVertexBufferEntryNVX = VkObjectTableVertexBufferEntryNVX## Addr##
                                                                             ByteArray##
 

@@ -35,9 +35,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         VkImportFenceFdKHR, pattern VkImportFenceFdKHR,
-        HS_vkImportFenceFdKHR, PFN_vkImportFenceFdKHR,
-        unwrapVkImportFenceFdKHR, VkGetFenceFdKHR, pattern VkGetFenceFdKHR,
-        HS_vkGetFenceFdKHR, PFN_vkGetFenceFdKHR, unwrapVkGetFenceFdKHR,
+        HS_vkImportFenceFdKHR, PFN_vkImportFenceFdKHR, VkGetFenceFdKHR,
+        pattern VkGetFenceFdKHR, HS_vkGetFenceFdKHR, PFN_vkGetFenceFdKHR,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,

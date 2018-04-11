@@ -239,10 +239,11 @@ fixSourceHooks isHsc = (if isHsc then enableHSC else id)
     enableHSC
         = unlines
         . ("#include \"vulkan/vulkan.h\"":) . ("":)
-        . byThree (*=~/ [ed|HSC2HS___[[:space:]]+"##([^"]+)"///#$1|])
-        . map ( (*=~/ [edBS|{-##///{-#|])
-              . (*=~/ [edBS|##-}///#-}|])
-              . (*=~/ [edBS|#///##|])
+        . byThree (*=~/ [ed|HSC2HS___[[:space:]]+"##([^"]+)"///#$1|]) -- hsc2hs keywords
+        . map ( (*=~/ [edBS|{-##///{-#|]) -- opening pragma
+              . (*=~/ [edBS|##-}///#-}|]) -- closing pragma
+              . (*=~/ [edBS|html##///html#|]) -- haddock spec links
+              . (*=~/ [edBS|#///##|]) -- escape all # symobls except in cases described above
               . (*=~/ [edBS|^([^']*'[^']*)$///$1 -- ' closing tick for hsc2hs|])
               )
         . lines

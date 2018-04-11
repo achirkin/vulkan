@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     void*                            window;
 --   > } VkViSurfaceCreateInfoNN;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViSurfaceCreateInfoNN VkViSurfaceCreateInfoNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViSurfaceCreateInfoNN VkViSurfaceCreateInfoNN registry at www.khronos.org>
 data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN## Addr##
                                                         ByteArray##
 

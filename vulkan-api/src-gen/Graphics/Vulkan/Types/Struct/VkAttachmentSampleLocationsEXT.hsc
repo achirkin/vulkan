@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkAttachmentSampleLocationsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAttachmentSampleLocationsEXT VkAttachmentSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentSampleLocationsEXT VkAttachmentSampleLocationsEXT registry at www.khronos.org>
 data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## Addr##
                                                                       ByteArray##
 

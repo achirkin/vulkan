@@ -24,7 +24,7 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
         -- Extension number: @180@
         VkCmdWriteBufferMarkerAMD, pattern VkCmdWriteBufferMarkerAMD,
         HS_vkCmdWriteBufferMarkerAMD, PFN_vkCmdWriteBufferMarkerAMD,
-        unwrapVkCmdWriteBufferMarkerAMD, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
         module Graphics.Vulkan.Types.Handles,
@@ -59,13 +59,13 @@ is_VkCmdWriteBufferMarkerAMD
 
 type VkCmdWriteBufferMarkerAMD = "vkCmdWriteBufferMarkerAMD"
 
--- | queues: 'transfer', 'graphics', 'compute'.
+-- | Queues: 'transfer', 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   pipeline: @transfer@
+--   Pipeline: @transfer@
 --
---   > () vkCmdWriteBufferMarkerAMD
+--   > void vkCmdWriteBufferMarkerAMD
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkPipelineStageFlagBits pipelineStage
 --   >     , VkBuffer dstBuffer

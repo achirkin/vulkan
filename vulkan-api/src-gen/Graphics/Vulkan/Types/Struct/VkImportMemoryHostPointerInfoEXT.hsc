@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     void* pHostPointer;
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportMemoryHostPointerInfoEXT VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryHostPointerInfoEXT VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
 data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## Addr##
                                                                           ByteArray##
 

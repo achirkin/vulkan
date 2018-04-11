@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkBool32         supported;
 --   > } VkDescriptorSetLayoutSupport;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetLayoutSupport VkDescriptorSetLayoutSupport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutSupport VkDescriptorSetLayoutSupport registry at www.khronos.org>
 data VkDescriptorSetLayoutSupport = VkDescriptorSetLayoutSupport## Addr##
                                                                   ByteArray##
 

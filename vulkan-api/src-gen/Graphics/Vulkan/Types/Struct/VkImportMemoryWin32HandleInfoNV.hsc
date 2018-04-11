@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                             (u
 --   >     HANDLE                           handle;
 --   > } VkImportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportMemoryWin32HandleInfoNV VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoNV VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## Addr##
                                                                         ByteArray##
 

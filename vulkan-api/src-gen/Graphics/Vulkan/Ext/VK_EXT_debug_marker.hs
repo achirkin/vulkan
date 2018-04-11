@@ -35,18 +35,16 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         -- > #include "vk_platform.h"
         VkDebugMarkerSetObjectTagEXT, pattern VkDebugMarkerSetObjectTagEXT,
         HS_vkDebugMarkerSetObjectTagEXT, PFN_vkDebugMarkerSetObjectTagEXT,
-        unwrapVkDebugMarkerSetObjectTagEXT, VkDebugMarkerSetObjectNameEXT,
+        VkDebugMarkerSetObjectNameEXT,
         pattern VkDebugMarkerSetObjectNameEXT,
         HS_vkDebugMarkerSetObjectNameEXT,
-        PFN_vkDebugMarkerSetObjectNameEXT,
-        unwrapVkDebugMarkerSetObjectNameEXT, VkCmdDebugMarkerBeginEXT,
+        PFN_vkDebugMarkerSetObjectNameEXT, VkCmdDebugMarkerBeginEXT,
         pattern VkCmdDebugMarkerBeginEXT, HS_vkCmdDebugMarkerBeginEXT,
-        PFN_vkCmdDebugMarkerBeginEXT, unwrapVkCmdDebugMarkerBeginEXT,
-        VkCmdDebugMarkerEndEXT, pattern VkCmdDebugMarkerEndEXT,
-        HS_vkCmdDebugMarkerEndEXT, PFN_vkCmdDebugMarkerEndEXT,
-        unwrapVkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
+        PFN_vkCmdDebugMarkerBeginEXT, VkCmdDebugMarkerEndEXT,
+        pattern VkCmdDebugMarkerEndEXT, HS_vkCmdDebugMarkerEndEXT,
+        PFN_vkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
         pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
-        PFN_vkCmdDebugMarkerInsertEXT, unwrapVkCmdDebugMarkerInsertEXT,
+        PFN_vkCmdDebugMarkerInsertEXT,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
@@ -194,11 +192,11 @@ is_VkCmdDebugMarkerBeginEXT
 
 type VkCmdDebugMarkerBeginEXT = "vkCmdDebugMarkerBeginEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdDebugMarkerBeginEXT
+--   > void vkCmdDebugMarkerBeginEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
@@ -244,11 +242,11 @@ is_VkCmdDebugMarkerEndEXT
 
 type VkCmdDebugMarkerEndEXT = "vkCmdDebugMarkerEndEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdDebugMarkerEndEXT
+--   > void vkCmdDebugMarkerEndEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
@@ -290,11 +288,11 @@ is_VkCmdDebugMarkerInsertEXT
 
 type VkCmdDebugMarkerInsertEXT = "vkCmdDebugMarkerInsertEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdDebugMarkerInsertEXT
+--   > void vkCmdDebugMarkerInsertEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )

@@ -43,7 +43,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         deviceLUIDValid;
 --   > } VkPhysicalDeviceIDProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceIDProperties VkPhysicalDeviceIDProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceIDProperties VkPhysicalDeviceIDProperties registry at www.khronos.org>
 data VkPhysicalDeviceIDProperties = VkPhysicalDeviceIDProperties## Addr##
                                                                   ByteArray##
 

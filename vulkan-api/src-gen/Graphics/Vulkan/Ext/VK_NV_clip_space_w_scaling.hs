@@ -34,7 +34,6 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         -- > #include "vk_platform.h"
         VkCmdSetViewportWScalingNV, pattern VkCmdSetViewportWScalingNV,
         HS_vkCmdSetViewportWScalingNV, PFN_vkCmdSetViewportWScalingNV,
-        unwrapVkCmdSetViewportWScalingNV,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
         pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
@@ -81,11 +80,11 @@ is_VkCmdSetViewportWScalingNV
 
 type VkCmdSetViewportWScalingNV = "vkCmdSetViewportWScalingNV"
 
--- | queues: 'graphics'.
+-- | Queues: 'graphics'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdSetViewportWScalingNV
+--   > void vkCmdSetViewportWScalingNV
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t firstViewport
 --   >     , uint32_t viewportCount

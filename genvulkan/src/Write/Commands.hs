@@ -64,7 +64,7 @@ genCommand nativeFFI command@VkCommand
     }
 
   -- command itself
-  indeed <- isIdentDeclared $ DIVar unwrapFun
+  indeed <- isIdentDeclared $ DIThing funTypeNameTxtHS DITNo
   if indeed
   then do
     writeAllImports
@@ -100,44 +100,56 @@ genCommand nativeFFI command@VkCommand
 
         let pFlagTxt = unProtectFlag (protectFlag pDef)
             pCppTxt  = unProtectCPP  (protectCPP pDef)
+            stubFunTxt = "my" <> T.drop 2 cnameTxt
+            mkStubFun  = case stubType of
+              InstanceOp False -> [text|
+                  $stubFunTxt <- vkGetInstanceProc @$vkInstanceProcSymbolT vkInstance
+                |]
+              InstanceOp True -> [text|
+                  $stubFunTxt <- vkGetInstanceProc @$vkInstanceProcSymbolT VK_NULL
+                |]
+              DeviceOp -> [text|
+                  $stubFunTxt <- vkGetDeviceProc @$vkInstanceProcSymbolT vkDevice
+                |]
+              ErrorOp -> [text|
+                  $stubFunTxt <- vkGetInstanceProc @$vkInstanceProcSymbolT vkInstance
+                |]
+            vkGetProcAddrTxt = case stubType of
+              InstanceOp _ -> "vkGetInstanceProcAddr"
+              DeviceOp -> "vkGetDeviceProcAddr"
+              ErrorOp -> "vkGetInstanceProcAddr"
             comment1 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
-                     [ "|"
+                     [ "###ifdef " <> pCppTxt
+                     , "|"
                      , fromMaybe mempty funComment
-                     , "###ifdef " <> pCppTxt
+                     , ""
+                     , [text|
+                         __Note:__ flag @$pFlagTxt@ is enabled, so this function is implemented
+                                   as a @foreign import@ call to C Vulkan loader.
+                       |]
                      ]
-            comment2 = Just . CodeComment AboveCode ' ' $ T.unpack $ case stubType of
-                InstanceOp _ ->
-                  [text|
-                    ###else
-                    Note: without @$pFlagTxt@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
-                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag to call it natively to make sure you get the best performance.
-                  |]
-                DeviceOp ->
-                  [text|
-                    ###else
-                    Note: without @$pFlagTxt@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
-                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag to call it natively to make sure you get the best performance.
-                  |]
-                ErrorOp ->
-                  [text|
-                    ###else
-                    Warning: without @$pFlagTxt@ cabal flag this function returns error!
-                    Either lookup the function manually or enable @$pFlagTxt@ cabal flag.
-                  |]
-            comment3 = Just $ CodeComment BelowCode ' ' "###endif"
-            annWarn = case stubType of
-              InstanceOp _ ->
-                "This function could be very inefficient. "
-                  ++ "It may call vkGetInstanceProcAddr every time you call it. "
-                  ++ "I suggest you to either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
-              DeviceOp ->
-                "This function could be very inefficient. "
-                  ++ "It may call vkGetDeviceProcAddr every time you call it. "
-                  ++ "I suggest you to either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
-              ErrorOp ->
-                "This function will return error! "
-                ++ "Either lookup the function address manually or enable flag " ++ T.unpack pFlagTxt
+            comment2 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
+                     [ "###else"
+                     , "|"
+                     , fromMaybe mempty funComment
+                     , ""
+                     , [text|
+                         __Note:__ You should refrain from using this function directly
+                                   unless flag @$pFlagTxt@ is enabled.
 
+                         Independently of the flag setting, you can lookup the function manually at runtime:
+
+                         > $mkStubFun
+                       |]
+                     ]
+            comment3 = Just $ CodeComment BelowCode ' ' "###endif"
+            annWarn = T.unpack $ T.unlines
+              [ T.strip [text|This function requires $pFlagTxt to use FFI for locating the C symbol statically.|]
+              , case stubType of
+                  ErrorOp -> "Otherwise, it causes a runtime error!"
+                  _ -> T.strip [text|Otherwise it may call $vkGetProcAddrTxt every time you execute it if not inlined.|]
+              , T.strip [text|You should either lookup the function address manually or enable flag $pFlagTxt.|]
+              ]
 
         -- foreign import unsafe
         writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlayRisky Nothing))
@@ -253,7 +265,7 @@ genCommand nativeFFI command@VkCommand
     accumRefs vkp = TyFun Nothing (paramT vkp)
 
     c = T.unlines $
-          [unVkTypeName vkrt <> " " <> unVkCommandName vkname]
+          [cReturnTypeOrig command <> " " <> unVkCommandName vkname]
        <> mapPam vkpams
        <> ["    )"]
     mapPam (x:xs) = "    ( " <> code x : map (("    , " <>) . code) xs
@@ -277,13 +289,13 @@ genCommand nativeFFI command@VkCommand
                               x) <> "."
                       )
                  . al (queues attrs)
-                      (\x -> "queues: "
+                      (\x -> "Queues: "
                           <> T.intercalate ", "
                             ( map (\t -> "'" <> t <> "'")
                               x) <> "."
                       )
-                 . ml (renderpass attrs) (\x -> "renderpass: @" <> x <> "@")
-                 . ml (pipeline attrs)   (\x -> "pipeline: @" <> x <> "@")
+                 . ml (renderpass attrs) (\x -> "Renderpass: @" <> x <> "@")
+                 . ml (pipeline attrs)   (\x -> "Pipeline: @" <> x <> "@")
                  . map ("> " <>) $ T.lines c
 
 
@@ -297,7 +309,7 @@ genCommand nativeFFI command@VkCommand
     writeAllImports = do
       writeImport $ DIThing funTypeNameTxtHS DITNo
       writeImport $ DIThing funTypeNameTxtPFN DITNo
-      writeImport $ DIVar unwrapFun
+      -- writeImport $ DIVar unwrapFun
       when genFFI $ do
         writeImport . DIVar $ unVkCommandName vkname
         writeImport . DIVar $ unVkCommandName vknameSafe
@@ -305,7 +317,7 @@ genCommand nativeFFI command@VkCommand
     writeAllExports = do
       writeExport $ DIThing funTypeNameTxtHS DITNo
       writeExport $ DIThing funTypeNameTxtPFN DITNo
-      writeExport $ DIVar unwrapFun
+      -- writeExport $ DIVar unwrapFun -- don't really need it because it is exposed via VulkanProc instance
       when genFFI $ do
         writeExport . DIVar $ unVkCommandName vkname
         writeExport . DIVar $ unVkCommandName vknameSafe

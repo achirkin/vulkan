@@ -31,7 +31,7 @@ import           System.IO.Unsafe                   (unsafeDupablePerformIO)
 --   >     PFN_vkInternalFreeNotification pfnInternalFree;
 --   > } VkAllocationCallbacks;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
 data VkAllocationCallbacks = VkAllocationCallbacks## Addr##
                                                     ByteArray##
 

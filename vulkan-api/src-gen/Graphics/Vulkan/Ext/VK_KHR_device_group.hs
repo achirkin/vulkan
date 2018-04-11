@@ -39,13 +39,11 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         VkGetDeviceGroupPeerMemoryFeaturesKHR,
         pattern VkGetDeviceGroupPeerMemoryFeaturesKHR,
         HS_vkGetDeviceGroupPeerMemoryFeaturesKHR,
-        PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR,
-        unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR, VkCmdSetDeviceMaskKHR,
+        PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR, VkCmdSetDeviceMaskKHR,
         pattern VkCmdSetDeviceMaskKHR, HS_vkCmdSetDeviceMaskKHR,
-        PFN_vkCmdSetDeviceMaskKHR, unwrapVkCmdSetDeviceMaskKHR,
-        VkCmdDispatchBaseKHR, pattern VkCmdDispatchBaseKHR,
-        HS_vkCmdDispatchBaseKHR, PFN_vkCmdDispatchBaseKHR,
-        unwrapVkCmdDispatchBaseKHR, module Graphics.Vulkan.Marshal,
+        PFN_vkCmdSetDeviceMaskKHR, VkCmdDispatchBaseKHR,
+        pattern VkCmdDispatchBaseKHR, HS_vkCmdDispatchBaseKHR,
+        PFN_vkCmdDispatchBaseKHR, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkPeerMemoryFeatureFlags,
         module Graphics.Vulkan.Types.Handles,
@@ -80,15 +78,12 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VkGetDeviceGroupPresentCapabilitiesKHR,
         HS_vkGetDeviceGroupPresentCapabilitiesKHR,
         PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
-        unwrapVkGetDeviceGroupPresentCapabilitiesKHR,
         pattern VkGetDeviceGroupSurfacePresentModesKHR,
         HS_vkGetDeviceGroupSurfacePresentModesKHR,
         PFN_vkGetDeviceGroupSurfacePresentModesKHR,
-        unwrapVkGetDeviceGroupSurfacePresentModesKHR,
         pattern VkGetPhysicalDevicePresentRectanglesKHR,
         HS_vkGetPhysicalDevicePresentRectanglesKHR,
         PFN_vkGetPhysicalDevicePresentRectanglesKHR,
-        unwrapVkGetPhysicalDevicePresentRectanglesKHR,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_device_group_creation'.
         module Graphics.Vulkan.Types.Struct.VkAcquireNextImageInfoKHR,
@@ -118,7 +113,7 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         module Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR,
         -- > #include "vk_platform.h"
         pattern VkAcquireNextImage2KHR, HS_vkAcquireNextImage2KHR,
-        PFN_vkAcquireNextImage2KHR, unwrapVkAcquireNextImage2KHR,
+        PFN_vkAcquireNextImage2KHR,
         pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
@@ -159,11 +154,7 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
                                                                                       pattern VkAcquireNextImage2KHR,
                                                                                       pattern VkGetDeviceGroupPresentCapabilitiesKHR,
                                                                                       pattern VkGetDeviceGroupSurfacePresentModesKHR,
-                                                                                      pattern VkGetPhysicalDevicePresentRectanglesKHR,
-                                                                                      unwrapVkAcquireNextImage2KHR,
-                                                                                      unwrapVkGetDeviceGroupPresentCapabilitiesKHR,
-                                                                                      unwrapVkGetDeviceGroupSurfacePresentModesKHR,
-                                                                                      unwrapVkGetPhysicalDevicePresentRectanglesKHR)
+                                                                                      pattern VkGetPhysicalDevicePresentRectanglesKHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
                                                                                       (VulkanProc (..))
@@ -235,7 +226,7 @@ type VkGetDeviceGroupPeerMemoryFeaturesKHR =
 
 -- | This is an alias for `vkGetDeviceGroupPeerMemoryFeatures`.
 --
---   > () vkGetDeviceGroupPeerMemoryFeaturesKHR
+--   > void vkGetDeviceGroupPeerMemoryFeaturesKHR
 --   >     ( VkDevice device
 --   >     , uint32_t heapIndex
 --   >     , uint32_t localDeviceIndex
@@ -291,11 +282,11 @@ type VkCmdSetDeviceMaskKHR = "vkCmdSetDeviceMaskKHR"
 
 -- | This is an alias for `vkCmdSetDeviceMask`.
 --
---   queues: 'graphics', 'compute', 'transfer'.
+--   Queues: 'graphics', 'compute', 'transfer'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdSetDeviceMaskKHR
+--   > void vkCmdSetDeviceMaskKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t deviceMask
 --   >     )
@@ -339,11 +330,11 @@ type VkCmdDispatchBaseKHR = "vkCmdDispatchBaseKHR"
 
 -- | This is an alias for `vkCmdDispatchBase`.
 --
---   queues: 'compute'.
+--   Queues: 'compute'.
 --
---   renderpass: @outside@
+--   Renderpass: @outside@
 --
---   > () vkCmdDispatchBaseKHR
+--   > void vkCmdDispatchBaseKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t baseGroupX
 --   >     , uint32_t baseGroupY

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     uint32_t               size;
 --   > } VkPushConstantRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPushConstantRange VkPushConstantRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPushConstantRange VkPushConstantRange registry at www.khronos.org>
 data VkPushConstantRange = VkPushConstantRange## Addr## ByteArray##
 
 instance Eq VkPushConstantRange where

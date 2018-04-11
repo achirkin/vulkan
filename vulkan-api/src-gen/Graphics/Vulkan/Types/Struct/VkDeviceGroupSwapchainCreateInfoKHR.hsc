@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceGroupPresentModeFlagsKHR                         modes;
 --   > } VkDeviceGroupSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupSwapchainCreateInfoKHR VkDeviceGroupSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSwapchainCreateInfoKHR VkDeviceGroupSwapchainCreateInfoKHR registry at www.khronos.org>
 data VkDeviceGroupSwapchainCreateInfoKHR = VkDeviceGroupSwapchainCreateInfoKHR## Addr##
                                                                                 ByteArray##
 

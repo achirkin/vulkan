@@ -56,12 +56,10 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         -- > #include "vk_platform.h"
         VkCmdSetSampleLocationsEXT, pattern VkCmdSetSampleLocationsEXT,
         HS_vkCmdSetSampleLocationsEXT, PFN_vkCmdSetSampleLocationsEXT,
-        unwrapVkCmdSetSampleLocationsEXT,
         VkGetPhysicalDeviceMultisamplePropertiesEXT,
         pattern VkGetPhysicalDeviceMultisamplePropertiesEXT,
         HS_vkGetPhysicalDeviceMultisamplePropertiesEXT,
         PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT,
-        unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
         pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
@@ -136,11 +134,11 @@ is_VkCmdSetSampleLocationsEXT
 
 type VkCmdSetSampleLocationsEXT = "vkCmdSetSampleLocationsEXT"
 
--- | queues: 'graphics'.
+-- | Queues: 'graphics'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdSetSampleLocationsEXT
+--   > void vkCmdSetSampleLocationsEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
 --   >     )
@@ -190,7 +188,7 @@ is_VkGetPhysicalDeviceMultisamplePropertiesEXT
 type VkGetPhysicalDeviceMultisamplePropertiesEXT =
      "vkGetPhysicalDeviceMultisamplePropertiesEXT"
 
--- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
+-- | > void vkGetPhysicalDeviceMultisamplePropertiesEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSampleCountFlagBits samples
 --   >     , VkMultisamplePropertiesEXT* pMultisampleProperties

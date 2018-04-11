@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     uint32_t                            queueIndex;
 --   > } VkDeviceQueueInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceQueueInfo2 VkDeviceQueueInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueInfo2 VkDeviceQueueInfo2 registry at www.khronos.org>
 data VkDeviceQueueInfo2 = VkDeviceQueueInfo2## Addr## ByteArray##
 
 instance Eq VkDeviceQueueInfo2 where

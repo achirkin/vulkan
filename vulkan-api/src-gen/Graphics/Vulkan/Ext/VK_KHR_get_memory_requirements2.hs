@@ -31,17 +31,14 @@ module Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
         pattern VkGetImageMemoryRequirements2KHR,
         HS_vkGetImageMemoryRequirements2KHR,
         PFN_vkGetImageMemoryRequirements2KHR,
-        unwrapVkGetImageMemoryRequirements2KHR,
         VkGetBufferMemoryRequirements2KHR,
         pattern VkGetBufferMemoryRequirements2KHR,
         HS_vkGetBufferMemoryRequirements2KHR,
         PFN_vkGetBufferMemoryRequirements2KHR,
-        unwrapVkGetBufferMemoryRequirements2KHR,
         VkGetImageSparseMemoryRequirements2KHR,
         pattern VkGetImageSparseMemoryRequirements2KHR,
         HS_vkGetImageSparseMemoryRequirements2KHR,
         PFN_vkGetImageSparseMemoryRequirements2KHR,
-        unwrapVkGetImageSparseMemoryRequirements2KHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkImageAspectFlags,
@@ -122,7 +119,7 @@ type VkGetImageMemoryRequirements2KHR =
 
 -- | This is an alias for `vkGetImageMemoryRequirements2`.
 --
---   > () vkGetImageMemoryRequirements2KHR
+--   > void vkGetImageMemoryRequirements2KHR
 --   >     ( VkDevice device
 --   >     , const VkImageMemoryRequirementsInfo2* pInfo
 --   >     , VkMemoryRequirements2* pMemoryRequirements
@@ -179,7 +176,7 @@ type VkGetBufferMemoryRequirements2KHR =
 
 -- | This is an alias for `vkGetBufferMemoryRequirements2`.
 --
---   > () vkGetBufferMemoryRequirements2KHR
+--   > void vkGetBufferMemoryRequirements2KHR
 --   >     ( VkDevice device
 --   >     , const VkBufferMemoryRequirementsInfo2* pInfo
 --   >     , VkMemoryRequirements2* pMemoryRequirements
@@ -236,7 +233,7 @@ type VkGetImageSparseMemoryRequirements2KHR =
 
 -- | This is an alias for `vkGetImageSparseMemoryRequirements2`.
 --
---   > () vkGetImageSparseMemoryRequirements2KHR
+--   > void vkGetImageSparseMemoryRequirements2KHR
 --   >     ( VkDevice device
 --   >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
 --   >     , uint32_t* pSparseMemoryRequirementCount

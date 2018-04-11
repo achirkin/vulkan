@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkPhysicalDeviceMemoryProperties memoryProperties;
 --   > } VkPhysicalDeviceMemoryProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMemoryProperties2 VkPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMemoryProperties2 VkPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties2 = VkPhysicalDeviceMemoryProperties2## Addr##
                                                                             ByteArray##
 

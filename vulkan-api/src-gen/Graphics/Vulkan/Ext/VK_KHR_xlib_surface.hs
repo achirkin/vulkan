@@ -38,13 +38,11 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         -- > #include "vk_platform.h"
         VkCreateXlibSurfaceKHR, pattern VkCreateXlibSurfaceKHR,
         HS_vkCreateXlibSurfaceKHR, PFN_vkCreateXlibSurfaceKHR,
-        unwrapVkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHR,
-        vkCreateXlibSurfaceKHRSafe,
+        vkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHRSafe,
         VkGetPhysicalDeviceXlibPresentationSupportKHR,
         pattern VkGetPhysicalDeviceXlibPresentationSupportKHR,
         HS_vkGetPhysicalDeviceXlibPresentationSupportKHR,
         PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR,
-        unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR,
         vkGetPhysicalDeviceXlibPresentationSupportKHR,
         vkGetPhysicalDeviceXlibPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -96,6 +94,7 @@ is_VkCreateXlibSurfaceKHR
 
 type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -109,7 +108,10 @@ type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHR ::
                VkInstance -- ^ instance
@@ -121,8 +123,27 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateXlibSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
+--
 vkCreateXlibSurfaceKHR ::
                        VkInstance -- ^ instance
                                   ->
@@ -139,10 +160,11 @@ vkCreateXlibSurfaceKHR d
 {-# INLINE vkCreateXlibSurfaceKHR #-}
 
 {-# WARNING
-vkCreateXlibSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateXlibSurfaceKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -156,7 +178,10 @@ vkCreateXlibSurfaceKHR"This function could be very inefficient. It may call vkGe
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -168,8 +193,27 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateXlibSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
+--
 vkCreateXlibSurfaceKHRSafe ::
                            VkInstance -- ^ instance
                                       ->
@@ -183,7 +227,7 @@ vkCreateXlibSurfaceKHRSafe = vkCreateXlibSurfaceKHR
 {-# INLINE vkCreateXlibSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateXlibSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateXlibSurfaceKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
@@ -246,6 +290,7 @@ is_VkGetPhysicalDeviceXlibPresentationSupportKHR
 type VkGetPhysicalDeviceXlibPresentationSupportKHR =
      "vkGetPhysicalDeviceXlibPresentationSupportKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -255,7 +300,10 @@ type VkGetPhysicalDeviceXlibPresentationSupportKHR =
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::
@@ -267,8 +315,23 @@ foreign import ccall unsafe
                                                    -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
+-- |
+-- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , Display* dpy
+-- >     , VisualID visualID
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
+--
 vkGetPhysicalDeviceXlibPresentationSupportKHR ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -283,10 +346,11 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR
         "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceXlibPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkGetPhysicalDeviceXlibPresentationSupportKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -296,7 +360,10 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR"This function will return error! E
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
@@ -308,8 +375,23 @@ foreign import ccall safe
                                                    -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
+-- |
+-- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , Display* dpy
+-- >     , VisualID visualID
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
+--
 vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                                                   VkPhysicalDevice -- ^ physicalDevice
                                                                    ->
@@ -323,7 +405,7 @@ vkGetPhysicalDeviceXlibPresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceXlibPresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceXlibPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkGetPhysicalDeviceXlibPresentationSupportKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 

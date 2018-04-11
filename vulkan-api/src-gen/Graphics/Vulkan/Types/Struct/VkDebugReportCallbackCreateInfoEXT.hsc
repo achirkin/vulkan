@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     void*            pUserData;
 --   > } VkDebugReportCallbackCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugReportCallbackCreateInfoEXT VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportCallbackCreateInfoEXT VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
 data VkDebugReportCallbackCreateInfoEXT = VkDebugReportCallbackCreateInfoEXT## Addr##
                                                                               ByteArray##
 

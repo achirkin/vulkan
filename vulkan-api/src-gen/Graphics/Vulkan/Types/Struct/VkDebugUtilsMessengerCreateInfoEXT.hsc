@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                               
 --   >     void*                                pUserData;
 --   > } VkDebugUtilsMessengerCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsMessengerCreateInfoEXT VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsMessengerCreateInfoEXT VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
 data VkDebugUtilsMessengerCreateInfoEXT = VkDebugUtilsMessengerCreateInfoEXT## Addr##
                                                                               ByteArray##
 

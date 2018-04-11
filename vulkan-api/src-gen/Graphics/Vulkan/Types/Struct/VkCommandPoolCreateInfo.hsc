@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     uint32_t               queueFamilyIndex;
 --   > } VkCommandPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandPoolCreateInfo VkCommandPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandPoolCreateInfo VkCommandPoolCreateInfo registry at www.khronos.org>
 data VkCommandPoolCreateInfo = VkCommandPoolCreateInfo## Addr##
                                                         ByteArray##
 

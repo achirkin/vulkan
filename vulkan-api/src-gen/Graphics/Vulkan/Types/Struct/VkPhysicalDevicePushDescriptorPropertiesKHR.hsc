@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     uint32_t                         maxPushDescriptors;
 --   > } VkPhysicalDevicePushDescriptorPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevicePushDescriptorPropertiesKHR VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDevicePushDescriptorPropertiesKHR VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDevicePushDescriptorPropertiesKHR = VkPhysicalDevicePushDescriptorPropertiesKHR## Addr##
                                                                                                 ByteArray##
 

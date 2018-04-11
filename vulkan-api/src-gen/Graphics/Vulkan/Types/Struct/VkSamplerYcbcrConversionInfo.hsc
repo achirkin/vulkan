@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkSamplerYcbcrConversion      conversion;
 --   > } VkSamplerYcbcrConversionInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerYcbcrConversionInfo VkSamplerYcbcrConversionInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionInfo VkSamplerYcbcrConversionInfo registry at www.khronos.org>
 data VkSamplerYcbcrConversionInfo = VkSamplerYcbcrConversionInfo## Addr##
                                                                   ByteArray##
 

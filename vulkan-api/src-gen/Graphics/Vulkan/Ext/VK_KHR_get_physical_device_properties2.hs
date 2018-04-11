@@ -35,37 +35,30 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VkGetPhysicalDeviceFeatures2KHR,
         HS_vkGetPhysicalDeviceFeatures2KHR,
         PFN_vkGetPhysicalDeviceFeatures2KHR,
-        unwrapVkGetPhysicalDeviceFeatures2KHR,
         VkGetPhysicalDeviceProperties2KHR,
         pattern VkGetPhysicalDeviceProperties2KHR,
         HS_vkGetPhysicalDeviceProperties2KHR,
         PFN_vkGetPhysicalDeviceProperties2KHR,
-        unwrapVkGetPhysicalDeviceProperties2KHR,
         VkGetPhysicalDeviceFormatProperties2KHR,
         pattern VkGetPhysicalDeviceFormatProperties2KHR,
         HS_vkGetPhysicalDeviceFormatProperties2KHR,
         PFN_vkGetPhysicalDeviceFormatProperties2KHR,
-        unwrapVkGetPhysicalDeviceFormatProperties2KHR,
         VkGetPhysicalDeviceImageFormatProperties2KHR,
         pattern VkGetPhysicalDeviceImageFormatProperties2KHR,
         HS_vkGetPhysicalDeviceImageFormatProperties2KHR,
         PFN_vkGetPhysicalDeviceImageFormatProperties2KHR,
-        unwrapVkGetPhysicalDeviceImageFormatProperties2KHR,
         VkGetPhysicalDeviceQueueFamilyProperties2KHR,
         pattern VkGetPhysicalDeviceQueueFamilyProperties2KHR,
         HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR,
         PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR,
-        unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHR,
         VkGetPhysicalDeviceMemoryProperties2KHR,
         pattern VkGetPhysicalDeviceMemoryProperties2KHR,
         HS_vkGetPhysicalDeviceMemoryProperties2KHR,
         PFN_vkGetPhysicalDeviceMemoryProperties2KHR,
-        unwrapVkGetPhysicalDeviceMemoryProperties2KHR,
         VkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
-        unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
@@ -214,7 +207,7 @@ type VkGetPhysicalDeviceFeatures2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceFeatures2`.
 --
---   > () vkGetPhysicalDeviceFeatures2KHR
+--   > void vkGetPhysicalDeviceFeatures2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceFeatures2* pFeatures
 --   >     )
@@ -267,7 +260,7 @@ type VkGetPhysicalDeviceProperties2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceProperties2`.
 --
---   > () vkGetPhysicalDeviceProperties2KHR
+--   > void vkGetPhysicalDeviceProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceProperties2* pProperties
 --   >     )
@@ -320,7 +313,7 @@ type VkGetPhysicalDeviceFormatProperties2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceFormatProperties2`.
 --
---   > () vkGetPhysicalDeviceFormatProperties2KHR
+--   > void vkGetPhysicalDeviceFormatProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkFormat format
 --   >     , VkFormatProperties2* pFormatProperties
@@ -440,7 +433,7 @@ type VkGetPhysicalDeviceQueueFamilyProperties2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceQueueFamilyProperties2`.
 --
---   > () vkGetPhysicalDeviceQueueFamilyProperties2KHR
+--   > void vkGetPhysicalDeviceQueueFamilyProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pQueueFamilyPropertyCount
 --   >     , VkQueueFamilyProperties2* pQueueFamilyProperties
@@ -498,7 +491,7 @@ type VkGetPhysicalDeviceMemoryProperties2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceMemoryProperties2`.
 --
---   > () vkGetPhysicalDeviceMemoryProperties2KHR
+--   > void vkGetPhysicalDeviceMemoryProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 --   >     )
@@ -555,7 +548,7 @@ type VkGetPhysicalDeviceSparseImageFormatProperties2KHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceSparseImageFormatProperties2`.
 --
---   > () vkGetPhysicalDeviceSparseImageFormatProperties2KHR
+--   > void vkGetPhysicalDeviceSparseImageFormatProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
 --   >     , uint32_t* pPropertyCount

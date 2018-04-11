@@ -28,7 +28,6 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         pattern VkEnumeratePhysicalDeviceGroupsKHR,
         HS_vkEnumeratePhysicalDeviceGroupsKHR,
         PFN_vkEnumeratePhysicalDeviceGroupsKHR,
-        unwrapVkEnumeratePhysicalDeviceGroupsKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkResult,

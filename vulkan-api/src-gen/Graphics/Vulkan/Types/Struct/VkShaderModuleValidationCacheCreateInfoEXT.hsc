@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkValidationCacheEXT    validationCache;
 --   > } VkShaderModuleValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkShaderModuleValidationCacheCreateInfoEXT VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderModuleValidationCacheCreateInfoEXT VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## Addr##
                                                                                               ByteArray##
 

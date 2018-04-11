@@ -38,7 +38,6 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         -- > #include "vk_platform.h"
         VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
         HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
-        unwrapVkGetSwapchainStatusKHR,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,

@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         pattern VkGetPhysicalDeviceExternalFencePropertiesKHR,
         HS_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR,
-        unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags,
@@ -109,7 +108,7 @@ type VkGetPhysicalDeviceExternalFencePropertiesKHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
 --
---   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
+--   > void vkGetPhysicalDeviceExternalFencePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
 --   >     , VkExternalFenceProperties* pExternalFenceProperties

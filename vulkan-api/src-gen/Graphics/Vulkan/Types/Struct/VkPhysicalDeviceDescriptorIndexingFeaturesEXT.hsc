@@ -47,7 +47,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkBool32               runtimeDescriptorArray;
 --   > } VkPhysicalDeviceDescriptorIndexingFeaturesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceDescriptorIndexingFeaturesEXT VkPhysicalDeviceDescriptorIndexingFeaturesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceDescriptorIndexingFeaturesEXT VkPhysicalDeviceDescriptorIndexingFeaturesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDescriptorIndexingFeaturesEXT = VkPhysicalDeviceDescriptorIndexingFeaturesEXT## Addr##
                                                                                                     ByteArray##
 

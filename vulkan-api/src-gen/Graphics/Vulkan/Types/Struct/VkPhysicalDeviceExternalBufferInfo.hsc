@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   > } VkPhysicalDeviceExternalBufferInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceExternalBufferInfo VkPhysicalDeviceExternalBufferInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalBufferInfo VkPhysicalDeviceExternalBufferInfo registry at www.khronos.org>
 data VkPhysicalDeviceExternalBufferInfo = VkPhysicalDeviceExternalBufferInfo## Addr##
                                                                               ByteArray##
 

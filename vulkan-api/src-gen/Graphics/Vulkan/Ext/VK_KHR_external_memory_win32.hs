@@ -40,12 +40,10 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         -- > #include "vk_platform.h"
         VkGetMemoryWin32HandleKHR, pattern VkGetMemoryWin32HandleKHR,
         HS_vkGetMemoryWin32HandleKHR, PFN_vkGetMemoryWin32HandleKHR,
-        unwrapVkGetMemoryWin32HandleKHR,
         VkGetMemoryWin32HandlePropertiesKHR,
         pattern VkGetMemoryWin32HandlePropertiesKHR,
         HS_vkGetMemoryWin32HandlePropertiesKHR,
         PFN_vkGetMemoryWin32HandlePropertiesKHR,
-        unwrapVkGetMemoryWin32HandlePropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,

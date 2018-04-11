@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         -- > #include "vk_platform.h"
         VkCmdPushDescriptorSetKHR, pattern VkCmdPushDescriptorSetKHR,
         HS_vkCmdPushDescriptorSetKHR, PFN_vkCmdPushDescriptorSetKHR,
-        unwrapVkCmdPushDescriptorSetKHR,
         module Graphics.Vulkan.Types.Enum.VkDescriptorType,
         module Graphics.Vulkan.Types.Enum.VkImageLayout,
         module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
@@ -58,7 +57,6 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         pattern VkCmdPushDescriptorSetWithTemplateKHR,
         HS_vkCmdPushDescriptorSetWithTemplateKHR,
         PFN_vkCmdPushDescriptorSetWithTemplateKHR,
-        unwrapVkCmdPushDescriptorSetWithTemplateKHR,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)
        where
 import           GHC.Ptr
@@ -107,11 +105,11 @@ is_VkCmdPushDescriptorSetKHR
 
 type VkCmdPushDescriptorSetKHR = "vkCmdPushDescriptorSetKHR"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdPushDescriptorSetKHR
+--   > void vkCmdPushDescriptorSetKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkPipelineBindPoint pipelineBindPoint
 --   >     , VkPipelineLayout layout
@@ -214,11 +212,11 @@ is_VkCmdPushDescriptorSetWithTemplateKHR
 type VkCmdPushDescriptorSetWithTemplateKHR =
      "vkCmdPushDescriptorSetWithTemplateKHR"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdPushDescriptorSetWithTemplateKHR
+--   > void vkCmdPushDescriptorSetWithTemplateKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
 --   >     , VkPipelineLayout layout

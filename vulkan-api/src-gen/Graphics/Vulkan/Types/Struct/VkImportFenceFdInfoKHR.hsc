@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     int                                    fd;
 --   > } VkImportFenceFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportFenceFdInfoKHR VkImportFenceFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportFenceFdInfoKHR VkImportFenceFdInfoKHR registry at www.khronos.org>
 data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## Addr##
                                                       ByteArray##
 

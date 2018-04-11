@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceFeatureFlags externalFenceFeatures;
 --   > } VkExternalFenceProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalFenceProperties VkExternalFenceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalFenceProperties VkExternalFenceProperties registry at www.khronos.org>
 data VkExternalFenceProperties = VkExternalFenceProperties## Addr##
                                                             ByteArray##
 

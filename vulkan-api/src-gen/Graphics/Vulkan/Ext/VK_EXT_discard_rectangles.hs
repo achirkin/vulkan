@@ -78,7 +78,6 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         -- > #include "vk_platform.h"
         VkCmdSetDiscardRectangleEXT, pattern VkCmdSetDiscardRectangleEXT,
         HS_vkCmdSetDiscardRectangleEXT, PFN_vkCmdSetDiscardRectangleEXT,
-        unwrapVkCmdSetDiscardRectangleEXT,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
         pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
@@ -163,11 +162,11 @@ is_VkCmdSetDiscardRectangleEXT
 
 type VkCmdSetDiscardRectangleEXT = "vkCmdSetDiscardRectangleEXT"
 
--- | queues: 'graphics'.
+-- | Queues: 'graphics'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdSetDiscardRectangleEXT
+--   > void vkCmdSetDiscardRectangleEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t firstDiscardRectangle
 --   >     , uint32_t discardRectangleCount

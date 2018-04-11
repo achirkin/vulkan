@@ -25,8 +25,7 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         -- Extension number: @70@
         module Graphics.Vulkan.Types.Bitmasks, VkTrimCommandPoolKHR,
         pattern VkTrimCommandPoolKHR, HS_vkTrimCommandPoolKHR,
-        PFN_vkTrimCommandPoolKHR, unwrapVkTrimCommandPoolKHR,
-        module Graphics.Vulkan.Marshal,
+        PFN_vkTrimCommandPoolKHR, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_MAINTENANCE1_SPEC_VERSION,
@@ -69,7 +68,7 @@ type VkTrimCommandPoolKHR = "vkTrimCommandPoolKHR"
 
 -- | This is an alias for `vkTrimCommandPool`.
 --
---   > () vkTrimCommandPoolKHR
+--   > void vkTrimCommandPoolKHR
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
 --   >     , VkCommandPoolTrimFlags flags

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     size_t scratchMemUsageInBytes;
 --   > } VkShaderResourceUsageAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkShaderResourceUsageAMD VkShaderResourceUsageAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderResourceUsageAMD VkShaderResourceUsageAMD registry at www.khronos.org>
 data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## Addr##
                                                           ByteArray##
 

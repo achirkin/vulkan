@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t               memoryTypeIndex;
 --   > } VkMemoryAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryAllocateInfo VkMemoryAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateInfo VkMemoryAllocateInfo registry at www.khronos.org>
 data VkMemoryAllocateInfo = VkMemoryAllocateInfo## Addr## ByteArray##
 
 instance Eq VkMemoryAllocateInfo where

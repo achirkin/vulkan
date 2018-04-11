@@ -39,7 +39,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkDeviceSize                             sequencesIndexOffset;
 --   > } VkCmdProcessCommandsInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCmdProcessCommandsInfoNVX VkCmdProcessCommandsInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCmdProcessCommandsInfoNVX VkCmdProcessCommandsInfoNVX registry at www.khronos.org>
 data VkCmdProcessCommandsInfoNVX = VkCmdProcessCommandsInfoNVX## Addr##
                                                                 ByteArray##
 

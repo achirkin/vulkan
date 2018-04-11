@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         shaderDrawParameters;
 --   > } VkPhysicalDeviceShaderDrawParameterFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceShaderDrawParameterFeatures VkPhysicalDeviceShaderDrawParameterFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceShaderDrawParameterFeatures VkPhysicalDeviceShaderDrawParameterFeatures registry at www.khronos.org>
 data VkPhysicalDeviceShaderDrawParameterFeatures = VkPhysicalDeviceShaderDrawParameterFeatures## Addr##
                                                                                                 ByteArray##
 
