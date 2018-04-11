@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     VkSparseImageFormatFlags flags;
 --   > } VkSparseImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageFormatProperties VkSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageFormatProperties VkSparseImageFormatProperties registry at www.khronos.org>
 data VkSparseImageFormatProperties = VkSparseImageFormatProperties## Addr##
                                                                     ByteArray##
 

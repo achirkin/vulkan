@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     const uint32_t* pCorrelationMasks;
 --   > } VkRenderPassMultiviewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRenderPassMultiviewCreateInfo VkRenderPassMultiviewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassMultiviewCreateInfo VkRenderPassMultiviewCreateInfo registry at www.khronos.org>
 data VkRenderPassMultiviewCreateInfo = VkRenderPassMultiviewCreateInfo## Addr##
                                                                         ByteArray##
 

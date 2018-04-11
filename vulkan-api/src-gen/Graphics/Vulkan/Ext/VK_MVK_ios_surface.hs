@@ -35,7 +35,7 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         -- > #include "vk_platform.h"
         VkCreateIOSSurfaceMVK, pattern VkCreateIOSSurfaceMVK,
         HS_vkCreateIOSSurfaceMVK, PFN_vkCreateIOSSurfaceMVK,
-        unwrapVkCreateIOSSurfaceMVK, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,

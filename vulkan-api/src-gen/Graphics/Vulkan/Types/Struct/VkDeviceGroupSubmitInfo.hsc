@@ -30,7 +30,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint32_t*  pSignalSemaphoreDeviceIndices;
 --   > } VkDeviceGroupSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupSubmitInfo VkDeviceGroupSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSubmitInfo VkDeviceGroupSubmitInfo registry at www.khronos.org>
 data VkDeviceGroupSubmitInfo = VkDeviceGroupSubmitInfo## Addr##
                                                         ByteArray##
 

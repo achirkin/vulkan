@@ -37,7 +37,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t computeWorkGroupSize[3];
 --   > } VkShaderStatisticsInfoAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkShaderStatisticsInfoAMD VkShaderStatisticsInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderStatisticsInfoAMD VkShaderStatisticsInfoAMD registry at www.khronos.org>
 data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## Addr##
                                                             ByteArray##
 

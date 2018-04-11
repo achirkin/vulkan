@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkEventCreateFlags     flags;
 --   > } VkEventCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkEventCreateInfo VkEventCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkEventCreateInfo VkEventCreateInfo registry at www.khronos.org>
 data VkEventCreateInfo = VkEventCreateInfo## Addr## ByteArray##
 
 instance Eq VkEventCreateInfo where

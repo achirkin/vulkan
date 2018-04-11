@@ -31,7 +31,6 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         -- > #include "vk_platform.h"
         VkGetShaderInfoAMD, pattern VkGetShaderInfoAMD,
         HS_vkGetShaderInfoAMD, PFN_vkGetShaderInfoAMD,
-        unwrapVkGetShaderInfoAMD,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_AMD_SHADER_INFO_SPEC_VERSION,

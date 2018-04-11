@@ -48,7 +48,6 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         pattern VkGetMemoryHostPointerPropertiesEXT,
         HS_vkGetMemoryHostPointerPropertiesEXT,
         PFN_vkGetMemoryHostPointerPropertiesEXT,
-        unwrapVkGetMemoryHostPointerPropertiesEXT,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkExtent2D                       maxSampleLocationGridSize;
 --   > } VkMultisamplePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMultisamplePropertiesEXT VkMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMultisamplePropertiesEXT VkMultisamplePropertiesEXT registry at www.khronos.org>
 data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## Addr##
                                                               ByteArray##
 

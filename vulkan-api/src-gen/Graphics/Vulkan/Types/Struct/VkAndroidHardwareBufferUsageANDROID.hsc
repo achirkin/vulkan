@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint64_t                           androidHardwareBufferUsage;
 --   > } VkAndroidHardwareBufferUsageANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAndroidHardwareBufferUsageANDROID VkAndroidHardwareBufferUsageANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferUsageANDROID VkAndroidHardwareBufferUsageANDROID registry at www.khronos.org>
 data VkAndroidHardwareBufferUsageANDROID = VkAndroidHardwareBufferUsageANDROID## Addr##
                                                                                 ByteArray##
 

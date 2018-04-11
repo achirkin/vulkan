@@ -23,11 +23,10 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         -- Extension number: @34@
         VkCmdDrawIndirectCountAMD, pattern VkCmdDrawIndirectCountAMD,
         HS_vkCmdDrawIndirectCountAMD, PFN_vkCmdDrawIndirectCountAMD,
-        unwrapVkCmdDrawIndirectCountAMD, VkCmdDrawIndexedIndirectCountAMD,
+        VkCmdDrawIndexedIndirectCountAMD,
         pattern VkCmdDrawIndexedIndirectCountAMD,
         HS_vkCmdDrawIndexedIndirectCountAMD,
         PFN_vkCmdDrawIndexedIndirectCountAMD,
-        unwrapVkCmdDrawIndexedIndirectCountAMD,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Handles,
@@ -61,13 +60,13 @@ is_VkCmdDrawIndirectCountAMD
 
 type VkCmdDrawIndirectCountAMD = "vkCmdDrawIndirectCountAMD"
 
--- | queues: 'graphics'.
+-- | Queues: 'graphics'.
 --
---   renderpass: @inside@
+--   Renderpass: @inside@
 --
---   pipeline: @graphics@
+--   Pipeline: @graphics@
 --
---   > () vkCmdDrawIndirectCountAMD
+--   > void vkCmdDrawIndirectCountAMD
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkBuffer buffer
 --   >     , VkDeviceSize offset
@@ -129,13 +128,13 @@ is_VkCmdDrawIndexedIndirectCountAMD
 type VkCmdDrawIndexedIndirectCountAMD =
      "vkCmdDrawIndexedIndirectCountAMD"
 
--- | queues: 'graphics'.
+-- | Queues: 'graphics'.
 --
---   renderpass: @inside@
+--   Renderpass: @inside@
 --
---   pipeline: @graphics@
+--   Pipeline: @graphics@
 --
---   > () vkCmdDrawIndexedIndirectCountAMD
+--   > void vkCmdDrawIndexedIndirectCountAMD
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkBuffer buffer
 --   >     , VkDeviceSize offset

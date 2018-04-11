@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceGetFdInfoKHR VkFenceGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceGetFdInfoKHR VkFenceGetFdInfoKHR registry at www.khronos.org>
 data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## Addr## ByteArray##
 
 instance Eq VkFenceGetFdInfoKHR where

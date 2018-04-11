@@ -38,7 +38,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         -- > #include "vk_platform.h"
         VkGetMemoryWin32HandleNV, pattern VkGetMemoryWin32HandleNV,
         HS_vkGetMemoryWin32HandleNV, PFN_vkGetMemoryWin32HandleNV,
-        unwrapVkGetMemoryWin32HandleNV, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,

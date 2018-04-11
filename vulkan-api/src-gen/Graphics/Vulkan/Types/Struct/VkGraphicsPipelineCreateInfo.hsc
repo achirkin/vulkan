@@ -71,7 +71,7 @@ import           System.IO.Unsafe
 --   >     int32_t                basePipelineIndex;
 --   > } VkGraphicsPipelineCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkGraphicsPipelineCreateInfo VkGraphicsPipelineCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkGraphicsPipelineCreateInfo VkGraphicsPipelineCreateInfo registry at www.khronos.org>
 data VkGraphicsPipelineCreateInfo = VkGraphicsPipelineCreateInfo## Addr##
                                                                   ByteArray##
 

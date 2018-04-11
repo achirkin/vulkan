@@ -49,7 +49,7 @@ import           System.IO.Unsafe                                            (un
 --   >     uint32_t               maxDescriptorSetUpdateAfterBindInputAttachments;
 --   > } VkPhysicalDeviceDescriptorIndexingPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceDescriptorIndexingPropertiesEXT VkPhysicalDeviceDescriptorIndexingPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceDescriptorIndexingPropertiesEXT VkPhysicalDeviceDescriptorIndexingPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDescriptorIndexingPropertiesEXT = VkPhysicalDeviceDescriptorIndexingPropertiesEXT## Addr##
                                                                                                         ByteArray##
 

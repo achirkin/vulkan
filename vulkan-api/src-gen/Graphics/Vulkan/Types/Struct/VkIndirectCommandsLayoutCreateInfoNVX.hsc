@@ -38,7 +38,7 @@ import           System.IO.Unsafe
 --   >     const VkIndirectCommandsLayoutTokenNVX*  pTokens;
 --   > } VkIndirectCommandsLayoutCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkIndirectCommandsLayoutCreateInfoNVX VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsLayoutCreateInfoNVX VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX## Addr##
                                                                                     ByteArray##
 

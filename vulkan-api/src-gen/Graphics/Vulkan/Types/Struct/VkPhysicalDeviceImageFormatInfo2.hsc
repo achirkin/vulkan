@@ -34,7 +34,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageCreateFlags flags;
 --   > } VkPhysicalDeviceImageFormatInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceImageFormatInfo2 VkPhysicalDeviceImageFormatInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceImageFormatInfo2 VkPhysicalDeviceImageFormatInfo2 registry at www.khronos.org>
 data VkPhysicalDeviceImageFormatInfo2 = VkPhysicalDeviceImageFormatInfo2## Addr##
                                                                           ByteArray##
 

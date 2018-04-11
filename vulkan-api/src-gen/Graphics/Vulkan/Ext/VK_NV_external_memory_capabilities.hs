@@ -34,7 +34,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
-        unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkFormat,
         module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,

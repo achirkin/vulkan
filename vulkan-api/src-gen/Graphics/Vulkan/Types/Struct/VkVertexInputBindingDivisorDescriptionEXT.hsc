@@ -22,7 +22,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t          divisor;
 --   > } VkVertexInputBindingDivisorDescriptionEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkVertexInputBindingDivisorDescriptionEXT VkVertexInputBindingDivisorDescriptionEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputBindingDivisorDescriptionEXT VkVertexInputBindingDivisorDescriptionEXT registry at www.khronos.org>
 data VkVertexInputBindingDivisorDescriptionEXT = VkVertexInputBindingDivisorDescriptionEXT## Addr##
                                                                                             ByteArray##
 

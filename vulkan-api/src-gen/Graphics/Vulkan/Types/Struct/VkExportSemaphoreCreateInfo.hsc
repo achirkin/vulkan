@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkExternalSemaphoreHandleTypeFlags handleTypes;
 --   > } VkExportSemaphoreCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportSemaphoreCreateInfo VkExportSemaphoreCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportSemaphoreCreateInfo VkExportSemaphoreCreateInfo registry at www.khronos.org>
 data VkExportSemaphoreCreateInfo = VkExportSemaphoreCreateInfo## Addr##
                                                                 ByteArray##
 

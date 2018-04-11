@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const char*      pObjectName;
 --   > } VkDebugUtilsObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsObjectNameInfoEXT VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsObjectNameInfoEXT VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
 data VkDebugUtilsObjectNameInfoEXT = VkDebugUtilsObjectNameInfoEXT## Addr##
                                                                     ByteArray##
 

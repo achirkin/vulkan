@@ -28,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t                                                 maxSequencesCount;
 --   > } VkCmdReserveSpaceForCommandsInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCmdReserveSpaceForCommandsInfoNVX VkCmdReserveSpaceForCommandsInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCmdReserveSpaceForCommandsInfoNVX VkCmdReserveSpaceForCommandsInfoNVX registry at www.khronos.org>
 data VkCmdReserveSpaceForCommandsInfoNVX = VkCmdReserveSpaceForCommandsInfoNVX## Addr##
                                                                                 ByteArray##
 

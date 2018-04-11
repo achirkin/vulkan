@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     uint32_t               commandBufferCount;
 --   > } VkCommandBufferAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandBufferAllocateInfo VkCommandBufferAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferAllocateInfo VkCommandBufferAllocateInfo registry at www.khronos.org>
 data VkCommandBufferAllocateInfo = VkCommandBufferAllocateInfo## Addr##
                                                                 ByteArray##
 

@@ -23,7 +23,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     const VkRectLayerKHR*   pRectangles;
 --   > } VkPresentRegionKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPresentRegionKHR VkPresentRegionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionKHR VkPresentRegionKHR registry at www.khronos.org>
 data VkPresentRegionKHR = VkPresentRegionKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionKHR where

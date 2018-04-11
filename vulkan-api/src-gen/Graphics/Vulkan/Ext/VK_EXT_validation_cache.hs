@@ -33,15 +33,12 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         -- > #include "vk_platform.h"
         VkCreateValidationCacheEXT, pattern VkCreateValidationCacheEXT,
         HS_vkCreateValidationCacheEXT, PFN_vkCreateValidationCacheEXT,
-        unwrapVkCreateValidationCacheEXT, VkDestroyValidationCacheEXT,
-        pattern VkDestroyValidationCacheEXT,
+        VkDestroyValidationCacheEXT, pattern VkDestroyValidationCacheEXT,
         HS_vkDestroyValidationCacheEXT, PFN_vkDestroyValidationCacheEXT,
-        unwrapVkDestroyValidationCacheEXT, VkMergeValidationCachesEXT,
-        pattern VkMergeValidationCachesEXT, HS_vkMergeValidationCachesEXT,
-        PFN_vkMergeValidationCachesEXT, unwrapVkMergeValidationCachesEXT,
+        VkMergeValidationCachesEXT, pattern VkMergeValidationCachesEXT,
+        HS_vkMergeValidationCachesEXT, PFN_vkMergeValidationCachesEXT,
         VkGetValidationCacheDataEXT, pattern VkGetValidationCacheDataEXT,
         HS_vkGetValidationCacheDataEXT, PFN_vkGetValidationCacheDataEXT,
-        unwrapVkGetValidationCacheDataEXT,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -157,7 +154,7 @@ is_VkDestroyValidationCacheEXT
 
 type VkDestroyValidationCacheEXT = "vkDestroyValidationCacheEXT"
 
--- | > () vkDestroyValidationCacheEXT
+-- | > void vkDestroyValidationCacheEXT
 --   >     ( VkDevice device
 --   >     , VkValidationCacheEXT validationCache
 --   >     , const VkAllocationCallbacks* pAllocator

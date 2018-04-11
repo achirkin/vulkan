@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     uint32_t                         deviceMask;
 --   > } VkMemoryAllocateFlagsInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryAllocateFlagsInfo VkMemoryAllocateFlagsInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateFlagsInfo VkMemoryAllocateFlagsInfo registry at www.khronos.org>
 data VkMemoryAllocateFlagsInfo = VkMemoryAllocateFlagsInfo## Addr##
                                                             ByteArray##
 

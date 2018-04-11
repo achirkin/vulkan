@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         pattern VkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
-        unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags,
@@ -112,7 +111,7 @@ type VkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceExternalSemaphoreProperties`.
 --
---   > () vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+--   > void vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
 --   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties

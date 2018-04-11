@@ -29,7 +29,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     const VkRect2D*  pDeviceRenderAreas;
 --   > } VkDeviceGroupRenderPassBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupRenderPassBeginInfo VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupRenderPassBeginInfo VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
 data VkDeviceGroupRenderPassBeginInfo = VkDeviceGroupRenderPassBeginInfo## Addr##
                                                                           ByteArray##
 

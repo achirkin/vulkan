@@ -39,45 +39,35 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         -- > #include "vk_platform.h"
         VkSetDebugUtilsObjectNameEXT, pattern VkSetDebugUtilsObjectNameEXT,
         HS_vkSetDebugUtilsObjectNameEXT, PFN_vkSetDebugUtilsObjectNameEXT,
-        unwrapVkSetDebugUtilsObjectNameEXT, VkSetDebugUtilsObjectTagEXT,
-        pattern VkSetDebugUtilsObjectTagEXT,
+        VkSetDebugUtilsObjectTagEXT, pattern VkSetDebugUtilsObjectTagEXT,
         HS_vkSetDebugUtilsObjectTagEXT, PFN_vkSetDebugUtilsObjectTagEXT,
-        unwrapVkSetDebugUtilsObjectTagEXT, VkQueueBeginDebugUtilsLabelEXT,
+        VkQueueBeginDebugUtilsLabelEXT,
         pattern VkQueueBeginDebugUtilsLabelEXT,
         HS_vkQueueBeginDebugUtilsLabelEXT,
-        PFN_vkQueueBeginDebugUtilsLabelEXT,
-        unwrapVkQueueBeginDebugUtilsLabelEXT, VkQueueEndDebugUtilsLabelEXT,
+        PFN_vkQueueBeginDebugUtilsLabelEXT, VkQueueEndDebugUtilsLabelEXT,
         pattern VkQueueEndDebugUtilsLabelEXT,
         HS_vkQueueEndDebugUtilsLabelEXT, PFN_vkQueueEndDebugUtilsLabelEXT,
-        unwrapVkQueueEndDebugUtilsLabelEXT,
         VkQueueInsertDebugUtilsLabelEXT,
         pattern VkQueueInsertDebugUtilsLabelEXT,
         HS_vkQueueInsertDebugUtilsLabelEXT,
-        PFN_vkQueueInsertDebugUtilsLabelEXT,
-        unwrapVkQueueInsertDebugUtilsLabelEXT,
-        VkCmdBeginDebugUtilsLabelEXT, pattern VkCmdBeginDebugUtilsLabelEXT,
+        PFN_vkQueueInsertDebugUtilsLabelEXT, VkCmdBeginDebugUtilsLabelEXT,
+        pattern VkCmdBeginDebugUtilsLabelEXT,
         HS_vkCmdBeginDebugUtilsLabelEXT, PFN_vkCmdBeginDebugUtilsLabelEXT,
-        unwrapVkCmdBeginDebugUtilsLabelEXT, VkCmdEndDebugUtilsLabelEXT,
-        pattern VkCmdEndDebugUtilsLabelEXT, HS_vkCmdEndDebugUtilsLabelEXT,
-        PFN_vkCmdEndDebugUtilsLabelEXT, unwrapVkCmdEndDebugUtilsLabelEXT,
+        VkCmdEndDebugUtilsLabelEXT, pattern VkCmdEndDebugUtilsLabelEXT,
+        HS_vkCmdEndDebugUtilsLabelEXT, PFN_vkCmdEndDebugUtilsLabelEXT,
         VkCmdInsertDebugUtilsLabelEXT,
         pattern VkCmdInsertDebugUtilsLabelEXT,
         HS_vkCmdInsertDebugUtilsLabelEXT,
-        PFN_vkCmdInsertDebugUtilsLabelEXT,
-        unwrapVkCmdInsertDebugUtilsLabelEXT,
-        VkCreateDebugUtilsMessengerEXT,
+        PFN_vkCmdInsertDebugUtilsLabelEXT, VkCreateDebugUtilsMessengerEXT,
         pattern VkCreateDebugUtilsMessengerEXT,
         HS_vkCreateDebugUtilsMessengerEXT,
         PFN_vkCreateDebugUtilsMessengerEXT,
-        unwrapVkCreateDebugUtilsMessengerEXT,
         VkDestroyDebugUtilsMessengerEXT,
         pattern VkDestroyDebugUtilsMessengerEXT,
         HS_vkDestroyDebugUtilsMessengerEXT,
-        PFN_vkDestroyDebugUtilsMessengerEXT,
-        unwrapVkDestroyDebugUtilsMessengerEXT,
-        VkSubmitDebugUtilsMessageEXT, pattern VkSubmitDebugUtilsMessageEXT,
+        PFN_vkDestroyDebugUtilsMessengerEXT, VkSubmitDebugUtilsMessageEXT,
+        pattern VkSubmitDebugUtilsMessageEXT,
         HS_vkSubmitDebugUtilsMessageEXT, PFN_vkSubmitDebugUtilsMessageEXT,
-        unwrapVkSubmitDebugUtilsMessageEXT,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -245,7 +235,7 @@ is_VkQueueBeginDebugUtilsLabelEXT
 type VkQueueBeginDebugUtilsLabelEXT =
      "vkQueueBeginDebugUtilsLabelEXT"
 
--- | > () vkQueueBeginDebugUtilsLabelEXT
+-- | > void vkQueueBeginDebugUtilsLabelEXT
 --   >     ( VkQueue queue
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
@@ -294,7 +284,7 @@ is_VkQueueEndDebugUtilsLabelEXT
 
 type VkQueueEndDebugUtilsLabelEXT = "vkQueueEndDebugUtilsLabelEXT"
 
--- | > () vkQueueEndDebugUtilsLabelEXT
+-- | > void vkQueueEndDebugUtilsLabelEXT
 --   >     ( VkQueue queue
 --   >     )
 --
@@ -341,7 +331,7 @@ is_VkQueueInsertDebugUtilsLabelEXT
 type VkQueueInsertDebugUtilsLabelEXT =
      "vkQueueInsertDebugUtilsLabelEXT"
 
--- | > () vkQueueInsertDebugUtilsLabelEXT
+-- | > void vkQueueInsertDebugUtilsLabelEXT
 --   >     ( VkQueue queue
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
@@ -390,11 +380,11 @@ is_VkCmdBeginDebugUtilsLabelEXT
 
 type VkCmdBeginDebugUtilsLabelEXT = "vkCmdBeginDebugUtilsLabelEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdBeginDebugUtilsLabelEXT
+--   > void vkCmdBeginDebugUtilsLabelEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
@@ -441,11 +431,11 @@ is_VkCmdEndDebugUtilsLabelEXT
 
 type VkCmdEndDebugUtilsLabelEXT = "vkCmdEndDebugUtilsLabelEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdEndDebugUtilsLabelEXT
+--   > void vkCmdEndDebugUtilsLabelEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
@@ -491,11 +481,11 @@ is_VkCmdInsertDebugUtilsLabelEXT
 type VkCmdInsertDebugUtilsLabelEXT =
      "vkCmdInsertDebugUtilsLabelEXT"
 
--- | queues: 'graphics', 'compute'.
+-- | Queues: 'graphics', 'compute'.
 --
---   renderpass: @both@
+--   Renderpass: @both@
 --
---   > () vkCmdInsertDebugUtilsLabelEXT
+--   > void vkCmdInsertDebugUtilsLabelEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
@@ -608,7 +598,7 @@ is_VkDestroyDebugUtilsMessengerEXT
 type VkDestroyDebugUtilsMessengerEXT =
      "vkDestroyDebugUtilsMessengerEXT"
 
--- | > () vkDestroyDebugUtilsMessengerEXT
+-- | > void vkDestroyDebugUtilsMessengerEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugUtilsMessengerEXT messenger
 --   >     , const VkAllocationCallbacks* pAllocator
@@ -660,7 +650,7 @@ is_VkSubmitDebugUtilsMessageEXT
 
 type VkSubmitDebugUtilsMessageEXT = "vkSubmitDebugUtilsMessageEXT"
 
--- | > () vkSubmitDebugUtilsMessageEXT
+-- | > void vkSubmitDebugUtilsMessageEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity
 --   >     , VkDebugUtilsMessageTypeFlagsEXT messageTypes

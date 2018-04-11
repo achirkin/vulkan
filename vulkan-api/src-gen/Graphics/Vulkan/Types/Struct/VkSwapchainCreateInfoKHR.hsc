@@ -51,7 +51,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSwapchainKHR   oldSwapchain;
 --   > } VkSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSwapchainCreateInfoKHR VkSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSwapchainCreateInfoKHR VkSwapchainCreateInfoKHR registry at www.khronos.org>
 data VkSwapchainCreateInfoKHR = VkSwapchainCreateInfoKHR## Addr##
                                                           ByteArray##
 

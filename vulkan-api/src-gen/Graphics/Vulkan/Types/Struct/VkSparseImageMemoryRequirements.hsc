@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkDeviceSize           imageMipTailStride;
 --   > } VkSparseImageMemoryRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageMemoryRequirements VkSparseImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryRequirements VkSparseImageMemoryRequirements registry at www.khronos.org>
 data VkSparseImageMemoryRequirements = VkSparseImageMemoryRequirements## Addr##
                                                                         ByteArray##
 

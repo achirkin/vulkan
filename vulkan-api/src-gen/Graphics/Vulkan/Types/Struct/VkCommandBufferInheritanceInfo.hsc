@@ -35,7 +35,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkQueryPipelineStatisticFlags pipelineStatistics;
 --   > } VkCommandBufferInheritanceInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandBufferInheritanceInfo VkCommandBufferInheritanceInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferInheritanceInfo VkCommandBufferInheritanceInfo registry at www.khronos.org>
 data VkCommandBufferInheritanceInfo = VkCommandBufferInheritanceInfo## Addr##
                                                                       ByteArray##
 

@@ -30,7 +30,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               uint32[4];
 --   > } VkClearColorValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearColorValue VkClearColorValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearColorValue VkClearColorValue registry at www.khronos.org>
 data VkClearColorValue = VkClearColorValue## Addr## ByteArray##
 
 instance Eq VkClearColorValue where

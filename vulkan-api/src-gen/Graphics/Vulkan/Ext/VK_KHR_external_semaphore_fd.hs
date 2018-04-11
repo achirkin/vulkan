@@ -36,9 +36,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         -- > #include "vk_platform.h"
         VkImportSemaphoreFdKHR, pattern VkImportSemaphoreFdKHR,
         HS_vkImportSemaphoreFdKHR, PFN_vkImportSemaphoreFdKHR,
-        unwrapVkImportSemaphoreFdKHR, VkGetSemaphoreFdKHR,
-        pattern VkGetSemaphoreFdKHR, HS_vkGetSemaphoreFdKHR,
-        PFN_vkGetSemaphoreFdKHR, unwrapVkGetSemaphoreFdKHR,
+        VkGetSemaphoreFdKHR, pattern VkGetSemaphoreFdKHR,
+        HS_vkGetSemaphoreFdKHR, PFN_vkGetSemaphoreFdKHR,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,

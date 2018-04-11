@@ -26,7 +26,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32               residencyNonResidentStrict;
 --   > } VkPhysicalDeviceSparseProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSparseProperties VkPhysicalDeviceSparseProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSparseProperties VkPhysicalDeviceSparseProperties registry at www.khronos.org>
 data VkPhysicalDeviceSparseProperties = VkPhysicalDeviceSparseProperties## Addr##
                                                                           ByteArray##
 

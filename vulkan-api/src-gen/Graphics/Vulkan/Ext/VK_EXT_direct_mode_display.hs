@@ -28,7 +28,6 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         -- ** Required extensions: 'VK_KHR_display'.
         VkReleaseDisplayEXT, pattern VkReleaseDisplayEXT,
         HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT,
-        unwrapVkReleaseDisplayEXT,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,

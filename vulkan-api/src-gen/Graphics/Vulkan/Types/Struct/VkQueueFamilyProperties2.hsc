@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkQueueFamilyProperties          queueFamilyProperties;
 --   > } VkQueueFamilyProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkQueueFamilyProperties2 VkQueueFamilyProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueueFamilyProperties2 VkQueueFamilyProperties2 registry at www.khronos.org>
 data VkQueueFamilyProperties2 = VkQueueFamilyProperties2## Addr##
                                                           ByteArray##
 

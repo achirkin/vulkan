@@ -35,7 +35,7 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         -- > #include "vk_platform.h"
         VkCreateViSurfaceNN, pattern VkCreateViSurfaceNN,
         HS_vkCreateViSurfaceNN, PFN_vkCreateViSurfaceNN,
-        unwrapVkCreateViSurfaceNN, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,

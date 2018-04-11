@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   > } VkSemaphoreGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSemaphoreGetFdInfoKHR VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSemaphoreGetFdInfoKHR VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## Addr##
                                                         ByteArray##
 

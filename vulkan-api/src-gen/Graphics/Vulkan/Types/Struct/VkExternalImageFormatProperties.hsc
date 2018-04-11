@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkExternalMemoryProperties externalMemoryProperties;
 --   > } VkExternalImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalImageFormatProperties VkExternalImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalImageFormatProperties VkExternalImageFormatProperties registry at www.khronos.org>
 data VkExternalImageFormatProperties = VkExternalImageFormatProperties## Addr##
                                                                         ByteArray##
 

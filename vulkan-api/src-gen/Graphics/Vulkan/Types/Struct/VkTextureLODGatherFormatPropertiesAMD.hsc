@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkBool32                         supportsTextureGatherLODBiasAMD;
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkTextureLODGatherFormatPropertiesAMD VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkTextureLODGatherFormatPropertiesAMD VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## Addr##
                                                                                     ByteArray##
 

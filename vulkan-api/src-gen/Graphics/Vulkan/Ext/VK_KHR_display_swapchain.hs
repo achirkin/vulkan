@@ -40,8 +40,8 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         -- > #include "vk_platform.h"
         VkCreateSharedSwapchainsKHR, pattern VkCreateSharedSwapchainsKHR,
         HS_vkCreateSharedSwapchainsKHR, PFN_vkCreateSharedSwapchainsKHR,
-        unwrapVkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHR,
-        vkCreateSharedSwapchainsKHRSafe, module Graphics.Vulkan.Marshal,
+        vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
         module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
         module Graphics.Vulkan.Types.Enum.VkFormat,
@@ -110,6 +110,7 @@ is_VkCreateSharedSwapchainsKHR
 
 type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -124,7 +125,10 @@ type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device
@@ -138,8 +142,28 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                                                                      -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkCreateSharedSwapchainsKHR
+-- >     ( VkDevice device
+-- >     , uint32_t swapchainCount
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchains
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
+--
 vkCreateSharedSwapchainsKHR ::
                             VkDevice -- ^ device
                                      ->
@@ -158,10 +182,11 @@ vkCreateSharedSwapchainsKHR d
 {-# INLINE vkCreateSharedSwapchainsKHR #-}
 
 {-# WARNING
-vkCreateSharedSwapchainsKHR"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateSharedSwapchainsKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -176,7 +201,10 @@ vkCreateSharedSwapchainsKHR"This function could be very inefficient. It may call
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHRSafe ::
                VkDevice -- ^ device
@@ -190,8 +218,28 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                                                                      -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetDeviceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkCreateSharedSwapchainsKHR
+-- >     ( VkDevice device
+-- >     , uint32_t swapchainCount
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchains
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
+--
 vkCreateSharedSwapchainsKHRSafe ::
                                 VkDevice -- ^ device
                                          ->
@@ -207,7 +255,7 @@ vkCreateSharedSwapchainsKHRSafe = vkCreateSharedSwapchainsKHR
 {-# INLINE vkCreateSharedSwapchainsKHRSafe #-}
 
 {-# WARNING
-vkCreateSharedSwapchainsKHRSafe"This function could be very inefficient. It may call vkGetDeviceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateSharedSwapchainsKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const void*            pInitialData;
 --   > } VkPipelineCacheCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineCacheCreateInfo VkPipelineCacheCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCacheCreateInfo VkPipelineCacheCreateInfo registry at www.khronos.org>
 data VkPipelineCacheCreateInfo = VkPipelineCacheCreateInfo## Addr##
                                                             ByteArray##
 

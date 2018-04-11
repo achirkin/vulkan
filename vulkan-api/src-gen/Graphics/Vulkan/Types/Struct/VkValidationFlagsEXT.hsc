@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkValidationCheckEXT* pDisabledValidationChecks;
 --   > } VkValidationFlagsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkValidationFlagsEXT VkValidationFlagsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationFlagsEXT VkValidationFlagsEXT registry at www.khronos.org>
 data VkValidationFlagsEXT = VkValidationFlagsEXT## Addr## ByteArray##
 
 instance Eq VkValidationFlagsEXT where

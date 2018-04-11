@@ -30,7 +30,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkBool32                         persistent;
 --   > } VkDisplayPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPresentInfoKHR VkDisplayPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPresentInfoKHR VkDisplayPresentInfoKHR registry at www.khronos.org>
 data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## Addr##
                                                         ByteArray##
 

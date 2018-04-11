@@ -30,9 +30,8 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         -- ** Required extensions: 'VK_EXT_direct_mode_display'.
         VkAcquireXlibDisplayEXT, pattern VkAcquireXlibDisplayEXT,
         HS_vkAcquireXlibDisplayEXT, PFN_vkAcquireXlibDisplayEXT,
-        unwrapVkAcquireXlibDisplayEXT, VkGetRandROutputDisplayEXT,
-        pattern VkGetRandROutputDisplayEXT, HS_vkGetRandROutputDisplayEXT,
-        PFN_vkGetRandROutputDisplayEXT, unwrapVkGetRandROutputDisplayEXT,
+        VkGetRandROutputDisplayEXT, pattern VkGetRandROutputDisplayEXT,
+        HS_vkGetRandROutputDisplayEXT, PFN_vkGetRandROutputDisplayEXT,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,

@@ -40,7 +40,6 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
-        unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     struct AHardwareBuffer*            buffer;
 --   > } VkImportAndroidHardwareBufferInfoANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportAndroidHardwareBufferInfoANDROID VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportAndroidHardwareBufferInfoANDROID VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
 data VkImportAndroidHardwareBufferInfoANDROID = VkImportAndroidHardwareBufferInfoANDROID## Addr##
                                                                                           ByteArray##
 

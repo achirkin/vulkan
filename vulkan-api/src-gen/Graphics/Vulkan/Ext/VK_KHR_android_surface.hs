@@ -38,8 +38,8 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         -- > #include "vk_platform.h"
         VkCreateAndroidSurfaceKHR, pattern VkCreateAndroidSurfaceKHR,
         HS_vkCreateAndroidSurfaceKHR, PFN_vkCreateAndroidSurfaceKHR,
-        unwrapVkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHR,
-        vkCreateAndroidSurfaceKHRSafe, module Graphics.Vulkan.Marshal,
+        vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Defines,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -88,6 +88,7 @@ is_VkCreateAndroidSurfaceKHR
 
 type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -101,7 +102,10 @@ type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
                VkInstance -- ^ instance
@@ -113,8 +117,27 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+-- > VkResult vkCreateAndroidSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
+--
 vkCreateAndroidSurfaceKHR ::
                           VkInstance -- ^ instance
                                      ->
@@ -131,10 +154,11 @@ vkCreateAndroidSurfaceKHR d
 {-# INLINE vkCreateAndroidSurfaceKHR #-}
 
 {-# WARNING
-vkCreateAndroidSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateAndroidSurfaceKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -148,7 +172,10 @@ vkCreateAndroidSurfaceKHR"This function could be very inefficient. It may call v
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -160,8 +187,27 @@ foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+-- > VkResult vkCreateAndroidSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
+--
 vkCreateAndroidSurfaceKHRSafe ::
                               VkInstance -- ^ instance
                                          ->
@@ -175,7 +221,7 @@ vkCreateAndroidSurfaceKHRSafe = vkCreateAndroidSurfaceKHR
 {-# INLINE vkCreateAndroidSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateAndroidSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateAndroidSurfaceKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 

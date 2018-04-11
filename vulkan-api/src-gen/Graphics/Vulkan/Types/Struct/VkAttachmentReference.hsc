@@ -23,7 +23,7 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   >     VkImageLayout          layout;
 --   > } VkAttachmentReference;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAttachmentReference VkAttachmentReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentReference VkAttachmentReference registry at www.khronos.org>
 data VkAttachmentReference = VkAttachmentReference## Addr##
                                                     ByteArray##
 

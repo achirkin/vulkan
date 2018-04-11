@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkBool32                         requiresDedicatedAllocation;
 --   > } VkMemoryDedicatedRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryDedicatedRequirements VkMemoryDedicatedRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryDedicatedRequirements VkMemoryDedicatedRequirements registry at www.khronos.org>
 data VkMemoryDedicatedRequirements = VkMemoryDedicatedRequirements## Addr##
                                                                     ByteArray##
 

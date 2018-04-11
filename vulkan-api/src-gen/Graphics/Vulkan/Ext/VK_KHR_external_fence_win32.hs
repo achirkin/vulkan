@@ -40,9 +40,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         -- > #include "vk_platform.h"
         VkImportFenceWin32HandleKHR, pattern VkImportFenceWin32HandleKHR,
         HS_vkImportFenceWin32HandleKHR, PFN_vkImportFenceWin32HandleKHR,
-        unwrapVkImportFenceWin32HandleKHR, VkGetFenceWin32HandleKHR,
-        pattern VkGetFenceWin32HandleKHR, HS_vkGetFenceWin32HandleKHR,
-        PFN_vkGetFenceWin32HandleKHR, unwrapVkGetFenceWin32HandleKHR,
+        VkGetFenceWin32HandleKHR, pattern VkGetFenceWin32HandleKHR,
+        HS_vkGetFenceWin32HandleKHR, PFN_vkGetFenceWin32HandleKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,

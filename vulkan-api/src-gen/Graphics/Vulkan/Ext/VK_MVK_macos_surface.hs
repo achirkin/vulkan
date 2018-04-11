@@ -35,7 +35,7 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
         -- > #include "vk_platform.h"
         VkCreateMacOSSurfaceMVK, pattern VkCreateMacOSSurfaceMVK,
         HS_vkCreateMacOSSurfaceMVK, PFN_vkCreateMacOSSurfaceMVK,
-        unwrapVkCreateMacOSSurfaceMVK, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,

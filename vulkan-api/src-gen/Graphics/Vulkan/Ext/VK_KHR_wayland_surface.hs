@@ -38,13 +38,11 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         -- > #include "vk_platform.h"
         VkCreateWaylandSurfaceKHR, pattern VkCreateWaylandSurfaceKHR,
         HS_vkCreateWaylandSurfaceKHR, PFN_vkCreateWaylandSurfaceKHR,
-        unwrapVkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHR,
-        vkCreateWaylandSurfaceKHRSafe,
+        vkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHRSafe,
         VkGetPhysicalDeviceWaylandPresentationSupportKHR,
         pattern VkGetPhysicalDeviceWaylandPresentationSupportKHR,
         HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
         PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
-        unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHR,
         vkGetPhysicalDeviceWaylandPresentationSupportKHR,
         vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -96,6 +94,7 @@ is_VkCreateWaylandSurfaceKHR
 
 type VkCreateWaylandSurfaceKHR = "vkCreateWaylandSurfaceKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -109,7 +108,10 @@ type VkCreateWaylandSurfaceKHR = "vkCreateWaylandSurfaceKHR"
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                vkCreateWaylandSurfaceKHR ::
                VkInstance -- ^ instance
@@ -121,8 +123,27 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateWaylandSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWaylandSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWaylandSurfaceKHR <- vkGetInstanceProc @VkCreateWaylandSurfaceKHR vkInstance
+--
 vkCreateWaylandSurfaceKHR ::
                           VkInstance -- ^ instance
                                      ->
@@ -139,10 +160,11 @@ vkCreateWaylandSurfaceKHR d
 {-# INLINE vkCreateWaylandSurfaceKHR #-}
 
 {-# WARNING
-vkCreateWaylandSurfaceKHR"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateWaylandSurfaceKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -156,7 +178,10 @@ vkCreateWaylandSurfaceKHR"This function could be very inefficient. It may call v
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe "vkCreateWaylandSurfaceKHR"
                vkCreateWaylandSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -168,8 +193,27 @@ foreign import ccall safe "vkCreateWaylandSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- Note: without @useNativeFFI-1-0@ cabal flag this function may call `vkGetInstanceProcAddr` every time you execute it.
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag to call it natively to make sure you get the best performance.
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateWaylandSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWaylandSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWaylandSurfaceKHR <- vkGetInstanceProc @VkCreateWaylandSurfaceKHR vkInstance
+--
 vkCreateWaylandSurfaceKHRSafe ::
                               VkInstance -- ^ instance
                                          ->
@@ -183,7 +227,7 @@ vkCreateWaylandSurfaceKHRSafe = vkCreateWaylandSurfaceKHR
 {-# INLINE vkCreateWaylandSurfaceKHRSafe #-}
 
 {-# WARNING
-vkCreateWaylandSurfaceKHRSafe"This function could be very inefficient. It may call vkGetInstanceProcAddr every time you call it. I suggest you to either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkCreateWaylandSurfaceKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
@@ -248,6 +292,7 @@ is_VkGetPhysicalDeviceWaylandPresentationSupportKHR
 type VkGetPhysicalDeviceWaylandPresentationSupportKHR =
      "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -256,7 +301,10 @@ type VkGetPhysicalDeviceWaylandPresentationSupportKHR =
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
@@ -266,8 +314,22 @@ foreign import ccall unsafe
                                                            -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , struct wl_display* display
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR vkInstance
+--
 vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
                                                  VkPhysicalDevice -- ^ physicalDevice
                                                                   ->
@@ -281,10 +343,11 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHR
         "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
 
 {-# WARNING
-vkGetPhysicalDeviceWaylandPresentationSupportKHR"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkGetPhysicalDeviceWaylandPresentationSupportKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -293,7 +356,10 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHR"This function will return error
 -- >     )
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
-#ifdef NATIVE_FFI_VK_VERSION_1_0
+--
+-- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+--           as a @foreign import@ call to C Vulkan loader.
+--
 foreign import ccall safe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe ::
@@ -303,8 +369,22 @@ foreign import ccall safe
                                                            -> IO VkBool32
 
 #else
--- Warning: without @useNativeFFI-1-0@ cabal flag this function returns error!
--- Either lookup the function manually or enable @useNativeFFI-1-0@ cabal flag.
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , struct wl_display* display
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ You should refrain from using this function directly
+--           unless flag @useNativeFFI-1-0@ is enabled.
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR vkInstance
+--
 vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe ::
                                                      VkPhysicalDevice -- ^ physicalDevice
                                                                       ->
@@ -317,7 +397,7 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe
 {-# INLINE vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe #-}
 
 {-# WARNING
-vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe"This function will return error! Either lookup the function address manually or enable flag useNativeFFI-1-0"
+vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
  #-}
 #endif
 

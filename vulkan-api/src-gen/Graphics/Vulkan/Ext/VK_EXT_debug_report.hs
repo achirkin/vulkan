@@ -37,14 +37,12 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         pattern VkCreateDebugReportCallbackEXT,
         HS_vkCreateDebugReportCallbackEXT,
         PFN_vkCreateDebugReportCallbackEXT,
-        unwrapVkCreateDebugReportCallbackEXT,
         VkDestroyDebugReportCallbackEXT,
         pattern VkDestroyDebugReportCallbackEXT,
         HS_vkDestroyDebugReportCallbackEXT,
-        PFN_vkDestroyDebugReportCallbackEXT,
-        unwrapVkDestroyDebugReportCallbackEXT, VkDebugReportMessageEXT,
+        PFN_vkDestroyDebugReportCallbackEXT, VkDebugReportMessageEXT,
         pattern VkDebugReportMessageEXT, HS_vkDebugReportMessageEXT,
-        PFN_vkDebugReportMessageEXT, unwrapVkDebugReportMessageEXT,
+        PFN_vkDebugReportMessageEXT,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -166,7 +164,7 @@ is_VkDestroyDebugReportCallbackEXT
 type VkDestroyDebugReportCallbackEXT =
      "vkDestroyDebugReportCallbackEXT"
 
--- | > () vkDestroyDebugReportCallbackEXT
+-- | > void vkDestroyDebugReportCallbackEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportCallbackEXT callback
 --   >     , const VkAllocationCallbacks* pAllocator
@@ -217,7 +215,7 @@ is_VkDebugReportMessageEXT
 
 type VkDebugReportMessageEXT = "vkDebugReportMessageEXT"
 
--- | > () vkDebugReportMessageEXT
+-- | > void vkDebugReportMessageEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportFlagsEXT flags
 --   >     , VkDebugReportObjectTypeEXT objectType

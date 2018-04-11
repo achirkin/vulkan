@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkExtent3D             imageExtent;
 --   > } VkBufferImageCopy;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBufferImageCopy VkBufferImageCopy registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferImageCopy VkBufferImageCopy registry at www.khronos.org>
 data VkBufferImageCopy = VkBufferImageCopy## Addr## ByteArray##
 
 instance Eq VkBufferImageCopy where

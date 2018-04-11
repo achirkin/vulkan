@@ -37,10 +37,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         VkGetMemoryFdKHR, pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
-        PFN_vkGetMemoryFdKHR, unwrapVkGetMemoryFdKHR,
-        VkGetMemoryFdPropertiesKHR, pattern VkGetMemoryFdPropertiesKHR,
-        HS_vkGetMemoryFdPropertiesKHR, PFN_vkGetMemoryFdPropertiesKHR,
-        unwrapVkGetMemoryFdPropertiesKHR,
+        PFN_vkGetMemoryFdKHR, VkGetMemoryFdPropertiesKHR,
+        pattern VkGetMemoryFdPropertiesKHR, HS_vkGetMemoryFdPropertiesKHR,
+        PFN_vkGetMemoryFdPropertiesKHR,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,

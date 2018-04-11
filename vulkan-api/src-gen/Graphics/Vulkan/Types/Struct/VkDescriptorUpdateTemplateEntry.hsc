@@ -27,7 +27,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     size_t                           stride;
 --   > } VkDescriptorUpdateTemplateEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorUpdateTemplateEntry VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateEntry VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
 data VkDescriptorUpdateTemplateEntry = VkDescriptorUpdateTemplateEntry## Addr##
                                                                         ByteArray##
 

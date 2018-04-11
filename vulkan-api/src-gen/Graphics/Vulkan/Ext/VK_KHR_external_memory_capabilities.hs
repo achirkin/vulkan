@@ -40,7 +40,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         pattern VkGetPhysicalDeviceExternalBufferPropertiesKHR,
         HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
-        unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
@@ -132,7 +131,7 @@ type VkGetPhysicalDeviceExternalBufferPropertiesKHR =
 
 -- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
 --
---   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
+--   > void vkGetPhysicalDeviceExternalBufferPropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
 --   >     , VkExternalBufferProperties* pExternalBufferProperties

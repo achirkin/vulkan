@@ -29,7 +29,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkDeviceSize                     memoryOffset;
 --   > } VkBindImageMemoryInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBindImageMemoryInfo VkBindImageMemoryInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImageMemoryInfo VkBindImageMemoryInfo registry at www.khronos.org>
 data VkBindImageMemoryInfo = VkBindImageMemoryInfo## Addr##
                                                     ByteArray##
 

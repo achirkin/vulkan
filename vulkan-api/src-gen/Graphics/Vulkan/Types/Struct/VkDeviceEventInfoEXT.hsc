@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkDeviceEventTypeEXT             deviceEvent;
 --   > } VkDeviceEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceEventInfoEXT VkDeviceEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventInfoEXT VkDeviceEventInfoEXT registry at www.khronos.org>
 data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## Addr## ByteArray##
 
 instance Eq VkDeviceEventInfoEXT where

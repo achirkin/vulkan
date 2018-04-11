@@ -35,7 +35,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkImageSubresourceRange subresourceRange;
 --   > } VkImageMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageMemoryBarrier VkImageMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageMemoryBarrier VkImageMemoryBarrier registry at www.khronos.org>
 data VkImageMemoryBarrier = VkImageMemoryBarrier## Addr## ByteArray##
 
 instance Eq VkImageMemoryBarrier where

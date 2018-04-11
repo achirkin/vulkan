@@ -32,7 +32,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     char            description[VK_MAX_DESCRIPTION_SIZE];
 --   > } VkLayerProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkLayerProperties VkLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkLayerProperties VkLayerProperties registry at www.khronos.org>
 data VkLayerProperties = VkLayerProperties## Addr## ByteArray##
 
 instance Eq VkLayerProperties where

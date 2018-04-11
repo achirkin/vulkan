@@ -32,7 +32,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     const char* const*      ppEnabledExtensionNames;
 --   > } VkInstanceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkInstanceCreateInfo VkInstanceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkInstanceCreateInfo VkInstanceCreateInfo registry at www.khronos.org>
 data VkInstanceCreateInfo = VkInstanceCreateInfo## Addr## ByteArray##
 
 instance Eq VkInstanceCreateInfo where
