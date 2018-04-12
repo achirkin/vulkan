@@ -13,14 +13,11 @@ module Graphics.Vulkan.Types.Struct.Descriptor
         VkDescriptorSetAllocateInfo(..), VkDescriptorSetLayoutBinding(..),
         VkDescriptorSetLayoutBindingFlagsCreateInfoEXT(..),
         VkDescriptorSetLayoutCreateInfo(..),
-        VkDescriptorSetLayoutSupport(..), VkDescriptorSetLayoutSupport(..),
-        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetLayoutSupport(..), VkDescriptorSetLayoutSupportKHR,
         VkDescriptorSetVariableDescriptorCountAllocateInfoEXT(..),
         VkDescriptorSetVariableDescriptorCountLayoutSupportEXT(..),
         VkDescriptorUpdateTemplateCreateInfo(..),
-        VkDescriptorUpdateTemplateCreateInfo(..),
         VkDescriptorUpdateTemplateCreateInfoKHR,
-        VkDescriptorUpdateTemplateEntry(..),
         VkDescriptorUpdateTemplateEntry(..),
         VkDescriptorUpdateTemplateEntryKHR)
        where

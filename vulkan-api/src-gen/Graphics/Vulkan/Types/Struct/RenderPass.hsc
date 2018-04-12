@@ -10,9 +10,7 @@
 module Graphics.Vulkan.Types.Struct.RenderPass
        (VkRenderPassBeginInfo(..), VkRenderPassCreateInfo(..),
         VkRenderPassInputAttachmentAspectCreateInfo(..),
-        VkRenderPassInputAttachmentAspectCreateInfo(..),
         VkRenderPassInputAttachmentAspectCreateInfoKHR,
-        VkRenderPassMultiviewCreateInfo(..),
         VkRenderPassMultiviewCreateInfo(..),
         VkRenderPassMultiviewCreateInfoKHR,
         VkRenderPassSampleLocationsBeginInfoEXT(..))

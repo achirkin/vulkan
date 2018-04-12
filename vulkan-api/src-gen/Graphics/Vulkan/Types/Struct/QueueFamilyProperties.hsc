@@ -9,7 +9,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.QueueFamilyProperties
        (VkQueueFamilyProperties(..), VkQueueFamilyProperties2(..),
-        VkQueueFamilyProperties2(..), VkQueueFamilyProperties2KHR)
+        VkQueueFamilyProperties2KHR)
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,

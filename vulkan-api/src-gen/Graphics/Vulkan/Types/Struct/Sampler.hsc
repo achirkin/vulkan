@@ -10,13 +10,10 @@
 module Graphics.Vulkan.Types.Struct.Sampler
        (VkSamplerCreateInfo(..), VkSamplerReductionModeCreateInfoEXT(..),
         VkSamplerYcbcrConversionCreateInfo(..),
-        VkSamplerYcbcrConversionCreateInfo(..),
         VkSamplerYcbcrConversionCreateInfoKHR,
         VkSamplerYcbcrConversionImageFormatProperties(..),
-        VkSamplerYcbcrConversionImageFormatProperties(..),
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
-        VkSamplerYcbcrConversionInfo(..), VkSamplerYcbcrConversionInfo(..),
-        VkSamplerYcbcrConversionInfoKHR)
+        VkSamplerYcbcrConversionInfo(..), VkSamplerYcbcrConversionInfoKHR)
        where
 import           Foreign.Storable                              (Storable (..))
 import           GHC.Base                                      (Addr##,

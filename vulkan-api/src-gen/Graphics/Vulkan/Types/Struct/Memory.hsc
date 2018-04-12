@@ -8,18 +8,16 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Memory
-       (VkMemoryAllocateFlagsInfo(..), VkMemoryAllocateFlagsInfo(..),
-        VkMemoryAllocateFlagsInfoKHR, VkMemoryAllocateInfo(..),
-        VkMemoryBarrier(..), VkMemoryDedicatedAllocateInfo(..),
+       (VkMemoryAllocateFlagsInfo(..), VkMemoryAllocateFlagsInfoKHR,
+        VkMemoryAllocateInfo(..), VkMemoryBarrier(..),
         VkMemoryDedicatedAllocateInfo(..),
         VkMemoryDedicatedAllocateInfoKHR,
-        VkMemoryDedicatedRequirements(..),
         VkMemoryDedicatedRequirements(..),
         VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR(..),
         VkMemoryGetFdInfoKHR(..), VkMemoryHeap(..),
         VkMemoryHostPointerPropertiesEXT(..), VkMemoryRequirements(..),
-        VkMemoryRequirements2(..), VkMemoryRequirements2(..),
-        VkMemoryRequirements2KHR, VkMemoryType(..))
+        VkMemoryRequirements2(..), VkMemoryRequirements2KHR,
+        VkMemoryType(..))
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,
