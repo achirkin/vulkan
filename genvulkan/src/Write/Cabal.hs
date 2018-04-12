@@ -60,6 +60,8 @@ genCabalFile coreVersions eModules = T.unlines $
           cabal-version:       >=1.22
           extra-source-files:
               include/vulkan/*.h
+              include/vulkan_loader.h
+              cbits/vulkan_loader.c
 
         |]
       : map mkFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
@@ -87,6 +89,15 @@ genCabalFile coreVersions eModules = T.unlines $
               else
                 extra-libraries:   vulkan
               include-dirs:        include
+              if $anyNativeVersion
+                if os(windows)
+                  extra-libraries: vulkan-1
+                else
+                  extra-libraries: vulkan
+              else
+                cpp-options:       -DVK_NO_PROTOTYPES
+                cc-options:        -DVK_NO_PROTOTYPES
+                c-sources:         cbits/vulkan_loader.c
 
           source-repository head
               type:     git
@@ -94,7 +105,10 @@ genCabalFile coreVersions eModules = T.unlines $
               subdir:   vulkan-api
         |]
       )
-  where
+  where -- flag(useNativeFFI-1-1) || flag(useNativeFFI-1-0)
+    anyNativeVersion = T.intercalate " || "
+      $ map (\p -> "flag(" <> unProtectFlag (protectFlag p) <> ")") coreVersions
+  
     library_version = T.pack $ showVersion version
     spaces = "        "
 
