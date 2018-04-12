@@ -23,6 +23,8 @@ build-type:          Simple
 cabal-version:       >=1.22
 extra-source-files:
     include/vulkan/*.h
+    include/vulkan_loader.h
+    cbits/vulkan_loader.c
 
 flag usePlatformAndroidKhr
     description:
@@ -430,6 +432,15 @@ library
     else
       extra-libraries:   vulkan
     include-dirs:        include
+    if flag(useNativeFFI-1-0) || flag(useNativeFFI-1-1)
+      if os(windows)
+        extra-libraries: vulkan-1
+      else
+        extra-libraries: vulkan
+    else
+      cpp-options:       -DVK_NO_PROTOTYPES
+      cc-options:        -DVK_NO_PROTOTYPES
+      c-sources:         cbits/vulkan_loader.c
 
 source-repository head
     type:     git
