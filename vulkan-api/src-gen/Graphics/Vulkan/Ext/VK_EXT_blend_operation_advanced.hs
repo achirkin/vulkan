@@ -18,30 +18,19 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         --
         -- Extension number: @149@
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.VkBlendFactor,
-        module Graphics.Vulkan.Types.Enum.VkBlendOp,
-        module Graphics.Vulkan.Types.Enum.VkBlendOverlapEXT,
+        module Graphics.Vulkan.Types.Enum.Blend,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkColorComponentFlags,
+        module Graphics.Vulkan.Types.Enum.Color,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkLogicOp,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoEXT,
-        module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState,
-        module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Enum.LogicOp,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Struct.Pipeline,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION,
         pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION,
@@ -84,36 +73,23 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         pattern VK_BLEND_OP_GREEN_EXT, pattern VK_BLEND_OP_BLUE_EXT,
         pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT)
        where
-import           GHC.Ptr
-                                                                                                   (Ptr (..))
+import           GHC.Ptr                                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkAccessFlags
-                                                                                                   (VkAccessBitmask (..),
-                                                                                                   VkAccessFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkBlendFactor
-import           Graphics.Vulkan.Types.Enum.VkBlendOp
-import           Graphics.Vulkan.Types.Enum.VkBlendOverlapEXT
-import           Graphics.Vulkan.Types.Enum.VkColorComponentFlags
-import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkLogicOp
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
-import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState
-import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
+import           Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..),
+                                                                      VkAccessFlagBits)
+import           Graphics.Vulkan.Types.Enum.Blend
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.LogicOp
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.Pipeline
 
 pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION ::
         (Num a, Eq a) => a

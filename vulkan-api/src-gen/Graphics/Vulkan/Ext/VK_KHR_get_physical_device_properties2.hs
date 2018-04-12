@@ -22,15 +22,11 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         -- type: @instance@
         --
         -- Extension number: @60@
-        module Graphics.Vulkan.Types.Struct.VkFormatProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2KHR,
-        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.FormatProperties,
+        module Graphics.Vulkan.Types.Struct.Image,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Struct.QueueFamilyProperties,
+        module Graphics.Vulkan.Types.Struct.Sparse,
         VkGetPhysicalDeviceFeatures2KHR,
         pattern VkGetPhysicalDeviceFeatures2KHR,
         HS_vkGetPhysicalDeviceFeatures2KHR,
@@ -62,46 +58,21 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
-        module Graphics.Vulkan.Types.Enum.VkFormat,
-        module Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkImageAspectFlags,
-        module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
-        module Graphics.Vulkan.Types.Enum.VkImageTiling,
-        module Graphics.Vulkan.Types.Enum.VkImageType,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags,
-        module Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkQueueFlags,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Enum.Format,
+        module Graphics.Vulkan.Types.Enum.Image,
+        module Graphics.Vulkan.Types.Enum.Memory,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.Queue,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.Sparse,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkExtent3D,
-        module Graphics.Vulkan.Types.Struct.VkFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkFormatProperties2,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2,
-        module Graphics.Vulkan.Types.Struct.VkMemoryHeap,
-        module Graphics.Vulkan.Types.Struct.VkMemoryType,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties,
-        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.Memory,
+        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
         VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION,
         VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME,
@@ -116,72 +87,40 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR)
        where
-import           GHC.Ptr
-                                                                                         (Ptr (..))
-import           Graphics.Vulkan.Core_1_1
-                                                                                         (pattern VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2,
-                                                                                         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2)
+import           GHC.Ptr                                             (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                            (pattern VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
+                                                                      pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
+                                                                      pattern VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2,
+                                                                      pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                         (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                        (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkFormat
-import           Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags
-import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkImageTiling
-import           Graphics.Vulkan.Types.Enum.VkImageType
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags
-import           Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkQueueFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.Memory
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Sparse
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkExtent3D
-import           Graphics.Vulkan.Types.Struct.VkFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkFormatProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkMemoryHeap
-import           Graphics.Vulkan.Types.Struct.VkMemoryType
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
-import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties
-import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2
-import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2KHR
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.FormatProperties
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.Memory
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import           Graphics.Vulkan.Types.Struct.Sparse
 
 pattern VkGetPhysicalDeviceFeatures2KHR :: CString
 

@@ -23,8 +23,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence
         --
 
         -- ** Required extensions: 'VK_KHR_external_fence_capabilities'.
-        module Graphics.Vulkan.Types.Struct.VkExportFenceCreateInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkFenceImportFlagBitsKHR,
+        module Graphics.Vulkan.Types.Struct.Export,
+        module Graphics.Vulkan.Types.Enum.Fence,
         module Graphics.Vulkan.Types.Bitmasks,
         VK_KHR_EXTERNAL_FENCE_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_SPEC_VERSION,
@@ -33,13 +33,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO_KHR,
         pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR)
        where
-import           GHC.Ptr                                                 (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                                (pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO)
+import           GHC.Ptr                             (Ptr (..))
+import           Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags           (VkFenceImportBitmask (..))
-import           Graphics.Vulkan.Types.Struct.VkExportFenceCreateInfoKHR
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Struct.Export
 
 pattern VK_KHR_EXTERNAL_FENCE_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -27,22 +27,18 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupportKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3PropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.Descriptor,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
         VkGetDescriptorSetLayoutSupportKHR,
         pattern VkGetDescriptorSetLayoutSupportKHR,
         HS_vkGetDescriptorSetLayoutSupportKHR,
         PFN_vkGetDescriptorSetLayoutSupportKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorType,
-        module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.Descriptor,
+        module Graphics.Vulkan.Types.Enum.Shader,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport,
         VK_KHR_MAINTENANCE3_SPEC_VERSION,
         pattern VK_KHR_MAINTENANCE3_SPEC_VERSION,
         VK_KHR_MAINTENANCE3_EXTENSION_NAME,
@@ -50,25 +46,18 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT_KHR)
        where
-import           GHC.Ptr
-                                                                                         (Ptr (..))
-import           Graphics.Vulkan.Core_1_1
-                                                                                         (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
-                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                         (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkDescriptorType
-import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupportKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3PropertiesKHR
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkGetDescriptorSetLayoutSupportKHR :: CString
 

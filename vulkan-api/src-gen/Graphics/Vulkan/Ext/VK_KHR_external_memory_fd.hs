@@ -29,18 +29,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         -- ** Required extensions: 'VK_KHR_external_memory'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
-        module Graphics.Vulkan.Types.Struct.VkImportMemoryFdInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkMemoryFdPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
-        VkGetMemoryFdKHR, pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
+        module Graphics.Vulkan.Types.Enum.External,
+        module Graphics.Vulkan.Types.Struct.Import,
+        module Graphics.Vulkan.Types.Struct.Memory,
+        module Graphics.Vulkan.Types.Enum.StructureType, -- > #include "vk_platform.h"
+                                                         VkGetMemoryFdKHR,
+        pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
         PFN_vkGetMemoryFdKHR, VkGetMemoryFdPropertiesKHR,
         pattern VkGetMemoryFdPropertiesKHR, HS_vkGetMemoryFdPropertiesKHR,
         PFN_vkGetMemoryFdPropertiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
@@ -50,18 +48,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         pattern VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR)
        where
-import           GHC.Ptr                                                    (Ptr (..))
+import           GHC.Ptr                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                               (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkImportMemoryFdInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryFdPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR
+import           Graphics.Vulkan.Types.Struct.Import
+import           Graphics.Vulkan.Types.Struct.Memory
 
 pattern VkGetMemoryFdKHR :: CString
 

@@ -26,19 +26,18 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_get_physical_device_properties2', 'VK_KHR_get_surface_capabilities2'.
-        module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
+        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
+        module Graphics.Vulkan.Types.Struct.Extent,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkSharedPresentSurfaceCapabilitiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2KHR,
-        module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
-        -- > #include "vk_platform.h"
-        VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
-        HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Image,
+        module Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Struct.Surface,
+        module Graphics.Vulkan.Types.Enum.Surface, -- > #include "vk_platform.h"
+                                                   VkGetSwapchainStatusKHR,
+        pattern VkGetSwapchainStatusKHR, HS_vkGetSwapchainStatusKHR,
+        PFN_vkGetSwapchainStatusKHR,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
         pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
@@ -50,25 +49,22 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         pattern VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR)
        where
 import           GHC.Ptr
-                                                                                     (Ptr (..))
+                                                                                   (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
-                                                                                     (VulkanProc (..))
+                                                                                   (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkImageLayout
-                                                                                     (VkImageLayout (..))
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkPresentModeKHR
-                                                                                     (VkPresentModeKHR (..))
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.PresentModeKHR
+                                                                                   (VkPresentModeKHR (..))
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkSharedPresentSurfaceCapabilitiesKHR
-import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2KHR
-import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR
+import           Graphics.Vulkan.Types.Struct.Surface
 
 pattern VkGetSwapchainStatusKHR :: CString
 

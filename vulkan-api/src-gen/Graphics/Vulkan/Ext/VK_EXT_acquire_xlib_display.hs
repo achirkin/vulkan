@@ -32,19 +32,19 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         HS_vkAcquireXlibDisplayEXT, PFN_vkAcquireXlibDisplayEXT,
         VkGetRandROutputDisplayEXT, pattern VkGetRandROutputDisplayEXT,
         HS_vkGetRandROutputDisplayEXT, PFN_vkGetRandROutputDisplayEXT,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
+import           GHC.Ptr                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.VkResult
+import           Graphics.Vulkan.Marshal.Proc      (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.Result
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include       (Display, RROutput)
+import           Graphics.Vulkan.Types.Include     (Display, RROutput)
 
 pattern VkAcquireXlibDisplayEXT :: CString
 

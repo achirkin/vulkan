@@ -29,26 +29,20 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         -- ** Required extensions: 'VK_KHR_external_memory'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR,
+        module Graphics.Vulkan.Types.Enum.External,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkImportMemoryHostPointerInfoEXT,
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkMemoryHostPointerPropertiesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Import,
+        module Graphics.Vulkan.Types.Struct.Memory,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkGetMemoryHostPointerPropertiesEXT,
         pattern VkGetMemoryHostPointerPropertiesEXT,
         HS_vkGetMemoryHostPointerPropertiesEXT,
         PFN_vkGetMemoryHostPointerPropertiesEXT,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
         pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
@@ -60,28 +54,20 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT,
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT)
        where
-import           GHC.Ptr
-                                                                                               (Ptr (..))
+import           GHC.Ptr                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                               (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkImportMemoryHostPointerInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryHostPointerPropertiesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
+import           Graphics.Vulkan.Types.Struct.Import
+import           Graphics.Vulkan.Types.Struct.Memory
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkGetMemoryHostPointerPropertiesEXT :: CString
 

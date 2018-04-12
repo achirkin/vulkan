@@ -22,14 +22,12 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain'.
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
-        module Graphics.Vulkan.Types.Struct.VkOffset2D,
-        module Graphics.Vulkan.Types.Struct.VkPresentInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPresentRegionKHR,
-        module Graphics.Vulkan.Types.Struct.VkPresentRegionsKHR,
-        module Graphics.Vulkan.Types.Struct.VkRectLayerKHR,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.Offset,
+        module Graphics.Vulkan.Types.Struct.Present,
+        module Graphics.Vulkan.Types.Struct.Rect,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION,
         pattern VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION,
@@ -37,16 +35,14 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR)
        where
-import           GHC.Ptr                                          (Ptr (..))
+import           GHC.Ptr                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkOffset2D
-import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPresentRegionKHR
-import           Graphics.Vulkan.Types.Struct.VkPresentRegionsKHR
-import           Graphics.Vulkan.Types.Struct.VkRectLayerKHR
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.Present
+import           Graphics.Vulkan.Types.Struct.Rect
 
 pattern VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION :: (Num a, Eq a) =>
         a

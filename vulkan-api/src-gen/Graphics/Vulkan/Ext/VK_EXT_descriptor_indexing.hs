@@ -24,27 +24,15 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2', 'VK_KHR_maintenance3'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorBindingFlagsEXT,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorType,
+        module Graphics.Vulkan.Types.Enum.Descriptor,
+        module Graphics.Vulkan.Types.Struct.Descriptor,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
-        module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
+        module Graphics.Vulkan.Types.Enum.Shader,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION,
         pattern VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION,
@@ -59,36 +47,19 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT,
         pattern VK_ERROR_FRAGMENTATION_EXT)
        where
-import           GHC.Ptr
-                                                                                                      (Ptr (..))
+import           GHC.Ptr                                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkDescriptorBindingFlagsEXT
-import           Graphics.Vulkan.Types.Enum.VkDescriptorPoolCreateFlags
-                                                                                                      (VkDescriptorPoolCreateBitmask (..),
-                                                                                                      VkDescriptorPoolCreateFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkDescriptorType
-import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-                                                                                                      (VkResult (..))
-import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
-import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDescriptorIndexingFeaturesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDescriptorIndexingPropertiesEXT
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Result                   (VkResult (..))
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
 
 pattern VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION :: (Num a, Eq a) =>
         a

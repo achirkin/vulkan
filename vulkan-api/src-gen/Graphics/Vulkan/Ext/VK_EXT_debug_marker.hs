@@ -27,11 +27,9 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
 
         -- ** Required extensions: 'VK_EXT_debug_report'.
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Struct.VkDebugMarkerMarkerInfoEXT,
-        module Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectNameInfoEXT,
-        module Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT,
-        module Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Debug,
+        module Graphics.Vulkan.Types.Enum.Debug,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkDebugMarkerSetObjectTagEXT, pattern VkDebugMarkerSetObjectTagEXT,
         HS_vkDebugMarkerSetObjectTagEXT, PFN_vkDebugMarkerSetObjectTagEXT,
@@ -45,7 +43,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         PFN_vkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
         pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
         PFN_vkCmdDebugMarkerInsertEXT,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION,
@@ -55,16 +53,14 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT)
        where
-import           GHC.Ptr                                                     (Ptr (..))
+import           GHC.Ptr                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                                (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.Debug
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkDebugMarkerMarkerInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectNameInfoEXT
-import           Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT
+import           Graphics.Vulkan.Types.Struct.Debug
 
 pattern VkDebugMarkerSetObjectTagEXT :: CString
 

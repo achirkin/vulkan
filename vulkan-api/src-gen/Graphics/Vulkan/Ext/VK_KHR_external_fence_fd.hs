@@ -27,17 +27,17 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
 
         -- ** Required extensions: 'VK_KHR_external_fence'.
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags,
-        module Graphics.Vulkan.Types.Struct.VkFenceGetFdInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkFenceImportFlags,
+        module Graphics.Vulkan.Types.Enum.External,
+        module Graphics.Vulkan.Types.Struct.Fence,
+        module Graphics.Vulkan.Types.Enum.Fence,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Import,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkImportFenceFdKHR, pattern VkImportFenceFdKHR,
         HS_vkImportFenceFdKHR, PFN_vkImportFenceFdKHR, VkGetFenceFdKHR,
         pattern VkGetFenceFdKHR, HS_vkGetFenceFdKHR, PFN_vkGetFenceFdKHR,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
@@ -46,17 +46,17 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_FENCE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR)
        where
-import           GHC.Ptr                                                   (Ptr (..))
+import           GHC.Ptr                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                              (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkFenceGetFdInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR
+import           Graphics.Vulkan.Types.Struct.Fence
+import           Graphics.Vulkan.Types.Struct.Import
 
 pattern VkImportFenceFdKHR :: CString
 

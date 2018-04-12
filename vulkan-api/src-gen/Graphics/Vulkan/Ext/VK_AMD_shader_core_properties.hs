@@ -24,14 +24,10 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceShaderCorePropertiesAMD,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION,
         pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION,
@@ -39,18 +35,13 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
         pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD)
        where
-import           GHC.Ptr
-                                                                                       (Ptr (..))
+import           GHC.Ptr                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceShaderCorePropertiesAMD
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION ::
         (Num a, Eq a) => a

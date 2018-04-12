@@ -27,24 +27,18 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR,
+        module Graphics.Vulkan.Types.Enum.External,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagBitsKHR,
-        module Graphics.Vulkan.Types.Struct.VkExternalFencePropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.External,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
         VkGetPhysicalDeviceExternalFencePropertiesKHR,
         pattern VkGetPhysicalDeviceExternalFencePropertiesKHR,
         HS_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkExternalFenceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME,
@@ -59,29 +53,19 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR,
         pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR)
        where
-import           GHC.Ptr
-                                                                                    (Ptr (..))
-import           Graphics.Vulkan.Constants
-                                                                                    (pattern VK_LUID_SIZE_KHR)
-import           Graphics.Vulkan.Core_1_1
-                                                                                    (pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
-                                                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                   (pattern VK_LUID_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                    (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkExternalFenceProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalFencePropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
+import           Graphics.Vulkan.Types.Struct.External
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkGetPhysicalDeviceExternalFencePropertiesKHR :: CString
 

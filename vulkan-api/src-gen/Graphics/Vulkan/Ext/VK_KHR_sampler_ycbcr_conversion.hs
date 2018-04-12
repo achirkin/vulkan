@@ -27,15 +27,12 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         --
 
         -- ** Required extensions: 'VK_KHR_maintenance1', 'VK_KHR_bind_memory2', 'VK_KHR_get_memory_requirements2', 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Struct.VkBindImagePlaneMemoryInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkChromaLocationKHR,
-        module Graphics.Vulkan.Types.Struct.VkImagePlaneMemoryRequirementsInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversionKHR,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRangeKHR,
+        module Graphics.Vulkan.Types.Struct.Bind,
+        module Graphics.Vulkan.Types.Enum.ChromaLocation,
+        module Graphics.Vulkan.Types.Struct.Image,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Struct.Sampler,
+        module Graphics.Vulkan.Types.Enum.Sampler,
         VkCreateSamplerYcbcrConversionKHR,
         pattern VkCreateSamplerYcbcrConversionKHR,
         HS_vkCreateSamplerYcbcrConversionKHR,
@@ -46,21 +43,17 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         PFN_vkDestroySamplerYcbcrConversionKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkChromaLocation,
-        module Graphics.Vulkan.Types.Enum.VkComponentSwizzle,
-        module Graphics.Vulkan.Types.Enum.VkFilter,
-        module Graphics.Vulkan.Types.Enum.VkFormat,
-        module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversion,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRange,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
+        module Graphics.Vulkan.Types.Enum.ComponentSwizzle,
+        module Graphics.Vulkan.Types.Enum.Filter,
+        module Graphics.Vulkan.Types.Enum.Format,
+        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.VkComponentMapping,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo,
+        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.ComponentMapping,
         VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION,
         pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION,
         VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME,
@@ -130,91 +123,80 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         -- ** Required extensions: 'VK_EXT_debug_report', 'VK_KHR_maintenance1', 'VK_KHR_bind_memory2', 'VK_KHR_get_memory_requirements2', 'VK_KHR_get_physical_device_properties2'.
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT)
        where
-import           GHC.Ptr
-                                                                                                 (Ptr (..))
-import           Graphics.Vulkan.Core_1_1
-                                                                                                 (pattern VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_B16G16R16G16_422_UNORM,
-                                                                                                 pattern VK_FORMAT_B8G8R8G8_422_UNORM,
-                                                                                                 pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_DISJOINT_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT,
-                                                                                                 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT,
-                                                                                                 pattern VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16,
-                                                                                                 pattern VK_FORMAT_G16B16G16R16_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G16_B16R16_2PLANE_420_UNORM,
-                                                                                                 pattern VK_FORMAT_G16_B16R16_2PLANE_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM,
-                                                                                                 pattern VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM,
-                                                                                                 pattern VK_FORMAT_G8B8G8R8_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G8_B8R8_2PLANE_420_UNORM,
-                                                                                                 pattern VK_FORMAT_G8_B8R8_2PLANE_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM,
-                                                                                                 pattern VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM,
-                                                                                                 pattern VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM,
-                                                                                                 pattern VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_R10X6G10X6_UNORM_2PACK16,
-                                                                                                 pattern VK_FORMAT_R10X6_UNORM_PACK16,
-                                                                                                 pattern VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16,
-                                                                                                 pattern VK_FORMAT_R12X4G12X4_UNORM_2PACK16,
-                                                                                                 pattern VK_FORMAT_R12X4_UNORM_PACK16,
-                                                                                                 pattern VK_IMAGE_ASPECT_PLANE_0_BIT,
-                                                                                                 pattern VK_IMAGE_ASPECT_PLANE_1_BIT,
-                                                                                                 pattern VK_IMAGE_ASPECT_PLANE_2_BIT,
-                                                                                                 pattern VK_IMAGE_CREATE_DISJOINT_BIT,
-                                                                                                 pattern VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION,
-                                                                                                 pattern VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO,
-                                                                                                 pattern VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
-                                                                                                 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
-                                                                                                 pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
-                                                                                                 pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
-                                                                                                 pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO)
-import           Graphics.Vulkan.Ext.VK_EXT_debug_report
-                                                                                                 (pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT)
+import           GHC.Ptr                                           (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                          (pattern VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_B16G16R16G16_422_UNORM,
+                                                                    pattern VK_FORMAT_B8G8R8G8_422_UNORM,
+                                                                    pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_DISJOINT_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT,
+                                                                    pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT,
+                                                                    pattern VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16,
+                                                                    pattern VK_FORMAT_G16B16G16R16_422_UNORM,
+                                                                    pattern VK_FORMAT_G16_B16R16_2PLANE_420_UNORM,
+                                                                    pattern VK_FORMAT_G16_B16R16_2PLANE_422_UNORM,
+                                                                    pattern VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM,
+                                                                    pattern VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM,
+                                                                    pattern VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM,
+                                                                    pattern VK_FORMAT_G8B8G8R8_422_UNORM,
+                                                                    pattern VK_FORMAT_G8_B8R8_2PLANE_420_UNORM,
+                                                                    pattern VK_FORMAT_G8_B8R8_2PLANE_422_UNORM,
+                                                                    pattern VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM,
+                                                                    pattern VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM,
+                                                                    pattern VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM,
+                                                                    pattern VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_R10X6G10X6_UNORM_2PACK16,
+                                                                    pattern VK_FORMAT_R10X6_UNORM_PACK16,
+                                                                    pattern VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16,
+                                                                    pattern VK_FORMAT_R12X4G12X4_UNORM_2PACK16,
+                                                                    pattern VK_FORMAT_R12X4_UNORM_PACK16,
+                                                                    pattern VK_IMAGE_ASPECT_PLANE_0_BIT,
+                                                                    pattern VK_IMAGE_ASPECT_PLANE_1_BIT,
+                                                                    pattern VK_IMAGE_ASPECT_PLANE_2_BIT,
+                                                                    pattern VK_IMAGE_CREATE_DISJOINT_BIT,
+                                                                    pattern VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION,
+                                                                    pattern VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO,
+                                                                    pattern VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
+                                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
+                                                                    pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
+                                                                    pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
+                                                                    pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO)
+import           Graphics.Vulkan.Ext.VK_EXT_debug_report           (pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                                 (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkChromaLocation
-import           Graphics.Vulkan.Types.Enum.VkChromaLocationKHR
-import           Graphics.Vulkan.Types.Enum.VkComponentSwizzle
-import           Graphics.Vulkan.Types.Enum.VkFilter
-import           Graphics.Vulkan.Types.Enum.VkFormat
-import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversion
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversionKHR
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRange
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRangeKHR
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.ChromaLocation
+import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import           Graphics.Vulkan.Types.Enum.Filter
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.Sampler
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.VkBindImagePlaneMemoryInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkComponentMapping
-import           Graphics.Vulkan.Types.Struct.VkImagePlaneMemoryRequirementsInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfoKHR
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Bind
+import           Graphics.Vulkan.Types.Struct.ComponentMapping
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.Sampler
 
 pattern VkCreateSamplerYcbcrConversionKHR :: CString
 

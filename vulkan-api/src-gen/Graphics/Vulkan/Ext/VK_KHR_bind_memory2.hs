@@ -22,19 +22,15 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         -- type: @device@
         --
         -- Extension number: @158@
-        module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR,
-        VkBindBufferMemory2KHR, pattern VkBindBufferMemory2KHR,
-        HS_vkBindBufferMemory2KHR, PFN_vkBindBufferMemory2KHR,
-        VkBindImageMemory2KHR, pattern VkBindImageMemory2KHR,
-        HS_vkBindImageMemory2KHR, PFN_vkBindImageMemory2KHR,
-        module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.Struct.Bind, VkBindBufferMemory2KHR,
+        pattern VkBindBufferMemory2KHR, HS_vkBindBufferMemory2KHR,
+        PFN_vkBindBufferMemory2KHR, VkBindImageMemory2KHR,
+        pattern VkBindImageMemory2KHR, HS_vkBindImageMemory2KHR,
+        PFN_vkBindImageMemory2KHR, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo,
-        module Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo,
         VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         VK_KHR_BIND_MEMORY_2_EXTENSION_NAME,
@@ -43,20 +39,17 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR,
         pattern VK_IMAGE_CREATE_ALIAS_BIT_KHR)
        where
-import           GHC.Ptr                                                (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                               (pattern VK_IMAGE_CREATE_ALIAS_BIT,
-                                                                         pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
-                                                                         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                 (pattern VK_IMAGE_CREATE_ALIAS_BIT,
+                                                           pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
+                                                           pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo
-import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo
-import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR
+import           Graphics.Vulkan.Types.Struct.Bind
 
 pattern VkBindBufferMemory2KHR :: CString
 
