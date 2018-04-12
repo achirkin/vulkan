@@ -26,18 +26,18 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
         HS_vkCmdWriteBufferMarkerAMD, PFN_vkCmdWriteBufferMarkerAMD,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
+        module Graphics.Vulkan.Types.Enum.Pipeline,
         module Graphics.Vulkan.Types.Handles,
         VK_AMD_BUFFER_MARKER_SPEC_VERSION,
         pattern VK_AMD_BUFFER_MARKER_SPEC_VERSION,
         VK_AMD_BUFFER_MARKER_EXTENSION_NAME,
         pattern VK_AMD_BUFFER_MARKER_EXTENSION_NAME)
        where
-import           GHC.Ptr                                         (Ptr (..))
+import           GHC.Ptr                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
+import           Graphics.Vulkan.Types.Enum.Pipeline
 import           Graphics.Vulkan.Types.Handles
 
 pattern VkCmdWriteBufferMarkerAMD :: CString

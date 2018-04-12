@@ -22,18 +22,17 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         -- type: @instance@
         --
         -- Extension number: @71@
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
         VkEnumeratePhysicalDeviceGroupsKHR,
         pattern VkEnumeratePhysicalDeviceGroupsKHR,
         HS_vkEnumeratePhysicalDeviceGroupsKHR,
         PFN_vkEnumeratePhysicalDeviceGroupsKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties,
         VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION,
         pattern VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION,
         VK_KHR_DEVICE_GROUP_CREATION_EXTENSION_NAME,
@@ -43,20 +42,19 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         pattern VK_MAX_DEVICE_GROUP_SIZE_KHR,
         pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR)
        where
-import           GHC.Ptr                                                         (Ptr (..))
-import           Graphics.Vulkan.Constants                                       (pattern VK_MAX_DEVICE_GROUP_SIZE_KHR)
-import           Graphics.Vulkan.Core_1_1                                        (pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
-                                                                                  pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
-                                                                                  pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                   (pattern VK_MAX_DEVICE_GROUP_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
+                                                              pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                                    (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHR
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkEnumeratePhysicalDeviceGroupsKHR :: CString
 

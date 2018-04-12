@@ -25,10 +25,10 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
 
         -- ** Required extensions: 'VK_NV_external_memory_win32'.
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Struct.VkSubmitInfo,
-        module Graphics.Vulkan.Types.Struct.VkWin32KeyedMutexAcquireReleaseInfoNV,
+        module Graphics.Vulkan.Types.Enum.Pipeline,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Struct.SubmitInfo,
+        module Graphics.Vulkan.Types.Struct.PlatformWin32Khr,
         -- > #include "vk_platform.h"
         VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION,
         pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION,
@@ -36,14 +36,13 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV)
        where
-import           GHC.Ptr
-                                                                                     (Ptr (..))
+import           GHC.Ptr                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkSubmitInfo
-import           Graphics.Vulkan.Types.Struct.VkWin32KeyedMutexAcquireReleaseInfoNV
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr
+import           Graphics.Vulkan.Types.Struct.SubmitInfo
 
 pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION :: (Num a, Eq a) => a
 

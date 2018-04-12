@@ -21,6 +21,8 @@ module VkXml.CommonTypes
   , toHaskellComm, toHaskellMemb
   , commaSeparated
   , toProtectDef
+    -- * Useful helpers
+  , firstUp
   ) where
 
 import           Control.Monad.State.Class

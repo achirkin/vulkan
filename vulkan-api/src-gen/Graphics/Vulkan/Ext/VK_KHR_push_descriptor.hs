@@ -28,24 +28,19 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDevicePushDescriptorPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkCmdPushDescriptorSetKHR, pattern VkCmdPushDescriptorSetKHR,
         HS_vkCmdPushDescriptorSetKHR, PFN_vkCmdPushDescriptorSetKHR,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorType,
-        module Graphics.Vulkan.Types.Enum.VkImageLayout,
-        module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
+        module Graphics.Vulkan.Types.Enum.Descriptor,
+        module Graphics.Vulkan.Types.Enum.Image,
+        module Graphics.Vulkan.Types.Enum.Pipeline,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorImageInfo,
-        module Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet,
+        module Graphics.Vulkan.Types.Struct.Descriptor,
+        module Graphics.Vulkan.Types.Struct.WriteDescriptorSet,
         VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION,
         pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION,
         VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME,
@@ -59,32 +54,20 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         PFN_vkCmdPushDescriptorSetWithTemplateKHR,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)
        where
-import           GHC.Ptr
-                                                                                           (Ptr (..))
+import           GHC.Ptr                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                           (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
-                                                                                           (VkDescriptorSetLayoutCreateBitmask (..),
-                                                                                           VkDescriptorSetLayoutCreateFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkDescriptorType
-import           Graphics.Vulkan.Types.Enum.VkDescriptorUpdateTemplateType
-                                                                                           (VkDescriptorUpdateTemplateType (..))
-import           Graphics.Vulkan.Types.Enum.VkImageLayout
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkPipelineBindPoint
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorImageInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDevicePushDescriptorPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
-import           Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.WriteDescriptorSet
 
 pattern VkCmdPushDescriptorSetKHR :: CString
 

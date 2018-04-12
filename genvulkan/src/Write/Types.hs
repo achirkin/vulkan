@@ -10,14 +10,17 @@ module Write.Types
   , writeAllTypes
   ) where
 
+import           Control.Arrow                        ((&&&))
 import           Control.Monad
 import           Control.Monad.Morph
 import           Control.Monad.Reader.Class
 import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
+import           Data.Char                            (isLower, isUpper)
+import qualified Data.List                            as L
 import qualified Data.Map                             as Map
-import           Data.Maybe                           (isNothing)
+import           Data.Maybe                           (fromMaybe, isNothing)
 import           Data.Semigroup
 import qualified Data.Set                             as Set
 import qualified Data.Text                            as T
@@ -72,34 +75,51 @@ writeAllTypes vkXml@VkXml{..}
       writeSimpleTypes "Graphics.Vulkan.Types.Bitmasks" $
         mapM_ genEnum bitmasksNoRequireds
 
-    moduleEnums <- forM (Map.elems trueEnums) $ \t ->
-      writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
-                         <> T.unpack (unVkTypeName
-                                       $ (name :: VkType -> VkTypeName) t)
-                       ) $ genEnum t
 
-    moduleBitmasks <- forM (Map.elems bitmasksCouples) $ \(tbm, te) ->
-      writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
-                         <> T.unpack (unVkTypeName
-                                       $ (name :: VkType -> VkTypeName) tbm)
-                       ) $ genBitmaskPair tbm te
+    let moduleEnumBitmaskRuns
+           = groupEnumMods
+           . L.sortOn fst
+           $ map (vktName &&& genEnum) (Map.elems trueEnums)
+          ++ map (\(tbm, te) -> (vktName tbm, genBitmaskPair tbm te)) (Map.elems bitmasksCouples)
+
+    moduleEnumBitmasks <- forM moduleEnumBitmaskRuns $ \(tn, as) ->
+      writeSimpleTypes ("Graphics.Vulkan.Types.Enum." <> T.unpack tn
+                       ) $ sequence_ as
+
+
+    -- moduleEnums <- forM (Map.elems trueEnums) $ \t ->
+    --   writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
+    --                      <> T.unpack (unVkTypeName
+    --                                    $ (name :: VkType -> VkTypeName) t)
+    --                    ) $ genEnum t
+    --
+    -- moduleBitmasks <- forM (Map.elems bitmasksCouples) $ \(tbm, te) ->
+    --   writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
+    --                      <> T.unpack (unVkTypeName
+    --                                    $ (name :: VkType -> VkTypeName) tbm)
+    --                    ) $ genBitmaskPair tbm te
 
     moduleStructs
       <- forM
-           ( Map.elems
+           ( groupPD
+           . L.sortOn snd
+           . map (\(t,p) -> (t, (p, groupedTypeModName $ vktName t)))
+           . Map.elems
            . evalProtectedTypes vkXml
            . removeDisabledTypes vkXml
            $ typesStructsOrUnions)
-         $ \(t, mpd) -> do
+         $ \(modN, mpd, ts) -> do
+
       mds <- State.get
       ((), mr) <- runModuleWriter vkXml
                       ("Graphics.Vulkan.Types.Struct."
-                          <> T.unpack (unVkTypeName
-                          $ (name :: VkType -> VkTypeName) t)
+                          <> T.unpack modN
+                          -- T.unpack (unVkTypeName
+                          -- $ (name :: VkType -> VkTypeName) t)
                       ) mds $ do
         writePragma "Strict"
         writePragma "DataKinds"
-        genStructOrUnion (VkTypeCatUnion == vkTypeCat t) t
+        forM_ ts $ \t -> genStructOrUnion (VkTypeCatUnion == vkTypeCat t) t
       State.put (globalNames mr)
       return (mr, mpd)
 
@@ -112,9 +132,37 @@ writeAllTypes vkXml@VkXml{..}
       , moduleHandles
       , moduleFuncpointers
       , moduleOrphanBitmasks
-      ] ++ moduleEnums ++ moduleBitmasks ++ moduleStructs
+      ] ++ moduleEnumBitmasks ++ moduleStructs
   | otherwise = error $ "Not all types were processed\n" ++ show allt8
   where
+    vktName = unVkTypeName . (name :: VkType -> VkTypeName)
+
+    mpdToName Nothing = "Core"
+    mpdToName (Just ProtectDef{ protectFlag = ProtectFlag n})
+      | Just modName <- T.stripPrefix "use" n = firstUp modName
+      | otherwise = firstUp n
+
+    groupPD [] = []
+    groupPD ((t,(Just p, _)):xs)
+      = let (ys, zs) = L.span ((Just p ==) . fst . snd) xs
+        in (mpdToName $ Just p, Just p, t : map fst ys) : groupPD zs
+    groupPD ((t,(Nothing, modN)):xs)
+      = let (ys, zs) = L.span (\(_, (p1, modN1)) -> isNothing p1 && modN1 == modN) xs
+            allTNames = map (stripVk . vktName) (t : map fst ys)
+        in ( if all (T.isPrefixOf modN) allTNames
+             then longestCommonPrefix allTNames
+             else modN
+           , Nothing, t : map fst ys) : groupPD zs
+
+    groupEnumMods [] = []
+    groupEnumMods ((tn, a):xs)
+      = let modName = groupedTypeModName tn
+            allTNames = map stripVk (tn : map fst ys)
+            (ys, zs) = L.span (\(tn1, _) -> groupedTypeModName tn1 == modName) xs
+        in ( if all (T.isPrefixOf modName) allTNames
+             then longestCommonPrefix allTNames
+             else modName
+           , a : map snd ys) : groupEnumMods zs
 
     (typesNoCat, allt0)
       = Map.partition ((VkTypeNoCat ==) . vkTypeCat) globTypes
@@ -378,3 +426,41 @@ genBasetypeAlias t@VkTypeSimple
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "
          <> show t
+
+-- | Group types into modules by their names.
+--   This function handles explicitly some corner cases to avoid mutually recursive modules.
+groupedTypeModName :: T.Text -> T.Text
+
+
+groupedTypeModName "VkDebugUtilsMessengerCallbackDataEXT" = "DebugUtilsMessengerCallbackDataEXT"
+groupedTypeModName "VkDebugUtilsMessengerCreateInfoEXT"   = "DebugUtilsMessengerCreateInfoEXT"
+groupedTypeModName "VkDebugUtilsObjectNameInfoEXT"        = "DebugUtilsObjectNameInfoEXT"
+groupedTypeModName "VkDebugUtilsLabelEXT"                 = "DebugUtilsLabelEXT"
+
+groupedTypeModName "VkGraphicsPipelineCreateInfo"         = "Pipeline"
+
+groupedTypeModName "VkPhysicalDeviceFeatures"             = "PhysicalDeviceFeatures"
+
+groupedTypeModName n = takeFirstCamel $ stripVk n
+  where
+    takeFirstCamel s
+      = let (s0, srest) = T.span isUpper s
+            (s1, _)     = T.span isLower srest
+        in s0 <> s1
+
+stripVk :: T.Text -> T.Text
+stripVk s = fromMaybe s $ T.stripPrefix "Vk" s
+
+longestCommonPrefix :: [T.Text] -> T.Text
+longestCommonPrefix = T.pack . go . map T.unpack
+  where
+    allStart _ [] = Just []
+    allStart _ ("":_) = Nothing
+    allStart c ((a:as):xs)
+      | c == a    = (as:) <$> allStart c xs
+      | otherwise = Nothing
+    go [] = ""
+    go ("":_) = ""
+    go ((c:cs):xs) = case allStart c xs of
+       Nothing -> ""
+       Just xs' -> c : go (cs:xs')

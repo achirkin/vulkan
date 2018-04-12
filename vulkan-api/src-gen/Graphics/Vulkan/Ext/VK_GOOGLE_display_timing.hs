@@ -26,13 +26,11 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain'.
-        module Graphics.Vulkan.Types.Struct.VkPastPresentationTimingGOOGLE,
-        module Graphics.Vulkan.Types.Struct.VkPresentInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPresentTimeGOOGLE,
-        module Graphics.Vulkan.Types.Struct.VkPresentTimesInfoGOOGLE,
-        module Graphics.Vulkan.Types.Struct.VkRefreshCycleDurationGOOGLE,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.PastPresentationTimingGOOGLE,
+        module Graphics.Vulkan.Types.Struct.Present,
+        module Graphics.Vulkan.Types.Struct.RefreshCycleDurationGOOGLE,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkGetRefreshCycleDurationGOOGLE,
         pattern VkGetRefreshCycleDurationGOOGLE,
@@ -50,17 +48,15 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         pattern VK_GOOGLE_DISPLAY_TIMING_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE)
        where
-import           GHC.Ptr                                                     (Ptr (..))
+import           GHC.Ptr                                                   (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                                (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Marshal.Proc                              (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkPastPresentationTimingGOOGLE
-import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPresentTimeGOOGLE
-import           Graphics.Vulkan.Types.Struct.VkPresentTimesInfoGOOGLE
-import           Graphics.Vulkan.Types.Struct.VkRefreshCycleDurationGOOGLE
+import           Graphics.Vulkan.Types.Struct.PastPresentationTimingGOOGLE
+import           Graphics.Vulkan.Types.Struct.Present
+import           Graphics.Vulkan.Types.Struct.RefreshCycleDurationGOOGLE
 
 pattern VkGetRefreshCycleDurationGOOGLE :: CString
 

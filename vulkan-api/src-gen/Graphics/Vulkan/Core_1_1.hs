@@ -26,7 +26,7 @@ module Graphics.Vulkan.Core_1_1
         VkEnumerateInstanceVersion, pattern VkEnumerateInstanceVersion,
         HS_vkEnumerateInstanceVersion, PFN_vkEnumerateInstanceVersion,
         vkEnumerateInstanceVersion, vkEnumerateInstanceVersionSafe,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         -- ** Promoted from VK_KHR_relaxed_block_layout, which has no API
         --
 
@@ -36,25 +36,20 @@ module Graphics.Vulkan.Core_1_1
         -- ** Originally based on VK_KHR_subgroup (extension 94), but the actual enum block used was, incorrectly, that of extension 95
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSubgroupProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Enum.VkSubgroupFeatureFlags,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.Shader,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
         -- ** Promoted from VK_KHR_bind_memory2
-        module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo,
-        module Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo,
-        -- > #include "vk_platform.h"
-        VkBindBufferMemory2, pattern VkBindBufferMemory2,
-        HS_vkBindBufferMemory2, PFN_vkBindBufferMemory2,
-        vkBindBufferMemory2, vkBindBufferMemory2Safe, VkBindImageMemory2,
+        module Graphics.Vulkan.Types.Struct.Bind, -- > #include "vk_platform.h"
+                                                  VkBindBufferMemory2,
+        pattern VkBindBufferMemory2, HS_vkBindBufferMemory2,
+        PFN_vkBindBufferMemory2, vkBindBufferMemory2,
+        vkBindBufferMemory2Safe, VkBindImageMemory2,
         pattern VkBindImageMemory2, HS_vkBindImageMemory2,
         PFN_vkBindImageMemory2, vkBindImageMemory2, vkBindImageMemory2Safe,
         module Graphics.Vulkan.Types.Handles,
@@ -63,56 +58,33 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_IMAGE_CREATE_ALIAS_BIT,
         -- ** Promoted from VK_KHR_16bit_storage
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDevice16BitStorageFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
         -- ** Promoted from VK_KHR_dedicated_allocation
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkMemoryDedicatedAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkMemoryDedicatedRequirements,
-        module Graphics.Vulkan.Types.Struct.VkMemoryRequirements,
-        module Graphics.Vulkan.Types.Struct.VkMemoryRequirements2,
+        module Graphics.Vulkan.Types.Struct.Memory,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS,
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO,
         -- ** Promoted from VK_KHR_device_group
-        module Graphics.Vulkan.Types.Struct.VkBindSparseInfo,
-        module Graphics.Vulkan.Types.Struct.VkClearColorValue,
-        module Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue,
-        module Graphics.Vulkan.Types.Struct.VkClearValue,
-        module Graphics.Vulkan.Types.Struct.VkCommandBufferBeginInfo,
-        module Graphics.Vulkan.Types.Struct.VkCommandBufferInheritanceInfo,
-        module Graphics.Vulkan.Types.Enum.VkCommandBufferUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupBindSparseInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupCommandBufferBeginInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupRenderPassBeginInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupSubmitInfo,
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
-        module Graphics.Vulkan.Types.Struct.VkExtent3D,
-        module Graphics.Vulkan.Types.Enum.VkImageAspectFlags,
-        module Graphics.Vulkan.Types.Struct.VkImageSubresource,
-        module Graphics.Vulkan.Types.Enum.VkMemoryAllocateFlags,
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateFlagsInfo,
-        module Graphics.Vulkan.Types.Struct.VkOffset2D,
-        module Graphics.Vulkan.Types.Struct.VkOffset3D,
-        module Graphics.Vulkan.Types.Enum.VkPeerMemoryFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
-        module Graphics.Vulkan.Types.Enum.VkQueryControlFlags,
-        module Graphics.Vulkan.Types.Enum.VkQueryPipelineStatisticFlags,
-        module Graphics.Vulkan.Types.Struct.VkRect2D,
-        module Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo,
-        module Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBind,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBindInfo,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageOpaqueMemoryBindInfo,
-        module Graphics.Vulkan.Types.Struct.VkSparseMemoryBind,
-        module Graphics.Vulkan.Types.Enum.VkSparseMemoryBindFlags,
-        module Graphics.Vulkan.Types.Struct.VkSubmitInfo,
+        module Graphics.Vulkan.Types.Struct.Clear,
+        module Graphics.Vulkan.Types.Struct.Command,
+        module Graphics.Vulkan.Types.Enum.Command,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Enum.Image,
+        module Graphics.Vulkan.Types.Struct.Image,
+        module Graphics.Vulkan.Types.Enum.Memory,
+        module Graphics.Vulkan.Types.Struct.Offset,
+        module Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag,
+        module Graphics.Vulkan.Types.Enum.Pipeline,
+        module Graphics.Vulkan.Types.Enum.Query,
+        module Graphics.Vulkan.Types.Struct.Rect,
+        module Graphics.Vulkan.Types.Struct.RenderPass,
+        module Graphics.Vulkan.Types.Struct.Sparse,
+        module Graphics.Vulkan.Types.Enum.Sparse,
+        module Graphics.Vulkan.Types.Struct.SubmitInfo,
         -- > #include "vk_platform.h"
         VkGetDeviceGroupPeerMemoryFeatures,
         pattern VkGetDeviceGroupPeerMemoryFeatures,
@@ -133,15 +105,15 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
         pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
         -- ** Promoted from VK_KHR_device_group + VK_KHR_bind_memory2
-        module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryDeviceGroupInfo,
-        module Graphics.Vulkan.Types.Struct.VkBindImageMemoryDeviceGroupInfo,
+        --
+        -- |
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
         pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT,
         -- ** Promoted from VK_KHR_device_group_creation
-        module Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties,
+        --
+        -- |
         -- > #include "vk_platform.h"
         VkEnumeratePhysicalDeviceGroups,
         pattern VkEnumeratePhysicalDeviceGroups,
@@ -154,13 +126,7 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_MAX_DEVICE_GROUP_SIZE,
         pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
         -- ** Promoted from VK_KHR_get_memory_requirements2
-        module Graphics.Vulkan.Types.Struct.VkBufferMemoryRequirementsInfo2,
-        module Graphics.Vulkan.Types.Struct.VkImageMemoryRequirementsInfo2,
-        module Graphics.Vulkan.Types.Struct.VkImageSparseMemoryRequirementsInfo2,
-        module Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements2,
+        module Graphics.Vulkan.Types.Struct.Buffer,
         -- > #include "vk_platform.h"
         VkGetImageMemoryRequirements2,
         pattern VkGetImageMemoryRequirements2,
@@ -183,28 +149,10 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2,
         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
         -- ** Promoted from VK_KHR_get_physical_device_properties2
-        module Graphics.Vulkan.Types.Enum.VkFormat,
-        module Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags,
-        module Graphics.Vulkan.Types.Struct.VkFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkFormatProperties2,
-        module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2,
-        module Graphics.Vulkan.Types.Enum.VkImageTiling,
-        module Graphics.Vulkan.Types.Enum.VkImageType,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkMemoryHeap,
-        module Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags,
-        module Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags,
-        module Graphics.Vulkan.Types.Struct.VkMemoryType,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2,
-        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties,
-        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2,
-        module Graphics.Vulkan.Types.Enum.VkQueueFlags,
-        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2,
+        module Graphics.Vulkan.Types.Enum.Format,
+        module Graphics.Vulkan.Types.Struct.FormatProperties,
+        module Graphics.Vulkan.Types.Struct.QueueFamilyProperties,
+        module Graphics.Vulkan.Types.Enum.Queue,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceFeatures2, pattern VkGetPhysicalDeviceFeatures2,
         HS_vkGetPhysicalDeviceFeatures2, PFN_vkGetPhysicalDeviceFeatures2,
@@ -264,32 +212,18 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT,
         -- ** Promoted from VK_KHR_maintenance2
-        module Graphics.Vulkan.Types.Enum.VkAccessFlags,
-        module Graphics.Vulkan.Types.Struct.VkAttachmentDescription,
-        module Graphics.Vulkan.Types.Enum.VkAttachmentDescriptionFlags,
-        module Graphics.Vulkan.Types.Enum.VkAttachmentLoadOp,
-        module Graphics.Vulkan.Types.Struct.VkAttachmentReference,
-        module Graphics.Vulkan.Types.Enum.VkAttachmentStoreOp,
-        module Graphics.Vulkan.Types.Struct.VkComponentMapping,
-        module Graphics.Vulkan.Types.Enum.VkComponentSwizzle,
-        module Graphics.Vulkan.Types.Enum.VkDependencyFlags,
-        module Graphics.Vulkan.Types.Enum.VkImageLayout,
-        module Graphics.Vulkan.Types.Struct.VkImageSubresourceRange,
-        module Graphics.Vulkan.Types.Struct.VkImageViewCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkImageViewType,
-        module Graphics.Vulkan.Types.Struct.VkImageViewUsageCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkInputAttachmentAspectReference,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDevicePointClippingProperties,
-        module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
-        module Graphics.Vulkan.Types.Struct.VkPipelineTessellationDomainOriginStateCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkPointClippingBehavior,
-        module Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkRenderPassInputAttachmentAspectCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkSubpassDependency,
-        module Graphics.Vulkan.Types.Struct.VkSubpassDescription,
-        module Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags,
-        module Graphics.Vulkan.Types.Enum.VkTessellationDomainOrigin,
+        module Graphics.Vulkan.Types.Enum.AccessFlags,
+        module Graphics.Vulkan.Types.Struct.Attachment,
+        module Graphics.Vulkan.Types.Enum.Attachment,
+        module Graphics.Vulkan.Types.Struct.ComponentMapping,
+        module Graphics.Vulkan.Types.Enum.ComponentSwizzle,
+        module Graphics.Vulkan.Types.Enum.DependencyFlags,
+        module Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference,
+        module Graphics.Vulkan.Types.Struct.Pipeline,
+        module Graphics.Vulkan.Types.Enum.PointClippingBehavior,
+        module Graphics.Vulkan.Types.Struct.Subpass,
+        module Graphics.Vulkan.Types.Enum.Subpass,
+        module Graphics.Vulkan.Types.Enum.TessellationDomainOrigin,
         -- > #include "vk_platform.h"
         pattern VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT,
         pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT,
@@ -300,23 +234,20 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL,
         -- ** Promoted from VK_KHR_multiview
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewProperties,
-        module Graphics.Vulkan.Types.Struct.VkRenderPassMultiviewCreateInfo,
+        --
+        -- |
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
         pattern VK_DEPENDENCY_VIEW_LOCAL_BIT,
         -- ** Promoted from VK_KHR_variable_pointers
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceVariablePointerFeatures,
+        --
+        -- |
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES,
         -- ** Originally based on VK_KHR_protected_memory (extension 146), which was never published; thus the mystifying large value= numbers below. These are not aliased since they weren't actually promoted from an extension.
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueInfo2,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryProperties,
-        module Graphics.Vulkan.Types.Struct.VkProtectedSubmitInfo,
+        module Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo,
         -- > #include "vk_platform.h"
         VkGetDeviceQueue2, pattern VkGetDeviceQueue2, HS_vkGetDeviceQueue2,
         PFN_vkGetDeviceQueue2, vkGetDeviceQueue2, vkGetDeviceQueue2Safe,
@@ -331,21 +262,12 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_IMAGE_CREATE_PROTECTED_BIT,
         pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT,
         -- ** Promoted from VK_KHR_sampler_ycbcr_conversion
-        module Graphics.Vulkan.Types.Struct.VkBindImagePlaneMemoryInfo,
-        module Graphics.Vulkan.Types.Enum.VkBorderColor,
-        module Graphics.Vulkan.Types.Enum.VkChromaLocation,
-        module Graphics.Vulkan.Types.Enum.VkCompareOp,
-        module Graphics.Vulkan.Types.Enum.VkFilter,
-        module Graphics.Vulkan.Types.Struct.VkImagePlaneMemoryRequirementsInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerYcbcrConversionFeatures,
-        module Graphics.Vulkan.Types.Enum.VkSamplerAddressMode,
-        module Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSamplerMipmapMode,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfo,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversion,
-        module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRange,
+        module Graphics.Vulkan.Types.Enum.BorderColor,
+        module Graphics.Vulkan.Types.Enum.ChromaLocation,
+        module Graphics.Vulkan.Types.Enum.CompareOp,
+        module Graphics.Vulkan.Types.Enum.Filter,
+        module Graphics.Vulkan.Types.Enum.Sampler,
+        module Graphics.Vulkan.Types.Struct.Sampler,
         -- > #include "vk_platform.h"
         VkCreateSamplerYcbcrConversion,
         pattern VkCreateSamplerYcbcrConversion,
@@ -358,10 +280,10 @@ module Graphics.Vulkan.Core_1_1
         PFN_vkDestroySamplerYcbcrConversion,
         vkDestroySamplerYcbcrConversion,
         vkDestroySamplerYcbcrConversionSafe,
-        module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
+        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
+        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
         module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
         pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
         pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO,
@@ -415,10 +337,8 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_FORMAT_FEATURE_DISJOINT_BIT,
         pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT,
         -- ** Promoted from VK_KHR_descriptor_update_template
-        module Graphics.Vulkan.Types.Enum.VkDescriptorType,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntry,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorUpdateTemplateType,
+        module Graphics.Vulkan.Types.Enum.Descriptor,
+        module Graphics.Vulkan.Types.Struct.Descriptor,
         -- > #include "vk_platform.h"
         VkCreateDescriptorUpdateTemplate,
         pattern VkCreateDescriptorUpdateTemplate,
@@ -441,16 +361,9 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
         pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE,
         -- ** Promoted from VK_KHR_external_memory_capabilities
-        module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
-        module Graphics.Vulkan.Types.Enum.VkBufferUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkExternalBufferProperties,
-        module Graphics.Vulkan.Types.Struct.VkExternalImageFormatProperties,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
-        module Graphics.Vulkan.Types.Struct.VkExternalMemoryProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDProperties,
+        module Graphics.Vulkan.Types.Enum.Buffer,
+        module Graphics.Vulkan.Types.Struct.External,
+        module Graphics.Vulkan.Types.Enum.External,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceExternalBufferProperties,
         pattern VkGetPhysicalDeviceExternalBufferProperties,
@@ -463,14 +376,9 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES,
-        pattern VK_LUID_SIZE,
-        -- ** Promoted from VK_KHR_external_memory
-        module Graphics.Vulkan.Types.Struct.VkBufferCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkExportMemoryAllocateInfo,
-        module Graphics.Vulkan.Types.Struct.VkExternalMemoryBufferCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkImageCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSharingMode,
+        pattern VK_LUID_SIZE, -- ** Promoted from VK_KHR_external_memory
+                              module Graphics.Vulkan.Types.Struct.Export,
+        module Graphics.Vulkan.Types.Enum.SharingMode,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
@@ -478,10 +386,8 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE,
         pattern VK_QUEUE_FAMILY_EXTERNAL,
         -- ** Promoted from VK_KHR_external_fence_capabilities
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags,
-        module Graphics.Vulkan.Types.Struct.VkExternalFenceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo,
+        --
+        -- |
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceExternalFenceProperties,
         pattern VkGetPhysicalDeviceExternalFenceProperties,
@@ -492,23 +398,18 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
         -- ** Promoted from VK_KHR_external_fence
-        module Graphics.Vulkan.Types.Struct.VkExportFenceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkFenceCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkFenceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkFenceImportFlags,
+        module Graphics.Vulkan.Types.Enum.Fence,
+        module Graphics.Vulkan.Types.Struct.Fence,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO,
         -- ** Promoted from VK_KHR_external_semaphore
-        module Graphics.Vulkan.Types.Struct.VkExportSemaphoreCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags,
-        module Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags,
+        module Graphics.Vulkan.Types.Struct.Semaphore,
+        module Graphics.Vulkan.Types.Enum.SemaphoreImportFlag,
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO,
         -- ** Promoted from VK_KHR_external_semaphore_capabilities
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags,
-        module Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfo,
+        --
+        -- |
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceExternalSemaphoreProperties,
         pattern VkGetPhysicalDeviceExternalSemaphoreProperties,
@@ -519,8 +420,8 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES,
         -- ** Promoted from VK_KHR_maintenance3
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3Properties,
+        --
+        -- |
         -- > #include "vk_platform.h"
         VkGetDescriptorSetLayoutSupport,
         pattern VkGetDescriptorSetLayoutSupport,
@@ -528,220 +429,92 @@ module Graphics.Vulkan.Core_1_1
         PFN_vkGetDescriptorSetLayoutSupport,
         vkGetDescriptorSetLayoutSupport,
         vkGetDescriptorSetLayoutSupportSafe,
-        module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding,
-        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
         -- ** Promoted from VK_KHR_shader_draw_parameters, with a feature support query added
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceShaderDrawParameterFeatures,
+        --
+        -- |
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES)
        where
-import           GHC.Ptr
-                                                                                                 (Ptr (..))
-import           Graphics.Vulkan.Constants
-                                                                                                 (pattern VK_LUID_SIZE,
-                                                                                                 pattern VK_MAX_DEVICE_GROUP_SIZE,
-                                                                                                 pattern VK_QUEUE_FAMILY_EXTERNAL)
+import           GHC.Ptr                                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                                   (pattern VK_LUID_SIZE,
+                                                                              pattern VK_MAX_DEVICE_GROUP_SIZE,
+                                                                              pattern VK_QUEUE_FAMILY_EXTERNAL)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkAccessFlags
-import           Graphics.Vulkan.Types.Enum.VkAttachmentDescriptionFlags
-import           Graphics.Vulkan.Types.Enum.VkAttachmentLoadOp
-import           Graphics.Vulkan.Types.Enum.VkAttachmentStoreOp
-import           Graphics.Vulkan.Types.Enum.VkBorderColor
-import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkBufferUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkChromaLocation
-import           Graphics.Vulkan.Types.Enum.VkCommandBufferUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkCommandPoolCreateFlags
-                                                                                                 (VkCommandPoolCreateBitmask (..),
-                                                                                                 VkCommandPoolCreateFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkCompareOp
-import           Graphics.Vulkan.Types.Enum.VkComponentSwizzle
-import           Graphics.Vulkan.Types.Enum.VkDependencyFlags
-import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkDescriptorType
-import           Graphics.Vulkan.Types.Enum.VkDescriptorUpdateTemplateType
-import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags
-import           Graphics.Vulkan.Types.Enum.VkFilter
-import           Graphics.Vulkan.Types.Enum.VkFormat
-import           Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags
-import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkImageLayout
-import           Graphics.Vulkan.Types.Enum.VkImageTiling
-import           Graphics.Vulkan.Types.Enum.VkImageType
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkImageViewType
-import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
-import           Graphics.Vulkan.Types.Enum.VkMemoryAllocateFlags
-import           Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags
-import           Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags
-import           Graphics.Vulkan.Types.Enum.VkObjectType
-                                                                                                 (VkObjectType (..))
-import           Graphics.Vulkan.Types.Enum.VkPeerMemoryFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkPipelineBindPoint
-import           Graphics.Vulkan.Types.Enum.VkPipelineCreateFlags
-                                                                                                 (VkPipelineCreateBitmask (..),
-                                                                                                 VkPipelineCreateFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
-import           Graphics.Vulkan.Types.Enum.VkPointClippingBehavior
-import           Graphics.Vulkan.Types.Enum.VkQueryControlFlags
-import           Graphics.Vulkan.Types.Enum.VkQueryPipelineStatisticFlags
-import           Graphics.Vulkan.Types.Enum.VkQueueFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkSamplerAddressMode
-import           Graphics.Vulkan.Types.Enum.VkSamplerMipmapMode
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversion
-import           Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRange
-import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags
-import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags
-import           Graphics.Vulkan.Types.Enum.VkSharingMode
-import           Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags
-import           Graphics.Vulkan.Types.Enum.VkSparseMemoryBindFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkSubgroupFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags
-import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
-import           Graphics.Vulkan.Types.Enum.VkTessellationDomainOrigin
+import           Graphics.Vulkan.Types.Enum.AccessFlags
+import           Graphics.Vulkan.Types.Enum.Attachment
+import           Graphics.Vulkan.Types.Enum.BorderColor
+import           Graphics.Vulkan.Types.Enum.Buffer
+import           Graphics.Vulkan.Types.Enum.ChromaLocation
+import           Graphics.Vulkan.Types.Enum.Command
+import           Graphics.Vulkan.Types.Enum.CompareOp
+import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import           Graphics.Vulkan.Types.Enum.DependencyFlags
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Enum.Filter
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Memory
+import           Graphics.Vulkan.Types.Enum.Object                           (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.PointClippingBehavior
+import           Graphics.Vulkan.Types.Enum.Query
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Sampler
+import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.Sparse
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags
+import           Graphics.Vulkan.Types.Enum.Subpass
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
 import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.VkAttachmentDescription
-import           Graphics.Vulkan.Types.Struct.VkAttachmentReference
-import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryDeviceGroupInfo
-import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo
-import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryDeviceGroupInfo
-import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo
-import           Graphics.Vulkan.Types.Struct.VkBindImagePlaneMemoryInfo
-import           Graphics.Vulkan.Types.Struct.VkBindSparseInfo
-import           Graphics.Vulkan.Types.Struct.VkBufferCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkBufferMemoryRequirementsInfo2
-import           Graphics.Vulkan.Types.Struct.VkClearColorValue
-import           Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue
-import           Graphics.Vulkan.Types.Struct.VkClearValue
-import           Graphics.Vulkan.Types.Struct.VkCommandBufferBeginInfo
-import           Graphics.Vulkan.Types.Struct.VkCommandBufferInheritanceInfo
-import           Graphics.Vulkan.Types.Struct.VkComponentMapping
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport
-import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntry
-import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupBindSparseInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupCommandBufferBeginInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupRenderPassBeginInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceGroupSubmitInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueInfo2
-import           Graphics.Vulkan.Types.Struct.VkExportFenceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkExportMemoryAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkExportSemaphoreCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkExtent3D
-import           Graphics.Vulkan.Types.Struct.VkExternalBufferProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalFenceProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalMemoryBufferCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkExternalMemoryProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties
-import           Graphics.Vulkan.Types.Struct.VkFenceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkImageMemoryRequirementsInfo2
-import           Graphics.Vulkan.Types.Struct.VkImagePlaneMemoryRequirementsInfo
-import           Graphics.Vulkan.Types.Struct.VkImageSparseMemoryRequirementsInfo2
-import           Graphics.Vulkan.Types.Struct.VkImageSubresource
-import           Graphics.Vulkan.Types.Struct.VkImageSubresourceRange
-import           Graphics.Vulkan.Types.Struct.VkImageViewCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkImageViewUsageCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkInputAttachmentAspectReference
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateFlagsInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryDedicatedAllocateInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryDedicatedRequirements
-import           Graphics.Vulkan.Types.Struct.VkMemoryHeap
-import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements
-import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements2
-import           Graphics.Vulkan.Types.Struct.VkMemoryType
-import           Graphics.Vulkan.Types.Struct.VkOffset2D
-import           Graphics.Vulkan.Types.Struct.VkOffset3D
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDevice16BitStorageFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3Properties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDevicePointClippingProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerYcbcrConversionFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceShaderDrawParameterFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSubgroupProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceVariablePointerFeatures
-import           Graphics.Vulkan.Types.Struct.VkPipelineTessellationDomainOriginStateCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkProtectedSubmitInfo
-import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties
-import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2
-import           Graphics.Vulkan.Types.Struct.VkRect2D
-import           Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo
-import           Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkRenderPassInputAttachmentAspectCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkRenderPassMultiviewCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfo
-import           Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo
-import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2
-import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBind
-import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBindInfo
-import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements
-import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements2
-import           Graphics.Vulkan.Types.Struct.VkSparseImageOpaqueMemoryBindInfo
-import           Graphics.Vulkan.Types.Struct.VkSparseMemoryBind
-import           Graphics.Vulkan.Types.Struct.VkSubmitInfo
-import           Graphics.Vulkan.Types.Struct.VkSubpassDependency
-import           Graphics.Vulkan.Types.Struct.VkSubpassDescription
-import           System.IO.Unsafe
-                                                                                                 (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Attachment
+import           Graphics.Vulkan.Types.Struct.Bind
+import           Graphics.Vulkan.Types.Struct.Buffer
+import           Graphics.Vulkan.Types.Struct.Clear
+import           Graphics.Vulkan.Types.Struct.Command
+import           Graphics.Vulkan.Types.Struct.ComponentMapping
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.Export
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.External
+import           Graphics.Vulkan.Types.Struct.Fence
+import           Graphics.Vulkan.Types.Struct.FormatProperties
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
+import           Graphics.Vulkan.Types.Struct.Memory
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.Pipeline
+import           Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo
+import           Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import           Graphics.Vulkan.Types.Struct.Rect
+import           Graphics.Vulkan.Types.Struct.RenderPass
+import           Graphics.Vulkan.Types.Struct.Sampler
+import           Graphics.Vulkan.Types.Struct.Semaphore
+import           Graphics.Vulkan.Types.Struct.Sparse
+import           Graphics.Vulkan.Types.Struct.SubmitInfo
+import           Graphics.Vulkan.Types.Struct.Subpass
+import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 pattern VkEnumerateInstanceVersion :: CString
 

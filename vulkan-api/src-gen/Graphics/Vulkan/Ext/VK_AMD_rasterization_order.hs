@@ -18,14 +18,13 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         --
         -- Extension number: @19@
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkCullModeFlags,
-        module Graphics.Vulkan.Types.Enum.VkFrontFace,
+        module Graphics.Vulkan.Types.Enum.CullModeFlags,
+        module Graphics.Vulkan.Types.Enum.FrontFace,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateRasterizationOrderAMD,
-        module Graphics.Vulkan.Types.Enum.VkPolygonMode,
-        module Graphics.Vulkan.Types.Enum.VkRasterizationOrderAMD,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Struct.Pipeline,
+        module Graphics.Vulkan.Types.Enum.PolygonMode,
+        module Graphics.Vulkan.Types.Enum.RasterizationOrderAMD,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION,
         pattern VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION,
@@ -33,18 +32,16 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         pattern VK_AMD_RASTERIZATION_ORDER_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD)
        where
-import           GHC.Ptr
-                                                                                                 (Ptr (..))
+import           GHC.Ptr                                          (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkCullModeFlags
-import           Graphics.Vulkan.Types.Enum.VkFrontFace
-import           Graphics.Vulkan.Types.Enum.VkPolygonMode
-import           Graphics.Vulkan.Types.Enum.VkRasterizationOrderAMD
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateRasterizationOrderAMD
+import           Graphics.Vulkan.Types.Enum.CullModeFlags
+import           Graphics.Vulkan.Types.Enum.FrontFace
+import           Graphics.Vulkan.Types.Enum.PolygonMode
+import           Graphics.Vulkan.Types.Enum.RasterizationOrderAMD
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Pipeline
 
 pattern VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION :: (Num a, Eq a) =>
         a

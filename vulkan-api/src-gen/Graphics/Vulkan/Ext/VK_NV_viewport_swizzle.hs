@@ -17,17 +17,15 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         -- type: @device@
         --
         -- Extension number: @99@
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
+        module Graphics.Vulkan.Types.Struct.Extent,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkOffset2D,
+        module Graphics.Vulkan.Types.Struct.Offset,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPipelineViewportSwizzleStateCreateInfoNV,
-        module Graphics.Vulkan.Types.Struct.VkRect2D,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Struct.VkViewport,
-        module Graphics.Vulkan.Types.Enum.VkViewportCoordinateSwizzleNV,
-        module Graphics.Vulkan.Types.Struct.VkViewportSwizzleNV,
+        module Graphics.Vulkan.Types.Struct.Pipeline,
+        module Graphics.Vulkan.Types.Struct.Rect,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Struct.Viewport,
+        module Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV,
         -- > #include "vk_platform.h"
         VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION,
         pattern VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION,
@@ -35,20 +33,17 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV)
        where
-import           GHC.Ptr
-                                                                                          (Ptr (..))
+import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkViewportCoordinateSwizzleNV
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkOffset2D
-import           Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPipelineViewportSwizzleStateCreateInfoNV
-import           Graphics.Vulkan.Types.Struct.VkRect2D
-import           Graphics.Vulkan.Types.Struct.VkViewport
-import           Graphics.Vulkan.Types.Struct.VkViewportSwizzleNV
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.Pipeline
+import           Graphics.Vulkan.Types.Struct.Rect
+import           Graphics.Vulkan.Types.Struct.Viewport
 
 pattern VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -27,24 +27,18 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlagBitsKHR,
+        module Graphics.Vulkan.Types.Enum.External,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagBitsKHR,
-        module Graphics.Vulkan.Types.Struct.VkExternalSemaphorePropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.External,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
         VkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         pattern VkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfo,
         VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_EXTENSION_NAME,
@@ -60,29 +54,19 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR,
         pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR)
        where
-import           GHC.Ptr
-                                                                                        (Ptr (..))
-import           Graphics.Vulkan.Constants
-                                                                                        (pattern VK_LUID_SIZE_KHR)
-import           Graphics.Vulkan.Core_1_1
-                                                                                        (pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES,
-                                                                                        pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                   (pattern VK_LUID_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                        (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagBitsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties
-import           Graphics.Vulkan.Types.Struct.VkExternalSemaphorePropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
+import           Graphics.Vulkan.Types.Struct.External
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::
         CString

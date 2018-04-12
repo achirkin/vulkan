@@ -32,18 +32,12 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkDisplayModeCreateInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplayModeParametersKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplayModePropertiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplayPlaneCapabilitiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplayPlanePropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplayPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkDisplaySurfaceCreateInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
-        module Graphics.Vulkan.Types.Struct.VkOffset2D,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
+        module Graphics.Vulkan.Types.Struct.Display,
+        module Graphics.Vulkan.Types.Enum.Display,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.Offset,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Enum.Surface,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceDisplayPropertiesKHR,
         pattern VkGetPhysicalDeviceDisplayPropertiesKHR,
@@ -81,12 +75,12 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         HS_vkCreateDisplayPlaneSurfaceKHR,
         PFN_vkCreateDisplayPlaneSurfaceKHR, vkCreateDisplayPlaneSurfaceKHR,
         vkCreateDisplayPlaneSurfaceKHRSafe,
-        module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.VkResult,
-        module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
+        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
+        module Graphics.Vulkan.Types.Enum.Result,
+        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
         VK_KHR_DISPLAY_SPEC_VERSION, pattern VK_KHR_DISPLAY_SPEC_VERSION,
         VK_KHR_DISPLAY_EXTENSION_NAME,
         pattern VK_KHR_DISPLAY_EXTENSION_NAME,
@@ -95,31 +89,25 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         pattern VK_OBJECT_TYPE_DISPLAY_KHR,
         pattern VK_OBJECT_TYPE_DISPLAY_MODE_KHR)
        where
-import           GHC.Ptr                                                    (Ptr (..))
+import           GHC.Ptr                                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Proc
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
-import           Graphics.Vulkan.Types.Enum.VkObjectType                    (VkObjectType (..))
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.Display
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.VkDisplayModeCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplayModeParametersKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplayModePropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplayPlaneCapabilitiesKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplayPlanePropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplayPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkDisplaySurfaceCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkOffset2D
-import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Display
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Offset
+import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkGetPhysicalDeviceDisplayPropertiesKHR :: CString
 

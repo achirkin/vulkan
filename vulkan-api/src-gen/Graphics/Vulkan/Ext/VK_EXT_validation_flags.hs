@@ -18,13 +18,13 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         --
         -- Extension number: @62@
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Struct.VkApplicationInfo,
+        module Graphics.Vulkan.Types.Struct.ApplicationInfo,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Enum.VkValidationCheckEXT,
-        module Graphics.Vulkan.Types.Struct.VkValidationFlagsEXT,
+        module Graphics.Vulkan.Types.Struct.InstanceCreateInfo,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Enum.ValidationC,
+        module Graphics.Vulkan.Types.Struct.Validation,
         -- > #include "vk_platform.h"
         VK_EXT_VALIDATION_FLAGS_SPEC_VERSION,
         pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION,
@@ -32,15 +32,15 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         pattern VK_EXT_VALIDATION_FLAGS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT)
        where
-import           GHC.Ptr                                           (Ptr (..))
+import           GHC.Ptr                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkValidationCheckEXT
-import           Graphics.Vulkan.Types.Struct.VkApplicationInfo
-import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkValidationFlagsEXT
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.ValidationC
+import           Graphics.Vulkan.Types.Struct.ApplicationInfo
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo
+import           Graphics.Vulkan.Types.Struct.Validation
 
 pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION :: (Num a, Eq a) => a
 

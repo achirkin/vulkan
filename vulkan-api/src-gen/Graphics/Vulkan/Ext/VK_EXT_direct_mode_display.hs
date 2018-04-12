@@ -28,17 +28,17 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         -- ** Required extensions: 'VK_KHR_display'.
         VkReleaseDisplayEXT, pattern VkReleaseDisplayEXT,
         HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
+import           GHC.Ptr                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.VkResult
+import           Graphics.Vulkan.Marshal.Proc      (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.Result
 import           Graphics.Vulkan.Types.Handles
 
 pattern VkReleaseDisplayEXT :: CString

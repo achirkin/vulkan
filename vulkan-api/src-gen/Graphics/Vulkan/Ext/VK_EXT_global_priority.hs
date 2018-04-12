@@ -17,12 +17,11 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         -- type: @device@
         --
         -- Extension number: @175@
-        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueGlobalPriorityCreateInfoEXT,
+        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Struct.Device,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkQueueGlobalPriorityEXT,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.Queue,
+        module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION,
         pattern VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION,
@@ -31,17 +30,14 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
         pattern VK_ERROR_NOT_PERMITTED_EXT)
        where
-import           GHC.Ptr
-                                                                                        (Ptr (..))
+import           GHC.Ptr                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkQueueGlobalPriorityEXT
-import           Graphics.Vulkan.Types.Enum.VkResult
-                                                                                        (VkResult (..))
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueGlobalPriorityCreateInfoEXT
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result        (VkResult (..))
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Device
 
 pattern VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -27,21 +27,20 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.VkExtent2D,
+        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
+        module Graphics.Vulkan.Types.Struct.Extent,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2EXT,
-        module Graphics.Vulkan.Types.Enum.VkSurfaceCounterFlagsEXT,
-        module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.Image,
+        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Types.Struct.Surface,
+        module Graphics.Vulkan.Types.Enum.Surface,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
         pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
@@ -50,19 +49,18 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT,
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT)
        where
-import           GHC.Ptr                                                (Ptr (..))
+import           GHC.Ptr                                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
+import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Enum.VkSurfaceCounterFlagsEXT
-import           Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkExtent2D
-import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2EXT
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Surface
 
 pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT :: CString
 

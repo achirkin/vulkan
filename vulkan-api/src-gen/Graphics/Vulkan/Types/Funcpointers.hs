@@ -22,26 +22,18 @@ module Graphics.Vulkan.Types.Funcpointers
         unwrapVkVoidFunction)
        where
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-                                                                                    (VkBool32 (..),
-                                                                                    VkFlags (..))
-import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT
-                                                                                    (VkDebugReportBitmaskEXT (..),
-                                                                                    VkDebugReportFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
-                                                                                    (VkDebugReportObjectTypeEXT (..))
-import           Graphics.Vulkan.Types.Enum.VkDebugUtilsMessageSeverityFlagsEXT
-                                                                                    (VkDebugUtilsMessageSeverityBitmaskEXT (..),
-                                                                                    VkDebugUtilsMessageSeverityFlagBitsEXT)
-import           Graphics.Vulkan.Types.Enum.VkDebugUtilsMessageTypeFlagsEXT
-                                                                                    (VkDebugUtilsMessageTypeBitmaskEXT (..),
-                                                                                    VkDebugUtilsMessageTypeFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
-                                                                                    (VkInternalAllocationType (..))
-import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
-                                                                                    (VkSystemAllocationScope (..))
-import           Graphics.Vulkan.Types.Struct.VkDebugUtilsMessengerCallbackDataEXT
-                                                                                    (VkDebugUtilsMessengerCallbackDataEXT (..))
+import           Graphics.Vulkan.Types.BaseTypes                                 (VkBool32 (..),
+                                                                                  VkFlags (..))
+import           Graphics.Vulkan.Types.Enum.Debug                                (VkDebugReportBitmaskEXT (..),
+                                                                                  VkDebugReportFlagsEXT,
+                                                                                  VkDebugReportObjectTypeEXT (..),
+                                                                                  VkDebugUtilsMessageSeverityBitmaskEXT (..),
+                                                                                  VkDebugUtilsMessageSeverityFlagBitsEXT,
+                                                                                  VkDebugUtilsMessageTypeBitmaskEXT (..),
+                                                                                  VkDebugUtilsMessageTypeFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType               (VkInternalAllocationType (..))
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope                (VkSystemAllocationScope (..))
+import           Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT (VkDebugUtilsMessengerCallbackDataEXT (..))
 
 type HS_vkAllocationFunction =
      Ptr Void ->

@@ -56,8 +56,8 @@ genCabalFile coreVersions eModules = T.unlines $
           maintainer:          chirkin@arch.ethz.ch
           copyright:           Copyright: (c) 2018 Artem Chirkin
           category:            vulkan, bsd3, graphics, library, opengl
-          build-type:          Custom
-          cabal-version:       >=1.24
+          build-type:          Simple
+          cabal-version:       >=1.22
           extra-source-files:
               include/vulkan/*.h
 
