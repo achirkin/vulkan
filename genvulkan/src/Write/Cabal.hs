@@ -65,16 +65,13 @@ genCabalFile coreVersions eModules = T.unlines $
       : map mkFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
       )
    <> ( [text|
-          custom-setup
-              setup-depends:
-                  base >= 4.7 && < 5,
-                  Cabal >=1.24
-
           library
               hs-source-dirs:      src, src-gen
               exposed-modules:
         |]
-      : map (spaces <>) (L.sort $ unprotected ++ hardcodedModules)
+      : map (spaces <>) exposedBase
+      ++ "    other-modules:"
+      : map (spaces <>) otherBase
       )
    <> map (mkModules . second L.sort) protectedGroups
    <> map mkVersionPragma coreVersions
@@ -100,6 +97,11 @@ genCabalFile coreVersions eModules = T.unlines $
   where
     library_version = T.pack $ showVersion version
     spaces = "        "
+
+    (otherBase, exposedBase) = L.partition isOtherModule
+      . L.sort $ unprotected ++ hardcodedModules
+    isOtherModule = T.isPrefixOf "Graphics.Vulkan.Types"
+
     mkGroup []           = []
     mkGroup xs@((_,g):_) = [(g, map fst xs)]
     (unprotected, protectedGroups)
@@ -125,11 +127,14 @@ genCabalFile coreVersions eModules = T.unlines $
     mkModules (p,ms)
       | f <- unProtectFlag $ protectFlag p
       , g <- unProtectCPP $ protectCPP p
+      , (otherMs, exposedMs) <- L.partition isOtherModule $ L.sort ms
       = T.unlines
       $ ("    if flag(" <> f <> ")")
       : ("      cpp-options: -D" <> g)
       :  "      exposed-modules:"
-      : map (spaces <>) ms
+      : map (spaces <>) exposedMs
+      ++ "      other-modules:"
+      : map (spaces <>) otherMs
 
     mkVersionFlagDef p
       | f <- unProtectFlag $ protectFlag p
