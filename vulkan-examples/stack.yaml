@@ -14,5 +14,5 @@ packages:
     extra-dep: true
   - location:
       git: https://github.com/bsl/GLFW-b
-      commit: 071aae2bb5f998ab9414700dbeb6b50551228763
+      commit: 311a3a3b1ba0e4525ad1e1292ef1b363645cbafe
     extra-dep: true
