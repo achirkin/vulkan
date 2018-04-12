@@ -84,11 +84,6 @@ flag useNativeFFI-1-1
       Enable foreign-imported functions from Vulkan 1.1 feature set
     default: False
 
-custom-setup
-    setup-depends:
-        base >= 4.7 && < 5,
-        Cabal >=1.24
-
 library
     hs-source-dirs:      src, src-gen
     exposed-modules:
@@ -199,6 +194,7 @@ library
         Graphics.Vulkan.Marshal.Create
         Graphics.Vulkan.Marshal.Internal
         Graphics.Vulkan.Marshal.Proc
+    other-modules:
         Graphics.Vulkan.Types.BaseTypes
         Graphics.Vulkan.Types.Bitmasks
         Graphics.Vulkan.Types.Defines
@@ -719,6 +715,7 @@ library
       exposed-modules:
         Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         Graphics.Vulkan.Ext.VK_KHR_android_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferFormatPropertiesANDROID
         Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferPropertiesANDROID
         Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferUsageANDROID
@@ -731,30 +728,35 @@ library
       cpp-options: -DVK_USE_PLATFORM_IOS_MVK
       exposed-modules:
         Graphics.Vulkan.Ext.VK_MVK_ios_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK
 
     if flag(usePlatformMacosMvk)
       cpp-options: -DVK_USE_PLATFORM_MACOS_MVK
       exposed-modules:
         Graphics.Vulkan.Ext.VK_MVK_macos_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkMacOSSurfaceCreateInfoMVK
 
     if flag(usePlatformMirKhr)
       cpp-options: -DVK_USE_PLATFORM_MIR_KHR
       exposed-modules:
         Graphics.Vulkan.Ext.VK_KHR_mir_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkMirSurfaceCreateInfoKHR
 
     if flag(usePlatformViNn)
       cpp-options: -DVK_USE_PLATFORM_VI_NN
       exposed-modules:
         Graphics.Vulkan.Ext.VK_NN_vi_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN
 
     if flag(usePlatformWaylandKhr)
       cpp-options: -DVK_USE_PLATFORM_WAYLAND_KHR
       exposed-modules:
         Graphics.Vulkan.Ext.VK_KHR_wayland_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkWaylandSurfaceCreateInfoKHR
 
     if flag(usePlatformWin32Khr)
@@ -767,6 +769,7 @@ library
         Graphics.Vulkan.Ext.VK_KHR_win32_surface
         Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkD3D12FenceSubmitInfoKHR
         Graphics.Vulkan.Types.Struct.VkExportFenceWin32HandleInfoKHR
         Graphics.Vulkan.Types.Struct.VkExportMemoryWin32HandleInfoKHR
@@ -788,18 +791,21 @@ library
       cpp-options: -DVK_USE_PLATFORM_XCB_KHR
       exposed-modules:
         Graphics.Vulkan.Ext.VK_KHR_xcb_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkXcbSurfaceCreateInfoKHR
 
     if flag(usePlatformXlibKhr)
       cpp-options: -DVK_USE_PLATFORM_XLIB_KHR
       exposed-modules:
         Graphics.Vulkan.Ext.VK_KHR_xlib_surface
+      other-modules:
         Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR
 
     if flag(usePlatformXlibXrandrExt)
       cpp-options: -DVK_USE_PLATFORM_XLIB_XRANDR_EXT
       exposed-modules:
         Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
+      other-modules:
 
     if flag(useNativeFFI-1-0)
       cpp-options: -DNATIVE_FFI_VK_VERSION_1_0
