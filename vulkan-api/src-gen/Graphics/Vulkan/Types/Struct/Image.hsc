@@ -14,21 +14,16 @@
 module Graphics.Vulkan.Types.Struct.Image
        (VkImageBlit(..), VkImageCopy(..), VkImageCreateInfo(..),
         VkImageFormatListCreateInfoKHR(..), VkImageFormatProperties(..),
-        VkImageFormatProperties2(..), VkImageFormatProperties2(..),
-        VkImageFormatProperties2KHR, VkImageMemoryBarrier(..),
-        VkImageMemoryRequirementsInfo2(..),
-        VkImageMemoryRequirementsInfo2(..),
+        VkImageFormatProperties2(..), VkImageFormatProperties2KHR,
+        VkImageMemoryBarrier(..), VkImageMemoryRequirementsInfo2(..),
         VkImageMemoryRequirementsInfo2KHR,
         VkImagePlaneMemoryRequirementsInfo(..),
-        VkImagePlaneMemoryRequirementsInfo(..),
         VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve(..),
-        VkImageSparseMemoryRequirementsInfo2(..),
         VkImageSparseMemoryRequirementsInfo2(..),
         VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource(..),
         VkImageSubresourceLayers(..), VkImageSubresourceRange(..),
         VkImageSwapchainCreateInfoKHR(..), VkImageViewCreateInfo(..),
-        VkImageViewUsageCreateInfo(..), VkImageViewUsageCreateInfo(..),
-        VkImageViewUsageCreateInfoKHR)
+        VkImageViewUsageCreateInfo(..), VkImageViewUsageCreateInfoKHR)
        where
 import           Foreign.Storable                              (Storable (..))
 import           GHC.Base                                      (Addr##,

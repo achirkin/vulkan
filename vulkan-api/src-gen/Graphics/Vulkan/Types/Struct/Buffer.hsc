@@ -10,7 +10,6 @@
 module Graphics.Vulkan.Types.Struct.Buffer
        (VkBufferCopy(..), VkBufferCreateInfo(..), VkBufferImageCopy(..),
         VkBufferMemoryBarrier(..), VkBufferMemoryRequirementsInfo2(..),
-        VkBufferMemoryRequirementsInfo2(..),
         VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo(..))
        where
 import           Foreign.Storable                         (Storable (..))

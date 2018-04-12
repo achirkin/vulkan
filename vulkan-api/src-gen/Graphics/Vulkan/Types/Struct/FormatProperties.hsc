@@ -9,7 +9,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.FormatProperties
        (VkFormatProperties(..), VkFormatProperties2(..),
-        VkFormatProperties2(..), VkFormatProperties2KHR)
+        VkFormatProperties2KHR)
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,

@@ -8,11 +8,10 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Export
-       (VkExportFenceCreateInfo(..), VkExportFenceCreateInfo(..),
-        VkExportFenceCreateInfoKHR, VkExportMemoryAllocateInfo(..),
+       (VkExportFenceCreateInfo(..), VkExportFenceCreateInfoKHR,
         VkExportMemoryAllocateInfo(..), VkExportMemoryAllocateInfoKHR,
         VkExportMemoryAllocateInfoNV(..), VkExportSemaphoreCreateInfo(..),
-        VkExportSemaphoreCreateInfo(..), VkExportSemaphoreCreateInfoKHR)
+        VkExportSemaphoreCreateInfoKHR)
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,

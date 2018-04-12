@@ -9,16 +9,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Bind
        (VkBindBufferMemoryDeviceGroupInfo(..),
-        VkBindBufferMemoryDeviceGroupInfo(..),
         VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo(..),
-        VkBindBufferMemoryInfo(..), VkBindBufferMemoryInfoKHR,
-        VkBindImageMemoryDeviceGroupInfo(..),
-        VkBindImageMemoryDeviceGroupInfo(..),
+        VkBindBufferMemoryInfoKHR, VkBindImageMemoryDeviceGroupInfo(..),
         VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo(..),
-        VkBindImageMemoryInfo(..), VkBindImageMemoryInfoKHR,
-        VkBindImageMemorySwapchainInfoKHR(..),
-        VkBindImagePlaneMemoryInfo(..), VkBindImagePlaneMemoryInfo(..),
-        VkBindImagePlaneMemoryInfoKHR, VkBindSparseInfo(..))
+        VkBindImageMemoryInfoKHR, VkBindImageMemorySwapchainInfoKHR(..),
+        VkBindImagePlaneMemoryInfo(..), VkBindImagePlaneMemoryInfoKHR,
+        VkBindSparseInfo(..))
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,

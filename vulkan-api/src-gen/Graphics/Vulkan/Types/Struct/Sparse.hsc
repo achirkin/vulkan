@@ -11,11 +11,9 @@ module Graphics.Vulkan.Types.Struct.Sparse
        (VkSparseBufferMemoryBindInfo(..),
         VkSparseImageFormatProperties(..),
         VkSparseImageFormatProperties2(..),
-        VkSparseImageFormatProperties2(..),
         VkSparseImageFormatProperties2KHR, VkSparseImageMemoryBind(..),
         VkSparseImageMemoryBindInfo(..),
         VkSparseImageMemoryRequirements(..),
-        VkSparseImageMemoryRequirements2(..),
         VkSparseImageMemoryRequirements2(..),
         VkSparseImageMemoryRequirements2KHR,
         VkSparseImageOpaqueMemoryBindInfo(..), VkSparseMemoryBind(..))

@@ -8,22 +8,17 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.External
-       (VkExternalBufferProperties(..), VkExternalBufferProperties(..),
-        VkExternalBufferPropertiesKHR, VkExternalFenceProperties(..),
+       (VkExternalBufferProperties(..), VkExternalBufferPropertiesKHR,
         VkExternalFenceProperties(..), VkExternalFencePropertiesKHR,
-        VkExternalImageFormatProperties(..),
         VkExternalImageFormatProperties(..),
         VkExternalImageFormatPropertiesKHR,
         VkExternalImageFormatPropertiesNV(..),
         VkExternalMemoryBufferCreateInfo(..),
-        VkExternalMemoryBufferCreateInfo(..),
         VkExternalMemoryBufferCreateInfoKHR,
-        VkExternalMemoryImageCreateInfo(..),
         VkExternalMemoryImageCreateInfo(..),
         VkExternalMemoryImageCreateInfoKHR,
         VkExternalMemoryImageCreateInfoNV(..),
-        VkExternalMemoryProperties(..), VkExternalMemoryProperties(..),
-        VkExternalMemoryPropertiesKHR, VkExternalSemaphoreProperties(..),
+        VkExternalMemoryProperties(..), VkExternalMemoryPropertiesKHR,
         VkExternalSemaphoreProperties(..),
         VkExternalSemaphorePropertiesKHR)
        where

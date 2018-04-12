@@ -30,7 +30,6 @@ module Graphics.Vulkan.Types.Struct.Pipeline
         VkPipelineSampleLocationsStateCreateInfoEXT(..),
         VkPipelineShaderStageCreateInfo(..),
         VkPipelineTessellationDomainOriginStateCreateInfo(..),
-        VkPipelineTessellationDomainOriginStateCreateInfo(..),
         VkPipelineTessellationDomainOriginStateCreateInfoKHR,
         VkPipelineTessellationStateCreateInfo(..),
         VkPipelineVertexInputDivisorStateCreateInfoEXT(..),

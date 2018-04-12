@@ -174,6 +174,7 @@ genStructOrUnion _ VkTypeSimple
       }
   }
   = do
+    indeed <- isIdentDeclared anameDeclared
     writeImport anameDeclared
     writeDecl
       . setComment
@@ -184,9 +185,9 @@ genStructOrUnion _ VkTypeSimple
       [ diToImportSpec anameDeclared
       , diToImportSpec $ DIThing tnametxt DITNo
       ]
-      [ diToExportSpec anameDeclared
-      , diToExportSpec $ DIThing tnametxt DITNo
-      ]
+      ( diToExportSpec (DIThing tnametxt DITNo) :
+      [ diToExportSpec anameDeclared | indeed ] -- export aliased name only if from another module
+      )
     writeExportExplicit (DIThing tnametxt DITNo)
       [ diToImportSpec $ DIThing tnametxt DITNo] []
     writeExportExplicit (DIThing tnametxt DITEmpty)

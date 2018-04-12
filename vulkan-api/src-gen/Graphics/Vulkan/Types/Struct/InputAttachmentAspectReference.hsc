@@ -9,7 +9,6 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
        (VkInputAttachmentAspectReference(..),
-        VkInputAttachmentAspectReference(..),
         VkInputAttachmentAspectReferenceKHR)
        where
 import           Foreign.Storable                 (Storable (..))
