@@ -114,10 +114,7 @@ genCommand nativeFFI command@VkCommand
               ErrorOp -> [text|
                   $stubFunTxt <- vkGetInstanceProc @$vkInstanceProcSymbolT vkInstance
                 |]
-            vkGetProcAddrTxt = case stubType of
-              InstanceOp _ -> "vkGetInstanceProcAddr"
-              DeviceOp -> "vkGetDeviceProcAddr"
-              ErrorOp -> "vkGetInstanceProcAddr"
+
             comment1 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
                      [ "###ifdef " <> pCppTxt
                      , "|"
@@ -134,47 +131,29 @@ genCommand nativeFFI command@VkCommand
                      , fromMaybe mempty funComment
                      , ""
                      , [text|
-                         __Note:__ You should refrain from using this function directly
-                                   unless flag @$pFlagTxt@ is enabled.
+                         __Note:__ flag @$pFlagTxt@ is disabled, so this function is looked up
+                                   dynamically at runtime;
+                                   @$cnameSafeTxt@ and @$cnameTxt@ are synonyms.
 
                          Independently of the flag setting, you can lookup the function manually at runtime:
 
                          > $mkStubFun
+
+                         or less efficient:
+
+                         > $stubFunTxt <- vkGetProc @$vkInstanceProcSymbolT
                        |]
                      ]
             comment3 = Just $ CodeComment BelowCode ' ' "###endif"
-            annWarn = T.unpack $ T.unlines
-              [ T.strip [text|This function requires $pFlagTxt to use FFI for locating the C symbol statically.|]
-              , case stubType of
-                  ErrorOp -> "Otherwise, it causes a runtime error!"
-                  _ -> T.strip [text|Otherwise it may call $vkGetProcAddrTxt every time you execute it if not inlined.|]
-              , T.strip [text|You should either lookup the function address manually or enable flag $pFlagTxt.|]
-              ]
 
         -- foreign import unsafe
         writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlayRisky Nothing))
                           (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
         writeDecl $ TypeSig comment2 [Nothing <$ unqualify cname] funtype
-        writeDecl $ parseDecl' $ case stubType of
-            InstanceOp False -> [text|
-                $cnameTxt d =
-                   unsafeDupablePerformIO (vkGetInstanceProc @$vkInstanceProcSymbolT d) d
-              |]
-            InstanceOp True -> [text|
-                $cnameTxt =
-                   unsafeDupablePerformIO (vkGetInstanceProc @$vkInstanceProcSymbolT VK_NULL)
-              |]
-            DeviceOp -> [text|
-                $cnameTxt d =
-                   unsafeDupablePerformIO (vkGetDeviceProc @$vkInstanceProcSymbolT d) d
-              |]
-            ErrorOp -> [text|
-                $cnameTxt = error $ "Cannot lookup C symbol \"$cnameTxt\" because its signature does not provide VkInstance argument. "
-                         ++ "Either lookup the function manually or enable $pFlagTxt cabal flag."
-              |]
-        when (stubType /= ErrorOp) $
-          writeDecl $ InlineSig Nothing True Nothing (Nothing <$ cname)
-        writeDecl $ WarnPragmaDecl comment3 [([Nothing <$ unqualify cname], annWarn)]
+        writeDecl $ parseDecl' $ [text|
+            $cnameTxt = unsafeDupablePerformIO (vkGetProc @$vkInstanceProcSymbolT)
+          |]
+        writeDecl $ InlineSig comment3 False Nothing (Nothing <$ cname)
 
         -- foreign import safe
         writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlaySafe Nothing False))
@@ -182,8 +161,8 @@ genCommand nativeFFI command@VkCommand
         writeDecl $ TypeSig comment2 [Nothing <$ unqualify cnameSafe] funtype
         writeDecl $ parseDecl'
           [text|$cnameSafeTxt = $cnameTxt|]
-        writeDecl $ InlineSig Nothing True Nothing (Nothing <$ cnameSafe)
-        writeDecl $ WarnPragmaDecl comment3 [([Nothing <$ unqualify cnameSafe], annWarn)]
+        writeDecl $ InlineSig comment3 True Nothing (Nothing <$ cnameSafe)
+
 
 
     -- type synonym

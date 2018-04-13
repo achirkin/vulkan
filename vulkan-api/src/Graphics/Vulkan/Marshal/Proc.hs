@@ -1,5 +1,7 @@
 {-# LANGUAGE AllowAmbiguousTypes #-}
+{-# LANGUAGE CPP                 #-}
 {-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE MagicHash           #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE Strict              #-}
 {-# LANGUAGE TypeApplications    #-}
@@ -16,15 +18,26 @@ module Graphics.Vulkan.Marshal.Proc
   ( VulkanProc (..)
   , vkGetInstanceProc, vkLookupInstanceProc
   , vkGetDeviceProc, vkLookupDeviceProc
+  , vkGetProc, vkLookupProc
     -- * Re-export `Foreign.Ptr`
   , FunPtr, nullFunPtr
   ) where
 
-import           Foreign.C.String              (CString)
-import           Foreign.Ptr                   (FunPtr, nullFunPtr)
+import           Control.Monad                 (when)
+import           Data.Void                     (Void)
+import           Foreign.C.String              (CString, peekCString)
+import           Foreign.ForeignPtr            (ForeignPtr, newForeignPtr,
+                                                withForeignPtr)
+import           Foreign.Marshal.Alloc         (alloca)
+import           Foreign.Ptr                   (FunPtr, nullFunPtr, nullPtr)
+import           Foreign.Storable              (peek)
+import           GHC.Ptr                       (Ptr (..))
 import           GHC.TypeLits                  (Symbol)
-import           Graphics.Vulkan.Types.Handles (VkDevice, VkInstance)
+import           System.IO.Unsafe              (unsafePerformIO)
 
+
+
+import           Graphics.Vulkan.Types.Handles (VkDevice, VkInstance)
 
 -- | Some of the vulkan functions defined in vulkan extensions are not
 --   available at the program linking time.
@@ -92,8 +105,94 @@ vkLookupDeviceProc i
 {-# INLINE vkLookupDeviceProc #-}
 
 
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery.
+--   This function throws an error on failure.
+--
+--   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a function,
+--    because they can return a more optimized version of a symbol.
+vkGetProc :: forall proc . VulkanProc proc => IO (VkProcType proc)
+vkGetProc = alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (vkProcSymbol @proc) errPtr
+    when (fp == nullFunPtr) $ peek errPtr >>= peekCString >>= fail .
+        ("An error happened while trying to load vulkan symbol dynamically: " ++)
+    return $ unwrapVkProcPtr @proc fp
+{-# INLINE vkGetProc #-}
+
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery.
+--   This function returns @Nothing@ on failure ignoring an error message.
+--
+--   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a function,
+--    because they can return a more optimized version of a symbol.
+vkLookupProc :: forall proc . VulkanProc proc => IO (Maybe (VkProcType proc))
+vkLookupProc = alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (vkProcSymbol @proc) errPtr
+    return $ if fp == nullFunPtr then Nothing else Just (unwrapVkProcPtr @proc fp)
+{-# INLINE vkLookupProc #-}
+
+
+
+
+
+
+
+#ifdef VK_NO_PROTOTYPES
+
+c'vkGetInstanceProcAddr :: VkInstance -> CString -> IO (FunPtr a)
+c'vkGetInstanceProcAddr = unsafePerformIO $ alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (Ptr "vkGetInstanceProcAddr"#) errPtr
+    when (fp == nullFunPtr) $
+      peek errPtr >>= peekCString >>= fail .
+        ("Could not load 'vkGetInstanceProcAddr' C function from vulkan library dynamically: " ++)
+    return $ unwrap'vkGetInstanceProcAddr fp
+
+c'vkGetDeviceProcAddr :: VkDevice -> CString -> IO (FunPtr a)
+c'vkGetDeviceProcAddr = unsafePerformIO $ alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (Ptr "vkGetDeviceProcAddr"#) errPtr
+    when (fp == nullFunPtr) $ peek errPtr >>= peekCString >>= fail .
+        ("Could not load 'vkGetDeviceProcAddr' C function from vulkan library dynamically: " ++)
+    return $ unwrap'vkGetDeviceProcAddr fp
+
+foreign import ccall unsafe "dynamic"
+  unwrap'vkGetInstanceProcAddr
+    :: FunPtr (VkInstance -> CString -> IO (FunPtr a))
+    -> VkInstance -> CString -> IO (FunPtr a)
+
+foreign import ccall unsafe "dynamic"
+  unwrap'vkGetDeviceProcAddr
+    :: FunPtr (VkDevice -> CString -> IO (FunPtr a))
+    -> VkDevice -> CString -> IO (FunPtr a)
+
+#else
+
 foreign import ccall unsafe "vkGetInstanceProcAddr"
   c'vkGetInstanceProcAddr :: VkInstance -> CString -> IO (FunPtr a)
 
 foreign import ccall unsafe "vkGetDeviceProcAddr"
   c'vkGetDeviceProcAddr :: VkDevice -> CString -> IO (FunPtr a)
+
+#endif
+
+
+foreign import ccall safe "_vkdll_dlinit"
+  c'vkdll_dlinit :: Ptr CString -> IO (Ptr Void)
+
+foreign import ccall safe "_vkdll_dlsym"
+  c'vkdll_dlsym :: Ptr Void -> CString -> Ptr CString -> IO (FunPtr a)
+
+foreign import ccall safe "&_vkdll_dlclose"
+  p'vk_dlclose :: FunPtr (Ptr Void -> IO ())
+
+_vkDlHandle :: ForeignPtr Void
+_vkDlHandle = unsafePerformIO $ alloca $ \errPtr -> do
+  handle <- c'vkdll_dlinit errPtr
+  if handle == nullPtr
+  then
+    peek errPtr >>= peekCString >>= fail .
+      ("An error happened while trying to load vulkan library dynamically: " ++)
+  else
+    newForeignPtr p'vk_dlclose handle
+{-# NOINLINE _vkDlHandle #-}
