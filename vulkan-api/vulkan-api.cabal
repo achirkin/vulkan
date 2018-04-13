@@ -87,6 +87,8 @@ flag useNativeFFI-1-1
     default: False
 
 library
+
+    build-tools:         hsc2hs
     hs-source-dirs:      src, src-gen
     exposed-modules:
 
@@ -431,7 +433,9 @@ library
     if flag(useNativeFFI-1-0) || flag(useNativeFFI-1-1)
       if os(windows)
         extra-libraries: vulkan-1
-      else
+      if os(darwin)
+        frameworks:      MoltenVK
+      if !os(windows) && !os(darwin)
         extra-libraries: vulkan
     else
       cpp-options:       -DVK_NO_PROTOTYPES

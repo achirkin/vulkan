@@ -136,12 +136,17 @@ foreign import ccall unsafe "vkCreateXcbSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateXcbSurfaceKHRSafe@ and @vkCreateXcbSurfaceKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateXcbSurfaceKHR <- vkGetInstanceProc @VkCreateXcbSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateXcbSurfaceKHR <- vkGetProc @VkCreateXcbSurfaceKHR
 --
 vkCreateXcbSurfaceKHR ::
                       VkInstance -- ^ instance
@@ -151,16 +156,10 @@ vkCreateXcbSurfaceKHR ::
                           Ptr VkAllocationCallbacks -- ^ pAllocator
                                                     -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                         -> IO VkResult
-vkCreateXcbSurfaceKHR d
-  = unsafeDupablePerformIO
-      (vkGetInstanceProc @VkCreateXcbSurfaceKHR d)
-      d
+vkCreateXcbSurfaceKHR
+  = unsafeDupablePerformIO (vkGetProc @VkCreateXcbSurfaceKHR)
 
-{-# INLINE vkCreateXcbSurfaceKHR #-}
-
-{-# WARNING
-vkCreateXcbSurfaceKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkCreateXcbSurfaceKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -206,12 +205,17 @@ foreign import ccall safe "vkCreateXcbSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateXcbSurfaceKHRSafe@ and @vkCreateXcbSurfaceKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateXcbSurfaceKHR <- vkGetInstanceProc @VkCreateXcbSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateXcbSurfaceKHR <- vkGetProc @VkCreateXcbSurfaceKHR
 --
 vkCreateXcbSurfaceKHRSafe ::
                           VkInstance -- ^ instance
@@ -224,10 +228,6 @@ vkCreateXcbSurfaceKHRSafe ::
 vkCreateXcbSurfaceKHRSafe = vkCreateXcbSurfaceKHR
 
 {-# INLINE vkCreateXcbSurfaceKHRSafe #-}
-
-{-# WARNING
-vkCreateXcbSurfaceKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -323,12 +323,17 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceXcbPresentationSupportKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXcbPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR
 --
 vkGetPhysicalDeviceXcbPresentationSupportKHR ::
                                              VkPhysicalDevice -- ^ physicalDevice
@@ -339,14 +344,10 @@ vkGetPhysicalDeviceXcbPresentationSupportKHR ::
                                                                     -> XcbVisualidT -- ^ visual_id
                                                                                     -> IO VkBool32
 vkGetPhysicalDeviceXcbPresentationSupportKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetPhysicalDeviceXcbPresentationSupportKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR)
 
-{-# WARNING
-vkGetPhysicalDeviceXcbPresentationSupportKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetPhysicalDeviceXcbPresentationSupportKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -384,12 +385,17 @@ foreign import ccall safe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceXcbPresentationSupportKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXcbPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR
 --
 vkGetPhysicalDeviceXcbPresentationSupportKHRSafe ::
                                                  VkPhysicalDevice -- ^ physicalDevice
@@ -404,10 +410,6 @@ vkGetPhysicalDeviceXcbPresentationSupportKHRSafe
   = vkGetPhysicalDeviceXcbPresentationSupportKHR
 
 {-# INLINE vkGetPhysicalDeviceXcbPresentationSupportKHRSafe #-}
-
-{-# WARNING
-vkGetPhysicalDeviceXcbPresentationSupportKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | > VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR

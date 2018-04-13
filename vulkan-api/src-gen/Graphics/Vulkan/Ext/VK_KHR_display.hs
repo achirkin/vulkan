@@ -171,12 +171,17 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@ and @vkGetPhysicalDeviceDisplayPropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR
 --
 vkGetPhysicalDeviceDisplayPropertiesKHR ::
                                         VkPhysicalDevice -- ^ physicalDevice
@@ -185,14 +190,10 @@ vkGetPhysicalDeviceDisplayPropertiesKHR ::
                                                      -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
                                                                                    -> IO VkResult
 vkGetPhysicalDeviceDisplayPropertiesKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetPhysicalDeviceDisplayPropertiesKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR)
 
-{-# WARNING
-vkGetPhysicalDeviceDisplayPropertiesKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetPhysicalDeviceDisplayPropertiesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -234,12 +235,17 @@ foreign import ccall safe "vkGetPhysicalDeviceDisplayPropertiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@ and @vkGetPhysicalDeviceDisplayPropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR
 --
 vkGetPhysicalDeviceDisplayPropertiesKHRSafe ::
                                             VkPhysicalDevice -- ^ physicalDevice
@@ -252,10 +258,6 @@ vkGetPhysicalDeviceDisplayPropertiesKHRSafe
   = vkGetPhysicalDeviceDisplayPropertiesKHR
 
 {-# INLINE vkGetPhysicalDeviceDisplayPropertiesKHRSafe #-}
-
-{-# WARNING
-vkGetPhysicalDeviceDisplayPropertiesKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -357,12 +359,17 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@ and @vkGetPhysicalDeviceDisplayPlanePropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --
 vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
                                              VkPhysicalDevice -- ^ physicalDevice
@@ -372,14 +379,10 @@ vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
                                                  Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
                                                                                  -> IO VkResult
 vkGetPhysicalDeviceDisplayPlanePropertiesKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetPhysicalDeviceDisplayPlanePropertiesKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR)
 
-{-# WARNING
-vkGetPhysicalDeviceDisplayPlanePropertiesKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -422,12 +425,17 @@ foreign import ccall safe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@ and @vkGetPhysicalDeviceDisplayPlanePropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --
 vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe ::
                                                  VkPhysicalDevice -- ^ physicalDevice
@@ -440,10 +448,6 @@ vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
   = vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
 {-# INLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe #-}
-
-{-# WARNING
-vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -548,12 +552,17 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayPlaneSupportedDisplaysKHRSafe@ and @vkGetDisplayPlaneSupportedDisplaysKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetInstanceProc @VkGetDisplayPlaneSupportedDisplaysKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR
 --
 vkGetDisplayPlaneSupportedDisplaysKHR ::
                                       VkPhysicalDevice -- ^ physicalDevice
@@ -563,14 +572,10 @@ vkGetDisplayPlaneSupportedDisplaysKHR ::
                                                              -> Ptr VkDisplayKHR -- ^ pDisplays
                                                                                  -> IO VkResult
 vkGetDisplayPlaneSupportedDisplaysKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetDisplayPlaneSupportedDisplaysKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR)
 
-{-# WARNING
-vkGetDisplayPlaneSupportedDisplaysKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetDisplayPlaneSupportedDisplaysKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -615,12 +620,17 @@ foreign import ccall safe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayPlaneSupportedDisplaysKHRSafe@ and @vkGetDisplayPlaneSupportedDisplaysKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetInstanceProc @VkGetDisplayPlaneSupportedDisplaysKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR
 --
 vkGetDisplayPlaneSupportedDisplaysKHRSafe ::
                                           VkPhysicalDevice -- ^ physicalDevice
@@ -633,10 +643,6 @@ vkGetDisplayPlaneSupportedDisplaysKHRSafe
   = vkGetDisplayPlaneSupportedDisplaysKHR
 
 {-# INLINE vkGetDisplayPlaneSupportedDisplaysKHRSafe #-}
-
-{-# WARNING
-vkGetDisplayPlaneSupportedDisplaysKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -742,12 +748,17 @@ foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayModePropertiesKHRSafe@ and @vkGetDisplayModePropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayModePropertiesKHR <- vkGetInstanceProc @VkGetDisplayModePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayModePropertiesKHR <- vkGetProc @VkGetDisplayModePropertiesKHR
 --
 vkGetDisplayModePropertiesKHR ::
                               VkPhysicalDevice -- ^ physicalDevice
@@ -758,14 +769,9 @@ vkGetDisplayModePropertiesKHR ::
                                              -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
                                                                                -> IO VkResult
 vkGetDisplayModePropertiesKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetDisplayModePropertiesKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO (vkGetProc @VkGetDisplayModePropertiesKHR)
 
-{-# WARNING
-vkGetDisplayModePropertiesKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetDisplayModePropertiesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -811,12 +817,17 @@ foreign import ccall safe "vkGetDisplayModePropertiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayModePropertiesKHRSafe@ and @vkGetDisplayModePropertiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayModePropertiesKHR <- vkGetInstanceProc @VkGetDisplayModePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayModePropertiesKHR <- vkGetProc @VkGetDisplayModePropertiesKHR
 --
 vkGetDisplayModePropertiesKHRSafe ::
                                   VkPhysicalDevice -- ^ physicalDevice
@@ -829,10 +840,6 @@ vkGetDisplayModePropertiesKHRSafe ::
 vkGetDisplayModePropertiesKHRSafe = vkGetDisplayModePropertiesKHR
 
 {-# INLINE vkGetDisplayModePropertiesKHRSafe #-}
-
-{-# WARNING
-vkGetDisplayModePropertiesKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -940,12 +947,17 @@ foreign import ccall unsafe "vkCreateDisplayModeKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayModeKHR vkCreateDisplayModeKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateDisplayModeKHRSafe@ and @vkCreateDisplayModeKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateDisplayModeKHR <- vkGetInstanceProc @VkCreateDisplayModeKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayModeKHR <- vkGetProc @VkCreateDisplayModeKHR
 --
 vkCreateDisplayModeKHR ::
                        VkPhysicalDevice -- ^ physicalDevice
@@ -958,14 +970,9 @@ vkCreateDisplayModeKHR ::
                                                        -> Ptr VkDisplayModeKHR -- ^ pMode
                                                                                -> IO VkResult
 vkCreateDisplayModeKHR
-  = error $
-      "Cannot lookup C symbol \"vkCreateDisplayModeKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO (vkGetProc @VkCreateDisplayModeKHR)
 
-{-# WARNING
-vkCreateDisplayModeKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkCreateDisplayModeKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -1015,12 +1022,17 @@ foreign import ccall safe "vkCreateDisplayModeKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayModeKHR vkCreateDisplayModeKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateDisplayModeKHRSafe@ and @vkCreateDisplayModeKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateDisplayModeKHR <- vkGetInstanceProc @VkCreateDisplayModeKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayModeKHR <- vkGetProc @VkCreateDisplayModeKHR
 --
 vkCreateDisplayModeKHRSafe ::
                            VkPhysicalDevice -- ^ physicalDevice
@@ -1035,10 +1047,6 @@ vkCreateDisplayModeKHRSafe ::
 vkCreateDisplayModeKHRSafe = vkCreateDisplayModeKHR
 
 {-# INLINE vkCreateDisplayModeKHRSafe #-}
-
-{-# WARNING
-vkCreateDisplayModeKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -1145,12 +1153,17 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayPlaneCapabilitiesKHRSafe@ and @vkGetDisplayPlaneCapabilitiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayPlaneCapabilitiesKHR <- vkGetInstanceProc @VkGetDisplayPlaneCapabilitiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneCapabilitiesKHR <- vkGetProc @VkGetDisplayPlaneCapabilitiesKHR
 --
 vkGetDisplayPlaneCapabilitiesKHR ::
                                  VkPhysicalDevice -- ^ physicalDevice
@@ -1161,14 +1174,10 @@ vkGetDisplayPlaneCapabilitiesKHR ::
                                             -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
                                                                                  -> IO VkResult
 vkGetDisplayPlaneCapabilitiesKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetDisplayPlaneCapabilitiesKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetDisplayPlaneCapabilitiesKHR)
 
-{-# WARNING
-vkGetDisplayPlaneCapabilitiesKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetDisplayPlaneCapabilitiesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -1214,12 +1223,17 @@ foreign import ccall safe "vkGetDisplayPlaneCapabilitiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDisplayPlaneCapabilitiesKHRSafe@ and @vkGetDisplayPlaneCapabilitiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDisplayPlaneCapabilitiesKHR <- vkGetInstanceProc @VkGetDisplayPlaneCapabilitiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneCapabilitiesKHR <- vkGetProc @VkGetDisplayPlaneCapabilitiesKHR
 --
 vkGetDisplayPlaneCapabilitiesKHRSafe ::
                                      VkPhysicalDevice -- ^ physicalDevice
@@ -1233,10 +1247,6 @@ vkGetDisplayPlaneCapabilitiesKHRSafe
   = vkGetDisplayPlaneCapabilitiesKHR
 
 {-# INLINE vkGetDisplayPlaneCapabilitiesKHRSafe #-}
-
-{-# WARNING
-vkGetDisplayPlaneCapabilitiesKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -1343,12 +1353,17 @@ foreign import ccall unsafe "vkCreateDisplayPlaneSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateDisplayPlaneSurfaceKHRSafe@ and @vkCreateDisplayPlaneSurfaceKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateDisplayPlaneSurfaceKHR <- vkGetInstanceProc @VkCreateDisplayPlaneSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayPlaneSurfaceKHR <- vkGetProc @VkCreateDisplayPlaneSurfaceKHR
 --
 vkCreateDisplayPlaneSurfaceKHR ::
                                VkInstance -- ^ instance
@@ -1358,16 +1373,11 @@ vkCreateDisplayPlaneSurfaceKHR ::
                                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                                  -> IO VkResult
-vkCreateDisplayPlaneSurfaceKHR d
+vkCreateDisplayPlaneSurfaceKHR
   = unsafeDupablePerformIO
-      (vkGetInstanceProc @VkCreateDisplayPlaneSurfaceKHR d)
-      d
+      (vkGetProc @VkCreateDisplayPlaneSurfaceKHR)
 
-{-# INLINE vkCreateDisplayPlaneSurfaceKHR #-}
-
-{-# WARNING
-vkCreateDisplayPlaneSurfaceKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkCreateDisplayPlaneSurfaceKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -1413,12 +1423,17 @@ foreign import ccall safe "vkCreateDisplayPlaneSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateDisplayPlaneSurfaceKHRSafe@ and @vkCreateDisplayPlaneSurfaceKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateDisplayPlaneSurfaceKHR <- vkGetInstanceProc @VkCreateDisplayPlaneSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayPlaneSurfaceKHR <- vkGetProc @VkCreateDisplayPlaneSurfaceKHR
 --
 vkCreateDisplayPlaneSurfaceKHRSafe ::
                                    VkInstance -- ^ instance
@@ -1431,10 +1446,6 @@ vkCreateDisplayPlaneSurfaceKHRSafe ::
 vkCreateDisplayPlaneSurfaceKHRSafe = vkCreateDisplayPlaneSurfaceKHR
 
 {-# INLINE vkCreateDisplayPlaneSurfaceKHRSafe #-}
-
-{-# WARNING
-vkCreateDisplayPlaneSurfaceKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetInstanceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.

@@ -68,6 +68,8 @@ genCabalFile coreVersions eModules = T.unlines $
       )
    <> ( [text|
           library
+
+              build-tools:         hsc2hs
               hs-source-dirs:      src, src-gen
               exposed-modules:
         |]
@@ -88,7 +90,9 @@ genCabalFile coreVersions eModules = T.unlines $
               if $anyNativeVersion
                 if os(windows)
                   extra-libraries: vulkan-1
-                else
+                if os(darwin)
+                  frameworks:      MoltenVK
+                if !os(windows) && !os(darwin)
                   extra-libraries: vulkan
               else
                 cpp-options:       -DVK_NO_PROTOTYPES

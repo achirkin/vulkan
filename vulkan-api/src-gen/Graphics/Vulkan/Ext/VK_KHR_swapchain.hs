@@ -206,12 +206,17 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateSwapchainKHRSafe@ and @vkCreateSwapchainKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateSwapchainKHR <- vkGetDeviceProc @VkCreateSwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSwapchainKHR <- vkGetProc @VkCreateSwapchainKHR
 --
 vkCreateSwapchainKHR ::
                      VkDevice -- ^ device
@@ -221,15 +226,10 @@ vkCreateSwapchainKHR ::
                          Ptr VkAllocationCallbacks -- ^ pAllocator
                                                    -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                          -> IO VkResult
-vkCreateSwapchainKHR d
-  = unsafeDupablePerformIO (vkGetDeviceProc @VkCreateSwapchainKHR d)
-      d
+vkCreateSwapchainKHR
+  = unsafeDupablePerformIO (vkGetProc @VkCreateSwapchainKHR)
 
-{-# INLINE vkCreateSwapchainKHR #-}
-
-{-# WARNING
-vkCreateSwapchainKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkCreateSwapchainKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -275,12 +275,17 @@ foreign import ccall safe "vkCreateSwapchainKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkCreateSwapchainKHRSafe@ and @vkCreateSwapchainKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myCreateSwapchainKHR <- vkGetDeviceProc @VkCreateSwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSwapchainKHR <- vkGetProc @VkCreateSwapchainKHR
 --
 vkCreateSwapchainKHRSafe ::
                          VkDevice -- ^ device
@@ -293,10 +298,6 @@ vkCreateSwapchainKHRSafe ::
 vkCreateSwapchainKHRSafe = vkCreateSwapchainKHR
 
 {-# INLINE vkCreateSwapchainKHRSafe #-}
-
-{-# WARNING
-vkCreateSwapchainKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -382,27 +383,27 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkDestroySwapchainKHRSafe@ and @vkDestroySwapchainKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myDestroySwapchainKHR <- vkGetDeviceProc @VkDestroySwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myDestroySwapchainKHR <- vkGetProc @VkDestroySwapchainKHR
 --
 vkDestroySwapchainKHR ::
                       VkDevice -- ^ device
                                -> VkSwapchainKHR -- ^ swapchain
                                                  -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                               -> IO ()
-vkDestroySwapchainKHR d
-  = unsafeDupablePerformIO (vkGetDeviceProc @VkDestroySwapchainKHR d)
-      d
+vkDestroySwapchainKHR
+  = unsafeDupablePerformIO (vkGetProc @VkDestroySwapchainKHR)
 
-{-# INLINE vkDestroySwapchainKHR #-}
-
-{-# WARNING
-vkDestroySwapchainKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkDestroySwapchainKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -435,12 +436,17 @@ foreign import ccall safe "vkDestroySwapchainKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkDestroySwapchainKHRSafe@ and @vkDestroySwapchainKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myDestroySwapchainKHR <- vkGetDeviceProc @VkDestroySwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myDestroySwapchainKHR <- vkGetProc @VkDestroySwapchainKHR
 --
 vkDestroySwapchainKHRSafe ::
                           VkDevice -- ^ device
@@ -450,10 +456,6 @@ vkDestroySwapchainKHRSafe ::
 vkDestroySwapchainKHRSafe = vkDestroySwapchainKHR
 
 {-# INLINE vkDestroySwapchainKHRSafe #-}
-
-{-# WARNING
-vkDestroySwapchainKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | > void vkDestroySwapchainKHR
@@ -544,12 +546,17 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetSwapchainImagesKHRSafe@ and @vkGetSwapchainImagesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetSwapchainImagesKHR <- vkGetDeviceProc @VkGetSwapchainImagesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetSwapchainImagesKHR <- vkGetProc @VkGetSwapchainImagesKHR
 --
 vkGetSwapchainImagesKHR ::
                         VkDevice -- ^ device
@@ -558,16 +565,10 @@ vkGetSwapchainImagesKHR ::
                                          -> Ptr Word32 -- ^ pSwapchainImageCount
                                                        -> Ptr VkImage -- ^ pSwapchainImages
                                                                       -> IO VkResult
-vkGetSwapchainImagesKHR d
-  = unsafeDupablePerformIO
-      (vkGetDeviceProc @VkGetSwapchainImagesKHR d)
-      d
+vkGetSwapchainImagesKHR
+  = unsafeDupablePerformIO (vkGetProc @VkGetSwapchainImagesKHR)
 
-{-# INLINE vkGetSwapchainImagesKHR #-}
-
-{-# WARNING
-vkGetSwapchainImagesKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkGetSwapchainImagesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -612,12 +613,17 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetSwapchainImagesKHRSafe@ and @vkGetSwapchainImagesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetSwapchainImagesKHR <- vkGetDeviceProc @VkGetSwapchainImagesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetSwapchainImagesKHR <- vkGetProc @VkGetSwapchainImagesKHR
 --
 vkGetSwapchainImagesKHRSafe ::
                             VkDevice -- ^ device
@@ -629,10 +635,6 @@ vkGetSwapchainImagesKHRSafe ::
 vkGetSwapchainImagesKHRSafe = vkGetSwapchainImagesKHR
 
 {-# INLINE vkGetSwapchainImagesKHRSafe #-}
-
-{-# WARNING
-vkGetSwapchainImagesKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -738,12 +740,17 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkAcquireNextImageKHRSafe@ and @vkAcquireNextImageKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myAcquireNextImageKHR <- vkGetDeviceProc @VkAcquireNextImageKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImageKHR <- vkGetProc @VkAcquireNextImageKHR
 --
 vkAcquireNextImageKHR ::
                       VkDevice -- ^ device
@@ -755,15 +762,10 @@ vkAcquireNextImageKHR ::
                                                 -> VkFence -- ^ fence
                                                            -> Ptr Word32 -- ^ pImageIndex
                                                                          -> IO VkResult
-vkAcquireNextImageKHR d
-  = unsafeDupablePerformIO (vkGetDeviceProc @VkAcquireNextImageKHR d)
-      d
+vkAcquireNextImageKHR
+  = unsafeDupablePerformIO (vkGetProc @VkAcquireNextImageKHR)
 
-{-# INLINE vkAcquireNextImageKHR #-}
-
-{-# WARNING
-vkAcquireNextImageKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkAcquireNextImageKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -815,12 +817,17 @@ foreign import ccall safe "vkAcquireNextImageKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkAcquireNextImageKHRSafe@ and @vkAcquireNextImageKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myAcquireNextImageKHR <- vkGetDeviceProc @VkAcquireNextImageKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImageKHR <- vkGetProc @VkAcquireNextImageKHR
 --
 vkAcquireNextImageKHRSafe ::
                           VkDevice -- ^ device
@@ -835,10 +842,6 @@ vkAcquireNextImageKHRSafe ::
 vkAcquireNextImageKHRSafe = vkAcquireNextImageKHR
 
 {-# INLINE vkAcquireNextImageKHRSafe #-}
-
-{-# WARNING
-vkAcquireNextImageKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
@@ -931,25 +934,25 @@ foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkQueuePresentKHRSafe@ and @vkQueuePresentKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myQueuePresentKHR <- vkGetInstanceProc @VkQueuePresentKHR vkInstance
 --
+-- or less efficient:
+--
+-- > myQueuePresentKHR <- vkGetProc @VkQueuePresentKHR
+--
 vkQueuePresentKHR :: VkQueue -- ^ queue
                              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                      -> IO VkResult
 vkQueuePresentKHR
-  = error $
-      "Cannot lookup C symbol \"vkQueuePresentKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-0 cabal flag."
+  = unsafeDupablePerformIO (vkGetProc @VkQueuePresentKHR)
 
-{-# WARNING
-vkQueuePresentKHR"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
+{-# NOINLINE vkQueuePresentKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_0
@@ -986,12 +989,17 @@ foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-0@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkQueuePresentKHRSafe@ and @vkQueuePresentKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myQueuePresentKHR <- vkGetInstanceProc @VkQueuePresentKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myQueuePresentKHR <- vkGetProc @VkQueuePresentKHR
 --
 vkQueuePresentKHRSafe ::
                       VkQueue -- ^ queue
@@ -1000,10 +1008,6 @@ vkQueuePresentKHRSafe ::
 vkQueuePresentKHRSafe = vkQueuePresentKHR
 
 {-# INLINE vkQueuePresentKHRSafe #-}
-
-{-# WARNING
-vkQueuePresentKHRSafe"This function requires useNativeFFI-1-0 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-0.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
@@ -1147,28 +1151,28 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDeviceGroupPresentCapabilitiesKHRSafe@ and @vkGetDeviceGroupPresentCapabilitiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetDeviceProc @VkGetDeviceGroupPresentCapabilitiesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR
 --
 vkGetDeviceGroupPresentCapabilitiesKHR ::
                                        VkDevice -- ^ device
                                                 ->
                                          Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
                                                                                  -> IO VkResult
-vkGetDeviceGroupPresentCapabilitiesKHR d
+vkGetDeviceGroupPresentCapabilitiesKHR
   = unsafeDupablePerformIO
-      (vkGetDeviceProc @VkGetDeviceGroupPresentCapabilitiesKHR d)
-      d
+      (vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR)
 
-{-# INLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
-
-{-# WARNING
-vkGetDeviceGroupPresentCapabilitiesKHR"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
+{-# NOINLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_1
@@ -1206,12 +1210,17 @@ foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDeviceGroupPresentCapabilitiesKHRSafe@ and @vkGetDeviceGroupPresentCapabilitiesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetDeviceProc @VkGetDeviceGroupPresentCapabilitiesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR
 --
 vkGetDeviceGroupPresentCapabilitiesKHRSafe ::
                                            VkDevice -- ^ device
@@ -1222,10 +1231,6 @@ vkGetDeviceGroupPresentCapabilitiesKHRSafe
   = vkGetDeviceGroupPresentCapabilitiesKHR
 
 {-# INLINE vkGetDeviceGroupPresentCapabilitiesKHRSafe #-}
-
-{-# WARNING
-vkGetDeviceGroupPresentCapabilitiesKHRSafe"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -1323,12 +1328,17 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDeviceGroupSurfacePresentModesKHRSafe@ and @vkGetDeviceGroupSurfacePresentModesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetDeviceProc @VkGetDeviceGroupSurfacePresentModesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR
 --
 vkGetDeviceGroupSurfacePresentModesKHR ::
                                        VkDevice -- ^ device
@@ -1337,16 +1347,11 @@ vkGetDeviceGroupSurfacePresentModesKHR ::
                                                       ->
                                            Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
                                                                                 -> IO VkResult
-vkGetDeviceGroupSurfacePresentModesKHR d
+vkGetDeviceGroupSurfacePresentModesKHR
   = unsafeDupablePerformIO
-      (vkGetDeviceProc @VkGetDeviceGroupSurfacePresentModesKHR d)
-      d
+      (vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR)
 
-{-# INLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
-
-{-# WARNING
-vkGetDeviceGroupSurfacePresentModesKHR"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
+{-# NOINLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_1
@@ -1388,12 +1393,17 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetDeviceGroupSurfacePresentModesKHRSafe@ and @vkGetDeviceGroupSurfacePresentModesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetDeviceProc @VkGetDeviceGroupSurfacePresentModesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR
 --
 vkGetDeviceGroupSurfacePresentModesKHRSafe ::
                                            VkDevice -- ^ device
@@ -1406,10 +1416,6 @@ vkGetDeviceGroupSurfacePresentModesKHRSafe
   = vkGetDeviceGroupSurfacePresentModesKHR
 
 {-# INLINE vkGetDeviceGroupSurfacePresentModesKHRSafe #-}
-
-{-# WARNING
-vkGetDeviceGroupSurfacePresentModesKHRSafe"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -1513,12 +1519,17 @@ foreign import ccall unsafe
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDevicePresentRectanglesKHRSafe@ and @vkGetPhysicalDevicePresentRectanglesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetInstanceProc @VkGetPhysicalDevicePresentRectanglesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR
 --
 vkGetPhysicalDevicePresentRectanglesKHR ::
                                         VkPhysicalDevice -- ^ physicalDevice
@@ -1528,14 +1539,10 @@ vkGetPhysicalDevicePresentRectanglesKHR ::
                                                                      -> Ptr VkRect2D -- ^ pRects
                                                                                      -> IO VkResult
 vkGetPhysicalDevicePresentRectanglesKHR
-  = error $
-      "Cannot lookup C symbol \"vkGetPhysicalDevicePresentRectanglesKHR\" because its signature does not provide VkInstance argument. "
-        ++
-        "Either lookup the function manually or enable useNativeFFI-1-1 cabal flag."
+  = unsafeDupablePerformIO
+      (vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR)
 
-{-# WARNING
-vkGetPhysicalDevicePresentRectanglesKHR"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
+{-# NOINLINE vkGetPhysicalDevicePresentRectanglesKHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_1
@@ -1580,12 +1587,17 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkGetPhysicalDevicePresentRectanglesKHRSafe@ and @vkGetPhysicalDevicePresentRectanglesKHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetInstanceProc @VkGetPhysicalDevicePresentRectanglesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR
 --
 vkGetPhysicalDevicePresentRectanglesKHRSafe ::
                                             VkPhysicalDevice -- ^ physicalDevice
@@ -1599,10 +1611,6 @@ vkGetPhysicalDevicePresentRectanglesKHRSafe
   = vkGetPhysicalDevicePresentRectanglesKHR
 
 {-# INLINE vkGetPhysicalDevicePresentRectanglesKHRSafe #-}
-
-{-# WARNING
-vkGetPhysicalDevicePresentRectanglesKHRSafe"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise, it causes a runtime error!\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -1701,12 +1709,17 @@ foreign import ccall unsafe "vkAcquireNextImage2KHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkAcquireNextImage2KHRSafe@ and @vkAcquireNextImage2KHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myAcquireNextImage2KHR <- vkGetDeviceProc @VkAcquireNextImage2KHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImage2KHR <- vkGetProc @VkAcquireNextImage2KHR
 --
 vkAcquireNextImage2KHR ::
                        VkDevice -- ^ device
@@ -1714,16 +1727,10 @@ vkAcquireNextImage2KHR ::
                          Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
                                                        -> Ptr Word32 -- ^ pImageIndex
                                                                      -> IO VkResult
-vkAcquireNextImage2KHR d
-  = unsafeDupablePerformIO
-      (vkGetDeviceProc @VkAcquireNextImage2KHR d)
-      d
+vkAcquireNextImage2KHR
+  = unsafeDupablePerformIO (vkGetProc @VkAcquireNextImage2KHR)
 
-{-# INLINE vkAcquireNextImage2KHR #-}
-
-{-# WARNING
-vkAcquireNextImage2KHR"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
+{-# NOINLINE vkAcquireNextImage2KHR #-}
 #endif
 
 #ifdef NATIVE_FFI_VK_VERSION_1_1
@@ -1765,12 +1772,17 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 --
--- __Note:__ You should refrain from using this function directly
---           unless flag @useNativeFFI-1-1@ is enabled.
+-- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
+--           dynamically at runtime;
+--           @vkAcquireNextImage2KHRSafe@ and @vkAcquireNextImage2KHR@ are synonyms.
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
 -- > myAcquireNextImage2KHR <- vkGetDeviceProc @VkAcquireNextImage2KHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImage2KHR <- vkGetProc @VkAcquireNextImage2KHR
 --
 vkAcquireNextImage2KHRSafe ::
                            VkDevice -- ^ device
@@ -1781,10 +1793,6 @@ vkAcquireNextImage2KHRSafe ::
 vkAcquireNextImage2KHRSafe = vkAcquireNextImage2KHR
 
 {-# INLINE vkAcquireNextImage2KHRSafe #-}
-
-{-# WARNING
-vkAcquireNextImage2KHRSafe"This function requires useNativeFFI-1-1 to use FFI for locating the C symbol statically.\nOtherwise it may call vkGetDeviceProcAddr every time you execute it if not inlined.\nYou should either lookup the function address manually or enable flag useNativeFFI-1-1.\n"
- #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
