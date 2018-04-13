@@ -11,4 +11,4 @@ install:
 
 script:
   - cabal configure
-  - cabal build
+  - travis_wait 60 cabal build
