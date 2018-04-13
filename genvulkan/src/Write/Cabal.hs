@@ -84,10 +84,6 @@ genCabalFile coreVersions eModules = T.unlines $
                   base >= 4.7 && < 5
               default-language:    Haskell2010
               ghc-options:         -Wall
-              if os(windows)
-                extra-libraries:   vulkan-1
-              else
-                extra-libraries:   vulkan
               include-dirs:        include
               if $anyNativeVersion
                 if os(windows)
@@ -108,7 +104,7 @@ genCabalFile coreVersions eModules = T.unlines $
   where -- flag(useNativeFFI-1-1) || flag(useNativeFFI-1-0)
     anyNativeVersion = T.intercalate " || "
       $ map (\p -> "flag(" <> unProtectFlag (protectFlag p) <> ")") coreVersions
-  
+
     library_version = T.pack $ showVersion version
     spaces = "        "
 
