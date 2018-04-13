@@ -1,0 +1,14 @@
+language: haskell
+ghc:
+  - "8.0"
+  - "8.2"
+  - "head"
+env:
+  - PACKAGEDIR="vulkan-api"
+before_install: cd ${PACKAGEDIR}
+install:
+  - cabal install --only-dependencies
+
+script:
+  - cabal configure
+  - cabal build
