@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/achirkin/vulkan.svg)](http://travis-ci.org/achirkin/vulkan)
+
 The aim of this project is to provide low-level low-overhead haskell bindings to vulkan api.
 Features of the bindings:
 
@@ -16,18 +18,33 @@ Features of the bindings:
   * Document the generated code as much as possible with references to vulkan registry.
   * Use no dependencies except `base`.
 
-# vulkan-api
+# vulkan-api [![Hackage](https://img.shields.io/hackage/v/vulkan-api.svg)](https://hackage.haskell.org/package/vulkan-api)
 
 Generated haskell bindings for vulkan api.
+
 
   * The generated library is rather big; consider using `-split-objs` or `-split-sections`
     to reduce the size of a project.
     Note, enabling one of these options can make the library compiling painfully
     long time (take some coffee... or watch a movie).
-  * Please, post a bug report if getting `undefined symbol` error during linking
-    of the library.
-    As a temporary workaround, one can disable `shared` library and dynamic executable linking
-    of haskell packages.
+
+  * By default, the library loads vulkan symbols explicitly dynamically at runtime.
+    Therefore, it does not even link to the vulkan loader library at compile time.
+
+  * The library provides `useNativeFFI-x-y` flags that enable haskell FFI functions
+    for vulkan core `x.y` symbols.
+    Turning on any of these flags enables compile-time linking to the vulkan loader library.
+
+  * All available extension functions can be found at runtime using simple lookup
+    functions in `Graphics.Vulkan.Marshal.Proc` module.
+
+
+Tested using `stack` on:
+
+  * Windows 10 x64 with [LunarG Vulkan SDK](https://www.lunarg.com/vulkan-sdk/)
+  * Mac OS High Sierra 10.13.4 with [MoltenVK](https://github.com/KhronosGroup/MoltenVK)
+  * Ubuntu 17.10 x64 with [LunarG Vulkan SDK](https://www.lunarg.com/vulkan-sdk/)
+
 
 # genvulkan
 
@@ -60,25 +77,13 @@ A more haskell-style example of a vulkan program.
 This is a combined result of programs in `vulkan-examples` with a little cleaner code.
 
 
-## Building
-
-
-Note, you need modern drivers to support ulkan api, e.g. nvidia drivers 367+.
-If your drivers are ok, install vulkan libs and everything should be fine.
-
-Basically, ghc should be able to see vulkan dynamic library and to discover header files.
-
-On ubuntu, these can be installed as follows:
-```bash
-sudo apt-get install libvulkan-dev
-```
 
 
 ## TODO
 
 ##### vulkan-api
 
- * [ ] Try to build it on various platforms, check if specifying foreign code calling
+ * [x] Try to build it on various platforms, check if specifying foreign code calling
        convention is necessary.
  * [ ] Remove unsafe FFI call to functions that could break at runtime.
        Currently we have both safe and unsafe versions for every function.
@@ -94,6 +99,8 @@ sudo apt-get install libvulkan-dev
  * [ ] Check whether we can disallow writing `returnedonly` fields.
  * [x] Investigate the need to use the extension loader (`vulkan-docs/src/ext_loader`).
        `Graphics.Vulkan.Marshal.Proc` seems to be good enough for this low-level binding.
+ * [ ] `vkGetProc` and `vkLookupProc` currently lookup functions in a shared library,
+       even if vulkan is linked statically. This can be dangerous! Need to check it.
 
 ##### genvulkan
 

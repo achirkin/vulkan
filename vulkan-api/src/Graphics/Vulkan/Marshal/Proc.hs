@@ -105,11 +105,15 @@ vkLookupDeviceProc i
 {-# INLINE vkLookupDeviceProc #-}
 
 
--- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery.
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery,
+--   such as @dlsym@ or @GetProcAddress@.
 --   This function throws an error on failure.
 --
 --   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a symbol,
 --    because they can return a more optimized version of a function.
+--   Also note, you are likely not able to lookup an extension funcion using
+--   `vkGetProc`, because a corresponding symbol is simply not present in the
+--   vulkan loader library.
 vkGetProc :: forall proc . VulkanProc proc => IO (VkProcType proc)
 vkGetProc = alloca $ \errPtr -> do
     fp <- withForeignPtr _vkDlHandle $ \h ->
@@ -119,11 +123,15 @@ vkGetProc = alloca $ \errPtr -> do
     return $ unwrapVkProcPtr @proc fp
 {-# INLINE vkGetProc #-}
 
--- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery.
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery,
+--   such as @dlsym@ or @GetProcAddress@.
 --   This function returns @Nothing@ on failure ignoring an error message.
 --
 --   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a symbol,
 --    because they can return a more optimized version of a function.
+--   Also note, you are likely not able to lookup an extension funcion using
+--   `vkLookupProc`, because a corresponding symbol is simply not present in the
+--   vulkan loader library.
 vkLookupProc :: forall proc . VulkanProc proc => IO (Maybe (VkProcType proc))
 vkLookupProc = alloca $ \errPtr -> do
     fp <- withForeignPtr _vkDlHandle $ \h ->
