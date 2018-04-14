@@ -1,5 +1,3 @@
-[![Build Status](https://secure.travis-ci.org/achirkin/vulkan.svg)](http://travis-ci.org/achirkin/vulkan)
-
 The aim of this project is to provide low-level low-overhead haskell bindings to vulkan api.
 Features of the bindings:
 
