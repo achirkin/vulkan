@@ -83,8 +83,11 @@ type HS_vkTrimCommandPoolKHR =
 
 type PFN_vkTrimCommandPoolKHR = FunPtr HS_vkTrimCommandPoolKHR
 
-foreign import ccall "dynamic" unwrapVkTrimCommandPoolKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkTrimCommandPoolKHR ::
                PFN_vkTrimCommandPoolKHR -> HS_vkTrimCommandPoolKHR
+
+foreign import ccall safe "dynamic" unwrapVkTrimCommandPoolKHRSafe
+               :: PFN_vkTrimCommandPoolKHR -> HS_vkTrimCommandPoolKHR
 
 instance VulkanProc "vkTrimCommandPoolKHR" where
         type VkProcType "vkTrimCommandPoolKHR" = HS_vkTrimCommandPoolKHR
@@ -94,6 +97,9 @@ instance VulkanProc "vkTrimCommandPoolKHR" where
         unwrapVkProcPtr = unwrapVkTrimCommandPoolKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_MAINTENANCE1_SPEC_VERSION :: (Num a, Eq a) => a
 

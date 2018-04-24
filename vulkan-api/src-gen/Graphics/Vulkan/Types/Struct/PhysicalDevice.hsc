@@ -1965,7 +1965,7 @@ instance VulkanMarshal
         type ReturnedOnly VkPhysicalDeviceDescriptorIndexingFeaturesEXT =
              'False -- ' closing tick for hsc2hs
         type StructExtends VkPhysicalDeviceDescriptorIndexingFeaturesEXT =
-             '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
+             '[VkPhysicalDeviceFeatures2, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceDescriptorIndexingFeaturesEXT
@@ -3301,7 +3301,7 @@ instance VulkanMarshal
         type ReturnedOnly VkPhysicalDeviceDescriptorIndexingPropertiesEXT =
              'True -- ' closing tick for hsc2hs
         type StructExtends VkPhysicalDeviceDescriptorIndexingPropertiesEXT
-             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
+             = '[VkPhysicalDeviceProperties2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceDescriptorIndexingPropertiesEXT

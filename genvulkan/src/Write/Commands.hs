@@ -116,34 +116,28 @@ genCommand nativeFFI command@VkCommand
                 |]
 
             comment1 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
-                     [ "###ifdef " <> pCppTxt
-                     , "|"
-                     , fromMaybe mempty funComment
-                     , ""
-                     , [text|
-                         __Note:__ flag @$pFlagTxt@ is enabled, so this function is implemented
-                                   as a @foreign import@ call to C Vulkan loader.
-                       |]
-                     ]
-            comment2 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
-                     [ "###else"
-                     , "|"
-                     , fromMaybe mempty funComment
-                     , ""
-                     , [text|
-                         __Note:__ flag @$pFlagTxt@ is disabled, so this function is looked up
-                                   dynamically at runtime;
-                                   @$cnameSafeTxt@ and @$cnameTxt@ are synonyms.
+               [ "|"
+               , fromMaybe mempty funComment
+               , ""
+               , [text|
+                    __Note:__ When @$pFlagTxt@ cabal flag is enabled, this function is linked statically
+                              as a @foreign import@ call to C Vulkan loader.
+                              Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 
-                         Independently of the flag setting, you can lookup the function manually at runtime:
+                    Independently of the flag setting, you can lookup the function manually at runtime:
 
-                         > $mkStubFun
+                    > $mkStubFun
 
-                         or less efficient:
+                    or less efficient:
 
-                         > $stubFunTxt <- vkGetProc @$vkInstanceProcSymbolT
-                       |]
-                     ]
+                    > $stubFunTxt <- vkGetProc @$vkInstanceProcSymbolT
+
+                    __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+                              using @unsafe@ of @safe@ FFI respectively.
+                 |]
+               , "###ifdef " <> pCppTxt
+               ]
+            comment2 = Just $ CodeComment AboveCode ' ' "###else"
             comment3 = Just $ CodeComment BelowCode ' ' "###endif"
 
         -- foreign import unsafe
@@ -159,9 +153,10 @@ genCommand nativeFFI command@VkCommand
         writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlaySafe Nothing False))
                           (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
         writeDecl $ TypeSig comment2 [Nothing <$ unqualify cnameSafe] funtype
-        writeDecl $ parseDecl'
-          [text|$cnameSafeTxt = $cnameTxt|]
-        writeDecl $ InlineSig comment3 True Nothing (Nothing <$ cnameSafe)
+        writeDecl $ parseDecl' $ [text|
+            $cnameSafeTxt = unsafeDupablePerformIO (vkGetProcSafe @$vkInstanceProcSymbolT)
+          |]
+        writeDecl $ InlineSig comment3 False Nothing (Nothing <$ cnameSafe)
 
 
 
@@ -176,8 +171,13 @@ genCommand nativeFFI command@VkCommand
     -- unwrap C function pointer
     writeDecl $ parseDecl'
       [text|
-        foreign import ccall "dynamic"
+        foreign import ccall unsafe "dynamic"
             $unwrapFun :: $funTypeNameTxtPFN -> $funTypeNameTxtHS
+      |]
+    writeDecl $ parseDecl'
+      [text|
+        foreign import ccall safe "dynamic"
+            $unwrapFunSafe :: $funTypeNameTxtPFN -> $funTypeNameTxtHS
       |]
 
     -- symbol discovery instance
@@ -193,6 +193,8 @@ genCommand nativeFFI command@VkCommand
           {-# INLINE vkProcSymbol #-}
           unwrapVkProcPtr = $unwrapFun
           {-# INLINE unwrapVkProcPtr #-}
+          unwrapVkProcPtrSafe = $unwrapFunSafe
+          {-# INLINE unwrapVkProcPtrSafe #-}
       |]
 
     writeAllExports
@@ -282,6 +284,7 @@ genCommand nativeFFI command@VkCommand
       ""     -> ""
       (x:xs) -> toUpper x : xs
     unwrapFun = T.pack $ "unwrap" <> firstUpCName
+    unwrapFunSafe = T.pack $ "unwrap" <> firstUpCName <> "Safe"
     vkInstanceProcSymbol = T.pack $ '_' : firstUpCName
     vkInstanceProcSymbolT = T.pack firstUpCName
 

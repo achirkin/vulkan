@@ -102,8 +102,11 @@ type HS_vkCreateViSurfaceNN =
 
 type PFN_vkCreateViSurfaceNN = FunPtr HS_vkCreateViSurfaceNN
 
-foreign import ccall "dynamic" unwrapVkCreateViSurfaceNN ::
+foreign import ccall unsafe "dynamic" unwrapVkCreateViSurfaceNN ::
                PFN_vkCreateViSurfaceNN -> HS_vkCreateViSurfaceNN
+
+foreign import ccall safe "dynamic" unwrapVkCreateViSurfaceNNSafe
+               :: PFN_vkCreateViSurfaceNN -> HS_vkCreateViSurfaceNN
 
 instance VulkanProc "vkCreateViSurfaceNN" where
         type VkProcType "vkCreateViSurfaceNN" = HS_vkCreateViSurfaceNN
@@ -113,6 +116,9 @@ instance VulkanProc "vkCreateViSurfaceNN" where
         unwrapVkProcPtr = unwrapVkCreateViSurfaceNN
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateViSurfaceNNSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NN_VI_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

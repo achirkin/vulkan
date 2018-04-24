@@ -45,6 +45,7 @@ data VkExtAttrs
   , extType      :: Maybe Text
   , extNumber    :: Int
   , extReqExts   :: [VkExtensionName]
+  , extReqCore   :: Maybe Text -- TODO: add a proper version handling
   , extProtect   :: Maybe ProtectDef
   , extPlatform  :: Maybe VkPlatformName
     -- ^ seems to be used in a similar way as extProtect
@@ -84,6 +85,7 @@ parseVkExtAttrs = do
   extPlatform  <- lift $ fmap VkPlatformName <$> attr "platform"
   extReqExts   <- commaSeparated <$> lift (attr "requires")
                   >>= mapM toHaskellExt
+  extReqCore   <- lift (attr "requiresCore")
   eextNumber   <- decOrHex <$> forceAttr "number"
   extComment   <- lift $ attr "comment"
   case eextNumber of

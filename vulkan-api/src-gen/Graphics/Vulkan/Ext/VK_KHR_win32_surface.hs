@@ -94,7 +94,6 @@ is_VkCreateWin32SurfaceKHR
 
 type VkCreateWin32SurfaceKHR = "vkCreateWin32SurfaceKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -109,9 +108,22 @@ type VkCreateWin32SurfaceKHR = "vkCreateWin32SurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetInstanceProc @VkCreateWin32SurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHR ::
                VkInstance -- ^ instance
@@ -123,32 +135,6 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateWin32SurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateWin32SurfaceKHRSafe@ and @vkCreateWin32SurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateWin32SurfaceKHR <- vkGetInstanceProc @VkCreateWin32SurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
---
 vkCreateWin32SurfaceKHR ::
                         VkInstance -- ^ instance
                                    ->
@@ -163,7 +149,6 @@ vkCreateWin32SurfaceKHR
 {-# NOINLINE vkCreateWin32SurfaceKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -178,9 +163,22 @@ vkCreateWin32SurfaceKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetInstanceProc @VkCreateWin32SurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -192,32 +190,6 @@ foreign import ccall safe "vkCreateWin32SurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateWin32SurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateWin32SurfaceKHRSafe@ and @vkCreateWin32SurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateWin32SurfaceKHR <- vkGetInstanceProc @VkCreateWin32SurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
---
 vkCreateWin32SurfaceKHRSafe ::
                             VkInstance -- ^ instance
                                        ->
@@ -226,9 +198,10 @@ vkCreateWin32SurfaceKHRSafe ::
                                 Ptr VkAllocationCallbacks -- ^ pAllocator
                                                           -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                               -> IO VkResult
-vkCreateWin32SurfaceKHRSafe = vkCreateWin32SurfaceKHR
+vkCreateWin32SurfaceKHRSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCreateWin32SurfaceKHR)
 
-{-# INLINE vkCreateWin32SurfaceKHRSafe #-}
+{-# NOINLINE vkCreateWin32SurfaceKHRSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -255,7 +228,11 @@ type HS_vkCreateWin32SurfaceKHR =
 type PFN_vkCreateWin32SurfaceKHR =
      FunPtr HS_vkCreateWin32SurfaceKHR
 
-foreign import ccall "dynamic" unwrapVkCreateWin32SurfaceKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkCreateWin32SurfaceKHR
+               :: PFN_vkCreateWin32SurfaceKHR -> HS_vkCreateWin32SurfaceKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateWin32SurfaceKHRSafe ::
                PFN_vkCreateWin32SurfaceKHR -> HS_vkCreateWin32SurfaceKHR
 
 instance VulkanProc "vkCreateWin32SurfaceKHR" where
@@ -267,6 +244,9 @@ instance VulkanProc "vkCreateWin32SurfaceKHR" where
         unwrapVkProcPtr = unwrapVkCreateWin32SurfaceKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateWin32SurfaceKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceWin32PresentationSupportKHR :: CString
 
@@ -292,7 +272,6 @@ is_VkGetPhysicalDeviceWin32PresentationSupportKHR
 type VkGetPhysicalDeviceWin32PresentationSupportKHR =
      "vkGetPhysicalDeviceWin32PresentationSupportKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -301,28 +280,9 @@ type VkGetPhysicalDeviceWin32PresentationSupportKHR =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
-               vkGetPhysicalDeviceWin32PresentationSupportKHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Word32 -- ^ queueFamilyIndex
-                                          -> IO VkBool32
-
-#else
--- |
--- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@ and @vkGetPhysicalDeviceWin32PresentationSupportKHR@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -332,6 +292,18 @@ foreign import ccall unsafe
 --
 -- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
+foreign import ccall unsafe
+               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
+               vkGetPhysicalDeviceWin32PresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> IO VkBool32
+
+#else
 vkGetPhysicalDeviceWin32PresentationSupportKHR ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 -> Word32 -- ^ queueFamilyIndex
@@ -343,7 +315,6 @@ vkGetPhysicalDeviceWin32PresentationSupportKHR
 {-# NOINLINE vkGetPhysicalDeviceWin32PresentationSupportKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -352,28 +323,9 @@ vkGetPhysicalDeviceWin32PresentationSupportKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe
-               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
-               vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Word32 -- ^ queueFamilyIndex
-                                          -> IO VkBool32
-
-#else
--- |
--- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@ and @vkGetPhysicalDeviceWin32PresentationSupportKHR@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -383,14 +335,27 @@ foreign import ccall safe
 --
 -- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
+foreign import ccall safe
+               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
+               vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> IO VkBool32
+
+#else
 vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
                                                    VkPhysicalDevice -- ^ physicalDevice
                                                                     -> Word32 -- ^ queueFamilyIndex
                                                                               -> IO VkBool32
 vkGetPhysicalDeviceWin32PresentationSupportKHRSafe
-  = vkGetPhysicalDeviceWin32PresentationSupportKHR
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceWin32PresentationSupportKHR)
 
-{-# INLINE vkGetPhysicalDeviceWin32PresentationSupportKHRSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceWin32PresentationSupportKHRSafe #-}
 #endif
 
 -- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
@@ -407,8 +372,13 @@ type HS_vkGetPhysicalDeviceWin32PresentationSupportKHR =
 type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceWin32PresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
                PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
 
@@ -424,6 +394,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_WIN32_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

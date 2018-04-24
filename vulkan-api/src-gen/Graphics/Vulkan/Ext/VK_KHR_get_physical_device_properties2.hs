@@ -160,8 +160,13 @@ type HS_vkGetPhysicalDeviceFeatures2KHR =
 type PFN_vkGetPhysicalDeviceFeatures2KHR =
      FunPtr HS_vkGetPhysicalDeviceFeatures2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceFeatures2KHR ::
+               PFN_vkGetPhysicalDeviceFeatures2KHR ->
+                 HS_vkGetPhysicalDeviceFeatures2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceFeatures2KHRSafe ::
                PFN_vkGetPhysicalDeviceFeatures2KHR ->
                  HS_vkGetPhysicalDeviceFeatures2KHR
 
@@ -174,6 +179,9 @@ instance VulkanProc "vkGetPhysicalDeviceFeatures2KHR" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFeatures2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeatures2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceProperties2KHR :: CString
 
@@ -213,8 +221,13 @@ type HS_vkGetPhysicalDeviceProperties2KHR =
 type PFN_vkGetPhysicalDeviceProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceProperties2KHR ::
+               PFN_vkGetPhysicalDeviceProperties2KHR ->
+                 HS_vkGetPhysicalDeviceProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceProperties2KHR ->
                  HS_vkGetPhysicalDeviceProperties2KHR
 
@@ -227,6 +240,9 @@ instance VulkanProc "vkGetPhysicalDeviceProperties2KHR" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceFormatProperties2KHR :: CString
 
@@ -268,8 +284,13 @@ type HS_vkGetPhysicalDeviceFormatProperties2KHR =
 type PFN_vkGetPhysicalDeviceFormatProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceFormatProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceFormatProperties2KHR ::
+               PFN_vkGetPhysicalDeviceFormatProperties2KHR ->
+                 HS_vkGetPhysicalDeviceFormatProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceFormatProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceFormatProperties2KHR
 
@@ -282,6 +303,10 @@ instance VulkanProc "vkGetPhysicalDeviceFormatProperties2KHR" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFormatProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceFormatProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceImageFormatProperties2KHR :: CString
 
@@ -330,8 +355,13 @@ type HS_vkGetPhysicalDeviceImageFormatProperties2KHR =
 type PFN_vkGetPhysicalDeviceImageFormatProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceImageFormatProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceImageFormatProperties2KHR ::
+               PFN_vkGetPhysicalDeviceImageFormatProperties2KHR ->
+                 HS_vkGetPhysicalDeviceImageFormatProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceImageFormatProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceImageFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceImageFormatProperties2KHR
 
@@ -346,6 +376,10 @@ instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties2KHR"
           = unwrapVkGetPhysicalDeviceImageFormatProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceImageFormatProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties2KHR :: CString
 
@@ -389,8 +423,13 @@ type HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR =
 type PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHR ::
+               PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR ->
+                 HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR ->
                  HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
 
@@ -405,6 +444,10 @@ instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
           = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMemoryProperties2KHR :: CString
 
@@ -444,8 +487,13 @@ type HS_vkGetPhysicalDeviceMemoryProperties2KHR =
 type PFN_vkGetPhysicalDeviceMemoryProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceMemoryProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceMemoryProperties2KHR ::
+               PFN_vkGetPhysicalDeviceMemoryProperties2KHR ->
+                 HS_vkGetPhysicalDeviceMemoryProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceMemoryProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceMemoryProperties2KHR ->
                  HS_vkGetPhysicalDeviceMemoryProperties2KHR
 
@@ -458,6 +506,10 @@ instance VulkanProc "vkGetPhysicalDeviceMemoryProperties2KHR" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMemoryProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceMemoryProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR ::
         CString
@@ -507,8 +559,13 @@ type HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR =
 type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR =
      FunPtr HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHR ::
+               PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR ->
+                 HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRSafe ::
                PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
@@ -525,6 +582,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a

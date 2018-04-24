@@ -116,8 +116,13 @@ type HS_vkGetImageMemoryRequirements2KHR =
 type PFN_vkGetImageMemoryRequirements2KHR =
      FunPtr HS_vkGetImageMemoryRequirements2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetImageMemoryRequirements2KHR ::
+               PFN_vkGetImageMemoryRequirements2KHR ->
+                 HS_vkGetImageMemoryRequirements2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetImageMemoryRequirements2KHRSafe ::
                PFN_vkGetImageMemoryRequirements2KHR ->
                  HS_vkGetImageMemoryRequirements2KHR
 
@@ -130,6 +135,9 @@ instance VulkanProc "vkGetImageMemoryRequirements2KHR" where
         unwrapVkProcPtr = unwrapVkGetImageMemoryRequirements2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetBufferMemoryRequirements2KHR :: CString
 
@@ -173,8 +181,13 @@ type HS_vkGetBufferMemoryRequirements2KHR =
 type PFN_vkGetBufferMemoryRequirements2KHR =
      FunPtr HS_vkGetBufferMemoryRequirements2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetBufferMemoryRequirements2KHR ::
+               PFN_vkGetBufferMemoryRequirements2KHR ->
+                 HS_vkGetBufferMemoryRequirements2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetBufferMemoryRequirements2KHRSafe ::
                PFN_vkGetBufferMemoryRequirements2KHR ->
                  HS_vkGetBufferMemoryRequirements2KHR
 
@@ -187,6 +200,9 @@ instance VulkanProc "vkGetBufferMemoryRequirements2KHR" where
         unwrapVkProcPtr = unwrapVkGetBufferMemoryRequirements2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageSparseMemoryRequirements2KHR :: CString
 
@@ -232,8 +248,13 @@ type HS_vkGetImageSparseMemoryRequirements2KHR =
 type PFN_vkGetImageSparseMemoryRequirements2KHR =
      FunPtr HS_vkGetImageSparseMemoryRequirements2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetImageSparseMemoryRequirements2KHR ::
+               PFN_vkGetImageSparseMemoryRequirements2KHR ->
+                 HS_vkGetImageSparseMemoryRequirements2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetImageSparseMemoryRequirements2KHRSafe ::
                PFN_vkGetImageSparseMemoryRequirements2KHR ->
                  HS_vkGetImageSparseMemoryRequirements2KHR
 
@@ -246,6 +267,10 @@ instance VulkanProc "vkGetImageSparseMemoryRequirements2KHR" where
         unwrapVkProcPtr = unwrapVkGetImageSparseMemoryRequirements2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetImageSparseMemoryRequirements2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -120,8 +120,13 @@ type HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
 type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
      FunPtr HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+               PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ->
+                 HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe ::
                PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ->
                  HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
@@ -138,6 +143,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

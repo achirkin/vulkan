@@ -117,7 +117,12 @@ type HS_vkCmdPushDescriptorSetKHR =
 type PFN_vkCmdPushDescriptorSetKHR =
      FunPtr HS_vkCmdPushDescriptorSetKHR
 
-foreign import ccall "dynamic" unwrapVkCmdPushDescriptorSetKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdPushDescriptorSetKHR ::
+               PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdPushDescriptorSetKHRSafe ::
                PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
 
 instance VulkanProc "vkCmdPushDescriptorSetKHR" where
@@ -129,6 +134,9 @@ instance VulkanProc "vkCmdPushDescriptorSetKHR" where
         unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdPushDescriptorSetKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -221,8 +229,13 @@ type HS_vkCmdPushDescriptorSetWithTemplateKHR =
 type PFN_vkCmdPushDescriptorSetWithTemplateKHR =
      FunPtr HS_vkCmdPushDescriptorSetWithTemplateKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCmdPushDescriptorSetWithTemplateKHR ::
+               PFN_vkCmdPushDescriptorSetWithTemplateKHR ->
+                 HS_vkCmdPushDescriptorSetWithTemplateKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdPushDescriptorSetWithTemplateKHRSafe ::
                PFN_vkCmdPushDescriptorSetWithTemplateKHR ->
                  HS_vkCmdPushDescriptorSetWithTemplateKHR
 
@@ -235,6 +248,10 @@ instance VulkanProc "vkCmdPushDescriptorSetWithTemplateKHR" where
         unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetWithTemplateKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkCmdPushDescriptorSetWithTemplateKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 -- | Create descriptor update template for pushed descriptor updates
 pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::

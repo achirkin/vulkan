@@ -101,8 +101,13 @@ type HS_vkGetDescriptorSetLayoutSupportKHR =
 type PFN_vkGetDescriptorSetLayoutSupportKHR =
      FunPtr HS_vkGetDescriptorSetLayoutSupportKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetDescriptorSetLayoutSupportKHR ::
+               PFN_vkGetDescriptorSetLayoutSupportKHR ->
+                 HS_vkGetDescriptorSetLayoutSupportKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetDescriptorSetLayoutSupportKHRSafe ::
                PFN_vkGetDescriptorSetLayoutSupportKHR ->
                  HS_vkGetDescriptorSetLayoutSupportKHR
 
@@ -115,6 +120,9 @@ instance VulkanProc "vkGetDescriptorSetLayoutSupportKHR" where
         unwrapVkProcPtr = unwrapVkGetDescriptorSetLayoutSupportKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_MAINTENANCE3_SPEC_VERSION :: (Num a, Eq a) => a
 

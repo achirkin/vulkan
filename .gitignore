@@ -2,3 +2,4 @@
 .vscode
 cabal-helper*
 out
+*/dist

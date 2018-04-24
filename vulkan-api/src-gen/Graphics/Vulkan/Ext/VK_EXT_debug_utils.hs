@@ -144,8 +144,12 @@ type HS_vkSetDebugUtilsObjectNameEXT =
 type PFN_vkSetDebugUtilsObjectNameEXT =
      FunPtr HS_vkSetDebugUtilsObjectNameEXT
 
-foreign import ccall "dynamic" unwrapVkSetDebugUtilsObjectNameEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkSetDebugUtilsObjectNameEXT ::
+               PFN_vkSetDebugUtilsObjectNameEXT -> HS_vkSetDebugUtilsObjectNameEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkSetDebugUtilsObjectNameEXTSafe ::
                PFN_vkSetDebugUtilsObjectNameEXT -> HS_vkSetDebugUtilsObjectNameEXT
 
 instance VulkanProc "vkSetDebugUtilsObjectNameEXT" where
@@ -157,6 +161,9 @@ instance VulkanProc "vkSetDebugUtilsObjectNameEXT" where
         unwrapVkProcPtr = unwrapVkSetDebugUtilsObjectNameEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkSetDebugUtilsObjectNameEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkSetDebugUtilsObjectTagEXT :: CString
 
@@ -196,7 +203,12 @@ type HS_vkSetDebugUtilsObjectTagEXT =
 type PFN_vkSetDebugUtilsObjectTagEXT =
      FunPtr HS_vkSetDebugUtilsObjectTagEXT
 
-foreign import ccall "dynamic" unwrapVkSetDebugUtilsObjectTagEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkSetDebugUtilsObjectTagEXT ::
+               PFN_vkSetDebugUtilsObjectTagEXT -> HS_vkSetDebugUtilsObjectTagEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkSetDebugUtilsObjectTagEXTSafe ::
                PFN_vkSetDebugUtilsObjectTagEXT -> HS_vkSetDebugUtilsObjectTagEXT
 
 instance VulkanProc "vkSetDebugUtilsObjectTagEXT" where
@@ -208,6 +220,9 @@ instance VulkanProc "vkSetDebugUtilsObjectTagEXT" where
         unwrapVkProcPtr = unwrapVkSetDebugUtilsObjectTagEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkSetDebugUtilsObjectTagEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueBeginDebugUtilsLabelEXT :: CString
 
@@ -245,8 +260,13 @@ type HS_vkQueueBeginDebugUtilsLabelEXT =
 type PFN_vkQueueBeginDebugUtilsLabelEXT =
      FunPtr HS_vkQueueBeginDebugUtilsLabelEXT
 
-foreign import ccall "dynamic" unwrapVkQueueBeginDebugUtilsLabelEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkQueueBeginDebugUtilsLabelEXT ::
+               PFN_vkQueueBeginDebugUtilsLabelEXT ->
+                 HS_vkQueueBeginDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkQueueBeginDebugUtilsLabelEXTSafe ::
                PFN_vkQueueBeginDebugUtilsLabelEXT ->
                  HS_vkQueueBeginDebugUtilsLabelEXT
 
@@ -259,6 +279,9 @@ instance VulkanProc "vkQueueBeginDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkQueueBeginDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkQueueBeginDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueEndDebugUtilsLabelEXT :: CString
 
@@ -291,8 +314,12 @@ type HS_vkQueueEndDebugUtilsLabelEXT = VkQueue -- ^ queue
 type PFN_vkQueueEndDebugUtilsLabelEXT =
      FunPtr HS_vkQueueEndDebugUtilsLabelEXT
 
-foreign import ccall "dynamic" unwrapVkQueueEndDebugUtilsLabelEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkQueueEndDebugUtilsLabelEXT ::
+               PFN_vkQueueEndDebugUtilsLabelEXT -> HS_vkQueueEndDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkQueueEndDebugUtilsLabelEXTSafe ::
                PFN_vkQueueEndDebugUtilsLabelEXT -> HS_vkQueueEndDebugUtilsLabelEXT
 
 instance VulkanProc "vkQueueEndDebugUtilsLabelEXT" where
@@ -304,6 +331,9 @@ instance VulkanProc "vkQueueEndDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkQueueEndDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkQueueEndDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueInsertDebugUtilsLabelEXT :: CString
 
@@ -341,8 +371,13 @@ type HS_vkQueueInsertDebugUtilsLabelEXT =
 type PFN_vkQueueInsertDebugUtilsLabelEXT =
      FunPtr HS_vkQueueInsertDebugUtilsLabelEXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkQueueInsertDebugUtilsLabelEXT ::
+               PFN_vkQueueInsertDebugUtilsLabelEXT ->
+                 HS_vkQueueInsertDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkQueueInsertDebugUtilsLabelEXTSafe ::
                PFN_vkQueueInsertDebugUtilsLabelEXT ->
                  HS_vkQueueInsertDebugUtilsLabelEXT
 
@@ -355,6 +390,9 @@ instance VulkanProc "vkQueueInsertDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkQueueInsertDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkQueueInsertDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBeginDebugUtilsLabelEXT :: CString
 
@@ -394,8 +432,12 @@ type HS_vkCmdBeginDebugUtilsLabelEXT =
 type PFN_vkCmdBeginDebugUtilsLabelEXT =
      FunPtr HS_vkCmdBeginDebugUtilsLabelEXT
 
-foreign import ccall "dynamic" unwrapVkCmdBeginDebugUtilsLabelEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdBeginDebugUtilsLabelEXT ::
+               PFN_vkCmdBeginDebugUtilsLabelEXT -> HS_vkCmdBeginDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdBeginDebugUtilsLabelEXTSafe ::
                PFN_vkCmdBeginDebugUtilsLabelEXT -> HS_vkCmdBeginDebugUtilsLabelEXT
 
 instance VulkanProc "vkCmdBeginDebugUtilsLabelEXT" where
@@ -407,6 +449,9 @@ instance VulkanProc "vkCmdBeginDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkCmdBeginDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdBeginDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdEndDebugUtilsLabelEXT :: CString
 
@@ -442,7 +487,12 @@ type HS_vkCmdEndDebugUtilsLabelEXT = VkCommandBuffer -- ^ commandBuffer
 type PFN_vkCmdEndDebugUtilsLabelEXT =
      FunPtr HS_vkCmdEndDebugUtilsLabelEXT
 
-foreign import ccall "dynamic" unwrapVkCmdEndDebugUtilsLabelEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdEndDebugUtilsLabelEXT ::
+               PFN_vkCmdEndDebugUtilsLabelEXT -> HS_vkCmdEndDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdEndDebugUtilsLabelEXTSafe ::
                PFN_vkCmdEndDebugUtilsLabelEXT -> HS_vkCmdEndDebugUtilsLabelEXT
 
 instance VulkanProc "vkCmdEndDebugUtilsLabelEXT" where
@@ -454,6 +504,9 @@ instance VulkanProc "vkCmdEndDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkCmdEndDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdEndDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdInsertDebugUtilsLabelEXT :: CString
 
@@ -495,8 +548,13 @@ type HS_vkCmdInsertDebugUtilsLabelEXT =
 type PFN_vkCmdInsertDebugUtilsLabelEXT =
      FunPtr HS_vkCmdInsertDebugUtilsLabelEXT
 
-foreign import ccall "dynamic" unwrapVkCmdInsertDebugUtilsLabelEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdInsertDebugUtilsLabelEXT ::
+               PFN_vkCmdInsertDebugUtilsLabelEXT ->
+                 HS_vkCmdInsertDebugUtilsLabelEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdInsertDebugUtilsLabelEXTSafe ::
                PFN_vkCmdInsertDebugUtilsLabelEXT ->
                  HS_vkCmdInsertDebugUtilsLabelEXT
 
@@ -509,6 +567,9 @@ instance VulkanProc "vkCmdInsertDebugUtilsLabelEXT" where
         unwrapVkProcPtr = unwrapVkCmdInsertDebugUtilsLabelEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdInsertDebugUtilsLabelEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDebugUtilsMessengerEXT :: CString
 
@@ -557,8 +618,13 @@ type HS_vkCreateDebugUtilsMessengerEXT =
 type PFN_vkCreateDebugUtilsMessengerEXT =
      FunPtr HS_vkCreateDebugUtilsMessengerEXT
 
-foreign import ccall "dynamic" unwrapVkCreateDebugUtilsMessengerEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateDebugUtilsMessengerEXT ::
+               PFN_vkCreateDebugUtilsMessengerEXT ->
+                 HS_vkCreateDebugUtilsMessengerEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateDebugUtilsMessengerEXTSafe ::
                PFN_vkCreateDebugUtilsMessengerEXT ->
                  HS_vkCreateDebugUtilsMessengerEXT
 
@@ -571,6 +637,9 @@ instance VulkanProc "vkCreateDebugUtilsMessengerEXT" where
         unwrapVkProcPtr = unwrapVkCreateDebugUtilsMessengerEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateDebugUtilsMessengerEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDebugUtilsMessengerEXT :: CString
 
@@ -611,8 +680,13 @@ type HS_vkDestroyDebugUtilsMessengerEXT =
 type PFN_vkDestroyDebugUtilsMessengerEXT =
      FunPtr HS_vkDestroyDebugUtilsMessengerEXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroyDebugUtilsMessengerEXT ::
+               PFN_vkDestroyDebugUtilsMessengerEXT ->
+                 HS_vkDestroyDebugUtilsMessengerEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyDebugUtilsMessengerEXTSafe ::
                PFN_vkDestroyDebugUtilsMessengerEXT ->
                  HS_vkDestroyDebugUtilsMessengerEXT
 
@@ -625,6 +699,9 @@ instance VulkanProc "vkDestroyDebugUtilsMessengerEXT" where
         unwrapVkProcPtr = unwrapVkDestroyDebugUtilsMessengerEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyDebugUtilsMessengerEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkSubmitDebugUtilsMessageEXT :: CString
 
@@ -667,8 +744,12 @@ type HS_vkSubmitDebugUtilsMessageEXT =
 type PFN_vkSubmitDebugUtilsMessageEXT =
      FunPtr HS_vkSubmitDebugUtilsMessageEXT
 
-foreign import ccall "dynamic" unwrapVkSubmitDebugUtilsMessageEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkSubmitDebugUtilsMessageEXT ::
+               PFN_vkSubmitDebugUtilsMessageEXT -> HS_vkSubmitDebugUtilsMessageEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkSubmitDebugUtilsMessageEXTSafe ::
                PFN_vkSubmitDebugUtilsMessageEXT -> HS_vkSubmitDebugUtilsMessageEXT
 
 instance VulkanProc "vkSubmitDebugUtilsMessageEXT" where
@@ -680,6 +761,9 @@ instance VulkanProc "vkSubmitDebugUtilsMessageEXT" where
         unwrapVkProcPtr = unwrapVkSubmitDebugUtilsMessageEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkSubmitDebugUtilsMessageEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -113,8 +113,13 @@ type HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
 type PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::
+               PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ->
+                 HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe ::
                PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
@@ -130,6 +135,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

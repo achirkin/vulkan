@@ -31,6 +31,8 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         module Graphics.Vulkan.Types.Enum.Device,
         module Graphics.Vulkan.Types.Struct.PhysicalDevice,
         module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
+        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.Shader,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -53,7 +55,9 @@ import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.Descriptor
 import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import           Graphics.Vulkan.Types.Enum.Result                   (VkResult (..))
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
 import           Graphics.Vulkan.Types.Enum.Shader
 import           Graphics.Vulkan.Types.Enum.StructureType
 import           Graphics.Vulkan.Types.Struct.Descriptor

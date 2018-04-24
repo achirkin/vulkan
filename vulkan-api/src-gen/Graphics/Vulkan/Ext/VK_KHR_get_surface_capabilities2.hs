@@ -116,8 +116,13 @@ type HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR =
 type PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR =
      FunPtr HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR ::
+               PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR ->
+                 HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHRSafe ::
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
 
@@ -131,6 +136,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSurfaceFormats2KHR :: CString
 
@@ -178,8 +187,13 @@ type HS_vkGetPhysicalDeviceSurfaceFormats2KHR =
 type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR =
      FunPtr HS_vkGetPhysicalDeviceSurfaceFormats2KHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceSurfaceFormats2KHR ::
+               PFN_vkGetPhysicalDeviceSurfaceFormats2KHR ->
+                 HS_vkGetPhysicalDeviceSurfaceFormats2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceSurfaceFormats2KHRSafe ::
                PFN_vkGetPhysicalDeviceSurfaceFormats2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceFormats2KHR
 
@@ -192,6 +206,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceFormats2KHR" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceFormats2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceSurfaceFormats2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a

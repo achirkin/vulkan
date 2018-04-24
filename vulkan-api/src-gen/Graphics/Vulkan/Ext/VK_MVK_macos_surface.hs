@@ -105,7 +105,11 @@ type HS_vkCreateMacOSSurfaceMVK =
 type PFN_vkCreateMacOSSurfaceMVK =
      FunPtr HS_vkCreateMacOSSurfaceMVK
 
-foreign import ccall "dynamic" unwrapVkCreateMacOSSurfaceMVK ::
+foreign import ccall unsafe "dynamic" unwrapVkCreateMacOSSurfaceMVK
+               :: PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateMacOSSurfaceMVKSafe ::
                PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
 
 instance VulkanProc "vkCreateMacOSSurfaceMVK" where
@@ -117,6 +121,9 @@ instance VulkanProc "vkCreateMacOSSurfaceMVK" where
         unwrapVkProcPtr = unwrapVkCreateMacOSSurfaceMVK
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateMacOSSurfaceMVKSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_MVK_MACOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

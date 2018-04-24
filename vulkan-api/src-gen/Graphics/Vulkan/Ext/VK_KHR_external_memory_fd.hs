@@ -95,7 +95,10 @@ type HS_vkGetMemoryFdKHR =
 
 type PFN_vkGetMemoryFdKHR = FunPtr HS_vkGetMemoryFdKHR
 
-foreign import ccall "dynamic" unwrapVkGetMemoryFdKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkGetMemoryFdKHR ::
+               PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
+
+foreign import ccall safe "dynamic" unwrapVkGetMemoryFdKHRSafe ::
                PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
 
 instance VulkanProc "vkGetMemoryFdKHR" where
@@ -106,6 +109,9 @@ instance VulkanProc "vkGetMemoryFdKHR" where
         unwrapVkProcPtr = unwrapVkGetMemoryFdKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryFdKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetMemoryFdPropertiesKHR :: CString
 
@@ -150,7 +156,12 @@ type HS_vkGetMemoryFdPropertiesKHR =
 type PFN_vkGetMemoryFdPropertiesKHR =
      FunPtr HS_vkGetMemoryFdPropertiesKHR
 
-foreign import ccall "dynamic" unwrapVkGetMemoryFdPropertiesKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetMemoryFdPropertiesKHR ::
+               PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryFdPropertiesKHRSafe ::
                PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
 
 instance VulkanProc "vkGetMemoryFdPropertiesKHR" where
@@ -162,6 +173,9 @@ instance VulkanProc "vkGetMemoryFdPropertiesKHR" where
         unwrapVkProcPtr = unwrapVkGetMemoryFdPropertiesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryFdPropertiesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION :: (Num a, Eq a) =>
         a

@@ -103,7 +103,11 @@ type HS_vkGetSwapchainStatusKHR =
 type PFN_vkGetSwapchainStatusKHR =
      FunPtr HS_vkGetSwapchainStatusKHR
 
-foreign import ccall "dynamic" unwrapVkGetSwapchainStatusKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkGetSwapchainStatusKHR
+               :: PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetSwapchainStatusKHRSafe ::
                PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
 
 instance VulkanProc "vkGetSwapchainStatusKHR" where
@@ -115,6 +119,9 @@ instance VulkanProc "vkGetSwapchainStatusKHR" where
         unwrapVkProcPtr = unwrapVkGetSwapchainStatusKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetSwapchainStatusKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION ::
         (Num a, Eq a) => a

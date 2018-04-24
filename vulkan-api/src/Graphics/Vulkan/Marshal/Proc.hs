@@ -14,11 +14,20 @@
 --   Also, have a look at
 --   <https://vulkan.lunarg.com/doc/view/1.1.70.1/windows/loader_and_layer_interface.html#user-content-instance-versus-device Vulkan loader>
 --   page to see other reasons to load symbols manually.
+--
+--   All FFI functions are present in two variants:
+--   @xxx@ and @xxxSafe@, the names stand for @foreign import unsafe xxx@
+--   @foreign import safe xxx@ respectively.
+--   In particular, that does not mean that @vkGetXxxProcSafe@ function cannot fail;
+--   it does error if the symbol is not present in the implementation!
 module Graphics.Vulkan.Marshal.Proc
   ( VulkanProc (..)
-  , vkGetInstanceProc, vkLookupInstanceProc
-  , vkGetDeviceProc, vkLookupDeviceProc
-  , vkGetProc, vkLookupProc
+  , vkGetInstanceProc, vkGetInstanceProcSafe
+  , vkLookupInstanceProc, vkLookupInstanceProcSafe
+  , vkGetDeviceProc, vkGetDeviceProcSafe
+  , vkLookupDeviceProc, vkLookupDeviceProcSafe
+  , vkGetProc, vkGetProcSafe
+  , vkLookupProc, vkLookupProcSafe
     -- * Re-export `Foreign.Ptr`
   , FunPtr, nullFunPtr
   ) where
@@ -55,7 +64,21 @@ class VulkanProc (proc :: Symbol) where
     -- | Name of the vulkan function
     vkProcSymbol :: CString
     -- | Convert C function pointer to an ordinary haskell function.
+    --   Use unsafe FFI (@foreign import unsafe "dynamic" ...@).
     unwrapVkProcPtr :: FunPtr (VkProcType proc) -> VkProcType proc
+    -- | Convert C function pointer to an ordinary haskell function.
+    --   Use safe FFI (@foreign import safe "dynamic" ...@).
+    unwrapVkProcPtrSafe :: FunPtr (VkProcType proc) -> VkProcType proc
+
+
+
+--------------------------------------------------------------------------------
+-- Unsafe FFI version
+--------------------------------------------------------------------------------
+
+
+
+
 
 -- | An alternative to @vkGetInstanceProcAddr@ with type inference
 --   and protection against typos.
@@ -141,6 +164,100 @@ vkLookupProc = alloca $ \errPtr -> do
 
 
 
+--------------------------------------------------------------------------------
+-- Safe FFI version
+--------------------------------------------------------------------------------
+
+
+
+-- | An alternative to @vkGetInstanceProcAddr@ with type inference
+--   and protection against typos.
+--
+--   Note, this is an unsafe function;
+--   it does not check if the result of @vkGetInstanceProcAddr@
+--   is a null function pointer.
+vkGetInstanceProcSafe :: forall proc . VulkanProc proc
+                  => VkInstance -> IO (VkProcType proc)
+vkGetInstanceProcSafe i
+  = unwrapVkProcPtrSafe @proc
+  <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+{-# INLINE vkGetInstanceProcSafe #-}
+
+-- | An alternative to @vkGetInstanceProcAddr@ with type inference
+--   and protection against typos.
+vkLookupInstanceProcSafe :: forall proc . VulkanProc proc
+                     => VkInstance -> IO (Maybe (VkProcType proc))
+vkLookupInstanceProcSafe i
+    = f <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+  where
+    f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrSafe @proc p)
+{-# INLINE vkLookupInstanceProcSafe #-}
+
+
+-- | An alternative to @vkGetDeviceProcAddr@ with type inference
+--   and protection against typos.
+--
+--   Note, this is an unsafe function;
+--   it does not check if the result of @vkGetInstanceProcAddr@
+--   is a null function pointer.
+vkGetDeviceProcSafe :: forall proc . VulkanProc proc
+                => VkDevice -> IO (VkProcType proc)
+vkGetDeviceProcSafe i
+  = unwrapVkProcPtrSafe @proc
+  <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+{-# INLINE vkGetDeviceProcSafe #-}
+
+-- | An alternative to @vkGetDeviceProcAddr@ with type inference
+--   and protection against typos.
+vkLookupDeviceProcSafe :: forall proc . VulkanProc proc
+                   => VkDevice -> IO (Maybe (VkProcType proc))
+vkLookupDeviceProcSafe i
+    = f <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+  where
+    f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrSafe @proc p)
+{-# INLINE vkLookupDeviceProcSafe #-}
+
+
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery,
+--   such as @dlsym@ or @GetProcAddress@.
+--   This function throws an error on failure.
+--
+--   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a symbol,
+--    because they can return a more optimized version of a function.
+--   Also note, you are likely not able to lookup an extension funcion using
+--   `vkGetProc`, because a corresponding symbol is simply not present in the
+--   vulkan loader library.
+vkGetProcSafe :: forall proc . VulkanProc proc => IO (VkProcType proc)
+vkGetProcSafe = alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (vkProcSymbol @proc) errPtr
+    when (fp == nullFunPtr) $ peek errPtr >>= peekCString >>= fail .
+        ("An error happened while trying to load vulkan symbol dynamically: " ++)
+    return $ unwrapVkProcPtrSafe @proc fp
+{-# INLINE vkGetProcSafe #-}
+
+-- | Locate Vulkan symbol dynamically at runtime using platform-dependent machinery,
+--   such as @dlsym@ or @GetProcAddress@.
+--   This function returns @Nothing@ on failure ignoring an error message.
+--
+--   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a symbol,
+--    because they can return a more optimized version of a function.
+--   Also note, you are likely not able to lookup an extension funcion using
+--   `vkLookupProc`, because a corresponding symbol is simply not present in the
+--   vulkan loader library.
+vkLookupProcSafe :: forall proc . VulkanProc proc => IO (Maybe (VkProcType proc))
+vkLookupProcSafe = alloca $ \errPtr -> do
+    fp <- withForeignPtr _vkDlHandle $ \h ->
+      c'vkdll_dlsym h (vkProcSymbol @proc) errPtr
+    return $ if fp == nullFunPtr then Nothing else Just (unwrapVkProcPtrSafe @proc fp)
+{-# INLINE vkLookupProcSafe #-}
+
+
+
+
+--------------------------------------------------------------------------------
+-- Utilities
+--------------------------------------------------------------------------------
 
 
 

@@ -125,8 +125,13 @@ type HS_vkCreateDebugReportCallbackEXT =
 type PFN_vkCreateDebugReportCallbackEXT =
      FunPtr HS_vkCreateDebugReportCallbackEXT
 
-foreign import ccall "dynamic" unwrapVkCreateDebugReportCallbackEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateDebugReportCallbackEXT ::
+               PFN_vkCreateDebugReportCallbackEXT ->
+                 HS_vkCreateDebugReportCallbackEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateDebugReportCallbackEXTSafe ::
                PFN_vkCreateDebugReportCallbackEXT ->
                  HS_vkCreateDebugReportCallbackEXT
 
@@ -139,6 +144,9 @@ instance VulkanProc "vkCreateDebugReportCallbackEXT" where
         unwrapVkProcPtr = unwrapVkCreateDebugReportCallbackEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateDebugReportCallbackEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDebugReportCallbackEXT :: CString
 
@@ -179,8 +187,13 @@ type HS_vkDestroyDebugReportCallbackEXT =
 type PFN_vkDestroyDebugReportCallbackEXT =
      FunPtr HS_vkDestroyDebugReportCallbackEXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroyDebugReportCallbackEXT ::
+               PFN_vkDestroyDebugReportCallbackEXT ->
+                 HS_vkDestroyDebugReportCallbackEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyDebugReportCallbackEXTSafe ::
                PFN_vkDestroyDebugReportCallbackEXT ->
                  HS_vkDestroyDebugReportCallbackEXT
 
@@ -193,6 +206,9 @@ instance VulkanProc "vkDestroyDebugReportCallbackEXT" where
         unwrapVkProcPtr = unwrapVkDestroyDebugReportCallbackEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyDebugReportCallbackEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDebugReportMessageEXT :: CString
 
@@ -242,7 +258,11 @@ type HS_vkDebugReportMessageEXT =
 type PFN_vkDebugReportMessageEXT =
      FunPtr HS_vkDebugReportMessageEXT
 
-foreign import ccall "dynamic" unwrapVkDebugReportMessageEXT ::
+foreign import ccall unsafe "dynamic" unwrapVkDebugReportMessageEXT
+               :: PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDebugReportMessageEXTSafe ::
                PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
 
 instance VulkanProc "vkDebugReportMessageEXT" where
@@ -254,6 +274,9 @@ instance VulkanProc "vkDebugReportMessageEXT" where
         unwrapVkProcPtr = unwrapVkDebugReportMessageEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDebugReportMessageEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 

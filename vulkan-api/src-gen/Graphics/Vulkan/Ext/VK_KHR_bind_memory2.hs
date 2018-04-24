@@ -91,7 +91,11 @@ type HS_vkBindBufferMemory2KHR =
 
 type PFN_vkBindBufferMemory2KHR = FunPtr HS_vkBindBufferMemory2KHR
 
-foreign import ccall "dynamic" unwrapVkBindBufferMemory2KHR ::
+foreign import ccall unsafe "dynamic" unwrapVkBindBufferMemory2KHR
+               :: PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkBindBufferMemory2KHRSafe ::
                PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
 
 instance VulkanProc "vkBindBufferMemory2KHR" where
@@ -103,6 +107,9 @@ instance VulkanProc "vkBindBufferMemory2KHR" where
         unwrapVkProcPtr = unwrapVkBindBufferMemory2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBindImageMemory2KHR :: CString
 
@@ -143,8 +150,11 @@ type HS_vkBindImageMemory2KHR =
 
 type PFN_vkBindImageMemory2KHR = FunPtr HS_vkBindImageMemory2KHR
 
-foreign import ccall "dynamic" unwrapVkBindImageMemory2KHR ::
-               PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
+foreign import ccall unsafe "dynamic" unwrapVkBindImageMemory2KHR
+               :: PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
+
+foreign import ccall safe "dynamic" unwrapVkBindImageMemory2KHRSafe
+               :: PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
 
 instance VulkanProc "vkBindImageMemory2KHR" where
         type VkProcType "vkBindImageMemory2KHR" = HS_vkBindImageMemory2KHR
@@ -154,6 +164,9 @@ instance VulkanProc "vkBindImageMemory2KHR" where
         unwrapVkProcPtr = unwrapVkBindImageMemory2KHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkBindImageMemory2KHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -124,7 +124,12 @@ type HS_vkCmdSetSampleLocationsEXT =
 type PFN_vkCmdSetSampleLocationsEXT =
      FunPtr HS_vkCmdSetSampleLocationsEXT
 
-foreign import ccall "dynamic" unwrapVkCmdSetSampleLocationsEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdSetSampleLocationsEXT ::
+               PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdSetSampleLocationsEXTSafe ::
                PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
 
 instance VulkanProc "vkCmdSetSampleLocationsEXT" where
@@ -136,6 +141,9 @@ instance VulkanProc "vkCmdSetSampleLocationsEXT" where
         unwrapVkProcPtr = unwrapVkCmdSetSampleLocationsEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdSetSampleLocationsEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString
 
@@ -177,8 +185,13 @@ type HS_vkGetPhysicalDeviceMultisamplePropertiesEXT =
 type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT =
      FunPtr HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT ::
+               PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ->
+                 HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTSafe ::
                PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ->
                  HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
 
@@ -192,6 +205,10 @@ instance VulkanProc "vkGetPhysicalDeviceMultisamplePropertiesEXT"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION :: (Num a, Eq a) => a
 

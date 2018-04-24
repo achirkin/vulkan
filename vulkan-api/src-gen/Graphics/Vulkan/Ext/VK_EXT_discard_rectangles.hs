@@ -144,7 +144,12 @@ type HS_vkCmdSetDiscardRectangleEXT =
 type PFN_vkCmdSetDiscardRectangleEXT =
      FunPtr HS_vkCmdSetDiscardRectangleEXT
 
-foreign import ccall "dynamic" unwrapVkCmdSetDiscardRectangleEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdSetDiscardRectangleEXT ::
+               PFN_vkCmdSetDiscardRectangleEXT -> HS_vkCmdSetDiscardRectangleEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdSetDiscardRectangleEXTSafe ::
                PFN_vkCmdSetDiscardRectangleEXT -> HS_vkCmdSetDiscardRectangleEXT
 
 instance VulkanProc "vkCmdSetDiscardRectangleEXT" where
@@ -156,6 +161,9 @@ instance VulkanProc "vkCmdSetDiscardRectangleEXT" where
         unwrapVkProcPtr = unwrapVkCmdSetDiscardRectangleEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdSetDiscardRectangleEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION :: (Num a, Eq a) =>
         a

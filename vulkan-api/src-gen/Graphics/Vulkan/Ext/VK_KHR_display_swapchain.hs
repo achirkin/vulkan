@@ -110,7 +110,6 @@ is_VkCreateSharedSwapchainsKHR
 
 type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -126,9 +125,22 @@ type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device
@@ -142,33 +154,6 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                                                                      -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
---
--- > VkResult vkCreateSharedSwapchainsKHR
--- >     ( VkDevice device
--- >     , uint32_t swapchainCount
--- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSwapchainKHR* pSwapchains
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateSharedSwapchainsKHRSafe@ and @vkCreateSharedSwapchainsKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
---
--- or less efficient:
---
--- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
---
 vkCreateSharedSwapchainsKHR ::
                             VkDevice -- ^ device
                                      ->
@@ -185,7 +170,6 @@ vkCreateSharedSwapchainsKHR
 {-# NOINLINE vkCreateSharedSwapchainsKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -201,9 +185,22 @@ vkCreateSharedSwapchainsKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHRSafe ::
                VkDevice -- ^ device
@@ -217,33 +214,6 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                                                                      -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
---
--- > VkResult vkCreateSharedSwapchainsKHR
--- >     ( VkDevice device
--- >     , uint32_t swapchainCount
--- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSwapchainKHR* pSwapchains
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateSharedSwapchainsKHRSafe@ and @vkCreateSharedSwapchainsKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
---
--- or less efficient:
---
--- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
---
 vkCreateSharedSwapchainsKHRSafe ::
                                 VkDevice -- ^ device
                                          ->
@@ -254,9 +224,11 @@ vkCreateSharedSwapchainsKHRSafe ::
                                       Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                 -> Ptr VkSwapchainKHR -- ^ pSwapchains
                                                                                       -> IO VkResult
-vkCreateSharedSwapchainsKHRSafe = vkCreateSharedSwapchainsKHR
+vkCreateSharedSwapchainsKHRSafe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkCreateSharedSwapchainsKHR)
 
-{-# INLINE vkCreateSharedSwapchainsKHRSafe #-}
+{-# NOINLINE vkCreateSharedSwapchainsKHRSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -286,7 +258,12 @@ type HS_vkCreateSharedSwapchainsKHR =
 type PFN_vkCreateSharedSwapchainsKHR =
      FunPtr HS_vkCreateSharedSwapchainsKHR
 
-foreign import ccall "dynamic" unwrapVkCreateSharedSwapchainsKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateSharedSwapchainsKHR ::
+               PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateSharedSwapchainsKHRSafe ::
                PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
 
 instance VulkanProc "vkCreateSharedSwapchainsKHR" where
@@ -298,6 +275,9 @@ instance VulkanProc "vkCreateSharedSwapchainsKHR" where
         unwrapVkProcPtr = unwrapVkCreateSharedSwapchainsKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateSharedSwapchainsKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 

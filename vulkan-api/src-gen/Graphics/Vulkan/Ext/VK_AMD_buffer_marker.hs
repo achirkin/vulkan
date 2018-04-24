@@ -87,7 +87,12 @@ type HS_vkCmdWriteBufferMarkerAMD =
 type PFN_vkCmdWriteBufferMarkerAMD =
      FunPtr HS_vkCmdWriteBufferMarkerAMD
 
-foreign import ccall "dynamic" unwrapVkCmdWriteBufferMarkerAMD ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdWriteBufferMarkerAMD ::
+               PFN_vkCmdWriteBufferMarkerAMD -> HS_vkCmdWriteBufferMarkerAMD
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdWriteBufferMarkerAMDSafe ::
                PFN_vkCmdWriteBufferMarkerAMD -> HS_vkCmdWriteBufferMarkerAMD
 
 instance VulkanProc "vkCmdWriteBufferMarkerAMD" where
@@ -99,6 +104,9 @@ instance VulkanProc "vkCmdWriteBufferMarkerAMD" where
         unwrapVkProcPtr = unwrapVkCmdWriteBufferMarkerAMD
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdWriteBufferMarkerAMDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_AMD_BUFFER_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 

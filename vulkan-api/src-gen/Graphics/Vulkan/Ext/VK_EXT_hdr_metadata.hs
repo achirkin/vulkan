@@ -82,8 +82,11 @@ type HS_vkSetHdrMetadataEXT =
 
 type PFN_vkSetHdrMetadataEXT = FunPtr HS_vkSetHdrMetadataEXT
 
-foreign import ccall "dynamic" unwrapVkSetHdrMetadataEXT ::
+foreign import ccall unsafe "dynamic" unwrapVkSetHdrMetadataEXT ::
                PFN_vkSetHdrMetadataEXT -> HS_vkSetHdrMetadataEXT
+
+foreign import ccall safe "dynamic" unwrapVkSetHdrMetadataEXTSafe
+               :: PFN_vkSetHdrMetadataEXT -> HS_vkSetHdrMetadataEXT
 
 instance VulkanProc "vkSetHdrMetadataEXT" where
         type VkProcType "vkSetHdrMetadataEXT" = HS_vkSetHdrMetadataEXT
@@ -93,6 +96,9 @@ instance VulkanProc "vkSetHdrMetadataEXT" where
         unwrapVkProcPtr = unwrapVkSetHdrMetadataEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkSetHdrMetadataEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_HDR_METADATA_SPEC_VERSION :: (Num a, Eq a) => a
 

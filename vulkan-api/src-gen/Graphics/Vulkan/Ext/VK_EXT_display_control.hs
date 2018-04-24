@@ -132,7 +132,12 @@ type HS_vkDisplayPowerControlEXT =
 type PFN_vkDisplayPowerControlEXT =
      FunPtr HS_vkDisplayPowerControlEXT
 
-foreign import ccall "dynamic" unwrapVkDisplayPowerControlEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkDisplayPowerControlEXT ::
+               PFN_vkDisplayPowerControlEXT -> HS_vkDisplayPowerControlEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDisplayPowerControlEXTSafe ::
                PFN_vkDisplayPowerControlEXT -> HS_vkDisplayPowerControlEXT
 
 instance VulkanProc "vkDisplayPowerControlEXT" where
@@ -144,6 +149,9 @@ instance VulkanProc "vkDisplayPowerControlEXT" where
         unwrapVkProcPtr = unwrapVkDisplayPowerControlEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDisplayPowerControlEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkRegisterDeviceEventEXT :: CString
 
@@ -186,7 +194,12 @@ type HS_vkRegisterDeviceEventEXT =
 type PFN_vkRegisterDeviceEventEXT =
      FunPtr HS_vkRegisterDeviceEventEXT
 
-foreign import ccall "dynamic" unwrapVkRegisterDeviceEventEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkRegisterDeviceEventEXT ::
+               PFN_vkRegisterDeviceEventEXT -> HS_vkRegisterDeviceEventEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkRegisterDeviceEventEXTSafe ::
                PFN_vkRegisterDeviceEventEXT -> HS_vkRegisterDeviceEventEXT
 
 instance VulkanProc "vkRegisterDeviceEventEXT" where
@@ -198,6 +211,9 @@ instance VulkanProc "vkRegisterDeviceEventEXT" where
         unwrapVkProcPtr = unwrapVkRegisterDeviceEventEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkRegisterDeviceEventEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkRegisterDisplayEventEXT :: CString
 
@@ -243,7 +259,12 @@ type HS_vkRegisterDisplayEventEXT =
 type PFN_vkRegisterDisplayEventEXT =
      FunPtr HS_vkRegisterDisplayEventEXT
 
-foreign import ccall "dynamic" unwrapVkRegisterDisplayEventEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkRegisterDisplayEventEXT ::
+               PFN_vkRegisterDisplayEventEXT -> HS_vkRegisterDisplayEventEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkRegisterDisplayEventEXTSafe ::
                PFN_vkRegisterDisplayEventEXT -> HS_vkRegisterDisplayEventEXT
 
 instance VulkanProc "vkRegisterDisplayEventEXT" where
@@ -255,6 +276,9 @@ instance VulkanProc "vkRegisterDisplayEventEXT" where
         unwrapVkProcPtr = unwrapVkRegisterDisplayEventEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkRegisterDisplayEventEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetSwapchainCounterEXT :: CString
 
@@ -299,7 +323,12 @@ type HS_vkGetSwapchainCounterEXT =
 type PFN_vkGetSwapchainCounterEXT =
      FunPtr HS_vkGetSwapchainCounterEXT
 
-foreign import ccall "dynamic" unwrapVkGetSwapchainCounterEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetSwapchainCounterEXT ::
+               PFN_vkGetSwapchainCounterEXT -> HS_vkGetSwapchainCounterEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetSwapchainCounterEXTSafe ::
                PFN_vkGetSwapchainCounterEXT -> HS_vkGetSwapchainCounterEXT
 
 instance VulkanProc "vkGetSwapchainCounterEXT" where
@@ -311,6 +340,9 @@ instance VulkanProc "vkGetSwapchainCounterEXT" where
         unwrapVkProcPtr = unwrapVkGetSwapchainCounterEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetSwapchainCounterEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DISPLAY_CONTROL_SPEC_VERSION :: (Num a, Eq a) => a
 

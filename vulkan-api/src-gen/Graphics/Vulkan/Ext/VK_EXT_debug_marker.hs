@@ -100,8 +100,12 @@ type HS_vkDebugMarkerSetObjectTagEXT =
 type PFN_vkDebugMarkerSetObjectTagEXT =
      FunPtr HS_vkDebugMarkerSetObjectTagEXT
 
-foreign import ccall "dynamic" unwrapVkDebugMarkerSetObjectTagEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkDebugMarkerSetObjectTagEXT ::
+               PFN_vkDebugMarkerSetObjectTagEXT -> HS_vkDebugMarkerSetObjectTagEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDebugMarkerSetObjectTagEXTSafe ::
                PFN_vkDebugMarkerSetObjectTagEXT -> HS_vkDebugMarkerSetObjectTagEXT
 
 instance VulkanProc "vkDebugMarkerSetObjectTagEXT" where
@@ -113,6 +117,9 @@ instance VulkanProc "vkDebugMarkerSetObjectTagEXT" where
         unwrapVkProcPtr = unwrapVkDebugMarkerSetObjectTagEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectTagEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDebugMarkerSetObjectNameEXT :: CString
 
@@ -154,8 +161,13 @@ type HS_vkDebugMarkerSetObjectNameEXT =
 type PFN_vkDebugMarkerSetObjectNameEXT =
      FunPtr HS_vkDebugMarkerSetObjectNameEXT
 
-foreign import ccall "dynamic" unwrapVkDebugMarkerSetObjectNameEXT
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkDebugMarkerSetObjectNameEXT ::
+               PFN_vkDebugMarkerSetObjectNameEXT ->
+                 HS_vkDebugMarkerSetObjectNameEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDebugMarkerSetObjectNameEXTSafe ::
                PFN_vkDebugMarkerSetObjectNameEXT ->
                  HS_vkDebugMarkerSetObjectNameEXT
 
@@ -168,6 +180,9 @@ instance VulkanProc "vkDebugMarkerSetObjectNameEXT" where
         unwrapVkProcPtr = unwrapVkDebugMarkerSetObjectNameEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectNameEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerBeginEXT :: CString
 
@@ -206,7 +221,12 @@ type HS_vkCmdDebugMarkerBeginEXT =
 type PFN_vkCmdDebugMarkerBeginEXT =
      FunPtr HS_vkCmdDebugMarkerBeginEXT
 
-foreign import ccall "dynamic" unwrapVkCmdDebugMarkerBeginEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdDebugMarkerBeginEXT ::
+               PFN_vkCmdDebugMarkerBeginEXT -> HS_vkCmdDebugMarkerBeginEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdDebugMarkerBeginEXTSafe ::
                PFN_vkCmdDebugMarkerBeginEXT -> HS_vkCmdDebugMarkerBeginEXT
 
 instance VulkanProc "vkCmdDebugMarkerBeginEXT" where
@@ -218,6 +238,9 @@ instance VulkanProc "vkCmdDebugMarkerBeginEXT" where
         unwrapVkProcPtr = unwrapVkCmdDebugMarkerBeginEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerBeginEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerEndEXT :: CString
 
@@ -252,7 +275,11 @@ type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdDebugMarkerEndEXT = FunPtr HS_vkCmdDebugMarkerEndEXT
 
-foreign import ccall "dynamic" unwrapVkCmdDebugMarkerEndEXT ::
+foreign import ccall unsafe "dynamic" unwrapVkCmdDebugMarkerEndEXT
+               :: PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdDebugMarkerEndEXTSafe ::
                PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
 
 instance VulkanProc "vkCmdDebugMarkerEndEXT" where
@@ -264,6 +291,9 @@ instance VulkanProc "vkCmdDebugMarkerEndEXT" where
         unwrapVkProcPtr = unwrapVkCmdDebugMarkerEndEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerEndEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerInsertEXT :: CString
 
@@ -302,7 +332,12 @@ type HS_vkCmdDebugMarkerInsertEXT =
 type PFN_vkCmdDebugMarkerInsertEXT =
      FunPtr HS_vkCmdDebugMarkerInsertEXT
 
-foreign import ccall "dynamic" unwrapVkCmdDebugMarkerInsertEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdDebugMarkerInsertEXT ::
+               PFN_vkCmdDebugMarkerInsertEXT -> HS_vkCmdDebugMarkerInsertEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdDebugMarkerInsertEXTSafe ::
                PFN_vkCmdDebugMarkerInsertEXT -> HS_vkCmdDebugMarkerInsertEXT
 
 instance VulkanProc "vkCmdDebugMarkerInsertEXT" where
@@ -314,6 +349,9 @@ instance VulkanProc "vkCmdDebugMarkerInsertEXT" where
         unwrapVkProcPtr = unwrapVkCmdDebugMarkerInsertEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerInsertEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 

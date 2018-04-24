@@ -138,8 +138,13 @@ type HS_vkGetAndroidHardwareBufferPropertiesANDROID =
 type PFN_vkGetAndroidHardwareBufferPropertiesANDROID =
      FunPtr HS_vkGetAndroidHardwareBufferPropertiesANDROID
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetAndroidHardwareBufferPropertiesANDROID ::
+               PFN_vkGetAndroidHardwareBufferPropertiesANDROID ->
+                 HS_vkGetAndroidHardwareBufferPropertiesANDROID
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetAndroidHardwareBufferPropertiesANDROIDSafe ::
                PFN_vkGetAndroidHardwareBufferPropertiesANDROID ->
                  HS_vkGetAndroidHardwareBufferPropertiesANDROID
 
@@ -153,6 +158,10 @@ instance VulkanProc "vkGetAndroidHardwareBufferPropertiesANDROID"
         unwrapVkProcPtr = unwrapVkGetAndroidHardwareBufferPropertiesANDROID
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetAndroidHardwareBufferPropertiesANDROIDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetMemoryAndroidHardwareBufferANDROID :: CString
 
@@ -198,8 +207,13 @@ type HS_vkGetMemoryAndroidHardwareBufferANDROID =
 type PFN_vkGetMemoryAndroidHardwareBufferANDROID =
      FunPtr HS_vkGetMemoryAndroidHardwareBufferANDROID
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetMemoryAndroidHardwareBufferANDROID ::
+               PFN_vkGetMemoryAndroidHardwareBufferANDROID ->
+                 HS_vkGetMemoryAndroidHardwareBufferANDROID
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryAndroidHardwareBufferANDROIDSafe ::
                PFN_vkGetMemoryAndroidHardwareBufferANDROID ->
                  HS_vkGetMemoryAndroidHardwareBufferANDROID
 
@@ -212,6 +226,10 @@ instance VulkanProc "vkGetMemoryAndroidHardwareBufferANDROID" where
         unwrapVkProcPtr = unwrapVkGetMemoryAndroidHardwareBufferANDROID
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetMemoryAndroidHardwareBufferANDROIDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION
         :: (Num a, Eq a) => a

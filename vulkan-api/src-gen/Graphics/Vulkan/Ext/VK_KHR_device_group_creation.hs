@@ -101,8 +101,13 @@ type HS_vkEnumeratePhysicalDeviceGroupsKHR =
 type PFN_vkEnumeratePhysicalDeviceGroupsKHR =
      FunPtr HS_vkEnumeratePhysicalDeviceGroupsKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkEnumeratePhysicalDeviceGroupsKHR ::
+               PFN_vkEnumeratePhysicalDeviceGroupsKHR ->
+                 HS_vkEnumeratePhysicalDeviceGroupsKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkEnumeratePhysicalDeviceGroupsKHRSafe ::
                PFN_vkEnumeratePhysicalDeviceGroupsKHR ->
                  HS_vkEnumeratePhysicalDeviceGroupsKHR
 
@@ -115,6 +120,9 @@ instance VulkanProc "vkEnumeratePhysicalDeviceGroupsKHR" where
         unwrapVkProcPtr = unwrapVkEnumeratePhysicalDeviceGroupsKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDeviceGroupsKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION ::
         (Num a, Eq a) => a

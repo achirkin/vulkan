@@ -101,8 +101,13 @@ type HS_vkGetRefreshCycleDurationGOOGLE =
 type PFN_vkGetRefreshCycleDurationGOOGLE =
      FunPtr HS_vkGetRefreshCycleDurationGOOGLE
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetRefreshCycleDurationGOOGLE ::
+               PFN_vkGetRefreshCycleDurationGOOGLE ->
+                 HS_vkGetRefreshCycleDurationGOOGLE
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetRefreshCycleDurationGOOGLESafe ::
                PFN_vkGetRefreshCycleDurationGOOGLE ->
                  HS_vkGetRefreshCycleDurationGOOGLE
 
@@ -115,6 +120,9 @@ instance VulkanProc "vkGetRefreshCycleDurationGOOGLE" where
         unwrapVkProcPtr = unwrapVkGetRefreshCycleDurationGOOGLE
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetRefreshCycleDurationGOOGLESafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPastPresentationTimingGOOGLE :: CString
 
@@ -162,8 +170,13 @@ type HS_vkGetPastPresentationTimingGOOGLE =
 type PFN_vkGetPastPresentationTimingGOOGLE =
      FunPtr HS_vkGetPastPresentationTimingGOOGLE
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPastPresentationTimingGOOGLE ::
+               PFN_vkGetPastPresentationTimingGOOGLE ->
+                 HS_vkGetPastPresentationTimingGOOGLE
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPastPresentationTimingGOOGLESafe ::
                PFN_vkGetPastPresentationTimingGOOGLE ->
                  HS_vkGetPastPresentationTimingGOOGLE
 
@@ -176,6 +189,9 @@ instance VulkanProc "vkGetPastPresentationTimingGOOGLE" where
         unwrapVkProcPtr = unwrapVkGetPastPresentationTimingGOOGLE
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetPastPresentationTimingGOOGLESafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -134,8 +134,13 @@ type HS_vkCreateDescriptorUpdateTemplateKHR =
 type PFN_vkCreateDescriptorUpdateTemplateKHR =
      FunPtr HS_vkCreateDescriptorUpdateTemplateKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCreateDescriptorUpdateTemplateKHR ::
+               PFN_vkCreateDescriptorUpdateTemplateKHR ->
+                 HS_vkCreateDescriptorUpdateTemplateKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateDescriptorUpdateTemplateKHRSafe ::
                PFN_vkCreateDescriptorUpdateTemplateKHR ->
                  HS_vkCreateDescriptorUpdateTemplateKHR
 
@@ -148,6 +153,9 @@ instance VulkanProc "vkCreateDescriptorUpdateTemplateKHR" where
         unwrapVkProcPtr = unwrapVkCreateDescriptorUpdateTemplateKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDescriptorUpdateTemplateKHR :: CString
 
@@ -190,8 +198,13 @@ type HS_vkDestroyDescriptorUpdateTemplateKHR =
 type PFN_vkDestroyDescriptorUpdateTemplateKHR =
      FunPtr HS_vkDestroyDescriptorUpdateTemplateKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroyDescriptorUpdateTemplateKHR ::
+               PFN_vkDestroyDescriptorUpdateTemplateKHR ->
+                 HS_vkDestroyDescriptorUpdateTemplateKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyDescriptorUpdateTemplateKHRSafe ::
                PFN_vkDestroyDescriptorUpdateTemplateKHR ->
                  HS_vkDestroyDescriptorUpdateTemplateKHR
 
@@ -204,6 +217,10 @@ instance VulkanProc "vkDestroyDescriptorUpdateTemplateKHR" where
         unwrapVkProcPtr = unwrapVkDestroyDescriptorUpdateTemplateKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkDestroyDescriptorUpdateTemplateKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUpdateDescriptorSetWithTemplateKHR :: CString
 
@@ -248,8 +265,13 @@ type HS_vkUpdateDescriptorSetWithTemplateKHR =
 type PFN_vkUpdateDescriptorSetWithTemplateKHR =
      FunPtr HS_vkUpdateDescriptorSetWithTemplateKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkUpdateDescriptorSetWithTemplateKHR ::
+               PFN_vkUpdateDescriptorSetWithTemplateKHR ->
+                 HS_vkUpdateDescriptorSetWithTemplateKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkUpdateDescriptorSetWithTemplateKHRSafe ::
                PFN_vkUpdateDescriptorSetWithTemplateKHR ->
                  HS_vkUpdateDescriptorSetWithTemplateKHR
 
@@ -262,6 +284,10 @@ instance VulkanProc "vkUpdateDescriptorSetWithTemplateKHR" where
         unwrapVkProcPtr = unwrapVkUpdateDescriptorSetWithTemplateKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkUpdateDescriptorSetWithTemplateKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION ::
         (Num a, Eq a) => a

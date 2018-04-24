@@ -85,7 +85,11 @@ type HS_vkAcquireXlibDisplayEXT =
 type PFN_vkAcquireXlibDisplayEXT =
      FunPtr HS_vkAcquireXlibDisplayEXT
 
-foreign import ccall "dynamic" unwrapVkAcquireXlibDisplayEXT ::
+foreign import ccall unsafe "dynamic" unwrapVkAcquireXlibDisplayEXT
+               :: PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkAcquireXlibDisplayEXTSafe ::
                PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
 
 instance VulkanProc "vkAcquireXlibDisplayEXT" where
@@ -97,6 +101,9 @@ instance VulkanProc "vkAcquireXlibDisplayEXT" where
         unwrapVkProcPtr = unwrapVkAcquireXlibDisplayEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkAcquireXlibDisplayEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetRandROutputDisplayEXT :: CString
 
@@ -138,7 +145,12 @@ type HS_vkGetRandROutputDisplayEXT =
 type PFN_vkGetRandROutputDisplayEXT =
      FunPtr HS_vkGetRandROutputDisplayEXT
 
-foreign import ccall "dynamic" unwrapVkGetRandROutputDisplayEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetRandROutputDisplayEXT ::
+               PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetRandROutputDisplayEXTSafe ::
                PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
 
 instance VulkanProc "vkGetRandROutputDisplayEXT" where
@@ -150,6 +162,9 @@ instance VulkanProc "vkGetRandROutputDisplayEXT" where
         unwrapVkProcPtr = unwrapVkGetRandROutputDisplayEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetRandROutputDisplayEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION ::
         (Num a, Eq a) => a

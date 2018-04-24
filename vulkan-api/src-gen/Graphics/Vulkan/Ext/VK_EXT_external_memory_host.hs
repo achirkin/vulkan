@@ -115,8 +115,13 @@ type HS_vkGetMemoryHostPointerPropertiesEXT =
 type PFN_vkGetMemoryHostPointerPropertiesEXT =
      FunPtr HS_vkGetMemoryHostPointerPropertiesEXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetMemoryHostPointerPropertiesEXT ::
+               PFN_vkGetMemoryHostPointerPropertiesEXT ->
+                 HS_vkGetMemoryHostPointerPropertiesEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryHostPointerPropertiesEXTSafe ::
                PFN_vkGetMemoryHostPointerPropertiesEXT ->
                  HS_vkGetMemoryHostPointerPropertiesEXT
 
@@ -129,6 +134,9 @@ instance VulkanProc "vkGetMemoryHostPointerPropertiesEXT" where
         unwrapVkProcPtr = unwrapVkGetMemoryHostPointerPropertiesEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryHostPointerPropertiesEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION ::
         (Num a, Eq a) => a
