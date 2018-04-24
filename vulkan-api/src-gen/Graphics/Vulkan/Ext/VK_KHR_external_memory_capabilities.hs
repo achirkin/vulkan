@@ -123,8 +123,13 @@ type HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
 type PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR ::
+               PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR ->
+                 HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHRSafe ::
                PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
 
@@ -140,6 +145,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

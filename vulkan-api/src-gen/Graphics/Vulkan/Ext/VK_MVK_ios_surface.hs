@@ -103,8 +103,11 @@ type HS_vkCreateIOSSurfaceMVK =
 
 type PFN_vkCreateIOSSurfaceMVK = FunPtr HS_vkCreateIOSSurfaceMVK
 
-foreign import ccall "dynamic" unwrapVkCreateIOSSurfaceMVK ::
-               PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
+foreign import ccall unsafe "dynamic" unwrapVkCreateIOSSurfaceMVK
+               :: PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
+
+foreign import ccall safe "dynamic" unwrapVkCreateIOSSurfaceMVKSafe
+               :: PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
 
 instance VulkanProc "vkCreateIOSSurfaceMVK" where
         type VkProcType "vkCreateIOSSurfaceMVK" = HS_vkCreateIOSSurfaceMVK
@@ -114,6 +117,9 @@ instance VulkanProc "vkCreateIOSSurfaceMVK" where
         unwrapVkProcPtr = unwrapVkCreateIOSSurfaceMVK
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateIOSSurfaceMVKSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_MVK_IOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

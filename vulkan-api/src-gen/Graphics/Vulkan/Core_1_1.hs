@@ -535,7 +535,6 @@ is_VkEnumerateInstanceVersion
 
 type VkEnumerateInstanceVersion = "vkEnumerateInstanceVersion"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -545,26 +544,9 @@ type VkEnumerateInstanceVersion = "vkEnumerateInstanceVersion"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkEnumerateInstanceVersion"
-               vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
-                                                        -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- > VkResult vkEnumerateInstanceVersion
--- >     ( uint32_t* pApiVersion
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkEnumerateInstanceVersionSafe@ and @vkEnumerateInstanceVersion@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -574,6 +556,15 @@ foreign import ccall unsafe "vkEnumerateInstanceVersion"
 --
 -- > myEnumerateInstanceVersion <- vkGetProc @VkEnumerateInstanceVersion
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkEnumerateInstanceVersion"
+               vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
+                                                        -> IO VkResult
+
+#else
 vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
                                          -> IO VkResult
 vkEnumerateInstanceVersion
@@ -582,7 +573,6 @@ vkEnumerateInstanceVersion
 {-# NOINLINE vkEnumerateInstanceVersion #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -592,26 +582,9 @@ vkEnumerateInstanceVersion
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkEnumerateInstanceVersion"
-               vkEnumerateInstanceVersionSafe :: Ptr Word32 -- ^ pApiVersion
-                                                            -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- > VkResult vkEnumerateInstanceVersion
--- >     ( uint32_t* pApiVersion
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkEnumerateInstanceVersionSafe@ and @vkEnumerateInstanceVersion@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -621,11 +594,22 @@ foreign import ccall safe "vkEnumerateInstanceVersion"
 --
 -- > myEnumerateInstanceVersion <- vkGetProc @VkEnumerateInstanceVersion
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkEnumerateInstanceVersion"
+               vkEnumerateInstanceVersionSafe :: Ptr Word32 -- ^ pApiVersion
+                                                            -> IO VkResult
+
+#else
 vkEnumerateInstanceVersionSafe :: Ptr Word32 -- ^ pApiVersion
                                              -> IO VkResult
-vkEnumerateInstanceVersionSafe = vkEnumerateInstanceVersion
+vkEnumerateInstanceVersionSafe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkEnumerateInstanceVersion)
 
-{-# INLINE vkEnumerateInstanceVersionSafe #-}
+{-# NOINLINE vkEnumerateInstanceVersionSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -641,7 +625,12 @@ type HS_vkEnumerateInstanceVersion = Ptr Word32 -- ^ pApiVersion
 type PFN_vkEnumerateInstanceVersion =
      FunPtr HS_vkEnumerateInstanceVersion
 
-foreign import ccall "dynamic" unwrapVkEnumerateInstanceVersion ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkEnumerateInstanceVersion ::
+               PFN_vkEnumerateInstanceVersion -> HS_vkEnumerateInstanceVersion
+
+foreign import ccall safe "dynamic"
+               unwrapVkEnumerateInstanceVersionSafe ::
                PFN_vkEnumerateInstanceVersion -> HS_vkEnumerateInstanceVersion
 
 instance VulkanProc "vkEnumerateInstanceVersion" where
@@ -653,6 +642,9 @@ instance VulkanProc "vkEnumerateInstanceVersion" where
         unwrapVkProcPtr = unwrapVkEnumerateInstanceVersion
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkEnumerateInstanceVersionSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES ::
         VkStructureType
@@ -677,7 +669,6 @@ is_VkBindBufferMemory2 = (EQ ==) . cmpCStrings _VkBindBufferMemory2
 
 type VkBindBufferMemory2 = "vkBindBufferMemory2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -691,33 +682,9 @@ type VkBindBufferMemory2 = "vkBindBufferMemory2"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkBindBufferMemory2"
-               vkBindBufferMemory2 ::
-               VkDevice -- ^ device
-                        -> Word32 -- ^ bindInfoCount
-                                  -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
-                                                                -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkBindBufferMemory2
--- >     ( VkDevice device
--- >     , uint32_t bindInfoCount
--- >     , const VkBindBufferMemoryInfo* pBindInfos
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkBindBufferMemory2Safe@ and @vkBindBufferMemory2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -727,6 +694,18 @@ foreign import ccall unsafe "vkBindBufferMemory2"
 --
 -- > myBindBufferMemory2 <- vkGetProc @VkBindBufferMemory2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkBindBufferMemory2"
+               vkBindBufferMemory2 ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                                -> IO VkResult
+
+#else
 vkBindBufferMemory2 ::
                     VkDevice -- ^ device
                              -> Word32 -- ^ bindInfoCount
@@ -738,7 +717,6 @@ vkBindBufferMemory2
 {-# NOINLINE vkBindBufferMemory2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -752,33 +730,9 @@ vkBindBufferMemory2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkBindBufferMemory2"
-               vkBindBufferMemory2Safe ::
-               VkDevice -- ^ device
-                        -> Word32 -- ^ bindInfoCount
-                                  -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
-                                                                -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkBindBufferMemory2
--- >     ( VkDevice device
--- >     , uint32_t bindInfoCount
--- >     , const VkBindBufferMemoryInfo* pBindInfos
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkBindBufferMemory2Safe@ and @vkBindBufferMemory2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -788,14 +742,27 @@ foreign import ccall safe "vkBindBufferMemory2"
 --
 -- > myBindBufferMemory2 <- vkGetProc @VkBindBufferMemory2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkBindBufferMemory2"
+               vkBindBufferMemory2Safe ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                                -> IO VkResult
+
+#else
 vkBindBufferMemory2Safe ::
                         VkDevice -- ^ device
                                  -> Word32 -- ^ bindInfoCount
                                            -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
                                                                          -> IO VkResult
-vkBindBufferMemory2Safe = vkBindBufferMemory2
+vkBindBufferMemory2Safe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkBindBufferMemory2)
 
-{-# INLINE vkBindBufferMemory2Safe #-}
+{-# NOINLINE vkBindBufferMemory2Safe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -817,8 +784,11 @@ type HS_vkBindBufferMemory2 =
 
 type PFN_vkBindBufferMemory2 = FunPtr HS_vkBindBufferMemory2
 
-foreign import ccall "dynamic" unwrapVkBindBufferMemory2 ::
+foreign import ccall unsafe "dynamic" unwrapVkBindBufferMemory2 ::
                PFN_vkBindBufferMemory2 -> HS_vkBindBufferMemory2
+
+foreign import ccall safe "dynamic" unwrapVkBindBufferMemory2Safe
+               :: PFN_vkBindBufferMemory2 -> HS_vkBindBufferMemory2
 
 instance VulkanProc "vkBindBufferMemory2" where
         type VkProcType "vkBindBufferMemory2" = HS_vkBindBufferMemory2
@@ -828,6 +798,9 @@ instance VulkanProc "vkBindBufferMemory2" where
         unwrapVkProcPtr = unwrapVkBindBufferMemory2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBindImageMemory2 :: CString
 
@@ -846,7 +819,6 @@ is_VkBindImageMemory2 = (EQ ==) . cmpCStrings _VkBindImageMemory2
 
 type VkBindImageMemory2 = "vkBindImageMemory2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -860,32 +832,9 @@ type VkBindImageMemory2 = "vkBindImageMemory2"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkBindImageMemory2" vkBindImageMemory2
-               :: VkDevice -- ^ device
-                           -> Word32 -- ^ bindInfoCount
-                                     -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
-                                                                  -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkBindImageMemory2
--- >     ( VkDevice device
--- >     , uint32_t bindInfoCount
--- >     , const VkBindImageMemoryInfo* pBindInfos
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkBindImageMemory2Safe@ and @vkBindImageMemory2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -895,6 +844,17 @@ foreign import ccall unsafe "vkBindImageMemory2" vkBindImageMemory2
 --
 -- > myBindImageMemory2 <- vkGetProc @VkBindImageMemory2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkBindImageMemory2" vkBindImageMemory2
+               :: VkDevice -- ^ device
+                           -> Word32 -- ^ bindInfoCount
+                                     -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                                  -> IO VkResult
+
+#else
 vkBindImageMemory2 ::
                    VkDevice -- ^ device
                             -> Word32 -- ^ bindInfoCount
@@ -906,7 +866,6 @@ vkBindImageMemory2
 {-# NOINLINE vkBindImageMemory2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -920,33 +879,9 @@ vkBindImageMemory2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkBindImageMemory2"
-               vkBindImageMemory2Safe ::
-               VkDevice -- ^ device
-                        -> Word32 -- ^ bindInfoCount
-                                  -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
-                                                               -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkBindImageMemory2
--- >     ( VkDevice device
--- >     , uint32_t bindInfoCount
--- >     , const VkBindImageMemoryInfo* pBindInfos
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkBindImageMemory2Safe@ and @vkBindImageMemory2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -956,14 +891,27 @@ foreign import ccall safe "vkBindImageMemory2"
 --
 -- > myBindImageMemory2 <- vkGetProc @VkBindImageMemory2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkBindImageMemory2"
+               vkBindImageMemory2Safe ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                               -> IO VkResult
+
+#else
 vkBindImageMemory2Safe ::
                        VkDevice -- ^ device
                                 -> Word32 -- ^ bindInfoCount
                                           -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
                                                                        -> IO VkResult
-vkBindImageMemory2Safe = vkBindImageMemory2
+vkBindImageMemory2Safe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkBindImageMemory2)
 
-{-# INLINE vkBindImageMemory2Safe #-}
+{-# NOINLINE vkBindImageMemory2Safe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -985,7 +933,10 @@ type HS_vkBindImageMemory2 =
 
 type PFN_vkBindImageMemory2 = FunPtr HS_vkBindImageMemory2
 
-foreign import ccall "dynamic" unwrapVkBindImageMemory2 ::
+foreign import ccall unsafe "dynamic" unwrapVkBindImageMemory2 ::
+               PFN_vkBindImageMemory2 -> HS_vkBindImageMemory2
+
+foreign import ccall safe "dynamic" unwrapVkBindImageMemory2Safe ::
                PFN_vkBindImageMemory2 -> HS_vkBindImageMemory2
 
 instance VulkanProc "vkBindImageMemory2" where
@@ -996,6 +947,9 @@ instance VulkanProc "vkBindImageMemory2" where
         unwrapVkProcPtr = unwrapVkBindImageMemory2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkBindImageMemory2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO ::
         VkStructureType
@@ -1053,7 +1007,6 @@ is_VkGetDeviceGroupPeerMemoryFeatures
 type VkGetDeviceGroupPeerMemoryFeatures =
      "vkGetDeviceGroupPeerMemoryFeatures"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDeviceGroupPeerMemoryFeatures
 -- >     ( VkDevice device
@@ -1065,9 +1018,22 @@ type VkGetDeviceGroupPeerMemoryFeatures =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetDeviceProc @VkGetDeviceGroupPeerMemoryFeatures vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
                vkGetDeviceGroupPeerMemoryFeatures ::
                VkDevice -- ^ device
@@ -1079,29 +1045,6 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
                                                                             -> IO ()
 
 #else
--- |
--- > void vkGetDeviceGroupPeerMemoryFeatures
--- >     ( VkDevice device
--- >     , uint32_t heapIndex
--- >     , uint32_t localDeviceIndex
--- >     , uint32_t remoteDeviceIndex
--- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDeviceGroupPeerMemoryFeaturesSafe@ and @vkGetDeviceGroupPeerMemoryFeatures@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetDeviceGroupPeerMemoryFeatures <- vkGetDeviceProc @VkGetDeviceGroupPeerMemoryFeatures vkDevice
---
--- or less efficient:
---
--- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
---
 vkGetDeviceGroupPeerMemoryFeatures ::
                                    VkDevice -- ^ device
                                             ->
@@ -1118,7 +1061,6 @@ vkGetDeviceGroupPeerMemoryFeatures
 {-# NOINLINE vkGetDeviceGroupPeerMemoryFeatures #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDeviceGroupPeerMemoryFeatures
 -- >     ( VkDevice device
@@ -1130,9 +1072,22 @@ vkGetDeviceGroupPeerMemoryFeatures
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetDeviceProc @VkGetDeviceGroupPeerMemoryFeatures vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
                vkGetDeviceGroupPeerMemoryFeaturesSafe ::
                VkDevice -- ^ device
@@ -1144,29 +1099,6 @@ foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
                                                                             -> IO ()
 
 #else
--- |
--- > void vkGetDeviceGroupPeerMemoryFeatures
--- >     ( VkDevice device
--- >     , uint32_t heapIndex
--- >     , uint32_t localDeviceIndex
--- >     , uint32_t remoteDeviceIndex
--- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDeviceGroupPeerMemoryFeaturesSafe@ and @vkGetDeviceGroupPeerMemoryFeatures@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetDeviceGroupPeerMemoryFeatures <- vkGetDeviceProc @VkGetDeviceGroupPeerMemoryFeatures vkDevice
---
--- or less efficient:
---
--- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
---
 vkGetDeviceGroupPeerMemoryFeaturesSafe ::
                                        VkDevice -- ^ device
                                                 ->
@@ -1177,9 +1109,10 @@ vkGetDeviceGroupPeerMemoryFeaturesSafe ::
                                                             -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
                                                                                             -> IO ()
 vkGetDeviceGroupPeerMemoryFeaturesSafe
-  = vkGetDeviceGroupPeerMemoryFeatures
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetDeviceGroupPeerMemoryFeatures)
 
-{-# INLINE vkGetDeviceGroupPeerMemoryFeaturesSafe #-}
+{-# NOINLINE vkGetDeviceGroupPeerMemoryFeaturesSafe #-}
 #endif
 
 -- | > void vkGetDeviceGroupPeerMemoryFeatures
@@ -1203,8 +1136,13 @@ type HS_vkGetDeviceGroupPeerMemoryFeatures =
 type PFN_vkGetDeviceGroupPeerMemoryFeatures =
      FunPtr HS_vkGetDeviceGroupPeerMemoryFeatures
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetDeviceGroupPeerMemoryFeatures ::
+               PFN_vkGetDeviceGroupPeerMemoryFeatures ->
+                 HS_vkGetDeviceGroupPeerMemoryFeatures
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetDeviceGroupPeerMemoryFeaturesSafe ::
                PFN_vkGetDeviceGroupPeerMemoryFeatures ->
                  HS_vkGetDeviceGroupPeerMemoryFeatures
 
@@ -1217,6 +1155,9 @@ instance VulkanProc "vkGetDeviceGroupPeerMemoryFeatures" where
         unwrapVkProcPtr = unwrapVkGetDeviceGroupPeerMemoryFeatures
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetDeviceGroupPeerMemoryFeaturesSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetDeviceMask :: CString
 
@@ -1235,7 +1176,6 @@ is_VkCmdSetDeviceMask = (EQ ==) . cmpCStrings _VkCmdSetDeviceMask
 
 type VkCmdSetDeviceMask = "vkCmdSetDeviceMask"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Queues: 'graphics', 'compute', 'transfer'.
 --
@@ -1248,30 +1188,9 @@ type VkCmdSetDeviceMask = "vkCmdSetDeviceMask"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkCmdSetDeviceMask" vkCmdSetDeviceMask
-               :: VkCommandBuffer -- ^ commandBuffer
-                                  -> Word32 -- ^ deviceMask
-                                            -> IO ()
-
-#else
--- |
--- Queues: 'graphics', 'compute', 'transfer'.
---
--- Renderpass: @both@
---
--- > void vkCmdSetDeviceMask
--- >     ( VkCommandBuffer commandBuffer
--- >     , uint32_t deviceMask
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCmdSetDeviceMaskSafe@ and @vkCmdSetDeviceMask@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -1281,6 +1200,16 @@ foreign import ccall unsafe "vkCmdSetDeviceMask" vkCmdSetDeviceMask
 --
 -- > myCmdSetDeviceMask <- vkGetProc @VkCmdSetDeviceMask
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkCmdSetDeviceMask" vkCmdSetDeviceMask
+               :: VkCommandBuffer -- ^ commandBuffer
+                                  -> Word32 -- ^ deviceMask
+                                            -> IO ()
+
+#else
 vkCmdSetDeviceMask :: VkCommandBuffer -- ^ commandBuffer
                                       -> Word32 -- ^ deviceMask
                                                 -> IO ()
@@ -1290,7 +1219,6 @@ vkCmdSetDeviceMask
 {-# NOINLINE vkCmdSetDeviceMask #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Queues: 'graphics', 'compute', 'transfer'.
 --
@@ -1303,30 +1231,9 @@ vkCmdSetDeviceMask
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkCmdSetDeviceMask"
-               vkCmdSetDeviceMaskSafe :: VkCommandBuffer -- ^ commandBuffer
-                                                         -> Word32 -- ^ deviceMask
-                                                                   -> IO ()
-
-#else
--- |
--- Queues: 'graphics', 'compute', 'transfer'.
---
--- Renderpass: @both@
---
--- > void vkCmdSetDeviceMask
--- >     ( VkCommandBuffer commandBuffer
--- >     , uint32_t deviceMask
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCmdSetDeviceMaskSafe@ and @vkCmdSetDeviceMask@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -1336,12 +1243,23 @@ foreign import ccall safe "vkCmdSetDeviceMask"
 --
 -- > myCmdSetDeviceMask <- vkGetProc @VkCmdSetDeviceMask
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkCmdSetDeviceMask"
+               vkCmdSetDeviceMaskSafe :: VkCommandBuffer -- ^ commandBuffer
+                                                         -> Word32 -- ^ deviceMask
+                                                                   -> IO ()
+
+#else
 vkCmdSetDeviceMaskSafe :: VkCommandBuffer -- ^ commandBuffer
                                           -> Word32 -- ^ deviceMask
                                                     -> IO ()
-vkCmdSetDeviceMaskSafe = vkCmdSetDeviceMask
+vkCmdSetDeviceMaskSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCmdSetDeviceMask)
 
-{-# INLINE vkCmdSetDeviceMaskSafe #-}
+{-# NOINLINE vkCmdSetDeviceMaskSafe #-}
 #endif
 
 -- | Queues: 'graphics', 'compute', 'transfer'.
@@ -1360,7 +1278,10 @@ type HS_vkCmdSetDeviceMask = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdSetDeviceMask = FunPtr HS_vkCmdSetDeviceMask
 
-foreign import ccall "dynamic" unwrapVkCmdSetDeviceMask ::
+foreign import ccall unsafe "dynamic" unwrapVkCmdSetDeviceMask ::
+               PFN_vkCmdSetDeviceMask -> HS_vkCmdSetDeviceMask
+
+foreign import ccall safe "dynamic" unwrapVkCmdSetDeviceMaskSafe ::
                PFN_vkCmdSetDeviceMask -> HS_vkCmdSetDeviceMask
 
 instance VulkanProc "vkCmdSetDeviceMask" where
@@ -1371,6 +1292,9 @@ instance VulkanProc "vkCmdSetDeviceMask" where
         unwrapVkProcPtr = unwrapVkCmdSetDeviceMask
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdSetDeviceMaskSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDispatchBase :: CString
 
@@ -1389,7 +1313,6 @@ is_VkCmdDispatchBase = (EQ ==) . cmpCStrings _VkCmdDispatchBase
 
 type VkCmdDispatchBase = "vkCmdDispatchBase"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Queues: 'compute'.
 --
@@ -1407,9 +1330,22 @@ type VkCmdDispatchBase = "vkCmdDispatchBase"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCmdDispatchBase <- vkGetInstanceProc @VkCmdDispatchBase vkInstance
+--
+-- or less efficient:
+--
+-- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkCmdDispatchBase" vkCmdDispatchBase
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -1423,35 +1359,6 @@ foreign import ccall unsafe "vkCmdDispatchBase" vkCmdDispatchBase
                                                                           -> IO ()
 
 #else
--- |
--- Queues: 'compute'.
---
--- Renderpass: @outside@
---
--- > void vkCmdDispatchBase
--- >     ( VkCommandBuffer commandBuffer
--- >     , uint32_t baseGroupX
--- >     , uint32_t baseGroupY
--- >     , uint32_t baseGroupZ
--- >     , uint32_t groupCountX
--- >     , uint32_t groupCountY
--- >     , uint32_t groupCountZ
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCmdDispatchBaseSafe@ and @vkCmdDispatchBase@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCmdDispatchBase <- vkGetInstanceProc @VkCmdDispatchBase vkInstance
---
--- or less efficient:
---
--- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
---
 vkCmdDispatchBase ::
                   VkCommandBuffer -- ^ commandBuffer
                                   ->
@@ -1468,7 +1375,6 @@ vkCmdDispatchBase
 {-# NOINLINE vkCmdDispatchBase #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Queues: 'compute'.
 --
@@ -1486,9 +1392,22 @@ vkCmdDispatchBase
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCmdDispatchBase <- vkGetInstanceProc @VkCmdDispatchBase vkInstance
+--
+-- or less efficient:
+--
+-- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCmdDispatchBase" vkCmdDispatchBaseSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -1502,35 +1421,6 @@ foreign import ccall safe "vkCmdDispatchBase" vkCmdDispatchBaseSafe
                                                                           -> IO ()
 
 #else
--- |
--- Queues: 'compute'.
---
--- Renderpass: @outside@
---
--- > void vkCmdDispatchBase
--- >     ( VkCommandBuffer commandBuffer
--- >     , uint32_t baseGroupX
--- >     , uint32_t baseGroupY
--- >     , uint32_t baseGroupZ
--- >     , uint32_t groupCountX
--- >     , uint32_t groupCountY
--- >     , uint32_t groupCountZ
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCmdDispatchBaseSafe@ and @vkCmdDispatchBase@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCmdDispatchBase <- vkGetInstanceProc @VkCmdDispatchBase vkInstance
---
--- or less efficient:
---
--- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
---
 vkCmdDispatchBaseSafe ::
                       VkCommandBuffer -- ^ commandBuffer
                                       ->
@@ -1541,9 +1431,10 @@ vkCmdDispatchBaseSafe ::
                                                              -> Word32 -- ^ groupCountY
                                                                        -> Word32 -- ^ groupCountZ
                                                                                  -> IO ()
-vkCmdDispatchBaseSafe = vkCmdDispatchBase
+vkCmdDispatchBaseSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCmdDispatchBase)
 
-{-# INLINE vkCmdDispatchBaseSafe #-}
+{-# NOINLINE vkCmdDispatchBaseSafe #-}
 #endif
 
 -- | Queues: 'compute'.
@@ -1574,7 +1465,10 @@ type HS_vkCmdDispatchBase =
 
 type PFN_vkCmdDispatchBase = FunPtr HS_vkCmdDispatchBase
 
-foreign import ccall "dynamic" unwrapVkCmdDispatchBase ::
+foreign import ccall unsafe "dynamic" unwrapVkCmdDispatchBase ::
+               PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
+
+foreign import ccall safe "dynamic" unwrapVkCmdDispatchBaseSafe ::
                PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
 
 instance VulkanProc "vkCmdDispatchBase" where
@@ -1585,6 +1479,9 @@ instance VulkanProc "vkCmdDispatchBase" where
         unwrapVkProcPtr = unwrapVkCmdDispatchBase
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDispatchBaseSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO ::
         VkStructureType
@@ -1680,7 +1577,6 @@ is_VkEnumeratePhysicalDeviceGroups
 type VkEnumeratePhysicalDeviceGroups =
      "vkEnumeratePhysicalDeviceGroups"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1694,34 +1590,9 @@ type VkEnumeratePhysicalDeviceGroups =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
-               vkEnumeratePhysicalDeviceGroups ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
-                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
-                                                                   -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
---
--- > VkResult vkEnumeratePhysicalDeviceGroups
--- >     ( VkInstance instance
--- >     , uint32_t* pPhysicalDeviceGroupCount
--- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkEnumeratePhysicalDeviceGroupsSafe@ and @vkEnumeratePhysicalDeviceGroups@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -1731,6 +1602,19 @@ foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
 --
 -- > myEnumeratePhysicalDeviceGroups <- vkGetProc @VkEnumeratePhysicalDeviceGroups
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
+               vkEnumeratePhysicalDeviceGroups ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                                   -> IO VkResult
+
+#else
 vkEnumeratePhysicalDeviceGroups ::
                                 VkInstance -- ^ instance
                                            ->
@@ -1744,7 +1628,6 @@ vkEnumeratePhysicalDeviceGroups
 {-# NOINLINE vkEnumeratePhysicalDeviceGroups #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1758,34 +1641,9 @@ vkEnumeratePhysicalDeviceGroups
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
-               vkEnumeratePhysicalDeviceGroupsSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
-                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
-                                                                   -> IO VkResult
-
-#else
--- |
--- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
---
--- > VkResult vkEnumeratePhysicalDeviceGroups
--- >     ( VkInstance instance
--- >     , uint32_t* pPhysicalDeviceGroupCount
--- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkEnumeratePhysicalDeviceGroupsSafe@ and @vkEnumeratePhysicalDeviceGroups@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -1795,6 +1653,19 @@ foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
 --
 -- > myEnumeratePhysicalDeviceGroups <- vkGetProc @VkEnumeratePhysicalDeviceGroups
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
+               vkEnumeratePhysicalDeviceGroupsSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                                   -> IO VkResult
+
+#else
 vkEnumeratePhysicalDeviceGroupsSafe ::
                                     VkInstance -- ^ instance
                                                ->
@@ -1803,9 +1674,10 @@ vkEnumeratePhysicalDeviceGroupsSafe ::
                                         Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
                                                                             -> IO VkResult
 vkEnumeratePhysicalDeviceGroupsSafe
-  = vkEnumeratePhysicalDeviceGroups
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkEnumeratePhysicalDeviceGroups)
 
-{-# INLINE vkEnumeratePhysicalDeviceGroupsSafe #-}
+{-# NOINLINE vkEnumeratePhysicalDeviceGroupsSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
@@ -1829,8 +1701,13 @@ type HS_vkEnumeratePhysicalDeviceGroups =
 type PFN_vkEnumeratePhysicalDeviceGroups =
      FunPtr HS_vkEnumeratePhysicalDeviceGroups
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkEnumeratePhysicalDeviceGroups ::
+               PFN_vkEnumeratePhysicalDeviceGroups ->
+                 HS_vkEnumeratePhysicalDeviceGroups
+
+foreign import ccall safe "dynamic"
+               unwrapVkEnumeratePhysicalDeviceGroupsSafe ::
                PFN_vkEnumeratePhysicalDeviceGroups ->
                  HS_vkEnumeratePhysicalDeviceGroups
 
@@ -1843,6 +1720,9 @@ instance VulkanProc "vkEnumeratePhysicalDeviceGroups" where
         unwrapVkProcPtr = unwrapVkEnumeratePhysicalDeviceGroups
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDeviceGroupsSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES ::
         VkStructureType
@@ -1885,7 +1765,6 @@ is_VkGetImageMemoryRequirements2
 type VkGetImageMemoryRequirements2 =
      "vkGetImageMemoryRequirements2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetImageMemoryRequirements2
 -- >     ( VkDevice device
@@ -1895,9 +1774,22 @@ type VkGetImageMemoryRequirements2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetDeviceProc @VkGetImageMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetImageMemoryRequirements2"
                vkGetImageMemoryRequirements2 ::
                VkDevice -- ^ device
@@ -1908,27 +1800,6 @@ foreign import ccall unsafe "vkGetImageMemoryRequirements2"
                                              -> IO ()
 
 #else
--- |
--- > void vkGetImageMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkImageMemoryRequirementsInfo2* pInfo
--- >     , VkMemoryRequirements2* pMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetImageMemoryRequirements2Safe@ and @vkGetImageMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetImageMemoryRequirements2 <- vkGetDeviceProc @VkGetImageMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
---
 vkGetImageMemoryRequirements2 ::
                               VkDevice -- ^ device
                                        ->
@@ -1942,7 +1813,6 @@ vkGetImageMemoryRequirements2
 {-# NOINLINE vkGetImageMemoryRequirements2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetImageMemoryRequirements2
 -- >     ( VkDevice device
@@ -1952,9 +1822,22 @@ vkGetImageMemoryRequirements2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetDeviceProc @VkGetImageMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetImageMemoryRequirements2"
                vkGetImageMemoryRequirements2Safe ::
                VkDevice -- ^ device
@@ -1965,27 +1848,6 @@ foreign import ccall safe "vkGetImageMemoryRequirements2"
                                              -> IO ()
 
 #else
--- |
--- > void vkGetImageMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkImageMemoryRequirementsInfo2* pInfo
--- >     , VkMemoryRequirements2* pMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetImageMemoryRequirements2Safe@ and @vkGetImageMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetImageMemoryRequirements2 <- vkGetDeviceProc @VkGetImageMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
---
 vkGetImageMemoryRequirements2Safe ::
                                   VkDevice -- ^ device
                                            ->
@@ -1993,9 +1855,11 @@ vkGetImageMemoryRequirements2Safe ::
                                                                        ->
                                       Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
                                                                 -> IO ()
-vkGetImageMemoryRequirements2Safe = vkGetImageMemoryRequirements2
+vkGetImageMemoryRequirements2Safe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetImageMemoryRequirements2)
 
-{-# INLINE vkGetImageMemoryRequirements2Safe #-}
+{-# NOINLINE vkGetImageMemoryRequirements2Safe #-}
 #endif
 
 -- | > void vkGetImageMemoryRequirements2
@@ -2016,8 +1880,13 @@ type HS_vkGetImageMemoryRequirements2 =
 type PFN_vkGetImageMemoryRequirements2 =
      FunPtr HS_vkGetImageMemoryRequirements2
 
-foreign import ccall "dynamic" unwrapVkGetImageMemoryRequirements2
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetImageMemoryRequirements2 ::
+               PFN_vkGetImageMemoryRequirements2 ->
+                 HS_vkGetImageMemoryRequirements2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetImageMemoryRequirements2Safe ::
                PFN_vkGetImageMemoryRequirements2 ->
                  HS_vkGetImageMemoryRequirements2
 
@@ -2030,6 +1899,9 @@ instance VulkanProc "vkGetImageMemoryRequirements2" where
         unwrapVkProcPtr = unwrapVkGetImageMemoryRequirements2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetBufferMemoryRequirements2 :: CString
 
@@ -2053,7 +1925,6 @@ is_VkGetBufferMemoryRequirements2
 type VkGetBufferMemoryRequirements2 =
      "vkGetBufferMemoryRequirements2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetBufferMemoryRequirements2
 -- >     ( VkDevice device
@@ -2063,9 +1934,22 @@ type VkGetBufferMemoryRequirements2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetDeviceProc @VkGetBufferMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetBufferMemoryRequirements2"
                vkGetBufferMemoryRequirements2 ::
                VkDevice -- ^ device
@@ -2076,27 +1960,6 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements2"
                                              -> IO ()
 
 #else
--- |
--- > void vkGetBufferMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkBufferMemoryRequirementsInfo2* pInfo
--- >     , VkMemoryRequirements2* pMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetBufferMemoryRequirements2Safe@ and @vkGetBufferMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetBufferMemoryRequirements2 <- vkGetDeviceProc @VkGetBufferMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
---
 vkGetBufferMemoryRequirements2 ::
                                VkDevice -- ^ device
                                         ->
@@ -2111,7 +1974,6 @@ vkGetBufferMemoryRequirements2
 {-# NOINLINE vkGetBufferMemoryRequirements2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetBufferMemoryRequirements2
 -- >     ( VkDevice device
@@ -2121,9 +1983,22 @@ vkGetBufferMemoryRequirements2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetDeviceProc @VkGetBufferMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetBufferMemoryRequirements2"
                vkGetBufferMemoryRequirements2Safe ::
                VkDevice -- ^ device
@@ -2134,27 +2009,6 @@ foreign import ccall safe "vkGetBufferMemoryRequirements2"
                                              -> IO ()
 
 #else
--- |
--- > void vkGetBufferMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkBufferMemoryRequirementsInfo2* pInfo
--- >     , VkMemoryRequirements2* pMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetBufferMemoryRequirements2Safe@ and @vkGetBufferMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetBufferMemoryRequirements2 <- vkGetDeviceProc @VkGetBufferMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
---
 vkGetBufferMemoryRequirements2Safe ::
                                    VkDevice -- ^ device
                                             ->
@@ -2162,9 +2016,11 @@ vkGetBufferMemoryRequirements2Safe ::
                                                                          ->
                                        Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
                                                                  -> IO ()
-vkGetBufferMemoryRequirements2Safe = vkGetBufferMemoryRequirements2
+vkGetBufferMemoryRequirements2Safe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetBufferMemoryRequirements2)
 
-{-# INLINE vkGetBufferMemoryRequirements2Safe #-}
+{-# NOINLINE vkGetBufferMemoryRequirements2Safe #-}
 #endif
 
 -- | > void vkGetBufferMemoryRequirements2
@@ -2185,8 +2041,13 @@ type HS_vkGetBufferMemoryRequirements2 =
 type PFN_vkGetBufferMemoryRequirements2 =
      FunPtr HS_vkGetBufferMemoryRequirements2
 
-foreign import ccall "dynamic" unwrapVkGetBufferMemoryRequirements2
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetBufferMemoryRequirements2 ::
+               PFN_vkGetBufferMemoryRequirements2 ->
+                 HS_vkGetBufferMemoryRequirements2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetBufferMemoryRequirements2Safe ::
                PFN_vkGetBufferMemoryRequirements2 ->
                  HS_vkGetBufferMemoryRequirements2
 
@@ -2199,6 +2060,9 @@ instance VulkanProc "vkGetBufferMemoryRequirements2" where
         unwrapVkProcPtr = unwrapVkGetBufferMemoryRequirements2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageSparseMemoryRequirements2 :: CString
 
@@ -2222,7 +2086,6 @@ is_VkGetImageSparseMemoryRequirements2
 type VkGetImageSparseMemoryRequirements2 =
      "vkGetImageSparseMemoryRequirements2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetImageSparseMemoryRequirements2
 -- >     ( VkDevice device
@@ -2233,9 +2096,22 @@ type VkGetImageSparseMemoryRequirements2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetDeviceProc @VkGetImageSparseMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetImageSparseMemoryRequirements2"
                vkGetImageSparseMemoryRequirements2 ::
                VkDevice -- ^ device
@@ -2247,28 +2123,6 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements2"
                                                                       -> IO ()
 
 #else
--- |
--- > void vkGetImageSparseMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
--- >     , uint32_t* pSparseMemoryRequirementCount
--- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetImageSparseMemoryRequirements2Safe@ and @vkGetImageSparseMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetImageSparseMemoryRequirements2 <- vkGetDeviceProc @VkGetImageSparseMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
---
 vkGetImageSparseMemoryRequirements2 ::
                                     VkDevice -- ^ device
                                              ->
@@ -2284,7 +2138,6 @@ vkGetImageSparseMemoryRequirements2
 {-# NOINLINE vkGetImageSparseMemoryRequirements2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetImageSparseMemoryRequirements2
 -- >     ( VkDevice device
@@ -2295,9 +2148,22 @@ vkGetImageSparseMemoryRequirements2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetDeviceProc @VkGetImageSparseMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetImageSparseMemoryRequirements2"
                vkGetImageSparseMemoryRequirements2Safe ::
                VkDevice -- ^ device
@@ -2309,28 +2175,6 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements2"
                                                                       -> IO ()
 
 #else
--- |
--- > void vkGetImageSparseMemoryRequirements2
--- >     ( VkDevice device
--- >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
--- >     , uint32_t* pSparseMemoryRequirementCount
--- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetImageSparseMemoryRequirements2Safe@ and @vkGetImageSparseMemoryRequirements2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetImageSparseMemoryRequirements2 <- vkGetDeviceProc @VkGetImageSparseMemoryRequirements2 vkDevice
---
--- or less efficient:
---
--- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
---
 vkGetImageSparseMemoryRequirements2Safe ::
                                         VkDevice -- ^ device
                                                  ->
@@ -2341,9 +2185,10 @@ vkGetImageSparseMemoryRequirements2Safe ::
                                               Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
                                                                                    -> IO ()
 vkGetImageSparseMemoryRequirements2Safe
-  = vkGetImageSparseMemoryRequirements2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetImageSparseMemoryRequirements2)
 
-{-# INLINE vkGetImageSparseMemoryRequirements2Safe #-}
+{-# NOINLINE vkGetImageSparseMemoryRequirements2Safe #-}
 #endif
 
 -- | > void vkGetImageSparseMemoryRequirements2
@@ -2366,8 +2211,13 @@ type HS_vkGetImageSparseMemoryRequirements2 =
 type PFN_vkGetImageSparseMemoryRequirements2 =
      FunPtr HS_vkGetImageSparseMemoryRequirements2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetImageSparseMemoryRequirements2 ::
+               PFN_vkGetImageSparseMemoryRequirements2 ->
+                 HS_vkGetImageSparseMemoryRequirements2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetImageSparseMemoryRequirements2Safe ::
                PFN_vkGetImageSparseMemoryRequirements2 ->
                  HS_vkGetImageSparseMemoryRequirements2
 
@@ -2380,6 +2230,9 @@ instance VulkanProc "vkGetImageSparseMemoryRequirements2" where
         unwrapVkProcPtr = unwrapVkGetImageSparseMemoryRequirements2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetImageSparseMemoryRequirements2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2 ::
         VkStructureType
@@ -2430,7 +2283,6 @@ is_VkGetPhysicalDeviceFeatures2
 
 type VkGetPhysicalDeviceFeatures2 = "vkGetPhysicalDeviceFeatures2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceFeatures2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2439,27 +2291,9 @@ type VkGetPhysicalDeviceFeatures2 = "vkGetPhysicalDeviceFeatures2"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2"
-               vkGetPhysicalDeviceFeatures2 ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
-                                                                 -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceFeatures2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceFeatures2* pFeatures
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceFeatures2Safe@ and @vkGetPhysicalDeviceFeatures2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2469,6 +2303,17 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2"
 --
 -- > myGetPhysicalDeviceFeatures2 <- vkGetProc @VkGetPhysicalDeviceFeatures2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2"
+               vkGetPhysicalDeviceFeatures2 ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
+                                                                 -> IO ()
+
+#else
 vkGetPhysicalDeviceFeatures2 ::
                              VkPhysicalDevice -- ^ physicalDevice
                                               -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
@@ -2479,7 +2324,6 @@ vkGetPhysicalDeviceFeatures2
 {-# NOINLINE vkGetPhysicalDeviceFeatures2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceFeatures2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2488,27 +2332,9 @@ vkGetPhysicalDeviceFeatures2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
-               vkGetPhysicalDeviceFeatures2Safe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
-                                                                 -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceFeatures2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceFeatures2* pFeatures
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceFeatures2Safe@ and @vkGetPhysicalDeviceFeatures2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2518,13 +2344,26 @@ foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
 --
 -- > myGetPhysicalDeviceFeatures2 <- vkGetProc @VkGetPhysicalDeviceFeatures2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
+               vkGetPhysicalDeviceFeatures2Safe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
+                                                                 -> IO ()
+
+#else
 vkGetPhysicalDeviceFeatures2Safe ::
                                  VkPhysicalDevice -- ^ physicalDevice
                                                   -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
                                                                                    -> IO ()
-vkGetPhysicalDeviceFeatures2Safe = vkGetPhysicalDeviceFeatures2
+vkGetPhysicalDeviceFeatures2Safe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceFeatures2)
 
-{-# INLINE vkGetPhysicalDeviceFeatures2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceFeatures2Safe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceFeatures2
@@ -2541,8 +2380,12 @@ type HS_vkGetPhysicalDeviceFeatures2 =
 type PFN_vkGetPhysicalDeviceFeatures2 =
      FunPtr HS_vkGetPhysicalDeviceFeatures2
 
-foreign import ccall "dynamic" unwrapVkGetPhysicalDeviceFeatures2
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetPhysicalDeviceFeatures2 ::
+               PFN_vkGetPhysicalDeviceFeatures2 -> HS_vkGetPhysicalDeviceFeatures2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceFeatures2Safe ::
                PFN_vkGetPhysicalDeviceFeatures2 -> HS_vkGetPhysicalDeviceFeatures2
 
 instance VulkanProc "vkGetPhysicalDeviceFeatures2" where
@@ -2554,6 +2397,9 @@ instance VulkanProc "vkGetPhysicalDeviceFeatures2" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFeatures2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeatures2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceProperties2 :: CString
 
@@ -2577,7 +2423,6 @@ is_VkGetPhysicalDeviceProperties2
 type VkGetPhysicalDeviceProperties2 =
      "vkGetPhysicalDeviceProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2586,27 +2431,9 @@ type VkGetPhysicalDeviceProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkGetPhysicalDeviceProperties2"
-               vkGetPhysicalDeviceProperties2 ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
-                                                                   -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceProperties2* pProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceProperties2Safe@ and @vkGetPhysicalDeviceProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2616,6 +2443,17 @@ foreign import ccall unsafe "vkGetPhysicalDeviceProperties2"
 --
 -- > myGetPhysicalDeviceProperties2 <- vkGetProc @VkGetPhysicalDeviceProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkGetPhysicalDeviceProperties2"
+               vkGetPhysicalDeviceProperties2 ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
+                                                                   -> IO ()
+
+#else
 vkGetPhysicalDeviceProperties2 ::
                                VkPhysicalDevice -- ^ physicalDevice
                                                 -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
@@ -2627,7 +2465,6 @@ vkGetPhysicalDeviceProperties2
 {-# NOINLINE vkGetPhysicalDeviceProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2636,27 +2473,9 @@ vkGetPhysicalDeviceProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkGetPhysicalDeviceProperties2"
-               vkGetPhysicalDeviceProperties2Safe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
-                                                                   -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceProperties2* pProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceProperties2Safe@ and @vkGetPhysicalDeviceProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2666,13 +2485,26 @@ foreign import ccall safe "vkGetPhysicalDeviceProperties2"
 --
 -- > myGetPhysicalDeviceProperties2 <- vkGetProc @VkGetPhysicalDeviceProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkGetPhysicalDeviceProperties2"
+               vkGetPhysicalDeviceProperties2Safe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
+                                                                   -> IO ()
+
+#else
 vkGetPhysicalDeviceProperties2Safe ::
                                    VkPhysicalDevice -- ^ physicalDevice
                                                     -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
                                                                                        -> IO ()
-vkGetPhysicalDeviceProperties2Safe = vkGetPhysicalDeviceProperties2
+vkGetPhysicalDeviceProperties2Safe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceProperties2)
 
-{-# INLINE vkGetPhysicalDeviceProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceProperties2Safe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceProperties2
@@ -2689,8 +2521,13 @@ type HS_vkGetPhysicalDeviceProperties2 =
 type PFN_vkGetPhysicalDeviceProperties2 =
      FunPtr HS_vkGetPhysicalDeviceProperties2
 
-foreign import ccall "dynamic" unwrapVkGetPhysicalDeviceProperties2
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetPhysicalDeviceProperties2 ::
+               PFN_vkGetPhysicalDeviceProperties2 ->
+                 HS_vkGetPhysicalDeviceProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceProperties2Safe ::
                PFN_vkGetPhysicalDeviceProperties2 ->
                  HS_vkGetPhysicalDeviceProperties2
 
@@ -2703,6 +2540,9 @@ instance VulkanProc "vkGetPhysicalDeviceProperties2" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceFormatProperties2 :: CString
 
@@ -2726,7 +2566,6 @@ is_VkGetPhysicalDeviceFormatProperties2
 type VkGetPhysicalDeviceFormatProperties2 =
      "vkGetPhysicalDeviceFormatProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceFormatProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2736,29 +2575,9 @@ type VkGetPhysicalDeviceFormatProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties2"
-               vkGetPhysicalDeviceFormatProperties2 ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> VkFormat -- ^ format
-                                            -> Ptr VkFormatProperties2 -- ^ pFormatProperties
-                                                                       -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkFormat format
--- >     , VkFormatProperties2* pFormatProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceFormatProperties2Safe@ and @vkGetPhysicalDeviceFormatProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2768,6 +2587,18 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties2"
 --
 -- > myGetPhysicalDeviceFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceFormatProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties2"
+               vkGetPhysicalDeviceFormatProperties2 ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> VkFormat -- ^ format
+                                            -> Ptr VkFormatProperties2 -- ^ pFormatProperties
+                                                                       -> IO ()
+
+#else
 vkGetPhysicalDeviceFormatProperties2 ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -2781,7 +2612,6 @@ vkGetPhysicalDeviceFormatProperties2
 {-# NOINLINE vkGetPhysicalDeviceFormatProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceFormatProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -2791,29 +2621,9 @@ vkGetPhysicalDeviceFormatProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
-               vkGetPhysicalDeviceFormatProperties2Safe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> VkFormat -- ^ format
-                                            -> Ptr VkFormatProperties2 -- ^ pFormatProperties
-                                                                       -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkFormat format
--- >     , VkFormatProperties2* pFormatProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceFormatProperties2Safe@ and @vkGetPhysicalDeviceFormatProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -2823,6 +2633,18 @@ foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
 --
 -- > myGetPhysicalDeviceFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceFormatProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
+               vkGetPhysicalDeviceFormatProperties2Safe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> VkFormat -- ^ format
+                                            -> Ptr VkFormatProperties2 -- ^ pFormatProperties
+                                                                       -> IO ()
+
+#else
 vkGetPhysicalDeviceFormatProperties2Safe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
@@ -2830,9 +2652,10 @@ vkGetPhysicalDeviceFormatProperties2Safe ::
                                                     -> Ptr VkFormatProperties2 -- ^ pFormatProperties
                                                                                -> IO ()
 vkGetPhysicalDeviceFormatProperties2Safe
-  = vkGetPhysicalDeviceFormatProperties2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceFormatProperties2)
 
-{-# INLINE vkGetPhysicalDeviceFormatProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceFormatProperties2Safe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceFormatProperties2
@@ -2851,8 +2674,13 @@ type HS_vkGetPhysicalDeviceFormatProperties2 =
 type PFN_vkGetPhysicalDeviceFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceFormatProperties2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceFormatProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceFormatProperties2Safe ::
                PFN_vkGetPhysicalDeviceFormatProperties2 ->
                  HS_vkGetPhysicalDeviceFormatProperties2
 
@@ -2865,6 +2693,10 @@ instance VulkanProc "vkGetPhysicalDeviceFormatProperties2" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFormatProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceFormatProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceImageFormatProperties2 :: CString
 
@@ -2888,7 +2720,6 @@ is_VkGetPhysicalDeviceImageFormatProperties2
 type VkGetPhysicalDeviceImageFormatProperties2 =
      "vkGetPhysicalDeviceImageFormatProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -2902,9 +2733,22 @@ type VkGetPhysicalDeviceImageFormatProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceImageFormatProperties2"
                vkGetPhysicalDeviceImageFormatProperties2 ::
@@ -2916,31 +2760,6 @@ foreign import ccall unsafe
                                                 -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
---
--- > VkResult vkGetPhysicalDeviceImageFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo
--- >     , VkImageFormatProperties2* pImageFormatProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceImageFormatProperties2Safe@ and @vkGetPhysicalDeviceImageFormatProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceImageFormatProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
---
 vkGetPhysicalDeviceImageFormatProperties2 ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -2955,7 +2774,6 @@ vkGetPhysicalDeviceImageFormatProperties2
 {-# NOINLINE vkGetPhysicalDeviceImageFormatProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -2969,9 +2787,22 @@ vkGetPhysicalDeviceImageFormatProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceImageFormatProperties2"
                vkGetPhysicalDeviceImageFormatProperties2Safe ::
@@ -2983,31 +2814,6 @@ foreign import ccall safe
                                                 -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
---
--- > VkResult vkGetPhysicalDeviceImageFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo
--- >     , VkImageFormatProperties2* pImageFormatProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceImageFormatProperties2Safe@ and @vkGetPhysicalDeviceImageFormatProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceImageFormatProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
---
 vkGetPhysicalDeviceImageFormatProperties2Safe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -3016,9 +2822,10 @@ vkGetPhysicalDeviceImageFormatProperties2Safe ::
                                                   Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
                                                                                -> IO VkResult
 vkGetPhysicalDeviceImageFormatProperties2Safe
-  = vkGetPhysicalDeviceImageFormatProperties2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceImageFormatProperties2)
 
-{-# INLINE vkGetPhysicalDeviceImageFormatProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceImageFormatProperties2Safe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -3043,8 +2850,13 @@ type HS_vkGetPhysicalDeviceImageFormatProperties2 =
 type PFN_vkGetPhysicalDeviceImageFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceImageFormatProperties2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceImageFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceImageFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceImageFormatProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceImageFormatProperties2Safe ::
                PFN_vkGetPhysicalDeviceImageFormatProperties2 ->
                  HS_vkGetPhysicalDeviceImageFormatProperties2
 
@@ -3058,6 +2870,10 @@ instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties2"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceImageFormatProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceImageFormatProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties2 :: CString
 
@@ -3081,7 +2897,6 @@ is_VkGetPhysicalDeviceQueueFamilyProperties2
 type VkGetPhysicalDeviceQueueFamilyProperties2 =
      "vkGetPhysicalDeviceQueueFamilyProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceQueueFamilyProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3091,9 +2906,22 @@ type VkGetPhysicalDeviceQueueFamilyProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceQueueFamilyProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceQueueFamilyProperties2"
                vkGetPhysicalDeviceQueueFamilyProperties2 ::
@@ -3104,27 +2932,6 @@ foreign import ccall unsafe
                                                             -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceQueueFamilyProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t* pQueueFamilyPropertyCount
--- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceQueueFamilyProperties2Safe@ and @vkGetPhysicalDeviceQueueFamilyProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceQueueFamilyProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
---
 vkGetPhysicalDeviceQueueFamilyProperties2 ::
                                           VkPhysicalDevice -- ^ physicalDevice
                                                            ->
@@ -3138,7 +2945,6 @@ vkGetPhysicalDeviceQueueFamilyProperties2
 {-# NOINLINE vkGetPhysicalDeviceQueueFamilyProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceQueueFamilyProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3148,9 +2954,22 @@ vkGetPhysicalDeviceQueueFamilyProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceQueueFamilyProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceQueueFamilyProperties2"
                vkGetPhysicalDeviceQueueFamilyProperties2Safe ::
@@ -3161,27 +2980,6 @@ foreign import ccall safe
                                                             -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceQueueFamilyProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t* pQueueFamilyPropertyCount
--- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceQueueFamilyProperties2Safe@ and @vkGetPhysicalDeviceQueueFamilyProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceQueueFamilyProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
---
 vkGetPhysicalDeviceQueueFamilyProperties2Safe ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -3189,9 +2987,10 @@ vkGetPhysicalDeviceQueueFamilyProperties2Safe ::
                                                            -> Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
                                                                                            -> IO ()
 vkGetPhysicalDeviceQueueFamilyProperties2Safe
-  = vkGetPhysicalDeviceQueueFamilyProperties2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceQueueFamilyProperties2)
 
-{-# INLINE vkGetPhysicalDeviceQueueFamilyProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceQueueFamilyProperties2Safe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceQueueFamilyProperties2
@@ -3211,8 +3010,13 @@ type HS_vkGetPhysicalDeviceQueueFamilyProperties2 =
 type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 =
      FunPtr HS_vkGetPhysicalDeviceQueueFamilyProperties2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceQueueFamilyProperties2 ::
+               PFN_vkGetPhysicalDeviceQueueFamilyProperties2 ->
+                 HS_vkGetPhysicalDeviceQueueFamilyProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceQueueFamilyProperties2Safe ::
                PFN_vkGetPhysicalDeviceQueueFamilyProperties2 ->
                  HS_vkGetPhysicalDeviceQueueFamilyProperties2
 
@@ -3226,6 +3030,10 @@ instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties2"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceQueueFamilyProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMemoryProperties2 :: CString
 
@@ -3249,7 +3057,6 @@ is_VkGetPhysicalDeviceMemoryProperties2
 type VkGetPhysicalDeviceMemoryProperties2 =
      "vkGetPhysicalDeviceMemoryProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceMemoryProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3258,27 +3065,9 @@ type VkGetPhysicalDeviceMemoryProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties2"
-               vkGetPhysicalDeviceMemoryProperties2 ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
-                                                                         -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceMemoryProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceMemoryProperties2Safe@ and @vkGetPhysicalDeviceMemoryProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3288,6 +3077,17 @@ foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties2"
 --
 -- > myGetPhysicalDeviceMemoryProperties2 <- vkGetProc @VkGetPhysicalDeviceMemoryProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties2"
+               vkGetPhysicalDeviceMemoryProperties2 ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
+                                                                         -> IO ()
+
+#else
 vkGetPhysicalDeviceMemoryProperties2 ::
                                      VkPhysicalDevice -- ^ physicalDevice
                                                       ->
@@ -3300,7 +3100,6 @@ vkGetPhysicalDeviceMemoryProperties2
 {-# NOINLINE vkGetPhysicalDeviceMemoryProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceMemoryProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3309,27 +3108,9 @@ vkGetPhysicalDeviceMemoryProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
-               vkGetPhysicalDeviceMemoryProperties2Safe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
-                                                                         -> IO ()
-
-#else
--- |
--- > void vkGetPhysicalDeviceMemoryProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceMemoryProperties2Safe@ and @vkGetPhysicalDeviceMemoryProperties2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3339,15 +3120,27 @@ foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
 --
 -- > myGetPhysicalDeviceMemoryProperties2 <- vkGetProc @VkGetPhysicalDeviceMemoryProperties2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
+               vkGetPhysicalDeviceMemoryProperties2Safe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
+                                                                         -> IO ()
+
+#else
 vkGetPhysicalDeviceMemoryProperties2Safe ::
                                          VkPhysicalDevice -- ^ physicalDevice
                                                           ->
                                            Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
                                                                                  -> IO ()
 vkGetPhysicalDeviceMemoryProperties2Safe
-  = vkGetPhysicalDeviceMemoryProperties2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceMemoryProperties2)
 
-{-# INLINE vkGetPhysicalDeviceMemoryProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceMemoryProperties2Safe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceMemoryProperties2
@@ -3364,8 +3157,13 @@ type HS_vkGetPhysicalDeviceMemoryProperties2 =
 type PFN_vkGetPhysicalDeviceMemoryProperties2 =
      FunPtr HS_vkGetPhysicalDeviceMemoryProperties2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceMemoryProperties2 ::
+               PFN_vkGetPhysicalDeviceMemoryProperties2 ->
+                 HS_vkGetPhysicalDeviceMemoryProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceMemoryProperties2Safe ::
                PFN_vkGetPhysicalDeviceMemoryProperties2 ->
                  HS_vkGetPhysicalDeviceMemoryProperties2
 
@@ -3378,6 +3176,10 @@ instance VulkanProc "vkGetPhysicalDeviceMemoryProperties2" where
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMemoryProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceMemoryProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties2 :: CString
 
@@ -3403,7 +3205,6 @@ is_VkGetPhysicalDeviceSparseImageFormatProperties2
 type VkGetPhysicalDeviceSparseImageFormatProperties2 =
      "vkGetPhysicalDeviceSparseImageFormatProperties2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceSparseImageFormatProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3414,9 +3215,22 @@ type VkGetPhysicalDeviceSparseImageFormatProperties2 =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceSparseImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSparseImageFormatProperties2"
                vkGetPhysicalDeviceSparseImageFormatProperties2 ::
@@ -3429,28 +3243,6 @@ foreign import ccall unsafe
                                                                     -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceSparseImageFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
--- >     , uint32_t* pPropertyCount
--- >     , VkSparseImageFormatProperties2* pProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@ and @vkGetPhysicalDeviceSparseImageFormatProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceSparseImageFormatProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
---
 vkGetPhysicalDeviceSparseImageFormatProperties2 ::
                                                 VkPhysicalDevice -- ^ physicalDevice
                                                                  ->
@@ -3467,7 +3259,6 @@ vkGetPhysicalDeviceSparseImageFormatProperties2
 {-# NOINLINE vkGetPhysicalDeviceSparseImageFormatProperties2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceSparseImageFormatProperties2
 -- >     ( VkPhysicalDevice physicalDevice
@@ -3478,9 +3269,22 @@ vkGetPhysicalDeviceSparseImageFormatProperties2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceSparseImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceSparseImageFormatProperties2"
                vkGetPhysicalDeviceSparseImageFormatProperties2Safe ::
@@ -3493,28 +3297,6 @@ foreign import ccall safe
                                                                     -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceSparseImageFormatProperties2
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
--- >     , uint32_t* pPropertyCount
--- >     , VkSparseImageFormatProperties2* pProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@ and @vkGetPhysicalDeviceSparseImageFormatProperties2@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceSparseImageFormatProperties2 vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
---
 vkGetPhysicalDeviceSparseImageFormatProperties2Safe ::
                                                     VkPhysicalDevice -- ^ physicalDevice
                                                                      ->
@@ -3526,9 +3308,11 @@ vkGetPhysicalDeviceSparseImageFormatProperties2Safe ::
                                                                                              ->
                                                             IO ()
 vkGetPhysicalDeviceSparseImageFormatProperties2Safe
-  = vkGetPhysicalDeviceSparseImageFormatProperties2
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceSparseImageFormatProperties2)
 
-{-# INLINE vkGetPhysicalDeviceSparseImageFormatProperties2Safe #-}
+{-# NOINLINE vkGetPhysicalDeviceSparseImageFormatProperties2Safe
+             #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceSparseImageFormatProperties2
@@ -3551,8 +3335,13 @@ type HS_vkGetPhysicalDeviceSparseImageFormatProperties2 =
 type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceSparseImageFormatProperties2
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceSparseImageFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceSparseImageFormatProperties2
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceSparseImageFormatProperties2Safe ::
                PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 ->
                  HS_vkGetPhysicalDeviceSparseImageFormatProperties2
 
@@ -3568,6 +3357,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2 ::
         VkStructureType
@@ -3639,7 +3432,6 @@ is_VkTrimCommandPool = (EQ ==) . cmpCStrings _VkTrimCommandPool
 
 type VkTrimCommandPool = "vkTrimCommandPool"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkTrimCommandPool
 -- >     ( VkDevice device
@@ -3649,28 +3441,9 @@ type VkTrimCommandPool = "vkTrimCommandPool"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkTrimCommandPool" vkTrimCommandPool
-               :: VkDevice -- ^ device
-                           -> VkCommandPool -- ^ commandPool
-                                            -> VkCommandPoolTrimFlags -- ^ flags
-                                                                      -> IO ()
-
-#else
--- |
--- > void vkTrimCommandPool
--- >     ( VkDevice device
--- >     , VkCommandPool commandPool
--- >     , VkCommandPoolTrimFlags flags
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkTrimCommandPoolSafe@ and @vkTrimCommandPool@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3680,6 +3453,17 @@ foreign import ccall unsafe "vkTrimCommandPool" vkTrimCommandPool
 --
 -- > myTrimCommandPool <- vkGetProc @VkTrimCommandPool
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkTrimCommandPool" vkTrimCommandPool
+               :: VkDevice -- ^ device
+                           -> VkCommandPool -- ^ commandPool
+                                            -> VkCommandPoolTrimFlags -- ^ flags
+                                                                      -> IO ()
+
+#else
 vkTrimCommandPool ::
                   VkDevice -- ^ device
                            -> VkCommandPool -- ^ commandPool
@@ -3691,7 +3475,6 @@ vkTrimCommandPool
 {-# NOINLINE vkTrimCommandPool #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkTrimCommandPool
 -- >     ( VkDevice device
@@ -3701,28 +3484,9 @@ vkTrimCommandPool
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
-               :: VkDevice -- ^ device
-                           -> VkCommandPool -- ^ commandPool
-                                            -> VkCommandPoolTrimFlags -- ^ flags
-                                                                      -> IO ()
-
-#else
--- |
--- > void vkTrimCommandPool
--- >     ( VkDevice device
--- >     , VkCommandPool commandPool
--- >     , VkCommandPoolTrimFlags flags
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkTrimCommandPoolSafe@ and @vkTrimCommandPool@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3732,14 +3496,26 @@ foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
 --
 -- > myTrimCommandPool <- vkGetProc @VkTrimCommandPool
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
+               :: VkDevice -- ^ device
+                           -> VkCommandPool -- ^ commandPool
+                                            -> VkCommandPoolTrimFlags -- ^ flags
+                                                                      -> IO ()
+
+#else
 vkTrimCommandPoolSafe ::
                       VkDevice -- ^ device
                                -> VkCommandPool -- ^ commandPool
                                                 -> VkCommandPoolTrimFlags -- ^ flags
                                                                           -> IO ()
-vkTrimCommandPoolSafe = vkTrimCommandPool
+vkTrimCommandPoolSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkTrimCommandPool)
 
-{-# INLINE vkTrimCommandPoolSafe #-}
+{-# NOINLINE vkTrimCommandPoolSafe #-}
 #endif
 
 -- | > void vkTrimCommandPool
@@ -3757,7 +3533,10 @@ type HS_vkTrimCommandPool =
 
 type PFN_vkTrimCommandPool = FunPtr HS_vkTrimCommandPool
 
-foreign import ccall "dynamic" unwrapVkTrimCommandPool ::
+foreign import ccall unsafe "dynamic" unwrapVkTrimCommandPool ::
+               PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
+
+foreign import ccall safe "dynamic" unwrapVkTrimCommandPoolSafe ::
                PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
 
 instance VulkanProc "vkTrimCommandPool" where
@@ -3768,6 +3547,9 @@ instance VulkanProc "vkTrimCommandPool" where
         unwrapVkProcPtr = unwrapVkTrimCommandPool
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_ERROR_OUT_OF_POOL_MEMORY :: VkResult
 
@@ -3895,7 +3677,6 @@ is_VkGetDeviceQueue2 = (EQ ==) . cmpCStrings _VkGetDeviceQueue2
 
 type VkGetDeviceQueue2 = "vkGetDeviceQueue2"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDeviceQueue2
 -- >     ( VkDevice device
@@ -3905,28 +3686,9 @@ type VkGetDeviceQueue2 = "vkGetDeviceQueue2"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkGetDeviceQueue2" vkGetDeviceQueue2
-               :: VkDevice -- ^ device
-                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
-                                                     -> Ptr VkQueue -- ^ pQueue
-                                                                    -> IO ()
-
-#else
--- |
--- > void vkGetDeviceQueue2
--- >     ( VkDevice device
--- >     , const VkDeviceQueueInfo2* pQueueInfo
--- >     , VkQueue* pQueue
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDeviceQueue2Safe@ and @vkGetDeviceQueue2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3936,6 +3698,17 @@ foreign import ccall unsafe "vkGetDeviceQueue2" vkGetDeviceQueue2
 --
 -- > myGetDeviceQueue2 <- vkGetProc @VkGetDeviceQueue2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkGetDeviceQueue2" vkGetDeviceQueue2
+               :: VkDevice -- ^ device
+                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                                     -> Ptr VkQueue -- ^ pQueue
+                                                                    -> IO ()
+
+#else
 vkGetDeviceQueue2 ::
                   VkDevice -- ^ device
                            -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
@@ -3947,7 +3720,6 @@ vkGetDeviceQueue2
 {-# NOINLINE vkGetDeviceQueue2 #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDeviceQueue2
 -- >     ( VkDevice device
@@ -3957,28 +3729,9 @@ vkGetDeviceQueue2
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
-               :: VkDevice -- ^ device
-                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
-                                                     -> Ptr VkQueue -- ^ pQueue
-                                                                    -> IO ()
-
-#else
--- |
--- > void vkGetDeviceQueue2
--- >     ( VkDevice device
--- >     , const VkDeviceQueueInfo2* pQueueInfo
--- >     , VkQueue* pQueue
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDeviceQueue2Safe@ and @vkGetDeviceQueue2@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -3988,14 +3741,26 @@ foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
 --
 -- > myGetDeviceQueue2 <- vkGetProc @VkGetDeviceQueue2
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
+               :: VkDevice -- ^ device
+                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                                     -> Ptr VkQueue -- ^ pQueue
+                                                                    -> IO ()
+
+#else
 vkGetDeviceQueue2Safe ::
                       VkDevice -- ^ device
                                -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
                                                          -> Ptr VkQueue -- ^ pQueue
                                                                         -> IO ()
-vkGetDeviceQueue2Safe = vkGetDeviceQueue2
+vkGetDeviceQueue2Safe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkGetDeviceQueue2)
 
-{-# INLINE vkGetDeviceQueue2Safe #-}
+{-# NOINLINE vkGetDeviceQueue2Safe #-}
 #endif
 
 -- | > void vkGetDeviceQueue2
@@ -4013,7 +3778,10 @@ type HS_vkGetDeviceQueue2 =
 
 type PFN_vkGetDeviceQueue2 = FunPtr HS_vkGetDeviceQueue2
 
-foreign import ccall "dynamic" unwrapVkGetDeviceQueue2 ::
+foreign import ccall unsafe "dynamic" unwrapVkGetDeviceQueue2 ::
+               PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
+
+foreign import ccall safe "dynamic" unwrapVkGetDeviceQueue2Safe ::
                PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
 
 instance VulkanProc "vkGetDeviceQueue2" where
@@ -4024,6 +3792,9 @@ instance VulkanProc "vkGetDeviceQueue2" where
         unwrapVkProcPtr = unwrapVkGetDeviceQueue2
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetDeviceQueue2Safe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO :: VkStructureType
 
@@ -4117,7 +3888,6 @@ is_VkCreateSamplerYcbcrConversion
 type VkCreateSamplerYcbcrConversion =
      "vkCreateSamplerYcbcrConversion"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -4132,9 +3902,22 @@ type VkCreateSamplerYcbcrConversion =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetDeviceProc @VkCreateSamplerYcbcrConversion vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
                vkCreateSamplerYcbcrConversion ::
                VkDevice -- ^ device
@@ -4147,32 +3930,6 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
                                                   -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateSamplerYcbcrConversion
--- >     ( VkDevice device
--- >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSamplerYcbcrConversion* pYcbcrConversion
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateSamplerYcbcrConversionSafe@ and @vkCreateSamplerYcbcrConversion@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateSamplerYcbcrConversion <- vkGetDeviceProc @VkCreateSamplerYcbcrConversion vkDevice
---
--- or less efficient:
---
--- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
---
 vkCreateSamplerYcbcrConversion ::
                                VkDevice -- ^ device
                                         ->
@@ -4189,7 +3946,6 @@ vkCreateSamplerYcbcrConversion
 {-# NOINLINE vkCreateSamplerYcbcrConversion #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -4204,9 +3960,22 @@ vkCreateSamplerYcbcrConversion
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetDeviceProc @VkCreateSamplerYcbcrConversion vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCreateSamplerYcbcrConversion"
                vkCreateSamplerYcbcrConversionSafe ::
                VkDevice -- ^ device
@@ -4219,32 +3988,6 @@ foreign import ccall safe "vkCreateSamplerYcbcrConversion"
                                                   -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateSamplerYcbcrConversion
--- >     ( VkDevice device
--- >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSamplerYcbcrConversion* pYcbcrConversion
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateSamplerYcbcrConversionSafe@ and @vkCreateSamplerYcbcrConversion@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateSamplerYcbcrConversion <- vkGetDeviceProc @VkCreateSamplerYcbcrConversion vkDevice
---
--- or less efficient:
---
--- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
---
 vkCreateSamplerYcbcrConversionSafe ::
                                    VkDevice -- ^ device
                                             ->
@@ -4254,9 +3997,11 @@ vkCreateSamplerYcbcrConversionSafe ::
                                                                  ->
                                          Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
                                                                       -> IO VkResult
-vkCreateSamplerYcbcrConversionSafe = vkCreateSamplerYcbcrConversion
+vkCreateSamplerYcbcrConversionSafe
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkCreateSamplerYcbcrConversion)
 
-{-# INLINE vkCreateSamplerYcbcrConversionSafe #-}
+{-# NOINLINE vkCreateSamplerYcbcrConversionSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -4284,8 +4029,13 @@ type HS_vkCreateSamplerYcbcrConversion =
 type PFN_vkCreateSamplerYcbcrConversion =
      FunPtr HS_vkCreateSamplerYcbcrConversion
 
-foreign import ccall "dynamic" unwrapVkCreateSamplerYcbcrConversion
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateSamplerYcbcrConversion ::
+               PFN_vkCreateSamplerYcbcrConversion ->
+                 HS_vkCreateSamplerYcbcrConversion
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateSamplerYcbcrConversionSafe ::
                PFN_vkCreateSamplerYcbcrConversion ->
                  HS_vkCreateSamplerYcbcrConversion
 
@@ -4298,6 +4048,9 @@ instance VulkanProc "vkCreateSamplerYcbcrConversion" where
         unwrapVkProcPtr = unwrapVkCreateSamplerYcbcrConversion
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySamplerYcbcrConversion :: CString
 
@@ -4321,7 +4074,6 @@ is_VkDestroySamplerYcbcrConversion
 type VkDestroySamplerYcbcrConversion =
      "vkDestroySamplerYcbcrConversion"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkDestroySamplerYcbcrConversion
 -- >     ( VkDevice device
@@ -4331,30 +4083,9 @@ type VkDestroySamplerYcbcrConversion =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
-               vkDestroySamplerYcbcrConversion ::
-               VkDevice -- ^ device
-                        ->
-                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
-#else
--- |
--- > void vkDestroySamplerYcbcrConversion
--- >     ( VkDevice device
--- >     , VkSamplerYcbcrConversion ycbcrConversion
--- >     , const VkAllocationCallbacks* pAllocator
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkDestroySamplerYcbcrConversionSafe@ and @vkDestroySamplerYcbcrConversion@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -4364,6 +4095,19 @@ foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
 --
 -- > myDestroySamplerYcbcrConversion <- vkGetProc @VkDestroySamplerYcbcrConversion
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
+               vkDestroySamplerYcbcrConversion ::
+               VkDevice -- ^ device
+                        ->
+                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
+
+#else
 vkDestroySamplerYcbcrConversion ::
                                 VkDevice -- ^ device
                                          ->
@@ -4377,7 +4121,6 @@ vkDestroySamplerYcbcrConversion
 {-# NOINLINE vkDestroySamplerYcbcrConversion #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkDestroySamplerYcbcrConversion
 -- >     ( VkDevice device
@@ -4387,30 +4130,9 @@ vkDestroySamplerYcbcrConversion
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkDestroySamplerYcbcrConversion"
-               vkDestroySamplerYcbcrConversionSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
-#else
--- |
--- > void vkDestroySamplerYcbcrConversion
--- >     ( VkDevice device
--- >     , VkSamplerYcbcrConversion ycbcrConversion
--- >     , const VkAllocationCallbacks* pAllocator
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkDestroySamplerYcbcrConversionSafe@ and @vkDestroySamplerYcbcrConversion@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -4420,6 +4142,19 @@ foreign import ccall safe "vkDestroySamplerYcbcrConversion"
 --
 -- > myDestroySamplerYcbcrConversion <- vkGetProc @VkDestroySamplerYcbcrConversion
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkDestroySamplerYcbcrConversion"
+               vkDestroySamplerYcbcrConversionSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
+
+#else
 vkDestroySamplerYcbcrConversionSafe ::
                                     VkDevice -- ^ device
                                              ->
@@ -4427,9 +4162,10 @@ vkDestroySamplerYcbcrConversionSafe ::
                                                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                                             -> IO ()
 vkDestroySamplerYcbcrConversionSafe
-  = vkDestroySamplerYcbcrConversion
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkDestroySamplerYcbcrConversion)
 
-{-# INLINE vkDestroySamplerYcbcrConversionSafe #-}
+{-# NOINLINE vkDestroySamplerYcbcrConversionSafe #-}
 #endif
 
 -- | > void vkDestroySamplerYcbcrConversion
@@ -4449,8 +4185,13 @@ type HS_vkDestroySamplerYcbcrConversion =
 type PFN_vkDestroySamplerYcbcrConversion =
      FunPtr HS_vkDestroySamplerYcbcrConversion
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroySamplerYcbcrConversion ::
+               PFN_vkDestroySamplerYcbcrConversion ->
+                 HS_vkDestroySamplerYcbcrConversion
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroySamplerYcbcrConversionSafe ::
                PFN_vkDestroySamplerYcbcrConversion ->
                  HS_vkDestroySamplerYcbcrConversion
 
@@ -4463,6 +4204,9 @@ instance VulkanProc "vkDestroySamplerYcbcrConversion" where
         unwrapVkProcPtr = unwrapVkDestroySamplerYcbcrConversion
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO ::
         VkStructureType
@@ -4774,7 +4518,6 @@ is_VkCreateDescriptorUpdateTemplate
 type VkCreateDescriptorUpdateTemplate =
      "vkCreateDescriptorUpdateTemplate"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -4789,9 +4532,22 @@ type VkCreateDescriptorUpdateTemplate =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetDeviceProc @VkCreateDescriptorUpdateTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
                vkCreateDescriptorUpdateTemplate ::
                VkDevice -- ^ device
@@ -4804,32 +4560,6 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
                                                     -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateDescriptorUpdateTemplate
--- >     ( VkDevice device
--- >     , const VkDescriptorUpdateTemplateCreateInfo* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateDescriptorUpdateTemplateSafe@ and @vkCreateDescriptorUpdateTemplate@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateDescriptorUpdateTemplate <- vkGetDeviceProc @VkCreateDescriptorUpdateTemplate vkDevice
---
--- or less efficient:
---
--- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
---
 vkCreateDescriptorUpdateTemplate ::
                                  VkDevice -- ^ device
                                           ->
@@ -4846,7 +4576,6 @@ vkCreateDescriptorUpdateTemplate
 {-# NOINLINE vkCreateDescriptorUpdateTemplate #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -4861,9 +4590,22 @@ vkCreateDescriptorUpdateTemplate
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetDeviceProc @VkCreateDescriptorUpdateTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
                vkCreateDescriptorUpdateTemplateSafe ::
                VkDevice -- ^ device
@@ -4876,32 +4618,6 @@ foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
                                                     -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateDescriptorUpdateTemplate
--- >     ( VkDevice device
--- >     , const VkDescriptorUpdateTemplateCreateInfo* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateDescriptorUpdateTemplateSafe@ and @vkCreateDescriptorUpdateTemplate@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateDescriptorUpdateTemplate <- vkGetDeviceProc @VkCreateDescriptorUpdateTemplate vkDevice
---
--- or less efficient:
---
--- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
---
 vkCreateDescriptorUpdateTemplateSafe ::
                                      VkDevice -- ^ device
                                               ->
@@ -4912,9 +4628,10 @@ vkCreateDescriptorUpdateTemplateSafe ::
                                            Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
                                                                           -> IO VkResult
 vkCreateDescriptorUpdateTemplateSafe
-  = vkCreateDescriptorUpdateTemplate
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkCreateDescriptorUpdateTemplate)
 
-{-# INLINE vkCreateDescriptorUpdateTemplateSafe #-}
+{-# NOINLINE vkCreateDescriptorUpdateTemplateSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -4942,8 +4659,13 @@ type HS_vkCreateDescriptorUpdateTemplate =
 type PFN_vkCreateDescriptorUpdateTemplate =
      FunPtr HS_vkCreateDescriptorUpdateTemplate
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCreateDescriptorUpdateTemplate ::
+               PFN_vkCreateDescriptorUpdateTemplate ->
+                 HS_vkCreateDescriptorUpdateTemplate
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateDescriptorUpdateTemplateSafe ::
                PFN_vkCreateDescriptorUpdateTemplate ->
                  HS_vkCreateDescriptorUpdateTemplate
 
@@ -4956,6 +4678,9 @@ instance VulkanProc "vkCreateDescriptorUpdateTemplate" where
         unwrapVkProcPtr = unwrapVkCreateDescriptorUpdateTemplate
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDescriptorUpdateTemplate :: CString
 
@@ -4979,7 +4704,6 @@ is_VkDestroyDescriptorUpdateTemplate
 type VkDestroyDescriptorUpdateTemplate =
      "vkDestroyDescriptorUpdateTemplate"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkDestroyDescriptorUpdateTemplate
 -- >     ( VkDevice device
@@ -4989,30 +4713,9 @@ type VkDestroyDescriptorUpdateTemplate =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
-               vkDestroyDescriptorUpdateTemplate ::
-               VkDevice -- ^ device
-                        ->
-                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                         -> IO ()
-
-#else
--- |
--- > void vkDestroyDescriptorUpdateTemplate
--- >     ( VkDevice device
--- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
--- >     , const VkAllocationCallbacks* pAllocator
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkDestroyDescriptorUpdateTemplateSafe@ and @vkDestroyDescriptorUpdateTemplate@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -5022,6 +4725,19 @@ foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
 --
 -- > myDestroyDescriptorUpdateTemplate <- vkGetProc @VkDestroyDescriptorUpdateTemplate
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
+               vkDestroyDescriptorUpdateTemplate ::
+               VkDevice -- ^ device
+                        ->
+                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
+
+#else
 vkDestroyDescriptorUpdateTemplate ::
                                   VkDevice -- ^ device
                                            ->
@@ -5035,7 +4751,6 @@ vkDestroyDescriptorUpdateTemplate
 {-# NOINLINE vkDestroyDescriptorUpdateTemplate #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkDestroyDescriptorUpdateTemplate
 -- >     ( VkDevice device
@@ -5045,30 +4760,9 @@ vkDestroyDescriptorUpdateTemplate
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
-               vkDestroyDescriptorUpdateTemplateSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                         -> IO ()
-
-#else
--- |
--- > void vkDestroyDescriptorUpdateTemplate
--- >     ( VkDevice device
--- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
--- >     , const VkAllocationCallbacks* pAllocator
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkDestroyDescriptorUpdateTemplateSafe@ and @vkDestroyDescriptorUpdateTemplate@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -5078,6 +4772,19 @@ foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
 --
 -- > myDestroyDescriptorUpdateTemplate <- vkGetProc @VkDestroyDescriptorUpdateTemplate
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
+foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
+               vkDestroyDescriptorUpdateTemplateSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
+
+#else
 vkDestroyDescriptorUpdateTemplateSafe ::
                                       VkDevice -- ^ device
                                                ->
@@ -5086,9 +4793,10 @@ vkDestroyDescriptorUpdateTemplateSafe ::
                                           Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                     -> IO ()
 vkDestroyDescriptorUpdateTemplateSafe
-  = vkDestroyDescriptorUpdateTemplate
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkDestroyDescriptorUpdateTemplate)
 
-{-# INLINE vkDestroyDescriptorUpdateTemplateSafe #-}
+{-# NOINLINE vkDestroyDescriptorUpdateTemplateSafe #-}
 #endif
 
 -- | > void vkDestroyDescriptorUpdateTemplate
@@ -5108,8 +4816,13 @@ type HS_vkDestroyDescriptorUpdateTemplate =
 type PFN_vkDestroyDescriptorUpdateTemplate =
      FunPtr HS_vkDestroyDescriptorUpdateTemplate
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroyDescriptorUpdateTemplate ::
+               PFN_vkDestroyDescriptorUpdateTemplate ->
+                 HS_vkDestroyDescriptorUpdateTemplate
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyDescriptorUpdateTemplateSafe ::
                PFN_vkDestroyDescriptorUpdateTemplate ->
                  HS_vkDestroyDescriptorUpdateTemplate
 
@@ -5122,6 +4835,9 @@ instance VulkanProc "vkDestroyDescriptorUpdateTemplate" where
         unwrapVkProcPtr = unwrapVkDestroyDescriptorUpdateTemplate
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorUpdateTemplateSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUpdateDescriptorSetWithTemplate :: CString
 
@@ -5145,7 +4861,6 @@ is_VkUpdateDescriptorSetWithTemplate
 type VkUpdateDescriptorSetWithTemplate =
      "vkUpdateDescriptorSetWithTemplate"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkUpdateDescriptorSetWithTemplate
 -- >     ( VkDevice device
@@ -5156,9 +4871,22 @@ type VkUpdateDescriptorSetWithTemplate =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetDeviceProc @VkUpdateDescriptorSetWithTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
                vkUpdateDescriptorSetWithTemplate ::
                VkDevice -- ^ device
@@ -5169,28 +4897,6 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
                                                                            -> IO ()
 
 #else
--- |
--- > void vkUpdateDescriptorSetWithTemplate
--- >     ( VkDevice device
--- >     , VkDescriptorSet descriptorSet
--- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
--- >     , const void* pData
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkUpdateDescriptorSetWithTemplateSafe@ and @vkUpdateDescriptorSetWithTemplate@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myUpdateDescriptorSetWithTemplate <- vkGetDeviceProc @VkUpdateDescriptorSetWithTemplate vkDevice
---
--- or less efficient:
---
--- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
---
 vkUpdateDescriptorSetWithTemplate ::
                                   VkDevice -- ^ device
                                            ->
@@ -5206,7 +4912,6 @@ vkUpdateDescriptorSetWithTemplate
 {-# NOINLINE vkUpdateDescriptorSetWithTemplate #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkUpdateDescriptorSetWithTemplate
 -- >     ( VkDevice device
@@ -5217,9 +4922,22 @@ vkUpdateDescriptorSetWithTemplate
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetDeviceProc @VkUpdateDescriptorSetWithTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
                vkUpdateDescriptorSetWithTemplateSafe ::
                VkDevice -- ^ device
@@ -5230,28 +4948,6 @@ foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
                                                                            -> IO ()
 
 #else
--- |
--- > void vkUpdateDescriptorSetWithTemplate
--- >     ( VkDevice device
--- >     , VkDescriptorSet descriptorSet
--- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
--- >     , const void* pData
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkUpdateDescriptorSetWithTemplateSafe@ and @vkUpdateDescriptorSetWithTemplate@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myUpdateDescriptorSetWithTemplate <- vkGetDeviceProc @VkUpdateDescriptorSetWithTemplate vkDevice
---
--- or less efficient:
---
--- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
---
 vkUpdateDescriptorSetWithTemplateSafe ::
                                       VkDevice -- ^ device
                                                ->
@@ -5261,9 +4957,10 @@ vkUpdateDescriptorSetWithTemplateSafe ::
                                                                      -> Ptr Void -- ^ pData
                                                                                  -> IO ()
 vkUpdateDescriptorSetWithTemplateSafe
-  = vkUpdateDescriptorSetWithTemplate
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkUpdateDescriptorSetWithTemplate)
 
-{-# INLINE vkUpdateDescriptorSetWithTemplateSafe #-}
+{-# NOINLINE vkUpdateDescriptorSetWithTemplateSafe #-}
 #endif
 
 -- | > void vkUpdateDescriptorSetWithTemplate
@@ -5285,8 +4982,13 @@ type HS_vkUpdateDescriptorSetWithTemplate =
 type PFN_vkUpdateDescriptorSetWithTemplate =
      FunPtr HS_vkUpdateDescriptorSetWithTemplate
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkUpdateDescriptorSetWithTemplate ::
+               PFN_vkUpdateDescriptorSetWithTemplate ->
+                 HS_vkUpdateDescriptorSetWithTemplate
+
+foreign import ccall safe "dynamic"
+               unwrapVkUpdateDescriptorSetWithTemplateSafe ::
                PFN_vkUpdateDescriptorSetWithTemplate ->
                  HS_vkUpdateDescriptorSetWithTemplate
 
@@ -5299,6 +5001,9 @@ instance VulkanProc "vkUpdateDescriptorSetWithTemplate" where
         unwrapVkProcPtr = unwrapVkUpdateDescriptorSetWithTemplate
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkUpdateDescriptorSetWithTemplateSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO ::
         VkStructureType
@@ -5334,7 +5039,6 @@ is_VkGetPhysicalDeviceExternalBufferProperties
 type VkGetPhysicalDeviceExternalBufferProperties =
      "vkGetPhysicalDeviceExternalBufferProperties"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalBufferProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5344,9 +5048,22 @@ type VkGetPhysicalDeviceExternalBufferProperties =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalBufferProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalBufferProperties"
                vkGetPhysicalDeviceExternalBufferProperties ::
@@ -5358,27 +5075,6 @@ foreign import ccall unsafe
                                                   -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalBufferProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
--- >     , VkExternalBufferProperties* pExternalBufferProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalBufferPropertiesSafe@ and @vkGetPhysicalDeviceExternalBufferProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalBufferProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalBufferProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
---
 vkGetPhysicalDeviceExternalBufferProperties ::
                                             VkPhysicalDevice -- ^ physicalDevice
                                                              ->
@@ -5393,7 +5089,6 @@ vkGetPhysicalDeviceExternalBufferProperties
 {-# NOINLINE vkGetPhysicalDeviceExternalBufferProperties #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalBufferProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5403,9 +5098,22 @@ vkGetPhysicalDeviceExternalBufferProperties
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalBufferProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceExternalBufferProperties"
                vkGetPhysicalDeviceExternalBufferPropertiesSafe ::
@@ -5417,27 +5125,6 @@ foreign import ccall safe
                                                   -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalBufferProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
--- >     , VkExternalBufferProperties* pExternalBufferProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalBufferPropertiesSafe@ and @vkGetPhysicalDeviceExternalBufferProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalBufferProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalBufferProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
---
 vkGetPhysicalDeviceExternalBufferPropertiesSafe ::
                                                 VkPhysicalDevice -- ^ physicalDevice
                                                                  ->
@@ -5446,9 +5133,10 @@ vkGetPhysicalDeviceExternalBufferPropertiesSafe ::
                                                     Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
                                                                                    -> IO ()
 vkGetPhysicalDeviceExternalBufferPropertiesSafe
-  = vkGetPhysicalDeviceExternalBufferProperties
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceExternalBufferProperties)
 
-{-# INLINE vkGetPhysicalDeviceExternalBufferPropertiesSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalBufferPropertiesSafe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceExternalBufferProperties
@@ -5469,8 +5157,13 @@ type HS_vkGetPhysicalDeviceExternalBufferProperties =
 type PFN_vkGetPhysicalDeviceExternalBufferProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalBufferProperties
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalBufferProperties ::
+               PFN_vkGetPhysicalDeviceExternalBufferProperties ->
+                 HS_vkGetPhysicalDeviceExternalBufferProperties
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalBufferPropertiesSafe ::
                PFN_vkGetPhysicalDeviceExternalBufferProperties ->
                  HS_vkGetPhysicalDeviceExternalBufferProperties
 
@@ -5484,6 +5177,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalBufferProperties"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceExternalBufferProperties
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalBufferPropertiesSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO
         :: VkStructureType
@@ -5559,7 +5256,6 @@ is_VkGetPhysicalDeviceExternalFenceProperties
 type VkGetPhysicalDeviceExternalFenceProperties =
      "vkGetPhysicalDeviceExternalFenceProperties"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalFenceProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5569,9 +5265,22 @@ type VkGetPhysicalDeviceExternalFenceProperties =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalFenceProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalFenceProperties"
                vkGetPhysicalDeviceExternalFenceProperties ::
@@ -5583,27 +5292,6 @@ foreign import ccall unsafe
                                                  -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalFenceProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
--- >     , VkExternalFenceProperties* pExternalFenceProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalFencePropertiesSafe@ and @vkGetPhysicalDeviceExternalFenceProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalFenceProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalFenceProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
---
 vkGetPhysicalDeviceExternalFenceProperties ::
                                            VkPhysicalDevice -- ^ physicalDevice
                                                             ->
@@ -5618,7 +5306,6 @@ vkGetPhysicalDeviceExternalFenceProperties
 {-# NOINLINE vkGetPhysicalDeviceExternalFenceProperties #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalFenceProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5628,9 +5315,22 @@ vkGetPhysicalDeviceExternalFenceProperties
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalFenceProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceExternalFenceProperties"
                vkGetPhysicalDeviceExternalFencePropertiesSafe ::
@@ -5642,27 +5342,6 @@ foreign import ccall safe
                                                  -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalFenceProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
--- >     , VkExternalFenceProperties* pExternalFenceProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalFencePropertiesSafe@ and @vkGetPhysicalDeviceExternalFenceProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalFenceProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalFenceProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
---
 vkGetPhysicalDeviceExternalFencePropertiesSafe ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 ->
@@ -5671,9 +5350,10 @@ vkGetPhysicalDeviceExternalFencePropertiesSafe ::
                                                    Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
                                                                                  -> IO ()
 vkGetPhysicalDeviceExternalFencePropertiesSafe
-  = vkGetPhysicalDeviceExternalFenceProperties
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceExternalFenceProperties)
 
-{-# INLINE vkGetPhysicalDeviceExternalFencePropertiesSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalFencePropertiesSafe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceExternalFenceProperties
@@ -5694,8 +5374,13 @@ type HS_vkGetPhysicalDeviceExternalFenceProperties =
 type PFN_vkGetPhysicalDeviceExternalFenceProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalFenceProperties
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalFenceProperties ::
+               PFN_vkGetPhysicalDeviceExternalFenceProperties ->
+                 HS_vkGetPhysicalDeviceExternalFenceProperties
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalFencePropertiesSafe ::
                PFN_vkGetPhysicalDeviceExternalFenceProperties ->
                  HS_vkGetPhysicalDeviceExternalFenceProperties
 
@@ -5709,6 +5394,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalFenceProperties"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceExternalFenceProperties
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalFencePropertiesSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO ::
         VkStructureType
@@ -5758,7 +5447,6 @@ is_VkGetPhysicalDeviceExternalSemaphoreProperties
 type VkGetPhysicalDeviceExternalSemaphoreProperties =
      "vkGetPhysicalDeviceExternalSemaphoreProperties"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalSemaphoreProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5768,9 +5456,22 @@ type VkGetPhysicalDeviceExternalSemaphoreProperties =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalSemaphoreProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalSemaphoreProperties"
                vkGetPhysicalDeviceExternalSemaphoreProperties ::
@@ -5782,27 +5483,6 @@ foreign import ccall unsafe
                                                      -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalSemaphoreProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
--- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@ and @vkGetPhysicalDeviceExternalSemaphoreProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalSemaphoreProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
---
 vkGetPhysicalDeviceExternalSemaphoreProperties ::
                                                VkPhysicalDevice -- ^ physicalDevice
                                                                 ->
@@ -5817,7 +5497,6 @@ vkGetPhysicalDeviceExternalSemaphoreProperties
 {-# NOINLINE vkGetPhysicalDeviceExternalSemaphoreProperties #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetPhysicalDeviceExternalSemaphoreProperties
 -- >     ( VkPhysicalDevice physicalDevice
@@ -5827,9 +5506,22 @@ vkGetPhysicalDeviceExternalSemaphoreProperties
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalSemaphoreProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
                "vkGetPhysicalDeviceExternalSemaphoreProperties"
                vkGetPhysicalDeviceExternalSemaphorePropertiesSafe ::
@@ -5841,27 +5533,6 @@ foreign import ccall safe
                                                      -> IO ()
 
 #else
--- |
--- > void vkGetPhysicalDeviceExternalSemaphoreProperties
--- >     ( VkPhysicalDevice physicalDevice
--- >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
--- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@ and @vkGetPhysicalDeviceExternalSemaphoreProperties@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalSemaphoreProperties vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
---
 vkGetPhysicalDeviceExternalSemaphorePropertiesSafe ::
                                                    VkPhysicalDevice -- ^ physicalDevice
                                                                     ->
@@ -5870,9 +5541,10 @@ vkGetPhysicalDeviceExternalSemaphorePropertiesSafe ::
                                                        Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
                                                                                          -> IO ()
 vkGetPhysicalDeviceExternalSemaphorePropertiesSafe
-  = vkGetPhysicalDeviceExternalSemaphoreProperties
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceExternalSemaphoreProperties)
 
-{-# INLINE vkGetPhysicalDeviceExternalSemaphorePropertiesSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalSemaphorePropertiesSafe #-}
 #endif
 
 -- | > void vkGetPhysicalDeviceExternalSemaphoreProperties
@@ -5893,8 +5565,13 @@ type HS_vkGetPhysicalDeviceExternalSemaphoreProperties =
 type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalSemaphoreProperties
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalSemaphoreProperties ::
+               PFN_vkGetPhysicalDeviceExternalSemaphoreProperties ->
+                 HS_vkGetPhysicalDeviceExternalSemaphoreProperties
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesSafe ::
                PFN_vkGetPhysicalDeviceExternalSemaphoreProperties ->
                  HS_vkGetPhysicalDeviceExternalSemaphoreProperties
 
@@ -5910,6 +5587,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceExternalSemaphoreProperties
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO
         :: VkStructureType
@@ -5945,7 +5626,6 @@ is_VkGetDescriptorSetLayoutSupport
 type VkGetDescriptorSetLayoutSupport =
      "vkGetDescriptorSetLayoutSupport"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDescriptorSetLayoutSupport
 -- >     ( VkDevice device
@@ -5955,9 +5635,22 @@ type VkGetDescriptorSetLayoutSupport =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetDeviceProc @VkGetDescriptorSetLayoutSupport vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
                vkGetDescriptorSetLayoutSupport ::
                VkDevice -- ^ device
@@ -5968,27 +5661,6 @@ foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
                                                     -> IO ()
 
 #else
--- |
--- > void vkGetDescriptorSetLayoutSupport
--- >     ( VkDevice device
--- >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
--- >     , VkDescriptorSetLayoutSupport* pSupport
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDescriptorSetLayoutSupportSafe@ and @vkGetDescriptorSetLayoutSupport@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetDescriptorSetLayoutSupport <- vkGetDeviceProc @VkGetDescriptorSetLayoutSupport vkDevice
---
--- or less efficient:
---
--- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
---
 vkGetDescriptorSetLayoutSupport ::
                                 VkDevice -- ^ device
                                          ->
@@ -6003,7 +5675,6 @@ vkGetDescriptorSetLayoutSupport
 {-# NOINLINE vkGetDescriptorSetLayoutSupport #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_1
 -- |
 -- > void vkGetDescriptorSetLayoutSupport
 -- >     ( VkDevice device
@@ -6013,9 +5684,22 @@ vkGetDescriptorSetLayoutSupport
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-1@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetDeviceProc @VkGetDescriptorSetLayoutSupport vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
                vkGetDescriptorSetLayoutSupportSafe ::
                VkDevice -- ^ device
@@ -6026,27 +5710,6 @@ foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
                                                     -> IO ()
 
 #else
--- |
--- > void vkGetDescriptorSetLayoutSupport
--- >     ( VkDevice device
--- >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
--- >     , VkDescriptorSetLayoutSupport* pSupport
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-1@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetDescriptorSetLayoutSupportSafe@ and @vkGetDescriptorSetLayoutSupport@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetDescriptorSetLayoutSupport <- vkGetDeviceProc @VkGetDescriptorSetLayoutSupport vkDevice
---
--- or less efficient:
---
--- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
---
 vkGetDescriptorSetLayoutSupportSafe ::
                                     VkDevice -- ^ device
                                              ->
@@ -6055,9 +5718,10 @@ vkGetDescriptorSetLayoutSupportSafe ::
                                         Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
                                                                          -> IO ()
 vkGetDescriptorSetLayoutSupportSafe
-  = vkGetDescriptorSetLayoutSupport
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetDescriptorSetLayoutSupport)
 
-{-# INLINE vkGetDescriptorSetLayoutSupportSafe #-}
+{-# NOINLINE vkGetDescriptorSetLayoutSupportSafe #-}
 #endif
 
 -- | > void vkGetDescriptorSetLayoutSupport
@@ -6078,8 +5742,13 @@ type HS_vkGetDescriptorSetLayoutSupport =
 type PFN_vkGetDescriptorSetLayoutSupport =
      FunPtr HS_vkGetDescriptorSetLayoutSupport
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetDescriptorSetLayoutSupport ::
+               PFN_vkGetDescriptorSetLayoutSupport ->
+                 HS_vkGetDescriptorSetLayoutSupport
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetDescriptorSetLayoutSupportSafe ::
                PFN_vkGetDescriptorSetLayoutSupport ->
                  HS_vkGetDescriptorSetLayoutSupport
 
@@ -6092,6 +5761,9 @@ instance VulkanProc "vkGetDescriptorSetLayoutSupport" where
         unwrapVkProcPtr = unwrapVkGetDescriptorSetLayoutSupport
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES
         :: VkStructureType

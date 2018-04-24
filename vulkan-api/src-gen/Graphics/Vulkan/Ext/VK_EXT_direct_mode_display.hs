@@ -73,8 +73,11 @@ type HS_vkReleaseDisplayEXT =
 
 type PFN_vkReleaseDisplayEXT = FunPtr HS_vkReleaseDisplayEXT
 
-foreign import ccall "dynamic" unwrapVkReleaseDisplayEXT ::
+foreign import ccall unsafe "dynamic" unwrapVkReleaseDisplayEXT ::
                PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
+
+foreign import ccall safe "dynamic" unwrapVkReleaseDisplayEXTSafe
+               :: PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
 
 instance VulkanProc "vkReleaseDisplayEXT" where
         type VkProcType "vkReleaseDisplayEXT" = HS_vkReleaseDisplayEXT
@@ -84,6 +87,9 @@ instance VulkanProc "vkReleaseDisplayEXT" where
         unwrapVkProcPtr = unwrapVkReleaseDisplayEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkReleaseDisplayEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION :: (Num a, Eq a) =>
         a

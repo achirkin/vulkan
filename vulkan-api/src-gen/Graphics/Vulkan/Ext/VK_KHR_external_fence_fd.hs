@@ -92,7 +92,10 @@ type HS_vkImportFenceFdKHR =
 
 type PFN_vkImportFenceFdKHR = FunPtr HS_vkImportFenceFdKHR
 
-foreign import ccall "dynamic" unwrapVkImportFenceFdKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkImportFenceFdKHR ::
+               PFN_vkImportFenceFdKHR -> HS_vkImportFenceFdKHR
+
+foreign import ccall safe "dynamic" unwrapVkImportFenceFdKHRSafe ::
                PFN_vkImportFenceFdKHR -> HS_vkImportFenceFdKHR
 
 instance VulkanProc "vkImportFenceFdKHR" where
@@ -103,6 +106,9 @@ instance VulkanProc "vkImportFenceFdKHR" where
         unwrapVkProcPtr = unwrapVkImportFenceFdKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkImportFenceFdKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetFenceFdKHR :: CString
 
@@ -140,7 +146,10 @@ type HS_vkGetFenceFdKHR =
 
 type PFN_vkGetFenceFdKHR = FunPtr HS_vkGetFenceFdKHR
 
-foreign import ccall "dynamic" unwrapVkGetFenceFdKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkGetFenceFdKHR ::
+               PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
+
+foreign import ccall safe "dynamic" unwrapVkGetFenceFdKHRSafe ::
                PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
 
 instance VulkanProc "vkGetFenceFdKHR" where
@@ -151,6 +160,9 @@ instance VulkanProc "vkGetFenceFdKHR" where
         unwrapVkProcPtr = unwrapVkGetFenceFdKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetFenceFdKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION :: (Num a, Eq a) => a
 

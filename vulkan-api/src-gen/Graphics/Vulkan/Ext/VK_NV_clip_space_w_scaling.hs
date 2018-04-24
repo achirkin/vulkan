@@ -96,7 +96,12 @@ type HS_vkCmdSetViewportWScalingNV =
 type PFN_vkCmdSetViewportWScalingNV =
      FunPtr HS_vkCmdSetViewportWScalingNV
 
-foreign import ccall "dynamic" unwrapVkCmdSetViewportWScalingNV ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdSetViewportWScalingNV ::
+               PFN_vkCmdSetViewportWScalingNV -> HS_vkCmdSetViewportWScalingNV
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdSetViewportWScalingNVSafe ::
                PFN_vkCmdSetViewportWScalingNV -> HS_vkCmdSetViewportWScalingNV
 
 instance VulkanProc "vkCmdSetViewportWScalingNV" where
@@ -108,6 +113,9 @@ instance VulkanProc "vkCmdSetViewportWScalingNV" where
         unwrapVkProcPtr = unwrapVkCmdSetViewportWScalingNV
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdSetViewportWScalingNVSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION :: (Num a, Eq a) =>
         a

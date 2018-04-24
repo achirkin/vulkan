@@ -110,8 +110,13 @@ type HS_vkGetPhysicalDeviceExternalFencePropertiesKHR =
 type PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR ::
+               PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ->
+                 HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRSafe ::
                PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
 
@@ -126,6 +131,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalFencePropertiesKHR"
           = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

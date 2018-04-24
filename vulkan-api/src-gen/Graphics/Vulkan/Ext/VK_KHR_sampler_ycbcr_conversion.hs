@@ -247,8 +247,13 @@ type HS_vkCreateSamplerYcbcrConversionKHR =
 type PFN_vkCreateSamplerYcbcrConversionKHR =
      FunPtr HS_vkCreateSamplerYcbcrConversionKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCreateSamplerYcbcrConversionKHR ::
+               PFN_vkCreateSamplerYcbcrConversionKHR ->
+                 HS_vkCreateSamplerYcbcrConversionKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateSamplerYcbcrConversionKHRSafe ::
                PFN_vkCreateSamplerYcbcrConversionKHR ->
                  HS_vkCreateSamplerYcbcrConversionKHR
 
@@ -261,6 +266,9 @@ instance VulkanProc "vkCreateSamplerYcbcrConversionKHR" where
         unwrapVkProcPtr = unwrapVkCreateSamplerYcbcrConversionKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySamplerYcbcrConversionKHR :: CString
 
@@ -303,8 +311,13 @@ type HS_vkDestroySamplerYcbcrConversionKHR =
 type PFN_vkDestroySamplerYcbcrConversionKHR =
      FunPtr HS_vkDestroySamplerYcbcrConversionKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroySamplerYcbcrConversionKHR ::
+               PFN_vkDestroySamplerYcbcrConversionKHR ->
+                 HS_vkDestroySamplerYcbcrConversionKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroySamplerYcbcrConversionKHRSafe ::
                PFN_vkDestroySamplerYcbcrConversionKHR ->
                  HS_vkDestroySamplerYcbcrConversionKHR
 
@@ -317,6 +330,9 @@ instance VulkanProc "vkDestroySamplerYcbcrConversionKHR" where
         unwrapVkProcPtr = unwrapVkDestroySamplerYcbcrConversionKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION ::
         (Num a, Eq a) => a

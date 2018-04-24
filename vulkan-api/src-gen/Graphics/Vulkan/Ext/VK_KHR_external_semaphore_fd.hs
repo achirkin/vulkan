@@ -95,7 +95,11 @@ type HS_vkImportSemaphoreFdKHR =
 
 type PFN_vkImportSemaphoreFdKHR = FunPtr HS_vkImportSemaphoreFdKHR
 
-foreign import ccall "dynamic" unwrapVkImportSemaphoreFdKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkImportSemaphoreFdKHR
+               :: PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkImportSemaphoreFdKHRSafe ::
                PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
 
 instance VulkanProc "vkImportSemaphoreFdKHR" where
@@ -107,6 +111,9 @@ instance VulkanProc "vkImportSemaphoreFdKHR" where
         unwrapVkProcPtr = unwrapVkImportSemaphoreFdKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkImportSemaphoreFdKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetSemaphoreFdKHR :: CString
 
@@ -144,8 +151,11 @@ type HS_vkGetSemaphoreFdKHR =
 
 type PFN_vkGetSemaphoreFdKHR = FunPtr HS_vkGetSemaphoreFdKHR
 
-foreign import ccall "dynamic" unwrapVkGetSemaphoreFdKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkGetSemaphoreFdKHR ::
                PFN_vkGetSemaphoreFdKHR -> HS_vkGetSemaphoreFdKHR
+
+foreign import ccall safe "dynamic" unwrapVkGetSemaphoreFdKHRSafe
+               :: PFN_vkGetSemaphoreFdKHR -> HS_vkGetSemaphoreFdKHR
 
 instance VulkanProc "vkGetSemaphoreFdKHR" where
         type VkProcType "vkGetSemaphoreFdKHR" = HS_vkGetSemaphoreFdKHR
@@ -155,6 +165,9 @@ instance VulkanProc "vkGetSemaphoreFdKHR" where
         unwrapVkProcPtr = unwrapVkGetSemaphoreFdKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetSemaphoreFdKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -83,10 +83,11 @@ genCabalFile coreVersions eModules = T.unlines $
         [text|
           DUMMY (have to keep it here for NeatInterpolation to work properly)
               build-depends:
-                  base >= 4.7 && < 5
+                  base >= 4.9 && < 5
               default-language:    Haskell2010
               ghc-options:         -Wall
               include-dirs:        include
+              c-sources:           cbits/vulkan_loader.c
               if $anyNativeVersion
                 if os(windows)
                   extra-libraries: vulkan-1
@@ -97,7 +98,6 @@ genCabalFile coreVersions eModules = T.unlines $
               else
                 cpp-options:       -DVK_NO_PROTOTYPES
                 cc-options:        -DVK_NO_PROTOTYPES
-                c-sources:         cbits/vulkan_loader.c
 
           source-repository head
               type:     git

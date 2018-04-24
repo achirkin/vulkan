@@ -89,7 +89,10 @@ type HS_vkGetShaderInfoAMD =
 
 type PFN_vkGetShaderInfoAMD = FunPtr HS_vkGetShaderInfoAMD
 
-foreign import ccall "dynamic" unwrapVkGetShaderInfoAMD ::
+foreign import ccall unsafe "dynamic" unwrapVkGetShaderInfoAMD ::
+               PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
+
+foreign import ccall safe "dynamic" unwrapVkGetShaderInfoAMDSafe ::
                PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
 
 instance VulkanProc "vkGetShaderInfoAMD" where
@@ -100,6 +103,9 @@ instance VulkanProc "vkGetShaderInfoAMD" where
         unwrapVkProcPtr = unwrapVkGetShaderInfoAMD
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetShaderInfoAMDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_AMD_SHADER_INFO_SPEC_VERSION :: (Num a, Eq a) => a
 

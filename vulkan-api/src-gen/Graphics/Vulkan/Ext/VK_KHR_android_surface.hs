@@ -88,7 +88,6 @@ is_VkCreateAndroidSurfaceKHR
 
 type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -103,9 +102,22 @@ type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
                VkInstance -- ^ instance
@@ -117,32 +129,6 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
--- > VkResult vkCreateAndroidSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateAndroidSurfaceKHRSafe@ and @vkCreateAndroidSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
---
 vkCreateAndroidSurfaceKHR ::
                           VkInstance -- ^ instance
                                      ->
@@ -157,7 +143,6 @@ vkCreateAndroidSurfaceKHR
 {-# NOINLINE vkCreateAndroidSurfaceKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -172,9 +157,22 @@ vkCreateAndroidSurfaceKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -186,32 +184,6 @@ foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
--- > VkResult vkCreateAndroidSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateAndroidSurfaceKHRSafe@ and @vkCreateAndroidSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
---
 vkCreateAndroidSurfaceKHRSafe ::
                               VkInstance -- ^ instance
                                          ->
@@ -220,9 +192,10 @@ vkCreateAndroidSurfaceKHRSafe ::
                                   Ptr VkAllocationCallbacks -- ^ pAllocator
                                                             -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                                 -> IO VkResult
-vkCreateAndroidSurfaceKHRSafe = vkCreateAndroidSurfaceKHR
+vkCreateAndroidSurfaceKHRSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCreateAndroidSurfaceKHR)
 
-{-# INLINE vkCreateAndroidSurfaceKHRSafe #-}
+{-# NOINLINE vkCreateAndroidSurfaceKHRSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -249,7 +222,12 @@ type HS_vkCreateAndroidSurfaceKHR =
 type PFN_vkCreateAndroidSurfaceKHR =
      FunPtr HS_vkCreateAndroidSurfaceKHR
 
-foreign import ccall "dynamic" unwrapVkCreateAndroidSurfaceKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateAndroidSurfaceKHR ::
+               PFN_vkCreateAndroidSurfaceKHR -> HS_vkCreateAndroidSurfaceKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateAndroidSurfaceKHRSafe ::
                PFN_vkCreateAndroidSurfaceKHR -> HS_vkCreateAndroidSurfaceKHR
 
 instance VulkanProc "vkCreateAndroidSurfaceKHR" where
@@ -261,6 +239,9 @@ instance VulkanProc "vkCreateAndroidSurfaceKHR" where
         unwrapVkProcPtr = unwrapVkCreateAndroidSurfaceKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateAndroidSurfaceKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_ANDROID_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

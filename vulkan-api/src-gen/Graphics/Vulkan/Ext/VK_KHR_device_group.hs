@@ -209,8 +209,13 @@ type HS_vkGetDeviceGroupPeerMemoryFeaturesKHR =
 type PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR =
      FunPtr HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR ::
+               PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ->
+                 HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetDeviceGroupPeerMemoryFeaturesKHRSafe ::
                PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ->
                  HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
 
@@ -223,6 +228,10 @@ instance VulkanProc "vkGetDeviceGroupPeerMemoryFeaturesKHR" where
         unwrapVkProcPtr = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetDeviceMaskKHR :: CString
 
@@ -260,8 +269,11 @@ type HS_vkCmdSetDeviceMaskKHR = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdSetDeviceMaskKHR = FunPtr HS_vkCmdSetDeviceMaskKHR
 
-foreign import ccall "dynamic" unwrapVkCmdSetDeviceMaskKHR ::
-               PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
+foreign import ccall unsafe "dynamic" unwrapVkCmdSetDeviceMaskKHR
+               :: PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
+
+foreign import ccall safe "dynamic" unwrapVkCmdSetDeviceMaskKHRSafe
+               :: PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
 
 instance VulkanProc "vkCmdSetDeviceMaskKHR" where
         type VkProcType "vkCmdSetDeviceMaskKHR" = HS_vkCmdSetDeviceMaskKHR
@@ -271,6 +283,9 @@ instance VulkanProc "vkCmdSetDeviceMaskKHR" where
         unwrapVkProcPtr = unwrapVkCmdSetDeviceMaskKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdSetDeviceMaskKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDispatchBaseKHR :: CString
 
@@ -320,8 +335,11 @@ type HS_vkCmdDispatchBaseKHR =
 
 type PFN_vkCmdDispatchBaseKHR = FunPtr HS_vkCmdDispatchBaseKHR
 
-foreign import ccall "dynamic" unwrapVkCmdDispatchBaseKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkCmdDispatchBaseKHR ::
                PFN_vkCmdDispatchBaseKHR -> HS_vkCmdDispatchBaseKHR
+
+foreign import ccall safe "dynamic" unwrapVkCmdDispatchBaseKHRSafe
+               :: PFN_vkCmdDispatchBaseKHR -> HS_vkCmdDispatchBaseKHR
 
 instance VulkanProc "vkCmdDispatchBaseKHR" where
         type VkProcType "vkCmdDispatchBaseKHR" = HS_vkCmdDispatchBaseKHR
@@ -331,6 +349,9 @@ instance VulkanProc "vkCmdDispatchBaseKHR" where
         unwrapVkProcPtr = unwrapVkCmdDispatchBaseKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDispatchBaseKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION :: (Num a, Eq a) => a
 

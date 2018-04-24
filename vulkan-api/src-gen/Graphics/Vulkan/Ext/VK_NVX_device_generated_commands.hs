@@ -142,7 +142,11 @@ type HS_vkCmdProcessCommandsNVX =
 type PFN_vkCmdProcessCommandsNVX =
      FunPtr HS_vkCmdProcessCommandsNVX
 
-foreign import ccall "dynamic" unwrapVkCmdProcessCommandsNVX ::
+foreign import ccall unsafe "dynamic" unwrapVkCmdProcessCommandsNVX
+               :: PFN_vkCmdProcessCommandsNVX -> HS_vkCmdProcessCommandsNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdProcessCommandsNVXSafe ::
                PFN_vkCmdProcessCommandsNVX -> HS_vkCmdProcessCommandsNVX
 
 instance VulkanProc "vkCmdProcessCommandsNVX" where
@@ -154,6 +158,9 @@ instance VulkanProc "vkCmdProcessCommandsNVX" where
         unwrapVkProcPtr = unwrapVkCmdProcessCommandsNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdProcessCommandsNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdReserveSpaceForCommandsNVX :: CString
 
@@ -195,8 +202,13 @@ type HS_vkCmdReserveSpaceForCommandsNVX =
 type PFN_vkCmdReserveSpaceForCommandsNVX =
      FunPtr HS_vkCmdReserveSpaceForCommandsNVX
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCmdReserveSpaceForCommandsNVX ::
+               PFN_vkCmdReserveSpaceForCommandsNVX ->
+                 HS_vkCmdReserveSpaceForCommandsNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdReserveSpaceForCommandsNVXSafe ::
                PFN_vkCmdReserveSpaceForCommandsNVX ->
                  HS_vkCmdReserveSpaceForCommandsNVX
 
@@ -209,6 +221,9 @@ instance VulkanProc "vkCmdReserveSpaceForCommandsNVX" where
         unwrapVkProcPtr = unwrapVkCmdReserveSpaceForCommandsNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdReserveSpaceForCommandsNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateIndirectCommandsLayoutNVX :: CString
 
@@ -257,8 +272,13 @@ type HS_vkCreateIndirectCommandsLayoutNVX =
 type PFN_vkCreateIndirectCommandsLayoutNVX =
      FunPtr HS_vkCreateIndirectCommandsLayoutNVX
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCreateIndirectCommandsLayoutNVX ::
+               PFN_vkCreateIndirectCommandsLayoutNVX ->
+                 HS_vkCreateIndirectCommandsLayoutNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateIndirectCommandsLayoutNVXSafe ::
                PFN_vkCreateIndirectCommandsLayoutNVX ->
                  HS_vkCreateIndirectCommandsLayoutNVX
 
@@ -271,6 +291,9 @@ instance VulkanProc "vkCreateIndirectCommandsLayoutNVX" where
         unwrapVkProcPtr = unwrapVkCreateIndirectCommandsLayoutNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateIndirectCommandsLayoutNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyIndirectCommandsLayoutNVX :: CString
 
@@ -311,8 +334,13 @@ type HS_vkDestroyIndirectCommandsLayoutNVX =
 type PFN_vkDestroyIndirectCommandsLayoutNVX =
      FunPtr HS_vkDestroyIndirectCommandsLayoutNVX
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkDestroyIndirectCommandsLayoutNVX ::
+               PFN_vkDestroyIndirectCommandsLayoutNVX ->
+                 HS_vkDestroyIndirectCommandsLayoutNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyIndirectCommandsLayoutNVXSafe ::
                PFN_vkDestroyIndirectCommandsLayoutNVX ->
                  HS_vkDestroyIndirectCommandsLayoutNVX
 
@@ -325,6 +353,9 @@ instance VulkanProc "vkDestroyIndirectCommandsLayoutNVX" where
         unwrapVkProcPtr = unwrapVkDestroyIndirectCommandsLayoutNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyIndirectCommandsLayoutNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateObjectTableNVX :: CString
 
@@ -368,7 +399,11 @@ type HS_vkCreateObjectTableNVX =
 
 type PFN_vkCreateObjectTableNVX = FunPtr HS_vkCreateObjectTableNVX
 
-foreign import ccall "dynamic" unwrapVkCreateObjectTableNVX ::
+foreign import ccall unsafe "dynamic" unwrapVkCreateObjectTableNVX
+               :: PFN_vkCreateObjectTableNVX -> HS_vkCreateObjectTableNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateObjectTableNVXSafe ::
                PFN_vkCreateObjectTableNVX -> HS_vkCreateObjectTableNVX
 
 instance VulkanProc "vkCreateObjectTableNVX" where
@@ -380,6 +415,9 @@ instance VulkanProc "vkCreateObjectTableNVX" where
         unwrapVkProcPtr = unwrapVkCreateObjectTableNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateObjectTableNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyObjectTableNVX :: CString
 
@@ -416,7 +454,11 @@ type HS_vkDestroyObjectTableNVX =
 type PFN_vkDestroyObjectTableNVX =
      FunPtr HS_vkDestroyObjectTableNVX
 
-foreign import ccall "dynamic" unwrapVkDestroyObjectTableNVX ::
+foreign import ccall unsafe "dynamic" unwrapVkDestroyObjectTableNVX
+               :: PFN_vkDestroyObjectTableNVX -> HS_vkDestroyObjectTableNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyObjectTableNVXSafe ::
                PFN_vkDestroyObjectTableNVX -> HS_vkDestroyObjectTableNVX
 
 instance VulkanProc "vkDestroyObjectTableNVX" where
@@ -428,6 +470,9 @@ instance VulkanProc "vkDestroyObjectTableNVX" where
         unwrapVkProcPtr = unwrapVkDestroyObjectTableNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyObjectTableNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkRegisterObjectsNVX :: CString
 
@@ -473,8 +518,11 @@ type HS_vkRegisterObjectsNVX =
 
 type PFN_vkRegisterObjectsNVX = FunPtr HS_vkRegisterObjectsNVX
 
-foreign import ccall "dynamic" unwrapVkRegisterObjectsNVX ::
+foreign import ccall unsafe "dynamic" unwrapVkRegisterObjectsNVX ::
                PFN_vkRegisterObjectsNVX -> HS_vkRegisterObjectsNVX
+
+foreign import ccall safe "dynamic" unwrapVkRegisterObjectsNVXSafe
+               :: PFN_vkRegisterObjectsNVX -> HS_vkRegisterObjectsNVX
 
 instance VulkanProc "vkRegisterObjectsNVX" where
         type VkProcType "vkRegisterObjectsNVX" = HS_vkRegisterObjectsNVX
@@ -484,6 +532,9 @@ instance VulkanProc "vkRegisterObjectsNVX" where
         unwrapVkProcPtr = unwrapVkRegisterObjectsNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkRegisterObjectsNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUnregisterObjectsNVX :: CString
 
@@ -529,7 +580,11 @@ type HS_vkUnregisterObjectsNVX =
 
 type PFN_vkUnregisterObjectsNVX = FunPtr HS_vkUnregisterObjectsNVX
 
-foreign import ccall "dynamic" unwrapVkUnregisterObjectsNVX ::
+foreign import ccall unsafe "dynamic" unwrapVkUnregisterObjectsNVX
+               :: PFN_vkUnregisterObjectsNVX -> HS_vkUnregisterObjectsNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkUnregisterObjectsNVXSafe ::
                PFN_vkUnregisterObjectsNVX -> HS_vkUnregisterObjectsNVX
 
 instance VulkanProc "vkUnregisterObjectsNVX" where
@@ -541,6 +596,9 @@ instance VulkanProc "vkUnregisterObjectsNVX" where
         unwrapVkProcPtr = unwrapVkUnregisterObjectsNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkUnregisterObjectsNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
         CString
@@ -585,8 +643,13 @@ type HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
 type PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
      FunPtr HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
+               PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ->
+                 HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe ::
                PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ->
                  HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
@@ -602,6 +665,10 @@ instance VulkanProc
           = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION ::
         (Num a, Eq a) => a

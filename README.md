@@ -13,7 +13,6 @@ Features of the bindings:
     allowing zero-copy conversion to and from pointers.
     Moreover, it is not necessary to convert them at all, if one prefers to
     manage corresponding memory manually.
-  * Document the generated code as much as possible with references to vulkan registry.
   * Use no dependencies except `base`.
 
 # vulkan-api [![Hackage](https://img.shields.io/hackage/v/vulkan-api.svg)](https://hackage.haskell.org/package/vulkan-api)
@@ -76,7 +75,6 @@ This is a combined result of programs in `vulkan-examples` with a little cleaner
 
 
 
-
 ## TODO
 
 ##### vulkan-api
@@ -107,3 +105,54 @@ This is a combined result of programs in `vulkan-examples` with a little cleaner
        Make parsing more compliant with the registry spec.
  * [ ] `VkXml.Sections.Types` `parseVkTypeData` needs a cleaner rewrite.
       Especially, check if type and member names are parsed correctly.
+
+
+##### Why another Haskell bindings?
+
+The generated bindings [`vulkan-api`](https://hackage.haskell.org/package/vulkan-api)
+are not the only Haskell bindings for Vulkan API.
+There is another package, called [`vulkan`](https://hackage.haskell.org/package/vulkan)
+that started in 2016.
+The main reason for me to write this new package two years later was that `vulkan`
+package was abandoned for a while and required significant efforts to be compiled
+at the time this project started 2018
+(as of April 2018 things seem to have changed and that package is great again :) ).
+However, the are a few design decisions that render `vulkan` and `vulkan-api` quite different.
+The main difference is that `vulkan` uses regular Haskell data types plus `DuplicateRecordFields` to manipulate Vulkan objects,
+whereas `vulkan-api` uses wrapped pinned byte arrays plus type classes and `TypeApplications`;
+as a result:
+
+  * Creating and composing data types in `vulkan` is very close to normal haskell way
+    of doing that (modulo the need to manually allocate pointers).
+    Creating and composing data types in `vulkan-api` is done via
+    [`VulkanMarshal`](https://github.com/achirkin/vulkan/blob/master/vulkan-api/src/Graphics/Vulkan/Marshal.hs#L87)
+    class.
+    There are helpers for managing memory in `Graphics.Vulkan.Marshal.Create` module,
+    you can find some examples in the [repository](https://github.com/achirkin/vulkan/blob/master/vulkan-triangles/src/Lib/Vulkan/Drawing.hs#L81).
+
+  * Duplicate field names in `vulkan` structure, such as `sType` use `DuplicateRecordFields`
+    and often require you writing a lot of type signatures explicitly,
+    which can be very annoying.
+    Things will become better with record type inference and `OverloadedRecordFields` extension;
+    but this is not implemented even in GHC 8.4 yet.
+
+  * Writing structure fields in `vulkan-api` is done via type classes (and heavy inlining);
+    thus, overloading with custom data types is extremely easy
+    (e.g. writing vectors or bytearrays directly into vulkan structures).
+    That comes at the cost of a not particularly novice-friendly interface.
+
+  * Low overheads: `vulkan-api` structures can be converted to and from C pointers for FFI
+    doing zero copying.
+    There is no need to `peek` all fields of a structure to read one of them.
+
+There is a number of smaller things:
+
+  * `vulkan-api` has different `vkGetXxxProc` machinery for loading Vulkan symbols dynamically,
+    check out [`Graphics.Vulkan.Marshal.Proc`](https://github.com/achirkin/vulkan/blob/master/vulkan-api/src/Graphics/Vulkan/Marshal/Proc.hs)
+    for that.
+
+  * `vulkan-api` keeps all Vulkan extension names in `Ptr CString` bi-directional patterns,
+    which eliminates the need to `alloca` when feeding them to Vulkan functions.
+
+  * Most of the constants in `vulkan-api` are duplicated at type level using `Nat` and `Symbol`,
+    which should allow more type-level programming and fancy high-level wrapppers.

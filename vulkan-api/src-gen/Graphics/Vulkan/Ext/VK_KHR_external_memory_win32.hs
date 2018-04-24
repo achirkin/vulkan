@@ -105,7 +105,12 @@ type HS_vkGetMemoryWin32HandleKHR =
 type PFN_vkGetMemoryWin32HandleKHR =
      FunPtr HS_vkGetMemoryWin32HandleKHR
 
-foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetMemoryWin32HandleKHR ::
+               PFN_vkGetMemoryWin32HandleKHR -> HS_vkGetMemoryWin32HandleKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryWin32HandleKHRSafe ::
                PFN_vkGetMemoryWin32HandleKHR -> HS_vkGetMemoryWin32HandleKHR
 
 instance VulkanProc "vkGetMemoryWin32HandleKHR" where
@@ -117,6 +122,9 @@ instance VulkanProc "vkGetMemoryWin32HandleKHR" where
         unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetMemoryWin32HandlePropertiesKHR :: CString
 
@@ -164,8 +172,13 @@ type HS_vkGetMemoryWin32HandlePropertiesKHR =
 type PFN_vkGetMemoryWin32HandlePropertiesKHR =
      FunPtr HS_vkGetMemoryWin32HandlePropertiesKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetMemoryWin32HandlePropertiesKHR ::
+               PFN_vkGetMemoryWin32HandlePropertiesKHR ->
+                 HS_vkGetMemoryWin32HandlePropertiesKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryWin32HandlePropertiesKHRSafe ::
                PFN_vkGetMemoryWin32HandlePropertiesKHR ->
                  HS_vkGetMemoryWin32HandlePropertiesKHR
 
@@ -178,6 +191,9 @@ instance VulkanProc "vkGetMemoryWin32HandlePropertiesKHR" where
         unwrapVkProcPtr = unwrapVkGetMemoryWin32HandlePropertiesKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandlePropertiesKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

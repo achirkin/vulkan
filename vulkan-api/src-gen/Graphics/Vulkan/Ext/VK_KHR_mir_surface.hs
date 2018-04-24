@@ -93,7 +93,6 @@ is_VkCreateMirSurfaceKHR
 
 type VkCreateMirSurfaceKHR = "vkCreateMirSurfaceKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -108,9 +107,22 @@ type VkCreateMirSurfaceKHR = "vkCreateMirSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateMirSurfaceKHR <- vkGetInstanceProc @VkCreateMirSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHR ::
                VkInstance -- ^ instance
@@ -122,32 +134,6 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateMirSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkMirSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateMirSurfaceKHRSafe@ and @vkCreateMirSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateMirSurfaceKHR <- vkGetInstanceProc @VkCreateMirSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
---
 vkCreateMirSurfaceKHR ::
                       VkInstance -- ^ instance
                                  ->
@@ -162,7 +148,6 @@ vkCreateMirSurfaceKHR
 {-# NOINLINE vkCreateMirSurfaceKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -177,9 +162,22 @@ vkCreateMirSurfaceKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateMirSurfaceKHR <- vkGetInstanceProc @VkCreateMirSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -191,32 +189,6 @@ foreign import ccall safe "vkCreateMirSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateMirSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkMirSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateMirSurfaceKHRSafe@ and @vkCreateMirSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateMirSurfaceKHR <- vkGetInstanceProc @VkCreateMirSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
---
 vkCreateMirSurfaceKHRSafe ::
                           VkInstance -- ^ instance
                                      ->
@@ -225,9 +197,10 @@ vkCreateMirSurfaceKHRSafe ::
                               Ptr VkAllocationCallbacks -- ^ pAllocator
                                                         -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                             -> IO VkResult
-vkCreateMirSurfaceKHRSafe = vkCreateMirSurfaceKHR
+vkCreateMirSurfaceKHRSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCreateMirSurfaceKHR)
 
-{-# INLINE vkCreateMirSurfaceKHRSafe #-}
+{-# NOINLINE vkCreateMirSurfaceKHRSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -253,8 +226,11 @@ type HS_vkCreateMirSurfaceKHR =
 
 type PFN_vkCreateMirSurfaceKHR = FunPtr HS_vkCreateMirSurfaceKHR
 
-foreign import ccall "dynamic" unwrapVkCreateMirSurfaceKHR ::
-               PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
+foreign import ccall unsafe "dynamic" unwrapVkCreateMirSurfaceKHR
+               :: PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
+
+foreign import ccall safe "dynamic" unwrapVkCreateMirSurfaceKHRSafe
+               :: PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
 
 instance VulkanProc "vkCreateMirSurfaceKHR" where
         type VkProcType "vkCreateMirSurfaceKHR" = HS_vkCreateMirSurfaceKHR
@@ -264,6 +240,9 @@ instance VulkanProc "vkCreateMirSurfaceKHR" where
         unwrapVkProcPtr = unwrapVkCreateMirSurfaceKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateMirSurfaceKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMirPresentationSupportKHR :: CString
 
@@ -288,7 +267,6 @@ is_VkGetPhysicalDeviceMirPresentationSupportKHR
 type VkGetPhysicalDeviceMirPresentationSupportKHR =
      "vkGetPhysicalDeviceMirPresentationSupportKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -298,30 +276,9 @@ type VkGetPhysicalDeviceMirPresentationSupportKHR =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceMirPresentationSupportKHR"
-               vkGetPhysicalDeviceMirPresentationSupportKHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Word32 -- ^ queueFamilyIndex
-                                          -> Ptr MirConnection -- ^ connection
-                                                               -> IO VkBool32
-
-#else
--- |
--- > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     , MirConnection* connection
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceMirPresentationSupportKHR@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -331,6 +288,19 @@ foreign import ccall unsafe
 --
 -- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
+foreign import ccall unsafe
+               "vkGetPhysicalDeviceMirPresentationSupportKHR"
+               vkGetPhysicalDeviceMirPresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> Ptr MirConnection -- ^ connection
+                                                               -> IO VkBool32
+
+#else
 vkGetPhysicalDeviceMirPresentationSupportKHR ::
                                              VkPhysicalDevice -- ^ physicalDevice
                                                               ->
@@ -344,7 +314,6 @@ vkGetPhysicalDeviceMirPresentationSupportKHR
 {-# NOINLINE vkGetPhysicalDeviceMirPresentationSupportKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -354,30 +323,9 @@ vkGetPhysicalDeviceMirPresentationSupportKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
---
-foreign import ccall safe
-               "vkGetPhysicalDeviceMirPresentationSupportKHR"
-               vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> Word32 -- ^ queueFamilyIndex
-                                          -> Ptr MirConnection -- ^ connection
-                                                               -> IO VkBool32
-
-#else
--- |
--- > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     , MirConnection* connection
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceMirPresentationSupportKHR@ are synonyms.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
 -- Independently of the flag setting, you can lookup the function manually at runtime:
 --
@@ -387,6 +335,19 @@ foreign import ccall safe
 --
 -- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR
 --
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
+foreign import ccall safe
+               "vkGetPhysicalDeviceMirPresentationSupportKHR"
+               vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> Ptr MirConnection -- ^ connection
+                                                               -> IO VkBool32
+
+#else
 vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
                                                  VkPhysicalDevice -- ^ physicalDevice
                                                                   ->
@@ -394,9 +355,10 @@ vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
                                                           -> Ptr MirConnection -- ^ connection
                                                                                -> IO VkBool32
 vkGetPhysicalDeviceMirPresentationSupportKHRSafe
-  = vkGetPhysicalDeviceMirPresentationSupportKHR
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceMirPresentationSupportKHR)
 
-{-# INLINE vkGetPhysicalDeviceMirPresentationSupportKHRSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceMirPresentationSupportKHRSafe #-}
 #endif
 
 -- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
@@ -415,8 +377,13 @@ type HS_vkGetPhysicalDeviceMirPresentationSupportKHR =
 type PFN_vkGetPhysicalDeviceMirPresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceMirPresentationSupportKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceMirPresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceMirPresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceMirPresentationSupportKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
                PFN_vkGetPhysicalDeviceMirPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceMirPresentationSupportKHR
 
@@ -431,6 +398,10 @@ instance VulkanProc "vkGetPhysicalDeviceMirPresentationSupportKHR"
           = unwrapVkGetPhysicalDeviceMirPresentationSupportKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceMirPresentationSupportKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_MIR_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

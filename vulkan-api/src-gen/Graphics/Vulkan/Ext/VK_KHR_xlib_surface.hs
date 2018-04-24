@@ -94,7 +94,6 @@ is_VkCreateXlibSurfaceKHR
 
 type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -109,9 +108,22 @@ type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetProc @VkCreateXlibSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHR ::
                VkInstance -- ^ instance
@@ -123,32 +135,6 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateXlibSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateXlibSurfaceKHRSafe@ and @vkCreateXlibSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateXlibSurfaceKHR <- vkGetProc @VkCreateXlibSurfaceKHR
---
 vkCreateXlibSurfaceKHR ::
                        VkInstance -- ^ instance
                                   ->
@@ -163,7 +149,6 @@ vkCreateXlibSurfaceKHR
 {-# NOINLINE vkCreateXlibSurfaceKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
@@ -178,9 +163,22 @@ vkCreateXlibSurfaceKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateXlibSurfaceKHR <- vkGetProc @VkCreateXlibSurfaceKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -192,32 +190,6 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
--- |
--- Success codes: 'VK_SUCCESS'.
---
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
--- > VkResult vkCreateXlibSurfaceKHR
--- >     ( VkInstance instance
--- >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
--- >     , const VkAllocationCallbacks* pAllocator
--- >     , VkSurfaceKHR* pSurface
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkCreateXlibSurfaceKHRSafe@ and @vkCreateXlibSurfaceKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myCreateXlibSurfaceKHR <- vkGetInstanceProc @VkCreateXlibSurfaceKHR vkInstance
---
--- or less efficient:
---
--- > myCreateXlibSurfaceKHR <- vkGetProc @VkCreateXlibSurfaceKHR
---
 vkCreateXlibSurfaceKHRSafe ::
                            VkInstance -- ^ instance
                                       ->
@@ -226,9 +198,10 @@ vkCreateXlibSurfaceKHRSafe ::
                                Ptr VkAllocationCallbacks -- ^ pAllocator
                                                          -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                              -> IO VkResult
-vkCreateXlibSurfaceKHRSafe = vkCreateXlibSurfaceKHR
+vkCreateXlibSurfaceKHRSafe
+  = unsafeDupablePerformIO (vkGetProcSafe @VkCreateXlibSurfaceKHR)
 
-{-# INLINE vkCreateXlibSurfaceKHRSafe #-}
+{-# NOINLINE vkCreateXlibSurfaceKHRSafe #-}
 #endif
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -254,7 +227,11 @@ type HS_vkCreateXlibSurfaceKHR =
 
 type PFN_vkCreateXlibSurfaceKHR = FunPtr HS_vkCreateXlibSurfaceKHR
 
-foreign import ccall "dynamic" unwrapVkCreateXlibSurfaceKHR ::
+foreign import ccall unsafe "dynamic" unwrapVkCreateXlibSurfaceKHR
+               :: PFN_vkCreateXlibSurfaceKHR -> HS_vkCreateXlibSurfaceKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateXlibSurfaceKHRSafe ::
                PFN_vkCreateXlibSurfaceKHR -> HS_vkCreateXlibSurfaceKHR
 
 instance VulkanProc "vkCreateXlibSurfaceKHR" where
@@ -266,6 +243,9 @@ instance VulkanProc "vkCreateXlibSurfaceKHR" where
         unwrapVkProcPtr = unwrapVkCreateXlibSurfaceKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateXlibSurfaceKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceXlibPresentationSupportKHR :: CString
 
@@ -290,7 +270,6 @@ is_VkGetPhysicalDeviceXlibPresentationSupportKHR
 type VkGetPhysicalDeviceXlibPresentationSupportKHR =
      "vkGetPhysicalDeviceXlibPresentationSupportKHR"
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -301,9 +280,22 @@ type VkGetPhysicalDeviceXlibPresentationSupportKHR =
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXlibPresentationSupportKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::
@@ -315,28 +307,6 @@ foreign import ccall unsafe
                                                    -> IO VkBool32
 
 #else
--- |
--- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     , Display* dpy
--- >     , VisualID visualID
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceXlibPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceXlibPresentationSupportKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXlibPresentationSupportKHR
---
 vkGetPhysicalDeviceXlibPresentationSupportKHR ::
                                               VkPhysicalDevice -- ^ physicalDevice
                                                                ->
@@ -351,7 +321,6 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR
 {-# NOINLINE vkGetPhysicalDeviceXlibPresentationSupportKHR #-}
 #endif
 
-#ifdef NATIVE_FFI_VK_VERSION_1_0
 -- |
 -- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 -- >     ( VkPhysicalDevice physicalDevice
@@ -362,9 +331,22 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR
 --
 -- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 --
--- __Note:__ flag @useNativeFFI-1-0@ is enabled, so this function is implemented
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
 --
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXlibPresentationSupportKHR
+--
+-- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
+--           using @unsafe@ of @safe@ FFI respectively.
+--
+#ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
@@ -376,28 +358,6 @@ foreign import ccall safe
                                                    -> IO VkBool32
 
 #else
--- |
--- > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
--- >     ( VkPhysicalDevice physicalDevice
--- >     , uint32_t queueFamilyIndex
--- >     , Display* dpy
--- >     , VisualID visualID
--- >     )
---
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
---
--- __Note:__ flag @useNativeFFI-1-0@ is disabled, so this function is looked up
---           dynamically at runtime;
---           @vkGetPhysicalDeviceXlibPresentationSupportKHRSafe@ and @vkGetPhysicalDeviceXlibPresentationSupportKHR@ are synonyms.
---
--- Independently of the flag setting, you can lookup the function manually at runtime:
---
--- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXlibPresentationSupportKHR vkInstance
---
--- or less efficient:
---
--- > myGetPhysicalDeviceXlibPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXlibPresentationSupportKHR
---
 vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                                                   VkPhysicalDevice -- ^ physicalDevice
                                                                    ->
@@ -406,9 +366,10 @@ vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                                                                           -> VisualID -- ^ visualID
                                                                                       -> IO VkBool32
 vkGetPhysicalDeviceXlibPresentationSupportKHRSafe
-  = vkGetPhysicalDeviceXlibPresentationSupportKHR
+  = unsafeDupablePerformIO
+      (vkGetProcSafe @VkGetPhysicalDeviceXlibPresentationSupportKHR)
 
-{-# INLINE vkGetPhysicalDeviceXlibPresentationSupportKHRSafe #-}
+{-# NOINLINE vkGetPhysicalDeviceXlibPresentationSupportKHRSafe #-}
 #endif
 
 -- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
@@ -430,8 +391,13 @@ type HS_vkGetPhysicalDeviceXlibPresentationSupportKHR =
 type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
 
@@ -446,6 +412,10 @@ instance VulkanProc "vkGetPhysicalDeviceXlibPresentationSupportKHR"
           = unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceXlibPresentationSupportKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_XLIB_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

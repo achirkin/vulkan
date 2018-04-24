@@ -105,8 +105,13 @@ type HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
 type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
      FunPtr HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT ::
+               PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT ->
+                 HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTSafe ::
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
 
@@ -120,6 +125,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
         unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe
+          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION ::
         (Num a, Eq a) => a

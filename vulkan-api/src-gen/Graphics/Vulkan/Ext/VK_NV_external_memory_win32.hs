@@ -102,7 +102,12 @@ type HS_vkGetMemoryWin32HandleNV =
 type PFN_vkGetMemoryWin32HandleNV =
      FunPtr HS_vkGetMemoryWin32HandleNV
 
-foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleNV ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetMemoryWin32HandleNV ::
+               PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetMemoryWin32HandleNVSafe ::
                PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
 
 instance VulkanProc "vkGetMemoryWin32HandleNV" where
@@ -114,6 +119,9 @@ instance VulkanProc "vkGetMemoryWin32HandleNV" where
         unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleNV
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleNVSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

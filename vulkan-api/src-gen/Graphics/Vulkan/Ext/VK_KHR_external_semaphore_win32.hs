@@ -113,8 +113,13 @@ type HS_vkImportSemaphoreWin32HandleKHR =
 type PFN_vkImportSemaphoreWin32HandleKHR =
      FunPtr HS_vkImportSemaphoreWin32HandleKHR
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkImportSemaphoreWin32HandleKHR ::
+               PFN_vkImportSemaphoreWin32HandleKHR ->
+                 HS_vkImportSemaphoreWin32HandleKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkImportSemaphoreWin32HandleKHRSafe ::
                PFN_vkImportSemaphoreWin32HandleKHR ->
                  HS_vkImportSemaphoreWin32HandleKHR
 
@@ -127,6 +132,9 @@ instance VulkanProc "vkImportSemaphoreWin32HandleKHR" where
         unwrapVkProcPtr = unwrapVkImportSemaphoreWin32HandleKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkImportSemaphoreWin32HandleKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetSemaphoreWin32HandleKHR :: CString
 
@@ -169,8 +177,12 @@ type HS_vkGetSemaphoreWin32HandleKHR =
 type PFN_vkGetSemaphoreWin32HandleKHR =
      FunPtr HS_vkGetSemaphoreWin32HandleKHR
 
-foreign import ccall "dynamic" unwrapVkGetSemaphoreWin32HandleKHR
-               ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetSemaphoreWin32HandleKHR ::
+               PFN_vkGetSemaphoreWin32HandleKHR -> HS_vkGetSemaphoreWin32HandleKHR
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetSemaphoreWin32HandleKHRSafe ::
                PFN_vkGetSemaphoreWin32HandleKHR -> HS_vkGetSemaphoreWin32HandleKHR
 
 instance VulkanProc "vkGetSemaphoreWin32HandleKHR" where
@@ -182,6 +194,9 @@ instance VulkanProc "vkGetSemaphoreWin32HandleKHR" where
         unwrapVkProcPtr = unwrapVkGetSemaphoreWin32HandleKHR
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetSemaphoreWin32HandleKHRSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

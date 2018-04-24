@@ -93,7 +93,12 @@ type HS_vkCmdDrawIndirectCountAMD =
 type PFN_vkCmdDrawIndirectCountAMD =
      FunPtr HS_vkCmdDrawIndirectCountAMD
 
-foreign import ccall "dynamic" unwrapVkCmdDrawIndirectCountAMD ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdDrawIndirectCountAMD ::
+               PFN_vkCmdDrawIndirectCountAMD -> HS_vkCmdDrawIndirectCountAMD
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdDrawIndirectCountAMDSafe ::
                PFN_vkCmdDrawIndirectCountAMD -> HS_vkCmdDrawIndirectCountAMD
 
 instance VulkanProc "vkCmdDrawIndirectCountAMD" where
@@ -105,6 +110,9 @@ instance VulkanProc "vkCmdDrawIndirectCountAMD" where
         unwrapVkProcPtr = unwrapVkCmdDrawIndirectCountAMD
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountAMDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndexedIndirectCountAMD :: CString
 
@@ -161,8 +169,13 @@ type HS_vkCmdDrawIndexedIndirectCountAMD =
 type PFN_vkCmdDrawIndexedIndirectCountAMD =
      FunPtr HS_vkCmdDrawIndexedIndirectCountAMD
 
-foreign import ccall "dynamic"
+foreign import ccall unsafe "dynamic"
                unwrapVkCmdDrawIndexedIndirectCountAMD ::
+               PFN_vkCmdDrawIndexedIndirectCountAMD ->
+                 HS_vkCmdDrawIndexedIndirectCountAMD
+
+foreign import ccall safe "dynamic"
+               unwrapVkCmdDrawIndexedIndirectCountAMDSafe ::
                PFN_vkCmdDrawIndexedIndirectCountAMD ->
                  HS_vkCmdDrawIndexedIndirectCountAMD
 
@@ -175,6 +188,9 @@ instance VulkanProc "vkCmdDrawIndexedIndirectCountAMD" where
         unwrapVkProcPtr = unwrapVkCmdDrawIndexedIndirectCountAMD
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountAMDSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION :: (Num a, Eq a) =>
         a

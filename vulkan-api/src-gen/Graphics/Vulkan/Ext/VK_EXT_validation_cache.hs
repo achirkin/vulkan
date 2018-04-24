@@ -115,7 +115,12 @@ type HS_vkCreateValidationCacheEXT =
 type PFN_vkCreateValidationCacheEXT =
      FunPtr HS_vkCreateValidationCacheEXT
 
-foreign import ccall "dynamic" unwrapVkCreateValidationCacheEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateValidationCacheEXT ::
+               PFN_vkCreateValidationCacheEXT -> HS_vkCreateValidationCacheEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkCreateValidationCacheEXTSafe ::
                PFN_vkCreateValidationCacheEXT -> HS_vkCreateValidationCacheEXT
 
 instance VulkanProc "vkCreateValidationCacheEXT" where
@@ -127,6 +132,9 @@ instance VulkanProc "vkCreateValidationCacheEXT" where
         unwrapVkProcPtr = unwrapVkCreateValidationCacheEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkCreateValidationCacheEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyValidationCacheEXT :: CString
 
@@ -165,7 +173,12 @@ type HS_vkDestroyValidationCacheEXT =
 type PFN_vkDestroyValidationCacheEXT =
      FunPtr HS_vkDestroyValidationCacheEXT
 
-foreign import ccall "dynamic" unwrapVkDestroyValidationCacheEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkDestroyValidationCacheEXT ::
+               PFN_vkDestroyValidationCacheEXT -> HS_vkDestroyValidationCacheEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkDestroyValidationCacheEXTSafe ::
                PFN_vkDestroyValidationCacheEXT -> HS_vkDestroyValidationCacheEXT
 
 instance VulkanProc "vkDestroyValidationCacheEXT" where
@@ -177,6 +190,9 @@ instance VulkanProc "vkDestroyValidationCacheEXT" where
         unwrapVkProcPtr = unwrapVkDestroyValidationCacheEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkDestroyValidationCacheEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkMergeValidationCachesEXT :: CString
 
@@ -221,7 +237,12 @@ type HS_vkMergeValidationCachesEXT =
 type PFN_vkMergeValidationCachesEXT =
      FunPtr HS_vkMergeValidationCachesEXT
 
-foreign import ccall "dynamic" unwrapVkMergeValidationCachesEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkMergeValidationCachesEXT ::
+               PFN_vkMergeValidationCachesEXT -> HS_vkMergeValidationCachesEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkMergeValidationCachesEXTSafe ::
                PFN_vkMergeValidationCachesEXT -> HS_vkMergeValidationCachesEXT
 
 instance VulkanProc "vkMergeValidationCachesEXT" where
@@ -233,6 +254,9 @@ instance VulkanProc "vkMergeValidationCachesEXT" where
         unwrapVkProcPtr = unwrapVkMergeValidationCachesEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkMergeValidationCachesEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetValidationCacheDataEXT :: CString
 
@@ -277,7 +301,12 @@ type HS_vkGetValidationCacheDataEXT =
 type PFN_vkGetValidationCacheDataEXT =
      FunPtr HS_vkGetValidationCacheDataEXT
 
-foreign import ccall "dynamic" unwrapVkGetValidationCacheDataEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetValidationCacheDataEXT ::
+               PFN_vkGetValidationCacheDataEXT -> HS_vkGetValidationCacheDataEXT
+
+foreign import ccall safe "dynamic"
+               unwrapVkGetValidationCacheDataEXTSafe ::
                PFN_vkGetValidationCacheDataEXT -> HS_vkGetValidationCacheDataEXT
 
 instance VulkanProc "vkGetValidationCacheDataEXT" where
@@ -289,6 +318,9 @@ instance VulkanProc "vkGetValidationCacheDataEXT" where
         unwrapVkProcPtr = unwrapVkGetValidationCacheDataEXT
 
         {-# INLINE unwrapVkProcPtr #-}
+        unwrapVkProcPtrSafe = unwrapVkGetValidationCacheDataEXTSafe
+
+        {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION :: (Num a, Eq a) => a
 
