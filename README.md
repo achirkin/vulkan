@@ -107,7 +107,7 @@ This is a combined result of programs in `vulkan-examples` with a little cleaner
       Especially, check if type and member names are parsed correctly.
 
 
-##### Why another Haskell bindings?
+## Why another Haskell bindings?
 
 The generated bindings [`vulkan-api`](https://hackage.haskell.org/package/vulkan-api)
 are not the only Haskell bindings for Vulkan API.
@@ -115,7 +115,7 @@ There is another package, called [`vulkan`](https://hackage.haskell.org/package/
 that started in 2016.
 The main reason for me to write this new package two years later was that `vulkan`
 package was abandoned for a while and required significant efforts to be compiled
-at the time this project started 2018
+at the time this project started in January 2018
 (as of April 2018 things seem to have changed and that package is great again :) ).
 However, the are a few design decisions that render `vulkan` and `vulkan-api` quite different.
 The main difference is that `vulkan` uses regular Haskell data types plus `DuplicateRecordFields` to manipulate Vulkan objects,
