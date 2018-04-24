@@ -16,8 +16,8 @@ executable ve-01-CreateInstance
   hs-source-dirs:      .
   main-is:             01-CreateInstance.hs
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
   default-language:    Haskell2010
 
 
@@ -27,9 +27,9 @@ executable ve-02-GLFWWindow
   other-modules:       Lib.Vulkan
                        Lib.Utils
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
-                     , GLFW-b
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
+                     , GLFW-b >= 3.2.1
   default-language:    Haskell2010
 
 
@@ -40,9 +40,9 @@ executable ve-03-LogicalDevice
                        Lib.Utils
                        Lib.GLFW
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
-                     , GLFW-b
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
+                     , GLFW-b >= 3.2.1
   default-language:    Haskell2010
 
 
@@ -53,9 +53,9 @@ executable ve-04-Presentation
                        Lib.Utils
                        Lib.GLFW
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
-                     , GLFW-b
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
+                     , GLFW-b >= 3.2.1
                      , containers
   default-language:    Haskell2010
 
@@ -69,9 +69,9 @@ executable ve-05-GraphicsPipeline
                        Lib.Utils.TH
                        Lib.GLFW
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
-                     , GLFW-b
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
+                     , GLFW-b >= 3.2.1
                      , containers
                      , template-haskell
                      , directory
@@ -90,9 +90,9 @@ executable ve-06-Drawing
                        Lib.Utils.TH
                        Lib.GLFW
   ghc-options:         -Wall
-  build-depends:       base
-                     , vulkan-api
-                     , GLFW-b
+  build-depends:       base >= 4.9 && < 5
+                     , vulkan-api >= 1.1.2
+                     , GLFW-b >= 3.2.1
                      , containers
                      , template-haskell
                      , directory

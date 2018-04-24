@@ -34,9 +34,9 @@ library
                         Lib.Vulkan.Presentation
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
-    build-depends:      base >= 4.7 && < 5
-                      , vulkan-api
-                      , GLFW-b
+    build-depends:      base >= 4.9 && < 5
+                      , vulkan-api >= 1.1.2
+                      , GLFW-b >= 3.2.1
                       , containers
                       , template-haskell
                       , directory

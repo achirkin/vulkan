@@ -11,13 +11,10 @@ flags:
     useNativeFFI-1-1: false
 
 extra-deps:
-  - bindings-GLFW-3.2.1.0
+  - bindings-GLFW-3.2.1.1
+  - GLFW-b-3.2.1.0
 
 packages:
   - .
   - location: ../vulkan-api
-    extra-dep: true
-  - location:
-      git: https://github.com/bsl/GLFW-b
-      commit: 311a3a3b1ba0e4525ad1e1292ef1b363645cbafe
     extra-dep: true
