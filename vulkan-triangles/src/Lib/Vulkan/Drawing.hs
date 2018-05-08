@@ -16,6 +16,8 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
+import           Graphics.Vulkan.Marshal.Create.DataFrame
+import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
@@ -115,10 +117,7 @@ createCommandBuffers
             &* set @"clearValueCount" 1
             &* setVkRef @"pClearValues"
                ( createVk $ setVk @"color"
-                  $  setAt @"float32" @0 0
-                  &* setAt @"float32" @1 0
-                  &* setAt @"float32" @2 0.2
-                  &* setAt @"float32" @3 1
+                  $ setVec @"float32" (vec4 0 0 0.2 1)
                )
 
       withVkPtr renderPassBeginInfo $ \rpibPtr ->

@@ -18,3 +18,9 @@ packages:
   - .
   - location: ../vulkan-api
     extra-dep: true
+  - location: ../../easytensor/easytensor
+    extra-dep: true
+  - location: ../../easytensor/dimensions
+    extra-dep: true
+  - location: ../../easytensor/easytensor-vulkan
+    extra-dep: true

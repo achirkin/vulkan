@@ -3,11 +3,18 @@
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DeriveGeneric    #-}
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import Numeric.DataFrame
+import Numeric.Dimensions
+import Numeric.PrimBytes
+import Data.Maybe (fromJust)
+import GHC.Generics (Generic)
+import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.GLFW
 import           Lib.Program
@@ -19,9 +26,34 @@ import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
 
+-- | Preparing Vertex data to make an interleaved array.
+data Vertex = Vertex
+  { pos   :: Vec2f
+  , color :: Vec3f
+  } deriving (Eq, Show, Generic)
+
+-- We need an instance of PrimBytes to fit Vertex into a DataFrame.
+-- Luckily, Generics can do it for us.
+instance PrimBytes Vertex
+
+-- | Interleaved array of vertices containing at least 3 entries
+vertices :: DataFrame Vertex '[XN 3]
+vertices = fromJust $ fromList (D @3)
+  [ scalar $ Vertex (vec2   0   (-0.5)) (vec3 1 0 0)
+  , scalar $ Vertex (vec2   0.5   0.5 ) (vec3 0 1 0)
+  , scalar $ Vertex (vec2 (-0.5)  0.5 ) (vec3 0 0 1)
+  ]
+
+vertIBD :: VkVertexInputBindingDescription
+vertIBD = createVk
+  $  set @"binding" 0
+  &* set @"stride"  (fromIntegral $ sizeOf @(Scalar Vertex) undefined)
+  &* set @"inputRate" VK_VERTEX_INPUT_RATE_VERTEX
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
+    liftIO $ print vertIBD
+    liftIO $ print vertices
     window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
 
     vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
