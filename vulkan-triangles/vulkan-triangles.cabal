@@ -35,7 +35,7 @@ library
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
     build-depends:      base >= 4.9 && < 5
-                      , vulkan-api >= 1.1.2
+                      , vulkan-api >= 1.1.2.1
                       , GLFW-b >= 3.2.1
                       , containers
                       , template-haskell
@@ -45,6 +45,9 @@ library
                       , transformers
                       , mtl
                       , monad-logger
+                      , easytensor >=1
+                      , easytensor-vulkan >=1
+                      , dimensions >=1
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
