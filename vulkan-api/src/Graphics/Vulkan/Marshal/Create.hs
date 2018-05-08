@@ -25,6 +25,7 @@ module Graphics.Vulkan.Marshal.Create
     , createVk, (&*)
     , set, setAt, setVk, setVkRef, setStr, setStrRef, setStrListRef, setListRef
     , SetOptionalFields (..), HandleRemainingFields (..), HandleRemFields
+    , unsafeIOCreate
     ) where
 
 import           Data.Coerce
@@ -69,6 +70,11 @@ newtype CreateVkStruct x (fs :: [Symbol]) a
 
            , a)
     }
+
+-- | Unsafe perform arbitrary IO action with a pointer to data under construction.
+--   This is used to add more functionality to this monad.
+unsafeIOCreate :: (Ptr x -> IO a) -> CreateVkStruct x fs a
+unsafeIOCreate k = CreateVkStruct $ fmap ((,) ([],[])) . k
 
 instance Functor (CreateVkStruct x fs) where
   fmap f = CreateVkStruct . fmap (fmap $ fmap f) . unCreateVkStruct
