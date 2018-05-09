@@ -74,13 +74,6 @@ createVertexBuffer pdev dev (XFrame vertices) = do
                           (getField @"size" bufferInfo) 0
     liftIO $ poke (castPtr dataPtr) vertices
     liftIO $ vkUnmapMemory dev vertexBufferMemory
-    -- let memRange = createVk @VkMappedMemoryRange
-    --       $  set @"sType" VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE
-    --       &* set @"pNext" VK_NULL
-    --       &* set @"memory" vertexBufferMemory
-    --       &* set @"offset" 0
-    --       &* set @"size" (VkDeviceSize VK_WHOLE_SIZE)
-    -- withVkPtr memRange $ runVk . vkFlushMappedMemoryRanges dev 1
 
     return buf
 

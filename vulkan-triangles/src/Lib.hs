@@ -31,6 +31,9 @@ vertices = fromJust $ fromList (D @3)
   [ scalar $ Vertex (vec2   0   (-0.5)) (vec3 1 0 0)
   , scalar $ Vertex (vec2   0.5   0.5 ) (vec3 0 1 0)
   , scalar $ Vertex (vec2 (-0.5)  0.5 ) (vec3 0 0 1)
+  , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
+  , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
+  , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
   ]
 
 vNumber :: DataFrame n '[XN k] -> Word32
@@ -38,9 +41,7 @@ vNumber (XFrame v) = fromIntegral . totalDim $ dims `inSpaceOf` v
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
-    liftIO $ print vertIBD
-    liftIO $ print vertices
-    liftIO $ print vertIADs
+
     window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
 
     vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
