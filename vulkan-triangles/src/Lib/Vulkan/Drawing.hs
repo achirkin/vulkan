@@ -66,13 +66,16 @@ createCommandBuffers :: VkDevice
                      -> VkCommandPool
                      -> VkRenderPass
                      -> SwapChainImgInfo
+                     -> (Word32, VkBuffer) -- nr of vertices and vertex data
                      -> [VkFramebuffer]
                      -> Program r [VkCommandBuffer]
 createCommandBuffers
-    dev pipeline commandPool rpass  SwapChainImgInfo{..} fbs
+    dev pipeline commandPool rpass  SwapChainImgInfo{..} (nVertices, vertexBuffer) fbs
   | buffersCount <- length fbs = do
   -- allocate a pointer to an array of command buffer handles
   cbsPtr <- mallocArrayRes buffersCount
+  vertexBufArr <- newArrayRes [vertexBuffer]
+  vertexOffArr <- newArrayRes [0]
 
   allocResource
     ( \_ -> do
@@ -125,7 +128,9 @@ createCommandBuffers
 
       -- basic drawing commands
       liftIO $ vkCmdBindPipeline cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipeline
-      liftIO $ vkCmdDraw cmdBuffer 3 1 0 0
+      liftIO $ vkCmdBindVertexBuffers
+                 cmdBuffer 0 1 vertexBufArr vertexOffArr
+      liftIO $ vkCmdDraw cmdBuffer nVertices 1 0 0
 
       -- finishing up
       liftIO $ vkCmdEndRenderPass cmdBuffer
