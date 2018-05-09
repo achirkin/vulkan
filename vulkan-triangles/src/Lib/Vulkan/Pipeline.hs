@@ -1,4 +1,6 @@
 {-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE PolyKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
@@ -12,6 +14,9 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
+import           Graphics.Vulkan.Marshal.Create.DataFrame
+import           Numeric.DataFrame
+import           Numeric.Dimensions
 
 import           Lib.Program
 import           Lib.Program.Foreign
@@ -19,22 +24,28 @@ import           Lib.Vulkan.Presentation
 
 
 
-createGraphicsPipeline :: VkDevice
+createGraphicsPipeline :: ( KnownDim (n :: k)
+                          , VulkanDataFrame VkVertexInputAttributeDescription '[n])
+                       => VkDevice
                        -> SwapChainImgInfo
+                       -> VkVertexInputBindingDescription
+                       -> Vector VkVertexInputAttributeDescription n
                        -> [VkPipelineShaderStageCreateInfo]
                        -> VkRenderPass
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} shaderDescs renderPass =
+    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
         &* set @"flags" 0
-        &* set @"vertexBindingDescriptionCount" 0
-        &* set @"pVertexBindingDescriptions" VK_NULL
-        &* set @"vertexAttributeDescriptionCount" 0
-        &* set @"pVertexAttributeDescriptions" VK_NULL
+        &* set @"vertexBindingDescriptionCount" 1
+        &* setDFRef @"pVertexBindingDescriptions"
+          (scalar bindDesc)
+        &* set @"vertexAttributeDescriptionCount"
+          (fromIntegral . totalDim $ dims `inSpaceOf` attrDescs)
+        &* setDFRef @"pVertexAttributeDescriptions" attrDescs
 
       -- input assembly
       inputAssembly = createVk @VkPipelineInputAssemblyStateCreateInfo

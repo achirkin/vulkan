@@ -3,18 +3,14 @@
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE DeriveGeneric    #-}
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import Numeric.DataFrame
-import Numeric.Dimensions
-import Numeric.PrimBytes
-import Data.Maybe (fromJust)
-import GHC.Generics (Generic)
-import           Graphics.Vulkan.Marshal.Create
+import           Numeric.DataFrame
+import           Numeric.Dimensions
+import           Data.Maybe                               (fromJust)
 
 import           Lib.GLFW
 import           Lib.Program
@@ -25,16 +21,9 @@ import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
+import           Lib.Vulkan.Vertex
+import           Lib.Vulkan.VertexBuffer
 
--- | Preparing Vertex data to make an interleaved array.
-data Vertex = Vertex
-  { pos   :: Vec2f
-  , color :: Vec3f
-  } deriving (Eq, Show, Generic)
-
--- We need an instance of PrimBytes to fit Vertex into a DataFrame.
--- Luckily, Generics can do it for us.
-instance PrimBytes Vertex
 
 -- | Interleaved array of vertices containing at least 3 entries
 vertices :: DataFrame Vertex '[XN 3]
@@ -44,16 +33,14 @@ vertices = fromJust $ fromList (D @3)
   , scalar $ Vertex (vec2 (-0.5)  0.5 ) (vec3 0 0 1)
   ]
 
-vertIBD :: VkVertexInputBindingDescription
-vertIBD = createVk
-  $  set @"binding" 0
-  &* set @"stride"  (fromIntegral $ sizeOf @(Scalar Vertex) undefined)
-  &* set @"inputRate" VK_VERTEX_INPUT_RATE_VERTEX
+vNumber :: DataFrame n '[XN k] -> Word32
+vNumber (XFrame v) = fromIntegral . totalDim $ dims `inSpaceOf` v
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
     liftIO $ print vertIBD
     liftIO $ print vertices
+    liftIO $ print vertIADs
     window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
 
     vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
@@ -89,6 +76,8 @@ runVulkanProgram = runProgram checkStatus $ do
     -- we need this later, but don't want to realloc every swapchain recreation.
     imgIPtr <- mallocRes
 
+    vertexBuffer <- createVertexBuffer pdev dev vertices
+
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
     redoOnOutdate $ do
@@ -98,13 +87,18 @@ runVulkanProgram = runProgram checkStatus $ do
 
       renderPass <- createRenderPass dev swInfo
       graphicsPipeline
-        <- createGraphicsPipeline dev swInfo [shaderVert, shaderFrag] renderPass
+        <- createGraphicsPipeline dev swInfo
+                                  vertIBD vertIADs
+                                  [shaderVert, shaderFrag]
+                                  renderPass
 
       framebuffers
         <- createFramebuffers dev renderPass swInfo imgViews
 
       cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
-                                         renderPass swInfo framebuffers
+                                         renderPass swInfo
+                                         (vNumber vertices, vertexBuffer)
+                                         framebuffers
 
       let rdata = RenderData
             { renderFinished = rendFinS

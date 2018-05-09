@@ -34,6 +34,8 @@ library
                         Lib.Vulkan.Presentation
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
+                        Lib.Vulkan.Vertex
+                        Lib.Vulkan.VertexBuffer
     build-depends:      base >= 4.9 && < 5
                       , vulkan-api >= 1.1.2.1
                       , GLFW-b >= 3.2.1
