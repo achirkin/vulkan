@@ -36,8 +36,6 @@ vertices = fromJust $ fromList (D @3)
   , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
   ]
 
-vNumber :: DataFrame n '[XN k] -> Word32
-vNumber (XFrame v) = fromIntegral . totalDim $ dims `inSpaceOf` v
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
@@ -98,7 +96,7 @@ runVulkanProgram = runProgram checkStatus $ do
 
       cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
                                          renderPass swInfo
-                                         (vNumber vertices, vertexBuffer)
+                                         (fromIntegral $ dimSize1 vertices, vertexBuffer)
                                          framebuffers
 
       let rdata = RenderData
