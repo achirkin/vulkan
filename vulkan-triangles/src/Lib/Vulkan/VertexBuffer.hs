@@ -34,7 +34,7 @@ createVertexBuffer pdev dev (XFrame vertices) = do
     let bufferInfo = createVk @VkBufferCreateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO
           &* set @"pNext" VK_NULL
-          &* set @"size" (fromIntegral $ sizeOf vertices)
+          &* set @"size" (fromIntegral $ bSizeOf vertices)
           &* set @"usage" VK_BUFFER_USAGE_VERTEX_BUFFER_BIT
           &* set @"sharingMode" VK_SHARING_MODE_EXCLUSIVE
           &* set @"queueFamilyIndexCount" 0
