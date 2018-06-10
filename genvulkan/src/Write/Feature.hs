@@ -38,8 +38,8 @@ import           Write.Types.Enum
 
 -- | The protect definition this function returns does not turn off the feature
 --   completely, but just replaces native FFI with @vkGet..ProcAddr@-located function.
-genFeature :: Monad m => VkFeature -> ModuleWriter m ProtectDef
-genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
+genFeature :: Monad m => ProtectDef -> VkFeature -> ModuleWriter m ProtectDef
+genFeature unsafeFFIDefaultDef VkFeature {..} = hoist (`evalStateT` mempty) $ do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
     let tps = globTypes vkXml
@@ -58,19 +58,20 @@ genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
       , ""
       , "@number = " <> number <> "@"
       ]
-    pushSecLvl $ \lvl -> mapM_ (genRequire (Just . NFFIGuarded $ ffiPDef) lvl tps cmds) reqList
+    pushSecLvl $ \lvl -> mapM_ (genRequire unsafeFFIDefaultDef (Just . NFFIGuarded $ ffiPDef) lvl tps cmds) reqList
     return ffiPDef
 
 
 genRequire :: MonadState (Set (ModuleName ())) m
-          => Maybe NativeFFI -- ^ whether to generate FFI
+          => ProtectDef
+          -> Maybe NativeFFI -- ^ whether to generate FFI
           -> Int
           -> Map.Map VkTypeName VkType
           -> Map.Map VkCommandName VkCommand
           -- -> Map.Map VkEnumName VkEnum
           -> VkRequire
           -> ModuleWriter m ()
-genRequire mNativeFFI curlvl tps cmds VkRequire {..} = do
+genRequire unsafeFFIDefaultDef mNativeFFI curlvl tps cmds VkRequire {..} = do
   writeOptionsPragma (Just HADDOCK) "not-home"
   writeSection curlvl $
     comment <:> showExts requireExts
@@ -98,7 +99,7 @@ genRequire mNativeFFI curlvl tps cmds VkRequire {..} = do
   tNames <- fmap mconcat $
     forM requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure mempty
-        Just t  -> genCommand nativeFFI t
+        Just t  -> genCommand unsafeFFIDefaultDef nativeFFI t
 
   emodNames <- foldM (\s (VkTypeName n) ->
                          fmap (Set.union s . maybe mempty Set.singleton)

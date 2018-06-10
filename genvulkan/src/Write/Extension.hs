@@ -24,9 +24,11 @@ import           Write.Feature
 import           Write.ModuleWriter
 
 
-genExtension :: Monad m => VkExtension
+genExtension :: Monad m
+             => ProtectDef
+             -> VkExtension
              -> ModuleWriter m (Maybe ProtectDef)
-genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ do
+genExtension unsafeFFIDefaultDef (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
     let tps = globTypes vkXml
@@ -49,7 +51,7 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
           (\s -> "Protected by CPP ifdef: @" <> unProtectCPP (protectCPP s) <> "@")
           extProtect
 
-    _ <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire genFFI lvl tps cmds) ereqs
+    _ <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire unsafeFFIDefaultDef genFFI lvl tps cmds) ereqs
 
     pure $ extProtect <|> protect <$> mplatform
 

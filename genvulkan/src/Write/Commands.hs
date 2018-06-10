@@ -44,8 +44,8 @@ data StubType
   deriving Eq
 
 
-genCommand :: Monad m => NativeFFI -> VkCommand -> ModuleWriter m (Set VkTypeName)
-genCommand nativeFFI command@VkCommand
+genCommand :: Monad m => ProtectDef -> NativeFFI -> VkCommand -> ModuleWriter m (Set VkTypeName)
+genCommand unsafeFFIDefaultDef nativeFFI command@VkCommand
   { cName = vkname
   , cNameOrig = cnameOrigTxt
   , cReturnType = vkrt
@@ -75,6 +75,7 @@ genCommand nativeFFI command@VkCommand
     let funComment = appendComLine rezComment' regLink
         rezComment = funComment >>= preComment . T.unpack
 
+    writePragma "CPP"
     writePragma "ForeignFunctionInterface"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeImport $ DIThing "FunPtr" DITEmpty
@@ -88,11 +89,14 @@ genCommand nativeFFI command@VkCommand
           writeImport $ DIThing "VkFlags" DITAll
         writeImport $ DIThing t dit
 
+    let
+      pUnsafeFFIDefaultFlagTxt = unProtectFlag (protectFlag unsafeFFIDefaultDef)
+      pUnsafeFFIDefaultCppTxt = unProtectCPP (protectCPP unsafeFFIDefaultDef)
+
     case nativeFFI of
       NFFIDisable -> pure ()
       NFFIGuarded pDef -> do
 
-        writePragma "CPP"
         writePragma "TypeApplications"
         writeImport $ DIVar "unsafeDupablePerformIO"
         writeFullImport "Graphics.Vulkan.Marshal.Proc"
@@ -115,7 +119,10 @@ genCommand nativeFFI command@VkCommand
                   $stubFunTxt <- vkGetInstanceProc @$vkInstanceProcSymbolT vkInstance
                 |]
 
-            comment1 = Just . CodeComment AboveCode ' ' . T.unpack $ T.unlines
+            aboveCode = Just . CodeComment AboveCode ' '
+            belowCode = Just . CodeComment BelowCode ' '
+
+            comment = T.unpack . T.unlines $
                [ "|"
                , fromMaybe mempty funComment
                , ""
@@ -132,33 +139,44 @@ genCommand nativeFFI command@VkCommand
 
                     > $stubFunTxt <- vkGetProc @$vkInstanceProcSymbolT
 
-                    __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
-                              using @unsafe@ of @safe@ FFI respectively.
+                    __Note:__ @$cnameUnsafeTxt@ and @$cnameSafeTxt@ are the @unsafe@ and @safe@
+                              FFI imports of this function, respectively. @$cnameTxt@ is an alias
+                              of @$cnameUnsafeTxt@ when the @$pUnsafeFFIDefaultFlagTxt@ cabal flag
+                              is enabled; otherwise, it is an alias of @$cnameSafeTxt@.
                  |]
-               , "###ifdef " <> pCppTxt
                ]
-            comment2 = Just $ CodeComment AboveCode ' ' "###else"
-            comment3 = Just $ CodeComment BelowCode ' ' "###endif"
+            cppIfdef cpp = "###ifdef " ++ T.unpack cpp
+            commentAndCppIfdef cpp = unlines [comment, cppIfdef cpp]
+            cppElse = "###else"
+            cppEndif = "###endif"
 
         -- foreign import unsafe
-        writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlayRisky Nothing))
-                          (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
-        writeDecl $ TypeSig comment2 [Nothing <$ unqualify cname] funtype
+        writeDecl $ ForImp (aboveCode $ commentAndCppIfdef pCppTxt) (CCall Nothing) (Just (PlayRisky Nothing))
+                          (Just cnameOrigStr) (Ident Nothing cnameUnsafeStr) funtype
+        writeDecl $ TypeSig (aboveCode cppElse) [Nothing <$ unqualify cnameUnsafe] funtype
         writeDecl $ parseDecl' $ [text|
-            $cnameTxt = unsafeDupablePerformIO (vkGetProc @$vkInstanceProcSymbolT)
+            $cnameUnsafeTxt = unsafeDupablePerformIO (vkGetProcUnsafe @$vkInstanceProcSymbolT)
           |]
-        writeDecl $ InlineSig comment3 False Nothing (Nothing <$ cname)
+        writeDecl $ InlineSig (belowCode cppEndif) False Nothing (Nothing <$ cnameUnsafe)
 
         -- foreign import safe
-        writeDecl $ ForImp comment1 (CCall Nothing) (Just (PlaySafe Nothing False))
+        writeDecl $ ForImp (aboveCode $ commentAndCppIfdef pCppTxt) (CCall Nothing) (Just (PlaySafe Nothing False))
                           (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
-        writeDecl $ TypeSig comment2 [Nothing <$ unqualify cnameSafe] funtype
+        writeDecl $ TypeSig (aboveCode cppElse) [Nothing <$ unqualify cnameSafe] funtype
         writeDecl $ parseDecl' $ [text|
             $cnameSafeTxt = unsafeDupablePerformIO (vkGetProcSafe @$vkInstanceProcSymbolT)
           |]
-        writeDecl $ InlineSig comment3 False Nothing (Nothing <$ cnameSafe)
+        writeDecl $ InlineSig (belowCode cppEndif) False Nothing (Nothing <$ cnameSafe)
 
-
+        -- alias to default foreign import
+        writeDecl $ TypeSig (aboveCode comment) [Nothing <$ unqualify cname] funtype
+        writeDecl . setComment (aboveCode $ cppIfdef pUnsafeFFIDefaultCppTxt) $ parseDecl' [text|
+            $cnameTxt = $cnameUnsafeTxt
+          |]
+        writeDecl . setComment (aboveCode cppElse) $ parseDecl' [text|
+            $cnameTxt = $cnameSafeTxt
+          |]
+        writeDecl $ InlineSig (aboveCode cppEndif) True Nothing (Nothing <$ cname)
 
     -- type synonym
     writeDecl $ TypeDecl rezComment
@@ -172,7 +190,7 @@ genCommand nativeFFI command@VkCommand
     writeDecl $ parseDecl'
       [text|
         foreign import ccall unsafe "dynamic"
-            $unwrapFun :: $funTypeNameTxtPFN -> $funTypeNameTxtHS
+            $unwrapFunUnsafe :: $funTypeNameTxtPFN -> $funTypeNameTxtHS
       |]
     writeDecl $ parseDecl'
       [text|
@@ -191,8 +209,8 @@ genCommand nativeFFI command@VkCommand
           type VkProcType "$cnameOrigTxt" = $funTypeNameTxtHS
           vkProcSymbol = $vkInstanceProcSymbol
           {-# INLINE vkProcSymbol #-}
-          unwrapVkProcPtr = $unwrapFun
-          {-# INLINE unwrapVkProcPtr #-}
+          unwrapVkProcPtrUnsafe = $unwrapFunUnsafe
+          {-# INLINE unwrapVkProcPtrUnsafe #-}
           unwrapVkProcPtrSafe = $unwrapFunSafe
           {-# INLINE unwrapVkProcPtrSafe #-}
       |]
@@ -223,6 +241,10 @@ genCommand nativeFFI command@VkCommand
     cnameSafe = toQName vknameSafe
     cnameSafeTxt = qNameTxt cnameSafe
     cnameSafeStr = T.unpack cnameSafeTxt
+    vknameUnsafe = VkCommandName $ unVkCommandName vkname <> "Unsafe"
+    cnameUnsafe = toQName vknameUnsafe
+    cnameUnsafeTxt = qNameTxt cnameUnsafe
+    cnameUnsafeStr = T.unpack cnameUnsafeTxt
     cname = toQName vkname
     cnameTxt = qNameTxt cname
     cnameStr = T.unpack cnameTxt
@@ -283,7 +305,7 @@ genCommand nativeFFI command@VkCommand
     firstUpCName = case T.unpack (unVkCommandName vkname) of
       ""     -> ""
       (x:xs) -> toUpper x : xs
-    unwrapFun = T.pack $ "unwrap" <> firstUpCName
+    unwrapFunUnsafe = T.pack $ "unwrap" <> firstUpCName <> "Unsafe"
     unwrapFunSafe = T.pack $ "unwrap" <> firstUpCName <> "Safe"
     vkInstanceProcSymbol = T.pack $ '_' : firstUpCName
     vkInstanceProcSymbolT = T.pack firstUpCName
@@ -291,26 +313,28 @@ genCommand nativeFFI command@VkCommand
     writeAllImports = do
       writeImport $ DIThing funTypeNameTxtHS DITNo
       writeImport $ DIThing funTypeNameTxtPFN DITNo
-      -- writeImport $ DIVar unwrapFun
+      -- writeImport $ DIVar unwrapFunUnsafe
       when genFFI $ do
         writeImport . DIVar $ unVkCommandName vkname
+        writeImport . DIVar $ unVkCommandName vknameUnsafe
         writeImport . DIVar $ unVkCommandName vknameSafe
 
     writeAllExports = do
       writeExport $ DIThing funTypeNameTxtHS DITNo
       writeExport $ DIThing funTypeNameTxtPFN DITNo
-      -- writeExport $ DIVar unwrapFun -- don't really need it because it is exposed via VulkanProc instance
+      -- writeExport $ DIVar unwrapFunUnsafe -- don't really need it because it is exposed via VulkanProc instance
       when genFFI $ do
         writeExport . DIVar $ unVkCommandName vkname
+        writeExport . DIVar $ unVkCommandName vknameUnsafe
         writeExport . DIVar $ unVkCommandName vknameSafe
 
 
 
-genCommand genFFI acom@(VkCommandAlias comname comalias comnameOrig)
+genCommand unsafeFFIDefaultDef genFFI acom@(VkCommandAlias comname comalias comnameOrig)
   = ask >>= \vk -> case Map.lookup comalias (globCommands vk) of
       Nothing -> error $
         "Could not find a command for an alias " <> show acom
-      Just c  -> genCommand genFFI
+      Just c  -> genCommand unsafeFFIDefaultDef genFFI
         c{ cName = comname
          , cNameOrig = comnameOrig
          , cAttributes = (cAttributes c)

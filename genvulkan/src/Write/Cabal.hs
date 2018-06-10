@@ -28,12 +28,14 @@ hardcodedModules =
   , "Graphics.Vulkan.Ext"
   ]
 
-genCabalFile :: [ProtectDef]
+genCabalFile :: ProtectDef
+                -- ^ Flag to enable unsafe FFI by default
+             -> [ProtectDef]
                 -- ^ Flags to enable native FFI for vulkan versions
              -> [(Text, Maybe ProtectDef)]
                 -- ^ module names and if they are protected by compilation flags
              -> Text
-genCabalFile coreVersions eModules = T.unlines $
+genCabalFile unsafeFFIDefaultDef coreVersions eModules = T.unlines $
       ( [text|
           --
           -- Do not modify this file directly
@@ -64,7 +66,8 @@ genCabalFile coreVersions eModules = T.unlines $
               cbits/vulkan_loader.c
 
         |]
-      : map mkFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
+      : mkFlagDef (unProtectFlag . protectFlag $ unsafeFFIDefaultDef) "Use unsafe foreign imports of Vulkan functions by default"
+      : map mkProtectedGroupFlagDef protectedGroups ++ map mkVersionFlagDef coreVersions
       )
    <> ( [text|
           library
@@ -77,8 +80,9 @@ genCabalFile coreVersions eModules = T.unlines $
       ++ "    other-modules:"
       : map (spaces <>) otherBase
       )
-   <> map (mkModules . second L.sort) protectedGroups
-   <> map mkVersionPragma coreVersions
+   <> ( mkSimplePragma unsafeFFIDefaultDef
+      : map (mkModules . second L.sort) protectedGroups ++ map mkSimplePragma coreVersions
+      )
    <> tail ( T.lines
         [text|
           DUMMY (have to keep it here for NeatInterpolation to work properly)
@@ -127,16 +131,23 @@ genCabalFile coreVersions eModules = T.unlines $
     splitThem ((Nothing, xs):ms) = first (xs ++)     $ splitThem ms
     splitThem ((Just g , xs):ms) = second ((g, xs):) $ splitThem ms
 
-
-    mkFlagDef (p, _)
-      | f <- unProtectFlag $ protectFlag p
-      , g <- unProtectCPP $ protectCPP p
+    mkFlagDef flag desc
       = [text|
-          flag $f
+          flag $flag
               description:
-                Enable platform-specific extensions protected by CPP macros $g
+                $desc
               default: False
         |]
+
+    mkProtectedGroupFlagDef (p, _)
+      | f <- unProtectFlag $ protectFlag p
+      , g <- unProtectCPP $ protectCPP p
+      = mkFlagDef f ("Enable platform-specific extensions protected by CPP macros " <> g)
+
+    mkVersionFlagDef p
+      | f <- unProtectFlag $ protectFlag p
+      , v <- coreVersion p
+      = mkFlagDef f ("Enable foreign-imported functions from Vulkan " <> v <> " feature set")
 
     mkModules (p,ms)
       | f <- unProtectFlag $ protectFlag p
@@ -150,17 +161,7 @@ genCabalFile coreVersions eModules = T.unlines $
       ++ "      other-modules:"
       : map (spaces <>) otherMs
 
-    mkVersionFlagDef p
-      | f <- unProtectFlag $ protectFlag p
-      , v <- coreVersion p
-      = [text|
-          flag $f
-              description:
-                Enable foreign-imported functions from Vulkan $v feature set
-              default: False
-        |]
-
-    mkVersionPragma p
+    mkSimplePragma p
       | f <- unProtectFlag $ protectFlag p
       , g <- unProtectCPP $ protectCPP p
       = T.unlines

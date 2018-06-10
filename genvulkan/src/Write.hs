@@ -43,7 +43,6 @@ generateVkSource :: Path b Dir
                  -> IO ()
 generateVkSource outputDir outCabalFile vkXml = do
 
-
   removeDirRecur outputDir
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
@@ -76,7 +75,7 @@ generateVkSource outputDir outCabalFile vkXml = do
       (featureVer, mr) <- runModuleWriter vkXml modName exportedNamesTypes $ do
          writePragma "Strict"
          writePragma "DataKinds"
-         genFeature feature
+         genFeature unsafeFFIDefaultDef feature
       _ <- writeModule outputDir mr
       pure (globalNames mr, [(T.pack modName, Nothing)], [featureVer])
 
@@ -91,7 +90,7 @@ generateVkSource outputDir outCabalFile vkXml = do
     (exProtect, mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       genExtension ext
+       genExtension unsafeFFIDefaultDef ext
     _ <- writeModule outputDir mr
     pure (globalNames mr, (T.pack modName, exProtect))
 
@@ -119,9 +118,14 @@ generateVkSource outputDir outCabalFile vkXml = do
      <> map importLine eModules
 
 
-  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile featureVersions
+  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile unsafeFFIDefaultDef featureVersions
     $ fModules <> eModules0 <> eModules
 
+  where
+    unsafeFFIDefaultDef = ProtectDef
+      { protectFlag = ProtectFlag "useUnsafeFFIDefault"
+      , protectCPP = ProtectCPP "UNSAFE_FFI_DEFAULT"
+      }
 
 
 aggregateExts :: DeclaredNames
