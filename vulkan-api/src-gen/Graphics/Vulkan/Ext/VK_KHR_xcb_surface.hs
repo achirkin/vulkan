@@ -38,12 +38,14 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
         -- > #include "vk_platform.h"
         VkCreateXcbSurfaceKHR, pattern VkCreateXcbSurfaceKHR,
         HS_vkCreateXcbSurfaceKHR, PFN_vkCreateXcbSurfaceKHR,
-        vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHRSafe,
+        vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHRUnsafe,
+        vkCreateXcbSurfaceKHRSafe,
         VkGetPhysicalDeviceXcbPresentationSupportKHR,
         pattern VkGetPhysicalDeviceXcbPresentationSupportKHR,
         HS_vkGetPhysicalDeviceXcbPresentationSupportKHR,
         PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR,
         vkGetPhysicalDeviceXcbPresentationSupportKHR,
+        vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe,
         vkGetPhysicalDeviceXcbPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
@@ -119,12 +121,15 @@ type VkCreateXcbSurfaceKHR = "vkCreateXcbSurfaceKHR"
 --
 -- > myCreateXcbSurfaceKHR <- vkGetProc @VkCreateXcbSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateXcbSurfaceKHRUnsafe@ and @vkCreateXcbSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateXcbSurfaceKHR@ is an alias
+--           of @vkCreateXcbSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateXcbSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateXcbSurfaceKHR"
-               vkCreateXcbSurfaceKHR ::
+               vkCreateXcbSurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkXcbSurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -134,18 +139,18 @@ foreign import ccall unsafe "vkCreateXcbSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateXcbSurfaceKHR ::
-                      VkInstance -- ^ instance
-                                 ->
-                        Ptr VkXcbSurfaceCreateInfoKHR -- ^ pCreateInfo
-                                                      ->
-                          Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                    -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                        -> IO VkResult
-vkCreateXcbSurfaceKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateXcbSurfaceKHR)
+vkCreateXcbSurfaceKHRUnsafe ::
+                            VkInstance -- ^ instance
+                                       ->
+                              Ptr VkXcbSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                            ->
+                                Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                              -> IO VkResult
+vkCreateXcbSurfaceKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCreateXcbSurfaceKHR)
 
-{-# NOINLINE vkCreateXcbSurfaceKHR #-}
+{-# NOINLINE vkCreateXcbSurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -174,8 +179,11 @@ vkCreateXcbSurfaceKHR
 --
 -- > myCreateXcbSurfaceKHR <- vkGetProc @VkCreateXcbSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateXcbSurfaceKHRUnsafe@ and @vkCreateXcbSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateXcbSurfaceKHR@ is an alias
+--           of @vkCreateXcbSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateXcbSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateXcbSurfaceKHR"
@@ -203,6 +211,53 @@ vkCreateXcbSurfaceKHRSafe
 {-# NOINLINE vkCreateXcbSurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateXcbSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkXcbSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateXcbSurfaceKHR <- vkGetInstanceProc @VkCreateXcbSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateXcbSurfaceKHR <- vkGetProc @VkCreateXcbSurfaceKHR
+--
+-- __Note:__ @vkCreateXcbSurfaceKHRUnsafe@ and @vkCreateXcbSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateXcbSurfaceKHR@ is an alias
+--           of @vkCreateXcbSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateXcbSurfaceKHRSafe@.
+--
+vkCreateXcbSurfaceKHR ::
+                      VkInstance -- ^ instance
+                                 ->
+                        Ptr VkXcbSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                      ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                        -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateXcbSurfaceKHR = vkCreateXcbSurfaceKHRUnsafe
+#else
+vkCreateXcbSurfaceKHR = vkCreateXcbSurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateXcbSurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -226,8 +281,9 @@ type HS_vkCreateXcbSurfaceKHR =
 
 type PFN_vkCreateXcbSurfaceKHR = FunPtr HS_vkCreateXcbSurfaceKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateXcbSurfaceKHR
-               :: PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateXcbSurfaceKHRUnsafe ::
+               PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
 
 foreign import ccall safe "dynamic" unwrapVkCreateXcbSurfaceKHRSafe
                :: PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
@@ -237,9 +293,9 @@ instance VulkanProc "vkCreateXcbSurfaceKHR" where
         vkProcSymbol = _VkCreateXcbSurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateXcbSurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateXcbSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateXcbSurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -289,13 +345,16 @@ type VkGetPhysicalDeviceXcbPresentationSupportKHR =
 --
 -- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceXcbPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXcbPresentationSupportKHR"
-               vkGetPhysicalDeviceXcbPresentationSupportKHR ::
+               vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Word32 -- ^ queueFamilyIndex
@@ -304,19 +363,20 @@ foreign import ccall unsafe
                                                               -> IO VkBool32
 
 #else
-vkGetPhysicalDeviceXcbPresentationSupportKHR ::
-                                             VkPhysicalDevice -- ^ physicalDevice
-                                                              ->
-                                               Word32 -- ^ queueFamilyIndex
-                                                      ->
-                                                 Ptr XcbConnectionT -- ^ connection
-                                                                    -> XcbVisualidT -- ^ visual_id
-                                                                                    -> IO VkBool32
-vkGetPhysicalDeviceXcbPresentationSupportKHR
+vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe ::
+                                                   VkPhysicalDevice -- ^ physicalDevice
+                                                                    ->
+                                                     Word32 -- ^ queueFamilyIndex
+                                                            ->
+                                                       Ptr XcbConnectionT -- ^ connection
+                                                                          ->
+                                                         XcbVisualidT -- ^ visual_id
+                                                                      -> IO VkBool32
+vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceXcbPresentationSupportKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceXcbPresentationSupportKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe #-}
 #endif
 
 -- |
@@ -341,8 +401,11 @@ vkGetPhysicalDeviceXcbPresentationSupportKHR
 --
 -- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceXcbPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
@@ -372,6 +435,51 @@ vkGetPhysicalDeviceXcbPresentationSupportKHRSafe
 {-# NOINLINE vkGetPhysicalDeviceXcbPresentationSupportKHRSafe #-}
 #endif
 
+-- |
+-- > VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , xcb_connection_t* connection
+-- >     , xcb_visualid_t visual_id
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceXcbPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceXcbPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceXcbPresentationSupportKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceXcbPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceXcbPresentationSupportKHRSafe@.
+--
+vkGetPhysicalDeviceXcbPresentationSupportKHR ::
+                                             VkPhysicalDevice -- ^ physicalDevice
+                                                              ->
+                                               Word32 -- ^ queueFamilyIndex
+                                                      ->
+                                                 Ptr XcbConnectionT -- ^ connection
+                                                                    -> XcbVisualidT -- ^ visual_id
+                                                                                    -> IO VkBool32
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceXcbPresentationSupportKHR
+  = vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe
+#else
+vkGetPhysicalDeviceXcbPresentationSupportKHR
+  = vkGetPhysicalDeviceXcbPresentationSupportKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceXcbPresentationSupportKHR #-}
+
 -- | > VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -392,7 +500,7 @@ type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR ::
+               unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe ::
                PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
 
@@ -408,10 +516,10 @@ instance VulkanProc "vkGetPhysicalDeviceXcbPresentationSupportKHR"
         vkProcSymbol = _VkGetPhysicalDeviceXcbPresentationSupportKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRSafe
 

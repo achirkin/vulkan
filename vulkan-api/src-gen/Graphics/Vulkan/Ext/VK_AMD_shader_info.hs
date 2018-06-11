@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -89,7 +90,8 @@ type HS_vkGetShaderInfoAMD =
 
 type PFN_vkGetShaderInfoAMD = FunPtr HS_vkGetShaderInfoAMD
 
-foreign import ccall unsafe "dynamic" unwrapVkGetShaderInfoAMD ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetShaderInfoAMDUnsafe ::
                PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
 
 foreign import ccall safe "dynamic" unwrapVkGetShaderInfoAMDSafe ::
@@ -100,9 +102,9 @@ instance VulkanProc "vkGetShaderInfoAMD" where
         vkProcSymbol = _VkGetShaderInfoAMD
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetShaderInfoAMD
+        unwrapVkProcPtrUnsafe = unwrapVkGetShaderInfoAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetShaderInfoAMDSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

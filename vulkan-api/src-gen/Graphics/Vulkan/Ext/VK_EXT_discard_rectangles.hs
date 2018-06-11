@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -145,7 +146,7 @@ type PFN_vkCmdSetDiscardRectangleEXT =
      FunPtr HS_vkCmdSetDiscardRectangleEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdSetDiscardRectangleEXT ::
+               unwrapVkCmdSetDiscardRectangleEXTUnsafe ::
                PFN_vkCmdSetDiscardRectangleEXT -> HS_vkCmdSetDiscardRectangleEXT
 
 foreign import ccall safe "dynamic"
@@ -158,9 +159,9 @@ instance VulkanProc "vkCmdSetDiscardRectangleEXT" where
         vkProcSymbol = _VkCmdSetDiscardRectangleEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdSetDiscardRectangleEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCmdSetDiscardRectangleEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdSetDiscardRectangleEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

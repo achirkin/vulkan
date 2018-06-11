@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -102,7 +103,7 @@ type PFN_vkGetDescriptorSetLayoutSupportKHR =
      FunPtr HS_vkGetDescriptorSetLayoutSupportKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDescriptorSetLayoutSupportKHR ::
+               unwrapVkGetDescriptorSetLayoutSupportKHRUnsafe ::
                PFN_vkGetDescriptorSetLayoutSupportKHR ->
                  HS_vkGetDescriptorSetLayoutSupportKHR
 
@@ -117,9 +118,10 @@ instance VulkanProc "vkGetDescriptorSetLayoutSupportKHR" where
         vkProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDescriptorSetLayoutSupportKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDescriptorSetLayoutSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

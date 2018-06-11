@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -103,8 +104,9 @@ type HS_vkCreateIOSSurfaceMVK =
 
 type PFN_vkCreateIOSSurfaceMVK = FunPtr HS_vkCreateIOSSurfaceMVK
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateIOSSurfaceMVK
-               :: PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateIOSSurfaceMVKUnsafe ::
+               PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
 
 foreign import ccall safe "dynamic" unwrapVkCreateIOSSurfaceMVKSafe
                :: PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
@@ -114,9 +116,9 @@ instance VulkanProc "vkCreateIOSSurfaceMVK" where
         vkProcSymbol = _VkCreateIOSSurfaceMVK
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateIOSSurfaceMVK
+        unwrapVkProcPtrUnsafe = unwrapVkCreateIOSSurfaceMVKUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateIOSSurfaceMVKSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

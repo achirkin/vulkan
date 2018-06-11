@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -103,7 +104,7 @@ type PFN_vkGetMemoryWin32HandleNV =
      FunPtr HS_vkGetMemoryWin32HandleNV
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryWin32HandleNV ::
+               unwrapVkGetMemoryWin32HandleNVUnsafe ::
                PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
 
 foreign import ccall safe "dynamic"
@@ -116,9 +117,9 @@ instance VulkanProc "vkGetMemoryWin32HandleNV" where
         vkProcSymbol = _VkGetMemoryWin32HandleNV
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleNV
+        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryWin32HandleNVUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleNVSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

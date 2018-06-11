@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -102,7 +103,7 @@ type PFN_vkEnumeratePhysicalDeviceGroupsKHR =
      FunPtr HS_vkEnumeratePhysicalDeviceGroupsKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkEnumeratePhysicalDeviceGroupsKHR ::
+               unwrapVkEnumeratePhysicalDeviceGroupsKHRUnsafe ::
                PFN_vkEnumeratePhysicalDeviceGroupsKHR ->
                  HS_vkEnumeratePhysicalDeviceGroupsKHR
 
@@ -117,9 +118,10 @@ instance VulkanProc "vkEnumeratePhysicalDeviceGroupsKHR" where
         vkProcSymbol = _VkEnumeratePhysicalDeviceGroupsKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkEnumeratePhysicalDeviceGroupsKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkEnumeratePhysicalDeviceGroupsKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDeviceGroupsKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -40,8 +40,8 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         -- > #include "vk_platform.h"
         VkCreateSharedSwapchainsKHR, pattern VkCreateSharedSwapchainsKHR,
         HS_vkCreateSharedSwapchainsKHR, PFN_vkCreateSharedSwapchainsKHR,
-        vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRUnsafe,
+        vkCreateSharedSwapchainsKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.Color,
         module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
         module Graphics.Vulkan.Types.Enum.Format,
@@ -137,12 +137,15 @@ type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 --
 -- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSharedSwapchainsKHRUnsafe@ and @vkCreateSharedSwapchainsKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSharedSwapchainsKHR@ is an alias
+--           of @vkCreateSharedSwapchainsKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSharedSwapchainsKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
-               vkCreateSharedSwapchainsKHR ::
+               vkCreateSharedSwapchainsKHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  Word32 -- ^ swapchainCount
@@ -154,20 +157,22 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                                                                      -> IO VkResult
 
 #else
-vkCreateSharedSwapchainsKHR ::
-                            VkDevice -- ^ device
-                                     ->
-                              Word32 -- ^ swapchainCount
-                                     ->
-                                Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
-                                                             ->
-                                  Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                            -> Ptr VkSwapchainKHR -- ^ pSwapchains
-                                                                                  -> IO VkResult
-vkCreateSharedSwapchainsKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateSharedSwapchainsKHR)
+vkCreateSharedSwapchainsKHRUnsafe ::
+                                  VkDevice -- ^ device
+                                           ->
+                                    Word32 -- ^ swapchainCount
+                                           ->
+                                      Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                                                   ->
+                                        Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                  ->
+                                          Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                             -> IO VkResult
+vkCreateSharedSwapchainsKHRUnsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkCreateSharedSwapchainsKHR)
 
-{-# NOINLINE vkCreateSharedSwapchainsKHR #-}
+{-# NOINLINE vkCreateSharedSwapchainsKHRUnsafe #-}
 #endif
 
 -- |
@@ -197,8 +202,11 @@ vkCreateSharedSwapchainsKHR
 --
 -- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSharedSwapchainsKHRUnsafe@ and @vkCreateSharedSwapchainsKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSharedSwapchainsKHR@ is an alias
+--           of @vkCreateSharedSwapchainsKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSharedSwapchainsKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSharedSwapchainsKHR"
@@ -231,6 +239,56 @@ vkCreateSharedSwapchainsKHRSafe
 {-# NOINLINE vkCreateSharedSwapchainsKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkCreateSharedSwapchainsKHR
+-- >     ( VkDevice device
+-- >     , uint32_t swapchainCount
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchains
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetDeviceProc @VkCreateSharedSwapchainsKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSharedSwapchainsKHR <- vkGetProc @VkCreateSharedSwapchainsKHR
+--
+-- __Note:__ @vkCreateSharedSwapchainsKHRUnsafe@ and @vkCreateSharedSwapchainsKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSharedSwapchainsKHR@ is an alias
+--           of @vkCreateSharedSwapchainsKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSharedSwapchainsKHRSafe@.
+--
+vkCreateSharedSwapchainsKHR ::
+                            VkDevice -- ^ device
+                                     ->
+                              Word32 -- ^ swapchainCount
+                                     ->
+                                Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                                             ->
+                                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                            -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                                                  -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateSharedSwapchainsKHR = vkCreateSharedSwapchainsKHRUnsafe
+#else
+vkCreateSharedSwapchainsKHR = vkCreateSharedSwapchainsKHRSafe
+
+#endif
+{-# INLINE vkCreateSharedSwapchainsKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -259,7 +317,7 @@ type PFN_vkCreateSharedSwapchainsKHR =
      FunPtr HS_vkCreateSharedSwapchainsKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateSharedSwapchainsKHR ::
+               unwrapVkCreateSharedSwapchainsKHRUnsafe ::
                PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
 
 foreign import ccall safe "dynamic"
@@ -272,9 +330,9 @@ instance VulkanProc "vkCreateSharedSwapchainsKHR" where
         vkProcSymbol = _VkCreateSharedSwapchainsKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateSharedSwapchainsKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateSharedSwapchainsKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateSharedSwapchainsKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

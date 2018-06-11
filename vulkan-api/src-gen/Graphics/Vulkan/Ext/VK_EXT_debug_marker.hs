@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -101,7 +102,7 @@ type PFN_vkDebugMarkerSetObjectTagEXT =
      FunPtr HS_vkDebugMarkerSetObjectTagEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDebugMarkerSetObjectTagEXT ::
+               unwrapVkDebugMarkerSetObjectTagEXTUnsafe ::
                PFN_vkDebugMarkerSetObjectTagEXT -> HS_vkDebugMarkerSetObjectTagEXT
 
 foreign import ccall safe "dynamic"
@@ -114,9 +115,9 @@ instance VulkanProc "vkDebugMarkerSetObjectTagEXT" where
         vkProcSymbol = _VkDebugMarkerSetObjectTagEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDebugMarkerSetObjectTagEXT
+        unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectTagEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectTagEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -162,7 +163,7 @@ type PFN_vkDebugMarkerSetObjectNameEXT =
      FunPtr HS_vkDebugMarkerSetObjectNameEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDebugMarkerSetObjectNameEXT ::
+               unwrapVkDebugMarkerSetObjectNameEXTUnsafe ::
                PFN_vkDebugMarkerSetObjectNameEXT ->
                  HS_vkDebugMarkerSetObjectNameEXT
 
@@ -177,9 +178,9 @@ instance VulkanProc "vkDebugMarkerSetObjectNameEXT" where
         vkProcSymbol = _VkDebugMarkerSetObjectNameEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDebugMarkerSetObjectNameEXT
+        unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectNameEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectNameEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -222,7 +223,7 @@ type PFN_vkCmdDebugMarkerBeginEXT =
      FunPtr HS_vkCmdDebugMarkerBeginEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdDebugMarkerBeginEXT ::
+               unwrapVkCmdDebugMarkerBeginEXTUnsafe ::
                PFN_vkCmdDebugMarkerBeginEXT -> HS_vkCmdDebugMarkerBeginEXT
 
 foreign import ccall safe "dynamic"
@@ -235,9 +236,9 @@ instance VulkanProc "vkCmdDebugMarkerBeginEXT" where
         vkProcSymbol = _VkCmdDebugMarkerBeginEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDebugMarkerBeginEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerBeginEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerBeginEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -275,8 +276,9 @@ type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdDebugMarkerEndEXT = FunPtr HS_vkCmdDebugMarkerEndEXT
 
-foreign import ccall unsafe "dynamic" unwrapVkCmdDebugMarkerEndEXT
-               :: PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdDebugMarkerEndEXTUnsafe ::
+               PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
 
 foreign import ccall safe "dynamic"
                unwrapVkCmdDebugMarkerEndEXTSafe ::
@@ -288,9 +290,9 @@ instance VulkanProc "vkCmdDebugMarkerEndEXT" where
         vkProcSymbol = _VkCmdDebugMarkerEndEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDebugMarkerEndEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerEndEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerEndEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -333,7 +335,7 @@ type PFN_vkCmdDebugMarkerInsertEXT =
      FunPtr HS_vkCmdDebugMarkerInsertEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdDebugMarkerInsertEXT ::
+               unwrapVkCmdDebugMarkerInsertEXTUnsafe ::
                PFN_vkCmdDebugMarkerInsertEXT -> HS_vkCmdDebugMarkerInsertEXT
 
 foreign import ccall safe "dynamic"
@@ -346,9 +348,9 @@ instance VulkanProc "vkCmdDebugMarkerInsertEXT" where
         vkProcSymbol = _VkCmdDebugMarkerInsertEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDebugMarkerInsertEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerInsertEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerInsertEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

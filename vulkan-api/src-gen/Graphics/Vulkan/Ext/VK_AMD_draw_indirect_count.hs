@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -94,7 +95,7 @@ type PFN_vkCmdDrawIndirectCountAMD =
      FunPtr HS_vkCmdDrawIndirectCountAMD
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdDrawIndirectCountAMD ::
+               unwrapVkCmdDrawIndirectCountAMDUnsafe ::
                PFN_vkCmdDrawIndirectCountAMD -> HS_vkCmdDrawIndirectCountAMD
 
 foreign import ccall safe "dynamic"
@@ -107,9 +108,9 @@ instance VulkanProc "vkCmdDrawIndirectCountAMD" where
         vkProcSymbol = _VkCmdDrawIndirectCountAMD
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDrawIndirectCountAMD
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectCountAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountAMDSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -170,7 +171,7 @@ type PFN_vkCmdDrawIndexedIndirectCountAMD =
      FunPtr HS_vkCmdDrawIndexedIndirectCountAMD
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdDrawIndexedIndirectCountAMD ::
+               unwrapVkCmdDrawIndexedIndirectCountAMDUnsafe ::
                PFN_vkCmdDrawIndexedIndirectCountAMD ->
                  HS_vkCmdDrawIndexedIndirectCountAMD
 
@@ -185,9 +186,10 @@ instance VulkanProc "vkCmdDrawIndexedIndirectCountAMD" where
         vkProcSymbol = _VkCmdDrawIndexedIndirectCountAMD
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDrawIndexedIndirectCountAMD
+        unwrapVkProcPtrUnsafe
+          = unwrapVkCmdDrawIndexedIndirectCountAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountAMDSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

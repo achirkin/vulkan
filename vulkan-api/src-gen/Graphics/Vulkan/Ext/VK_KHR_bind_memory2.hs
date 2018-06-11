@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -91,8 +92,9 @@ type HS_vkBindBufferMemory2KHR =
 
 type PFN_vkBindBufferMemory2KHR = FunPtr HS_vkBindBufferMemory2KHR
 
-foreign import ccall unsafe "dynamic" unwrapVkBindBufferMemory2KHR
-               :: PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkBindBufferMemory2KHRUnsafe ::
+               PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
 
 foreign import ccall safe "dynamic"
                unwrapVkBindBufferMemory2KHRSafe ::
@@ -104,9 +106,9 @@ instance VulkanProc "vkBindBufferMemory2KHR" where
         vkProcSymbol = _VkBindBufferMemory2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkBindBufferMemory2KHR
+        unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemory2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2KHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -150,8 +152,9 @@ type HS_vkBindImageMemory2KHR =
 
 type PFN_vkBindImageMemory2KHR = FunPtr HS_vkBindImageMemory2KHR
 
-foreign import ccall unsafe "dynamic" unwrapVkBindImageMemory2KHR
-               :: PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkBindImageMemory2KHRUnsafe ::
+               PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
 
 foreign import ccall safe "dynamic" unwrapVkBindImageMemory2KHRSafe
                :: PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
@@ -161,9 +164,9 @@ instance VulkanProc "vkBindImageMemory2KHR" where
         vkProcSymbol = _VkBindImageMemory2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkBindImageMemory2KHR
+        unwrapVkProcPtrUnsafe = unwrapVkBindImageMemory2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkBindImageMemory2KHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

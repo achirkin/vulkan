@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -92,7 +93,8 @@ type HS_vkImportFenceFdKHR =
 
 type PFN_vkImportFenceFdKHR = FunPtr HS_vkImportFenceFdKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkImportFenceFdKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkImportFenceFdKHRUnsafe ::
                PFN_vkImportFenceFdKHR -> HS_vkImportFenceFdKHR
 
 foreign import ccall safe "dynamic" unwrapVkImportFenceFdKHRSafe ::
@@ -103,9 +105,9 @@ instance VulkanProc "vkImportFenceFdKHR" where
         vkProcSymbol = _VkImportFenceFdKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkImportFenceFdKHR
+        unwrapVkProcPtrUnsafe = unwrapVkImportFenceFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkImportFenceFdKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -146,8 +148,8 @@ type HS_vkGetFenceFdKHR =
 
 type PFN_vkGetFenceFdKHR = FunPtr HS_vkGetFenceFdKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkGetFenceFdKHR ::
-               PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
+foreign import ccall unsafe "dynamic" unwrapVkGetFenceFdKHRUnsafe
+               :: PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
 
 foreign import ccall safe "dynamic" unwrapVkGetFenceFdKHRSafe ::
                PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
@@ -157,9 +159,9 @@ instance VulkanProc "vkGetFenceFdKHR" where
         vkProcSymbol = _VkGetFenceFdKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetFenceFdKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetFenceFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetFenceFdKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

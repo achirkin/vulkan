@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -121,7 +122,7 @@ type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
      FunPtr HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+               unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVUnsafe ::
                PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ->
                  HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
@@ -139,10 +140,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe
 

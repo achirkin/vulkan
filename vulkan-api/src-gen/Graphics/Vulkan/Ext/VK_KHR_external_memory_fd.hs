@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -95,8 +96,8 @@ type HS_vkGetMemoryFdKHR =
 
 type PFN_vkGetMemoryFdKHR = FunPtr HS_vkGetMemoryFdKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkGetMemoryFdKHR ::
-               PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
+foreign import ccall unsafe "dynamic" unwrapVkGetMemoryFdKHRUnsafe
+               :: PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
 
 foreign import ccall safe "dynamic" unwrapVkGetMemoryFdKHRSafe ::
                PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
@@ -106,9 +107,9 @@ instance VulkanProc "vkGetMemoryFdKHR" where
         vkProcSymbol = _VkGetMemoryFdKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryFdKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryFdKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -157,7 +158,7 @@ type PFN_vkGetMemoryFdPropertiesKHR =
      FunPtr HS_vkGetMemoryFdPropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryFdPropertiesKHR ::
+               unwrapVkGetMemoryFdPropertiesKHRUnsafe ::
                PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
 
 foreign import ccall safe "dynamic"
@@ -170,9 +171,9 @@ instance VulkanProc "vkGetMemoryFdPropertiesKHR" where
         vkProcSymbol = _VkGetMemoryFdPropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryFdPropertiesKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdPropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryFdPropertiesKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -31,19 +31,21 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         -- ** Required extensions: 'VK_KHR_surface'.
         VkCreateSwapchainKHR, pattern VkCreateSwapchainKHR,
         HS_vkCreateSwapchainKHR, PFN_vkCreateSwapchainKHR,
-        vkCreateSwapchainKHR, vkCreateSwapchainKHRSafe,
-        VkDestroySwapchainKHR, pattern VkDestroySwapchainKHR,
-        HS_vkDestroySwapchainKHR, PFN_vkDestroySwapchainKHR,
-        vkDestroySwapchainKHR, vkDestroySwapchainKHRSafe,
+        vkCreateSwapchainKHR, vkCreateSwapchainKHRUnsafe,
+        vkCreateSwapchainKHRSafe, VkDestroySwapchainKHR,
+        pattern VkDestroySwapchainKHR, HS_vkDestroySwapchainKHR,
+        PFN_vkDestroySwapchainKHR, vkDestroySwapchainKHR,
+        vkDestroySwapchainKHRUnsafe, vkDestroySwapchainKHRSafe,
         VkGetSwapchainImagesKHR, pattern VkGetSwapchainImagesKHR,
         HS_vkGetSwapchainImagesKHR, PFN_vkGetSwapchainImagesKHR,
-        vkGetSwapchainImagesKHR, vkGetSwapchainImagesKHRSafe,
-        VkAcquireNextImageKHR, pattern VkAcquireNextImageKHR,
-        HS_vkAcquireNextImageKHR, PFN_vkAcquireNextImageKHR,
-        vkAcquireNextImageKHR, vkAcquireNextImageKHRSafe,
+        vkGetSwapchainImagesKHR, vkGetSwapchainImagesKHRUnsafe,
+        vkGetSwapchainImagesKHRSafe, VkAcquireNextImageKHR,
+        pattern VkAcquireNextImageKHR, HS_vkAcquireNextImageKHR,
+        PFN_vkAcquireNextImageKHR, vkAcquireNextImageKHR,
+        vkAcquireNextImageKHRUnsafe, vkAcquireNextImageKHRSafe,
         VkQueuePresentKHR, pattern VkQueuePresentKHR, HS_vkQueuePresentKHR,
-        PFN_vkQueuePresentKHR, vkQueuePresentKHR, vkQueuePresentKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        PFN_vkQueuePresentKHR, vkQueuePresentKHR, vkQueuePresentKHRUnsafe,
+        vkQueuePresentKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.Color,
         module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
@@ -85,22 +87,26 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         HS_vkGetDeviceGroupPresentCapabilitiesKHR,
         PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
         vkGetDeviceGroupPresentCapabilitiesKHR,
+        vkGetDeviceGroupPresentCapabilitiesKHRUnsafe,
         vkGetDeviceGroupPresentCapabilitiesKHRSafe,
         VkGetDeviceGroupSurfacePresentModesKHR,
         pattern VkGetDeviceGroupSurfacePresentModesKHR,
         HS_vkGetDeviceGroupSurfacePresentModesKHR,
         PFN_vkGetDeviceGroupSurfacePresentModesKHR,
         vkGetDeviceGroupSurfacePresentModesKHR,
+        vkGetDeviceGroupSurfacePresentModesKHRUnsafe,
         vkGetDeviceGroupSurfacePresentModesKHRSafe,
         VkGetPhysicalDevicePresentRectanglesKHR,
         pattern VkGetPhysicalDevicePresentRectanglesKHR,
         HS_vkGetPhysicalDevicePresentRectanglesKHR,
         PFN_vkGetPhysicalDevicePresentRectanglesKHR,
         vkGetPhysicalDevicePresentRectanglesKHR,
+        vkGetPhysicalDevicePresentRectanglesKHRUnsafe,
         vkGetPhysicalDevicePresentRectanglesKHRSafe,
         VkAcquireNextImage2KHR, pattern VkAcquireNextImage2KHR,
         HS_vkAcquireNextImage2KHR, PFN_vkAcquireNextImage2KHR,
-        vkAcquireNextImage2KHR, vkAcquireNextImage2KHRSafe,
+        vkAcquireNextImage2KHR, vkAcquireNextImage2KHRUnsafe,
+        vkAcquireNextImage2KHRSafe,
         module Graphics.Vulkan.Types.Struct.Offset,
         module Graphics.Vulkan.Types.Struct.Rect,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
@@ -189,12 +195,15 @@ type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 --
 -- > myCreateSwapchainKHR <- vkGetProc @VkCreateSwapchainKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSwapchainKHRUnsafe@ and @vkCreateSwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSwapchainKHR@ is an alias
+--           of @vkCreateSwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSwapchainKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateSwapchainKHR"
-               vkCreateSwapchainKHR ::
+               vkCreateSwapchainKHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
@@ -204,18 +213,18 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
                                                                    -> IO VkResult
 
 #else
-vkCreateSwapchainKHR ::
-                     VkDevice -- ^ device
-                              ->
-                       Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
-                                                    ->
-                         Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                   -> Ptr VkSwapchainKHR -- ^ pSwapchain
-                                                                         -> IO VkResult
-vkCreateSwapchainKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateSwapchainKHR)
+vkCreateSwapchainKHRUnsafe ::
+                           VkDevice -- ^ device
+                                    ->
+                             Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                                          ->
+                               Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                                               -> IO VkResult
+vkCreateSwapchainKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCreateSwapchainKHR)
 
-{-# NOINLINE vkCreateSwapchainKHR #-}
+{-# NOINLINE vkCreateSwapchainKHRUnsafe #-}
 #endif
 
 -- |
@@ -244,8 +253,11 @@ vkCreateSwapchainKHR
 --
 -- > myCreateSwapchainKHR <- vkGetProc @VkCreateSwapchainKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSwapchainKHRUnsafe@ and @vkCreateSwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSwapchainKHR@ is an alias
+--           of @vkCreateSwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSwapchainKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateSwapchainKHR"
@@ -273,6 +285,53 @@ vkCreateSwapchainKHRSafe
 {-# NOINLINE vkCreateSwapchainKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+-- > VkResult vkCreateSwapchainKHR
+-- >     ( VkDevice device
+-- >     , const VkSwapchainCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSwapchainKHR* pSwapchain
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSwapchainKHR <- vkGetDeviceProc @VkCreateSwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSwapchainKHR <- vkGetProc @VkCreateSwapchainKHR
+--
+-- __Note:__ @vkCreateSwapchainKHRUnsafe@ and @vkCreateSwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSwapchainKHR@ is an alias
+--           of @vkCreateSwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSwapchainKHRSafe@.
+--
+vkCreateSwapchainKHR ::
+                     VkDevice -- ^ device
+                              ->
+                       Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                                    ->
+                         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                   -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                                         -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateSwapchainKHR = vkCreateSwapchainKHRUnsafe
+#else
+vkCreateSwapchainKHR = vkCreateSwapchainKHRSafe
+
+#endif
+{-# INLINE vkCreateSwapchainKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
@@ -296,7 +355,8 @@ type HS_vkCreateSwapchainKHR =
 
 type PFN_vkCreateSwapchainKHR = FunPtr HS_vkCreateSwapchainKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateSwapchainKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateSwapchainKHRUnsafe ::
                PFN_vkCreateSwapchainKHR -> HS_vkCreateSwapchainKHR
 
 foreign import ccall safe "dynamic" unwrapVkCreateSwapchainKHRSafe
@@ -307,9 +367,9 @@ instance VulkanProc "vkCreateSwapchainKHR" where
         vkProcSymbol = _VkCreateSwapchainKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateSwapchainKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateSwapchainKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateSwapchainKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -353,27 +413,30 @@ type VkDestroySwapchainKHR = "vkDestroySwapchainKHR"
 --
 -- > myDestroySwapchainKHR <- vkGetProc @VkDestroySwapchainKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroySwapchainKHRUnsafe@ and @vkDestroySwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySwapchainKHR@ is an alias
+--           of @vkDestroySwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySwapchainKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkDestroySwapchainKHR"
-               vkDestroySwapchainKHR ::
+               vkDestroySwapchainKHRUnsafe ::
                VkDevice -- ^ device
                         -> VkSwapchainKHR -- ^ swapchain
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
 #else
-vkDestroySwapchainKHR ::
-                      VkDevice -- ^ device
-                               -> VkSwapchainKHR -- ^ swapchain
-                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                              -> IO ()
-vkDestroySwapchainKHR
-  = unsafeDupablePerformIO (vkGetProc @VkDestroySwapchainKHR)
+vkDestroySwapchainKHRUnsafe ::
+                            VkDevice -- ^ device
+                                     -> VkSwapchainKHR -- ^ swapchain
+                                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                    -> IO ()
+vkDestroySwapchainKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkDestroySwapchainKHR)
 
-{-# NOINLINE vkDestroySwapchainKHR #-}
+{-# NOINLINE vkDestroySwapchainKHRUnsafe #-}
 #endif
 
 -- |
@@ -397,8 +460,11 @@ vkDestroySwapchainKHR
 --
 -- > myDestroySwapchainKHR <- vkGetProc @VkDestroySwapchainKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroySwapchainKHRUnsafe@ and @vkDestroySwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySwapchainKHR@ is an alias
+--           of @vkDestroySwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySwapchainKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkDestroySwapchainKHR"
@@ -420,6 +486,45 @@ vkDestroySwapchainKHRSafe
 {-# NOINLINE vkDestroySwapchainKHRSafe #-}
 #endif
 
+-- |
+-- > void vkDestroySwapchainKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myDestroySwapchainKHR <- vkGetDeviceProc @VkDestroySwapchainKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myDestroySwapchainKHR <- vkGetProc @VkDestroySwapchainKHR
+--
+-- __Note:__ @vkDestroySwapchainKHRUnsafe@ and @vkDestroySwapchainKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySwapchainKHR@ is an alias
+--           of @vkDestroySwapchainKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySwapchainKHRSafe@.
+--
+vkDestroySwapchainKHR ::
+                      VkDevice -- ^ device
+                               -> VkSwapchainKHR -- ^ swapchain
+                                                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                              -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkDestroySwapchainKHR = vkDestroySwapchainKHRUnsafe
+#else
+vkDestroySwapchainKHR = vkDestroySwapchainKHRSafe
+
+#endif
+{-# INLINE vkDestroySwapchainKHR #-}
+
 -- | > void vkDestroySwapchainKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
@@ -435,8 +540,9 @@ type HS_vkDestroySwapchainKHR =
 
 type PFN_vkDestroySwapchainKHR = FunPtr HS_vkDestroySwapchainKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkDestroySwapchainKHR
-               :: PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkDestroySwapchainKHRUnsafe ::
+               PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
 
 foreign import ccall safe "dynamic" unwrapVkDestroySwapchainKHRSafe
                :: PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
@@ -446,9 +552,9 @@ instance VulkanProc "vkDestroySwapchainKHR" where
         vkProcSymbol = _VkDestroySwapchainKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroySwapchainKHR
+        unwrapVkProcPtrUnsafe = unwrapVkDestroySwapchainKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDestroySwapchainKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -498,12 +604,15 @@ type VkGetSwapchainImagesKHR = "vkGetSwapchainImagesKHR"
 --
 -- > myGetSwapchainImagesKHR <- vkGetProc @VkGetSwapchainImagesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetSwapchainImagesKHRUnsafe@ and @vkGetSwapchainImagesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetSwapchainImagesKHR@ is an alias
+--           of @vkGetSwapchainImagesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetSwapchainImagesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetSwapchainImagesKHR"
-               vkGetSwapchainImagesKHR ::
+               vkGetSwapchainImagesKHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkSwapchainKHR -- ^ swapchain
@@ -512,17 +621,17 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                                                              -> IO VkResult
 
 #else
-vkGetSwapchainImagesKHR ::
-                        VkDevice -- ^ device
-                                 ->
-                          VkSwapchainKHR -- ^ swapchain
-                                         -> Ptr Word32 -- ^ pSwapchainImageCount
-                                                       -> Ptr VkImage -- ^ pSwapchainImages
-                                                                      -> IO VkResult
-vkGetSwapchainImagesKHR
-  = unsafeDupablePerformIO (vkGetProc @VkGetSwapchainImagesKHR)
+vkGetSwapchainImagesKHRUnsafe ::
+                              VkDevice -- ^ device
+                                       ->
+                                VkSwapchainKHR -- ^ swapchain
+                                               -> Ptr Word32 -- ^ pSwapchainImageCount
+                                                             -> Ptr VkImage -- ^ pSwapchainImages
+                                                                            -> IO VkResult
+vkGetSwapchainImagesKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkGetSwapchainImagesKHR)
 
-{-# NOINLINE vkGetSwapchainImagesKHR #-}
+{-# NOINLINE vkGetSwapchainImagesKHRUnsafe #-}
 #endif
 
 -- |
@@ -551,8 +660,11 @@ vkGetSwapchainImagesKHR
 --
 -- > myGetSwapchainImagesKHR <- vkGetProc @VkGetSwapchainImagesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetSwapchainImagesKHRUnsafe@ and @vkGetSwapchainImagesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetSwapchainImagesKHR@ is an alias
+--           of @vkGetSwapchainImagesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetSwapchainImagesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetSwapchainImagesKHR"
@@ -578,6 +690,52 @@ vkGetSwapchainImagesKHRSafe
 {-# NOINLINE vkGetSwapchainImagesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetSwapchainImagesKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint32_t* pSwapchainImageCount
+-- >     , VkImage* pSwapchainImages
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetSwapchainImagesKHR <- vkGetDeviceProc @VkGetSwapchainImagesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetSwapchainImagesKHR <- vkGetProc @VkGetSwapchainImagesKHR
+--
+-- __Note:__ @vkGetSwapchainImagesKHRUnsafe@ and @vkGetSwapchainImagesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetSwapchainImagesKHR@ is an alias
+--           of @vkGetSwapchainImagesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetSwapchainImagesKHRSafe@.
+--
+vkGetSwapchainImagesKHR ::
+                        VkDevice -- ^ device
+                                 ->
+                          VkSwapchainKHR -- ^ swapchain
+                                         -> Ptr Word32 -- ^ pSwapchainImageCount
+                                                       -> Ptr VkImage -- ^ pSwapchainImages
+                                                                      -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetSwapchainImagesKHR = vkGetSwapchainImagesKHRUnsafe
+#else
+vkGetSwapchainImagesKHR = vkGetSwapchainImagesKHRSafe
+
+#endif
+{-# INLINE vkGetSwapchainImagesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -601,8 +759,9 @@ type HS_vkGetSwapchainImagesKHR =
 type PFN_vkGetSwapchainImagesKHR =
      FunPtr HS_vkGetSwapchainImagesKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkGetSwapchainImagesKHR
-               :: PFN_vkGetSwapchainImagesKHR -> HS_vkGetSwapchainImagesKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetSwapchainImagesKHRUnsafe ::
+               PFN_vkGetSwapchainImagesKHR -> HS_vkGetSwapchainImagesKHR
 
 foreign import ccall safe "dynamic"
                unwrapVkGetSwapchainImagesKHRSafe ::
@@ -614,9 +773,9 @@ instance VulkanProc "vkGetSwapchainImagesKHR" where
         vkProcSymbol = _VkGetSwapchainImagesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetSwapchainImagesKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainImagesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetSwapchainImagesKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -667,12 +826,15 @@ type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 --
 -- > myAcquireNextImageKHR <- vkGetProc @VkAcquireNextImageKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkAcquireNextImageKHRUnsafe@ and @vkAcquireNextImageKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImageKHR@ is an alias
+--           of @vkAcquireNextImageKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImageKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkAcquireNextImageKHR"
-               vkAcquireNextImageKHR ::
+               vkAcquireNextImageKHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkSwapchainKHR -- ^ swapchain
@@ -684,20 +846,20 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
                                                                   -> IO VkResult
 
 #else
-vkAcquireNextImageKHR ::
-                      VkDevice -- ^ device
-                               ->
-                        VkSwapchainKHR -- ^ swapchain
-                                       ->
-                          Word64 -- ^ timeout
-                                 -> VkSemaphore -- ^ semaphore
-                                                -> VkFence -- ^ fence
-                                                           -> Ptr Word32 -- ^ pImageIndex
-                                                                         -> IO VkResult
-vkAcquireNextImageKHR
-  = unsafeDupablePerformIO (vkGetProc @VkAcquireNextImageKHR)
+vkAcquireNextImageKHRUnsafe ::
+                            VkDevice -- ^ device
+                                     ->
+                              VkSwapchainKHR -- ^ swapchain
+                                             ->
+                                Word64 -- ^ timeout
+                                       -> VkSemaphore -- ^ semaphore
+                                                      -> VkFence -- ^ fence
+                                                                 -> Ptr Word32 -- ^ pImageIndex
+                                                                               -> IO VkResult
+vkAcquireNextImageKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkAcquireNextImageKHR)
 
-{-# NOINLINE vkAcquireNextImageKHR #-}
+{-# NOINLINE vkAcquireNextImageKHRUnsafe #-}
 #endif
 
 -- |
@@ -728,8 +890,11 @@ vkAcquireNextImageKHR
 --
 -- > myAcquireNextImageKHR <- vkGetProc @VkAcquireNextImageKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkAcquireNextImageKHRUnsafe@ and @vkAcquireNextImageKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImageKHR@ is an alias
+--           of @vkAcquireNextImageKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImageKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkAcquireNextImageKHR"
@@ -761,6 +926,57 @@ vkAcquireNextImageKHRSafe
 {-# NOINLINE vkAcquireNextImageKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkAcquireNextImageKHR
+-- >     ( VkDevice device
+-- >     , VkSwapchainKHR swapchain
+-- >     , uint64_t timeout
+-- >     , VkSemaphore semaphore
+-- >     , VkFence fence
+-- >     , uint32_t* pImageIndex
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myAcquireNextImageKHR <- vkGetDeviceProc @VkAcquireNextImageKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImageKHR <- vkGetProc @VkAcquireNextImageKHR
+--
+-- __Note:__ @vkAcquireNextImageKHRUnsafe@ and @vkAcquireNextImageKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImageKHR@ is an alias
+--           of @vkAcquireNextImageKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImageKHRSafe@.
+--
+vkAcquireNextImageKHR ::
+                      VkDevice -- ^ device
+                               ->
+                        VkSwapchainKHR -- ^ swapchain
+                                       ->
+                          Word64 -- ^ timeout
+                                 -> VkSemaphore -- ^ semaphore
+                                                -> VkFence -- ^ fence
+                                                           -> Ptr Word32 -- ^ pImageIndex
+                                                                         -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkAcquireNextImageKHR = vkAcquireNextImageKHRUnsafe
+#else
+vkAcquireNextImageKHR = vkAcquireNextImageKHRSafe
+
+#endif
+{-# INLINE vkAcquireNextImageKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -788,8 +1004,9 @@ type HS_vkAcquireNextImageKHR =
 
 type PFN_vkAcquireNextImageKHR = FunPtr HS_vkAcquireNextImageKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkAcquireNextImageKHR
-               :: PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkAcquireNextImageKHRUnsafe ::
+               PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
 
 foreign import ccall safe "dynamic" unwrapVkAcquireNextImageKHRSafe
                :: PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
@@ -799,9 +1016,9 @@ instance VulkanProc "vkAcquireNextImageKHR" where
         vkProcSymbol = _VkAcquireNextImageKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkAcquireNextImageKHR
+        unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImageKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkAcquireNextImageKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -847,23 +1064,28 @@ type VkQueuePresentKHR = "vkQueuePresentKHR"
 --
 -- > myQueuePresentKHR <- vkGetProc @VkQueuePresentKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkQueuePresentKHRUnsafe@ and @vkQueuePresentKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkQueuePresentKHR@ is an alias
+--           of @vkQueuePresentKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkQueuePresentKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
-foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
-               :: VkQueue -- ^ queue
-                          -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
-                                                  -> IO VkResult
+foreign import ccall unsafe "vkQueuePresentKHR"
+               vkQueuePresentKHRUnsafe ::
+               VkQueue -- ^ queue
+                       -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                               -> IO VkResult
 
 #else
-vkQueuePresentKHR :: VkQueue -- ^ queue
-                             -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
-                                                     -> IO VkResult
-vkQueuePresentKHR
-  = unsafeDupablePerformIO (vkGetProc @VkQueuePresentKHR)
+vkQueuePresentKHRUnsafe ::
+                        VkQueue -- ^ queue
+                                -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                                        -> IO VkResult
+vkQueuePresentKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkQueuePresentKHR)
 
-{-# NOINLINE vkQueuePresentKHR #-}
+{-# NOINLINE vkQueuePresentKHRUnsafe #-}
 #endif
 
 -- |
@@ -890,8 +1112,11 @@ vkQueuePresentKHR
 --
 -- > myQueuePresentKHR <- vkGetProc @VkQueuePresentKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkQueuePresentKHRUnsafe@ and @vkQueuePresentKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkQueuePresentKHR@ is an alias
+--           of @vkQueuePresentKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkQueuePresentKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
@@ -910,6 +1135,46 @@ vkQueuePresentKHRSafe
 {-# NOINLINE vkQueuePresentKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkQueuePresentKHR
+-- >     ( VkQueue queue
+-- >     , const VkPresentInfoKHR* pPresentInfo
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myQueuePresentKHR <- vkGetInstanceProc @VkQueuePresentKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myQueuePresentKHR <- vkGetProc @VkQueuePresentKHR
+--
+-- __Note:__ @vkQueuePresentKHRUnsafe@ and @vkQueuePresentKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkQueuePresentKHR@ is an alias
+--           of @vkQueuePresentKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkQueuePresentKHRSafe@.
+--
+vkQueuePresentKHR :: VkQueue -- ^ queue
+                             -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                                     -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkQueuePresentKHR = vkQueuePresentKHRUnsafe
+#else
+vkQueuePresentKHR = vkQueuePresentKHRSafe
+
+#endif
+{-# INLINE vkQueuePresentKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -927,8 +1192,8 @@ type HS_vkQueuePresentKHR =
 
 type PFN_vkQueuePresentKHR = FunPtr HS_vkQueuePresentKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkQueuePresentKHR ::
-               PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
+foreign import ccall unsafe "dynamic" unwrapVkQueuePresentKHRUnsafe
+               :: PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
 
 foreign import ccall safe "dynamic" unwrapVkQueuePresentKHRSafe ::
                PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
@@ -938,9 +1203,9 @@ instance VulkanProc "vkQueuePresentKHR" where
         vkProcSymbol = _VkQueuePresentKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkQueuePresentKHR
+        unwrapVkProcPtrUnsafe = unwrapVkQueuePresentKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkQueuePresentKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1045,28 +1310,32 @@ type VkGetDeviceGroupPresentCapabilitiesKHR =
 --
 -- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ and @vkGetDeviceGroupPresentCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPresentCapabilitiesKHR@ is an alias
+--           of @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPresentCapabilitiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetDeviceGroupPresentCapabilitiesKHR"
-               vkGetDeviceGroupPresentCapabilitiesKHR ::
+               vkGetDeviceGroupPresentCapabilitiesKHRUnsafe ::
                VkDevice -- ^ device
                         -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
                                                                    -> IO VkResult
 
 #else
-vkGetDeviceGroupPresentCapabilitiesKHR ::
-                                       VkDevice -- ^ device
-                                                ->
-                                         Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
-                                                                                 -> IO VkResult
-vkGetDeviceGroupPresentCapabilitiesKHR
+vkGetDeviceGroupPresentCapabilitiesKHRUnsafe ::
+                                             VkDevice -- ^ device
+                                                      ->
+                                               Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
+                                                                                       ->
+                                                 IO VkResult
+vkGetDeviceGroupPresentCapabilitiesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR)
+      (vkGetProcUnsafe @VkGetDeviceGroupPresentCapabilitiesKHR)
 
-{-# NOINLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
+{-# NOINLINE vkGetDeviceGroupPresentCapabilitiesKHRUnsafe #-}
 #endif
 
 -- |
@@ -1093,8 +1362,11 @@ vkGetDeviceGroupPresentCapabilitiesKHR
 --
 -- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ and @vkGetDeviceGroupPresentCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPresentCapabilitiesKHR@ is an alias
+--           of @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPresentCapabilitiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
@@ -1116,6 +1388,50 @@ vkGetDeviceGroupPresentCapabilitiesKHRSafe
 {-# NOINLINE vkGetDeviceGroupPresentCapabilitiesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
+-- >     ( VkDevice device
+-- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetDeviceProc @VkGetDeviceGroupPresentCapabilitiesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPresentCapabilitiesKHR <- vkGetProc @VkGetDeviceGroupPresentCapabilitiesKHR
+--
+-- __Note:__ @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ and @vkGetDeviceGroupPresentCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPresentCapabilitiesKHR@ is an alias
+--           of @vkGetDeviceGroupPresentCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPresentCapabilitiesKHRSafe@.
+--
+vkGetDeviceGroupPresentCapabilitiesKHR ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
+                                                                                 -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDeviceGroupPresentCapabilitiesKHR
+  = vkGetDeviceGroupPresentCapabilitiesKHRUnsafe
+#else
+vkGetDeviceGroupPresentCapabilitiesKHR
+  = vkGetDeviceGroupPresentCapabilitiesKHRSafe
+
+#endif
+{-# INLINE vkGetDeviceGroupPresentCapabilitiesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -1135,7 +1451,7 @@ type PFN_vkGetDeviceGroupPresentCapabilitiesKHR =
      FunPtr HS_vkGetDeviceGroupPresentCapabilitiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDeviceGroupPresentCapabilitiesKHR ::
+               unwrapVkGetDeviceGroupPresentCapabilitiesKHRUnsafe ::
                PFN_vkGetDeviceGroupPresentCapabilitiesKHR ->
                  HS_vkGetDeviceGroupPresentCapabilitiesKHR
 
@@ -1150,9 +1466,10 @@ instance VulkanProc "vkGetDeviceGroupPresentCapabilitiesKHR" where
         vkProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDeviceGroupPresentCapabilitiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDeviceGroupPresentCapabilitiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetDeviceGroupPresentCapabilitiesKHRSafe
 
@@ -1205,13 +1522,16 @@ type VkGetDeviceGroupSurfacePresentModesKHR =
 --
 -- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ and @vkGetDeviceGroupSurfacePresentModesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupSurfacePresentModesKHR@ is an alias
+--           of @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupSurfacePresentModesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetDeviceGroupSurfacePresentModesKHR"
-               vkGetDeviceGroupSurfacePresentModesKHR ::
+               vkGetDeviceGroupSurfacePresentModesKHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkSurfaceKHR -- ^ surface
@@ -1219,18 +1539,18 @@ foreign import ccall unsafe
                                                                       -> IO VkResult
 
 #else
-vkGetDeviceGroupSurfacePresentModesKHR ::
-                                       VkDevice -- ^ device
-                                                ->
-                                         VkSurfaceKHR -- ^ surface
+vkGetDeviceGroupSurfacePresentModesKHRUnsafe ::
+                                             VkDevice -- ^ device
                                                       ->
-                                           Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
-                                                                                -> IO VkResult
-vkGetDeviceGroupSurfacePresentModesKHR
+                                               VkSurfaceKHR -- ^ surface
+                                                            ->
+                                                 Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
+                                                                                      -> IO VkResult
+vkGetDeviceGroupSurfacePresentModesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR)
+      (vkGetProcUnsafe @VkGetDeviceGroupSurfacePresentModesKHR)
 
-{-# NOINLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
+{-# NOINLINE vkGetDeviceGroupSurfacePresentModesKHRUnsafe #-}
 #endif
 
 -- |
@@ -1258,8 +1578,11 @@ vkGetDeviceGroupSurfacePresentModesKHR
 --
 -- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ and @vkGetDeviceGroupSurfacePresentModesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupSurfacePresentModesKHR@ is an alias
+--           of @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupSurfacePresentModesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
@@ -1285,6 +1608,53 @@ vkGetDeviceGroupSurfacePresentModesKHRSafe
 {-# NOINLINE vkGetDeviceGroupSurfacePresentModesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkGetDeviceGroupSurfacePresentModesKHR
+-- >     ( VkDevice device
+-- >     , VkSurfaceKHR surface
+-- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetDeviceProc @VkGetDeviceGroupSurfacePresentModesKHR vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupSurfacePresentModesKHR <- vkGetProc @VkGetDeviceGroupSurfacePresentModesKHR
+--
+-- __Note:__ @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ and @vkGetDeviceGroupSurfacePresentModesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupSurfacePresentModesKHR@ is an alias
+--           of @vkGetDeviceGroupSurfacePresentModesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupSurfacePresentModesKHRSafe@.
+--
+vkGetDeviceGroupSurfacePresentModesKHR ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         VkSurfaceKHR -- ^ surface
+                                                      ->
+                                           Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
+                                                                                -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDeviceGroupSurfacePresentModesKHR
+  = vkGetDeviceGroupSurfacePresentModesKHRUnsafe
+#else
+vkGetDeviceGroupSurfacePresentModesKHR
+  = vkGetDeviceGroupSurfacePresentModesKHRSafe
+
+#endif
+{-# INLINE vkGetDeviceGroupSurfacePresentModesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -1307,7 +1677,7 @@ type PFN_vkGetDeviceGroupSurfacePresentModesKHR =
      FunPtr HS_vkGetDeviceGroupSurfacePresentModesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDeviceGroupSurfacePresentModesKHR ::
+               unwrapVkGetDeviceGroupSurfacePresentModesKHRUnsafe ::
                PFN_vkGetDeviceGroupSurfacePresentModesKHR ->
                  HS_vkGetDeviceGroupSurfacePresentModesKHR
 
@@ -1322,9 +1692,10 @@ instance VulkanProc "vkGetDeviceGroupSurfacePresentModesKHR" where
         vkProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDeviceGroupSurfacePresentModesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDeviceGroupSurfacePresentModesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetDeviceGroupSurfacePresentModesKHRSafe
 
@@ -1378,13 +1749,16 @@ type VkGetPhysicalDevicePresentRectanglesKHR =
 --
 -- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ and @vkGetPhysicalDevicePresentRectanglesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDevicePresentRectanglesKHR@ is an alias
+--           of @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDevicePresentRectanglesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDevicePresentRectanglesKHR"
-               vkGetPhysicalDevicePresentRectanglesKHR ::
+               vkGetPhysicalDevicePresentRectanglesKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface
@@ -1393,18 +1767,19 @@ foreign import ccall unsafe
                                                             -> IO VkResult
 
 #else
-vkGetPhysicalDevicePresentRectanglesKHR ::
-                                        VkPhysicalDevice -- ^ physicalDevice
-                                                         ->
-                                          VkSurfaceKHR -- ^ surface
-                                                       -> Ptr Word32 -- ^ pRectCount
-                                                                     -> Ptr VkRect2D -- ^ pRects
-                                                                                     -> IO VkResult
-vkGetPhysicalDevicePresentRectanglesKHR
+vkGetPhysicalDevicePresentRectanglesKHRUnsafe ::
+                                              VkPhysicalDevice -- ^ physicalDevice
+                                                               ->
+                                                VkSurfaceKHR -- ^ surface
+                                                             ->
+                                                  Ptr Word32 -- ^ pRectCount
+                                                             -> Ptr VkRect2D -- ^ pRects
+                                                                             -> IO VkResult
+vkGetPhysicalDevicePresentRectanglesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDevicePresentRectanglesKHR)
 
-{-# NOINLINE vkGetPhysicalDevicePresentRectanglesKHR #-}
+{-# NOINLINE vkGetPhysicalDevicePresentRectanglesKHRUnsafe #-}
 #endif
 
 -- |
@@ -1433,8 +1808,11 @@ vkGetPhysicalDevicePresentRectanglesKHR
 --
 -- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ and @vkGetPhysicalDevicePresentRectanglesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDevicePresentRectanglesKHR@ is an alias
+--           of @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDevicePresentRectanglesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
@@ -1462,6 +1840,54 @@ vkGetPhysicalDevicePresentRectanglesKHRSafe
 {-# NOINLINE vkGetPhysicalDevicePresentRectanglesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetPhysicalDevicePresentRectanglesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkSurfaceKHR surface
+-- >     , uint32_t* pRectCount
+-- >     , VkRect2D* pRects
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetInstanceProc @VkGetPhysicalDevicePresentRectanglesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDevicePresentRectanglesKHR <- vkGetProc @VkGetPhysicalDevicePresentRectanglesKHR
+--
+-- __Note:__ @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ and @vkGetPhysicalDevicePresentRectanglesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDevicePresentRectanglesKHR@ is an alias
+--           of @vkGetPhysicalDevicePresentRectanglesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDevicePresentRectanglesKHRSafe@.
+--
+vkGetPhysicalDevicePresentRectanglesKHR ::
+                                        VkPhysicalDevice -- ^ physicalDevice
+                                                         ->
+                                          VkSurfaceKHR -- ^ surface
+                                                       -> Ptr Word32 -- ^ pRectCount
+                                                                     -> Ptr VkRect2D -- ^ pRects
+                                                                                     -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDevicePresentRectanglesKHR
+  = vkGetPhysicalDevicePresentRectanglesKHRUnsafe
+#else
+vkGetPhysicalDevicePresentRectanglesKHR
+  = vkGetPhysicalDevicePresentRectanglesKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDevicePresentRectanglesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -1486,7 +1912,7 @@ type PFN_vkGetPhysicalDevicePresentRectanglesKHR =
      FunPtr HS_vkGetPhysicalDevicePresentRectanglesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDevicePresentRectanglesKHR ::
+               unwrapVkGetPhysicalDevicePresentRectanglesKHRUnsafe ::
                PFN_vkGetPhysicalDevicePresentRectanglesKHR ->
                  HS_vkGetPhysicalDevicePresentRectanglesKHR
 
@@ -1501,9 +1927,10 @@ instance VulkanProc "vkGetPhysicalDevicePresentRectanglesKHR" where
         vkProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDevicePresentRectanglesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDevicePresentRectanglesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDevicePresentRectanglesKHRSafe
 
@@ -1553,12 +1980,15 @@ type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
 --
 -- > myAcquireNextImage2KHR <- vkGetProc @VkAcquireNextImage2KHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkAcquireNextImage2KHRUnsafe@ and @vkAcquireNextImage2KHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImage2KHR@ is an alias
+--           of @vkAcquireNextImage2KHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImage2KHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkAcquireNextImage2KHR"
-               vkAcquireNextImage2KHR ::
+               vkAcquireNextImage2KHRUnsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
@@ -1566,16 +1996,16 @@ foreign import ccall unsafe "vkAcquireNextImage2KHR"
                                                              -> IO VkResult
 
 #else
-vkAcquireNextImage2KHR ::
-                       VkDevice -- ^ device
-                                ->
-                         Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
-                                                       -> Ptr Word32 -- ^ pImageIndex
-                                                                     -> IO VkResult
-vkAcquireNextImage2KHR
-  = unsafeDupablePerformIO (vkGetProc @VkAcquireNextImage2KHR)
+vkAcquireNextImage2KHRUnsafe ::
+                             VkDevice -- ^ device
+                                      ->
+                               Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
+                                                             -> Ptr Word32 -- ^ pImageIndex
+                                                                           -> IO VkResult
+vkAcquireNextImage2KHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkAcquireNextImage2KHR)
 
-{-# NOINLINE vkAcquireNextImage2KHR #-}
+{-# NOINLINE vkAcquireNextImage2KHRUnsafe #-}
 #endif
 
 -- |
@@ -1603,8 +2033,11 @@ vkAcquireNextImage2KHR
 --
 -- > myAcquireNextImage2KHR <- vkGetProc @VkAcquireNextImage2KHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkAcquireNextImage2KHRUnsafe@ and @vkAcquireNextImage2KHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImage2KHR@ is an alias
+--           of @vkAcquireNextImage2KHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImage2KHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkAcquireNextImage2KHR"
@@ -1628,6 +2061,50 @@ vkAcquireNextImage2KHRSafe
 {-# NOINLINE vkAcquireNextImage2KHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+-- > VkResult vkAcquireNextImage2KHR
+-- >     ( VkDevice device
+-- >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
+-- >     , uint32_t* pImageIndex
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myAcquireNextImage2KHR <- vkGetDeviceProc @VkAcquireNextImage2KHR vkDevice
+--
+-- or less efficient:
+--
+-- > myAcquireNextImage2KHR <- vkGetProc @VkAcquireNextImage2KHR
+--
+-- __Note:__ @vkAcquireNextImage2KHRUnsafe@ and @vkAcquireNextImage2KHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkAcquireNextImage2KHR@ is an alias
+--           of @vkAcquireNextImage2KHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkAcquireNextImage2KHRSafe@.
+--
+vkAcquireNextImage2KHR ::
+                       VkDevice -- ^ device
+                                ->
+                         Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
+                                                       -> Ptr Word32 -- ^ pImageIndex
+                                                                     -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkAcquireNextImage2KHR = vkAcquireNextImage2KHRUnsafe
+#else
+vkAcquireNextImage2KHR = vkAcquireNextImage2KHRSafe
+
+#endif
+{-# INLINE vkAcquireNextImage2KHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -1648,8 +2125,9 @@ type HS_vkAcquireNextImage2KHR =
 
 type PFN_vkAcquireNextImage2KHR = FunPtr HS_vkAcquireNextImage2KHR
 
-foreign import ccall unsafe "dynamic" unwrapVkAcquireNextImage2KHR
-               :: PFN_vkAcquireNextImage2KHR -> HS_vkAcquireNextImage2KHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkAcquireNextImage2KHRUnsafe ::
+               PFN_vkAcquireNextImage2KHR -> HS_vkAcquireNextImage2KHR
 
 foreign import ccall safe "dynamic"
                unwrapVkAcquireNextImage2KHRSafe ::
@@ -1661,9 +2139,9 @@ instance VulkanProc "vkAcquireNextImage2KHR" where
         vkProcSymbol = _VkAcquireNextImage2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkAcquireNextImage2KHR
+        unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImage2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkAcquireNextImage2KHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

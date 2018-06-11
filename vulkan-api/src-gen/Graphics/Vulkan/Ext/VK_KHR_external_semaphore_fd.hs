@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -95,8 +96,9 @@ type HS_vkImportSemaphoreFdKHR =
 
 type PFN_vkImportSemaphoreFdKHR = FunPtr HS_vkImportSemaphoreFdKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkImportSemaphoreFdKHR
-               :: PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkImportSemaphoreFdKHRUnsafe ::
+               PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
 
 foreign import ccall safe "dynamic"
                unwrapVkImportSemaphoreFdKHRSafe ::
@@ -108,9 +110,9 @@ instance VulkanProc "vkImportSemaphoreFdKHR" where
         vkProcSymbol = _VkImportSemaphoreFdKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkImportSemaphoreFdKHR
+        unwrapVkProcPtrUnsafe = unwrapVkImportSemaphoreFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkImportSemaphoreFdKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -151,7 +153,8 @@ type HS_vkGetSemaphoreFdKHR =
 
 type PFN_vkGetSemaphoreFdKHR = FunPtr HS_vkGetSemaphoreFdKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkGetSemaphoreFdKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetSemaphoreFdKHRUnsafe ::
                PFN_vkGetSemaphoreFdKHR -> HS_vkGetSemaphoreFdKHR
 
 foreign import ccall safe "dynamic" unwrapVkGetSemaphoreFdKHRSafe
@@ -162,9 +165,9 @@ instance VulkanProc "vkGetSemaphoreFdKHR" where
         vkProcSymbol = _VkGetSemaphoreFdKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetSemaphoreFdKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetSemaphoreFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetSemaphoreFdKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

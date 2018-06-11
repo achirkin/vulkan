@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -114,7 +115,7 @@ type PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::
+               unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHRUnsafe ::
                PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
@@ -131,10 +132,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe
 

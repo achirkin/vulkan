@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -139,7 +140,7 @@ type PFN_vkGetAndroidHardwareBufferPropertiesANDROID =
      FunPtr HS_vkGetAndroidHardwareBufferPropertiesANDROID
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetAndroidHardwareBufferPropertiesANDROID ::
+               unwrapVkGetAndroidHardwareBufferPropertiesANDROIDUnsafe ::
                PFN_vkGetAndroidHardwareBufferPropertiesANDROID ->
                  HS_vkGetAndroidHardwareBufferPropertiesANDROID
 
@@ -155,9 +156,10 @@ instance VulkanProc "vkGetAndroidHardwareBufferPropertiesANDROID"
         vkProcSymbol = _VkGetAndroidHardwareBufferPropertiesANDROID
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetAndroidHardwareBufferPropertiesANDROID
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetAndroidHardwareBufferPropertiesANDROIDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetAndroidHardwareBufferPropertiesANDROIDSafe
 
@@ -208,7 +210,7 @@ type PFN_vkGetMemoryAndroidHardwareBufferANDROID =
      FunPtr HS_vkGetMemoryAndroidHardwareBufferANDROID
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryAndroidHardwareBufferANDROID ::
+               unwrapVkGetMemoryAndroidHardwareBufferANDROIDUnsafe ::
                PFN_vkGetMemoryAndroidHardwareBufferANDROID ->
                  HS_vkGetMemoryAndroidHardwareBufferANDROID
 
@@ -223,9 +225,10 @@ instance VulkanProc "vkGetMemoryAndroidHardwareBufferANDROID" where
         vkProcSymbol = _VkGetMemoryAndroidHardwareBufferANDROID
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryAndroidHardwareBufferANDROID
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetMemoryAndroidHardwareBufferANDROIDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetMemoryAndroidHardwareBufferANDROIDSafe
 

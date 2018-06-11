@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -117,7 +118,7 @@ type PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR =
      FunPtr HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR ::
+               unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHRUnsafe ::
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
 
@@ -133,9 +134,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
         vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHRSafe
 
@@ -188,7 +190,7 @@ type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR =
      FunPtr HS_vkGetPhysicalDeviceSurfaceFormats2KHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceSurfaceFormats2KHR ::
+               unwrapVkGetPhysicalDeviceSurfaceFormats2KHRUnsafe ::
                PFN_vkGetPhysicalDeviceSurfaceFormats2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceFormats2KHR
 
@@ -203,9 +205,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceFormats2KHR" where
         vkProcSymbol = _VkGetPhysicalDeviceSurfaceFormats2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceFormats2KHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceSurfaceFormats2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceSurfaceFormats2KHRSafe
 

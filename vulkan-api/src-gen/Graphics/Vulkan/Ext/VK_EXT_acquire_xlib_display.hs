@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -85,8 +86,9 @@ type HS_vkAcquireXlibDisplayEXT =
 type PFN_vkAcquireXlibDisplayEXT =
      FunPtr HS_vkAcquireXlibDisplayEXT
 
-foreign import ccall unsafe "dynamic" unwrapVkAcquireXlibDisplayEXT
-               :: PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
+foreign import ccall unsafe "dynamic"
+               unwrapVkAcquireXlibDisplayEXTUnsafe ::
+               PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
 
 foreign import ccall safe "dynamic"
                unwrapVkAcquireXlibDisplayEXTSafe ::
@@ -98,9 +100,9 @@ instance VulkanProc "vkAcquireXlibDisplayEXT" where
         vkProcSymbol = _VkAcquireXlibDisplayEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkAcquireXlibDisplayEXT
+        unwrapVkProcPtrUnsafe = unwrapVkAcquireXlibDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkAcquireXlibDisplayEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -146,7 +148,7 @@ type PFN_vkGetRandROutputDisplayEXT =
      FunPtr HS_vkGetRandROutputDisplayEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetRandROutputDisplayEXT ::
+               unwrapVkGetRandROutputDisplayEXTUnsafe ::
                PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
 
 foreign import ccall safe "dynamic"
@@ -159,9 +161,9 @@ instance VulkanProc "vkGetRandROutputDisplayEXT" where
         vkProcSymbol = _VkGetRandROutputDisplayEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetRandROutputDisplayEXT
+        unwrapVkProcPtrUnsafe = unwrapVkGetRandROutputDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetRandROutputDisplayEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

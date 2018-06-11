@@ -25,7 +25,8 @@ module Graphics.Vulkan.Core_1_1
         -- ** Device Initialization
         VkEnumerateInstanceVersion, pattern VkEnumerateInstanceVersion,
         HS_vkEnumerateInstanceVersion, PFN_vkEnumerateInstanceVersion,
-        vkEnumerateInstanceVersion, vkEnumerateInstanceVersionSafe,
+        vkEnumerateInstanceVersion, vkEnumerateInstanceVersionUnsafe,
+        vkEnumerateInstanceVersionSafe,
         module Graphics.Vulkan.Types.Enum.Result,
         -- ** Promoted from VK_KHR_relaxed_block_layout, which has no API
         --
@@ -49,9 +50,10 @@ module Graphics.Vulkan.Core_1_1
                                                   VkBindBufferMemory2,
         pattern VkBindBufferMemory2, HS_vkBindBufferMemory2,
         PFN_vkBindBufferMemory2, vkBindBufferMemory2,
-        vkBindBufferMemory2Safe, VkBindImageMemory2,
-        pattern VkBindImageMemory2, HS_vkBindImageMemory2,
-        PFN_vkBindImageMemory2, vkBindImageMemory2, vkBindImageMemory2Safe,
+        vkBindBufferMemory2Unsafe, vkBindBufferMemory2Safe,
+        VkBindImageMemory2, pattern VkBindImageMemory2,
+        HS_vkBindImageMemory2, PFN_vkBindImageMemory2, vkBindImageMemory2,
+        vkBindImageMemory2Unsafe, vkBindImageMemory2Safe,
         module Graphics.Vulkan.Types.Handles,
         pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO,
@@ -91,11 +93,14 @@ module Graphics.Vulkan.Core_1_1
         HS_vkGetDeviceGroupPeerMemoryFeatures,
         PFN_vkGetDeviceGroupPeerMemoryFeatures,
         vkGetDeviceGroupPeerMemoryFeatures,
+        vkGetDeviceGroupPeerMemoryFeaturesUnsafe,
         vkGetDeviceGroupPeerMemoryFeaturesSafe, VkCmdSetDeviceMask,
         pattern VkCmdSetDeviceMask, HS_vkCmdSetDeviceMask,
-        PFN_vkCmdSetDeviceMask, vkCmdSetDeviceMask, vkCmdSetDeviceMaskSafe,
+        PFN_vkCmdSetDeviceMask, vkCmdSetDeviceMask,
+        vkCmdSetDeviceMaskUnsafe, vkCmdSetDeviceMaskSafe,
         VkCmdDispatchBase, pattern VkCmdDispatchBase, HS_vkCmdDispatchBase,
-        PFN_vkCmdDispatchBase, vkCmdDispatchBase, vkCmdDispatchBaseSafe,
+        PFN_vkCmdDispatchBase, vkCmdDispatchBase, vkCmdDispatchBaseUnsafe,
+        vkCmdDispatchBaseSafe,
         pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
@@ -120,6 +125,7 @@ module Graphics.Vulkan.Core_1_1
         HS_vkEnumeratePhysicalDeviceGroups,
         PFN_vkEnumeratePhysicalDeviceGroups,
         vkEnumeratePhysicalDeviceGroups,
+        vkEnumeratePhysicalDeviceGroupsUnsafe,
         vkEnumeratePhysicalDeviceGroupsSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
@@ -132,16 +138,19 @@ module Graphics.Vulkan.Core_1_1
         pattern VkGetImageMemoryRequirements2,
         HS_vkGetImageMemoryRequirements2,
         PFN_vkGetImageMemoryRequirements2, vkGetImageMemoryRequirements2,
+        vkGetImageMemoryRequirements2Unsafe,
         vkGetImageMemoryRequirements2Safe, VkGetBufferMemoryRequirements2,
         pattern VkGetBufferMemoryRequirements2,
         HS_vkGetBufferMemoryRequirements2,
         PFN_vkGetBufferMemoryRequirements2, vkGetBufferMemoryRequirements2,
+        vkGetBufferMemoryRequirements2Unsafe,
         vkGetBufferMemoryRequirements2Safe,
         VkGetImageSparseMemoryRequirements2,
         pattern VkGetImageSparseMemoryRequirements2,
         HS_vkGetImageSparseMemoryRequirements2,
         PFN_vkGetImageSparseMemoryRequirements2,
         vkGetImageSparseMemoryRequirements2,
+        vkGetImageSparseMemoryRequirements2Unsafe,
         vkGetImageSparseMemoryRequirements2Safe,
         pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2,
         pattern VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2,
@@ -156,41 +165,47 @@ module Graphics.Vulkan.Core_1_1
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceFeatures2, pattern VkGetPhysicalDeviceFeatures2,
         HS_vkGetPhysicalDeviceFeatures2, PFN_vkGetPhysicalDeviceFeatures2,
-        vkGetPhysicalDeviceFeatures2, vkGetPhysicalDeviceFeatures2Safe,
-        VkGetPhysicalDeviceProperties2,
+        vkGetPhysicalDeviceFeatures2, vkGetPhysicalDeviceFeatures2Unsafe,
+        vkGetPhysicalDeviceFeatures2Safe, VkGetPhysicalDeviceProperties2,
         pattern VkGetPhysicalDeviceProperties2,
         HS_vkGetPhysicalDeviceProperties2,
         PFN_vkGetPhysicalDeviceProperties2, vkGetPhysicalDeviceProperties2,
+        vkGetPhysicalDeviceProperties2Unsafe,
         vkGetPhysicalDeviceProperties2Safe,
         VkGetPhysicalDeviceFormatProperties2,
         pattern VkGetPhysicalDeviceFormatProperties2,
         HS_vkGetPhysicalDeviceFormatProperties2,
         PFN_vkGetPhysicalDeviceFormatProperties2,
         vkGetPhysicalDeviceFormatProperties2,
+        vkGetPhysicalDeviceFormatProperties2Unsafe,
         vkGetPhysicalDeviceFormatProperties2Safe,
         VkGetPhysicalDeviceImageFormatProperties2,
         pattern VkGetPhysicalDeviceImageFormatProperties2,
         HS_vkGetPhysicalDeviceImageFormatProperties2,
         PFN_vkGetPhysicalDeviceImageFormatProperties2,
         vkGetPhysicalDeviceImageFormatProperties2,
+        vkGetPhysicalDeviceImageFormatProperties2Unsafe,
         vkGetPhysicalDeviceImageFormatProperties2Safe,
         VkGetPhysicalDeviceQueueFamilyProperties2,
         pattern VkGetPhysicalDeviceQueueFamilyProperties2,
         HS_vkGetPhysicalDeviceQueueFamilyProperties2,
         PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
         vkGetPhysicalDeviceQueueFamilyProperties2,
+        vkGetPhysicalDeviceQueueFamilyProperties2Unsafe,
         vkGetPhysicalDeviceQueueFamilyProperties2Safe,
         VkGetPhysicalDeviceMemoryProperties2,
         pattern VkGetPhysicalDeviceMemoryProperties2,
         HS_vkGetPhysicalDeviceMemoryProperties2,
         PFN_vkGetPhysicalDeviceMemoryProperties2,
         vkGetPhysicalDeviceMemoryProperties2,
+        vkGetPhysicalDeviceMemoryProperties2Unsafe,
         vkGetPhysicalDeviceMemoryProperties2Safe,
         VkGetPhysicalDeviceSparseImageFormatProperties2,
         pattern VkGetPhysicalDeviceSparseImageFormatProperties2,
         HS_vkGetPhysicalDeviceSparseImageFormatProperties2,
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
         vkGetPhysicalDeviceSparseImageFormatProperties2,
+        vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe,
         vkGetPhysicalDeviceSparseImageFormatProperties2Safe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
@@ -206,8 +221,8 @@ module Graphics.Vulkan.Core_1_1
         -- |
         -- > #include "vk_platform.h"
         VkTrimCommandPool, pattern VkTrimCommandPool, HS_vkTrimCommandPool,
-        PFN_vkTrimCommandPool, vkTrimCommandPool, vkTrimCommandPoolSafe,
-        pattern VK_ERROR_OUT_OF_POOL_MEMORY,
+        PFN_vkTrimCommandPool, vkTrimCommandPool, vkTrimCommandPoolUnsafe,
+        vkTrimCommandPoolSafe, pattern VK_ERROR_OUT_OF_POOL_MEMORY,
         pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT,
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT,
@@ -250,7 +265,8 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo,
         -- > #include "vk_platform.h"
         VkGetDeviceQueue2, pattern VkGetDeviceQueue2, HS_vkGetDeviceQueue2,
-        PFN_vkGetDeviceQueue2, vkGetDeviceQueue2, vkGetDeviceQueue2Safe,
+        PFN_vkGetDeviceQueue2, vkGetDeviceQueue2, vkGetDeviceQueue2Unsafe,
+        vkGetDeviceQueue2Safe,
         pattern VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
@@ -273,12 +289,14 @@ module Graphics.Vulkan.Core_1_1
         pattern VkCreateSamplerYcbcrConversion,
         HS_vkCreateSamplerYcbcrConversion,
         PFN_vkCreateSamplerYcbcrConversion, vkCreateSamplerYcbcrConversion,
+        vkCreateSamplerYcbcrConversionUnsafe,
         vkCreateSamplerYcbcrConversionSafe,
         VkDestroySamplerYcbcrConversion,
         pattern VkDestroySamplerYcbcrConversion,
         HS_vkDestroySamplerYcbcrConversion,
         PFN_vkDestroySamplerYcbcrConversion,
         vkDestroySamplerYcbcrConversion,
+        vkDestroySamplerYcbcrConversionUnsafe,
         vkDestroySamplerYcbcrConversionSafe,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
         module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
@@ -345,18 +363,21 @@ module Graphics.Vulkan.Core_1_1
         HS_vkCreateDescriptorUpdateTemplate,
         PFN_vkCreateDescriptorUpdateTemplate,
         vkCreateDescriptorUpdateTemplate,
+        vkCreateDescriptorUpdateTemplateUnsafe,
         vkCreateDescriptorUpdateTemplateSafe,
         VkDestroyDescriptorUpdateTemplate,
         pattern VkDestroyDescriptorUpdateTemplate,
         HS_vkDestroyDescriptorUpdateTemplate,
         PFN_vkDestroyDescriptorUpdateTemplate,
         vkDestroyDescriptorUpdateTemplate,
+        vkDestroyDescriptorUpdateTemplateUnsafe,
         vkDestroyDescriptorUpdateTemplateSafe,
         VkUpdateDescriptorSetWithTemplate,
         pattern VkUpdateDescriptorSetWithTemplate,
         HS_vkUpdateDescriptorSetWithTemplate,
         PFN_vkUpdateDescriptorSetWithTemplate,
         vkUpdateDescriptorSetWithTemplate,
+        vkUpdateDescriptorSetWithTemplateUnsafe,
         vkUpdateDescriptorSetWithTemplateSafe,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
         pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE,
@@ -370,6 +391,7 @@ module Graphics.Vulkan.Core_1_1
         HS_vkGetPhysicalDeviceExternalBufferProperties,
         PFN_vkGetPhysicalDeviceExternalBufferProperties,
         vkGetPhysicalDeviceExternalBufferProperties,
+        vkGetPhysicalDeviceExternalBufferPropertiesUnsafe,
         vkGetPhysicalDeviceExternalBufferPropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES,
@@ -394,6 +416,7 @@ module Graphics.Vulkan.Core_1_1
         HS_vkGetPhysicalDeviceExternalFenceProperties,
         PFN_vkGetPhysicalDeviceExternalFenceProperties,
         vkGetPhysicalDeviceExternalFenceProperties,
+        vkGetPhysicalDeviceExternalFencePropertiesUnsafe,
         vkGetPhysicalDeviceExternalFencePropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
@@ -416,6 +439,7 @@ module Graphics.Vulkan.Core_1_1
         HS_vkGetPhysicalDeviceExternalSemaphoreProperties,
         PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
         vkGetPhysicalDeviceExternalSemaphoreProperties,
+        vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe,
         vkGetPhysicalDeviceExternalSemaphorePropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES,
@@ -428,6 +452,7 @@ module Graphics.Vulkan.Core_1_1
         HS_vkGetDescriptorSetLayoutSupport,
         PFN_vkGetDescriptorSetLayoutSupport,
         vkGetDescriptorSetLayoutSupport,
+        vkGetDescriptorSetLayoutSupportUnsafe,
         vkGetDescriptorSetLayoutSupportSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
@@ -556,21 +581,25 @@ type VkEnumerateInstanceVersion = "vkEnumerateInstanceVersion"
 --
 -- > myEnumerateInstanceVersion <- vkGetProc @VkEnumerateInstanceVersion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkEnumerateInstanceVersionUnsafe@ and @vkEnumerateInstanceVersionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumerateInstanceVersion@ is an alias
+--           of @vkEnumerateInstanceVersionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumerateInstanceVersionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkEnumerateInstanceVersion"
-               vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
-                                                        -> IO VkResult
+               vkEnumerateInstanceVersionUnsafe :: Ptr Word32 -- ^ pApiVersion
+                                                              -> IO VkResult
 
 #else
-vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
-                                         -> IO VkResult
-vkEnumerateInstanceVersion
-  = unsafeDupablePerformIO (vkGetProc @VkEnumerateInstanceVersion)
+vkEnumerateInstanceVersionUnsafe :: Ptr Word32 -- ^ pApiVersion
+                                               -> IO VkResult
+vkEnumerateInstanceVersionUnsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkEnumerateInstanceVersion)
 
-{-# NOINLINE vkEnumerateInstanceVersion #-}
+{-# NOINLINE vkEnumerateInstanceVersionUnsafe #-}
 #endif
 
 -- |
@@ -594,8 +623,11 @@ vkEnumerateInstanceVersion
 --
 -- > myEnumerateInstanceVersion <- vkGetProc @VkEnumerateInstanceVersion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkEnumerateInstanceVersionUnsafe@ and @vkEnumerateInstanceVersionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumerateInstanceVersion@ is an alias
+--           of @vkEnumerateInstanceVersionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumerateInstanceVersionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkEnumerateInstanceVersion"
@@ -612,6 +644,42 @@ vkEnumerateInstanceVersionSafe
 {-# NOINLINE vkEnumerateInstanceVersionSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- > VkResult vkEnumerateInstanceVersion
+-- >     ( uint32_t* pApiVersion
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myEnumerateInstanceVersion <- vkGetInstanceProc @VkEnumerateInstanceVersion vkInstance
+--
+-- or less efficient:
+--
+-- > myEnumerateInstanceVersion <- vkGetProc @VkEnumerateInstanceVersion
+--
+-- __Note:__ @vkEnumerateInstanceVersionUnsafe@ and @vkEnumerateInstanceVersionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumerateInstanceVersion@ is an alias
+--           of @vkEnumerateInstanceVersionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumerateInstanceVersionSafe@.
+--
+vkEnumerateInstanceVersion :: Ptr Word32 -- ^ pApiVersion
+                                         -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkEnumerateInstanceVersion = vkEnumerateInstanceVersionUnsafe
+#else
+vkEnumerateInstanceVersion = vkEnumerateInstanceVersionSafe
+
+#endif
+{-# INLINE vkEnumerateInstanceVersion #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   > VkResult vkEnumerateInstanceVersion
@@ -626,7 +694,7 @@ type PFN_vkEnumerateInstanceVersion =
      FunPtr HS_vkEnumerateInstanceVersion
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkEnumerateInstanceVersion ::
+               unwrapVkEnumerateInstanceVersionUnsafe ::
                PFN_vkEnumerateInstanceVersion -> HS_vkEnumerateInstanceVersion
 
 foreign import ccall safe "dynamic"
@@ -639,9 +707,9 @@ instance VulkanProc "vkEnumerateInstanceVersion" where
         vkProcSymbol = _VkEnumerateInstanceVersion
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkEnumerateInstanceVersion
+        unwrapVkProcPtrUnsafe = unwrapVkEnumerateInstanceVersionUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkEnumerateInstanceVersionSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -694,27 +762,30 @@ type VkBindBufferMemory2 = "vkBindBufferMemory2"
 --
 -- > myBindBufferMemory2 <- vkGetProc @VkBindBufferMemory2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkBindBufferMemory2Unsafe@ and @vkBindBufferMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindBufferMemory2@ is an alias
+--           of @vkBindBufferMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindBufferMemory2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkBindBufferMemory2"
-               vkBindBufferMemory2 ::
+               vkBindBufferMemory2Unsafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
                                                                 -> IO VkResult
 
 #else
-vkBindBufferMemory2 ::
-                    VkDevice -- ^ device
-                             -> Word32 -- ^ bindInfoCount
-                                       -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
-                                                                     -> IO VkResult
-vkBindBufferMemory2
-  = unsafeDupablePerformIO (vkGetProc @VkBindBufferMemory2)
+vkBindBufferMemory2Unsafe ::
+                          VkDevice -- ^ device
+                                   -> Word32 -- ^ bindInfoCount
+                                             -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                                           -> IO VkResult
+vkBindBufferMemory2Unsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkBindBufferMemory2)
 
-{-# NOINLINE vkBindBufferMemory2 #-}
+{-# NOINLINE vkBindBufferMemory2Unsafe #-}
 #endif
 
 -- |
@@ -742,8 +813,11 @@ vkBindBufferMemory2
 --
 -- > myBindBufferMemory2 <- vkGetProc @VkBindBufferMemory2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkBindBufferMemory2Unsafe@ and @vkBindBufferMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindBufferMemory2@ is an alias
+--           of @vkBindBufferMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindBufferMemory2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkBindBufferMemory2"
@@ -765,6 +839,49 @@ vkBindBufferMemory2Safe
 {-# NOINLINE vkBindBufferMemory2Safe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkBindBufferMemory2
+-- >     ( VkDevice device
+-- >     , uint32_t bindInfoCount
+-- >     , const VkBindBufferMemoryInfo* pBindInfos
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myBindBufferMemory2 <- vkGetDeviceProc @VkBindBufferMemory2 vkDevice
+--
+-- or less efficient:
+--
+-- > myBindBufferMemory2 <- vkGetProc @VkBindBufferMemory2
+--
+-- __Note:__ @vkBindBufferMemory2Unsafe@ and @vkBindBufferMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindBufferMemory2@ is an alias
+--           of @vkBindBufferMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindBufferMemory2Safe@.
+--
+vkBindBufferMemory2 ::
+                    VkDevice -- ^ device
+                             -> Word32 -- ^ bindInfoCount
+                                       -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                                     -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkBindBufferMemory2 = vkBindBufferMemory2Unsafe
+#else
+vkBindBufferMemory2 = vkBindBufferMemory2Safe
+
+#endif
+{-# INLINE vkBindBufferMemory2 #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -784,7 +901,8 @@ type HS_vkBindBufferMemory2 =
 
 type PFN_vkBindBufferMemory2 = FunPtr HS_vkBindBufferMemory2
 
-foreign import ccall unsafe "dynamic" unwrapVkBindBufferMemory2 ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkBindBufferMemory2Unsafe ::
                PFN_vkBindBufferMemory2 -> HS_vkBindBufferMemory2
 
 foreign import ccall safe "dynamic" unwrapVkBindBufferMemory2Safe
@@ -795,9 +913,9 @@ instance VulkanProc "vkBindBufferMemory2" where
         vkProcSymbol = _VkBindBufferMemory2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkBindBufferMemory2
+        unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemory2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -844,26 +962,30 @@ type VkBindImageMemory2 = "vkBindImageMemory2"
 --
 -- > myBindImageMemory2 <- vkGetProc @VkBindImageMemory2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkBindImageMemory2Unsafe@ and @vkBindImageMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindImageMemory2@ is an alias
+--           of @vkBindImageMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindImageMemory2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
-foreign import ccall unsafe "vkBindImageMemory2" vkBindImageMemory2
-               :: VkDevice -- ^ device
-                           -> Word32 -- ^ bindInfoCount
-                                     -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
-                                                                  -> IO VkResult
+foreign import ccall unsafe "vkBindImageMemory2"
+               vkBindImageMemory2Unsafe ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                               -> IO VkResult
 
 #else
-vkBindImageMemory2 ::
-                   VkDevice -- ^ device
-                            -> Word32 -- ^ bindInfoCount
-                                      -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
-                                                                   -> IO VkResult
-vkBindImageMemory2
-  = unsafeDupablePerformIO (vkGetProc @VkBindImageMemory2)
+vkBindImageMemory2Unsafe ::
+                         VkDevice -- ^ device
+                                  -> Word32 -- ^ bindInfoCount
+                                            -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                                         -> IO VkResult
+vkBindImageMemory2Unsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkBindImageMemory2)
 
-{-# NOINLINE vkBindImageMemory2 #-}
+{-# NOINLINE vkBindImageMemory2Unsafe #-}
 #endif
 
 -- |
@@ -891,8 +1013,11 @@ vkBindImageMemory2
 --
 -- > myBindImageMemory2 <- vkGetProc @VkBindImageMemory2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkBindImageMemory2Unsafe@ and @vkBindImageMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindImageMemory2@ is an alias
+--           of @vkBindImageMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindImageMemory2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkBindImageMemory2"
@@ -914,6 +1039,49 @@ vkBindImageMemory2Safe
 {-# NOINLINE vkBindImageMemory2Safe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkBindImageMemory2
+-- >     ( VkDevice device
+-- >     , uint32_t bindInfoCount
+-- >     , const VkBindImageMemoryInfo* pBindInfos
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myBindImageMemory2 <- vkGetDeviceProc @VkBindImageMemory2 vkDevice
+--
+-- or less efficient:
+--
+-- > myBindImageMemory2 <- vkGetProc @VkBindImageMemory2
+--
+-- __Note:__ @vkBindImageMemory2Unsafe@ and @vkBindImageMemory2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkBindImageMemory2@ is an alias
+--           of @vkBindImageMemory2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkBindImageMemory2Safe@.
+--
+vkBindImageMemory2 ::
+                   VkDevice -- ^ device
+                            -> Word32 -- ^ bindInfoCount
+                                      -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                                   -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkBindImageMemory2 = vkBindImageMemory2Unsafe
+#else
+vkBindImageMemory2 = vkBindImageMemory2Safe
+
+#endif
+{-# INLINE vkBindImageMemory2 #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -933,7 +1101,8 @@ type HS_vkBindImageMemory2 =
 
 type PFN_vkBindImageMemory2 = FunPtr HS_vkBindImageMemory2
 
-foreign import ccall unsafe "dynamic" unwrapVkBindImageMemory2 ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkBindImageMemory2Unsafe ::
                PFN_vkBindImageMemory2 -> HS_vkBindImageMemory2
 
 foreign import ccall safe "dynamic" unwrapVkBindImageMemory2Safe ::
@@ -944,9 +1113,9 @@ instance VulkanProc "vkBindImageMemory2" where
         vkProcSymbol = _VkBindImageMemory2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkBindImageMemory2
+        unwrapVkProcPtrUnsafe = unwrapVkBindImageMemory2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkBindImageMemory2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1030,12 +1199,15 @@ type VkGetDeviceGroupPeerMemoryFeatures =
 --
 -- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ and @vkGetDeviceGroupPeerMemoryFeaturesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPeerMemoryFeatures@ is an alias
+--           of @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPeerMemoryFeaturesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
-               vkGetDeviceGroupPeerMemoryFeatures ::
+               vkGetDeviceGroupPeerMemoryFeaturesUnsafe ::
                VkDevice -- ^ device
                         ->
                  Word32 -- ^ heapIndex
@@ -1045,20 +1217,21 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
                                                                             -> IO ()
 
 #else
-vkGetDeviceGroupPeerMemoryFeatures ::
-                                   VkDevice -- ^ device
-                                            ->
-                                     Word32 -- ^ heapIndex
-                                            ->
-                                       Word32 -- ^ localDeviceIndex
-                                              -> Word32 -- ^ remoteDeviceIndex
-                                                        -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
-                                                                                        -> IO ()
-vkGetDeviceGroupPeerMemoryFeatures
+vkGetDeviceGroupPeerMemoryFeaturesUnsafe ::
+                                         VkDevice -- ^ device
+                                                  ->
+                                           Word32 -- ^ heapIndex
+                                                  ->
+                                             Word32 -- ^ localDeviceIndex
+                                                    ->
+                                               Word32 -- ^ remoteDeviceIndex
+                                                      -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
+                                                                                      -> IO ()
+vkGetDeviceGroupPeerMemoryFeaturesUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDeviceGroupPeerMemoryFeatures)
+      (vkGetProcUnsafe @VkGetDeviceGroupPeerMemoryFeatures)
 
-{-# NOINLINE vkGetDeviceGroupPeerMemoryFeatures #-}
+{-# NOINLINE vkGetDeviceGroupPeerMemoryFeaturesUnsafe #-}
 #endif
 
 -- |
@@ -1084,8 +1257,11 @@ vkGetDeviceGroupPeerMemoryFeatures
 --
 -- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ and @vkGetDeviceGroupPeerMemoryFeaturesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPeerMemoryFeatures@ is an alias
+--           of @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPeerMemoryFeaturesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
@@ -1115,6 +1291,53 @@ vkGetDeviceGroupPeerMemoryFeaturesSafe
 {-# NOINLINE vkGetDeviceGroupPeerMemoryFeaturesSafe #-}
 #endif
 
+-- |
+-- > void vkGetDeviceGroupPeerMemoryFeatures
+-- >     ( VkDevice device
+-- >     , uint32_t heapIndex
+-- >     , uint32_t localDeviceIndex
+-- >     , uint32_t remoteDeviceIndex
+-- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetDeviceProc @VkGetDeviceGroupPeerMemoryFeatures vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceGroupPeerMemoryFeatures <- vkGetProc @VkGetDeviceGroupPeerMemoryFeatures
+--
+-- __Note:__ @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ and @vkGetDeviceGroupPeerMemoryFeaturesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceGroupPeerMemoryFeatures@ is an alias
+--           of @vkGetDeviceGroupPeerMemoryFeaturesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceGroupPeerMemoryFeaturesSafe@.
+--
+vkGetDeviceGroupPeerMemoryFeatures ::
+                                   VkDevice -- ^ device
+                                            ->
+                                     Word32 -- ^ heapIndex
+                                            ->
+                                       Word32 -- ^ localDeviceIndex
+                                              -> Word32 -- ^ remoteDeviceIndex
+                                                        -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
+                                                                                        -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDeviceGroupPeerMemoryFeatures
+  = vkGetDeviceGroupPeerMemoryFeaturesUnsafe
+#else
+vkGetDeviceGroupPeerMemoryFeatures
+  = vkGetDeviceGroupPeerMemoryFeaturesSafe
+
+#endif
+{-# INLINE vkGetDeviceGroupPeerMemoryFeatures #-}
+
 -- | > void vkGetDeviceGroupPeerMemoryFeatures
 --   >     ( VkDevice device
 --   >     , uint32_t heapIndex
@@ -1137,7 +1360,7 @@ type PFN_vkGetDeviceGroupPeerMemoryFeatures =
      FunPtr HS_vkGetDeviceGroupPeerMemoryFeatures
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDeviceGroupPeerMemoryFeatures ::
+               unwrapVkGetDeviceGroupPeerMemoryFeaturesUnsafe ::
                PFN_vkGetDeviceGroupPeerMemoryFeatures ->
                  HS_vkGetDeviceGroupPeerMemoryFeatures
 
@@ -1152,9 +1375,10 @@ instance VulkanProc "vkGetDeviceGroupPeerMemoryFeatures" where
         vkProcSymbol = _VkGetDeviceGroupPeerMemoryFeatures
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDeviceGroupPeerMemoryFeatures
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDeviceGroupPeerMemoryFeaturesUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDeviceGroupPeerMemoryFeaturesSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1200,23 +1424,26 @@ type VkCmdSetDeviceMask = "vkCmdSetDeviceMask"
 --
 -- > myCmdSetDeviceMask <- vkGetProc @VkCmdSetDeviceMask
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCmdSetDeviceMaskUnsafe@ and @vkCmdSetDeviceMaskSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdSetDeviceMask@ is an alias
+--           of @vkCmdSetDeviceMaskUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdSetDeviceMaskSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
-foreign import ccall unsafe "vkCmdSetDeviceMask" vkCmdSetDeviceMask
-               :: VkCommandBuffer -- ^ commandBuffer
-                                  -> Word32 -- ^ deviceMask
-                                            -> IO ()
+foreign import ccall unsafe "vkCmdSetDeviceMask"
+               vkCmdSetDeviceMaskUnsafe :: VkCommandBuffer -- ^ commandBuffer
+                                                           -> Word32 -- ^ deviceMask
+                                                                     -> IO ()
 
 #else
-vkCmdSetDeviceMask :: VkCommandBuffer -- ^ commandBuffer
-                                      -> Word32 -- ^ deviceMask
-                                                -> IO ()
-vkCmdSetDeviceMask
-  = unsafeDupablePerformIO (vkGetProc @VkCmdSetDeviceMask)
+vkCmdSetDeviceMaskUnsafe :: VkCommandBuffer -- ^ commandBuffer
+                                            -> Word32 -- ^ deviceMask
+                                                      -> IO ()
+vkCmdSetDeviceMaskUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCmdSetDeviceMask)
 
-{-# NOINLINE vkCmdSetDeviceMask #-}
+{-# NOINLINE vkCmdSetDeviceMaskUnsafe #-}
 #endif
 
 -- |
@@ -1243,8 +1470,11 @@ vkCmdSetDeviceMask
 --
 -- > myCmdSetDeviceMask <- vkGetProc @VkCmdSetDeviceMask
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCmdSetDeviceMaskUnsafe@ and @vkCmdSetDeviceMaskSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdSetDeviceMask@ is an alias
+--           of @vkCmdSetDeviceMaskUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdSetDeviceMaskSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCmdSetDeviceMask"
@@ -1262,6 +1492,46 @@ vkCmdSetDeviceMaskSafe
 {-# NOINLINE vkCmdSetDeviceMaskSafe #-}
 #endif
 
+-- |
+-- Queues: 'graphics', 'compute', 'transfer'.
+--
+-- Renderpass: @both@
+--
+-- > void vkCmdSetDeviceMask
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t deviceMask
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCmdSetDeviceMask <- vkGetInstanceProc @VkCmdSetDeviceMask vkInstance
+--
+-- or less efficient:
+--
+-- > myCmdSetDeviceMask <- vkGetProc @VkCmdSetDeviceMask
+--
+-- __Note:__ @vkCmdSetDeviceMaskUnsafe@ and @vkCmdSetDeviceMaskSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdSetDeviceMask@ is an alias
+--           of @vkCmdSetDeviceMaskUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdSetDeviceMaskSafe@.
+--
+vkCmdSetDeviceMask :: VkCommandBuffer -- ^ commandBuffer
+                                      -> Word32 -- ^ deviceMask
+                                                -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkCmdSetDeviceMask = vkCmdSetDeviceMaskUnsafe
+#else
+vkCmdSetDeviceMask = vkCmdSetDeviceMaskSafe
+
+#endif
+{-# INLINE vkCmdSetDeviceMask #-}
+
 -- | Queues: 'graphics', 'compute', 'transfer'.
 --
 --   Renderpass: @both@
@@ -1278,7 +1548,8 @@ type HS_vkCmdSetDeviceMask = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdSetDeviceMask = FunPtr HS_vkCmdSetDeviceMask
 
-foreign import ccall unsafe "dynamic" unwrapVkCmdSetDeviceMask ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdSetDeviceMaskUnsafe ::
                PFN_vkCmdSetDeviceMask -> HS_vkCmdSetDeviceMask
 
 foreign import ccall safe "dynamic" unwrapVkCmdSetDeviceMaskSafe ::
@@ -1289,9 +1560,9 @@ instance VulkanProc "vkCmdSetDeviceMask" where
         vkProcSymbol = _VkCmdSetDeviceMask
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdSetDeviceMask
+        unwrapVkProcPtrUnsafe = unwrapVkCmdSetDeviceMaskUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdSetDeviceMaskSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1342,12 +1613,15 @@ type VkCmdDispatchBase = "vkCmdDispatchBase"
 --
 -- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCmdDispatchBaseUnsafe@ and @vkCmdDispatchBaseSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdDispatchBase@ is an alias
+--           of @vkCmdDispatchBaseUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdDispatchBaseSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
-foreign import ccall unsafe "vkCmdDispatchBase" vkCmdDispatchBase
-               ::
+foreign import ccall unsafe "vkCmdDispatchBase"
+               vkCmdDispatchBaseUnsafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  Word32 -- ^ baseGroupX
@@ -1359,20 +1633,20 @@ foreign import ccall unsafe "vkCmdDispatchBase" vkCmdDispatchBase
                                                                           -> IO ()
 
 #else
-vkCmdDispatchBase ::
-                  VkCommandBuffer -- ^ commandBuffer
-                                  ->
-                    Word32 -- ^ baseGroupX
-                           -> Word32 -- ^ baseGroupY
-                                     -> Word32 -- ^ baseGroupZ
-                                               -> Word32 -- ^ groupCountX
-                                                         -> Word32 -- ^ groupCountY
-                                                                   -> Word32 -- ^ groupCountZ
-                                                                             -> IO ()
-vkCmdDispatchBase
-  = unsafeDupablePerformIO (vkGetProc @VkCmdDispatchBase)
+vkCmdDispatchBaseUnsafe ::
+                        VkCommandBuffer -- ^ commandBuffer
+                                        ->
+                          Word32 -- ^ baseGroupX
+                                 -> Word32 -- ^ baseGroupY
+                                           -> Word32 -- ^ baseGroupZ
+                                                     -> Word32 -- ^ groupCountX
+                                                               -> Word32 -- ^ groupCountY
+                                                                         -> Word32 -- ^ groupCountZ
+                                                                                   -> IO ()
+vkCmdDispatchBaseUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCmdDispatchBase)
 
-{-# NOINLINE vkCmdDispatchBase #-}
+{-# NOINLINE vkCmdDispatchBaseUnsafe #-}
 #endif
 
 -- |
@@ -1404,8 +1678,11 @@ vkCmdDispatchBase
 --
 -- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCmdDispatchBaseUnsafe@ and @vkCmdDispatchBaseSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdDispatchBase@ is an alias
+--           of @vkCmdDispatchBaseUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdDispatchBaseSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCmdDispatchBase" vkCmdDispatchBaseSafe
@@ -1437,6 +1714,58 @@ vkCmdDispatchBaseSafe
 {-# NOINLINE vkCmdDispatchBaseSafe #-}
 #endif
 
+-- |
+-- Queues: 'compute'.
+--
+-- Renderpass: @outside@
+--
+-- > void vkCmdDispatchBase
+-- >     ( VkCommandBuffer commandBuffer
+-- >     , uint32_t baseGroupX
+-- >     , uint32_t baseGroupY
+-- >     , uint32_t baseGroupZ
+-- >     , uint32_t groupCountX
+-- >     , uint32_t groupCountY
+-- >     , uint32_t groupCountZ
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCmdDispatchBase <- vkGetInstanceProc @VkCmdDispatchBase vkInstance
+--
+-- or less efficient:
+--
+-- > myCmdDispatchBase <- vkGetProc @VkCmdDispatchBase
+--
+-- __Note:__ @vkCmdDispatchBaseUnsafe@ and @vkCmdDispatchBaseSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCmdDispatchBase@ is an alias
+--           of @vkCmdDispatchBaseUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCmdDispatchBaseSafe@.
+--
+vkCmdDispatchBase ::
+                  VkCommandBuffer -- ^ commandBuffer
+                                  ->
+                    Word32 -- ^ baseGroupX
+                           -> Word32 -- ^ baseGroupY
+                                     -> Word32 -- ^ baseGroupZ
+                                               -> Word32 -- ^ groupCountX
+                                                         -> Word32 -- ^ groupCountY
+                                                                   -> Word32 -- ^ groupCountZ
+                                                                             -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkCmdDispatchBase = vkCmdDispatchBaseUnsafe
+#else
+vkCmdDispatchBase = vkCmdDispatchBaseSafe
+
+#endif
+{-# INLINE vkCmdDispatchBase #-}
+
 -- | Queues: 'compute'.
 --
 --   Renderpass: @outside@
@@ -1465,8 +1794,8 @@ type HS_vkCmdDispatchBase =
 
 type PFN_vkCmdDispatchBase = FunPtr HS_vkCmdDispatchBase
 
-foreign import ccall unsafe "dynamic" unwrapVkCmdDispatchBase ::
-               PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
+foreign import ccall unsafe "dynamic" unwrapVkCmdDispatchBaseUnsafe
+               :: PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
 
 foreign import ccall safe "dynamic" unwrapVkCmdDispatchBaseSafe ::
                PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
@@ -1476,9 +1805,9 @@ instance VulkanProc "vkCmdDispatchBase" where
         vkProcSymbol = _VkCmdDispatchBase
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDispatchBase
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchBaseUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDispatchBaseSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1602,12 +1931,15 @@ type VkEnumeratePhysicalDeviceGroups =
 --
 -- > myEnumeratePhysicalDeviceGroups <- vkGetProc @VkEnumeratePhysicalDeviceGroups
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkEnumeratePhysicalDeviceGroupsUnsafe@ and @vkEnumeratePhysicalDeviceGroupsSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumeratePhysicalDeviceGroups@ is an alias
+--           of @vkEnumeratePhysicalDeviceGroupsUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumeratePhysicalDeviceGroupsSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
-               vkEnumeratePhysicalDeviceGroups ::
+               vkEnumeratePhysicalDeviceGroupsUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr Word32 -- ^ pPhysicalDeviceGroupCount
@@ -1615,17 +1947,18 @@ foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
                                                                    -> IO VkResult
 
 #else
-vkEnumeratePhysicalDeviceGroups ::
-                                VkInstance -- ^ instance
-                                           ->
-                                  Ptr Word32 -- ^ pPhysicalDeviceGroupCount
-                                             -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
-                                                                                    -> IO VkResult
-vkEnumeratePhysicalDeviceGroups
+vkEnumeratePhysicalDeviceGroupsUnsafe ::
+                                      VkInstance -- ^ instance
+                                                 ->
+                                        Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                                                   ->
+                                          Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                                              -> IO VkResult
+vkEnumeratePhysicalDeviceGroupsUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkEnumeratePhysicalDeviceGroups)
+      (vkGetProcUnsafe @VkEnumeratePhysicalDeviceGroups)
 
-{-# NOINLINE vkEnumeratePhysicalDeviceGroups #-}
+{-# NOINLINE vkEnumeratePhysicalDeviceGroupsUnsafe #-}
 #endif
 
 -- |
@@ -1653,8 +1986,11 @@ vkEnumeratePhysicalDeviceGroups
 --
 -- > myEnumeratePhysicalDeviceGroups <- vkGetProc @VkEnumeratePhysicalDeviceGroups
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkEnumeratePhysicalDeviceGroupsUnsafe@ and @vkEnumeratePhysicalDeviceGroupsSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumeratePhysicalDeviceGroups@ is an alias
+--           of @vkEnumeratePhysicalDeviceGroupsUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumeratePhysicalDeviceGroupsSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
@@ -1680,6 +2016,52 @@ vkEnumeratePhysicalDeviceGroupsSafe
 {-# NOINLINE vkEnumeratePhysicalDeviceGroupsSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+-- > VkResult vkEnumeratePhysicalDeviceGroups
+-- >     ( VkInstance instance
+-- >     , uint32_t* pPhysicalDeviceGroupCount
+-- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myEnumeratePhysicalDeviceGroups <- vkGetInstanceProc @VkEnumeratePhysicalDeviceGroups vkInstance
+--
+-- or less efficient:
+--
+-- > myEnumeratePhysicalDeviceGroups <- vkGetProc @VkEnumeratePhysicalDeviceGroups
+--
+-- __Note:__ @vkEnumeratePhysicalDeviceGroupsUnsafe@ and @vkEnumeratePhysicalDeviceGroupsSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkEnumeratePhysicalDeviceGroups@ is an alias
+--           of @vkEnumeratePhysicalDeviceGroupsUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkEnumeratePhysicalDeviceGroupsSafe@.
+--
+vkEnumeratePhysicalDeviceGroups ::
+                                VkInstance -- ^ instance
+                                           ->
+                                  Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                                             -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                                                    -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkEnumeratePhysicalDeviceGroups
+  = vkEnumeratePhysicalDeviceGroupsUnsafe
+#else
+vkEnumeratePhysicalDeviceGroups
+  = vkEnumeratePhysicalDeviceGroupsSafe
+
+#endif
+{-# INLINE vkEnumeratePhysicalDeviceGroups #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
@@ -1702,7 +2084,7 @@ type PFN_vkEnumeratePhysicalDeviceGroups =
      FunPtr HS_vkEnumeratePhysicalDeviceGroups
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkEnumeratePhysicalDeviceGroups ::
+               unwrapVkEnumeratePhysicalDeviceGroupsUnsafe ::
                PFN_vkEnumeratePhysicalDeviceGroups ->
                  HS_vkEnumeratePhysicalDeviceGroups
 
@@ -1717,9 +2099,9 @@ instance VulkanProc "vkEnumeratePhysicalDeviceGroups" where
         vkProcSymbol = _VkEnumeratePhysicalDeviceGroups
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkEnumeratePhysicalDeviceGroups
+        unwrapVkProcPtrUnsafe = unwrapVkEnumeratePhysicalDeviceGroupsUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDeviceGroupsSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1786,12 +2168,15 @@ type VkGetImageMemoryRequirements2 =
 --
 -- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetImageMemoryRequirements2Unsafe@ and @vkGetImageMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageMemoryRequirements2@ is an alias
+--           of @vkGetImageMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetImageMemoryRequirements2"
-               vkGetImageMemoryRequirements2 ::
+               vkGetImageMemoryRequirements2Unsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
@@ -1800,17 +2185,18 @@ foreign import ccall unsafe "vkGetImageMemoryRequirements2"
                                              -> IO ()
 
 #else
-vkGetImageMemoryRequirements2 ::
-                              VkDevice -- ^ device
-                                       ->
-                                Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
-                                                                   ->
-                                  Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                                            -> IO ()
-vkGetImageMemoryRequirements2
-  = unsafeDupablePerformIO (vkGetProc @VkGetImageMemoryRequirements2)
+vkGetImageMemoryRequirements2Unsafe ::
+                                    VkDevice -- ^ device
+                                             ->
+                                      Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
+                                                                         ->
+                                        Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                                                  -> IO ()
+vkGetImageMemoryRequirements2Unsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkGetImageMemoryRequirements2)
 
-{-# NOINLINE vkGetImageMemoryRequirements2 #-}
+{-# NOINLINE vkGetImageMemoryRequirements2Unsafe #-}
 #endif
 
 -- |
@@ -1834,8 +2220,11 @@ vkGetImageMemoryRequirements2
 --
 -- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetImageMemoryRequirements2Unsafe@ and @vkGetImageMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageMemoryRequirements2@ is an alias
+--           of @vkGetImageMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetImageMemoryRequirements2"
@@ -1862,6 +2251,47 @@ vkGetImageMemoryRequirements2Safe
 {-# NOINLINE vkGetImageMemoryRequirements2Safe #-}
 #endif
 
+-- |
+-- > void vkGetImageMemoryRequirements2
+-- >     ( VkDevice device
+-- >     , const VkImageMemoryRequirementsInfo2* pInfo
+-- >     , VkMemoryRequirements2* pMemoryRequirements
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetDeviceProc @VkGetImageMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageMemoryRequirements2 <- vkGetProc @VkGetImageMemoryRequirements2
+--
+-- __Note:__ @vkGetImageMemoryRequirements2Unsafe@ and @vkGetImageMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageMemoryRequirements2@ is an alias
+--           of @vkGetImageMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageMemoryRequirements2Safe@.
+--
+vkGetImageMemoryRequirements2 ::
+                              VkDevice -- ^ device
+                                       ->
+                                Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
+                                                                   ->
+                                  Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                                            -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetImageMemoryRequirements2 = vkGetImageMemoryRequirements2Unsafe
+#else
+vkGetImageMemoryRequirements2 = vkGetImageMemoryRequirements2Safe
+
+#endif
+{-# INLINE vkGetImageMemoryRequirements2 #-}
+
 -- | > void vkGetImageMemoryRequirements2
 --   >     ( VkDevice device
 --   >     , const VkImageMemoryRequirementsInfo2* pInfo
@@ -1881,7 +2311,7 @@ type PFN_vkGetImageMemoryRequirements2 =
      FunPtr HS_vkGetImageMemoryRequirements2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetImageMemoryRequirements2 ::
+               unwrapVkGetImageMemoryRequirements2Unsafe ::
                PFN_vkGetImageMemoryRequirements2 ->
                  HS_vkGetImageMemoryRequirements2
 
@@ -1896,9 +2326,9 @@ instance VulkanProc "vkGetImageMemoryRequirements2" where
         vkProcSymbol = _VkGetImageMemoryRequirements2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetImageMemoryRequirements2
+        unwrapVkProcPtrUnsafe = unwrapVkGetImageMemoryRequirements2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1946,12 +2376,15 @@ type VkGetBufferMemoryRequirements2 =
 --
 -- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetBufferMemoryRequirements2Unsafe@ and @vkGetBufferMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetBufferMemoryRequirements2@ is an alias
+--           of @vkGetBufferMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetBufferMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetBufferMemoryRequirements2"
-               vkGetBufferMemoryRequirements2 ::
+               vkGetBufferMemoryRequirements2Unsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
@@ -1960,18 +2393,18 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements2"
                                              -> IO ()
 
 #else
-vkGetBufferMemoryRequirements2 ::
-                               VkDevice -- ^ device
-                                        ->
-                                 Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
-                                                                     ->
-                                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                                             -> IO ()
-vkGetBufferMemoryRequirements2
+vkGetBufferMemoryRequirements2Unsafe ::
+                                     VkDevice -- ^ device
+                                              ->
+                                       Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
+                                                                           ->
+                                         Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                                                   -> IO ()
+vkGetBufferMemoryRequirements2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetBufferMemoryRequirements2)
+      (vkGetProcUnsafe @VkGetBufferMemoryRequirements2)
 
-{-# NOINLINE vkGetBufferMemoryRequirements2 #-}
+{-# NOINLINE vkGetBufferMemoryRequirements2Unsafe #-}
 #endif
 
 -- |
@@ -1995,8 +2428,11 @@ vkGetBufferMemoryRequirements2
 --
 -- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetBufferMemoryRequirements2Unsafe@ and @vkGetBufferMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetBufferMemoryRequirements2@ is an alias
+--           of @vkGetBufferMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetBufferMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetBufferMemoryRequirements2"
@@ -2023,6 +2459,48 @@ vkGetBufferMemoryRequirements2Safe
 {-# NOINLINE vkGetBufferMemoryRequirements2Safe #-}
 #endif
 
+-- |
+-- > void vkGetBufferMemoryRequirements2
+-- >     ( VkDevice device
+-- >     , const VkBufferMemoryRequirementsInfo2* pInfo
+-- >     , VkMemoryRequirements2* pMemoryRequirements
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetDeviceProc @VkGetBufferMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetBufferMemoryRequirements2 <- vkGetProc @VkGetBufferMemoryRequirements2
+--
+-- __Note:__ @vkGetBufferMemoryRequirements2Unsafe@ and @vkGetBufferMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetBufferMemoryRequirements2@ is an alias
+--           of @vkGetBufferMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetBufferMemoryRequirements2Safe@.
+--
+vkGetBufferMemoryRequirements2 ::
+                               VkDevice -- ^ device
+                                        ->
+                                 Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
+                                                                     ->
+                                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                                             -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetBufferMemoryRequirements2
+  = vkGetBufferMemoryRequirements2Unsafe
+#else
+vkGetBufferMemoryRequirements2 = vkGetBufferMemoryRequirements2Safe
+
+#endif
+{-# INLINE vkGetBufferMemoryRequirements2 #-}
+
 -- | > void vkGetBufferMemoryRequirements2
 --   >     ( VkDevice device
 --   >     , const VkBufferMemoryRequirementsInfo2* pInfo
@@ -2042,7 +2520,7 @@ type PFN_vkGetBufferMemoryRequirements2 =
      FunPtr HS_vkGetBufferMemoryRequirements2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetBufferMemoryRequirements2 ::
+               unwrapVkGetBufferMemoryRequirements2Unsafe ::
                PFN_vkGetBufferMemoryRequirements2 ->
                  HS_vkGetBufferMemoryRequirements2
 
@@ -2057,9 +2535,9 @@ instance VulkanProc "vkGetBufferMemoryRequirements2" where
         vkProcSymbol = _VkGetBufferMemoryRequirements2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetBufferMemoryRequirements2
+        unwrapVkProcPtrUnsafe = unwrapVkGetBufferMemoryRequirements2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -2108,12 +2586,15 @@ type VkGetImageSparseMemoryRequirements2 =
 --
 -- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetImageSparseMemoryRequirements2Unsafe@ and @vkGetImageSparseMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageSparseMemoryRequirements2@ is an alias
+--           of @vkGetImageSparseMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageSparseMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetImageSparseMemoryRequirements2"
-               vkGetImageSparseMemoryRequirements2 ::
+               vkGetImageSparseMemoryRequirements2Unsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
@@ -2123,19 +2604,20 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements2"
                                                                       -> IO ()
 
 #else
-vkGetImageSparseMemoryRequirements2 ::
-                                    VkDevice -- ^ device
-                                             ->
-                                      Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
-                                                                               ->
-                                        Ptr Word32 -- ^ pSparseMemoryRequirementCount
-                                                   -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
-                                                                                           -> IO ()
-vkGetImageSparseMemoryRequirements2
+vkGetImageSparseMemoryRequirements2Unsafe ::
+                                          VkDevice -- ^ device
+                                                   ->
+                                            Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
+                                                                                     ->
+                                              Ptr Word32 -- ^ pSparseMemoryRequirementCount
+                                                         ->
+                                                Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
+                                                                                     -> IO ()
+vkGetImageSparseMemoryRequirements2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetImageSparseMemoryRequirements2)
+      (vkGetProcUnsafe @VkGetImageSparseMemoryRequirements2)
 
-{-# NOINLINE vkGetImageSparseMemoryRequirements2 #-}
+{-# NOINLINE vkGetImageSparseMemoryRequirements2Unsafe #-}
 #endif
 
 -- |
@@ -2160,8 +2642,11 @@ vkGetImageSparseMemoryRequirements2
 --
 -- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetImageSparseMemoryRequirements2Unsafe@ and @vkGetImageSparseMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageSparseMemoryRequirements2@ is an alias
+--           of @vkGetImageSparseMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageSparseMemoryRequirements2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetImageSparseMemoryRequirements2"
@@ -2191,6 +2676,51 @@ vkGetImageSparseMemoryRequirements2Safe
 {-# NOINLINE vkGetImageSparseMemoryRequirements2Safe #-}
 #endif
 
+-- |
+-- > void vkGetImageSparseMemoryRequirements2
+-- >     ( VkDevice device
+-- >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
+-- >     , uint32_t* pSparseMemoryRequirementCount
+-- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetDeviceProc @VkGetImageSparseMemoryRequirements2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetImageSparseMemoryRequirements2 <- vkGetProc @VkGetImageSparseMemoryRequirements2
+--
+-- __Note:__ @vkGetImageSparseMemoryRequirements2Unsafe@ and @vkGetImageSparseMemoryRequirements2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetImageSparseMemoryRequirements2@ is an alias
+--           of @vkGetImageSparseMemoryRequirements2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetImageSparseMemoryRequirements2Safe@.
+--
+vkGetImageSparseMemoryRequirements2 ::
+                                    VkDevice -- ^ device
+                                             ->
+                                      Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
+                                                                               ->
+                                        Ptr Word32 -- ^ pSparseMemoryRequirementCount
+                                                   -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
+                                                                                           -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetImageSparseMemoryRequirements2
+  = vkGetImageSparseMemoryRequirements2Unsafe
+#else
+vkGetImageSparseMemoryRequirements2
+  = vkGetImageSparseMemoryRequirements2Safe
+
+#endif
+{-# INLINE vkGetImageSparseMemoryRequirements2 #-}
+
 -- | > void vkGetImageSparseMemoryRequirements2
 --   >     ( VkDevice device
 --   >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
@@ -2212,7 +2742,7 @@ type PFN_vkGetImageSparseMemoryRequirements2 =
      FunPtr HS_vkGetImageSparseMemoryRequirements2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetImageSparseMemoryRequirements2 ::
+               unwrapVkGetImageSparseMemoryRequirements2Unsafe ::
                PFN_vkGetImageSparseMemoryRequirements2 ->
                  HS_vkGetImageSparseMemoryRequirements2
 
@@ -2227,9 +2757,10 @@ instance VulkanProc "vkGetImageSparseMemoryRequirements2" where
         vkProcSymbol = _VkGetImageSparseMemoryRequirements2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetImageSparseMemoryRequirements2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetImageSparseMemoryRequirements2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetImageSparseMemoryRequirements2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -2303,25 +2834,29 @@ type VkGetPhysicalDeviceFeatures2 = "vkGetPhysicalDeviceFeatures2"
 --
 -- > myGetPhysicalDeviceFeatures2 <- vkGetProc @VkGetPhysicalDeviceFeatures2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceFeatures2Unsafe@ and @vkGetPhysicalDeviceFeatures2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFeatures2@ is an alias
+--           of @vkGetPhysicalDeviceFeatures2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFeatures2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2"
-               vkGetPhysicalDeviceFeatures2 ::
+               vkGetPhysicalDeviceFeatures2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
                                                                  -> IO ()
 
 #else
-vkGetPhysicalDeviceFeatures2 ::
-                             VkPhysicalDevice -- ^ physicalDevice
-                                              -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
-                                                                               -> IO ()
-vkGetPhysicalDeviceFeatures2
-  = unsafeDupablePerformIO (vkGetProc @VkGetPhysicalDeviceFeatures2)
+vkGetPhysicalDeviceFeatures2Unsafe ::
+                                   VkPhysicalDevice -- ^ physicalDevice
+                                                    -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
+                                                                                     -> IO ()
+vkGetPhysicalDeviceFeatures2Unsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkGetPhysicalDeviceFeatures2)
 
-{-# NOINLINE vkGetPhysicalDeviceFeatures2 #-}
+{-# NOINLINE vkGetPhysicalDeviceFeatures2Unsafe #-}
 #endif
 
 -- |
@@ -2344,8 +2879,11 @@ vkGetPhysicalDeviceFeatures2
 --
 -- > myGetPhysicalDeviceFeatures2 <- vkGetProc @VkGetPhysicalDeviceFeatures2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceFeatures2Unsafe@ and @vkGetPhysicalDeviceFeatures2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFeatures2@ is an alias
+--           of @vkGetPhysicalDeviceFeatures2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFeatures2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
@@ -2366,6 +2904,43 @@ vkGetPhysicalDeviceFeatures2Safe
 {-# NOINLINE vkGetPhysicalDeviceFeatures2Safe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceFeatures2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceFeatures2* pFeatures
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceFeatures2 <- vkGetInstanceProc @VkGetPhysicalDeviceFeatures2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceFeatures2 <- vkGetProc @VkGetPhysicalDeviceFeatures2
+--
+-- __Note:__ @vkGetPhysicalDeviceFeatures2Unsafe@ and @vkGetPhysicalDeviceFeatures2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFeatures2@ is an alias
+--           of @vkGetPhysicalDeviceFeatures2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFeatures2Safe@.
+--
+vkGetPhysicalDeviceFeatures2 ::
+                             VkPhysicalDevice -- ^ physicalDevice
+                                              -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
+                                                                               -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceFeatures2 = vkGetPhysicalDeviceFeatures2Unsafe
+#else
+vkGetPhysicalDeviceFeatures2 = vkGetPhysicalDeviceFeatures2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceFeatures2 #-}
+
 -- | > void vkGetPhysicalDeviceFeatures2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceFeatures2* pFeatures
@@ -2381,7 +2956,7 @@ type PFN_vkGetPhysicalDeviceFeatures2 =
      FunPtr HS_vkGetPhysicalDeviceFeatures2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceFeatures2 ::
+               unwrapVkGetPhysicalDeviceFeatures2Unsafe ::
                PFN_vkGetPhysicalDeviceFeatures2 -> HS_vkGetPhysicalDeviceFeatures2
 
 foreign import ccall safe "dynamic"
@@ -2394,9 +2969,9 @@ instance VulkanProc "vkGetPhysicalDeviceFeatures2" where
         vkProcSymbol = _VkGetPhysicalDeviceFeatures2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFeatures2
+        unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceFeatures2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeatures2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -2443,26 +3018,29 @@ type VkGetPhysicalDeviceProperties2 =
 --
 -- > myGetPhysicalDeviceProperties2 <- vkGetProc @VkGetPhysicalDeviceProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceProperties2Unsafe@ and @vkGetPhysicalDeviceProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceProperties2@ is an alias
+--           of @vkGetPhysicalDeviceProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetPhysicalDeviceProperties2"
-               vkGetPhysicalDeviceProperties2 ::
+               vkGetPhysicalDeviceProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
                                                                    -> IO ()
 
 #else
-vkGetPhysicalDeviceProperties2 ::
-                               VkPhysicalDevice -- ^ physicalDevice
-                                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
-                                                                                   -> IO ()
-vkGetPhysicalDeviceProperties2
+vkGetPhysicalDeviceProperties2Unsafe ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
+                                                                                         -> IO ()
+vkGetPhysicalDeviceProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceProperties2Unsafe #-}
 #endif
 
 -- |
@@ -2485,8 +3063,11 @@ vkGetPhysicalDeviceProperties2
 --
 -- > myGetPhysicalDeviceProperties2 <- vkGetProc @VkGetPhysicalDeviceProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceProperties2Unsafe@ and @vkGetPhysicalDeviceProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceProperties2@ is an alias
+--           of @vkGetPhysicalDeviceProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDeviceProperties2"
@@ -2507,6 +3088,44 @@ vkGetPhysicalDeviceProperties2Safe
 {-# NOINLINE vkGetPhysicalDeviceProperties2Safe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceProperties2* pProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceProperties2 <- vkGetProc @VkGetPhysicalDeviceProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceProperties2Unsafe@ and @vkGetPhysicalDeviceProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceProperties2@ is an alias
+--           of @vkGetPhysicalDeviceProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceProperties2Safe@.
+--
+vkGetPhysicalDeviceProperties2 ::
+                               VkPhysicalDevice -- ^ physicalDevice
+                                                -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
+                                                                                   -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceProperties2
+  = vkGetPhysicalDeviceProperties2Unsafe
+#else
+vkGetPhysicalDeviceProperties2 = vkGetPhysicalDeviceProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceProperties2 #-}
+
 -- | > void vkGetPhysicalDeviceProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceProperties2* pProperties
@@ -2522,7 +3141,7 @@ type PFN_vkGetPhysicalDeviceProperties2 =
      FunPtr HS_vkGetPhysicalDeviceProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceProperties2 ::
+               unwrapVkGetPhysicalDeviceProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceProperties2 ->
                  HS_vkGetPhysicalDeviceProperties2
 
@@ -2537,9 +3156,9 @@ instance VulkanProc "vkGetPhysicalDeviceProperties2" where
         vkProcSymbol = _VkGetPhysicalDeviceProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceProperties2
+        unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceProperties2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -2587,29 +3206,32 @@ type VkGetPhysicalDeviceFormatProperties2 =
 --
 -- > myGetPhysicalDeviceFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceFormatProperties2Unsafe@ and @vkGetPhysicalDeviceFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties2"
-               vkGetPhysicalDeviceFormatProperties2 ::
+               vkGetPhysicalDeviceFormatProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> VkFormat -- ^ format
                                             -> Ptr VkFormatProperties2 -- ^ pFormatProperties
                                                                        -> IO ()
 
 #else
-vkGetPhysicalDeviceFormatProperties2 ::
-                                     VkPhysicalDevice -- ^ physicalDevice
-                                                      ->
-                                       VkFormat -- ^ format
-                                                -> Ptr VkFormatProperties2 -- ^ pFormatProperties
-                                                                           -> IO ()
-vkGetPhysicalDeviceFormatProperties2
+vkGetPhysicalDeviceFormatProperties2Unsafe ::
+                                           VkPhysicalDevice -- ^ physicalDevice
+                                                            ->
+                                             VkFormat -- ^ format
+                                                      -> Ptr VkFormatProperties2 -- ^ pFormatProperties
+                                                                                 -> IO ()
+vkGetPhysicalDeviceFormatProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceFormatProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceFormatProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceFormatProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceFormatProperties2Unsafe #-}
 #endif
 
 -- |
@@ -2633,8 +3255,11 @@ vkGetPhysicalDeviceFormatProperties2
 --
 -- > myGetPhysicalDeviceFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceFormatProperties2Unsafe@ and @vkGetPhysicalDeviceFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
@@ -2658,6 +3283,48 @@ vkGetPhysicalDeviceFormatProperties2Safe
 {-# NOINLINE vkGetPhysicalDeviceFormatProperties2Safe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceFormatProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkFormat format
+-- >     , VkFormatProperties2* pFormatProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceFormatProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceFormatProperties2Unsafe@ and @vkGetPhysicalDeviceFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceFormatProperties2Safe@.
+--
+vkGetPhysicalDeviceFormatProperties2 ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       VkFormat -- ^ format
+                                                -> Ptr VkFormatProperties2 -- ^ pFormatProperties
+                                                                           -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceFormatProperties2
+  = vkGetPhysicalDeviceFormatProperties2Unsafe
+#else
+vkGetPhysicalDeviceFormatProperties2
+  = vkGetPhysicalDeviceFormatProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceFormatProperties2 #-}
+
 -- | > void vkGetPhysicalDeviceFormatProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkFormat format
@@ -2675,7 +3342,7 @@ type PFN_vkGetPhysicalDeviceFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceFormatProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceFormatProperties2 ::
+               unwrapVkGetPhysicalDeviceFormatProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceFormatProperties2 ->
                  HS_vkGetPhysicalDeviceFormatProperties2
 
@@ -2690,9 +3357,10 @@ instance VulkanProc "vkGetPhysicalDeviceFormatProperties2" where
         vkProcSymbol = _VkGetPhysicalDeviceFormatProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFormatProperties2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceFormatProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceFormatProperties2Safe
 
@@ -2745,13 +3413,16 @@ type VkGetPhysicalDeviceImageFormatProperties2 =
 --
 -- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceImageFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceImageFormatProperties2"
-               vkGetPhysicalDeviceImageFormatProperties2 ::
+               vkGetPhysicalDeviceImageFormatProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceImageFormatInfo2 -- ^ pImageFormatInfo
@@ -2760,18 +3431,18 @@ foreign import ccall unsafe
                                                 -> IO VkResult
 
 #else
-vkGetPhysicalDeviceImageFormatProperties2 ::
-                                          VkPhysicalDevice -- ^ physicalDevice
-                                                           ->
-                                            Ptr VkPhysicalDeviceImageFormatInfo2 -- ^ pImageFormatInfo
-                                                                                 ->
-                                              Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
-                                                                           -> IO VkResult
-vkGetPhysicalDeviceImageFormatProperties2
+vkGetPhysicalDeviceImageFormatProperties2Unsafe ::
+                                                VkPhysicalDevice -- ^ physicalDevice
+                                                                 ->
+                                                  Ptr VkPhysicalDeviceImageFormatInfo2 -- ^ pImageFormatInfo
+                                                                                       ->
+                                                    Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
+                                                                                 -> IO VkResult
+vkGetPhysicalDeviceImageFormatProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceImageFormatProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceImageFormatProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceImageFormatProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceImageFormatProperties2Unsafe #-}
 #endif
 
 -- |
@@ -2799,8 +3470,11 @@ vkGetPhysicalDeviceImageFormatProperties2
 --
 -- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceImageFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -2828,6 +3502,53 @@ vkGetPhysicalDeviceImageFormatProperties2Safe
 {-# NOINLINE vkGetPhysicalDeviceImageFormatProperties2Safe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+--
+-- > VkResult vkGetPhysicalDeviceImageFormatProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo
+-- >     , VkImageFormatProperties2* pImageFormatProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceImageFormatProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceImageFormatProperties2Safe@.
+--
+vkGetPhysicalDeviceImageFormatProperties2 ::
+                                          VkPhysicalDevice -- ^ physicalDevice
+                                                           ->
+                                            Ptr VkPhysicalDeviceImageFormatInfo2 -- ^ pImageFormatInfo
+                                                                                 ->
+                                              Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
+                                                                           -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceImageFormatProperties2
+  = vkGetPhysicalDeviceImageFormatProperties2Unsafe
+#else
+vkGetPhysicalDeviceImageFormatProperties2
+  = vkGetPhysicalDeviceImageFormatProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceImageFormatProperties2 #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
@@ -2851,7 +3572,7 @@ type PFN_vkGetPhysicalDeviceImageFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceImageFormatProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceImageFormatProperties2 ::
+               unwrapVkGetPhysicalDeviceImageFormatProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceImageFormatProperties2 ->
                  HS_vkGetPhysicalDeviceImageFormatProperties2
 
@@ -2867,9 +3588,10 @@ instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties2"
         vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceImageFormatProperties2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceImageFormatProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceImageFormatProperties2Safe
 
@@ -2918,13 +3640,16 @@ type VkGetPhysicalDeviceQueueFamilyProperties2 =
 --
 -- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ and @vkGetPhysicalDeviceQueueFamilyProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceQueueFamilyProperties2@ is an alias
+--           of @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceQueueFamilyProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceQueueFamilyProperties2"
-               vkGetPhysicalDeviceQueueFamilyProperties2 ::
+               vkGetPhysicalDeviceQueueFamilyProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr Word32 -- ^ pQueueFamilyPropertyCount
@@ -2932,17 +3657,18 @@ foreign import ccall unsafe
                                                             -> IO ()
 
 #else
-vkGetPhysicalDeviceQueueFamilyProperties2 ::
-                                          VkPhysicalDevice -- ^ physicalDevice
-                                                           ->
-                                            Ptr Word32 -- ^ pQueueFamilyPropertyCount
-                                                       -> Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
-                                                                                       -> IO ()
-vkGetPhysicalDeviceQueueFamilyProperties2
+vkGetPhysicalDeviceQueueFamilyProperties2Unsafe ::
+                                                VkPhysicalDevice -- ^ physicalDevice
+                                                                 ->
+                                                  Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                                                             ->
+                                                    Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
+                                                                                 -> IO ()
+vkGetPhysicalDeviceQueueFamilyProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceQueueFamilyProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceQueueFamilyProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceQueueFamilyProperties2Unsafe #-}
 #endif
 
 -- |
@@ -2966,8 +3692,11 @@ vkGetPhysicalDeviceQueueFamilyProperties2
 --
 -- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ and @vkGetPhysicalDeviceQueueFamilyProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceQueueFamilyProperties2@ is an alias
+--           of @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceQueueFamilyProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -2993,6 +3722,48 @@ vkGetPhysicalDeviceQueueFamilyProperties2Safe
 {-# NOINLINE vkGetPhysicalDeviceQueueFamilyProperties2Safe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceQueueFamilyProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pQueueFamilyPropertyCount
+-- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceQueueFamilyProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceQueueFamilyProperties2 <- vkGetProc @VkGetPhysicalDeviceQueueFamilyProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ and @vkGetPhysicalDeviceQueueFamilyProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceQueueFamilyProperties2@ is an alias
+--           of @vkGetPhysicalDeviceQueueFamilyProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceQueueFamilyProperties2Safe@.
+--
+vkGetPhysicalDeviceQueueFamilyProperties2 ::
+                                          VkPhysicalDevice -- ^ physicalDevice
+                                                           ->
+                                            Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                                                       -> Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
+                                                                                       -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceQueueFamilyProperties2
+  = vkGetPhysicalDeviceQueueFamilyProperties2Unsafe
+#else
+vkGetPhysicalDeviceQueueFamilyProperties2
+  = vkGetPhysicalDeviceQueueFamilyProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceQueueFamilyProperties2 #-}
+
 -- | > void vkGetPhysicalDeviceQueueFamilyProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pQueueFamilyPropertyCount
@@ -3011,7 +3782,7 @@ type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 =
      FunPtr HS_vkGetPhysicalDeviceQueueFamilyProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceQueueFamilyProperties2 ::
+               unwrapVkGetPhysicalDeviceQueueFamilyProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceQueueFamilyProperties2 ->
                  HS_vkGetPhysicalDeviceQueueFamilyProperties2
 
@@ -3027,9 +3798,10 @@ instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties2"
         vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceQueueFamilyProperties2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceQueueFamilyProperties2Safe
 
@@ -3077,27 +3849,30 @@ type VkGetPhysicalDeviceMemoryProperties2 =
 --
 -- > myGetPhysicalDeviceMemoryProperties2 <- vkGetProc @VkGetPhysicalDeviceMemoryProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceMemoryProperties2Unsafe@ and @vkGetPhysicalDeviceMemoryProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMemoryProperties2@ is an alias
+--           of @vkGetPhysicalDeviceMemoryProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMemoryProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties2"
-               vkGetPhysicalDeviceMemoryProperties2 ::
+               vkGetPhysicalDeviceMemoryProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
                                                                          -> IO ()
 
 #else
-vkGetPhysicalDeviceMemoryProperties2 ::
-                                     VkPhysicalDevice -- ^ physicalDevice
-                                                      ->
-                                       Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
-                                                                             -> IO ()
-vkGetPhysicalDeviceMemoryProperties2
+vkGetPhysicalDeviceMemoryProperties2Unsafe ::
+                                           VkPhysicalDevice -- ^ physicalDevice
+                                                            ->
+                                             Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
+                                                                                   -> IO ()
+vkGetPhysicalDeviceMemoryProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceMemoryProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceMemoryProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceMemoryProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceMemoryProperties2Unsafe #-}
 #endif
 
 -- |
@@ -3120,8 +3895,11 @@ vkGetPhysicalDeviceMemoryProperties2
 --
 -- > myGetPhysicalDeviceMemoryProperties2 <- vkGetProc @VkGetPhysicalDeviceMemoryProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceMemoryProperties2Unsafe@ and @vkGetPhysicalDeviceMemoryProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMemoryProperties2@ is an alias
+--           of @vkGetPhysicalDeviceMemoryProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMemoryProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
@@ -3143,6 +3921,46 @@ vkGetPhysicalDeviceMemoryProperties2Safe
 {-# NOINLINE vkGetPhysicalDeviceMemoryProperties2Safe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceMemoryProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceMemoryProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceMemoryProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceMemoryProperties2 <- vkGetProc @VkGetPhysicalDeviceMemoryProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceMemoryProperties2Unsafe@ and @vkGetPhysicalDeviceMemoryProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMemoryProperties2@ is an alias
+--           of @vkGetPhysicalDeviceMemoryProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMemoryProperties2Safe@.
+--
+vkGetPhysicalDeviceMemoryProperties2 ::
+                                     VkPhysicalDevice -- ^ physicalDevice
+                                                      ->
+                                       Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
+                                                                             -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceMemoryProperties2
+  = vkGetPhysicalDeviceMemoryProperties2Unsafe
+#else
+vkGetPhysicalDeviceMemoryProperties2
+  = vkGetPhysicalDeviceMemoryProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceMemoryProperties2 #-}
+
 -- | > void vkGetPhysicalDeviceMemoryProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
@@ -3158,7 +3976,7 @@ type PFN_vkGetPhysicalDeviceMemoryProperties2 =
      FunPtr HS_vkGetPhysicalDeviceMemoryProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceMemoryProperties2 ::
+               unwrapVkGetPhysicalDeviceMemoryProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceMemoryProperties2 ->
                  HS_vkGetPhysicalDeviceMemoryProperties2
 
@@ -3173,9 +3991,10 @@ instance VulkanProc "vkGetPhysicalDeviceMemoryProperties2" where
         vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMemoryProperties2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceMemoryProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceMemoryProperties2Safe
 
@@ -3227,13 +4046,16 @@ type VkGetPhysicalDeviceSparseImageFormatProperties2 =
 --
 -- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceSparseImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSparseImageFormatProperties2"
-               vkGetPhysicalDeviceSparseImageFormatProperties2 ::
+               vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceSparseImageFormatInfo2 -- ^ pFormatInfo
@@ -3243,20 +4065,22 @@ foreign import ccall unsafe
                                                                     -> IO ()
 
 #else
-vkGetPhysicalDeviceSparseImageFormatProperties2 ::
-                                                VkPhysicalDevice -- ^ physicalDevice
-                                                                 ->
-                                                  Ptr VkPhysicalDeviceSparseImageFormatInfo2 -- ^ pFormatInfo
-                                                                                             ->
-                                                    Ptr Word32 -- ^ pPropertyCount
-                                                               ->
-                                                      Ptr VkSparseImageFormatProperties2 -- ^ pProperties
-                                                                                         -> IO ()
-vkGetPhysicalDeviceSparseImageFormatProperties2
+vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe ::
+                                                      VkPhysicalDevice -- ^ physicalDevice
+                                                                       ->
+                                                        Ptr VkPhysicalDeviceSparseImageFormatInfo2 -- ^ pFormatInfo
+                                                          ->
+                                                          Ptr Word32 -- ^ pPropertyCount
+                                                                     ->
+                                                            Ptr VkSparseImageFormatProperties2 -- ^ pProperties
+                                                                                               ->
+                                                              IO ()
+vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceSparseImageFormatProperties2)
 
-{-# NOINLINE vkGetPhysicalDeviceSparseImageFormatProperties2 #-}
+{-# NOINLINE vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe
+             #-}
 #endif
 
 -- |
@@ -3281,8 +4105,11 @@ vkGetPhysicalDeviceSparseImageFormatProperties2
 --
 -- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceSparseImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -3315,6 +4142,52 @@ vkGetPhysicalDeviceSparseImageFormatProperties2Safe
              #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceSparseImageFormatProperties2
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
+-- >     , uint32_t* pPropertyCount
+-- >     , VkSparseImageFormatProperties2* pProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetInstanceProc @VkGetPhysicalDeviceSparseImageFormatProperties2 vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceSparseImageFormatProperties2 <- vkGetProc @VkGetPhysicalDeviceSparseImageFormatProperties2
+--
+-- __Note:__ @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ and @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceSparseImageFormatProperties2@ is an alias
+--           of @vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceSparseImageFormatProperties2Safe@.
+--
+vkGetPhysicalDeviceSparseImageFormatProperties2 ::
+                                                VkPhysicalDevice -- ^ physicalDevice
+                                                                 ->
+                                                  Ptr VkPhysicalDeviceSparseImageFormatInfo2 -- ^ pFormatInfo
+                                                                                             ->
+                                                    Ptr Word32 -- ^ pPropertyCount
+                                                               ->
+                                                      Ptr VkSparseImageFormatProperties2 -- ^ pProperties
+                                                                                         -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceSparseImageFormatProperties2
+  = vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe
+#else
+vkGetPhysicalDeviceSparseImageFormatProperties2
+  = vkGetPhysicalDeviceSparseImageFormatProperties2Safe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceSparseImageFormatProperties2 #-}
+
 -- | > void vkGetPhysicalDeviceSparseImageFormatProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
@@ -3336,7 +4209,7 @@ type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 =
      FunPtr HS_vkGetPhysicalDeviceSparseImageFormatProperties2
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceSparseImageFormatProperties2 ::
+               unwrapVkGetPhysicalDeviceSparseImageFormatProperties2Unsafe ::
                PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 ->
                  HS_vkGetPhysicalDeviceSparseImageFormatProperties2
 
@@ -3353,10 +4226,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2Safe
 
@@ -3453,26 +4326,30 @@ type VkTrimCommandPool = "vkTrimCommandPool"
 --
 -- > myTrimCommandPool <- vkGetProc @VkTrimCommandPool
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkTrimCommandPoolUnsafe@ and @vkTrimCommandPoolSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkTrimCommandPool@ is an alias
+--           of @vkTrimCommandPoolUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkTrimCommandPoolSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
-foreign import ccall unsafe "vkTrimCommandPool" vkTrimCommandPool
-               :: VkDevice -- ^ device
-                           -> VkCommandPool -- ^ commandPool
-                                            -> VkCommandPoolTrimFlags -- ^ flags
-                                                                      -> IO ()
+foreign import ccall unsafe "vkTrimCommandPool"
+               vkTrimCommandPoolUnsafe ::
+               VkDevice -- ^ device
+                        -> VkCommandPool -- ^ commandPool
+                                         -> VkCommandPoolTrimFlags -- ^ flags
+                                                                   -> IO ()
 
 #else
-vkTrimCommandPool ::
-                  VkDevice -- ^ device
-                           -> VkCommandPool -- ^ commandPool
-                                            -> VkCommandPoolTrimFlags -- ^ flags
-                                                                      -> IO ()
-vkTrimCommandPool
-  = unsafeDupablePerformIO (vkGetProc @VkTrimCommandPool)
+vkTrimCommandPoolUnsafe ::
+                        VkDevice -- ^ device
+                                 -> VkCommandPool -- ^ commandPool
+                                                  -> VkCommandPoolTrimFlags -- ^ flags
+                                                                            -> IO ()
+vkTrimCommandPoolUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkTrimCommandPool)
 
-{-# NOINLINE vkTrimCommandPool #-}
+{-# NOINLINE vkTrimCommandPoolUnsafe #-}
 #endif
 
 -- |
@@ -3496,8 +4373,11 @@ vkTrimCommandPool
 --
 -- > myTrimCommandPool <- vkGetProc @VkTrimCommandPool
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkTrimCommandPoolUnsafe@ and @vkTrimCommandPoolSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkTrimCommandPool@ is an alias
+--           of @vkTrimCommandPoolUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkTrimCommandPoolSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
@@ -3518,6 +4398,45 @@ vkTrimCommandPoolSafe
 {-# NOINLINE vkTrimCommandPoolSafe #-}
 #endif
 
+-- |
+-- > void vkTrimCommandPool
+-- >     ( VkDevice device
+-- >     , VkCommandPool commandPool
+-- >     , VkCommandPoolTrimFlags flags
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myTrimCommandPool <- vkGetDeviceProc @VkTrimCommandPool vkDevice
+--
+-- or less efficient:
+--
+-- > myTrimCommandPool <- vkGetProc @VkTrimCommandPool
+--
+-- __Note:__ @vkTrimCommandPoolUnsafe@ and @vkTrimCommandPoolSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkTrimCommandPool@ is an alias
+--           of @vkTrimCommandPoolUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkTrimCommandPoolSafe@.
+--
+vkTrimCommandPool ::
+                  VkDevice -- ^ device
+                           -> VkCommandPool -- ^ commandPool
+                                            -> VkCommandPoolTrimFlags -- ^ flags
+                                                                      -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkTrimCommandPool = vkTrimCommandPoolUnsafe
+#else
+vkTrimCommandPool = vkTrimCommandPoolSafe
+
+#endif
+{-# INLINE vkTrimCommandPool #-}
+
 -- | > void vkTrimCommandPool
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
@@ -3533,8 +4452,8 @@ type HS_vkTrimCommandPool =
 
 type PFN_vkTrimCommandPool = FunPtr HS_vkTrimCommandPool
 
-foreign import ccall unsafe "dynamic" unwrapVkTrimCommandPool ::
-               PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
+foreign import ccall unsafe "dynamic" unwrapVkTrimCommandPoolUnsafe
+               :: PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
 
 foreign import ccall safe "dynamic" unwrapVkTrimCommandPoolSafe ::
                PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
@@ -3544,9 +4463,9 @@ instance VulkanProc "vkTrimCommandPool" where
         vkProcSymbol = _VkTrimCommandPool
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkTrimCommandPool
+        unwrapVkProcPtrUnsafe = unwrapVkTrimCommandPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -3698,26 +4617,30 @@ type VkGetDeviceQueue2 = "vkGetDeviceQueue2"
 --
 -- > myGetDeviceQueue2 <- vkGetProc @VkGetDeviceQueue2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceQueue2Unsafe@ and @vkGetDeviceQueue2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceQueue2@ is an alias
+--           of @vkGetDeviceQueue2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceQueue2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
-foreign import ccall unsafe "vkGetDeviceQueue2" vkGetDeviceQueue2
-               :: VkDevice -- ^ device
-                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
-                                                     -> Ptr VkQueue -- ^ pQueue
-                                                                    -> IO ()
+foreign import ccall unsafe "vkGetDeviceQueue2"
+               vkGetDeviceQueue2Unsafe ::
+               VkDevice -- ^ device
+                        -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                                  -> Ptr VkQueue -- ^ pQueue
+                                                                 -> IO ()
 
 #else
-vkGetDeviceQueue2 ::
-                  VkDevice -- ^ device
-                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
-                                                     -> Ptr VkQueue -- ^ pQueue
-                                                                    -> IO ()
-vkGetDeviceQueue2
-  = unsafeDupablePerformIO (vkGetProc @VkGetDeviceQueue2)
+vkGetDeviceQueue2Unsafe ::
+                        VkDevice -- ^ device
+                                 -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                                           -> Ptr VkQueue -- ^ pQueue
+                                                                          -> IO ()
+vkGetDeviceQueue2Unsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkGetDeviceQueue2)
 
-{-# NOINLINE vkGetDeviceQueue2 #-}
+{-# NOINLINE vkGetDeviceQueue2Unsafe #-}
 #endif
 
 -- |
@@ -3741,8 +4664,11 @@ vkGetDeviceQueue2
 --
 -- > myGetDeviceQueue2 <- vkGetProc @VkGetDeviceQueue2
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDeviceQueue2Unsafe@ and @vkGetDeviceQueue2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceQueue2@ is an alias
+--           of @vkGetDeviceQueue2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceQueue2Safe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
@@ -3763,6 +4689,45 @@ vkGetDeviceQueue2Safe
 {-# NOINLINE vkGetDeviceQueue2Safe #-}
 #endif
 
+-- |
+-- > void vkGetDeviceQueue2
+-- >     ( VkDevice device
+-- >     , const VkDeviceQueueInfo2* pQueueInfo
+-- >     , VkQueue* pQueue
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDeviceQueue2 <- vkGetDeviceProc @VkGetDeviceQueue2 vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDeviceQueue2 <- vkGetProc @VkGetDeviceQueue2
+--
+-- __Note:__ @vkGetDeviceQueue2Unsafe@ and @vkGetDeviceQueue2Safe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDeviceQueue2@ is an alias
+--           of @vkGetDeviceQueue2Unsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDeviceQueue2Safe@.
+--
+vkGetDeviceQueue2 ::
+                  VkDevice -- ^ device
+                           -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                                     -> Ptr VkQueue -- ^ pQueue
+                                                                    -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDeviceQueue2 = vkGetDeviceQueue2Unsafe
+#else
+vkGetDeviceQueue2 = vkGetDeviceQueue2Safe
+
+#endif
+{-# INLINE vkGetDeviceQueue2 #-}
+
 -- | > void vkGetDeviceQueue2
 --   >     ( VkDevice device
 --   >     , const VkDeviceQueueInfo2* pQueueInfo
@@ -3778,8 +4743,8 @@ type HS_vkGetDeviceQueue2 =
 
 type PFN_vkGetDeviceQueue2 = FunPtr HS_vkGetDeviceQueue2
 
-foreign import ccall unsafe "dynamic" unwrapVkGetDeviceQueue2 ::
-               PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
+foreign import ccall unsafe "dynamic" unwrapVkGetDeviceQueue2Unsafe
+               :: PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
 
 foreign import ccall safe "dynamic" unwrapVkGetDeviceQueue2Safe ::
                PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
@@ -3789,9 +4754,9 @@ instance VulkanProc "vkGetDeviceQueue2" where
         vkProcSymbol = _VkGetDeviceQueue2
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDeviceQueue2
+        unwrapVkProcPtrUnsafe = unwrapVkGetDeviceQueue2Unsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDeviceQueue2Safe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -3914,12 +4879,15 @@ type VkCreateSamplerYcbcrConversion =
 --
 -- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSamplerYcbcrConversionUnsafe@ and @vkCreateSamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSamplerYcbcrConversion@ is an alias
+--           of @vkCreateSamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSamplerYcbcrConversionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
-               vkCreateSamplerYcbcrConversion ::
+               vkCreateSamplerYcbcrConversionUnsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
@@ -3930,20 +4898,20 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
                                                   -> IO VkResult
 
 #else
-vkCreateSamplerYcbcrConversion ::
-                               VkDevice -- ^ device
-                                        ->
-                                 Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
-                                                                        ->
-                                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                             ->
-                                     Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
-                                                                  -> IO VkResult
-vkCreateSamplerYcbcrConversion
+vkCreateSamplerYcbcrConversionUnsafe ::
+                                     VkDevice -- ^ device
+                                              ->
+                                       Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
+                                                                              ->
+                                         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                   ->
+                                           Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
+                                                                        -> IO VkResult
+vkCreateSamplerYcbcrConversionUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkCreateSamplerYcbcrConversion)
+      (vkGetProcUnsafe @VkCreateSamplerYcbcrConversion)
 
-{-# NOINLINE vkCreateSamplerYcbcrConversion #-}
+{-# NOINLINE vkCreateSamplerYcbcrConversionUnsafe #-}
 #endif
 
 -- |
@@ -3972,8 +4940,11 @@ vkCreateSamplerYcbcrConversion
 --
 -- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateSamplerYcbcrConversionUnsafe@ and @vkCreateSamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSamplerYcbcrConversion@ is an alias
+--           of @vkCreateSamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSamplerYcbcrConversionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCreateSamplerYcbcrConversion"
@@ -4004,6 +4975,55 @@ vkCreateSamplerYcbcrConversionSafe
 {-# NOINLINE vkCreateSamplerYcbcrConversionSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateSamplerYcbcrConversion
+-- >     ( VkDevice device
+-- >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSamplerYcbcrConversion* pYcbcrConversion
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetDeviceProc @VkCreateSamplerYcbcrConversion vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateSamplerYcbcrConversion <- vkGetProc @VkCreateSamplerYcbcrConversion
+--
+-- __Note:__ @vkCreateSamplerYcbcrConversionUnsafe@ and @vkCreateSamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateSamplerYcbcrConversion@ is an alias
+--           of @vkCreateSamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateSamplerYcbcrConversionSafe@.
+--
+vkCreateSamplerYcbcrConversion ::
+                               VkDevice -- ^ device
+                                        ->
+                                 Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
+                                                                        ->
+                                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             ->
+                                     Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
+                                                                  -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateSamplerYcbcrConversion
+  = vkCreateSamplerYcbcrConversionUnsafe
+#else
+vkCreateSamplerYcbcrConversion = vkCreateSamplerYcbcrConversionSafe
+
+#endif
+{-# INLINE vkCreateSamplerYcbcrConversion #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -4030,7 +5050,7 @@ type PFN_vkCreateSamplerYcbcrConversion =
      FunPtr HS_vkCreateSamplerYcbcrConversion
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateSamplerYcbcrConversion ::
+               unwrapVkCreateSamplerYcbcrConversionUnsafe ::
                PFN_vkCreateSamplerYcbcrConversion ->
                  HS_vkCreateSamplerYcbcrConversion
 
@@ -4045,9 +5065,9 @@ instance VulkanProc "vkCreateSamplerYcbcrConversion" where
         vkProcSymbol = _VkCreateSamplerYcbcrConversion
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateSamplerYcbcrConversion
+        unwrapVkProcPtrUnsafe = unwrapVkCreateSamplerYcbcrConversionUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -4095,12 +5115,15 @@ type VkDestroySamplerYcbcrConversion =
 --
 -- > myDestroySamplerYcbcrConversion <- vkGetProc @VkDestroySamplerYcbcrConversion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroySamplerYcbcrConversionUnsafe@ and @vkDestroySamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySamplerYcbcrConversion@ is an alias
+--           of @vkDestroySamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySamplerYcbcrConversionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
-               vkDestroySamplerYcbcrConversion ::
+               vkDestroySamplerYcbcrConversionUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkSamplerYcbcrConversion -- ^ ycbcrConversion
@@ -4108,17 +5131,18 @@ foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
                                                                        -> IO ()
 
 #else
-vkDestroySamplerYcbcrConversion ::
-                                VkDevice -- ^ device
-                                         ->
-                                  VkSamplerYcbcrConversion -- ^ ycbcrConversion
-                                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                                        -> IO ()
-vkDestroySamplerYcbcrConversion
+vkDestroySamplerYcbcrConversionUnsafe ::
+                                      VkDevice -- ^ device
+                                               ->
+                                        VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                                                 ->
+                                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
+vkDestroySamplerYcbcrConversionUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkDestroySamplerYcbcrConversion)
+      (vkGetProcUnsafe @VkDestroySamplerYcbcrConversion)
 
-{-# NOINLINE vkDestroySamplerYcbcrConversion #-}
+{-# NOINLINE vkDestroySamplerYcbcrConversionUnsafe #-}
 #endif
 
 -- |
@@ -4142,8 +5166,11 @@ vkDestroySamplerYcbcrConversion
 --
 -- > myDestroySamplerYcbcrConversion <- vkGetProc @VkDestroySamplerYcbcrConversion
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroySamplerYcbcrConversionUnsafe@ and @vkDestroySamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySamplerYcbcrConversion@ is an alias
+--           of @vkDestroySamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySamplerYcbcrConversionSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkDestroySamplerYcbcrConversion"
@@ -4168,6 +5195,48 @@ vkDestroySamplerYcbcrConversionSafe
 {-# NOINLINE vkDestroySamplerYcbcrConversionSafe #-}
 #endif
 
+-- |
+-- > void vkDestroySamplerYcbcrConversion
+-- >     ( VkDevice device
+-- >     , VkSamplerYcbcrConversion ycbcrConversion
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myDestroySamplerYcbcrConversion <- vkGetDeviceProc @VkDestroySamplerYcbcrConversion vkDevice
+--
+-- or less efficient:
+--
+-- > myDestroySamplerYcbcrConversion <- vkGetProc @VkDestroySamplerYcbcrConversion
+--
+-- __Note:__ @vkDestroySamplerYcbcrConversionUnsafe@ and @vkDestroySamplerYcbcrConversionSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroySamplerYcbcrConversion@ is an alias
+--           of @vkDestroySamplerYcbcrConversionUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroySamplerYcbcrConversionSafe@.
+--
+vkDestroySamplerYcbcrConversion ::
+                                VkDevice -- ^ device
+                                         ->
+                                  VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                        -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkDestroySamplerYcbcrConversion
+  = vkDestroySamplerYcbcrConversionUnsafe
+#else
+vkDestroySamplerYcbcrConversion
+  = vkDestroySamplerYcbcrConversionSafe
+
+#endif
+{-# INLINE vkDestroySamplerYcbcrConversion #-}
+
 -- | > void vkDestroySamplerYcbcrConversion
 --   >     ( VkDevice device
 --   >     , VkSamplerYcbcrConversion ycbcrConversion
@@ -4186,7 +5255,7 @@ type PFN_vkDestroySamplerYcbcrConversion =
      FunPtr HS_vkDestroySamplerYcbcrConversion
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDestroySamplerYcbcrConversion ::
+               unwrapVkDestroySamplerYcbcrConversionUnsafe ::
                PFN_vkDestroySamplerYcbcrConversion ->
                  HS_vkDestroySamplerYcbcrConversion
 
@@ -4201,9 +5270,9 @@ instance VulkanProc "vkDestroySamplerYcbcrConversion" where
         vkProcSymbol = _VkDestroySamplerYcbcrConversion
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroySamplerYcbcrConversion
+        unwrapVkProcPtrUnsafe = unwrapVkDestroySamplerYcbcrConversionUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -4544,12 +5613,15 @@ type VkCreateDescriptorUpdateTemplate =
 --
 -- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDescriptorUpdateTemplateUnsafe@ and @vkCreateDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDescriptorUpdateTemplate@ is an alias
+--           of @vkCreateDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDescriptorUpdateTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
-               vkCreateDescriptorUpdateTemplate ::
+               vkCreateDescriptorUpdateTemplateUnsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
@@ -4560,20 +5632,20 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
                                                     -> IO VkResult
 
 #else
-vkCreateDescriptorUpdateTemplate ::
-                                 VkDevice -- ^ device
-                                          ->
-                                   Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
-                                                                            ->
-                                     Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                               ->
-                                       Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
-                                                                      -> IO VkResult
-vkCreateDescriptorUpdateTemplate
+vkCreateDescriptorUpdateTemplateUnsafe ::
+                                       VkDevice -- ^ device
+                                                ->
+                                         Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
+                                                                                  ->
+                                           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                     ->
+                                             Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
+                                                                            -> IO VkResult
+vkCreateDescriptorUpdateTemplateUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkCreateDescriptorUpdateTemplate)
+      (vkGetProcUnsafe @VkCreateDescriptorUpdateTemplate)
 
-{-# NOINLINE vkCreateDescriptorUpdateTemplate #-}
+{-# NOINLINE vkCreateDescriptorUpdateTemplateUnsafe #-}
 #endif
 
 -- |
@@ -4602,8 +5674,11 @@ vkCreateDescriptorUpdateTemplate
 --
 -- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDescriptorUpdateTemplateUnsafe@ and @vkCreateDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDescriptorUpdateTemplate@ is an alias
+--           of @vkCreateDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDescriptorUpdateTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
@@ -4634,6 +5709,56 @@ vkCreateDescriptorUpdateTemplateSafe
 {-# NOINLINE vkCreateDescriptorUpdateTemplateSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateDescriptorUpdateTemplate
+-- >     ( VkDevice device
+-- >     , const VkDescriptorUpdateTemplateCreateInfo* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetDeviceProc @VkCreateDescriptorUpdateTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myCreateDescriptorUpdateTemplate <- vkGetProc @VkCreateDescriptorUpdateTemplate
+--
+-- __Note:__ @vkCreateDescriptorUpdateTemplateUnsafe@ and @vkCreateDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDescriptorUpdateTemplate@ is an alias
+--           of @vkCreateDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDescriptorUpdateTemplateSafe@.
+--
+vkCreateDescriptorUpdateTemplate ::
+                                 VkDevice -- ^ device
+                                          ->
+                                   Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
+                                                                            ->
+                                     Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                               ->
+                                       Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
+                                                                      -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateDescriptorUpdateTemplate
+  = vkCreateDescriptorUpdateTemplateUnsafe
+#else
+vkCreateDescriptorUpdateTemplate
+  = vkCreateDescriptorUpdateTemplateSafe
+
+#endif
+{-# INLINE vkCreateDescriptorUpdateTemplate #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -4660,7 +5785,7 @@ type PFN_vkCreateDescriptorUpdateTemplate =
      FunPtr HS_vkCreateDescriptorUpdateTemplate
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateDescriptorUpdateTemplate ::
+               unwrapVkCreateDescriptorUpdateTemplateUnsafe ::
                PFN_vkCreateDescriptorUpdateTemplate ->
                  HS_vkCreateDescriptorUpdateTemplate
 
@@ -4675,9 +5800,10 @@ instance VulkanProc "vkCreateDescriptorUpdateTemplate" where
         vkProcSymbol = _VkCreateDescriptorUpdateTemplate
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateDescriptorUpdateTemplate
+        unwrapVkProcPtrUnsafe
+          = unwrapVkCreateDescriptorUpdateTemplateUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -4725,12 +5851,15 @@ type VkDestroyDescriptorUpdateTemplate =
 --
 -- > myDestroyDescriptorUpdateTemplate <- vkGetProc @VkDestroyDescriptorUpdateTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroyDescriptorUpdateTemplateUnsafe@ and @vkDestroyDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroyDescriptorUpdateTemplate@ is an alias
+--           of @vkDestroyDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroyDescriptorUpdateTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
-               vkDestroyDescriptorUpdateTemplate ::
+               vkDestroyDescriptorUpdateTemplateUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
@@ -4738,17 +5867,18 @@ foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
                                                                          -> IO ()
 
 #else
-vkDestroyDescriptorUpdateTemplate ::
-                                  VkDevice -- ^ device
-                                           ->
-                                    VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                                            -> IO ()
-vkDestroyDescriptorUpdateTemplate
+vkDestroyDescriptorUpdateTemplateUnsafe ::
+                                        VkDevice -- ^ device
+                                                 ->
+                                          VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                                     ->
+                                            Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
+vkDestroyDescriptorUpdateTemplateUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkDestroyDescriptorUpdateTemplate)
+      (vkGetProcUnsafe @VkDestroyDescriptorUpdateTemplate)
 
-{-# NOINLINE vkDestroyDescriptorUpdateTemplate #-}
+{-# NOINLINE vkDestroyDescriptorUpdateTemplateUnsafe #-}
 #endif
 
 -- |
@@ -4772,8 +5902,11 @@ vkDestroyDescriptorUpdateTemplate
 --
 -- > myDestroyDescriptorUpdateTemplate <- vkGetProc @VkDestroyDescriptorUpdateTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkDestroyDescriptorUpdateTemplateUnsafe@ and @vkDestroyDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroyDescriptorUpdateTemplate@ is an alias
+--           of @vkDestroyDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroyDescriptorUpdateTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
@@ -4799,6 +5932,48 @@ vkDestroyDescriptorUpdateTemplateSafe
 {-# NOINLINE vkDestroyDescriptorUpdateTemplateSafe #-}
 #endif
 
+-- |
+-- > void vkDestroyDescriptorUpdateTemplate
+-- >     ( VkDevice device
+-- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myDestroyDescriptorUpdateTemplate <- vkGetDeviceProc @VkDestroyDescriptorUpdateTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myDestroyDescriptorUpdateTemplate <- vkGetProc @VkDestroyDescriptorUpdateTemplate
+--
+-- __Note:__ @vkDestroyDescriptorUpdateTemplateUnsafe@ and @vkDestroyDescriptorUpdateTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkDestroyDescriptorUpdateTemplate@ is an alias
+--           of @vkDestroyDescriptorUpdateTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkDestroyDescriptorUpdateTemplateSafe@.
+--
+vkDestroyDescriptorUpdateTemplate ::
+                                  VkDevice -- ^ device
+                                           ->
+                                    VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                                            -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkDestroyDescriptorUpdateTemplate
+  = vkDestroyDescriptorUpdateTemplateUnsafe
+#else
+vkDestroyDescriptorUpdateTemplate
+  = vkDestroyDescriptorUpdateTemplateSafe
+
+#endif
+{-# INLINE vkDestroyDescriptorUpdateTemplate #-}
+
 -- | > void vkDestroyDescriptorUpdateTemplate
 --   >     ( VkDevice device
 --   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
@@ -4817,7 +5992,7 @@ type PFN_vkDestroyDescriptorUpdateTemplate =
      FunPtr HS_vkDestroyDescriptorUpdateTemplate
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDestroyDescriptorUpdateTemplate ::
+               unwrapVkDestroyDescriptorUpdateTemplateUnsafe ::
                PFN_vkDestroyDescriptorUpdateTemplate ->
                  HS_vkDestroyDescriptorUpdateTemplate
 
@@ -4832,9 +6007,10 @@ instance VulkanProc "vkDestroyDescriptorUpdateTemplate" where
         vkProcSymbol = _VkDestroyDescriptorUpdateTemplate
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroyDescriptorUpdateTemplate
+        unwrapVkProcPtrUnsafe
+          = unwrapVkDestroyDescriptorUpdateTemplateUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorUpdateTemplateSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -4883,12 +6059,15 @@ type VkUpdateDescriptorSetWithTemplate =
 --
 -- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkUpdateDescriptorSetWithTemplateUnsafe@ and @vkUpdateDescriptorSetWithTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkUpdateDescriptorSetWithTemplate@ is an alias
+--           of @vkUpdateDescriptorSetWithTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkUpdateDescriptorSetWithTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
-               vkUpdateDescriptorSetWithTemplate ::
+               vkUpdateDescriptorSetWithTemplateUnsafe ::
                VkDevice -- ^ device
                         ->
                  VkDescriptorSet -- ^ descriptorSet
@@ -4897,19 +6076,19 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
                                                                            -> IO ()
 
 #else
-vkUpdateDescriptorSetWithTemplate ::
-                                  VkDevice -- ^ device
-                                           ->
-                                    VkDescriptorSet -- ^ descriptorSet
-                                                    ->
-                                      VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                                                 -> Ptr Void -- ^ pData
-                                                                             -> IO ()
-vkUpdateDescriptorSetWithTemplate
+vkUpdateDescriptorSetWithTemplateUnsafe ::
+                                        VkDevice -- ^ device
+                                                 ->
+                                          VkDescriptorSet -- ^ descriptorSet
+                                                          ->
+                                            VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                                       -> Ptr Void -- ^ pData
+                                                                                   -> IO ()
+vkUpdateDescriptorSetWithTemplateUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkUpdateDescriptorSetWithTemplate)
+      (vkGetProcUnsafe @VkUpdateDescriptorSetWithTemplate)
 
-{-# NOINLINE vkUpdateDescriptorSetWithTemplate #-}
+{-# NOINLINE vkUpdateDescriptorSetWithTemplateUnsafe #-}
 #endif
 
 -- |
@@ -4934,8 +6113,11 @@ vkUpdateDescriptorSetWithTemplate
 --
 -- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkUpdateDescriptorSetWithTemplateUnsafe@ and @vkUpdateDescriptorSetWithTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkUpdateDescriptorSetWithTemplate@ is an alias
+--           of @vkUpdateDescriptorSetWithTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkUpdateDescriptorSetWithTemplateSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
@@ -4963,6 +6145,51 @@ vkUpdateDescriptorSetWithTemplateSafe
 {-# NOINLINE vkUpdateDescriptorSetWithTemplateSafe #-}
 #endif
 
+-- |
+-- > void vkUpdateDescriptorSetWithTemplate
+-- >     ( VkDevice device
+-- >     , VkDescriptorSet descriptorSet
+-- >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+-- >     , const void* pData
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetDeviceProc @VkUpdateDescriptorSetWithTemplate vkDevice
+--
+-- or less efficient:
+--
+-- > myUpdateDescriptorSetWithTemplate <- vkGetProc @VkUpdateDescriptorSetWithTemplate
+--
+-- __Note:__ @vkUpdateDescriptorSetWithTemplateUnsafe@ and @vkUpdateDescriptorSetWithTemplateSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkUpdateDescriptorSetWithTemplate@ is an alias
+--           of @vkUpdateDescriptorSetWithTemplateUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkUpdateDescriptorSetWithTemplateSafe@.
+--
+vkUpdateDescriptorSetWithTemplate ::
+                                  VkDevice -- ^ device
+                                           ->
+                                    VkDescriptorSet -- ^ descriptorSet
+                                                    ->
+                                      VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                                 -> Ptr Void -- ^ pData
+                                                                             -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkUpdateDescriptorSetWithTemplate
+  = vkUpdateDescriptorSetWithTemplateUnsafe
+#else
+vkUpdateDescriptorSetWithTemplate
+  = vkUpdateDescriptorSetWithTemplateSafe
+
+#endif
+{-# INLINE vkUpdateDescriptorSetWithTemplate #-}
+
 -- | > void vkUpdateDescriptorSetWithTemplate
 --   >     ( VkDevice device
 --   >     , VkDescriptorSet descriptorSet
@@ -4983,7 +6210,7 @@ type PFN_vkUpdateDescriptorSetWithTemplate =
      FunPtr HS_vkUpdateDescriptorSetWithTemplate
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkUpdateDescriptorSetWithTemplate ::
+               unwrapVkUpdateDescriptorSetWithTemplateUnsafe ::
                PFN_vkUpdateDescriptorSetWithTemplate ->
                  HS_vkUpdateDescriptorSetWithTemplate
 
@@ -4998,9 +6225,10 @@ instance VulkanProc "vkUpdateDescriptorSetWithTemplate" where
         vkProcSymbol = _VkUpdateDescriptorSetWithTemplate
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkUpdateDescriptorSetWithTemplate
+        unwrapVkProcPtrUnsafe
+          = unwrapVkUpdateDescriptorSetWithTemplateUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkUpdateDescriptorSetWithTemplateSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -5060,13 +6288,16 @@ type VkGetPhysicalDeviceExternalBufferProperties =
 --
 -- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ and @vkGetPhysicalDeviceExternalBufferPropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalBufferProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalBufferPropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalBufferProperties"
-               vkGetPhysicalDeviceExternalBufferProperties ::
+               vkGetPhysicalDeviceExternalBufferPropertiesUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
@@ -5075,18 +6306,18 @@ foreign import ccall unsafe
                                                   -> IO ()
 
 #else
-vkGetPhysicalDeviceExternalBufferProperties ::
-                                            VkPhysicalDevice -- ^ physicalDevice
-                                                             ->
-                                              Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
-                                                                                     ->
-                                                Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
-                                                                               -> IO ()
-vkGetPhysicalDeviceExternalBufferProperties
+vkGetPhysicalDeviceExternalBufferPropertiesUnsafe ::
+                                                  VkPhysicalDevice -- ^ physicalDevice
+                                                                   ->
+                                                    Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                                                                           ->
+                                                      Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                                                                     -> IO ()
+vkGetPhysicalDeviceExternalBufferPropertiesUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceExternalBufferProperties)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceExternalBufferProperties)
 
-{-# NOINLINE vkGetPhysicalDeviceExternalBufferProperties #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalBufferPropertiesUnsafe #-}
 #endif
 
 -- |
@@ -5110,8 +6341,11 @@ vkGetPhysicalDeviceExternalBufferProperties
 --
 -- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ and @vkGetPhysicalDeviceExternalBufferPropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalBufferProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalBufferPropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -5139,6 +6373,49 @@ vkGetPhysicalDeviceExternalBufferPropertiesSafe
 {-# NOINLINE vkGetPhysicalDeviceExternalBufferPropertiesSafe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceExternalBufferProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
+-- >     , VkExternalBufferProperties* pExternalBufferProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalBufferProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalBufferProperties <- vkGetProc @VkGetPhysicalDeviceExternalBufferProperties
+--
+-- __Note:__ @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ and @vkGetPhysicalDeviceExternalBufferPropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalBufferProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalBufferPropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalBufferPropertiesSafe@.
+--
+vkGetPhysicalDeviceExternalBufferProperties ::
+                                            VkPhysicalDevice -- ^ physicalDevice
+                                                             ->
+                                              Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                                                                     ->
+                                                Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                                                               -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceExternalBufferProperties
+  = vkGetPhysicalDeviceExternalBufferPropertiesUnsafe
+#else
+vkGetPhysicalDeviceExternalBufferProperties
+  = vkGetPhysicalDeviceExternalBufferPropertiesSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceExternalBufferProperties #-}
+
 -- | > void vkGetPhysicalDeviceExternalBufferProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
@@ -5158,7 +6435,7 @@ type PFN_vkGetPhysicalDeviceExternalBufferProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalBufferProperties
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalBufferProperties ::
+               unwrapVkGetPhysicalDeviceExternalBufferPropertiesUnsafe ::
                PFN_vkGetPhysicalDeviceExternalBufferProperties ->
                  HS_vkGetPhysicalDeviceExternalBufferProperties
 
@@ -5174,9 +6451,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalBufferProperties"
         vkProcSymbol = _VkGetPhysicalDeviceExternalBufferProperties
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceExternalBufferProperties
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalBufferPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalBufferPropertiesSafe
 
@@ -5277,13 +6555,16 @@ type VkGetPhysicalDeviceExternalFenceProperties =
 --
 -- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalFencePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalFenceProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalFencePropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalFenceProperties"
-               vkGetPhysicalDeviceExternalFenceProperties ::
+               vkGetPhysicalDeviceExternalFencePropertiesUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
@@ -5292,18 +6573,18 @@ foreign import ccall unsafe
                                                  -> IO ()
 
 #else
-vkGetPhysicalDeviceExternalFenceProperties ::
-                                           VkPhysicalDevice -- ^ physicalDevice
-                                                            ->
-                                             Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
-                                                                                   ->
-                                               Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
-                                                                             -> IO ()
-vkGetPhysicalDeviceExternalFenceProperties
+vkGetPhysicalDeviceExternalFencePropertiesUnsafe ::
+                                                 VkPhysicalDevice -- ^ physicalDevice
+                                                                  ->
+                                                   Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                                                                         ->
+                                                     Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                                                                   -> IO ()
+vkGetPhysicalDeviceExternalFencePropertiesUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceExternalFenceProperties)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceExternalFenceProperties)
 
-{-# NOINLINE vkGetPhysicalDeviceExternalFenceProperties #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalFencePropertiesUnsafe #-}
 #endif
 
 -- |
@@ -5327,8 +6608,11 @@ vkGetPhysicalDeviceExternalFenceProperties
 --
 -- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalFencePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalFenceProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalFencePropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -5356,6 +6640,49 @@ vkGetPhysicalDeviceExternalFencePropertiesSafe
 {-# NOINLINE vkGetPhysicalDeviceExternalFencePropertiesSafe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceExternalFenceProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
+-- >     , VkExternalFenceProperties* pExternalFenceProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalFenceProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalFenceProperties <- vkGetProc @VkGetPhysicalDeviceExternalFenceProperties
+--
+-- __Note:__ @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalFencePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalFenceProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalFencePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalFencePropertiesSafe@.
+--
+vkGetPhysicalDeviceExternalFenceProperties ::
+                                           VkPhysicalDevice -- ^ physicalDevice
+                                                            ->
+                                             Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                                                                   ->
+                                               Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                                                             -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceExternalFenceProperties
+  = vkGetPhysicalDeviceExternalFencePropertiesUnsafe
+#else
+vkGetPhysicalDeviceExternalFenceProperties
+  = vkGetPhysicalDeviceExternalFencePropertiesSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceExternalFenceProperties #-}
+
 -- | > void vkGetPhysicalDeviceExternalFenceProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
@@ -5375,7 +6702,7 @@ type PFN_vkGetPhysicalDeviceExternalFenceProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalFenceProperties
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalFenceProperties ::
+               unwrapVkGetPhysicalDeviceExternalFencePropertiesUnsafe ::
                PFN_vkGetPhysicalDeviceExternalFenceProperties ->
                  HS_vkGetPhysicalDeviceExternalFenceProperties
 
@@ -5391,9 +6718,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalFenceProperties"
         vkProcSymbol = _VkGetPhysicalDeviceExternalFenceProperties
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceExternalFenceProperties
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalFencePropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalFencePropertiesSafe
 
@@ -5468,13 +6796,16 @@ type VkGetPhysicalDeviceExternalSemaphoreProperties =
 --
 -- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalSemaphoreProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalSemaphoreProperties"
-               vkGetPhysicalDeviceExternalSemaphoreProperties ::
+               vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
@@ -5483,18 +6814,19 @@ foreign import ccall unsafe
                                                      -> IO ()
 
 #else
-vkGetPhysicalDeviceExternalSemaphoreProperties ::
-                                               VkPhysicalDevice -- ^ physicalDevice
-                                                                ->
-                                                 Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
-                                                                                           ->
-                                                   Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
-                                                                                     -> IO ()
-vkGetPhysicalDeviceExternalSemaphoreProperties
+vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe ::
+                                                     VkPhysicalDevice -- ^ physicalDevice
+                                                                      ->
+                                                       Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
+                                                                                                 ->
+                                                         Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
+                                                                                           -> IO ()
+vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceExternalSemaphoreProperties)
 
-{-# NOINLINE vkGetPhysicalDeviceExternalSemaphoreProperties #-}
+{-# NOINLINE vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe
+             #-}
 #endif
 
 -- |
@@ -5518,8 +6850,11 @@ vkGetPhysicalDeviceExternalSemaphoreProperties
 --
 -- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalSemaphoreProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe
@@ -5547,6 +6882,49 @@ vkGetPhysicalDeviceExternalSemaphorePropertiesSafe
 {-# NOINLINE vkGetPhysicalDeviceExternalSemaphorePropertiesSafe #-}
 #endif
 
+-- |
+-- > void vkGetPhysicalDeviceExternalSemaphoreProperties
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
+-- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetInstanceProc @VkGetPhysicalDeviceExternalSemaphoreProperties vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceExternalSemaphoreProperties <- vkGetProc @VkGetPhysicalDeviceExternalSemaphoreProperties
+--
+-- __Note:__ @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ and @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceExternalSemaphoreProperties@ is an alias
+--           of @vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceExternalSemaphorePropertiesSafe@.
+--
+vkGetPhysicalDeviceExternalSemaphoreProperties ::
+                                               VkPhysicalDevice -- ^ physicalDevice
+                                                                ->
+                                                 Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
+                                                                                           ->
+                                                   Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
+                                                                                     -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceExternalSemaphoreProperties
+  = vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe
+#else
+vkGetPhysicalDeviceExternalSemaphoreProperties
+  = vkGetPhysicalDeviceExternalSemaphorePropertiesSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceExternalSemaphoreProperties #-}
+
 -- | > void vkGetPhysicalDeviceExternalSemaphoreProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
@@ -5566,7 +6944,7 @@ type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties =
      FunPtr HS_vkGetPhysicalDeviceExternalSemaphoreProperties
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalSemaphoreProperties ::
+               unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe ::
                PFN_vkGetPhysicalDeviceExternalSemaphoreProperties ->
                  HS_vkGetPhysicalDeviceExternalSemaphoreProperties
 
@@ -5583,10 +6961,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceExternalSemaphoreProperties
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceExternalSemaphoreProperties
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesSafe
 
@@ -5647,12 +7025,15 @@ type VkGetDescriptorSetLayoutSupport =
 --
 -- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDescriptorSetLayoutSupportUnsafe@ and @vkGetDescriptorSetLayoutSupportSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDescriptorSetLayoutSupport@ is an alias
+--           of @vkGetDescriptorSetLayoutSupportUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDescriptorSetLayoutSupportSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
-               vkGetDescriptorSetLayoutSupport ::
+               vkGetDescriptorSetLayoutSupportUnsafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
@@ -5661,18 +7042,18 @@ foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
                                                     -> IO ()
 
 #else
-vkGetDescriptorSetLayoutSupport ::
-                                VkDevice -- ^ device
-                                         ->
-                                  Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
-                                                                      ->
-                                    Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
-                                                                     -> IO ()
-vkGetDescriptorSetLayoutSupport
+vkGetDescriptorSetLayoutSupportUnsafe ::
+                                      VkDevice -- ^ device
+                                               ->
+                                        Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                                                            ->
+                                          Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
+                                                                           -> IO ()
+vkGetDescriptorSetLayoutSupportUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDescriptorSetLayoutSupport)
+      (vkGetProcUnsafe @VkGetDescriptorSetLayoutSupport)
 
-{-# NOINLINE vkGetDescriptorSetLayoutSupport #-}
+{-# NOINLINE vkGetDescriptorSetLayoutSupportUnsafe #-}
 #endif
 
 -- |
@@ -5696,8 +7077,11 @@ vkGetDescriptorSetLayoutSupport
 --
 -- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDescriptorSetLayoutSupportUnsafe@ and @vkGetDescriptorSetLayoutSupportSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDescriptorSetLayoutSupport@ is an alias
+--           of @vkGetDescriptorSetLayoutSupportUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDescriptorSetLayoutSupportSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_1
 foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
@@ -5724,6 +7108,49 @@ vkGetDescriptorSetLayoutSupportSafe
 {-# NOINLINE vkGetDescriptorSetLayoutSupportSafe #-}
 #endif
 
+-- |
+-- > void vkGetDescriptorSetLayoutSupport
+-- >     ( VkDevice device
+-- >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
+-- >     , VkDescriptorSetLayoutSupport* pSupport
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetDeviceProc @VkGetDescriptorSetLayoutSupport vkDevice
+--
+-- or less efficient:
+--
+-- > myGetDescriptorSetLayoutSupport <- vkGetProc @VkGetDescriptorSetLayoutSupport
+--
+-- __Note:__ @vkGetDescriptorSetLayoutSupportUnsafe@ and @vkGetDescriptorSetLayoutSupportSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDescriptorSetLayoutSupport@ is an alias
+--           of @vkGetDescriptorSetLayoutSupportUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDescriptorSetLayoutSupportSafe@.
+--
+vkGetDescriptorSetLayoutSupport ::
+                                VkDevice -- ^ device
+                                         ->
+                                  Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                                                      ->
+                                    Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
+                                                                     -> IO ()
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDescriptorSetLayoutSupport
+  = vkGetDescriptorSetLayoutSupportUnsafe
+#else
+vkGetDescriptorSetLayoutSupport
+  = vkGetDescriptorSetLayoutSupportSafe
+
+#endif
+{-# INLINE vkGetDescriptorSetLayoutSupport #-}
+
 -- | > void vkGetDescriptorSetLayoutSupport
 --   >     ( VkDevice device
 --   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
@@ -5743,7 +7170,7 @@ type PFN_vkGetDescriptorSetLayoutSupport =
      FunPtr HS_vkGetDescriptorSetLayoutSupport
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDescriptorSetLayoutSupport ::
+               unwrapVkGetDescriptorSetLayoutSupportUnsafe ::
                PFN_vkGetDescriptorSetLayoutSupport ->
                  HS_vkGetDescriptorSetLayoutSupport
 
@@ -5758,9 +7185,9 @@ instance VulkanProc "vkGetDescriptorSetLayoutSupport" where
         vkProcSymbol = _VkGetDescriptorSetLayoutSupport
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDescriptorSetLayoutSupport
+        unwrapVkProcPtrUnsafe = unwrapVkGetDescriptorSetLayoutSupportUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

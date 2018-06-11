@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -82,7 +83,8 @@ type HS_vkSetHdrMetadataEXT =
 
 type PFN_vkSetHdrMetadataEXT = FunPtr HS_vkSetHdrMetadataEXT
 
-foreign import ccall unsafe "dynamic" unwrapVkSetHdrMetadataEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkSetHdrMetadataEXTUnsafe ::
                PFN_vkSetHdrMetadataEXT -> HS_vkSetHdrMetadataEXT
 
 foreign import ccall safe "dynamic" unwrapVkSetHdrMetadataEXTSafe
@@ -93,9 +95,9 @@ instance VulkanProc "vkSetHdrMetadataEXT" where
         vkProcSymbol = _VkSetHdrMetadataEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkSetHdrMetadataEXT
+        unwrapVkProcPtrUnsafe = unwrapVkSetHdrMetadataEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkSetHdrMetadataEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -111,7 +112,7 @@ type PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR ::
+               unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRUnsafe ::
                PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
 
@@ -127,10 +128,10 @@ instance VulkanProc "vkGetPhysicalDeviceExternalFencePropertiesKHR"
         vkProcSymbol = _VkGetPhysicalDeviceExternalFencePropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRSafe
 

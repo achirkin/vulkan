@@ -38,8 +38,8 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         -- > #include "vk_platform.h"
         VkCreateAndroidSurfaceKHR, pattern VkCreateAndroidSurfaceKHR,
         HS_vkCreateAndroidSurfaceKHR, PFN_vkCreateAndroidSurfaceKHR,
-        vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRUnsafe,
+        vkCreateAndroidSurfaceKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Defines,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
         module Graphics.Vulkan.Types.Enum.Result,
@@ -114,12 +114,15 @@ type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 --
 -- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateAndroidSurfaceKHRUnsafe@ and @vkCreateAndroidSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateAndroidSurfaceKHR@ is an alias
+--           of @vkCreateAndroidSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateAndroidSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
-               vkCreateAndroidSurfaceKHR ::
+               vkCreateAndroidSurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -129,18 +132,19 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateAndroidSurfaceKHR ::
-                          VkInstance -- ^ instance
-                                     ->
-                            Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
-                                                              ->
-                              Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                        -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                            -> IO VkResult
-vkCreateAndroidSurfaceKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateAndroidSurfaceKHR)
+vkCreateAndroidSurfaceKHRUnsafe ::
+                                VkInstance -- ^ instance
+                                           ->
+                                  Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                                    ->
+                                    Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                              -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                                  -> IO VkResult
+vkCreateAndroidSurfaceKHRUnsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkCreateAndroidSurfaceKHR)
 
-{-# NOINLINE vkCreateAndroidSurfaceKHR #-}
+{-# NOINLINE vkCreateAndroidSurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -169,8 +173,11 @@ vkCreateAndroidSurfaceKHR
 --
 -- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateAndroidSurfaceKHRUnsafe@ and @vkCreateAndroidSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateAndroidSurfaceKHR@ is an alias
+--           of @vkCreateAndroidSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateAndroidSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateAndroidSurfaceKHR"
@@ -198,6 +205,53 @@ vkCreateAndroidSurfaceKHRSafe
 {-# NOINLINE vkCreateAndroidSurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+-- > VkResult vkCreateAndroidSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetInstanceProc @VkCreateAndroidSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateAndroidSurfaceKHR <- vkGetProc @VkCreateAndroidSurfaceKHR
+--
+-- __Note:__ @vkCreateAndroidSurfaceKHRUnsafe@ and @vkCreateAndroidSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateAndroidSurfaceKHR@ is an alias
+--           of @vkCreateAndroidSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateAndroidSurfaceKHRSafe@.
+--
+vkCreateAndroidSurfaceKHR ::
+                          VkInstance -- ^ instance
+                                     ->
+                            Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                              ->
+                              Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                        -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                            -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateAndroidSurfaceKHR = vkCreateAndroidSurfaceKHRUnsafe
+#else
+vkCreateAndroidSurfaceKHR = vkCreateAndroidSurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateAndroidSurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
@@ -223,7 +277,7 @@ type PFN_vkCreateAndroidSurfaceKHR =
      FunPtr HS_vkCreateAndroidSurfaceKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateAndroidSurfaceKHR ::
+               unwrapVkCreateAndroidSurfaceKHRUnsafe ::
                PFN_vkCreateAndroidSurfaceKHR -> HS_vkCreateAndroidSurfaceKHR
 
 foreign import ccall safe "dynamic"
@@ -236,9 +290,9 @@ instance VulkanProc "vkCreateAndroidSurfaceKHR" where
         vkProcSymbol = _VkCreateAndroidSurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateAndroidSurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateAndroidSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateAndroidSurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -114,7 +115,7 @@ type PFN_vkImportSemaphoreWin32HandleKHR =
      FunPtr HS_vkImportSemaphoreWin32HandleKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkImportSemaphoreWin32HandleKHR ::
+               unwrapVkImportSemaphoreWin32HandleKHRUnsafe ::
                PFN_vkImportSemaphoreWin32HandleKHR ->
                  HS_vkImportSemaphoreWin32HandleKHR
 
@@ -129,9 +130,9 @@ instance VulkanProc "vkImportSemaphoreWin32HandleKHR" where
         vkProcSymbol = _VkImportSemaphoreWin32HandleKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkImportSemaphoreWin32HandleKHR
+        unwrapVkProcPtrUnsafe = unwrapVkImportSemaphoreWin32HandleKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkImportSemaphoreWin32HandleKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -178,7 +179,7 @@ type PFN_vkGetSemaphoreWin32HandleKHR =
      FunPtr HS_vkGetSemaphoreWin32HandleKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetSemaphoreWin32HandleKHR ::
+               unwrapVkGetSemaphoreWin32HandleKHRUnsafe ::
                PFN_vkGetSemaphoreWin32HandleKHR -> HS_vkGetSemaphoreWin32HandleKHR
 
 foreign import ccall safe "dynamic"
@@ -191,9 +192,9 @@ instance VulkanProc "vkGetSemaphoreWin32HandleKHR" where
         vkProcSymbol = _VkGetSemaphoreWin32HandleKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetSemaphoreWin32HandleKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetSemaphoreWin32HandleKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetSemaphoreWin32HandleKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

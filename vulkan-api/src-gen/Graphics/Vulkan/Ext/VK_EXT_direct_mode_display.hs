@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -73,7 +74,8 @@ type HS_vkReleaseDisplayEXT =
 
 type PFN_vkReleaseDisplayEXT = FunPtr HS_vkReleaseDisplayEXT
 
-foreign import ccall unsafe "dynamic" unwrapVkReleaseDisplayEXT ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkReleaseDisplayEXTUnsafe ::
                PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
 
 foreign import ccall safe "dynamic" unwrapVkReleaseDisplayEXTSafe
@@ -84,9 +86,9 @@ instance VulkanProc "vkReleaseDisplayEXT" where
         vkProcSymbol = _VkReleaseDisplayEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkReleaseDisplayEXT
+        unwrapVkProcPtrUnsafe = unwrapVkReleaseDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkReleaseDisplayEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

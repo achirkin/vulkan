@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -105,8 +106,9 @@ type HS_vkCreateMacOSSurfaceMVK =
 type PFN_vkCreateMacOSSurfaceMVK =
      FunPtr HS_vkCreateMacOSSurfaceMVK
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateMacOSSurfaceMVK
-               :: PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateMacOSSurfaceMVKUnsafe ::
+               PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
 
 foreign import ccall safe "dynamic"
                unwrapVkCreateMacOSSurfaceMVKSafe ::
@@ -118,9 +120,9 @@ instance VulkanProc "vkCreateMacOSSurfaceMVK" where
         vkProcSymbol = _VkCreateMacOSSurfaceMVK
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateMacOSSurfaceMVK
+        unwrapVkProcPtrUnsafe = unwrapVkCreateMacOSSurfaceMVKUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateMacOSSurfaceMVKSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
