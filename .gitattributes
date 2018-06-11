@@ -1,1 +1,1 @@
-vulkan-api/src-gen linguist-vendored
+vulkan-api/src-gen/* linguist-vendored=true
