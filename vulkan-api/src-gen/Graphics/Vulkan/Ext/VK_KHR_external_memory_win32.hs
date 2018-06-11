@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -106,7 +107,7 @@ type PFN_vkGetMemoryWin32HandleKHR =
      FunPtr HS_vkGetMemoryWin32HandleKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryWin32HandleKHR ::
+               unwrapVkGetMemoryWin32HandleKHRUnsafe ::
                PFN_vkGetMemoryWin32HandleKHR -> HS_vkGetMemoryWin32HandleKHR
 
 foreign import ccall safe "dynamic"
@@ -119,9 +120,9 @@ instance VulkanProc "vkGetMemoryWin32HandleKHR" where
         vkProcSymbol = _VkGetMemoryWin32HandleKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryWin32HandleKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -173,7 +174,7 @@ type PFN_vkGetMemoryWin32HandlePropertiesKHR =
      FunPtr HS_vkGetMemoryWin32HandlePropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryWin32HandlePropertiesKHR ::
+               unwrapVkGetMemoryWin32HandlePropertiesKHRUnsafe ::
                PFN_vkGetMemoryWin32HandlePropertiesKHR ->
                  HS_vkGetMemoryWin32HandlePropertiesKHR
 
@@ -188,9 +189,10 @@ instance VulkanProc "vkGetMemoryWin32HandlePropertiesKHR" where
         vkProcSymbol = _VkGetMemoryWin32HandlePropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandlePropertiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetMemoryWin32HandlePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandlePropertiesKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -9,6 +9,7 @@ flags:
   vulkan-api:
     useNativeFFI-1-0: true
     useNativeFFI-1-1: false
+    useUnsafeFFIDefault: true
 
 extra-deps:
   - bindings-GLFW-3.2.1.1

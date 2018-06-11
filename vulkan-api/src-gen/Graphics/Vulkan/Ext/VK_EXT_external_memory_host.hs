@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -116,7 +117,7 @@ type PFN_vkGetMemoryHostPointerPropertiesEXT =
      FunPtr HS_vkGetMemoryHostPointerPropertiesEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetMemoryHostPointerPropertiesEXT ::
+               unwrapVkGetMemoryHostPointerPropertiesEXTUnsafe ::
                PFN_vkGetMemoryHostPointerPropertiesEXT ->
                  HS_vkGetMemoryHostPointerPropertiesEXT
 
@@ -131,9 +132,10 @@ instance VulkanProc "vkGetMemoryHostPointerPropertiesEXT" where
         vkProcSymbol = _VkGetMemoryHostPointerPropertiesEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetMemoryHostPointerPropertiesEXT
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetMemoryHostPointerPropertiesEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetMemoryHostPointerPropertiesEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

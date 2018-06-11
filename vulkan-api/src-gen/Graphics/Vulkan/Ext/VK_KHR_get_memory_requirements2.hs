@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -117,7 +118,7 @@ type PFN_vkGetImageMemoryRequirements2KHR =
      FunPtr HS_vkGetImageMemoryRequirements2KHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetImageMemoryRequirements2KHR ::
+               unwrapVkGetImageMemoryRequirements2KHRUnsafe ::
                PFN_vkGetImageMemoryRequirements2KHR ->
                  HS_vkGetImageMemoryRequirements2KHR
 
@@ -132,9 +133,10 @@ instance VulkanProc "vkGetImageMemoryRequirements2KHR" where
         vkProcSymbol = _VkGetImageMemoryRequirements2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetImageMemoryRequirements2KHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetImageMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2KHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -182,7 +184,7 @@ type PFN_vkGetBufferMemoryRequirements2KHR =
      FunPtr HS_vkGetBufferMemoryRequirements2KHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetBufferMemoryRequirements2KHR ::
+               unwrapVkGetBufferMemoryRequirements2KHRUnsafe ::
                PFN_vkGetBufferMemoryRequirements2KHR ->
                  HS_vkGetBufferMemoryRequirements2KHR
 
@@ -197,9 +199,10 @@ instance VulkanProc "vkGetBufferMemoryRequirements2KHR" where
         vkProcSymbol = _VkGetBufferMemoryRequirements2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetBufferMemoryRequirements2KHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetBufferMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2KHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -249,7 +252,7 @@ type PFN_vkGetImageSparseMemoryRequirements2KHR =
      FunPtr HS_vkGetImageSparseMemoryRequirements2KHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetImageSparseMemoryRequirements2KHR ::
+               unwrapVkGetImageSparseMemoryRequirements2KHRUnsafe ::
                PFN_vkGetImageSparseMemoryRequirements2KHR ->
                  HS_vkGetImageSparseMemoryRequirements2KHR
 
@@ -264,9 +267,10 @@ instance VulkanProc "vkGetImageSparseMemoryRequirements2KHR" where
         vkProcSymbol = _VkGetImageSparseMemoryRequirements2KHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetImageSparseMemoryRequirements2KHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetImageSparseMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetImageSparseMemoryRequirements2KHRSafe
 

@@ -2,6 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -126,7 +127,7 @@ type PFN_vkCreateDebugReportCallbackEXT =
      FunPtr HS_vkCreateDebugReportCallbackEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateDebugReportCallbackEXT ::
+               unwrapVkCreateDebugReportCallbackEXTUnsafe ::
                PFN_vkCreateDebugReportCallbackEXT ->
                  HS_vkCreateDebugReportCallbackEXT
 
@@ -141,9 +142,9 @@ instance VulkanProc "vkCreateDebugReportCallbackEXT" where
         vkProcSymbol = _VkCreateDebugReportCallbackEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateDebugReportCallbackEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCreateDebugReportCallbackEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateDebugReportCallbackEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -188,7 +189,7 @@ type PFN_vkDestroyDebugReportCallbackEXT =
      FunPtr HS_vkDestroyDebugReportCallbackEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDestroyDebugReportCallbackEXT ::
+               unwrapVkDestroyDebugReportCallbackEXTUnsafe ::
                PFN_vkDestroyDebugReportCallbackEXT ->
                  HS_vkDestroyDebugReportCallbackEXT
 
@@ -203,9 +204,9 @@ instance VulkanProc "vkDestroyDebugReportCallbackEXT" where
         vkProcSymbol = _VkDestroyDebugReportCallbackEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroyDebugReportCallbackEXT
+        unwrapVkProcPtrUnsafe = unwrapVkDestroyDebugReportCallbackEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDestroyDebugReportCallbackEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -258,8 +259,9 @@ type HS_vkDebugReportMessageEXT =
 type PFN_vkDebugReportMessageEXT =
      FunPtr HS_vkDebugReportMessageEXT
 
-foreign import ccall unsafe "dynamic" unwrapVkDebugReportMessageEXT
-               :: PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
+foreign import ccall unsafe "dynamic"
+               unwrapVkDebugReportMessageEXTUnsafe ::
+               PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
 
 foreign import ccall safe "dynamic"
                unwrapVkDebugReportMessageEXTSafe ::
@@ -271,9 +273,9 @@ instance VulkanProc "vkDebugReportMessageEXT" where
         vkProcSymbol = _VkDebugReportMessageEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDebugReportMessageEXT
+        unwrapVkProcPtrUnsafe = unwrapVkDebugReportMessageEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDebugReportMessageEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

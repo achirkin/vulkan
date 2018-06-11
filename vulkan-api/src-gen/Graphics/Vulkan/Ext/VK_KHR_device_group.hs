@@ -2,6 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -210,7 +211,7 @@ type PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR =
      FunPtr HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR ::
+               unwrapVkGetDeviceGroupPeerMemoryFeaturesKHRUnsafe ::
                PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ->
                  HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
 
@@ -225,9 +226,10 @@ instance VulkanProc "vkGetDeviceGroupPeerMemoryFeaturesKHR" where
         vkProcSymbol = _VkGetDeviceGroupPeerMemoryFeaturesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHRSafe
 
@@ -269,8 +271,9 @@ type HS_vkCmdSetDeviceMaskKHR = VkCommandBuffer -- ^ commandBuffer
 
 type PFN_vkCmdSetDeviceMaskKHR = FunPtr HS_vkCmdSetDeviceMaskKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCmdSetDeviceMaskKHR
-               :: PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdSetDeviceMaskKHRUnsafe ::
+               PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
 
 foreign import ccall safe "dynamic" unwrapVkCmdSetDeviceMaskKHRSafe
                :: PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
@@ -280,9 +283,9 @@ instance VulkanProc "vkCmdSetDeviceMaskKHR" where
         vkProcSymbol = _VkCmdSetDeviceMaskKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdSetDeviceMaskKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCmdSetDeviceMaskKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdSetDeviceMaskKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -335,7 +338,8 @@ type HS_vkCmdDispatchBaseKHR =
 
 type PFN_vkCmdDispatchBaseKHR = FunPtr HS_vkCmdDispatchBaseKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCmdDispatchBaseKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCmdDispatchBaseKHRUnsafe ::
                PFN_vkCmdDispatchBaseKHR -> HS_vkCmdDispatchBaseKHR
 
 foreign import ccall safe "dynamic" unwrapVkCmdDispatchBaseKHRSafe
@@ -346,9 +350,9 @@ instance VulkanProc "vkCmdDispatchBaseKHR" where
         vkProcSymbol = _VkCmdDispatchBaseKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdDispatchBaseKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchBaseKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdDispatchBaseKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

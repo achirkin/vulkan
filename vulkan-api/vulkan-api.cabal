@@ -26,6 +26,11 @@ extra-source-files:
     include/vulkan_loader.h
     cbits/vulkan_loader.c
 
+flag useUnsafeFFIDefault
+    description:
+      Use unsafe foreign imports of Vulkan functions by default
+    default: False
+
 flag usePlatformAndroidKhr
     description:
       Enable platform-specific extensions protected by CPP macros VK_USE_PLATFORM_ANDROID_KHR
@@ -343,6 +348,9 @@ library
         Graphics.Vulkan.Types.Struct.Viewport
         Graphics.Vulkan.Types.Struct.WriteDescriptorSet
         Graphics.Vulkan.Types.Struct.XYColorEXT
+    if flag(useUnsafeFFIDefault)
+      cpp-options: -DUNSAFE_FFI_DEFAULT
+
     if flag(usePlatformAndroidKhr)
       cpp-options: -DVK_USE_PLATFORM_ANDROID_KHR
       exposed-modules:

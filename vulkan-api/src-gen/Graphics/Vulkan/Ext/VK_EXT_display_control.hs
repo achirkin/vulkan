@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -133,7 +134,7 @@ type PFN_vkDisplayPowerControlEXT =
      FunPtr HS_vkDisplayPowerControlEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDisplayPowerControlEXT ::
+               unwrapVkDisplayPowerControlEXTUnsafe ::
                PFN_vkDisplayPowerControlEXT -> HS_vkDisplayPowerControlEXT
 
 foreign import ccall safe "dynamic"
@@ -146,9 +147,9 @@ instance VulkanProc "vkDisplayPowerControlEXT" where
         vkProcSymbol = _VkDisplayPowerControlEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDisplayPowerControlEXT
+        unwrapVkProcPtrUnsafe = unwrapVkDisplayPowerControlEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDisplayPowerControlEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -195,7 +196,7 @@ type PFN_vkRegisterDeviceEventEXT =
      FunPtr HS_vkRegisterDeviceEventEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkRegisterDeviceEventEXT ::
+               unwrapVkRegisterDeviceEventEXTUnsafe ::
                PFN_vkRegisterDeviceEventEXT -> HS_vkRegisterDeviceEventEXT
 
 foreign import ccall safe "dynamic"
@@ -208,9 +209,9 @@ instance VulkanProc "vkRegisterDeviceEventEXT" where
         vkProcSymbol = _VkRegisterDeviceEventEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkRegisterDeviceEventEXT
+        unwrapVkProcPtrUnsafe = unwrapVkRegisterDeviceEventEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkRegisterDeviceEventEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -260,7 +261,7 @@ type PFN_vkRegisterDisplayEventEXT =
      FunPtr HS_vkRegisterDisplayEventEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkRegisterDisplayEventEXT ::
+               unwrapVkRegisterDisplayEventEXTUnsafe ::
                PFN_vkRegisterDisplayEventEXT -> HS_vkRegisterDisplayEventEXT
 
 foreign import ccall safe "dynamic"
@@ -273,9 +274,9 @@ instance VulkanProc "vkRegisterDisplayEventEXT" where
         vkProcSymbol = _VkRegisterDisplayEventEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkRegisterDisplayEventEXT
+        unwrapVkProcPtrUnsafe = unwrapVkRegisterDisplayEventEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkRegisterDisplayEventEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -324,7 +325,7 @@ type PFN_vkGetSwapchainCounterEXT =
      FunPtr HS_vkGetSwapchainCounterEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetSwapchainCounterEXT ::
+               unwrapVkGetSwapchainCounterEXTUnsafe ::
                PFN_vkGetSwapchainCounterEXT -> HS_vkGetSwapchainCounterEXT
 
 foreign import ccall safe "dynamic"
@@ -337,9 +338,9 @@ instance VulkanProc "vkGetSwapchainCounterEXT" where
         vkProcSymbol = _VkGetSwapchainCounterEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetSwapchainCounterEXT
+        unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainCounterEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetSwapchainCounterEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

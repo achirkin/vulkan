@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -102,7 +103,7 @@ type PFN_vkGetRefreshCycleDurationGOOGLE =
      FunPtr HS_vkGetRefreshCycleDurationGOOGLE
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetRefreshCycleDurationGOOGLE ::
+               unwrapVkGetRefreshCycleDurationGOOGLEUnsafe ::
                PFN_vkGetRefreshCycleDurationGOOGLE ->
                  HS_vkGetRefreshCycleDurationGOOGLE
 
@@ -117,9 +118,9 @@ instance VulkanProc "vkGetRefreshCycleDurationGOOGLE" where
         vkProcSymbol = _VkGetRefreshCycleDurationGOOGLE
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetRefreshCycleDurationGOOGLE
+        unwrapVkProcPtrUnsafe = unwrapVkGetRefreshCycleDurationGOOGLEUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetRefreshCycleDurationGOOGLESafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -171,7 +172,7 @@ type PFN_vkGetPastPresentationTimingGOOGLE =
      FunPtr HS_vkGetPastPresentationTimingGOOGLE
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPastPresentationTimingGOOGLE ::
+               unwrapVkGetPastPresentationTimingGOOGLEUnsafe ::
                PFN_vkGetPastPresentationTimingGOOGLE ->
                  HS_vkGetPastPresentationTimingGOOGLE
 
@@ -186,9 +187,10 @@ instance VulkanProc "vkGetPastPresentationTimingGOOGLE" where
         vkProcSymbol = _VkGetPastPresentationTimingGOOGLE
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPastPresentationTimingGOOGLE
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPastPresentationTimingGOOGLEUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetPastPresentationTimingGOOGLESafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

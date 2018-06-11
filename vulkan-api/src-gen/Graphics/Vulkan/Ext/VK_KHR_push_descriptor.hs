@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -118,7 +119,7 @@ type PFN_vkCmdPushDescriptorSetKHR =
      FunPtr HS_vkCmdPushDescriptorSetKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdPushDescriptorSetKHR ::
+               unwrapVkCmdPushDescriptorSetKHRUnsafe ::
                PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
 
 foreign import ccall safe "dynamic"
@@ -131,9 +132,9 @@ instance VulkanProc "vkCmdPushDescriptorSetKHR" where
         vkProcSymbol = _VkCmdPushDescriptorSetKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCmdPushDescriptorSetKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdPushDescriptorSetKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -230,7 +231,7 @@ type PFN_vkCmdPushDescriptorSetWithTemplateKHR =
      FunPtr HS_vkCmdPushDescriptorSetWithTemplateKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdPushDescriptorSetWithTemplateKHR ::
+               unwrapVkCmdPushDescriptorSetWithTemplateKHRUnsafe ::
                PFN_vkCmdPushDescriptorSetWithTemplateKHR ->
                  HS_vkCmdPushDescriptorSetWithTemplateKHR
 
@@ -245,9 +246,10 @@ instance VulkanProc "vkCmdPushDescriptorSetWithTemplateKHR" where
         vkProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetWithTemplateKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkCmdPushDescriptorSetWithTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkCmdPushDescriptorSetWithTemplateKHRSafe
 

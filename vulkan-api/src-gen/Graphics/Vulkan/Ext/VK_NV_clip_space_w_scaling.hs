@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -97,7 +98,7 @@ type PFN_vkCmdSetViewportWScalingNV =
      FunPtr HS_vkCmdSetViewportWScalingNV
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdSetViewportWScalingNV ::
+               unwrapVkCmdSetViewportWScalingNVUnsafe ::
                PFN_vkCmdSetViewportWScalingNV -> HS_vkCmdSetViewportWScalingNV
 
 foreign import ccall safe "dynamic"
@@ -110,9 +111,9 @@ instance VulkanProc "vkCmdSetViewportWScalingNV" where
         vkProcSymbol = _VkCmdSetViewportWScalingNV
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdSetViewportWScalingNV
+        unwrapVkProcPtrUnsafe = unwrapVkCmdSetViewportWScalingNVUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdSetViewportWScalingNVSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -44,36 +44,43 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         HS_vkGetPhysicalDeviceDisplayPropertiesKHR,
         PFN_vkGetPhysicalDeviceDisplayPropertiesKHR,
         vkGetPhysicalDeviceDisplayPropertiesKHR,
+        vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe,
         vkGetPhysicalDeviceDisplayPropertiesKHRSafe,
         VkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe,
         vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe,
         VkGetDisplayPlaneSupportedDisplaysKHR,
         pattern VkGetDisplayPlaneSupportedDisplaysKHR,
         HS_vkGetDisplayPlaneSupportedDisplaysKHR,
         PFN_vkGetDisplayPlaneSupportedDisplaysKHR,
         vkGetDisplayPlaneSupportedDisplaysKHR,
+        vkGetDisplayPlaneSupportedDisplaysKHRUnsafe,
         vkGetDisplayPlaneSupportedDisplaysKHRSafe,
         VkGetDisplayModePropertiesKHR,
         pattern VkGetDisplayModePropertiesKHR,
         HS_vkGetDisplayModePropertiesKHR,
         PFN_vkGetDisplayModePropertiesKHR, vkGetDisplayModePropertiesKHR,
+        vkGetDisplayModePropertiesKHRUnsafe,
         vkGetDisplayModePropertiesKHRSafe, VkCreateDisplayModeKHR,
         pattern VkCreateDisplayModeKHR, HS_vkCreateDisplayModeKHR,
         PFN_vkCreateDisplayModeKHR, vkCreateDisplayModeKHR,
-        vkCreateDisplayModeKHRSafe, VkGetDisplayPlaneCapabilitiesKHR,
+        vkCreateDisplayModeKHRUnsafe, vkCreateDisplayModeKHRSafe,
+        VkGetDisplayPlaneCapabilitiesKHR,
         pattern VkGetDisplayPlaneCapabilitiesKHR,
         HS_vkGetDisplayPlaneCapabilitiesKHR,
         PFN_vkGetDisplayPlaneCapabilitiesKHR,
         vkGetDisplayPlaneCapabilitiesKHR,
+        vkGetDisplayPlaneCapabilitiesKHRUnsafe,
         vkGetDisplayPlaneCapabilitiesKHRSafe,
         VkCreateDisplayPlaneSurfaceKHR,
         pattern VkCreateDisplayPlaneSurfaceKHR,
         HS_vkCreateDisplayPlaneSurfaceKHR,
         PFN_vkCreateDisplayPlaneSurfaceKHR, vkCreateDisplayPlaneSurfaceKHR,
+        vkCreateDisplayPlaneSurfaceKHRUnsafe,
         vkCreateDisplayPlaneSurfaceKHRSafe,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
         module Graphics.Vulkan.Types.Enum.Result,
@@ -156,13 +163,16 @@ type VkGetPhysicalDeviceDisplayPropertiesKHR =
 --
 -- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceDisplayPropertiesKHR"
-               vkGetPhysicalDeviceDisplayPropertiesKHR ::
+               vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr Word32 -- ^ pPropertyCount
@@ -170,17 +180,18 @@ foreign import ccall unsafe
                                                           -> IO VkResult
 
 #else
-vkGetPhysicalDeviceDisplayPropertiesKHR ::
-                                        VkPhysicalDevice -- ^ physicalDevice
-                                                         ->
-                                          Ptr Word32 -- ^ pPropertyCount
-                                                     -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
-                                                                                   -> IO VkResult
-vkGetPhysicalDeviceDisplayPropertiesKHR
+vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe ::
+                                              VkPhysicalDevice -- ^ physicalDevice
+                                                               ->
+                                                Ptr Word32 -- ^ pPropertyCount
+                                                           ->
+                                                  Ptr VkDisplayPropertiesKHR -- ^ pProperties
+                                                                             -> IO VkResult
+vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceDisplayPropertiesKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceDisplayPropertiesKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe #-}
 #endif
 
 -- |
@@ -208,8 +219,11 @@ vkGetPhysicalDeviceDisplayPropertiesKHR
 --
 -- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetPhysicalDeviceDisplayPropertiesKHR"
@@ -235,6 +249,52 @@ vkGetPhysicalDeviceDisplayPropertiesKHRSafe
 {-# NOINLINE vkGetPhysicalDeviceDisplayPropertiesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetPhysicalDeviceDisplayPropertiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pPropertyCount
+-- >     , VkDisplayPropertiesKHR* pProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPropertiesKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPropertiesKHRSafe@.
+--
+vkGetPhysicalDeviceDisplayPropertiesKHR ::
+                                        VkPhysicalDevice -- ^ physicalDevice
+                                                         ->
+                                          Ptr Word32 -- ^ pPropertyCount
+                                                     -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
+                                                                                   -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceDisplayPropertiesKHR
+  = vkGetPhysicalDeviceDisplayPropertiesKHRUnsafe
+#else
+vkGetPhysicalDeviceDisplayPropertiesKHR
+  = vkGetPhysicalDeviceDisplayPropertiesKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceDisplayPropertiesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -257,7 +317,7 @@ type PFN_vkGetPhysicalDeviceDisplayPropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceDisplayPropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceDisplayPropertiesKHR ::
+               unwrapVkGetPhysicalDeviceDisplayPropertiesKHRUnsafe ::
                PFN_vkGetPhysicalDeviceDisplayPropertiesKHR ->
                  HS_vkGetPhysicalDeviceDisplayPropertiesKHR
 
@@ -272,9 +332,10 @@ instance VulkanProc "vkGetPhysicalDeviceDisplayPropertiesKHR" where
         vkProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceDisplayPropertiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRSafe
 
@@ -328,13 +389,16 @@ type VkGetPhysicalDeviceDisplayPlanePropertiesKHR =
 --
 -- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPlanePropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
-               vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
+               vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr Word32 -- ^ pPropertyCount
@@ -342,18 +406,19 @@ foreign import ccall unsafe
                                                                -> IO VkResult
 
 #else
-vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
-                                             VkPhysicalDevice -- ^ physicalDevice
-                                                              ->
-                                               Ptr Word32 -- ^ pPropertyCount
-                                                          ->
-                                                 Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
-                                                                                 -> IO VkResult
-vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe ::
+                                                   VkPhysicalDevice -- ^ physicalDevice
+                                                                    ->
+                                                     Ptr Word32 -- ^ pPropertyCount
+                                                                ->
+                                                       Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
+                                                                                       ->
+                                                         IO VkResult
+vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceDisplayPlanePropertiesKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe #-}
 #endif
 
 -- |
@@ -381,8 +446,11 @@ vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --
 -- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPlanePropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
@@ -409,6 +477,53 @@ vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
 {-# NOINLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t* pPropertyCount
+-- >     , VkDisplayPlanePropertiesKHR* pProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetInstanceProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceDisplayPlanePropertiesKHR <- vkGetProc @VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ and @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceDisplayPlanePropertiesKHR@ is an alias
+--           of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe@.
+--
+vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
+                                             VkPhysicalDevice -- ^ physicalDevice
+                                                              ->
+                                               Ptr Word32 -- ^ pPropertyCount
+                                                          ->
+                                                 Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
+                                                                                 -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+  = vkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe
+#else
+vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+  = vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -431,7 +546,7 @@ type PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR =
      FunPtr HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
+               unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe ::
                PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR ->
                  HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
@@ -447,10 +562,10 @@ instance VulkanProc "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
         vkProcSymbol = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
 
@@ -504,12 +619,15 @@ type VkGetDisplayPlaneSupportedDisplaysKHR =
 --
 -- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ and @vkGetDisplayPlaneSupportedDisplaysKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneSupportedDisplaysKHR@ is an alias
+--           of @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneSupportedDisplaysKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
-               vkGetDisplayPlaneSupportedDisplaysKHR ::
+               vkGetDisplayPlaneSupportedDisplaysKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Word32 -- ^ planeIndex
@@ -518,18 +636,19 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
                                                           -> IO VkResult
 
 #else
-vkGetDisplayPlaneSupportedDisplaysKHR ::
-                                      VkPhysicalDevice -- ^ physicalDevice
-                                                       ->
-                                        Word32 -- ^ planeIndex
-                                               -> Ptr Word32 -- ^ pDisplayCount
-                                                             -> Ptr VkDisplayKHR -- ^ pDisplays
-                                                                                 -> IO VkResult
-vkGetDisplayPlaneSupportedDisplaysKHR
+vkGetDisplayPlaneSupportedDisplaysKHRUnsafe ::
+                                            VkPhysicalDevice -- ^ physicalDevice
+                                                             ->
+                                              Word32 -- ^ planeIndex
+                                                     ->
+                                                Ptr Word32 -- ^ pDisplayCount
+                                                           -> Ptr VkDisplayKHR -- ^ pDisplays
+                                                                               -> IO VkResult
+vkGetDisplayPlaneSupportedDisplaysKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR)
+      (vkGetProcUnsafe @VkGetDisplayPlaneSupportedDisplaysKHR)
 
-{-# NOINLINE vkGetDisplayPlaneSupportedDisplaysKHR #-}
+{-# NOINLINE vkGetDisplayPlaneSupportedDisplaysKHRUnsafe #-}
 #endif
 
 -- |
@@ -558,8 +677,11 @@ vkGetDisplayPlaneSupportedDisplaysKHR
 --
 -- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ and @vkGetDisplayPlaneSupportedDisplaysKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneSupportedDisplaysKHR@ is an alias
+--           of @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneSupportedDisplaysKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDisplayPlaneSupportedDisplaysKHR"
@@ -586,6 +708,54 @@ vkGetDisplayPlaneSupportedDisplaysKHRSafe
 {-# NOINLINE vkGetDisplayPlaneSupportedDisplaysKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetDisplayPlaneSupportedDisplaysKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t planeIndex
+-- >     , uint32_t* pDisplayCount
+-- >     , VkDisplayKHR* pDisplays
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetInstanceProc @VkGetDisplayPlaneSupportedDisplaysKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneSupportedDisplaysKHR <- vkGetProc @VkGetDisplayPlaneSupportedDisplaysKHR
+--
+-- __Note:__ @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ and @vkGetDisplayPlaneSupportedDisplaysKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneSupportedDisplaysKHR@ is an alias
+--           of @vkGetDisplayPlaneSupportedDisplaysKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneSupportedDisplaysKHRSafe@.
+--
+vkGetDisplayPlaneSupportedDisplaysKHR ::
+                                      VkPhysicalDevice -- ^ physicalDevice
+                                                       ->
+                                        Word32 -- ^ planeIndex
+                                               -> Ptr Word32 -- ^ pDisplayCount
+                                                             -> Ptr VkDisplayKHR -- ^ pDisplays
+                                                                                 -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDisplayPlaneSupportedDisplaysKHR
+  = vkGetDisplayPlaneSupportedDisplaysKHRUnsafe
+#else
+vkGetDisplayPlaneSupportedDisplaysKHR
+  = vkGetDisplayPlaneSupportedDisplaysKHRSafe
+
+#endif
+{-# INLINE vkGetDisplayPlaneSupportedDisplaysKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -610,7 +780,7 @@ type PFN_vkGetDisplayPlaneSupportedDisplaysKHR =
      FunPtr HS_vkGetDisplayPlaneSupportedDisplaysKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDisplayPlaneSupportedDisplaysKHR ::
+               unwrapVkGetDisplayPlaneSupportedDisplaysKHRUnsafe ::
                PFN_vkGetDisplayPlaneSupportedDisplaysKHR ->
                  HS_vkGetDisplayPlaneSupportedDisplaysKHR
 
@@ -625,9 +795,10 @@ instance VulkanProc "vkGetDisplayPlaneSupportedDisplaysKHR" where
         vkProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDisplayPlaneSupportedDisplaysKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDisplayPlaneSupportedDisplaysKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetDisplayPlaneSupportedDisplaysKHRSafe
 
@@ -681,12 +852,15 @@ type VkGetDisplayModePropertiesKHR =
 --
 -- > myGetDisplayModePropertiesKHR <- vkGetProc @VkGetDisplayModePropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayModePropertiesKHRUnsafe@ and @vkGetDisplayModePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayModePropertiesKHR@ is an alias
+--           of @vkGetDisplayModePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayModePropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
-               vkGetDisplayModePropertiesKHR ::
+               vkGetDisplayModePropertiesKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkDisplayKHR -- ^ display
@@ -696,18 +870,19 @@ foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
                                                                 -> IO VkResult
 
 #else
-vkGetDisplayModePropertiesKHR ::
-                              VkPhysicalDevice -- ^ physicalDevice
-                                               ->
-                                VkDisplayKHR -- ^ display
-                                             ->
-                                  Ptr Word32 -- ^ pPropertyCount
-                                             -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
-                                                                               -> IO VkResult
-vkGetDisplayModePropertiesKHR
-  = unsafeDupablePerformIO (vkGetProc @VkGetDisplayModePropertiesKHR)
+vkGetDisplayModePropertiesKHRUnsafe ::
+                                    VkPhysicalDevice -- ^ physicalDevice
+                                                     ->
+                                      VkDisplayKHR -- ^ display
+                                                   ->
+                                        Ptr Word32 -- ^ pPropertyCount
+                                                   -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
+                                                                                     -> IO VkResult
+vkGetDisplayModePropertiesKHRUnsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkGetDisplayModePropertiesKHR)
 
-{-# NOINLINE vkGetDisplayModePropertiesKHR #-}
+{-# NOINLINE vkGetDisplayModePropertiesKHRUnsafe #-}
 #endif
 
 -- |
@@ -736,8 +911,11 @@ vkGetDisplayModePropertiesKHR
 --
 -- > myGetDisplayModePropertiesKHR <- vkGetProc @VkGetDisplayModePropertiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayModePropertiesKHRUnsafe@ and @vkGetDisplayModePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayModePropertiesKHR@ is an alias
+--           of @vkGetDisplayModePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayModePropertiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDisplayModePropertiesKHR"
@@ -766,6 +944,53 @@ vkGetDisplayModePropertiesKHRSafe
 {-# NOINLINE vkGetDisplayModePropertiesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetDisplayModePropertiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkDisplayKHR display
+-- >     , uint32_t* pPropertyCount
+-- >     , VkDisplayModePropertiesKHR* pProperties
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDisplayModePropertiesKHR <- vkGetInstanceProc @VkGetDisplayModePropertiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayModePropertiesKHR <- vkGetProc @VkGetDisplayModePropertiesKHR
+--
+-- __Note:__ @vkGetDisplayModePropertiesKHRUnsafe@ and @vkGetDisplayModePropertiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayModePropertiesKHR@ is an alias
+--           of @vkGetDisplayModePropertiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayModePropertiesKHRSafe@.
+--
+vkGetDisplayModePropertiesKHR ::
+                              VkPhysicalDevice -- ^ physicalDevice
+                                               ->
+                                VkDisplayKHR -- ^ display
+                                             ->
+                                  Ptr Word32 -- ^ pPropertyCount
+                                             -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
+                                                                               -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDisplayModePropertiesKHR = vkGetDisplayModePropertiesKHRUnsafe
+#else
+vkGetDisplayModePropertiesKHR = vkGetDisplayModePropertiesKHRSafe
+
+#endif
+{-# INLINE vkGetDisplayModePropertiesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -791,7 +1016,7 @@ type PFN_vkGetDisplayModePropertiesKHR =
      FunPtr HS_vkGetDisplayModePropertiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDisplayModePropertiesKHR ::
+               unwrapVkGetDisplayModePropertiesKHRUnsafe ::
                PFN_vkGetDisplayModePropertiesKHR ->
                  HS_vkGetDisplayModePropertiesKHR
 
@@ -806,9 +1031,9 @@ instance VulkanProc "vkGetDisplayModePropertiesKHR" where
         vkProcSymbol = _VkGetDisplayModePropertiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDisplayModePropertiesKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetDisplayModePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDisplayModePropertiesKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -859,12 +1084,15 @@ type VkCreateDisplayModeKHR = "vkCreateDisplayModeKHR"
 --
 -- > myCreateDisplayModeKHR <- vkGetProc @VkCreateDisplayModeKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDisplayModeKHRUnsafe@ and @vkCreateDisplayModeKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayModeKHR@ is an alias
+--           of @vkCreateDisplayModeKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayModeKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateDisplayModeKHR"
-               vkCreateDisplayModeKHR ::
+               vkCreateDisplayModeKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkDisplayKHR -- ^ display
@@ -876,20 +1104,20 @@ foreign import ccall unsafe "vkCreateDisplayModeKHR"
                                                                        -> IO VkResult
 
 #else
-vkCreateDisplayModeKHR ::
-                       VkPhysicalDevice -- ^ physicalDevice
-                                        ->
-                         VkDisplayKHR -- ^ display
-                                      ->
-                           Ptr VkDisplayModeCreateInfoKHR -- ^ pCreateInfo
-                                                          ->
-                             Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                       -> Ptr VkDisplayModeKHR -- ^ pMode
-                                                                               -> IO VkResult
-vkCreateDisplayModeKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateDisplayModeKHR)
+vkCreateDisplayModeKHRUnsafe ::
+                             VkPhysicalDevice -- ^ physicalDevice
+                                              ->
+                               VkDisplayKHR -- ^ display
+                                            ->
+                                 Ptr VkDisplayModeCreateInfoKHR -- ^ pCreateInfo
+                                                                ->
+                                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> Ptr VkDisplayModeKHR -- ^ pMode
+                                                                                     -> IO VkResult
+vkCreateDisplayModeKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCreateDisplayModeKHR)
 
-{-# NOINLINE vkCreateDisplayModeKHR #-}
+{-# NOINLINE vkCreateDisplayModeKHRUnsafe #-}
 #endif
 
 -- |
@@ -919,8 +1147,11 @@ vkCreateDisplayModeKHR
 --
 -- > myCreateDisplayModeKHR <- vkGetProc @VkCreateDisplayModeKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDisplayModeKHRUnsafe@ and @vkCreateDisplayModeKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayModeKHR@ is an alias
+--           of @vkCreateDisplayModeKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayModeKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateDisplayModeKHR"
@@ -952,6 +1183,56 @@ vkCreateDisplayModeKHRSafe
 {-# NOINLINE vkCreateDisplayModeKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+-- > VkResult vkCreateDisplayModeKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkDisplayKHR display
+-- >     , const VkDisplayModeCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkDisplayModeKHR* pMode
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayModeKHR vkCreateDisplayModeKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateDisplayModeKHR <- vkGetInstanceProc @VkCreateDisplayModeKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayModeKHR <- vkGetProc @VkCreateDisplayModeKHR
+--
+-- __Note:__ @vkCreateDisplayModeKHRUnsafe@ and @vkCreateDisplayModeKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayModeKHR@ is an alias
+--           of @vkCreateDisplayModeKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayModeKHRSafe@.
+--
+vkCreateDisplayModeKHR ::
+                       VkPhysicalDevice -- ^ physicalDevice
+                                        ->
+                         VkDisplayKHR -- ^ display
+                                      ->
+                           Ptr VkDisplayModeCreateInfoKHR -- ^ pCreateInfo
+                                                          ->
+                             Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                       -> Ptr VkDisplayModeKHR -- ^ pMode
+                                                                               -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateDisplayModeKHR = vkCreateDisplayModeKHRUnsafe
+#else
+vkCreateDisplayModeKHR = vkCreateDisplayModeKHRSafe
+
+#endif
+{-# INLINE vkCreateDisplayModeKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
@@ -978,8 +1259,9 @@ type HS_vkCreateDisplayModeKHR =
 
 type PFN_vkCreateDisplayModeKHR = FunPtr HS_vkCreateDisplayModeKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateDisplayModeKHR
-               :: PFN_vkCreateDisplayModeKHR -> HS_vkCreateDisplayModeKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateDisplayModeKHRUnsafe ::
+               PFN_vkCreateDisplayModeKHR -> HS_vkCreateDisplayModeKHR
 
 foreign import ccall safe "dynamic"
                unwrapVkCreateDisplayModeKHRSafe ::
@@ -991,9 +1273,9 @@ instance VulkanProc "vkCreateDisplayModeKHR" where
         vkProcSymbol = _VkCreateDisplayModeKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateDisplayModeKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayModeKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateDisplayModeKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1046,12 +1328,15 @@ type VkGetDisplayPlaneCapabilitiesKHR =
 --
 -- > myGetDisplayPlaneCapabilitiesKHR <- vkGetProc @VkGetDisplayPlaneCapabilitiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ and @vkGetDisplayPlaneCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneCapabilitiesKHR@ is an alias
+--           of @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneCapabilitiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
-               vkGetDisplayPlaneCapabilitiesKHR ::
+               vkGetDisplayPlaneCapabilitiesKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkDisplayModeKHR -- ^ mode
@@ -1061,19 +1346,20 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
                                                                -> IO VkResult
 
 #else
-vkGetDisplayPlaneCapabilitiesKHR ::
-                                 VkPhysicalDevice -- ^ physicalDevice
+vkGetDisplayPlaneCapabilitiesKHRUnsafe ::
+                                       VkPhysicalDevice -- ^ physicalDevice
+                                                        ->
+                                         VkDisplayModeKHR -- ^ mode
+                                                          ->
+                                           Word32 -- ^ planeIndex
                                                   ->
-                                   VkDisplayModeKHR -- ^ mode
-                                                    ->
-                                     Word32 -- ^ planeIndex
-                                            -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
-                                                                                 -> IO VkResult
-vkGetDisplayPlaneCapabilitiesKHR
+                                             Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
+                                                                               -> IO VkResult
+vkGetDisplayPlaneCapabilitiesKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetDisplayPlaneCapabilitiesKHR)
+      (vkGetProcUnsafe @VkGetDisplayPlaneCapabilitiesKHR)
 
-{-# NOINLINE vkGetDisplayPlaneCapabilitiesKHR #-}
+{-# NOINLINE vkGetDisplayPlaneCapabilitiesKHRUnsafe #-}
 #endif
 
 -- |
@@ -1102,8 +1388,11 @@ vkGetDisplayPlaneCapabilitiesKHR
 --
 -- > myGetDisplayPlaneCapabilitiesKHR <- vkGetProc @VkGetDisplayPlaneCapabilitiesKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ and @vkGetDisplayPlaneCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneCapabilitiesKHR@ is an alias
+--           of @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneCapabilitiesKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkGetDisplayPlaneCapabilitiesKHR"
@@ -1132,6 +1421,55 @@ vkGetDisplayPlaneCapabilitiesKHRSafe
 {-# NOINLINE vkGetDisplayPlaneCapabilitiesKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkGetDisplayPlaneCapabilitiesKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , VkDisplayModeKHR mode
+-- >     , uint32_t planeIndex
+-- >     , VkDisplayPlaneCapabilitiesKHR* pCapabilities
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetDisplayPlaneCapabilitiesKHR <- vkGetInstanceProc @VkGetDisplayPlaneCapabilitiesKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetDisplayPlaneCapabilitiesKHR <- vkGetProc @VkGetDisplayPlaneCapabilitiesKHR
+--
+-- __Note:__ @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ and @vkGetDisplayPlaneCapabilitiesKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetDisplayPlaneCapabilitiesKHR@ is an alias
+--           of @vkGetDisplayPlaneCapabilitiesKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetDisplayPlaneCapabilitiesKHRSafe@.
+--
+vkGetDisplayPlaneCapabilitiesKHR ::
+                                 VkPhysicalDevice -- ^ physicalDevice
+                                                  ->
+                                   VkDisplayModeKHR -- ^ mode
+                                                    ->
+                                     Word32 -- ^ planeIndex
+                                            -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
+                                                                                 -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetDisplayPlaneCapabilitiesKHR
+  = vkGetDisplayPlaneCapabilitiesKHRUnsafe
+#else
+vkGetDisplayPlaneCapabilitiesKHR
+  = vkGetDisplayPlaneCapabilitiesKHRSafe
+
+#endif
+{-# INLINE vkGetDisplayPlaneCapabilitiesKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -1157,7 +1495,7 @@ type PFN_vkGetDisplayPlaneCapabilitiesKHR =
      FunPtr HS_vkGetDisplayPlaneCapabilitiesKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetDisplayPlaneCapabilitiesKHR ::
+               unwrapVkGetDisplayPlaneCapabilitiesKHRUnsafe ::
                PFN_vkGetDisplayPlaneCapabilitiesKHR ->
                  HS_vkGetDisplayPlaneCapabilitiesKHR
 
@@ -1172,9 +1510,10 @@ instance VulkanProc "vkGetDisplayPlaneCapabilitiesKHR" where
         vkProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetDisplayPlaneCapabilitiesKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetDisplayPlaneCapabilitiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetDisplayPlaneCapabilitiesKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -1227,12 +1566,15 @@ type VkCreateDisplayPlaneSurfaceKHR =
 --
 -- > myCreateDisplayPlaneSurfaceKHR <- vkGetProc @VkCreateDisplayPlaneSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDisplayPlaneSurfaceKHRUnsafe@ and @vkCreateDisplayPlaneSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayPlaneSurfaceKHR@ is an alias
+--           of @vkCreateDisplayPlaneSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayPlaneSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateDisplayPlaneSurfaceKHR"
-               vkCreateDisplayPlaneSurfaceKHR ::
+               vkCreateDisplayPlaneSurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -1242,19 +1584,20 @@ foreign import ccall unsafe "vkCreateDisplayPlaneSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateDisplayPlaneSurfaceKHR ::
-                               VkInstance -- ^ instance
-                                          ->
-                                 Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
+vkCreateDisplayPlaneSurfaceKHRUnsafe ::
+                                     VkInstance -- ^ instance
+                                                ->
+                                       Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                                         ->
+                                         Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                    ->
-                                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                                 -> IO VkResult
-vkCreateDisplayPlaneSurfaceKHR
+                                           Ptr VkSurfaceKHR -- ^ pSurface
+                                                            -> IO VkResult
+vkCreateDisplayPlaneSurfaceKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkCreateDisplayPlaneSurfaceKHR)
+      (vkGetProcUnsafe @VkCreateDisplayPlaneSurfaceKHR)
 
-{-# NOINLINE vkCreateDisplayPlaneSurfaceKHR #-}
+{-# NOINLINE vkCreateDisplayPlaneSurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -1283,8 +1626,11 @@ vkCreateDisplayPlaneSurfaceKHR
 --
 -- > myCreateDisplayPlaneSurfaceKHR <- vkGetProc @VkCreateDisplayPlaneSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateDisplayPlaneSurfaceKHRUnsafe@ and @vkCreateDisplayPlaneSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayPlaneSurfaceKHR@ is an alias
+--           of @vkCreateDisplayPlaneSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayPlaneSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateDisplayPlaneSurfaceKHR"
@@ -1313,6 +1659,54 @@ vkCreateDisplayPlaneSurfaceKHRSafe
 {-# NOINLINE vkCreateDisplayPlaneSurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateDisplayPlaneSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkDisplaySurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateDisplayPlaneSurfaceKHR <- vkGetInstanceProc @VkCreateDisplayPlaneSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateDisplayPlaneSurfaceKHR <- vkGetProc @VkCreateDisplayPlaneSurfaceKHR
+--
+-- __Note:__ @vkCreateDisplayPlaneSurfaceKHRUnsafe@ and @vkCreateDisplayPlaneSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateDisplayPlaneSurfaceKHR@ is an alias
+--           of @vkCreateDisplayPlaneSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateDisplayPlaneSurfaceKHRSafe@.
+--
+vkCreateDisplayPlaneSurfaceKHR ::
+                               VkInstance -- ^ instance
+                                          ->
+                                 Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                                   ->
+                                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                                 -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateDisplayPlaneSurfaceKHR
+  = vkCreateDisplayPlaneSurfaceKHRUnsafe
+#else
+vkCreateDisplayPlaneSurfaceKHR = vkCreateDisplayPlaneSurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateDisplayPlaneSurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -1338,7 +1732,7 @@ type PFN_vkCreateDisplayPlaneSurfaceKHR =
      FunPtr HS_vkCreateDisplayPlaneSurfaceKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateDisplayPlaneSurfaceKHR ::
+               unwrapVkCreateDisplayPlaneSurfaceKHRUnsafe ::
                PFN_vkCreateDisplayPlaneSurfaceKHR ->
                  HS_vkCreateDisplayPlaneSurfaceKHR
 
@@ -1353,9 +1747,9 @@ instance VulkanProc "vkCreateDisplayPlaneSurfaceKHR" where
         vkProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateDisplayPlaneSurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayPlaneSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateDisplayPlaneSurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

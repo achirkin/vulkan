@@ -38,12 +38,14 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         -- > #include "vk_platform.h"
         VkCreateWaylandSurfaceKHR, pattern VkCreateWaylandSurfaceKHR,
         HS_vkCreateWaylandSurfaceKHR, PFN_vkCreateWaylandSurfaceKHR,
-        vkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHRSafe,
+        vkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHRUnsafe,
+        vkCreateWaylandSurfaceKHRSafe,
         VkGetPhysicalDeviceWaylandPresentationSupportKHR,
         pattern VkGetPhysicalDeviceWaylandPresentationSupportKHR,
         HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
         PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
         vkGetPhysicalDeviceWaylandPresentationSupportKHR,
+        vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe,
         vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
@@ -120,12 +122,15 @@ type VkCreateWaylandSurfaceKHR = "vkCreateWaylandSurfaceKHR"
 --
 -- > myCreateWaylandSurfaceKHR <- vkGetProc @VkCreateWaylandSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateWaylandSurfaceKHRUnsafe@ and @vkCreateWaylandSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWaylandSurfaceKHR@ is an alias
+--           of @vkCreateWaylandSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWaylandSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
-               vkCreateWaylandSurfaceKHR ::
+               vkCreateWaylandSurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkWaylandSurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -135,18 +140,19 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateWaylandSurfaceKHR ::
-                          VkInstance -- ^ instance
-                                     ->
-                            Ptr VkWaylandSurfaceCreateInfoKHR -- ^ pCreateInfo
-                                                              ->
-                              Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                        -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                            -> IO VkResult
-vkCreateWaylandSurfaceKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateWaylandSurfaceKHR)
+vkCreateWaylandSurfaceKHRUnsafe ::
+                                VkInstance -- ^ instance
+                                           ->
+                                  Ptr VkWaylandSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                                    ->
+                                    Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                              -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                                  -> IO VkResult
+vkCreateWaylandSurfaceKHRUnsafe
+  = unsafeDupablePerformIO
+      (vkGetProcUnsafe @VkCreateWaylandSurfaceKHR)
 
-{-# NOINLINE vkCreateWaylandSurfaceKHR #-}
+{-# NOINLINE vkCreateWaylandSurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -175,8 +181,11 @@ vkCreateWaylandSurfaceKHR
 --
 -- > myCreateWaylandSurfaceKHR <- vkGetProc @VkCreateWaylandSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateWaylandSurfaceKHRUnsafe@ and @vkCreateWaylandSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWaylandSurfaceKHR@ is an alias
+--           of @vkCreateWaylandSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWaylandSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateWaylandSurfaceKHR"
@@ -204,6 +213,53 @@ vkCreateWaylandSurfaceKHRSafe
 {-# NOINLINE vkCreateWaylandSurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateWaylandSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWaylandSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWaylandSurfaceKHR <- vkGetInstanceProc @VkCreateWaylandSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateWaylandSurfaceKHR <- vkGetProc @VkCreateWaylandSurfaceKHR
+--
+-- __Note:__ @vkCreateWaylandSurfaceKHRUnsafe@ and @vkCreateWaylandSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWaylandSurfaceKHR@ is an alias
+--           of @vkCreateWaylandSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWaylandSurfaceKHRSafe@.
+--
+vkCreateWaylandSurfaceKHR ::
+                          VkInstance -- ^ instance
+                                     ->
+                            Ptr VkWaylandSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                              ->
+                              Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                        -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                            -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateWaylandSurfaceKHR = vkCreateWaylandSurfaceKHRUnsafe
+#else
+vkCreateWaylandSurfaceKHR = vkCreateWaylandSurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateWaylandSurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -229,7 +285,7 @@ type PFN_vkCreateWaylandSurfaceKHR =
      FunPtr HS_vkCreateWaylandSurfaceKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateWaylandSurfaceKHR ::
+               unwrapVkCreateWaylandSurfaceKHRUnsafe ::
                PFN_vkCreateWaylandSurfaceKHR -> HS_vkCreateWaylandSurfaceKHR
 
 foreign import ccall safe "dynamic"
@@ -242,9 +298,9 @@ instance VulkanProc "vkCreateWaylandSurfaceKHR" where
         vkProcSymbol = _VkCreateWaylandSurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateWaylandSurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateWaylandSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateWaylandSurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -294,30 +350,34 @@ type VkGetPhysicalDeviceWaylandPresentationSupportKHR =
 --
 -- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWaylandPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
-               vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
+               vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> Ptr WlDisplay -- ^ display
                                                            -> IO VkBool32
 
 #else
-vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
-                                                 VkPhysicalDevice -- ^ physicalDevice
-                                                                  ->
-                                                   Word32 -- ^ queueFamilyIndex
-                                                          -> Ptr WlDisplay -- ^ display
-                                                                           -> IO VkBool32
-vkGetPhysicalDeviceWaylandPresentationSupportKHR
+vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe ::
+                                                       VkPhysicalDevice -- ^ physicalDevice
+                                                                        ->
+                                                         Word32 -- ^ queueFamilyIndex
+                                                                -> Ptr WlDisplay -- ^ display
+                                                                                 -> IO VkBool32
+vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceWaylandPresentationSupportKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceWaylandPresentationSupportKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe
+             #-}
 #endif
 
 -- |
@@ -341,8 +401,11 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHR
 --
 -- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWaylandPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
@@ -368,6 +431,48 @@ vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe
              #-}
 #endif
 
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , struct wl_display* display
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceWaylandPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWaylandPresentationSupportKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWaylandPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe@.
+--
+vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
+                                                 VkPhysicalDevice -- ^ physicalDevice
+                                                                  ->
+                                                   Word32 -- ^ queueFamilyIndex
+                                                          -> Ptr WlDisplay -- ^ display
+                                                                           -> IO VkBool32
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceWaylandPresentationSupportKHR
+  = vkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe
+#else
+vkGetPhysicalDeviceWaylandPresentationSupportKHR
+  = vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceWaylandPresentationSupportKHR #-}
+
 -- | > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -385,7 +490,7 @@ type PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHR ::
+               unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe ::
                PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR
 
@@ -402,10 +507,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceWaylandPresentationSupportKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHRSafe
 

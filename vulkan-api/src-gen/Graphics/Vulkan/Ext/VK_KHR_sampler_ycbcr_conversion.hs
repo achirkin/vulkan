@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -248,7 +249,7 @@ type PFN_vkCreateSamplerYcbcrConversionKHR =
      FunPtr HS_vkCreateSamplerYcbcrConversionKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateSamplerYcbcrConversionKHR ::
+               unwrapVkCreateSamplerYcbcrConversionKHRUnsafe ::
                PFN_vkCreateSamplerYcbcrConversionKHR ->
                  HS_vkCreateSamplerYcbcrConversionKHR
 
@@ -263,9 +264,10 @@ instance VulkanProc "vkCreateSamplerYcbcrConversionKHR" where
         vkProcSymbol = _VkCreateSamplerYcbcrConversionKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateSamplerYcbcrConversionKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkCreateSamplerYcbcrConversionKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -312,7 +314,7 @@ type PFN_vkDestroySamplerYcbcrConversionKHR =
      FunPtr HS_vkDestroySamplerYcbcrConversionKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDestroySamplerYcbcrConversionKHR ::
+               unwrapVkDestroySamplerYcbcrConversionKHRUnsafe ::
                PFN_vkDestroySamplerYcbcrConversionKHR ->
                  HS_vkDestroySamplerYcbcrConversionKHR
 
@@ -327,9 +329,10 @@ instance VulkanProc "vkDestroySamplerYcbcrConversionKHR" where
         vkProcSymbol = _VkDestroySamplerYcbcrConversionKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroySamplerYcbcrConversionKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkDestroySamplerYcbcrConversionKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

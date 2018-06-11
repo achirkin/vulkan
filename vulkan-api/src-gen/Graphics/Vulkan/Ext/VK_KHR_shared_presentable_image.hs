@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -103,8 +104,9 @@ type HS_vkGetSwapchainStatusKHR =
 type PFN_vkGetSwapchainStatusKHR =
      FunPtr HS_vkGetSwapchainStatusKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkGetSwapchainStatusKHR
-               :: PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkGetSwapchainStatusKHRUnsafe ::
+               PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
 
 foreign import ccall safe "dynamic"
                unwrapVkGetSwapchainStatusKHRSafe ::
@@ -116,9 +118,9 @@ instance VulkanProc "vkGetSwapchainStatusKHR" where
         vkProcSymbol = _VkGetSwapchainStatusKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetSwapchainStatusKHR
+        unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainStatusKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkGetSwapchainStatusKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

@@ -38,12 +38,14 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         -- > #include "vk_platform.h"
         VkCreateMirSurfaceKHR, pattern VkCreateMirSurfaceKHR,
         HS_vkCreateMirSurfaceKHR, PFN_vkCreateMirSurfaceKHR,
-        vkCreateMirSurfaceKHR, vkCreateMirSurfaceKHRSafe,
+        vkCreateMirSurfaceKHR, vkCreateMirSurfaceKHRUnsafe,
+        vkCreateMirSurfaceKHRSafe,
         VkGetPhysicalDeviceMirPresentationSupportKHR,
         pattern VkGetPhysicalDeviceMirPresentationSupportKHR,
         HS_vkGetPhysicalDeviceMirPresentationSupportKHR,
         PFN_vkGetPhysicalDeviceMirPresentationSupportKHR,
         vkGetPhysicalDeviceMirPresentationSupportKHR,
+        vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe,
         vkGetPhysicalDeviceMirPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
@@ -119,12 +121,15 @@ type VkCreateMirSurfaceKHR = "vkCreateMirSurfaceKHR"
 --
 -- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateMirSurfaceKHRUnsafe@ and @vkCreateMirSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateMirSurfaceKHR@ is an alias
+--           of @vkCreateMirSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateMirSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateMirSurfaceKHR"
-               vkCreateMirSurfaceKHR ::
+               vkCreateMirSurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -134,18 +139,18 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateMirSurfaceKHR ::
-                      VkInstance -- ^ instance
-                                 ->
-                        Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
-                                                      ->
-                          Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                    -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                        -> IO VkResult
-vkCreateMirSurfaceKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateMirSurfaceKHR)
+vkCreateMirSurfaceKHRUnsafe ::
+                            VkInstance -- ^ instance
+                                       ->
+                              Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                            ->
+                                Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                              -> IO VkResult
+vkCreateMirSurfaceKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCreateMirSurfaceKHR)
 
-{-# NOINLINE vkCreateMirSurfaceKHR #-}
+{-# NOINLINE vkCreateMirSurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -174,8 +179,11 @@ vkCreateMirSurfaceKHR
 --
 -- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateMirSurfaceKHRUnsafe@ and @vkCreateMirSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateMirSurfaceKHR@ is an alias
+--           of @vkCreateMirSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateMirSurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateMirSurfaceKHR"
@@ -203,6 +211,53 @@ vkCreateMirSurfaceKHRSafe
 {-# NOINLINE vkCreateMirSurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateMirSurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkMirSurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateMirSurfaceKHR <- vkGetInstanceProc @VkCreateMirSurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateMirSurfaceKHR <- vkGetProc @VkCreateMirSurfaceKHR
+--
+-- __Note:__ @vkCreateMirSurfaceKHRUnsafe@ and @vkCreateMirSurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateMirSurfaceKHR@ is an alias
+--           of @vkCreateMirSurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateMirSurfaceKHRSafe@.
+--
+vkCreateMirSurfaceKHR ::
+                      VkInstance -- ^ instance
+                                 ->
+                        Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                      ->
+                          Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                    -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                        -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateMirSurfaceKHR = vkCreateMirSurfaceKHRUnsafe
+#else
+vkCreateMirSurfaceKHR = vkCreateMirSurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateMirSurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -226,8 +281,9 @@ type HS_vkCreateMirSurfaceKHR =
 
 type PFN_vkCreateMirSurfaceKHR = FunPtr HS_vkCreateMirSurfaceKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateMirSurfaceKHR
-               :: PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateMirSurfaceKHRUnsafe ::
+               PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
 
 foreign import ccall safe "dynamic" unwrapVkCreateMirSurfaceKHRSafe
                :: PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
@@ -237,9 +293,9 @@ instance VulkanProc "vkCreateMirSurfaceKHR" where
         vkProcSymbol = _VkCreateMirSurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateMirSurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateMirSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateMirSurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -288,30 +344,33 @@ type VkGetPhysicalDeviceMirPresentationSupportKHR =
 --
 -- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMirPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
-               vkGetPhysicalDeviceMirPresentationSupportKHR ::
+               vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> Ptr MirConnection -- ^ connection
                                                                -> IO VkBool32
 
 #else
-vkGetPhysicalDeviceMirPresentationSupportKHR ::
-                                             VkPhysicalDevice -- ^ physicalDevice
-                                                              ->
-                                               Word32 -- ^ queueFamilyIndex
-                                                      -> Ptr MirConnection -- ^ connection
-                                                                           -> IO VkBool32
-vkGetPhysicalDeviceMirPresentationSupportKHR
+vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe ::
+                                                   VkPhysicalDevice -- ^ physicalDevice
+                                                                    ->
+                                                     Word32 -- ^ queueFamilyIndex
+                                                            -> Ptr MirConnection -- ^ connection
+                                                                                 -> IO VkBool32
+vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceMirPresentationSupportKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceMirPresentationSupportKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe #-}
 #endif
 
 -- |
@@ -335,8 +394,11 @@ vkGetPhysicalDeviceMirPresentationSupportKHR
 --
 -- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMirPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
@@ -361,6 +423,48 @@ vkGetPhysicalDeviceMirPresentationSupportKHRSafe
 {-# NOINLINE vkGetPhysicalDeviceMirPresentationSupportKHRSafe #-}
 #endif
 
+-- |
+-- > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     , MirConnection* connection
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceMirPresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceMirPresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceMirPresentationSupportKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceMirPresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceMirPresentationSupportKHRSafe@.
+--
+vkGetPhysicalDeviceMirPresentationSupportKHR ::
+                                             VkPhysicalDevice -- ^ physicalDevice
+                                                              ->
+                                               Word32 -- ^ queueFamilyIndex
+                                                      -> Ptr MirConnection -- ^ connection
+                                                                           -> IO VkBool32
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceMirPresentationSupportKHR
+  = vkGetPhysicalDeviceMirPresentationSupportKHRUnsafe
+#else
+vkGetPhysicalDeviceMirPresentationSupportKHR
+  = vkGetPhysicalDeviceMirPresentationSupportKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceMirPresentationSupportKHR #-}
+
 -- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -378,7 +482,7 @@ type PFN_vkGetPhysicalDeviceMirPresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceMirPresentationSupportKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceMirPresentationSupportKHR ::
+               unwrapVkGetPhysicalDeviceMirPresentationSupportKHRUnsafe ::
                PFN_vkGetPhysicalDeviceMirPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceMirPresentationSupportKHR
 
@@ -394,10 +498,10 @@ instance VulkanProc "vkGetPhysicalDeviceMirPresentationSupportKHR"
         vkProcSymbol = _VkGetPhysicalDeviceMirPresentationSupportKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceMirPresentationSupportKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceMirPresentationSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceMirPresentationSupportKHRSafe
 

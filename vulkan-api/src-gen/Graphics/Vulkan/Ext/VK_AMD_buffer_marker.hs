@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -88,7 +89,7 @@ type PFN_vkCmdWriteBufferMarkerAMD =
      FunPtr HS_vkCmdWriteBufferMarkerAMD
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdWriteBufferMarkerAMD ::
+               unwrapVkCmdWriteBufferMarkerAMDUnsafe ::
                PFN_vkCmdWriteBufferMarkerAMD -> HS_vkCmdWriteBufferMarkerAMD
 
 foreign import ccall safe "dynamic"
@@ -101,9 +102,9 @@ instance VulkanProc "vkCmdWriteBufferMarkerAMD" where
         vkProcSymbol = _VkCmdWriteBufferMarkerAMD
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdWriteBufferMarkerAMD
+        unwrapVkProcPtrUnsafe = unwrapVkCmdWriteBufferMarkerAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdWriteBufferMarkerAMDSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

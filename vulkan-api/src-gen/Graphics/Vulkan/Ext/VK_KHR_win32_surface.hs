@@ -38,12 +38,14 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         -- > #include "vk_platform.h"
         VkCreateWin32SurfaceKHR, pattern VkCreateWin32SurfaceKHR,
         HS_vkCreateWin32SurfaceKHR, PFN_vkCreateWin32SurfaceKHR,
-        vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHRSafe,
+        vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHRUnsafe,
+        vkCreateWin32SurfaceKHRSafe,
         VkGetPhysicalDeviceWin32PresentationSupportKHR,
         pattern VkGetPhysicalDeviceWin32PresentationSupportKHR,
         HS_vkGetPhysicalDeviceWin32PresentationSupportKHR,
         PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR,
         vkGetPhysicalDeviceWin32PresentationSupportKHR,
+        vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe,
         vkGetPhysicalDeviceWin32PresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
@@ -120,12 +122,15 @@ type VkCreateWin32SurfaceKHR = "vkCreateWin32SurfaceKHR"
 --
 -- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateWin32SurfaceKHRUnsafe@ and @vkCreateWin32SurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWin32SurfaceKHR@ is an alias
+--           of @vkCreateWin32SurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWin32SurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
-               vkCreateWin32SurfaceKHR ::
+               vkCreateWin32SurfaceKHRUnsafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
@@ -135,18 +140,18 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                                                                  -> IO VkResult
 
 #else
-vkCreateWin32SurfaceKHR ::
-                        VkInstance -- ^ instance
-                                   ->
-                          Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
-                                                          ->
-                            Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                      -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                          -> IO VkResult
-vkCreateWin32SurfaceKHR
-  = unsafeDupablePerformIO (vkGetProc @VkCreateWin32SurfaceKHR)
+vkCreateWin32SurfaceKHRUnsafe ::
+                              VkInstance -- ^ instance
+                                         ->
+                                Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                                ->
+                                  Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                            -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                                -> IO VkResult
+vkCreateWin32SurfaceKHRUnsafe
+  = unsafeDupablePerformIO (vkGetProcUnsafe @VkCreateWin32SurfaceKHR)
 
-{-# NOINLINE vkCreateWin32SurfaceKHR #-}
+{-# NOINLINE vkCreateWin32SurfaceKHRUnsafe #-}
 #endif
 
 -- |
@@ -175,8 +180,11 @@ vkCreateWin32SurfaceKHR
 --
 -- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkCreateWin32SurfaceKHRUnsafe@ and @vkCreateWin32SurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWin32SurfaceKHR@ is an alias
+--           of @vkCreateWin32SurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWin32SurfaceKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe "vkCreateWin32SurfaceKHR"
@@ -204,6 +212,53 @@ vkCreateWin32SurfaceKHRSafe
 {-# NOINLINE vkCreateWin32SurfaceKHRSafe #-}
 #endif
 
+-- |
+-- Success codes: 'VK_SUCCESS'.
+--
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+-- > VkResult vkCreateWin32SurfaceKHR
+-- >     ( VkInstance instance
+-- >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
+-- >     , const VkAllocationCallbacks* pAllocator
+-- >     , VkSurfaceKHR* pSurface
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetInstanceProc @VkCreateWin32SurfaceKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myCreateWin32SurfaceKHR <- vkGetProc @VkCreateWin32SurfaceKHR
+--
+-- __Note:__ @vkCreateWin32SurfaceKHRUnsafe@ and @vkCreateWin32SurfaceKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkCreateWin32SurfaceKHR@ is an alias
+--           of @vkCreateWin32SurfaceKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkCreateWin32SurfaceKHRSafe@.
+--
+vkCreateWin32SurfaceKHR ::
+                        VkInstance -- ^ instance
+                                   ->
+                          Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                          ->
+                            Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                      -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                          -> IO VkResult
+#ifdef UNSAFE_FFI_DEFAULT
+vkCreateWin32SurfaceKHR = vkCreateWin32SurfaceKHRUnsafe
+#else
+vkCreateWin32SurfaceKHR = vkCreateWin32SurfaceKHRSafe
+
+#endif
+{-# INLINE vkCreateWin32SurfaceKHR #-}
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -228,8 +283,9 @@ type HS_vkCreateWin32SurfaceKHR =
 type PFN_vkCreateWin32SurfaceKHR =
      FunPtr HS_vkCreateWin32SurfaceKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateWin32SurfaceKHR
-               :: PFN_vkCreateWin32SurfaceKHR -> HS_vkCreateWin32SurfaceKHR
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateWin32SurfaceKHRUnsafe ::
+               PFN_vkCreateWin32SurfaceKHR -> HS_vkCreateWin32SurfaceKHR
 
 foreign import ccall safe "dynamic"
                unwrapVkCreateWin32SurfaceKHRSafe ::
@@ -241,9 +297,9 @@ instance VulkanProc "vkCreateWin32SurfaceKHR" where
         vkProcSymbol = _VkCreateWin32SurfaceKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateWin32SurfaceKHR
+        unwrapVkProcPtrUnsafe = unwrapVkCreateWin32SurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateWin32SurfaceKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -292,27 +348,31 @@ type VkGetPhysicalDeviceWin32PresentationSupportKHR =
 --
 -- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWin32PresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
-               vkGetPhysicalDeviceWin32PresentationSupportKHR ::
+               vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> IO VkBool32
 
 #else
-vkGetPhysicalDeviceWin32PresentationSupportKHR ::
-                                               VkPhysicalDevice -- ^ physicalDevice
-                                                                -> Word32 -- ^ queueFamilyIndex
-                                                                          -> IO VkBool32
-vkGetPhysicalDeviceWin32PresentationSupportKHR
+vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe ::
+                                                     VkPhysicalDevice -- ^ physicalDevice
+                                                                      -> Word32 -- ^ queueFamilyIndex
+                                                                                -> IO VkBool32
+vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe
   = unsafeDupablePerformIO
-      (vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR)
+      (vkGetProcUnsafe @VkGetPhysicalDeviceWin32PresentationSupportKHR)
 
-{-# NOINLINE vkGetPhysicalDeviceWin32PresentationSupportKHR #-}
+{-# NOINLINE vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe
+             #-}
 #endif
 
 -- |
@@ -335,8 +395,11 @@ vkGetPhysicalDeviceWin32PresentationSupportKHR
 --
 -- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR
 --
--- __Note:__ @vkXxx@ and @vkXxxSafe@ versions of the call refer to
---           using @unsafe@ of @safe@ FFI respectively.
+-- __Note:__ @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWin32PresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@.
+--
 --
 #ifdef NATIVE_FFI_VK_VERSION_1_0
 foreign import ccall safe
@@ -358,6 +421,45 @@ vkGetPhysicalDeviceWin32PresentationSupportKHRSafe
 {-# NOINLINE vkGetPhysicalDeviceWin32PresentationSupportKHRSafe #-}
 #endif
 
+-- |
+-- > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
+-- >     ( VkPhysicalDevice physicalDevice
+-- >     , uint32_t queueFamilyIndex
+-- >     )
+--
+-- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+--
+-- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
+--           as a @foreign import@ call to C Vulkan loader.
+--           Otherwise, it is looked up dynamically at runtime using dlsym-like machinery (platform-dependent).
+--
+-- Independently of the flag setting, you can lookup the function manually at runtime:
+--
+-- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetInstanceProc @VkGetPhysicalDeviceWin32PresentationSupportKHR vkInstance
+--
+-- or less efficient:
+--
+-- > myGetPhysicalDeviceWin32PresentationSupportKHR <- vkGetProc @VkGetPhysicalDeviceWin32PresentationSupportKHR
+--
+-- __Note:__ @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ and @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@ are the @unsafe@ and @safe@
+--           FFI imports of this function, respectively. @vkGetPhysicalDeviceWin32PresentationSupportKHR@ is an alias
+--           of @vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe@ when the @useUnsafeFFIDefault@ cabal flag
+--           is enabled; otherwise, it is an alias of @vkGetPhysicalDeviceWin32PresentationSupportKHRSafe@.
+--
+vkGetPhysicalDeviceWin32PresentationSupportKHR ::
+                                               VkPhysicalDevice -- ^ physicalDevice
+                                                                -> Word32 -- ^ queueFamilyIndex
+                                                                          -> IO VkBool32
+#ifdef UNSAFE_FFI_DEFAULT
+vkGetPhysicalDeviceWin32PresentationSupportKHR
+  = vkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe
+#else
+vkGetPhysicalDeviceWin32PresentationSupportKHR
+  = vkGetPhysicalDeviceWin32PresentationSupportKHRSafe
+
+#endif
+{-# INLINE vkGetPhysicalDeviceWin32PresentationSupportKHR #-}
+
 -- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -373,7 +475,7 @@ type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
      FunPtr HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceWin32PresentationSupportKHR ::
+               unwrapVkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe ::
                PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
 
@@ -390,10 +492,10 @@ instance VulkanProc
         vkProcSymbol = _VkGetPhysicalDeviceWin32PresentationSupportKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr
-          = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHRSafe
 

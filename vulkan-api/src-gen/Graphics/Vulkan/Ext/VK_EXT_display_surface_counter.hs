@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -106,7 +107,7 @@ type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
      FunPtr HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT ::
+               unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTUnsafe ::
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
 
@@ -122,9 +123,10 @@ instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
         vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTSafe
 

@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -102,7 +103,8 @@ type HS_vkCreateViSurfaceNN =
 
 type PFN_vkCreateViSurfaceNN = FunPtr HS_vkCreateViSurfaceNN
 
-foreign import ccall unsafe "dynamic" unwrapVkCreateViSurfaceNN ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkCreateViSurfaceNNUnsafe ::
                PFN_vkCreateViSurfaceNN -> HS_vkCreateViSurfaceNN
 
 foreign import ccall safe "dynamic" unwrapVkCreateViSurfaceNNSafe
@@ -113,9 +115,9 @@ instance VulkanProc "vkCreateViSurfaceNN" where
         vkProcSymbol = _VkCreateViSurfaceNN
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateViSurfaceNN
+        unwrapVkProcPtrUnsafe = unwrapVkCreateViSurfaceNNUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateViSurfaceNNSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

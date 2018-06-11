@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -135,7 +136,7 @@ type PFN_vkCreateDescriptorUpdateTemplateKHR =
      FunPtr HS_vkCreateDescriptorUpdateTemplateKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCreateDescriptorUpdateTemplateKHR ::
+               unwrapVkCreateDescriptorUpdateTemplateKHRUnsafe ::
                PFN_vkCreateDescriptorUpdateTemplateKHR ->
                  HS_vkCreateDescriptorUpdateTemplateKHR
 
@@ -150,9 +151,10 @@ instance VulkanProc "vkCreateDescriptorUpdateTemplateKHR" where
         vkProcSymbol = _VkCreateDescriptorUpdateTemplateKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCreateDescriptorUpdateTemplateKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkCreateDescriptorUpdateTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -199,7 +201,7 @@ type PFN_vkDestroyDescriptorUpdateTemplateKHR =
      FunPtr HS_vkDestroyDescriptorUpdateTemplateKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkDestroyDescriptorUpdateTemplateKHR ::
+               unwrapVkDestroyDescriptorUpdateTemplateKHRUnsafe ::
                PFN_vkDestroyDescriptorUpdateTemplateKHR ->
                  HS_vkDestroyDescriptorUpdateTemplateKHR
 
@@ -214,9 +216,10 @@ instance VulkanProc "vkDestroyDescriptorUpdateTemplateKHR" where
         vkProcSymbol = _VkDestroyDescriptorUpdateTemplateKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkDestroyDescriptorUpdateTemplateKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkDestroyDescriptorUpdateTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkDestroyDescriptorUpdateTemplateKHRSafe
 
@@ -266,7 +269,7 @@ type PFN_vkUpdateDescriptorSetWithTemplateKHR =
      FunPtr HS_vkUpdateDescriptorSetWithTemplateKHR
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkUpdateDescriptorSetWithTemplateKHR ::
+               unwrapVkUpdateDescriptorSetWithTemplateKHRUnsafe ::
                PFN_vkUpdateDescriptorSetWithTemplateKHR ->
                  HS_vkUpdateDescriptorSetWithTemplateKHR
 
@@ -281,9 +284,10 @@ instance VulkanProc "vkUpdateDescriptorSetWithTemplateKHR" where
         vkProcSymbol = _VkUpdateDescriptorSetWithTemplateKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkUpdateDescriptorSetWithTemplateKHR
+        unwrapVkProcPtrUnsafe
+          = unwrapVkUpdateDescriptorSetWithTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkUpdateDescriptorSetWithTemplateKHRSafe
 

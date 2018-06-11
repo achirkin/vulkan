@@ -2,6 +2,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -83,7 +84,8 @@ type HS_vkTrimCommandPoolKHR =
 
 type PFN_vkTrimCommandPoolKHR = FunPtr HS_vkTrimCommandPoolKHR
 
-foreign import ccall unsafe "dynamic" unwrapVkTrimCommandPoolKHR ::
+foreign import ccall unsafe "dynamic"
+               unwrapVkTrimCommandPoolKHRUnsafe ::
                PFN_vkTrimCommandPoolKHR -> HS_vkTrimCommandPoolKHR
 
 foreign import ccall safe "dynamic" unwrapVkTrimCommandPoolKHRSafe
@@ -94,9 +96,9 @@ instance VulkanProc "vkTrimCommandPoolKHR" where
         vkProcSymbol = _VkTrimCommandPoolKHR
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkTrimCommandPoolKHR
+        unwrapVkProcPtrUnsafe = unwrapVkTrimCommandPoolKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolKHRSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}

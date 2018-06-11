@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
+{-# LANGUAGE CPP                      #-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -125,7 +126,7 @@ type PFN_vkCmdSetSampleLocationsEXT =
      FunPtr HS_vkCmdSetSampleLocationsEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkCmdSetSampleLocationsEXT ::
+               unwrapVkCmdSetSampleLocationsEXTUnsafe ::
                PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
 
 foreign import ccall safe "dynamic"
@@ -138,9 +139,9 @@ instance VulkanProc "vkCmdSetSampleLocationsEXT" where
         vkProcSymbol = _VkCmdSetSampleLocationsEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkCmdSetSampleLocationsEXT
+        unwrapVkProcPtrUnsafe = unwrapVkCmdSetSampleLocationsEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe = unwrapVkCmdSetSampleLocationsEXTSafe
 
         {-# INLINE unwrapVkProcPtrSafe #-}
@@ -186,7 +187,7 @@ type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT =
      FunPtr HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
 
 foreign import ccall unsafe "dynamic"
-               unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT ::
+               unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTUnsafe ::
                PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ->
                  HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
 
@@ -202,9 +203,10 @@ instance VulkanProc "vkGetPhysicalDeviceMultisamplePropertiesEXT"
         vkProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
 
         {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT
+        unwrapVkProcPtrUnsafe
+          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtr #-}
+        {-# INLINE unwrapVkProcPtrUnsafe #-}
         unwrapVkProcPtrSafe
           = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTSafe
 
