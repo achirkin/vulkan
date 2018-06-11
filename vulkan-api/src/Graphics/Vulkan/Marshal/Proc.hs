@@ -90,7 +90,7 @@ vkGetInstanceProcUnsafe :: forall proc . VulkanProc proc
                         => VkInstance -> IO (VkProcType proc)
 vkGetInstanceProcUnsafe i
   = unwrapVkProcPtrUnsafe @proc
-  <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+  <$> c'vkGetInstanceProcAddrUnsafe i (vkProcSymbol @proc)
 {-# INLINE vkGetInstanceProcUnsafe #-}
 
 -- | An alternative to @vkGetInstanceProcAddr@ with type inference
@@ -98,7 +98,7 @@ vkGetInstanceProcUnsafe i
 vkLookupInstanceProcUnsafe :: forall proc . VulkanProc proc
                            => VkInstance -> IO (Maybe (VkProcType proc))
 vkLookupInstanceProcUnsafe i
-    = f <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+    = f <$> c'vkGetInstanceProcAddrUnsafe i (vkProcSymbol @proc)
   where
     f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrUnsafe @proc p)
 {-# INLINE vkLookupInstanceProcUnsafe #-}
@@ -114,7 +114,7 @@ vkGetDeviceProcUnsafe :: forall proc . VulkanProc proc
                       => VkDevice -> IO (VkProcType proc)
 vkGetDeviceProcUnsafe i
   = unwrapVkProcPtrUnsafe @proc
-  <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+  <$> c'vkGetDeviceProcAddrUnsafe i (vkProcSymbol @proc)
 {-# INLINE vkGetDeviceProcUnsafe #-}
 
 -- | An alternative to @vkGetDeviceProcAddr@ with type inference
@@ -122,7 +122,7 @@ vkGetDeviceProcUnsafe i
 vkLookupDeviceProcUnsafe :: forall proc . VulkanProc proc
                          => VkDevice -> IO (Maybe (VkProcType proc))
 vkLookupDeviceProcUnsafe i
-    = f <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+    = f <$> c'vkGetDeviceProcAddrUnsafe i (vkProcSymbol @proc)
   where
     f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrUnsafe @proc p)
 {-# INLINE vkLookupDeviceProcUnsafe #-}
@@ -180,7 +180,7 @@ vkGetInstanceProcSafe :: forall proc . VulkanProc proc
                   => VkInstance -> IO (VkProcType proc)
 vkGetInstanceProcSafe i
   = unwrapVkProcPtrSafe @proc
-  <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+  <$> c'vkGetInstanceProcAddrSafe i (vkProcSymbol @proc)
 {-# INLINE vkGetInstanceProcSafe #-}
 
 -- | An alternative to @vkGetInstanceProcAddr@ with type inference
@@ -188,7 +188,7 @@ vkGetInstanceProcSafe i
 vkLookupInstanceProcSafe :: forall proc . VulkanProc proc
                      => VkInstance -> IO (Maybe (VkProcType proc))
 vkLookupInstanceProcSafe i
-    = f <$> c'vkGetInstanceProcAddr i (vkProcSymbol @proc)
+    = f <$> c'vkGetInstanceProcAddrSafe i (vkProcSymbol @proc)
   where
     f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrSafe @proc p)
 {-# INLINE vkLookupInstanceProcSafe #-}
@@ -204,7 +204,7 @@ vkGetDeviceProcSafe :: forall proc . VulkanProc proc
                 => VkDevice -> IO (VkProcType proc)
 vkGetDeviceProcSafe i
   = unwrapVkProcPtrSafe @proc
-  <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+  <$> c'vkGetDeviceProcAddrSafe i (vkProcSymbol @proc)
 {-# INLINE vkGetDeviceProcSafe #-}
 
 -- | An alternative to @vkGetDeviceProcAddr@ with type inference
@@ -212,7 +212,7 @@ vkGetDeviceProcSafe i
 vkLookupDeviceProcSafe :: forall proc . VulkanProc proc
                    => VkDevice -> IO (Maybe (VkProcType proc))
 vkLookupDeviceProcSafe i
-    = f <$> c'vkGetDeviceProcAddr i (vkProcSymbol @proc)
+    = f <$> c'vkGetDeviceProcAddrSafe i (vkProcSymbol @proc)
   where
     f p = if p == nullFunPtr then Nothing else Just (unwrapVkProcPtrSafe @proc p)
 {-# INLINE vkLookupDeviceProcSafe #-}
@@ -366,40 +366,77 @@ vkLookupProc =
 
 #ifdef VK_NO_PROTOTYPES
 
-c'vkGetInstanceProcAddr :: VkInstance -> CString -> IO (FunPtr a)
-c'vkGetInstanceProcAddr = unsafePerformIO $ alloca $ \errPtr -> do
+c'vkGetInstanceProcAddrSafe :: VkInstance -> CString -> IO (FunPtr a)
+c'vkGetInstanceProcAddrSafe = c'vkGetInstanceProcAddr' unwrap'vkGetInstanceProcAddrSafe
+
+c'vkGetInstanceProcAddrUnsafe :: VkInstance -> CString -> IO (FunPtr a)
+c'vkGetInstanceProcAddrUnsafe = c'vkGetInstanceProcAddr' unwrap'vkGetInstanceProcAddrUnsafe
+
+c'vkGetDeviceProcAddrSafe :: VkDevice -> CString -> IO (FunPtr a)
+c'vkGetDeviceProcAddrSafe = c'vkGetDeviceProcAddr' unwrap'vkGetDeviceProcAddrSafe
+
+c'vkGetDeviceProcAddrUnsafe :: VkDevice -> CString -> IO (FunPtr a)
+c'vkGetDeviceProcAddrUnsafe = c'vkGetDeviceProcAddr' unwrap'vkGetDeviceProcAddrUnsafe
+
+c'vkGetInstanceProcAddr'
+    :: ( FunPtr (VkInstance -> CString -> IO (FunPtr a))
+          -> VkInstance -> CString -> IO (FunPtr a)
+       )
+    -> VkInstance -> CString -> IO (FunPtr a)
+c'vkGetInstanceProcAddr' k = unsafePerformIO $ alloca $ \errPtr -> do
     fp <- withForeignPtr _vkDlHandle $ \h ->
       c'vkdll_dlsym h (Ptr "vkGetInstanceProcAddr"#) errPtr
     when (fp == nullFunPtr) $
       peek errPtr >>= peekCString >>= fail .
         ("Could not load 'vkGetInstanceProcAddr' C function from vulkan library dynamically: " ++)
-    return $ unwrap'vkGetInstanceProcAddr fp
+    return $ k fp
 
-c'vkGetDeviceProcAddr :: VkDevice -> CString -> IO (FunPtr a)
-c'vkGetDeviceProcAddr = unsafePerformIO $ alloca $ \errPtr -> do
+c'vkGetDeviceProcAddr'
+    :: ( FunPtr (VkDevice -> CString -> IO (FunPtr a))
+          -> VkDevice -> CString -> IO (FunPtr a)
+       )
+    -> VkDevice -> CString -> IO (FunPtr a)
+c'vkGetDeviceProcAddr' k = unsafePerformIO $ alloca $ \errPtr -> do
     fp <- withForeignPtr _vkDlHandle $ \h ->
       c'vkdll_dlsym h (Ptr "vkGetDeviceProcAddr"#) errPtr
     when (fp == nullFunPtr) $ peek errPtr >>= peekCString >>= fail .
         ("Could not load 'vkGetDeviceProcAddr' C function from vulkan library dynamically: " ++)
-    return $ unwrap'vkGetDeviceProcAddr fp
+    return $ k fp
+
+foreign import ccall safe "dynamic"
+  unwrap'vkGetInstanceProcAddrSafe
+    :: FunPtr (VkInstance -> CString -> IO (FunPtr a))
+    -> VkInstance -> CString -> IO (FunPtr a)
+
+foreign import ccall safe "dynamic"
+  unwrap'vkGetDeviceProcAddrSafe
+    :: FunPtr (VkDevice -> CString -> IO (FunPtr a))
+    -> VkDevice -> CString -> IO (FunPtr a)
 
 foreign import ccall unsafe "dynamic"
-  unwrap'vkGetInstanceProcAddr
+  unwrap'vkGetInstanceProcAddrUnsafe
     :: FunPtr (VkInstance -> CString -> IO (FunPtr a))
     -> VkInstance -> CString -> IO (FunPtr a)
 
 foreign import ccall unsafe "dynamic"
-  unwrap'vkGetDeviceProcAddr
+  unwrap'vkGetDeviceProcAddrUnsafe
     :: FunPtr (VkDevice -> CString -> IO (FunPtr a))
     -> VkDevice -> CString -> IO (FunPtr a)
 
 #else
 
+foreign import ccall safe "vkGetInstanceProcAddr"
+  c'vkGetInstanceProcAddrSafe :: VkInstance -> CString -> IO (FunPtr a)
+
+foreign import ccall safe "vkGetDeviceProcAddr"
+  c'vkGetDeviceProcAddrSafe :: VkDevice -> CString -> IO (FunPtr a)
+
 foreign import ccall unsafe "vkGetInstanceProcAddr"
-  c'vkGetInstanceProcAddr :: VkInstance -> CString -> IO (FunPtr a)
+  c'vkGetInstanceProcAddrUnsafe :: VkInstance -> CString -> IO (FunPtr a)
 
 foreign import ccall unsafe "vkGetDeviceProcAddr"
-  c'vkGetDeviceProcAddr :: VkDevice -> CString -> IO (FunPtr a)
+  c'vkGetDeviceProcAddrUnsafe :: VkDevice -> CString -> IO (FunPtr a)
+
 
 #endif
 
