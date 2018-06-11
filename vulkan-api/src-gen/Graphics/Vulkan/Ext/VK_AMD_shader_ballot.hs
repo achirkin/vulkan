@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_ballot
         --
         -- supported: @vulkan@
         --
-        -- contact: @Dominik Witczak @dominikwitczak_amd@
+        -- contact: @Dominik Witczak @dominikwitczakamd@
         --
         -- author: @AMD@
         --

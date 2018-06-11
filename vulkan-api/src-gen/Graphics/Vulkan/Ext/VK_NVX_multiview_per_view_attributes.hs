@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @NVX@
         --

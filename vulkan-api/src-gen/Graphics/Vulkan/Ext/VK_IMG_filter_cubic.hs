@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_IMG_filter_cubic
         --
         -- supported: @vulkan@
         --
-        -- contact: @Tobias Hector @tobias@
+        -- contact: @Tobias Hector @tobski@
         --
         -- author: @IMG@
         --

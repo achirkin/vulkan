@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         --
         -- supported: @vulkan@
         --
-        -- contact: @Piers Daniell @pdaniell@
+        -- contact: @Piers Daniell @pdaniell-nv@
         --
         -- author: @NV@
         --

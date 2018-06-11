@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jesse Hall @jessehall@
+        -- contact: @Jesse Hall @critsec@
         --
         -- author: @KHR@
         --

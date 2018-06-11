@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         --
         -- supported: @vulkan@
         --
-        -- contact: @Tobias Hector @tobias@
+        -- contact: @Tobias Hector @tobski@
         --
         -- author: @KHR@
         --

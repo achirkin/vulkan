@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NV_sample_mask_override_coverage
         --
         -- supported: @vulkan@
         --
-        -- contact: @Piers Daniell @pdaniell@
+        -- contact: @Piers Daniell @pdaniell-nv@
         --
         -- author: @NV@
         --

@@ -57,12 +57,12 @@ pattern VK_API_VERSION_1_1 = 4198400
 type VK_API_VERSION_1_1 = 4198400
 
 -- | > // Version of this file
---   > #define VK_HEADER_VERSION 74
+--   > #define VK_HEADER_VERSION 77
 pattern VK_HEADER_VERSION :: (Num a, Eq a) => a
 
-pattern VK_HEADER_VERSION = 74
+pattern VK_HEADER_VERSION = 77
 
-type VK_HEADER_VERSION = 74
+type VK_HEADER_VERSION = 77
 
 -- | > #define VK_MAKE_VERSION(major, minor, patch) \
 --   >     (((major) << 22) | ((minor) << 12) | (patch))

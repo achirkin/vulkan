@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         --
         -- supported: @vulkan@
         --
-        -- contact: @Courtney Goeltzenleuchter @courtneygo@
+        -- contact: @Courtney Goeltzenleuchter @courtney-g@
         --
         -- author: @GOOGLE@
         --

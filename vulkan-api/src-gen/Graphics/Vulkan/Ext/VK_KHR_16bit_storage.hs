@@ -11,7 +11,7 @@ module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jan-Harald Fredriksen @janharald@
+        -- contact: @Jan-Harald Fredriksen @janharaldfredriksen-arm@
         --
         -- author: @KHR@
         --

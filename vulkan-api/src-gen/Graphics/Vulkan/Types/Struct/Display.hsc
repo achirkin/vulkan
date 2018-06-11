@@ -9,10 +9,13 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Display
        (VkDisplayEventInfoEXT(..), VkDisplayModeCreateInfoKHR(..),
-        VkDisplayModeParametersKHR(..), VkDisplayModePropertiesKHR(..),
-        VkDisplayPlaneCapabilitiesKHR(..), VkDisplayPlanePropertiesKHR(..),
+        VkDisplayModeParametersKHR(..), VkDisplayModeProperties2KHR(..),
+        VkDisplayModePropertiesKHR(..), VkDisplayPlaneCapabilities2KHR(..),
+        VkDisplayPlaneCapabilitiesKHR(..), VkDisplayPlaneInfo2KHR(..),
+        VkDisplayPlaneProperties2KHR(..), VkDisplayPlanePropertiesKHR(..),
         VkDisplayPowerInfoEXT(..), VkDisplayPresentInfoKHR(..),
-        VkDisplayPropertiesKHR(..), VkDisplaySurfaceCreateInfoKHR(..))
+        VkDisplayProperties2KHR(..), VkDisplayPropertiesKHR(..),
+        VkDisplaySurfaceCreateInfoKHR(..))
        where
 import           Foreign.Storable                         (Storable (..))
 import           GHC.Base                                 (Addr##, ByteArray##,
@@ -538,6 +541,182 @@ instance Show VkDisplayModeParametersKHR where
                     showString "refreshRate = " .
                       showsPrec d (getField @"refreshRate" x) . showChar '}'
 
+-- | > typedef struct VkDisplayModeProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkDisplayModePropertiesKHR displayModeProperties;
+--   > } VkDisplayModeProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeProperties2KHR VkDisplayModeProperties2KHR registry at www.khronos.org>
+data VkDisplayModeProperties2KHR = VkDisplayModeProperties2KHR## Addr##
+                                                                ByteArray##
+
+instance Eq VkDisplayModeProperties2KHR where
+        (VkDisplayModeProperties2KHR## a _) ==
+          x@(VkDisplayModeProperties2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
+
+        {-# INLINE (==) #-}
+
+instance Ord VkDisplayModeProperties2KHR where
+        (VkDisplayModeProperties2KHR## a _) `compare`
+          x@(VkDisplayModeProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+
+        {-# INLINE compare #-}
+
+instance Storable VkDisplayModeProperties2KHR where
+        sizeOf ~_ = #{size VkDisplayModeProperties2KHR}
+
+        {-# INLINE sizeOf #-}
+        alignment ~_ = #{alignment VkDisplayModeProperties2KHR}
+
+        {-# INLINE alignment #-}
+        peek = peekVkData##
+
+        {-# INLINE peek #-}
+        poke = pokeVkData##
+
+        {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayModeProperties2KHR where
+        unsafeAddr (VkDisplayModeProperties2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayModeProperties2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayModeProperties2KHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
+instance VulkanMarshal VkDisplayModeProperties2KHR where
+        type StructFields VkDisplayModeProperties2KHR =
+             '["sType", "pNext", "displayModeProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayModeProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayModeProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayModeProperties2KHR = '[] -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDisplayModeProperties2KHR where
+        type FieldType "sType" VkDisplayModeProperties2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkDisplayModeProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayModeProperties2KHR =
+             #{offset VkDisplayModeProperties2KHR, sType}
+        type FieldIsArray "sType" VkDisplayModeProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayModeProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeProperties2KHR, sType})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayModeProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayModeProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDisplayModeProperties2KHR where
+        type FieldType "pNext" VkDisplayModeProperties2KHR = Ptr Void
+        type FieldOptional "pNext" VkDisplayModeProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayModeProperties2KHR =
+             #{offset VkDisplayModeProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkDisplayModeProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayModeProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeProperties2KHR, pNext})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayModeProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayModeProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "displayModeProperties" VkDisplayModeProperties2KHR where
+        type FieldType "displayModeProperties" VkDisplayModeProperties2KHR
+             = VkDisplayModePropertiesKHR
+        type FieldOptional "displayModeProperties"
+               VkDisplayModeProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayModeProperties"
+               VkDisplayModeProperties2KHR
+             =
+             #{offset VkDisplayModeProperties2KHR, displayModeProperties}
+        type FieldIsArray "displayModeProperties"
+               VkDisplayModeProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeProperties2KHR, displayModeProperties}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "displayModeProperties" VkDisplayModeProperties2KHR
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeProperties2KHR, displayModeProperties})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayModeProperties2KHR, displayModeProperties}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "displayModeProperties" VkDisplayModeProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeProperties2KHR, displayModeProperties}
+
+instance Show VkDisplayModeProperties2KHR where
+        showsPrec d x
+          = showString "VkDisplayModeProperties2KHR {" .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
+                  showString ", " .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
+                        showString ", " .
+                          showString "displayModeProperties = " .
+                            showsPrec d (getField @"displayModeProperties" x) . showChar '}'
+
 -- | > typedef struct VkDisplayModePropertiesKHR {
 --   >     VkDisplayModeKHR                 displayMode;
 --   >     VkDisplayModeParametersKHR       parameters;
@@ -670,6 +849,177 @@ instance Show VkDisplayModePropertiesKHR where
                   showString ", " .
                     showString "parameters = " .
                       showsPrec d (getField @"parameters" x) . showChar '}'
+
+-- | > typedef struct VkDisplayPlaneCapabilities2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkDisplayPlaneCapabilitiesKHR capabilities;
+--   > } VkDisplayPlaneCapabilities2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneCapabilities2KHR VkDisplayPlaneCapabilities2KHR registry at www.khronos.org>
+data VkDisplayPlaneCapabilities2KHR = VkDisplayPlaneCapabilities2KHR## Addr##
+                                                                      ByteArray##
+
+instance Eq VkDisplayPlaneCapabilities2KHR where
+        (VkDisplayPlaneCapabilities2KHR## a _) ==
+          x@(VkDisplayPlaneCapabilities2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
+
+        {-# INLINE (==) #-}
+
+instance Ord VkDisplayPlaneCapabilities2KHR where
+        (VkDisplayPlaneCapabilities2KHR## a _) `compare`
+          x@(VkDisplayPlaneCapabilities2KHR## b _) = cmpBytes## (sizeOf x) a b
+
+        {-# INLINE compare #-}
+
+instance Storable VkDisplayPlaneCapabilities2KHR where
+        sizeOf ~_ = #{size VkDisplayPlaneCapabilities2KHR}
+
+        {-# INLINE sizeOf #-}
+        alignment ~_
+          = #{alignment VkDisplayPlaneCapabilities2KHR}
+
+        {-# INLINE alignment #-}
+        peek = peekVkData##
+
+        {-# INLINE peek #-}
+        poke = pokeVkData##
+
+        {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayPlaneCapabilities2KHR where
+        unsafeAddr (VkDisplayPlaneCapabilities2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayPlaneCapabilities2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayPlaneCapabilities2KHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
+instance VulkanMarshal VkDisplayPlaneCapabilities2KHR where
+        type StructFields VkDisplayPlaneCapabilities2KHR =
+             '["sType", "pNext", "capabilities"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPlaneCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPlaneCapabilities2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPlaneCapabilities2KHR = '[] -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDisplayPlaneCapabilities2KHR where
+        type FieldType "sType" VkDisplayPlaneCapabilities2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkDisplayPlaneCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayPlaneCapabilities2KHR =
+             #{offset VkDisplayPlaneCapabilities2KHR, sType}
+        type FieldIsArray "sType" VkDisplayPlaneCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilities2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayPlaneCapabilities2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilities2KHR, sType})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilities2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayPlaneCapabilities2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilities2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDisplayPlaneCapabilities2KHR where
+        type FieldType "pNext" VkDisplayPlaneCapabilities2KHR = Ptr Void
+        type FieldOptional "pNext" VkDisplayPlaneCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayPlaneCapabilities2KHR =
+             #{offset VkDisplayPlaneCapabilities2KHR, pNext}
+        type FieldIsArray "pNext" VkDisplayPlaneCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilities2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayPlaneCapabilities2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilities2KHR, pNext})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilities2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayPlaneCapabilities2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilities2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "capabilities" VkDisplayPlaneCapabilities2KHR where
+        type FieldType "capabilities" VkDisplayPlaneCapabilities2KHR =
+             VkDisplayPlaneCapabilitiesKHR
+        type FieldOptional "capabilities" VkDisplayPlaneCapabilities2KHR =
+             'False -- ' closing tick for hsc2hs
+        type FieldOffset "capabilities" VkDisplayPlaneCapabilities2KHR =
+             #{offset VkDisplayPlaneCapabilities2KHR, capabilities}
+        type FieldIsArray "capabilities" VkDisplayPlaneCapabilities2KHR =
+             'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilities2KHR, capabilities}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "capabilities" VkDisplayPlaneCapabilities2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilities2KHR, capabilities})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilities2KHR, capabilities}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "capabilities" VkDisplayPlaneCapabilities2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilities2KHR, capabilities}
+
+instance Show VkDisplayPlaneCapabilities2KHR where
+        showsPrec d x
+          = showString "VkDisplayPlaneCapabilities2KHR {" .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
+                  showString ", " .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
+                        showString ", " .
+                          showString "capabilities = " .
+                            showsPrec d (getField @"capabilities" x) . showChar '}'
 
 -- | > typedef struct VkDisplayPlaneCapabilitiesKHR {
 --   >     VkDisplayPlaneAlphaFlagsKHR      supportedAlpha;
@@ -1084,6 +1434,381 @@ instance Show VkDisplayPlaneCapabilitiesKHR where
                                                                 showsPrec d
                                                                   (getField @"maxDstExtent" x)
                                                                   . showChar '}'
+
+-- | > typedef struct VkDisplayPlaneInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkDisplayModeKHR mode;
+--   >     uint32_t planeIndex;
+--   > } VkDisplayPlaneInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneInfo2KHR VkDisplayPlaneInfo2KHR registry at www.khronos.org>
+data VkDisplayPlaneInfo2KHR = VkDisplayPlaneInfo2KHR## Addr##
+                                                      ByteArray##
+
+instance Eq VkDisplayPlaneInfo2KHR where
+        (VkDisplayPlaneInfo2KHR## a _) == x@(VkDisplayPlaneInfo2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
+
+        {-# INLINE (==) #-}
+
+instance Ord VkDisplayPlaneInfo2KHR where
+        (VkDisplayPlaneInfo2KHR## a _) `compare`
+          x@(VkDisplayPlaneInfo2KHR## b _) = cmpBytes## (sizeOf x) a b
+
+        {-# INLINE compare #-}
+
+instance Storable VkDisplayPlaneInfo2KHR where
+        sizeOf ~_ = #{size VkDisplayPlaneInfo2KHR}
+
+        {-# INLINE sizeOf #-}
+        alignment ~_ = #{alignment VkDisplayPlaneInfo2KHR}
+
+        {-# INLINE alignment #-}
+        peek = peekVkData##
+
+        {-# INLINE peek #-}
+        poke = pokeVkData##
+
+        {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayPlaneInfo2KHR where
+        unsafeAddr (VkDisplayPlaneInfo2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayPlaneInfo2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayPlaneInfo2KHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
+instance VulkanMarshal VkDisplayPlaneInfo2KHR where
+        type StructFields VkDisplayPlaneInfo2KHR =
+             '["sType", "pNext", "mode", "planeIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPlaneInfo2KHR = '[] -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDisplayPlaneInfo2KHR where
+        type FieldType "sType" VkDisplayPlaneInfo2KHR = VkStructureType
+        type FieldOptional "sType" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayPlaneInfo2KHR =
+             #{offset VkDisplayPlaneInfo2KHR, sType}
+        type FieldIsArray "sType" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPlaneInfo2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayPlaneInfo2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneInfo2KHR, sType})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneInfo2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayPlaneInfo2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneInfo2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDisplayPlaneInfo2KHR where
+        type FieldType "pNext" VkDisplayPlaneInfo2KHR = Ptr Void
+        type FieldOptional "pNext" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayPlaneInfo2KHR =
+             #{offset VkDisplayPlaneInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPlaneInfo2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayPlaneInfo2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneInfo2KHR, pNext})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneInfo2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayPlaneInfo2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneInfo2KHR, pNext}
+
+instance {-# OVERLAPPING #-} HasField "mode" VkDisplayPlaneInfo2KHR
+         where
+        type FieldType "mode" VkDisplayPlaneInfo2KHR = VkDisplayModeKHR
+        type FieldOptional "mode" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "mode" VkDisplayPlaneInfo2KHR =
+             #{offset VkDisplayPlaneInfo2KHR, mode}
+        type FieldIsArray "mode" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPlaneInfo2KHR, mode}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "mode" VkDisplayPlaneInfo2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneInfo2KHR, mode})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneInfo2KHR, mode}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "mode" VkDisplayPlaneInfo2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneInfo2KHR, mode}
+
+instance {-# OVERLAPPING #-}
+         HasField "planeIndex" VkDisplayPlaneInfo2KHR where
+        type FieldType "planeIndex" VkDisplayPlaneInfo2KHR = Word32
+        type FieldOptional "planeIndex" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeIndex" VkDisplayPlaneInfo2KHR =
+             #{offset VkDisplayPlaneInfo2KHR, planeIndex}
+        type FieldIsArray "planeIndex" VkDisplayPlaneInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneInfo2KHR, planeIndex}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "planeIndex" VkDisplayPlaneInfo2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneInfo2KHR, planeIndex})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneInfo2KHR, planeIndex}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "planeIndex" VkDisplayPlaneInfo2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneInfo2KHR, planeIndex}
+
+instance Show VkDisplayPlaneInfo2KHR where
+        showsPrec d x
+          = showString "VkDisplayPlaneInfo2KHR {" .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
+                  showString ", " .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
+                        showString ", " .
+                          showString "mode = " .
+                            showsPrec d (getField @"mode" x) .
+                              showString ", " .
+                                showString "planeIndex = " .
+                                  showsPrec d (getField @"planeIndex" x) . showChar '}'
+
+-- | > typedef struct VkDisplayPlaneProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkDisplayPlanePropertiesKHR displayPlaneProperties;
+--   > } VkDisplayPlaneProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneProperties2KHR VkDisplayPlaneProperties2KHR registry at www.khronos.org>
+data VkDisplayPlaneProperties2KHR = VkDisplayPlaneProperties2KHR## Addr##
+                                                                  ByteArray##
+
+instance Eq VkDisplayPlaneProperties2KHR where
+        (VkDisplayPlaneProperties2KHR## a _) ==
+          x@(VkDisplayPlaneProperties2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
+
+        {-# INLINE (==) #-}
+
+instance Ord VkDisplayPlaneProperties2KHR where
+        (VkDisplayPlaneProperties2KHR## a _) `compare`
+          x@(VkDisplayPlaneProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+
+        {-# INLINE compare #-}
+
+instance Storable VkDisplayPlaneProperties2KHR where
+        sizeOf ~_ = #{size VkDisplayPlaneProperties2KHR}
+
+        {-# INLINE sizeOf #-}
+        alignment ~_
+          = #{alignment VkDisplayPlaneProperties2KHR}
+
+        {-# INLINE alignment #-}
+        peek = peekVkData##
+
+        {-# INLINE peek #-}
+        poke = pokeVkData##
+
+        {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayPlaneProperties2KHR where
+        unsafeAddr (VkDisplayPlaneProperties2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayPlaneProperties2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayPlaneProperties2KHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
+instance VulkanMarshal VkDisplayPlaneProperties2KHR where
+        type StructFields VkDisplayPlaneProperties2KHR =
+             '["sType", "pNext", "displayPlaneProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPlaneProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPlaneProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPlaneProperties2KHR = '[] -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDisplayPlaneProperties2KHR where
+        type FieldType "sType" VkDisplayPlaneProperties2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkDisplayPlaneProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayPlaneProperties2KHR =
+             #{offset VkDisplayPlaneProperties2KHR, sType}
+        type FieldIsArray "sType" VkDisplayPlaneProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayPlaneProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneProperties2KHR, sType})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayPlaneProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDisplayPlaneProperties2KHR where
+        type FieldType "pNext" VkDisplayPlaneProperties2KHR = Ptr Void
+        type FieldOptional "pNext" VkDisplayPlaneProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayPlaneProperties2KHR =
+             #{offset VkDisplayPlaneProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkDisplayPlaneProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayPlaneProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneProperties2KHR, pNext})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayPlaneProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "displayPlaneProperties" VkDisplayPlaneProperties2KHR
+         where
+        type FieldType "displayPlaneProperties"
+               VkDisplayPlaneProperties2KHR
+             = VkDisplayPlanePropertiesKHR
+        type FieldOptional "displayPlaneProperties"
+               VkDisplayPlaneProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayPlaneProperties"
+               VkDisplayPlaneProperties2KHR
+             =
+             #{offset VkDisplayPlaneProperties2KHR, displayPlaneProperties}
+        type FieldIsArray "displayPlaneProperties"
+               VkDisplayPlaneProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneProperties2KHR, displayPlaneProperties}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "displayPlaneProperties" VkDisplayPlaneProperties2KHR
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneProperties2KHR, displayPlaneProperties})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneProperties2KHR, displayPlaneProperties}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "displayPlaneProperties" VkDisplayPlaneProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneProperties2KHR, displayPlaneProperties}
+
+instance Show VkDisplayPlaneProperties2KHR where
+        showsPrec d x
+          = showString "VkDisplayPlaneProperties2KHR {" .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
+                  showString ", " .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
+                        showString ", " .
+                          showString "displayPlaneProperties = " .
+                            showsPrec d (getField @"displayPlaneProperties" x) . showChar '}'
 
 -- | > typedef struct VkDisplayPlanePropertiesKHR {
 --   >     VkDisplayKHR                     currentDisplay;
@@ -1615,6 +2340,170 @@ instance Show VkDisplayPresentInfoKHR where
                                     showString ", " .
                                       showString "persistent = " .
                                         showsPrec d (getField @"persistent" x) . showChar '}'
+
+-- | > typedef struct VkDisplayProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkDisplayPropertiesKHR displayProperties;
+--   > } VkDisplayProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayProperties2KHR VkDisplayProperties2KHR registry at www.khronos.org>
+data VkDisplayProperties2KHR = VkDisplayProperties2KHR## Addr##
+                                                        ByteArray##
+
+instance Eq VkDisplayProperties2KHR where
+        (VkDisplayProperties2KHR## a _) == x@(VkDisplayProperties2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
+
+        {-# INLINE (==) #-}
+
+instance Ord VkDisplayProperties2KHR where
+        (VkDisplayProperties2KHR## a _) `compare`
+          x@(VkDisplayProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+
+        {-# INLINE compare #-}
+
+instance Storable VkDisplayProperties2KHR where
+        sizeOf ~_ = #{size VkDisplayProperties2KHR}
+
+        {-# INLINE sizeOf #-}
+        alignment ~_ = #{alignment VkDisplayProperties2KHR}
+
+        {-# INLINE alignment #-}
+        peek = peekVkData##
+
+        {-# INLINE peek #-}
+        poke = pokeVkData##
+
+        {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayProperties2KHR where
+        unsafeAddr (VkDisplayProperties2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayProperties2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayProperties2KHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
+instance VulkanMarshal VkDisplayProperties2KHR where
+        type StructFields VkDisplayProperties2KHR =
+             '["sType", "pNext", "displayProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayProperties2KHR = '[] -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDisplayProperties2KHR where
+        type FieldType "sType" VkDisplayProperties2KHR = VkStructureType
+        type FieldOptional "sType" VkDisplayProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayProperties2KHR =
+             #{offset VkDisplayProperties2KHR, sType}
+        type FieldIsArray "sType" VkDisplayProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayProperties2KHR, sType})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayProperties2KHR, sType}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDisplayProperties2KHR where
+        type FieldType "pNext" VkDisplayProperties2KHR = Ptr Void
+        type FieldOptional "pNext" VkDisplayProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayProperties2KHR =
+             #{offset VkDisplayProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkDisplayProperties2KHR = 'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayProperties2KHR, pNext})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayProperties2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "displayProperties" VkDisplayProperties2KHR where
+        type FieldType "displayProperties" VkDisplayProperties2KHR =
+             VkDisplayPropertiesKHR
+        type FieldOptional "displayProperties" VkDisplayProperties2KHR =
+             'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayProperties" VkDisplayProperties2KHR =
+             #{offset VkDisplayProperties2KHR, displayProperties}
+        type FieldIsArray "displayProperties" VkDisplayProperties2KHR =
+             'False -- ' closing tick for hsc2hs
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayProperties2KHR, displayProperties}
+
+instance {-# OVERLAPPING #-}
+         CanReadField "displayProperties" VkDisplayProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayProperties2KHR, displayProperties})
+
+        {-# INLINE readField #-}
+        readField p
+          = peekByteOff p #{offset VkDisplayProperties2KHR, displayProperties}
+
+instance {-# OVERLAPPING #-}
+         CanWriteField "displayProperties" VkDisplayProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayProperties2KHR, displayProperties}
+
+instance Show VkDisplayProperties2KHR where
+        showsPrec d x
+          = showString "VkDisplayProperties2KHR {" .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
+                  showString ", " .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
+                        showString ", " .
+                          showString "displayProperties = " .
+                            showsPrec d (getField @"displayProperties" x) . showChar '}'
 
 -- | > typedef struct VkDisplayPropertiesKHR {
 --   >     VkDisplayKHR                     display;

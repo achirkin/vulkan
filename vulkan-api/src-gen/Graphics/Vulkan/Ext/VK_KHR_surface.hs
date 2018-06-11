@@ -18,7 +18,7 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         --
         -- supported: @vulkan@
         --
-        -- contact: @James Jones @cubanismo,Ian Elliott ianelliott@google.com@
+        -- contact: @James Jones @cubanismo,Ian Elliott @ianelliottus@
         --
         -- author: @KHR@
         --

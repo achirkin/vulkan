@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         --
         -- supported: @vulkan@
         --
-        -- contact: @Piers Daniell @pdaniell@
+        -- contact: @Piers Daniell @pdaniell-nv@
         --
         -- author: @KHR@
         --

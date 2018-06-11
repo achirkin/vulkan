@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         --
         -- supported: @vulkan@
         --
-        -- contact: @Daniel Rakos @aqnuep@
+        -- contact: @Daniel Rakos @drakos-amd@
         --
         -- author: @AMD@
         --

@@ -123,6 +123,7 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_KHR_maintenance2
     , module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
     , module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
+    , module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
 #ifdef VK_USE_PLATFORM_IOS_MVK
     , module Graphics.Vulkan.Ext.VK_MVK_ios_surface
 #endif
@@ -160,6 +161,7 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
     , module Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
     , module Graphics.Vulkan.Ext.VK_KHR_maintenance3
+    , module Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
     , module Graphics.Vulkan.Ext.VK_EXT_global_priority
     , module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
     , module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
@@ -290,6 +292,7 @@ import Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
 import Graphics.Vulkan.Ext.VK_KHR_maintenance2
 import Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
 import Graphics.Vulkan.Ext.VK_KHR_variable_pointers
+import Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
 #ifdef VK_USE_PLATFORM_IOS_MVK
 import Graphics.Vulkan.Ext.VK_MVK_ios_surface
 #endif
@@ -327,6 +330,7 @@ import Graphics.Vulkan.Ext.VK_EXT_validation_cache
 import Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
 import Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
 import Graphics.Vulkan.Ext.VK_KHR_maintenance3
+import Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
 import Graphics.Vulkan.Ext.VK_EXT_global_priority
 import Graphics.Vulkan.Ext.VK_EXT_external_memory_host
 import Graphics.Vulkan.Ext.VK_AMD_buffer_marker

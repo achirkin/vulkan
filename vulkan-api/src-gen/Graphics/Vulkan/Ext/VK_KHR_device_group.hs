@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @KHR@
         --

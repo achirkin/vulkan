@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @NV@
         --

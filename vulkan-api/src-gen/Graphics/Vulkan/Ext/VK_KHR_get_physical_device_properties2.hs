@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @KHR@
         --

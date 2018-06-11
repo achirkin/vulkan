@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         --
         -- supported: @vulkan@
         --
-        -- contact: @Daniel Rakos @aqnuep@
+        -- contact: @Daniel Rakos @drakos-amd@
         --
         -- author: @EXT@
         --

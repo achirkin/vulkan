@@ -37,7 +37,7 @@ library
                         Lib.Vulkan.Vertex
                         Lib.Vulkan.VertexBuffer
     build-depends:      base >= 4.9 && < 5
-                      , vulkan-api >= 1.1.2.1
+                      , vulkan-api >= 1.1.3.0
                       , GLFW-b >= 3.2.1
                       , containers
                       , template-haskell

@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         --
         -- supported: @vulkan@
         --
-        -- contact: @Piers Daniell @pdaniell@
+        -- contact: @Piers Daniell @pdaniell-nv@
         --
         -- author: @NV@
         --

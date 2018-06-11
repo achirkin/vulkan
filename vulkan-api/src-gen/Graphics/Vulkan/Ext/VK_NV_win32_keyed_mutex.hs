@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         --
         -- supported: @vulkan@
         --
-        -- contact: @Carsten Rohde@
+        -- contact: @Carsten Rohde @crohde@
         --
         -- author: @NV@
         --

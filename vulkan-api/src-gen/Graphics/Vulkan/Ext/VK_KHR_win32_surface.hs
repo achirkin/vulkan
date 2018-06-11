@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jesse Hall @jessehall,Ian Elliott ianelliott@google.com@
+        -- contact: @Jesse Hall @critsec,Ian Elliott @ianelliottus@
         --
         -- author: @KHR@
         --

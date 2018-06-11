@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_EXT_depth_range_unrestricted
         --
         -- supported: @vulkan@
         --
-        -- contact: @Piers Daniell @pdaniell@
+        -- contact: @Piers Daniell @pdaniell-nv@
         --
         -- author: @NV@
         --

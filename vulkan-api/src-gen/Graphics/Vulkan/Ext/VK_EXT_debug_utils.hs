@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         --
         -- supported: @vulkan@
         --
-        -- contact: @Mark Young @MarkY_LunarG@
+        -- contact: @Mark Young @marky-lunarg@
         --
         -- author: @EXT@
         --

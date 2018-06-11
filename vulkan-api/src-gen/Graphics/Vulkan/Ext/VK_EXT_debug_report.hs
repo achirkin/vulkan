@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         --
         -- supported: @vulkan@
         --
-        -- contact: @Courtney Goeltzenleuchter @courtney@
+        -- contact: @Courtney Goeltzenleuchter @courtney-g@
         --
         -- author: @GOOGLE@
         --

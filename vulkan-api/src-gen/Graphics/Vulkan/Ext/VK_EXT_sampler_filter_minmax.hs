@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @NV@
         --

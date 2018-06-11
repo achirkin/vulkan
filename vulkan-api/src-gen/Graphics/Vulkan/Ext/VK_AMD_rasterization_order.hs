@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         --
         -- supported: @vulkan@
         --
-        -- contact: @Daniel Rakos @aqnuep@
+        -- contact: @Daniel Rakos @drakos-amd@
         --
         -- author: @AMD@
         --

@@ -614,6 +614,7 @@ module Graphics.Vulkan.Core_1_0
         module Graphics.Vulkan.Types.Enum.IndexType,
         module Graphics.Vulkan.Types.Struct.Clear,
         -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
+        module Graphics.Vulkan.Types.Struct.Base,
         module Graphics.Vulkan.Types.Struct.DispatchIndirectCommand,
         module Graphics.Vulkan.Types.Struct.DrawInd,
         module Graphics.Vulkan.Types.Enum.Object)
@@ -678,6 +679,7 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.ApplicationInfo
 import           Graphics.Vulkan.Types.Struct.Attachment
+import           Graphics.Vulkan.Types.Struct.Base
 import           Graphics.Vulkan.Types.Struct.Bind
 import           Graphics.Vulkan.Types.Struct.Buffer
 import           Graphics.Vulkan.Types.Struct.Clear

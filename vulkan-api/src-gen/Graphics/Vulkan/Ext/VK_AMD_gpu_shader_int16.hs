@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
         --
         -- supported: @vulkan@
         --
-        -- contact: @quentin.lin@amd.com@
+        -- contact: @Qun Lin, AMD @linqun@
         --
         -- author: @AMD@
         --

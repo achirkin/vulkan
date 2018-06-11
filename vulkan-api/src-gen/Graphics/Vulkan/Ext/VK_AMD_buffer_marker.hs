@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
         --
         -- supported: @vulkan@
         --
-        -- contact: @Daniel Rakos @aqnuep@
+        -- contact: @Daniel Rakos @drakos-amd@
         --
         -- author: @AMD@
         --

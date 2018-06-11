@@ -11,7 +11,7 @@ module Graphics.Vulkan.Ext.VK_KHR_multiview
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @KHR@
         --
