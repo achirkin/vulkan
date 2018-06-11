@@ -240,7 +240,7 @@ vkGetProcSafe = alloca $ \errPtr -> do
 --   such as @dlsym@ or @GetProcAddress@.
 --   This function returns @Nothing@ on failure ignoring an error message.
 --
---   Consider using `vkGetDeviceProc` or `vkGetInstanceProc` for loading a symbol,
+--   Consider using `vkLookupDeviceProc` or `vkLookupInstanceProc` for loading a symbol,
 --    because they can return a more optimized version of a function.
 --   Also note, you are likely not able to lookup an extension funcion using
 --   `vkLookupProc`, because a corresponding symbol is simply not present in the
