@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         --
         -- supported: @vulkan@
         --
-        -- contact: @Courtney Goeltzenleuchter @courtneygo@
+        -- contact: @Courtney Goeltzenleuchter @courtney-g@
         --
         -- author: @GOOGLE@
         --

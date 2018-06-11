@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @NV@
         --

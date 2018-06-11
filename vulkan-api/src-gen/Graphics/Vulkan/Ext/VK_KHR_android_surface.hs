@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jesse Hall @jessehall@
+        -- contact: @Jesse Hall @critsec@
         --
         -- author: @KHR@
         --

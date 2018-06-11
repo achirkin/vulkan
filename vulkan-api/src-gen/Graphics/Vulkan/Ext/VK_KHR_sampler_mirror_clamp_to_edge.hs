@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
         --
         -- supported: @vulkan@
         --
-        -- contact: @Tobias Hector @tobias@
+        -- contact: @Tobias Hector @tobski@
         --
         -- author: @KHR@
         --

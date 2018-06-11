@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jesse Hall @jessehall@
+        -- contact: @Jesse Hall @critsec@
         --
         -- author: @ANDROID@
         --

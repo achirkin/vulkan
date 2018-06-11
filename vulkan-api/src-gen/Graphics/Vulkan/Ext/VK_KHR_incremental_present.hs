@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         --
         -- supported: @vulkan@
         --
-        -- contact: @Ian Elliott ianelliott@google.com@
+        -- contact: @Ian Elliott @ianelliottus@
         --
         -- author: @KHR@
         --

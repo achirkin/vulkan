@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         --
         -- supported: @vulkan@
         --
-        -- contact: @Ian Elliott ianelliott@google.com@
+        -- contact: @Ian Elliott @ianelliottus@
         --
         -- author: @GOOGLE@
         --

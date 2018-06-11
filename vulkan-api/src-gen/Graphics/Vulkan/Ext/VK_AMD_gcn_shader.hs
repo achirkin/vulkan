@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_gcn_shader
         --
         -- supported: @vulkan@
         --
-        -- contact: @dominik.witczak@amd.com@
+        -- contact: @Dominik Witczak @dominikwitczakamd@
         --
         -- author: @AMD@
         --

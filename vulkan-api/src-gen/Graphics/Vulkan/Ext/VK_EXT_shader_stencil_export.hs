@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_stencil_export
         --
         -- supported: @vulkan@
         --
-        -- contact: @dominik.witczak@amd.com@
+        -- contact: @Dominik Witczak @dominikwitczakamd@
         --
         -- author: @EXT@
         --

@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         --
         -- supported: @vulkan@
         --
-        -- contact: @Eric Werness @ewerness@
+        -- contact: @Eric Werness @ewerness-nv@
         --
         -- author: @NV@
         --

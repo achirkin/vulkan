@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @NV@
         --

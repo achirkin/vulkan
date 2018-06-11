@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jeff Bolz @jbolz@
+        -- contact: @Jeff Bolz @jeffbolznv@
         --
         -- author: @KHR@
         --

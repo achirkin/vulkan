@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         --
         -- supported: @vulkan@
         --
-        -- contact: @Mathias Heyer @mheyer@
+        -- contact: @Mathias Heyer gitlab:@mheyer@
         --
         -- author: @NN@
         --

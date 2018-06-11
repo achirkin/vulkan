@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
         --
         -- supported: @vulkan@
         --
-        -- contact: @Alexander Galazin @debater@
+        -- contact: @Alexander Galazin @alegal-arm@
         --
         -- author: @KHR@
         --

@@ -17,7 +17,7 @@ executable ve-01-CreateInstance
   main-is:             01-CreateInstance.hs
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
   default-language:    Haskell2010
 
 
@@ -28,7 +28,7 @@ executable ve-02-GLFWWindow
                        Lib.Utils
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
                      , GLFW-b >= 3.2.1
   default-language:    Haskell2010
 
@@ -41,7 +41,7 @@ executable ve-03-LogicalDevice
                        Lib.GLFW
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
                      , GLFW-b >= 3.2.1
   default-language:    Haskell2010
 
@@ -54,7 +54,7 @@ executable ve-04-Presentation
                        Lib.GLFW
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
                      , GLFW-b >= 3.2.1
                      , containers
   default-language:    Haskell2010
@@ -70,7 +70,7 @@ executable ve-05-GraphicsPipeline
                        Lib.GLFW
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
                      , GLFW-b >= 3.2.1
                      , containers
                      , template-haskell
@@ -91,7 +91,7 @@ executable ve-06-Drawing
                        Lib.GLFW
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
-                     , vulkan-api >= 1.1.2
+                     , vulkan-api >= 1.1.3
                      , GLFW-b >= 3.2.1
                      , containers
                      , template-haskell

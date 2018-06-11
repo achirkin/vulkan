@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_fragment_mask
         --
         -- supported: @vulkan@
         --
-        -- contact: @Aaron Hagan @ahagan@
+        -- contact: @Aaron Hagan @AaronHaganAMD@
         --
         -- author: @AMD@
         --

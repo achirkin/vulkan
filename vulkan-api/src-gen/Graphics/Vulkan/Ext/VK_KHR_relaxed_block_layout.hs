@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_KHR_relaxed_block_layout
         --
         -- supported: @vulkan@
         --
-        -- contact: @John Kessenich @johnk@
+        -- contact: @John Kessenich @johnkslang@
         --
         -- author: @KHR@
         --

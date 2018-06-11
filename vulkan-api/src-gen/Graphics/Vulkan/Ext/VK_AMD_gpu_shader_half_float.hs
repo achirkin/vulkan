@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_half_float
         --
         -- supported: @vulkan@
         --
-        -- contact: @Dominik Witczak @dominikwitczak_amd@
+        -- contact: @Dominik Witczak @dominikwitczakamd@
         --
         -- author: @AMD@
         --

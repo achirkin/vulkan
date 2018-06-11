@@ -15,7 +15,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         --
         -- supported: @vulkan@
         --
-        -- contact: @baldurk@baldurk.org@
+        -- contact: @Baldur Karlsson @baldurk@
         --
         -- author: @Baldur Karlsson@
         --

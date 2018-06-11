@@ -16,7 +16,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         --
         -- supported: @vulkan@
         --
-        -- contact: @Jaakko Konttinen @jaakko@
+        -- contact: @Jaakko Konttinen @jaakkoamd@
         --
         -- author: @AMD@
         --
