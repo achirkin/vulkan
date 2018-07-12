@@ -1,13 +1,18 @@
-{-# LANGUAGE Strict #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE KindSignatures      #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TypeApplications    #-}
 -- | Collection of functions adapted from @Foreign@ module hierarchy
 module Lib.Program.Foreign
     ( Ptr, plusPtr, Storable.sizeOf
     , alloca, allocaArray
     , peek, peekArray
     , asListVk
-    , allocaPeek, allocaPeekVk
+    , allocaPeek, allocaPeekVk, allocaPeekDF
     , mallocRes, mallocArrayRes, newArrayRes
     ) where
+
 
 import           Control.Concurrent.MVar
 import           Control.Monad.IO.Class
@@ -17,6 +22,10 @@ import           Foreign.Ptr
 import           Foreign.Storable        (Storable)
 import qualified Foreign.Storable        as Storable
 import           Graphics.Vulkan.Marshal
+import           Numeric.DataFrame
+import           Numeric.DataFrame.IO
+import           Numeric.Dimensions
+import           Numeric.PrimBytes
 
 import           Lib.Program
 
@@ -36,6 +45,20 @@ allocaPeekVk pf = Program $ \ref c -> do
   locVar <- liftIO newEmptyMVar
   a <- newVkData (\ptr -> unProgram (pf ptr) ref (putMVar locVar))
   takeMVar locVar >>= c . (a <$)
+
+allocaPeekDF :: forall a (ns :: [Nat]) r
+              . (PrimBytes a, Dimensions ns)
+             => (Ptr a -> Program () ())
+             -> Program r (DataFrame a ns)
+allocaPeekDF pf
+  | E <- inferASing' @a @ns
+  , E <- inferPrim' @a @ns
+  = Program $ \ref c -> do
+    mdf <- newPinnedDataFrame
+    locVar <- liftIO newEmptyMVar
+    withDataFramePtr mdf $ \ptr -> unProgram (pf ptr) ref (putMVar locVar)
+    df <- unsafeFreezeDataFrame mdf
+    takeMVar locVar >>= c . (df <$)
 
 allocaArray :: Storable a
             => Int
