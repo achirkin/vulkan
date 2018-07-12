@@ -28,14 +28,24 @@ import           Lib.Vulkan.VertexBuffer
 -- | Interleaved array of vertices containing at least 3 entries
 vertices :: DataFrame Vertex '[XN 3]
 vertices = fromJust $ fromList (D @3)
-  [ scalar $ Vertex (vec2   0   (-0.5)) (vec3 1 0 0)
-  , scalar $ Vertex (vec2   0.5   0.5 ) (vec3 0 1 0)
-  , scalar $ Vertex (vec2 (-0.5)  0.5 ) (vec3 0 0 1)
+  [ -- rectangle
+    scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0)
+  , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0)
+  , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1)
+  , scalar $ Vertex (vec2 (-0.5)   0.4 ) (vec3 1 1 1)
+    -- triangle
   , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
   , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
   , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
   ]
 
+indices :: DataFrame Word16 '[XN 3]
+indices = fromJust $ fromList (D @3)
+  [ -- rectangle
+    0, 1, 2, 2, 3, 0
+    -- triangle
+  , 4, 5, 6
+  ]
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
@@ -78,6 +88,9 @@ runVulkanProgram = runProgram checkStatus $ do
     vertexBuffer <-
       createVertexBuffer pdev dev commandPool (graphicsQueue queues) vertices
 
+    indexBuffer <-
+      createIndexBuffer pdev dev commandPool (graphicsQueue queues) indices
+
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
     redoOnOutdate $ do
@@ -97,7 +110,8 @@ runVulkanProgram = runProgram checkStatus $ do
 
       cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
                                          renderPass swInfo
-                                         (fromIntegral $ dimSize1 vertices, vertexBuffer)
+                                         vertexBuffer
+                                         (fromIntegral $ dimSize1 indices, indexBuffer)
                                          framebuffers
 
       let rdata = RenderData
