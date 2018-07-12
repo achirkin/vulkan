@@ -13,7 +13,7 @@ module Lib.Program
     ( Program (..), Program', runProgram
     , MonadIO (..)
       -- * Resource management
-    , allocResource, locally
+    , allocResource, allocResource', locally
       -- * State manipulation
     , ProgramState (..), MonadState (..), modify, modify', gets
       -- * Exception handling
@@ -97,6 +97,24 @@ allocResource free alloc = Program $ \ref c ->
     Left e -> c (Left e)
     Right a -> c (Right a) >>= \r -> r <$ unProgram (free a) ref pure
 
+-- | The same as `allocResource`, but does not prepend a
+--   resource release action to the continuation.
+--   Instead, return the resource-release-action-continuation-prepending action.
+--   The latter may be envoked later to add the resource-release-action to
+--   the beginning of the continuation.
+--
+--   This gives a more granular control over when the release of a resource
+--   should happen. For example, when the resource allocation and release
+--   should happen in the same order.
+allocResource' :: (a -> Program' ()) -- ^ free resource
+               -> Program r a -- ^ allocate resource
+               -> Program r (a, Program r ())
+allocResource' free alloc = Program $ \ref c ->
+  unProgram alloc ref $ \case
+    Left e -> c (Left e)
+    Right a -> c (Right (a, Program $ \ref' c' ->
+                                 c' (Right ()) >>=
+                                      \r -> r <$ unProgram (free a) ref' pure))
 
 -- | Run nested continuations locally:
 --     fully execute the program in IO;
