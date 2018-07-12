@@ -1,7 +1,6 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PolyKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan.VertexBuffer
@@ -39,7 +38,7 @@ createVertexBuffer pdev dev (XFrame vertices) = do
           &* set @"sharingMode" VK_SHARING_MODE_EXCLUSIVE
           &* set @"queueFamilyIndexCount" 0
           &* set @"pQueueFamilyIndices" VK_NULL
-    buf <- allocResource
+    (buf, freeBufLater) <- allocResource'
       (\vb -> liftIO $ vkDestroyBuffer dev vb VK_NULL) $
       withVkPtr bufferInfo $ \biPtr -> allocaPeek $
         runVk . vkCreateBuffer dev biPtr VK_NULL
@@ -59,11 +58,13 @@ createVertexBuffer pdev dev (XFrame vertices) = do
           &* set @"allocationSize" (getField @"size" memRequirements)
           &* set @"memoryTypeIndex" memIndex
 
-    -- TODO: change the code so that memory is destroyed after buffer
     vertexBufferMemory <- allocResource
       (\vbm -> liftIO $ vkFreeMemory dev vbm VK_NULL) $
       withVkPtr allocInfo $ \aiPtr -> allocaPeek $
         runVk . vkAllocateMemory dev aiPtr VK_NULL
+    -- The buf will be released before release of any of the resources
+    -- allocated above, but after release on any allocations below.
+    freeBufLater
 
     -- associate memory with buffer
     runVk $ vkBindBufferMemory dev buf vertexBufferMemory 0
