@@ -75,7 +75,8 @@ runVulkanProgram = runProgram checkStatus $ do
     -- we need this later, but don't want to realloc every swapchain recreation.
     imgIPtr <- mallocRes
 
-    vertexBuffer <- createVertexBuffer pdev dev vertices
+    vertexBuffer <-
+      createVertexBuffer pdev dev commandPool (graphicsQueue queues) vertices
 
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
