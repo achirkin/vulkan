@@ -2,11 +2,11 @@
 {-# LANGUAGE DeriveGeneric    #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PolyKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan.Vertex
   ( Vertex (..), vertIBD, vertIADs
+  , UniformBufferObject (..), uboDSLBinding
   ) where
 
 
@@ -28,9 +28,17 @@ data Vertex = Vertex
   , color :: Vec3f
   } deriving (Eq, Show, Generic)
 
+
+data UniformBufferObject = UniformBufferObject
+  { model :: Mat44f
+  , view  :: Mat44f
+  , proj  :: Mat44f
+  } deriving (Eq, Show, Generic)
+
 -- We need an instance of PrimBytes to fit Vertex into a DataFrame.
 -- Luckily, Generics can do it for us.
 instance PrimBytes Vertex
+instance PrimBytes UniformBufferObject
 
 
 vertIBD :: VkVertexInputBindingDescription
@@ -60,3 +68,11 @@ vertIADs = ST.runST $ do
                            -- Perhaps, we could try to add such functionality
                            -- to (G)PrimBytes class?..
     ST.unsafeFreezeDataFrame mv
+
+uboDSLBinding :: VkDescriptorSetLayoutBinding
+uboDSLBinding = createVk
+  $  set @"binding" 0
+  &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
+  &* set @"descriptorCount" 1
+  &* set @"stageFlags" VK_SHADER_STAGE_VERTEX_BIT
+  &* set @"pImmutableSamplers" VK_NULL

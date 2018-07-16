@@ -1,4 +1,4 @@
-resolver: nightly-2018-04-12
+resolver: lts-11.17
 
 ghc-options:
   vulkan-api:    -O2
@@ -15,8 +15,21 @@ extra-deps:
   - bindings-GLFW-3.2.1.1
   - GLFW-b-3.2.1.0
   - dimensions-1.0.0.0
-  - easytensor-1.0.0.0
+  - easytensor-1.0.0.1
   - easytensor-vulkan-1.0.0.0
+    # ghc-mod
+  - https://hackage.haskell.org/package/ghc-mod-5.9.0.0/candidate/ghc-mod-5.9.0.0.tar.gz
+  - cabal-helper-0.8.0.2
+  - extra-1.5.3
+  - monad-journal-0.7.2
+  - haskell-src-exts-1.19.1
+  - haskell-src-exts-util-0.2.1.2
+  - hlint-2.0.11
+  - optparse-applicative-0.13.2.0
+  - either-4.4.1.1
+  - free-4.12.4
+    # IPC
+  - interprocess-0.2.0.1
 
 packages:
   - .

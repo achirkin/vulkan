@@ -21,6 +21,7 @@ import           Numeric.Dimensions
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
+import           Lib.Vulkan.Vertex                        (uboDSLBinding)
 
 
 
@@ -168,20 +169,31 @@ createGraphicsPipeline
 
 
 createPipelineLayout :: VkDevice -> Program r VkPipelineLayout
-createPipelineLayout dev =
+createPipelineLayout dev = do
+  let layoutInfo = createVk @VkDescriptorSetLayoutCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"bindingCount" 1
+        &* setDFRef @"pBindings" (scalar uboDSLBinding)
+  dset <- allocResource
+      (liftIO . flip (vkDestroyDescriptorSetLayout dev) VK_NULL) $
+      withVkPtr layoutInfo $ \liPtr -> allocaPeek $
+        runVk . vkCreateDescriptorSetLayout dev liPtr VK_NULL
+
+  let plCreateInfo = createVk @VkPipelineLayoutCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"setLayoutCount"         1       -- Optional
+        &* setListRef @"pSetLayouts"     [dset]  -- Optional
+        &* set @"pushConstantRangeCount" 0       -- Optional
+        &* set @"pPushConstantRanges"    VK_NULL -- Optional
+
   allocResource
     (\pl -> liftIO $ vkDestroyPipelineLayout dev pl VK_NULL) $
     withVkPtr plCreateInfo $ \plciPtr -> allocaPeek $
       runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
-  where
-    plCreateInfo = createVk @VkPipelineLayoutCreateInfo
-      $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-      &* set @"pNext" VK_NULL
-      &* set @"flags" 0
-      &* set @"setLayoutCount"         0       -- Optional
-      &* set @"pSetLayouts"            VK_NULL -- Optional
-      &* set @"pushConstantRangeCount" 0       -- Optional
-      &* set @"pPushConstantRanges"    VK_NULL -- Optional
+
 
 
 createRenderPass :: VkDevice -> SwapChainImgInfo
