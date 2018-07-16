@@ -96,6 +96,7 @@ allocResource free alloc = Program $ \ref c ->
   unProgram alloc ref $ \case
     Left e -> c (Left e)
     Right a -> c (Right a) >>= \r -> r <$ unProgram (free a) ref pure
+{-# INLINE allocResource #-}
 
 -- | The same as `allocResource`, but does not prepend a
 --   resource release action to the continuation.
@@ -115,6 +116,7 @@ allocResource' free alloc = Program $ \ref c ->
     Right a -> c (Right (a, Program $ \ref' c' ->
                                  c' (Right ()) >>=
                                       \r -> r <$ unProgram (free a) ref' pure))
+{-# INLINE allocResource' #-}
 
 -- | Run nested continuations locally:
 --     fully execute the program in IO;
@@ -125,29 +127,39 @@ allocResource' free alloc = Program $ \ref c ->
 locally :: Program' a
         -> Program r a
 locally p = Program $ \ref c -> unProgram p ref pure >>= c
+{-# INLINE locally #-}
 
 instance Functor (Program r) where
   fmap f p = Program $ \ref c -> unProgram p ref (c . fmap f)
+  {-# INLINE fmap #-}
 
 instance Applicative (Program r) where
   pure x = Program $ const ($ Right x)
+  {-# INLINE pure #-}
   pf <*> px = Program $
     \ref c -> unProgram pf ref $ \g -> unProgram px ref (c . (g <*>) )
+  {-# INLINE (<*>) #-}
 
-instance Monad (Program r)  where
+instance Monad (Program r) where
   return = pure
+  {-# INLINE return #-}
   px >>= k = Program $
     \ref c -> unProgram px ref $ \case
       Right x -> unProgram (k x) ref c
       Left e  -> c (Left e)
+  {-# INLINE (>>=) #-}
 
 instance MonadIO (Program r) where
   liftIO m = Program $ const (Right <$> m >>=)
+  {-# INLINE liftIO #-}
 
 instance MonadState ProgramState (Program r) where
   get = Program $ \ref -> (Right <$> readIORef ref >>=)
+  {-# INLINE get #-}
   put s = Program $ \ref -> (Right <$> writeIORef ref s >>=)
+  {-# INLINE put #-}
   state f = Program $ \ref -> (Right <$> atomicModifyIORef' ref (swap . f) >>=)
+  {-# INLINE state #-}
 
 
 -- | Use this to throw all exceptions in this project
@@ -173,9 +185,11 @@ instance Exception VulkanException where
 
 instance MonadError VulkanException (Program r) where
   throwError e = Program $ const ($ Left e)
+  {-# INLINE throwError #-}
   catchError px catcher = Program $ \ref c -> unProgram px ref $ \case
     Left e  -> unProgram (catcher e) ref c
     Right r -> c (Right r)
+  {-# INLINE catchError #-}
 
 
 -- | Throw VulkanException without error code
@@ -184,6 +198,7 @@ throwVkMsg msg = throwError . VulkanException Nothing $ unlines
   [ msg
   , prettyCallStack callStack
   ]
+{-# INLINE throwVkMsg #-}
 
 
 
@@ -200,6 +215,7 @@ bracket before after thing = do
   er <- try (thing a)
   _ <- after a
   Program $ const ($ er)
+{-# INLINE bracket #-}
 
 
 -- | A specialised variant of 'bracket' with just a computation to run
@@ -217,6 +233,7 @@ finally a sequel = do
   er <- try a
   _ <- sequel
   Program $ const ($ er)
+{-# INLINE finally #-}
 
 
 -- | An adaptation of @try@ from `Control.Exception`
@@ -225,6 +242,7 @@ finally a sequel = do
 --   to catch the exception defined in this module.
 try :: Program r a -> Program r (Either VulkanException a)
 try a = Program $ \ref c -> unProgram a ref $ c . Right
+{-# INLINE try #-}
 
 
 -- | Run vulkan command, throwing an exception if its result is an error.
@@ -235,12 +253,14 @@ runVk action = do
   when (r < 0) . throwError . VulkanException (Just r)
     $ "Vulkan command returned an error VkResult\n"
     ++ prettyCallStack callStack
+{-# INLINE runVk #-}
 
 
 instance Logger.MonadLogger (Program r) where
   monadLoggerLog loc ls ll msg = do
     logFun <- gets loggingFunc
     liftIO $ logFun loc ls ll (Logger.toLogStr msg)
+  {-# INLINE monadLoggerLog #-}
 
 
 logDebug :: HasCallStack => String -> Program r ()
@@ -288,6 +308,7 @@ liftIOWith :: ((a -> IO (Either VulkanException b))
            -> (a -> Program' b) -> Program r b
 liftIOWith iof pf = Program $ \ref c ->
   iof (\a -> unProgram (pf a) ref pure) >>= c
+{-# INLINE liftIOWith #-}
 
 
 withVkPtr :: VulkanMarshal a
@@ -295,3 +316,4 @@ withVkPtr :: VulkanMarshal a
           -> (Ptr a -> Program' b)
           -> Program r b
 withVkPtr x = liftIOWith (withPtr x)
+{-# INLINE withVkPtr #-}
