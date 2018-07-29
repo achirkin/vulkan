@@ -25,7 +25,18 @@ import           Lib.Vulkan.Vertex
 import           Lib.Vulkan.VertexBuffer
 
 
--- | Interleaved array of vertices containing at least 3 entries
+-- | Interleaved array of vertices containing at least 3 entries.
+--
+--   Obviously, in real world vertices come from a separate file and not known at compile time.
+--   The shader pipeline requires at least 3 unique vertices (for a triangle)
+--   to render something on a screen. Setting `XN 3` here is just a handy way
+--   to statically ensure the program satisfies this requirement.
+--   This way, not-enough-vertices error occures at the moment of DataFrame initialization
+--   instead of silently failing to render something onto a screen.
+--
+--   Note: in this program, `n >= 3` requirement is also forced in `Lib/Vulkan/VertexBuffer.h`,
+--         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
+--         in function signatures (such as, e.g. `KnownDim n`).
 vertices :: DataFrame Vertex '[XN 3]
 vertices = fromJust $ fromList (D @3)
   [ -- rectangle
