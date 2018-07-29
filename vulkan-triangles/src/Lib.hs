@@ -34,7 +34,7 @@ import           Lib.Vulkan.VertexBuffer
 --   This way, not-enough-vertices error occures at the moment of DataFrame initialization
 --   instead of silently failing to render something onto a screen.
 --
---   Note: in this program, `n >= 3` requirement is also forced in `Lib/Vulkan/VertexBuffer.h`,
+--   Note: in this program, `n >= 3` requirement is also forced in `Lib/Vulkan/VertexBuffer.hs`,
 --         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
 --         in function signatures (such as, e.g. `KnownDim n`).
 vertices :: DataFrame Vertex '[XN 3]
