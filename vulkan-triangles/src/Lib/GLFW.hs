@@ -3,6 +3,7 @@ module Lib.GLFW
     ( createGLFWVulkanInstance
     , initGLFWWindow
     , glfwMainLoop
+    , glfwMainLoopWithState
     ) where
 
 import           Control.Monad       (unless)
@@ -57,6 +58,8 @@ glfwMainLoop w action = go
         liftIO GLFW.pollEvents >> locally action
         go
 
+glfwMainLoopWithState :: GLFW.Window -> Program' () -> Program r ()
+glfwMainLoopWithState = undefined
 
 createGLFWVulkanInstance :: String -> Program r VkInstance
 createGLFWVulkanInstance progName = do

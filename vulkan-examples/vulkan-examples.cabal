@@ -102,6 +102,8 @@ executable ve-06-Drawing
 
 
 
+
+
 source-repository head
   type:     git
   location: https://github.com/achirkin/vulkan

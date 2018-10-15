@@ -66,14 +66,14 @@ runVulkanProgram = runProgram checkStatus $ do
     vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
 
     vulkanSurface <- createSurface vulkanInstance window
-    logInfo $ "Createad surface: " ++ show vulkanSurface
+    logInfo $ "Created surface: " ++ show vulkanSurface
 
     (_, pdev) <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
     logInfo $ "Selected physical device: " ++ show pdev
 
     (dev, queues) <- createGraphicsDevice pdev vulkanSurface
-    logInfo $ "Createad device: " ++ show dev
-    logInfo $ "Createad queues: " ++ show queues
+    logInfo $ "Created device: " ++ show dev
+    logInfo $ "Created queues: " ++ show queues
 
     shaderVert
       <- createVkShaderStageCI dev
@@ -85,13 +85,13 @@ runVulkanProgram = runProgram checkStatus $ do
             $(compileGLSL "shaders/triangle.frag")
             VK_SHADER_STAGE_FRAGMENT_BIT
 
-    logInfo $ "Createad vertex shader module: " ++ show shaderVert
-    logInfo $ "Createad fragment shader module: " ++ show shaderFrag
+    logInfo $ "Created vertex shader module: " ++ show shaderVert
+    logInfo $ "Created fragment shader module: " ++ show shaderFrag
 
     rendFinS <- createSemaphore dev
     imAvailS <- createSemaphore dev
     commandPool <- createCommandPool dev queues
-    logInfo $ "Createad command pool: " ++ show commandPool
+    logInfo $ "Created command pool: " ++ show commandPool
 
     -- we need this later, but don't want to realloc every swapchain recreation.
     imgIPtr <- mallocRes
@@ -125,7 +125,16 @@ runVulkanProgram = runProgram checkStatus $ do
                                          (fromIntegral $ dimSize1 indices, indexBuffer)
                                          framebuffers
 
-      let rdata = RenderData
+      
+
+      logInfo $ "Created image views: " ++ show imgViews
+      logInfo $ "Created renderpass: " ++ show renderPass
+      logInfo $ "Created pipeline: " ++ show graphicsPipeline
+      logInfo $ "Created framebuffers: " ++ show framebuffers
+      logInfo $ "Created command buffers: " ++ show cmdBuffers
+
+      glfwMainLoop window $ do
+        rdata <- return RenderData
             { renderFinished = rendFinS
             , imageAvailable = imAvailS
             , device         = dev
@@ -134,15 +143,6 @@ runVulkanProgram = runProgram checkStatus $ do
             , imgIndexPtr    = imgIPtr
             , commandBuffers = cmdBuffers
             }
-
-      logInfo $ "Createad image views: " ++ show imgViews
-      logInfo $ "Createad renderpass: " ++ show renderPass
-      logInfo $ "Createad pipeline: " ++ show graphicsPipeline
-      logInfo $ "Createad framebuffers: " ++ show framebuffers
-      logInfo $ "Createad command buffers: " ++ show cmdBuffers
-
-      glfwMainLoop window $ do
-        return () -- do some app logic
 
         runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
 

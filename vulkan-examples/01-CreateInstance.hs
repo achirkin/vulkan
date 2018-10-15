@@ -1,6 +1,6 @@
 {- |
 
-In this minimal example, I create Vulkan instance using no vulkan extensions,
+In this minimal example, I create Vulkan instance using no Vulkan extensions,
 no haskell language extensions, and no libraries other than base and vulkan-api.
 
 Just plain haskell; c-like simple and verbose.
@@ -56,7 +56,7 @@ withVulkanInstance action =
     (vkResult, vkInstance) <- alloca $ \vkInstPtr -> do
       -- test dynamic symbol lookup:
       -- the code below should work exactly as the commented version
-      createInst <- vkGetInstanceProc @VkCreateInstance VK_NULL
+      createInst <- vkGetInstanceProc   VkCreateInstance VK_NULL
       vkRes <- createInst (unsafePtr iCreateInfo) VK_NULL_HANDLE vkInstPtr
       -- vkRes <- vkCreateInstance
       --   (unsafePtr iCreateInfo) -- must keep iCreateInfo alive!

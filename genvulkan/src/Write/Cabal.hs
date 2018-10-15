@@ -94,7 +94,7 @@ genCabalFile unsafeFFIDefaultDef coreVersions eModules = T.unlines $
               c-sources:           cbits/vulkan_loader.c
               if $anyNativeVersion
                 if os(windows)
-                  extra-libraries: vulkan-1
+                    
                 if os(darwin)
                   frameworks:      MoltenVK
                 if !os(windows) && !os(darwin)

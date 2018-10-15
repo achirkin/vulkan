@@ -1,9 +1,10 @@
-resolver: nightly-2018-04-12
+resolver: lts-12.11
 
 ghc-options:
   vulkan-api:    -O2
   GLFW-b:        -O2
   bindings-GLFW: -O2
+  "$everything": -fobject-code
 
 flags:
   vulkan-api:
@@ -17,7 +18,6 @@ extra-deps:
   - dimensions-1.0.0.0
   - easytensor-1.0.0.1
   - easytensor-vulkan-1.0.0.0
-
 packages:
   - .
   - location: ../vulkan-api

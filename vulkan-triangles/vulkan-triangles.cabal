@@ -1,8 +1,7 @@
 name:                vulkan-triangles
 version:             0.3.0.0
 synopsis:            Haskell-vulkan program rendering triangles
-description:         An example of using vulkan-api bindings to create a GLFW window
-                     and render some simple geometry.
+description:         An example of using vulkan-api bindings to create a GLFW window and render some simple geometry.
 homepage:            https://github.com/achirkin/genvulkan#readme
 license:             BSD3
 license-file:        LICENSE
@@ -15,6 +14,7 @@ cabal-version:       >=1.22
 extra-source-files:
     shaders/triangle.frag
     shaders/triangle.vert
+
 
 flag dev
     description:
