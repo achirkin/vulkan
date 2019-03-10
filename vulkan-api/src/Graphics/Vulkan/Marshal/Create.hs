@@ -23,7 +23,8 @@
 module Graphics.Vulkan.Marshal.Create
     ( CreateVkStruct ()
     , createVk, (&*)
-    , set, setAt, setVk, setVkRef, setStr, setStrRef, setStrListRef, setListRef
+    , set, setAt, setVk, setVkRef, setStr, setStrRef
+    , setStrListRef, setStrListCountAndRef, setListRef, setListCountAndRef
     , SetOptionalFields (..), HandleRemainingFields (..), HandleRemFields
     , unsafeIOCreate
     ) where
@@ -170,11 +171,15 @@ setStr v = CreateVkStruct $ \p ->
 --
 --   This function also attaches a reliable finalizer to the vulkan struct,
 --    so that the allocated memory is freed when the structure is GCed.
+--
+--   This function writes null pointer if used with an empty string.
 setStrRef :: forall fname x
            . ( CanWriteField fname x
              , FieldType fname x ~ CString
              )
           => String -> CreateVkStruct x '[fname] ()
+setStrRef "" = CreateVkStruct $ \p ->
+  (,) ([],[]) <$> writeField @fname @x p nullPtr
 setStrRef v = CreateVkStruct $ \p -> do
   sPtr <- newCString v
   (,) ([coerce sPtr],[]) <$> writeField @fname @x p sPtr
@@ -198,6 +203,20 @@ setListRef v = CreateVkStruct $ \p -> do
   aPtr <- newArray v
   (,) ([coerce aPtr],[]) <$> writeField @fname @x p aPtr
 
+-- | Equivalent to 'set' on a count field and 'setListRef' on a corresponding list field,
+--    where the count is set to the length of the list.
+setListCountAndRef :: forall countfname listfname x a
+                  . ( CanWriteField countfname x
+                    , CanWriteField listfname x
+                    , FieldType countfname x ~ Word32
+                    , FieldType listfname x ~ Ptr a
+                    , Storable a
+                    )
+                  => [a] -> CreateVkStruct x (Union x '[countfname] '[listfname]) ()
+setListCountAndRef list =
+  set @countfname (fromIntegral $ length list) &*
+  setListRef @listfname list
+
 -- | Allocate memory for an array of elements, store them,
 --    and write a pointer to the array into vulkan structure.
 --
@@ -216,6 +235,19 @@ setStrListRef v = CreateVkStruct $ \p -> do
   strptrs <- mapM newCString v
   aPtr <- newArray strptrs
   (,) (coerce aPtr : coerce strptrs,[]) <$> writeField @fname @x p aPtr
+
+-- | Equivalent to 'set' on a count field and 'setStrListRef' on a corresponding list field,
+--    where the count is set to the length of the list.
+setStrListCountAndRef :: forall countfname listfname x
+                      . ( CanWriteField countfname x
+                        , CanWriteField listfname x
+                        , FieldType countfname x ~ Word32
+                        , FieldType listfname x ~ Ptr CString
+                        )
+                      => [String] -> CreateVkStruct x (Union x '[countfname] '[listfname]) ()
+setStrListCountAndRef list =
+  set @countfname (fromIntegral $ length list) &*
+  setStrListRef @listfname list
 
 -- | Write a pointer to a vulkan structure - member of current structure
 --    and make sure the member exists as long as this structure exists.
