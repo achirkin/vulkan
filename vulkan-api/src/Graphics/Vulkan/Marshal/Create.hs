@@ -171,15 +171,11 @@ setStr v = CreateVkStruct $ \p ->
 --
 --   This function also attaches a reliable finalizer to the vulkan struct,
 --    so that the allocated memory is freed when the structure is GCed.
---
---   This function writes null pointer if used with an empty string.
 setStrRef :: forall fname x
            . ( CanWriteField fname x
              , FieldType fname x ~ CString
              )
           => String -> CreateVkStruct x '[fname] ()
-setStrRef "" = CreateVkStruct $ \p ->
-  (,) ([],[]) <$> writeField @fname @x p nullPtr
 setStrRef v = CreateVkStruct $ \p -> do
   sPtr <- newCString v
   (,) ([coerce sPtr],[]) <$> writeField @fname @x p sPtr
