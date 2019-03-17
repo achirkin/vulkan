@@ -302,14 +302,14 @@ class ( HasField fname a
   readFieldArrayUnsafe :: Int -> Ptr a -> IO (FieldType fname a)
 
 getFieldArray :: forall fname idx a
-               . (CanReadFieldArray fname a, IndexInBounds fname idx a)
+               . (CanReadFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
               => a -> FieldType fname a
 getFieldArray = getFieldArrayUnsafe @fname @a @idx
   (fromInteger $ natVal' (proxy# :: Proxy# idx))
 {-# INLINE getFieldArray #-}
 
 readFieldArray :: forall fname idx a
-                . (CanReadFieldArray fname a, IndexInBounds fname idx a)
+                . (CanReadFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
                => Ptr a -> IO (FieldType fname a)
 readFieldArray = readFieldArrayUnsafe @fname @a
   (fromInteger $ natVal' (proxy# :: Proxy# idx))
@@ -321,7 +321,7 @@ class CanReadFieldArray fname idx a
   writeFieldArrayUnsafe :: Int -> Ptr a -> FieldType fname a -> IO ()
 
 writeFieldArray :: forall fname idx a
-                 . (CanWriteFieldArray fname a, IndexInBounds fname idx a)
+                 . (CanWriteFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
                 => Ptr a -> FieldType fname a -> IO ()
 writeFieldArray = writeFieldArrayUnsafe @fname @a
   (fromInteger $ natVal' (proxy# :: Proxy# idx))
