@@ -141,7 +141,7 @@ set v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeField @fname @x p v
 
 -- | `writeFieldArray` wrapped into `CreateVkStruct` monad.
 setAt :: forall fname i x
-       . CanWriteFieldArray fname i x
+       . ( CanWriteFieldArray fname x, IndexInBounds fname i x, KnownNat i)
       => FieldType fname x -> CreateVkStruct x '[fname] ()
 setAt v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeFieldArray @fname @i @x p v
 
@@ -159,7 +159,7 @@ setVk ma = CreateVkStruct $ \p ->
 
 -- | Write a String into a vulkan struct in-place.
 setStr :: forall fname x
-        . ( CanWriteFieldArray fname 0 x
+        . ( CanWriteFieldArray fname x
           , FieldType fname x ~ CChar
           )
        => String -> CreateVkStruct x '[fname] ()
