@@ -6346,31 +6346,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceGroupProperties, physicalDevices}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "physicalDevices" idx
-            VkPhysicalDeviceGroupProperties) =>
-         CanReadFieldArray "physicalDevices" idx
-           VkPhysicalDeviceGroupProperties
+         CanReadFieldArray "physicalDevices" VkPhysicalDeviceGroupProperties
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "physicalDevices" 0
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "physicalDevices" 1
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "physicalDevices" 2
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "physicalDevices" 3
-                         VkPhysicalDeviceGroupProperties
-                       #-}
         type FieldArrayLength "physicalDevices"
                VkPhysicalDeviceGroupProperties
              = VK_MAX_DEVICE_GROUP_SIZE
@@ -6378,58 +6355,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_DEVICE_GROUP_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceGroupProperties, physicalDevices}
-                      +
-                      sizeOf (undefined :: VkPhysicalDevice) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: VkPhysicalDevice) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceGroupProperties, physicalDevices}
-                 +
-                 sizeOf (undefined :: VkPhysicalDevice) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkPhysicalDevice) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "physicalDevices" idx
-            VkPhysicalDeviceGroupProperties) =>
-         CanWriteFieldArray "physicalDevices" idx
+         CanWriteFieldArray "physicalDevices"
            VkPhysicalDeviceGroupProperties
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "physicalDevices" 0
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "physicalDevices" 1
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "physicalDevices" 2
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "physicalDevices" 3
-                         VkPhysicalDeviceGroupProperties
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceGroupProperties, physicalDevices}
-                 +
-                 sizeOf (undefined :: VkPhysicalDevice) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkPhysicalDevice) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "subsetAllocation" VkPhysicalDeviceGroupProperties where
@@ -6657,66 +6605,34 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceIDProperties, deviceUUID}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDProperties) =>
-         CanReadFieldArray "deviceUUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceUUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceUUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceUUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceUUID" 3 VkPhysicalDeviceIDProperties #-}
+         CanReadFieldArray "deviceUUID" VkPhysicalDeviceIDProperties where
         type FieldArrayLength "deviceUUID" VkPhysicalDeviceIDProperties =
              VK_UUID_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_UUID_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceIDProperties, deviceUUID} +
-                      sizeOf (undefined :: Word8) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: Word8) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceIDProperties, deviceUUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDProperties) =>
-         CanWriteFieldArray "deviceUUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceUUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceUUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceUUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceUUID" 3 VkPhysicalDeviceIDProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "deviceUUID" VkPhysicalDeviceIDProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceIDProperties, deviceUUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "driverUUID" VkPhysicalDeviceIDProperties where
@@ -6735,66 +6651,34 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceIDProperties, driverUUID}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "driverUUID" idx VkPhysicalDeviceIDProperties) =>
-         CanReadFieldArray "driverUUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "driverUUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "driverUUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "driverUUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "driverUUID" 3 VkPhysicalDeviceIDProperties #-}
+         CanReadFieldArray "driverUUID" VkPhysicalDeviceIDProperties where
         type FieldArrayLength "driverUUID" VkPhysicalDeviceIDProperties =
              VK_UUID_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_UUID_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceIDProperties, driverUUID} +
-                      sizeOf (undefined :: Word8) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: Word8) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceIDProperties, driverUUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "driverUUID" idx VkPhysicalDeviceIDProperties) =>
-         CanWriteFieldArray "driverUUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "driverUUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "driverUUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "driverUUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "driverUUID" 3 VkPhysicalDeviceIDProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "driverUUID" VkPhysicalDeviceIDProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceIDProperties, driverUUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "deviceLUID" VkPhysicalDeviceIDProperties where
@@ -6813,66 +6697,34 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceIDProperties, deviceLUID}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDProperties) =>
-         CanReadFieldArray "deviceLUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceLUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceLUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceLUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceLUID" 3 VkPhysicalDeviceIDProperties #-}
+         CanReadFieldArray "deviceLUID" VkPhysicalDeviceIDProperties where
         type FieldArrayLength "deviceLUID" VkPhysicalDeviceIDProperties =
              VK_LUID_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_LUID_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceIDProperties, deviceLUID} +
-                      sizeOf (undefined :: Word8) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: Word8) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceIDProperties, deviceLUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDProperties) =>
-         CanWriteFieldArray "deviceLUID" idx VkPhysicalDeviceIDProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceLUID" 0 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceLUID" 1 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceLUID" 2 VkPhysicalDeviceIDProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceLUID" 3 VkPhysicalDeviceIDProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "deviceLUID" VkPhysicalDeviceIDProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceIDProperties, deviceLUID} +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "deviceNodeMask" VkPhysicalDeviceIDProperties where
@@ -9727,26 +9579,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, maxComputeWorkGroupCount}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxComputeWorkGroupCount" idx
-            VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "maxComputeWorkGroupCount" idx
-           VkPhysicalDeviceLimits
+         CanReadFieldArray "maxComputeWorkGroupCount" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupCount" 0
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupCount" 1
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupCount" 2
-                         VkPhysicalDeviceLimits
-                       #-}
         type FieldArrayLength "maxComputeWorkGroupCount"
                VkPhysicalDeviceLimits
              = 3
@@ -9754,53 +9588,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 3
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, maxComputeWorkGroupCount}
-                      +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, maxComputeWorkGroupCount}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxComputeWorkGroupCount" idx
-            VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "maxComputeWorkGroupCount" idx
+         CanWriteFieldArray "maxComputeWorkGroupCount"
            VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupCount" 0
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupCount" 1
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupCount" 2
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, maxComputeWorkGroupCount}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "maxComputeWorkGroupInvocations" VkPhysicalDeviceLimits
@@ -9866,26 +9676,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, maxComputeWorkGroupSize}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxComputeWorkGroupSize" idx
-            VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "maxComputeWorkGroupSize" idx
-           VkPhysicalDeviceLimits
+         CanReadFieldArray "maxComputeWorkGroupSize" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupSize" 0
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupSize" 1
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxComputeWorkGroupSize" 2
-                         VkPhysicalDeviceLimits
-                       #-}
         type FieldArrayLength "maxComputeWorkGroupSize"
                VkPhysicalDeviceLimits
              = 3
@@ -9893,53 +9685,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 3
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, maxComputeWorkGroupSize}
-                      +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, maxComputeWorkGroupSize}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxComputeWorkGroupSize" idx
-            VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "maxComputeWorkGroupSize" idx
-           VkPhysicalDeviceLimits
+         CanWriteFieldArray "maxComputeWorkGroupSize" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupSize" 0
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupSize" 1
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxComputeWorkGroupSize" 2
-                         VkPhysicalDeviceLimits
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, maxComputeWorkGroupSize}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "subPixelPrecisionBits" VkPhysicalDeviceLimits where
@@ -10241,19 +10008,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, maxViewportDimensions}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxViewportDimensions" idx
-            VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "maxViewportDimensions" idx
-           VkPhysicalDeviceLimits
+         CanReadFieldArray "maxViewportDimensions" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxViewportDimensions" 0 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "maxViewportDimensions" 1 VkPhysicalDeviceLimits
-                       #-}
         type FieldArrayLength "maxViewportDimensions"
                VkPhysicalDeviceLimits
              = 2
@@ -10261,46 +10017,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 2
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, maxViewportDimensions}
-                      +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, maxViewportDimensions}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "maxViewportDimensions" idx
-            VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "maxViewportDimensions" idx
-           VkPhysicalDeviceLimits
+         CanWriteFieldArray "maxViewportDimensions" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxViewportDimensions" 0 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "maxViewportDimensions" 1 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, maxViewportDimensions}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "viewportBoundsRange" VkPhysicalDeviceLimits where
@@ -10321,61 +10059,36 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, viewportBoundsRange}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "viewportBoundsRange" idx VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "viewportBoundsRange" idx VkPhysicalDeviceLimits
+         CanReadFieldArray "viewportBoundsRange" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "viewportBoundsRange" 0 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "viewportBoundsRange" 1 VkPhysicalDeviceLimits
-                       #-}
         type FieldArrayLength "viewportBoundsRange" VkPhysicalDeviceLimits
              = 2
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 2
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, viewportBoundsRange}
-                      +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, viewportBoundsRange}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "viewportBoundsRange" idx VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "viewportBoundsRange" idx VkPhysicalDeviceLimits
+         CanWriteFieldArray "viewportBoundsRange" VkPhysicalDeviceLimits
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "viewportBoundsRange" 0 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "viewportBoundsRange" 1 VkPhysicalDeviceLimits
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, viewportBoundsRange}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "viewportSubPixelBits" VkPhysicalDeviceLimits where
@@ -11639,53 +11352,33 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, pointSizeRange}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "pointSizeRange" idx VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "pointSizeRange" idx VkPhysicalDeviceLimits
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pointSizeRange" 0 VkPhysicalDeviceLimits #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pointSizeRange" 1 VkPhysicalDeviceLimits #-}
+         CanReadFieldArray "pointSizeRange" VkPhysicalDeviceLimits where
         type FieldArrayLength "pointSizeRange" VkPhysicalDeviceLimits = 2
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 2
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, pointSizeRange} +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, pointSizeRange} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "pointSizeRange" idx VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "pointSizeRange" idx VkPhysicalDeviceLimits
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pointSizeRange" 0 VkPhysicalDeviceLimits #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pointSizeRange" 1 VkPhysicalDeviceLimits #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "pointSizeRange" VkPhysicalDeviceLimits where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, pointSizeRange} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "lineWidthRange" VkPhysicalDeviceLimits where
@@ -11704,53 +11397,33 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceLimits, lineWidthRange}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "lineWidthRange" idx VkPhysicalDeviceLimits) =>
-         CanReadFieldArray "lineWidthRange" idx VkPhysicalDeviceLimits
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "lineWidthRange" 0 VkPhysicalDeviceLimits #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "lineWidthRange" 1 VkPhysicalDeviceLimits #-}
+         CanReadFieldArray "lineWidthRange" VkPhysicalDeviceLimits where
         type FieldArrayLength "lineWidthRange" VkPhysicalDeviceLimits = 2
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 2
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceLimits, lineWidthRange} +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceLimits, lineWidthRange} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "lineWidthRange" idx VkPhysicalDeviceLimits) =>
-         CanWriteFieldArray "lineWidthRange" idx VkPhysicalDeviceLimits
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "lineWidthRange" 0 VkPhysicalDeviceLimits #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "lineWidthRange" 1 VkPhysicalDeviceLimits #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "lineWidthRange" VkPhysicalDeviceLimits where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceLimits, lineWidthRange} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "pointSizeGranularity" VkPhysicalDeviceLimits where
@@ -13785,27 +13458,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "memoryTypes" idx
-            VkPhysicalDeviceMemoryProperties) =>
-         CanReadFieldArray "memoryTypes" idx
-           VkPhysicalDeviceMemoryProperties
+         CanReadFieldArray "memoryTypes" VkPhysicalDeviceMemoryProperties
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryTypes" 0 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryTypes" 1 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryTypes" 2 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryTypes" 3 VkPhysicalDeviceMemoryProperties
-                       #-}
         type FieldArrayLength "memoryTypes"
                VkPhysicalDeviceMemoryProperties
              = VK_MAX_MEMORY_TYPES
@@ -13813,54 +13467,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_MEMORY_TYPES
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
-                      +
-                      sizeOf (undefined :: VkMemoryType) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: VkMemoryType) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
-                 +
-                 sizeOf (undefined :: VkMemoryType) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkMemoryType) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "memoryTypes" idx
-            VkPhysicalDeviceMemoryProperties) =>
-         CanWriteFieldArray "memoryTypes" idx
-           VkPhysicalDeviceMemoryProperties
+         CanWriteFieldArray "memoryTypes" VkPhysicalDeviceMemoryProperties
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryTypes" 0 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryTypes" 1 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryTypes" 2 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryTypes" 3 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
-                 +
-                 sizeOf (undefined :: VkMemoryType) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkMemoryType) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "memoryHeapCount" VkPhysicalDeviceMemoryProperties where
@@ -13921,27 +13549,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "memoryHeaps" idx
-            VkPhysicalDeviceMemoryProperties) =>
-         CanReadFieldArray "memoryHeaps" idx
-           VkPhysicalDeviceMemoryProperties
+         CanReadFieldArray "memoryHeaps" VkPhysicalDeviceMemoryProperties
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryHeaps" 0 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryHeaps" 1 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryHeaps" 2 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "memoryHeaps" 3 VkPhysicalDeviceMemoryProperties
-                       #-}
         type FieldArrayLength "memoryHeaps"
                VkPhysicalDeviceMemoryProperties
              = VK_MAX_MEMORY_HEAPS
@@ -13949,54 +13558,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_MEMORY_HEAPS
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
-                      +
-                      sizeOf (undefined :: VkMemoryHeap) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: VkMemoryHeap) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
-                 +
-                 sizeOf (undefined :: VkMemoryHeap) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkMemoryHeap) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "memoryHeaps" idx
-            VkPhysicalDeviceMemoryProperties) =>
-         CanWriteFieldArray "memoryHeaps" idx
-           VkPhysicalDeviceMemoryProperties
+         CanWriteFieldArray "memoryHeaps" VkPhysicalDeviceMemoryProperties
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryHeaps" 0 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryHeaps" 1 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryHeaps" 2 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "memoryHeaps" 3 VkPhysicalDeviceMemoryProperties
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
-                 +
-                 sizeOf (undefined :: VkMemoryHeap) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: VkMemoryHeap) * i)
 
 instance Show VkPhysicalDeviceMemoryProperties where
         showsPrec d x
@@ -15432,66 +15015,34 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceProperties, deviceName}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceName" idx VkPhysicalDeviceProperties) =>
-         CanReadFieldArray "deviceName" idx VkPhysicalDeviceProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceName" 0 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceName" 1 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceName" 2 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "deviceName" 3 VkPhysicalDeviceProperties #-}
+         CanReadFieldArray "deviceName" VkPhysicalDeviceProperties where
         type FieldArrayLength "deviceName" VkPhysicalDeviceProperties =
              VK_MAX_PHYSICAL_DEVICE_NAME_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_PHYSICAL_DEVICE_NAME_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceProperties, deviceName} +
-                      sizeOf (undefined :: CChar) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: CChar) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceProperties, deviceName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "deviceName" idx VkPhysicalDeviceProperties) =>
-         CanWriteFieldArray "deviceName" idx VkPhysicalDeviceProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceName" 0 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceName" 1 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceName" 2 VkPhysicalDeviceProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "deviceName" 3 VkPhysicalDeviceProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "deviceName" VkPhysicalDeviceProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceProperties, deviceName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineCacheUUID" VkPhysicalDeviceProperties where
@@ -15512,27 +15063,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceProperties, pipelineCacheUUID}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "pipelineCacheUUID" idx
-            VkPhysicalDeviceProperties) =>
-         CanReadFieldArray "pipelineCacheUUID" idx
-           VkPhysicalDeviceProperties
+         CanReadFieldArray "pipelineCacheUUID" VkPhysicalDeviceProperties
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pipelineCacheUUID" 0 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pipelineCacheUUID" 1 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pipelineCacheUUID" 2 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "pipelineCacheUUID" 3 VkPhysicalDeviceProperties
-                       #-}
         type FieldArrayLength "pipelineCacheUUID"
                VkPhysicalDeviceProperties
              = VK_UUID_SIZE
@@ -15540,54 +15072,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_UUID_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceProperties, pipelineCacheUUID}
-                      +
-                      sizeOf (undefined :: Word8) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word8) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceProperties, pipelineCacheUUID}
-                 +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "pipelineCacheUUID" idx
-            VkPhysicalDeviceProperties) =>
-         CanWriteFieldArray "pipelineCacheUUID" idx
-           VkPhysicalDeviceProperties
+         CanWriteFieldArray "pipelineCacheUUID" VkPhysicalDeviceProperties
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pipelineCacheUUID" 0 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pipelineCacheUUID" 1 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pipelineCacheUUID" 2 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "pipelineCacheUUID" 3 VkPhysicalDeviceProperties
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceProperties, pipelineCacheUUID}
-                 +
-                 sizeOf (undefined :: Word8) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word8) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "limits" VkPhysicalDeviceProperties where
@@ -16772,21 +16278,9 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "sampleLocationCoordinateRange" idx
-            VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
-         CanReadFieldArray "sampleLocationCoordinateRange" idx
+         CanReadFieldArray "sampleLocationCoordinateRange"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "sampleLocationCoordinateRange" 0
-                         VkPhysicalDeviceSampleLocationsPropertiesEXT
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "sampleLocationCoordinateRange" 1
-                         VkPhysicalDeviceSampleLocationsPropertiesEXT
-                       #-}
         type FieldArrayLength "sampleLocationCoordinateRange"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 2
@@ -16794,48 +16288,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 2
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
-                      +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "sampleLocationCoordinateRange" idx
-            VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
-         CanWriteFieldArray "sampleLocationCoordinateRange" idx
+         CanWriteFieldArray "sampleLocationCoordinateRange"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "sampleLocationCoordinateRange" 0
-                         VkPhysicalDeviceSampleLocationsPropertiesEXT
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "sampleLocationCoordinateRange" 1
-                         VkPhysicalDeviceSampleLocationsPropertiesEXT
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationSubPixelBits"

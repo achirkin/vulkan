@@ -258,63 +258,33 @@ instance {-# OVERLAPPING #-} HasField "float32" VkClearColorValue
         fieldOffset = #{offset VkClearColorValue, float32}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "float32" idx VkClearColorValue) =>
-         CanReadFieldArray "float32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "float32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "float32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "float32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "float32" 3 VkClearColorValue #-}
+         CanReadFieldArray "float32" VkClearColorValue where
         type FieldArrayLength "float32" VkClearColorValue = 4
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkClearColorValue, float32} +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkClearColorValue, float32} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "float32" idx VkClearColorValue) =>
-         CanWriteFieldArray "float32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "float32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "float32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "float32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "float32" 3 VkClearColorValue #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "float32" VkClearColorValue where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkClearColorValue, float32} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-} HasField "int32" VkClearColorValue
          where
@@ -331,63 +301,33 @@ instance {-# OVERLAPPING #-} HasField "int32" VkClearColorValue
         fieldOffset = #{offset VkClearColorValue, int32}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "int32" idx VkClearColorValue) =>
-         CanReadFieldArray "int32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "int32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "int32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "int32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "int32" 3 VkClearColorValue #-}
+         CanReadFieldArray "int32" VkClearColorValue where
         type FieldArrayLength "int32" VkClearColorValue = 4
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkClearColorValue, int32} +
-                      sizeOf (undefined :: Int32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: Int32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkClearColorValue, int32} +
-                 sizeOf (undefined :: Int32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Int32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "int32" idx VkClearColorValue) =>
-         CanWriteFieldArray "int32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "int32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "int32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "int32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "int32" 3 VkClearColorValue #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "int32" VkClearColorValue where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkClearColorValue, int32} +
-                 sizeOf (undefined :: Int32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Int32) * i)
 
 instance {-# OVERLAPPING #-} HasField "uint32" VkClearColorValue
          where
@@ -404,63 +344,33 @@ instance {-# OVERLAPPING #-} HasField "uint32" VkClearColorValue
         fieldOffset = #{offset VkClearColorValue, uint32}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "uint32" idx VkClearColorValue) =>
-         CanReadFieldArray "uint32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "uint32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "uint32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "uint32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "uint32" 3 VkClearColorValue #-}
+         CanReadFieldArray "uint32" VkClearColorValue where
         type FieldArrayLength "uint32" VkClearColorValue = 4
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkClearColorValue, uint32} +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkClearColorValue, uint32} +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "uint32" idx VkClearColorValue) =>
-         CanWriteFieldArray "uint32" idx VkClearColorValue
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "uint32" 0 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "uint32" 1 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "uint32" 2 VkClearColorValue #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "uint32" 3 VkClearColorValue #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "uint32" VkClearColorValue where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkClearColorValue, uint32} +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: Word32) * i)
 
 instance Show VkClearColorValue where
         showsPrec d x

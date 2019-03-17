@@ -278,28 +278,6 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
     fieldOptionalT = "'" <> fieldOptional
     fieldOptional = T.pack . show $ optional attributes
 
-    specMax = case memberData of
-          VkTypeData { name = Just (_, [VkTypeQArrLen n]) } -> n
-          _ -> 4
-    specStart t = "{-# SPECIALIZE instance " <> t <> " " <> origNameTxtQQ <> " "
-    specEnd   = structTypeTxt <> " #-}"
-    spec0r = if 0 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "0" <> specEnd
-    spec1r = if 1 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "1" <> specEnd
-    spec2r = if 2 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "2" <> specEnd
-    spec3r = if 3 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "3" <> specEnd
-    spec0w = if 0 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "0" <> specEnd
-    spec1w = if 1 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "1" <> specEnd
-    spec2w = if 2 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "2" <> specEnd
-    spec3w = if 3 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "3" <> specEnd
-
     genInstance = do
       writePragma "TypeFamilies"
       writePragma "MultiParamTypeClasses"
@@ -340,10 +318,6 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
             Just lentxt -> parseDecls [text|
               instance {-# OVERLAPPING #-}
                        CanReadFieldArray $origNameTxtQQ $structTypeTxt where
-                $spec0r
-                $spec1r
-                $spec2r
-                $spec3r
                 type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
                 {-# INLINE fieldArrayLength #-}
                 fieldArrayLength = $lentxt
@@ -372,10 +346,6 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
               Just _ -> parseDecls [text|
                 instance {-# OVERLAPPING #-}
                          CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
-                  $spec0w
-                  $spec1w
-                  $spec2w
-                  $spec3w
                   {-# INLINE writeFieldArrayUnsafe #-}
                   writeFieldArrayUnsafe i p = pokeByteOff p
                     ( $offsetExpr + $esizeExpr * i )
