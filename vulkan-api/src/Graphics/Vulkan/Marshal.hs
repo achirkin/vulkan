@@ -304,7 +304,7 @@ class ( HasField fname a
 getFieldArray :: forall fname idx a
                . (CanReadFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
               => a -> FieldType fname a
-getFieldArray = getFieldArrayUnsafe @fname @a @idx
+getFieldArray = getFieldArrayUnsafe @fname @a
   (fromInteger $ natVal' (proxy# :: Proxy# idx))
 {-# INLINE getFieldArray #-}
 
@@ -315,7 +315,7 @@ readFieldArray = readFieldArrayUnsafe @fname @a
   (fromInteger $ natVal' (proxy# :: Proxy# idx))
 {-# INLINE readFieldArray #-}
 
-class CanReadFieldArray fname idx a
+class CanReadFieldArray fname a
       => CanWriteFieldArray (fname :: Symbol) (a :: Type) where
   -- | Write to an array-type field. No bound checks.
   writeFieldArrayUnsafe :: Int -> Ptr a -> FieldType fname a -> IO ()
@@ -343,9 +343,10 @@ instance {-# OVERLAPPABLE #-}
          ( HasField fname a
          , IsFieldArray fname a 'True
          , TypeError (ErrorNotReadableField fname a)
+         , KnownNat (FieldArrayLength fname a)
          ) => CanReadFieldArray fname a where
 instance {-# OVERLAPPABLE #-}
-         ( CanReadFieldArray fname idx a
+         ( CanReadFieldArray fname a
          , TypeError (ErrorNotWritableField fname a)
          ) => CanWriteFieldArray fname a where
 
@@ -423,7 +424,7 @@ type ErrorNotWritableField (s :: Symbol) (a :: Type)
 --   The string pointers should not be used outside the callback.
 --   It will point to a correct location only as long as the struct is alive.
 withCStringField :: forall fname a b
-                 . ( CanReadFieldArray fname 0 a
+                 . ( CanReadFieldArray fname a
                    , FieldType fname a ~ CChar
                    , VulkanMarshal a
                    )
@@ -435,7 +436,7 @@ withCStringField x f = do
 
 -- | Get pointer to a memory location of the C string field in a structure.
 unsafeCStringField :: forall fname a
-                   . ( CanReadFieldArray fname 0 a
+                   . ( CanReadFieldArray fname a
                      , FieldType fname a ~ CChar
                      , VulkanMarshal a
                      )
@@ -444,30 +445,30 @@ unsafeCStringField x = unsafePtr x `plusPtr` fieldOffset @fname @a
 
 
 getStringField :: forall fname a
-                . ( CanReadFieldArray fname 0 a
+                . ( CanReadFieldArray fname a
                   , FieldType fname a ~ CChar
                   , VulkanMarshal a
                   )
                => a -> String
 getStringField x
-    = case takeForce (fieldArrayLength @fname @0 @a)
+    = case takeForce (fieldArrayLength @fname @a)
          . unsafeDupablePerformIO
          $ withCStringField @fname @a x peekCString of
         ((), s) -> s
 
 readStringField :: forall fname a
-                . ( CanReadFieldArray fname 0 a
+                . ( CanReadFieldArray fname a
                   , FieldType fname a ~ CChar
                   , VulkanMarshal a
                   )
                => Ptr a -> IO String
 readStringField px = do
-  ((), s) <- takeForce (fieldArrayLength @fname @0 @a)
+  ((), s) <- takeForce (fieldArrayLength @fname @a)
          <$> peekCString (px `plusPtr` fieldOffset @fname @a)
   return s
 
 writeStringField :: forall fname a
-                  . ( CanWriteFieldArray fname 0 a
+                  . ( CanWriteFieldArray fname a
                     , FieldType fname a ~ CChar
                     , VulkanMarshal a
                     )
