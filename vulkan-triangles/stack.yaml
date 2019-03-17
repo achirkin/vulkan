@@ -1,4 +1,4 @@
-resolver: nightly-2018-04-12
+resolver: lts-12.26
 
 ghc-options:
   vulkan-api:    -O2
@@ -16,7 +16,7 @@ extra-deps:
   - GLFW-b-3.2.1.0
   - dimensions-1.0.0.0
   - easytensor-1.0.0.1
-  - easytensor-vulkan-1.0.0.0
+  - easytensor-vulkan-1.0.1.0
 
 packages:
   - .

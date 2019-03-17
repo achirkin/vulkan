@@ -1,4 +1,4 @@
-resolver: lts-8.21
+resolver: lts-12.26
 
 extra-deps:
   - bindings-GLFW-3.2.1.1
