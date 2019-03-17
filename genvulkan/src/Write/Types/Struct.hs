@@ -339,8 +339,7 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
               |]
             Just lentxt -> parseDecls [text|
               instance {-# OVERLAPPING #-}
-                       IndexInBounds $origNameTxtQQ $structTypeTxt
-                    => CanReadFieldArray $origNameTxtQQ $structTypeTxt where
+                       CanReadFieldArray $origNameTxtQQ $structTypeTxt where
                 $spec0r
                 $spec1r
                 $spec2r
@@ -372,8 +371,7 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
                 |]
               Just _ -> parseDecls [text|
                 instance {-# OVERLAPPING #-}
-                         IndexInBounds $origNameTxtQQ $structTypeTxt
-                      => CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
+                         CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
                   $spec0w
                   $spec1w
                   $spec2w
