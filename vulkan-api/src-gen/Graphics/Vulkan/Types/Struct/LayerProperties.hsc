@@ -96,64 +96,34 @@ instance {-# OVERLAPPING #-} HasField "layerName" VkLayerProperties
         fieldOffset = #{offset VkLayerProperties, layerName}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "layerName" idx VkLayerProperties) =>
-         CanReadFieldArray "layerName" idx VkLayerProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "layerName" 0 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "layerName" 1 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "layerName" 2 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "layerName" 3 VkLayerProperties #-}
+         CanReadFieldArray "layerName" VkLayerProperties where
         type FieldArrayLength "layerName" VkLayerProperties =
              VK_MAX_EXTENSION_NAME_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_EXTENSION_NAME_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkLayerProperties, layerName} +
-                      sizeOf (undefined :: CChar) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: CChar) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkLayerProperties, layerName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "layerName" idx VkLayerProperties) =>
-         CanWriteFieldArray "layerName" idx VkLayerProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "layerName" 0 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "layerName" 1 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "layerName" 2 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "layerName" 3 VkLayerProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "layerName" VkLayerProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkLayerProperties, layerName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "specVersion" VkLayerProperties where
@@ -235,66 +205,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset = #{offset VkLayerProperties, description}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "description" idx VkLayerProperties) =>
-         CanReadFieldArray "description" idx VkLayerProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "description" 0 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "description" 1 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "description" 2 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "description" 3 VkLayerProperties #-}
+         CanReadFieldArray "description" VkLayerProperties where
         type FieldArrayLength "description" VkLayerProperties =
              VK_MAX_DESCRIPTION_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_DESCRIPTION_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkLayerProperties, description} +
-                      sizeOf (undefined :: CChar) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: CChar) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkLayerProperties, description} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "description" idx VkLayerProperties) =>
-         CanWriteFieldArray "description" idx VkLayerProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "description" 0 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "description" 1 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "description" 2 VkLayerProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "description" 3 VkLayerProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "description" VkLayerProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkLayerProperties, description} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance Show VkLayerProperties where
         showsPrec d x
