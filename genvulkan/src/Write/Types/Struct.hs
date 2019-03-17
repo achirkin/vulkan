@@ -339,10 +339,8 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
               |]
             Just lentxt -> parseDecls [text|
               instance {-# OVERLAPPING #-}
-                       ( KnownNat idx
-                       , IndexInBounds $origNameTxtQQ idx $structTypeTxt
-                       )
-                    => CanReadFieldArray $origNameTxtQQ idx $structTypeTxt where
+                       IndexInBounds $origNameTxtQQ $structTypeTxt
+                    => CanReadFieldArray $origNameTxtQQ $structTypeTxt where
                 $spec0r
                 $spec1r
                 $spec2r
@@ -350,17 +348,15 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
                 type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
                 {-# INLINE fieldArrayLength #-}
                 fieldArrayLength = $lentxt
-                {-# INLINE getFieldArray #-}
-                getFieldArray = f
+                {-# INLINE getFieldArrayUnsafe #-}
+                getFieldArrayUnsafe i = f
                   where
                     {-# NOINLINE f #-}
                     f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
-                    off = $offsetExpr + $esizeExpr * fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                {-# INLINE readFieldArray #-}
-                readFieldArray p = peekByteOff p
-                  ( $offsetExpr + $esizeExpr *
-                    fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                  )
+                    off = $offsetExpr + $esizeExpr * i
+                {-# INLINE readFieldArrayUnsafe #-}
+                readFieldArrayUnsafe i p = peekByteOff p
+                  ( $offsetExpr + $esizeExpr * i )
               |]
           dsWrite =
             if False -- returnedonly structAttrs
@@ -376,19 +372,15 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
                 |]
               Just _ -> parseDecls [text|
                 instance {-# OVERLAPPING #-}
-                         ( KnownNat idx
-                         , IndexInBounds $origNameTxtQQ idx $structTypeTxt
-                         )
-                      => CanWriteFieldArray $origNameTxtQQ idx $structTypeTxt where
+                         IndexInBounds $origNameTxtQQ $structTypeTxt
+                      => CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
                   $spec0w
                   $spec1w
                   $spec2w
                   $spec3w
-                  {-# INLINE writeFieldArray #-}
-                  writeFieldArray p = pokeByteOff p
-                    ( $offsetExpr + $esizeExpr *
-                      fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                    )
+                  {-# INLINE writeFieldArrayUnsafe #-}
+                  writeFieldArrayUnsafe i p = pokeByteOff p
+                    ( $offsetExpr + $esizeExpr * i )
                 |]
 
       when (isJust sfiTyElemN) $ do
