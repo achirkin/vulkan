@@ -93,66 +93,34 @@ instance {-# OVERLAPPING #-}
           = #{offset VkExtensionProperties, extensionName}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "extensionName" idx VkExtensionProperties) =>
-         CanReadFieldArray "extensionName" idx VkExtensionProperties
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "extensionName" 0 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "extensionName" 1 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "extensionName" 2 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "extensionName" 3 VkExtensionProperties #-}
+         CanReadFieldArray "extensionName" VkExtensionProperties where
         type FieldArrayLength "extensionName" VkExtensionProperties =
              VK_MAX_EXTENSION_NAME_SIZE
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_EXTENSION_NAME_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkExtensionProperties, extensionName} +
-                      sizeOf (undefined :: CChar) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: CChar) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkExtensionProperties, extensionName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "extensionName" idx VkExtensionProperties) =>
-         CanWriteFieldArray "extensionName" idx VkExtensionProperties
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "extensionName" 0 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "extensionName" 1 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "extensionName" 2 VkExtensionProperties #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "extensionName" 3 VkExtensionProperties #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "extensionName" VkExtensionProperties where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkExtensionProperties, extensionName} +
-                 sizeOf (undefined :: CChar) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: CChar) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "specVersion" VkExtensionProperties where

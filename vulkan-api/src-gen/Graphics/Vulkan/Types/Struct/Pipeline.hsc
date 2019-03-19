@@ -2355,31 +2355,9 @@ instance {-# OVERLAPPING #-}
           = #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "blendConstants" idx
-            VkPipelineColorBlendStateCreateInfo) =>
-         CanReadFieldArray "blendConstants" idx
+         CanReadFieldArray "blendConstants"
            VkPipelineColorBlendStateCreateInfo
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "blendConstants" 0
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "blendConstants" 1
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "blendConstants" 2
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "blendConstants" 3
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
         type FieldArrayLength "blendConstants"
                VkPipelineColorBlendStateCreateInfo
              = 4
@@ -2387,58 +2365,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
-                      +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "blendConstants" idx
-            VkPipelineColorBlendStateCreateInfo) =>
-         CanWriteFieldArray "blendConstants" idx
+         CanWriteFieldArray "blendConstants"
            VkPipelineColorBlendStateCreateInfo
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "blendConstants" 0
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "blendConstants" 1
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "blendConstants" 2
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "blendConstants" 3
-                         VkPipelineColorBlendStateCreateInfo
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
-                 +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: #{type float}) * i)
 
 instance Show VkPipelineColorBlendStateCreateInfo where
         showsPrec d x

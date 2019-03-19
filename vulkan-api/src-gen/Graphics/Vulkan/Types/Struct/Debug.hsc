@@ -210,65 +210,33 @@ instance {-# OVERLAPPING #-}
           = #{offset VkDebugMarkerMarkerInfoEXT, color}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
-         CanReadFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 0 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 1 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 2 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
+         CanReadFieldArray "color" VkDebugMarkerMarkerInfoEXT where
         type FieldArrayLength "color" VkDebugMarkerMarkerInfoEXT = 4
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkDebugMarkerMarkerInfoEXT, color} +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkDebugMarkerMarkerInfoEXT, color} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
-         CanWriteFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 0 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 1 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 2 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "color" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkDebugMarkerMarkerInfoEXT, color} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance Show VkDebugMarkerMarkerInfoEXT where
         showsPrec d x

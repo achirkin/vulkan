@@ -2030,31 +2030,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkDeviceGroupPresentCapabilitiesKHR, presentMask}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "presentMask" idx
-            VkDeviceGroupPresentCapabilitiesKHR) =>
-         CanReadFieldArray "presentMask" idx
-           VkDeviceGroupPresentCapabilitiesKHR
+         CanReadFieldArray "presentMask" VkDeviceGroupPresentCapabilitiesKHR
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "presentMask" 0
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "presentMask" 1
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "presentMask" 2
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "presentMask" 3
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
         type FieldArrayLength "presentMask"
                VkDeviceGroupPresentCapabilitiesKHR
              = VK_MAX_DEVICE_GROUP_SIZE
@@ -2062,58 +2039,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = VK_MAX_DEVICE_GROUP_SIZE
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkDeviceGroupPresentCapabilitiesKHR, presentMask}
-                      +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkDeviceGroupPresentCapabilitiesKHR, presentMask}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "presentMask" idx
-            VkDeviceGroupPresentCapabilitiesKHR) =>
-         CanWriteFieldArray "presentMask" idx
+         CanWriteFieldArray "presentMask"
            VkDeviceGroupPresentCapabilitiesKHR
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "presentMask" 0
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "presentMask" 1
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "presentMask" 2
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "presentMask" 3
-                         VkDeviceGroupPresentCapabilitiesKHR
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkDeviceGroupPresentCapabilitiesKHR, presentMask}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
          HasField "modes" VkDeviceGroupPresentCapabilitiesKHR where

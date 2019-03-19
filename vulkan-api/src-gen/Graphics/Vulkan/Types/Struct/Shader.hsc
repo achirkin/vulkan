@@ -1016,26 +1016,8 @@ instance {-# OVERLAPPING #-}
           = #{offset VkShaderStatisticsInfoAMD, computeWorkGroupSize}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "computeWorkGroupSize" idx
-            VkShaderStatisticsInfoAMD) =>
-         CanReadFieldArray "computeWorkGroupSize" idx
-           VkShaderStatisticsInfoAMD
+         CanReadFieldArray "computeWorkGroupSize" VkShaderStatisticsInfoAMD
          where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "computeWorkGroupSize" 0
-                         VkShaderStatisticsInfoAMD
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "computeWorkGroupSize" 1
-                         VkShaderStatisticsInfoAMD
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "computeWorkGroupSize" 2
-                         VkShaderStatisticsInfoAMD
-                       #-}
         type FieldArrayLength "computeWorkGroupSize"
                VkShaderStatisticsInfoAMD
              = 3
@@ -1043,53 +1025,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 3
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkShaderStatisticsInfoAMD, computeWorkGroupSize}
-                      +
-                      sizeOf (undefined :: Word32) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      + sizeOf (undefined :: Word32) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkShaderStatisticsInfoAMD, computeWorkGroupSize}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx,
-          IndexInBounds "computeWorkGroupSize" idx
-            VkShaderStatisticsInfoAMD) =>
-         CanWriteFieldArray "computeWorkGroupSize" idx
-           VkShaderStatisticsInfoAMD
+         CanWriteFieldArray "computeWorkGroupSize" VkShaderStatisticsInfoAMD
          where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "computeWorkGroupSize" 0
-                         VkShaderStatisticsInfoAMD
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "computeWorkGroupSize" 1
-                         VkShaderStatisticsInfoAMD
-                       #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "computeWorkGroupSize" 2
-                         VkShaderStatisticsInfoAMD
-                       #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkShaderStatisticsInfoAMD, computeWorkGroupSize}
-                 +
-                 sizeOf (undefined :: Word32) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 + sizeOf (undefined :: Word32) * i)
 
 instance Show VkShaderStatisticsInfoAMD where
         showsPrec d x
