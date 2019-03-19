@@ -33,6 +33,7 @@ module Graphics.Vulkan.Marshal
     -- * Type-indexed access to struct members
   , HasField (..), CanReadField (..), CanWriteField (..)
   , CanReadFieldArray (..), CanWriteFieldArray (..)
+  , getFieldArray, readFieldArray, writeFieldArray
   , IsFieldArray, IndexInBounds
     -- * Re-exported functions from 'Foreign.ForeignPtr'
   , mallocForeignPtr, withForeignPtr, addForeignPtrFinalizer
@@ -63,6 +64,7 @@ import           Foreign.Marshal.Array            (pokeArray0)
 import           Foreign.Marshal.Utils            (fillBytes)
 import           Foreign.Ptr                      (FunPtr, nullPtr, plusPtr)
 import           Foreign.Storable                 (Storable (sizeOf))
+import           GHC.Exts                         (Proxy#, proxy#)
 import           GHC.Generics                     (Generic)
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits
@@ -287,19 +289,43 @@ class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: Type) where
   writeField :: Ptr a -> FieldType fname a -> IO ()
 
 class ( HasField fname a
-      , IndexInBounds fname idx a
       , IsFieldArray fname a 'True
-      ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
+      , KnownNat (FieldArrayLength fname a)
+      ) => CanReadFieldArray (fname :: Symbol) (a :: Type) where
   -- | Length of an array that is a field of a structure or union
   type FieldArrayLength fname a :: Nat
   -- | Length of an array that is a field of a structure or union
   fieldArrayLength :: Int
-  getFieldArray :: a -> FieldType fname a
-  readFieldArray :: Ptr a -> IO (FieldType fname a)
+  -- | Index an array-type field. No bound checks.
+  getFieldArrayUnsafe :: Int -> a -> FieldType fname a
+  -- | Read from an array-type field. No bound checks.
+  readFieldArrayUnsafe :: Int -> Ptr a -> IO (FieldType fname a)
 
-class CanReadFieldArray fname idx a
-      => CanWriteFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
-  writeFieldArray :: Ptr a -> FieldType fname a -> IO ()
+getFieldArray :: forall fname idx a
+               . (CanReadFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
+              => a -> FieldType fname a
+getFieldArray = getFieldArrayUnsafe @fname @a
+  (fromInteger $ natVal' (proxy# :: Proxy# idx))
+{-# INLINE getFieldArray #-}
+
+readFieldArray :: forall fname idx a
+                . (CanReadFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
+               => Ptr a -> IO (FieldType fname a)
+readFieldArray = readFieldArrayUnsafe @fname @a
+  (fromInteger $ natVal' (proxy# :: Proxy# idx))
+{-# INLINE readFieldArray #-}
+
+class CanReadFieldArray fname a
+      => CanWriteFieldArray (fname :: Symbol) (a :: Type) where
+  -- | Write to an array-type field. No bound checks.
+  writeFieldArrayUnsafe :: Int -> Ptr a -> FieldType fname a -> IO ()
+
+writeFieldArray :: forall fname idx a
+                 . (CanWriteFieldArray fname a, IndexInBounds fname idx a, KnownNat idx)
+                => Ptr a -> FieldType fname a -> IO ()
+writeFieldArray = writeFieldArrayUnsafe @fname @a
+  (fromInteger $ natVal' (proxy# :: Proxy# idx))
+{-# INLINE writeFieldArray #-}
 
 instance {-# OVERLAPPABLE #-}
          TypeError (ErrorNoSuchField fname a) => HasField fname a where
@@ -316,13 +342,13 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPABLE #-}
          ( HasField fname a
          , IsFieldArray fname a 'True
-         , IndexInBounds fname idx a
          , TypeError (ErrorNotReadableField fname a)
-         ) => CanReadFieldArray fname idx a where
+         , KnownNat (FieldArrayLength fname a)
+         ) => CanReadFieldArray fname a where
 instance {-# OVERLAPPABLE #-}
-         ( CanReadFieldArray fname idx a
+         ( CanReadFieldArray fname a
          , TypeError (ErrorNotWritableField fname a)
-         ) => CanWriteFieldArray fname idx a where
+         ) => CanWriteFieldArray fname a where
 
 
 type IndexInBounds (s :: Symbol) (i :: Nat) (a :: Type)
@@ -398,7 +424,7 @@ type ErrorNotWritableField (s :: Symbol) (a :: Type)
 --   The string pointers should not be used outside the callback.
 --   It will point to a correct location only as long as the struct is alive.
 withCStringField :: forall fname a b
-                 . ( CanReadFieldArray fname 0 a
+                 . ( CanReadFieldArray fname a
                    , FieldType fname a ~ CChar
                    , VulkanMarshal a
                    )
@@ -410,7 +436,7 @@ withCStringField x f = do
 
 -- | Get pointer to a memory location of the C string field in a structure.
 unsafeCStringField :: forall fname a
-                   . ( CanReadFieldArray fname 0 a
+                   . ( CanReadFieldArray fname a
                      , FieldType fname a ~ CChar
                      , VulkanMarshal a
                      )
@@ -419,30 +445,30 @@ unsafeCStringField x = unsafePtr x `plusPtr` fieldOffset @fname @a
 
 
 getStringField :: forall fname a
-                . ( CanReadFieldArray fname 0 a
+                . ( CanReadFieldArray fname a
                   , FieldType fname a ~ CChar
                   , VulkanMarshal a
                   )
                => a -> String
 getStringField x
-    = case takeForce (fieldArrayLength @fname @0 @a)
+    = case takeForce (fieldArrayLength @fname @a)
          . unsafeDupablePerformIO
          $ withCStringField @fname @a x peekCString of
         ((), s) -> s
 
 readStringField :: forall fname a
-                . ( CanReadFieldArray fname 0 a
+                . ( CanReadFieldArray fname a
                   , FieldType fname a ~ CChar
                   , VulkanMarshal a
                   )
                => Ptr a -> IO String
 readStringField px = do
-  ((), s) <- takeForce (fieldArrayLength @fname @0 @a)
+  ((), s) <- takeForce (fieldArrayLength @fname @a)
          <$> peekCString (px `plusPtr` fieldOffset @fname @a)
   return s
 
 writeStringField :: forall fname a
-                  . ( CanWriteFieldArray fname 0 a
+                  . ( CanWriteFieldArray fname a
                     , FieldType fname a ~ CChar
                     , VulkanMarshal a
                     )

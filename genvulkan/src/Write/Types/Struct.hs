@@ -278,28 +278,6 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
     fieldOptionalT = "'" <> fieldOptional
     fieldOptional = T.pack . show $ optional attributes
 
-    specMax = case memberData of
-          VkTypeData { name = Just (_, [VkTypeQArrLen n]) } -> n
-          _ -> 4
-    specStart t = "{-# SPECIALIZE instance " <> t <> " " <> origNameTxtQQ <> " "
-    specEnd   = structTypeTxt <> " #-}"
-    spec0r = if 0 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "0" <> specEnd
-    spec1r = if 1 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "1" <> specEnd
-    spec2r = if 2 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "2" <> specEnd
-    spec3r = if 3 >= specMax then ""
-            else specStart "CanReadFieldArray" <> "3" <> specEnd
-    spec0w = if 0 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "0" <> specEnd
-    spec1w = if 1 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "1" <> specEnd
-    spec2w = if 2 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "2" <> specEnd
-    spec3w = if 3 >= specMax then ""
-            else specStart "CanWriteFieldArray" <> "3" <> specEnd
-
     genInstance = do
       writePragma "TypeFamilies"
       writePragma "MultiParamTypeClasses"
@@ -339,28 +317,19 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
               |]
             Just lentxt -> parseDecls [text|
               instance {-# OVERLAPPING #-}
-                       ( KnownNat idx
-                       , IndexInBounds $origNameTxtQQ idx $structTypeTxt
-                       )
-                    => CanReadFieldArray $origNameTxtQQ idx $structTypeTxt where
-                $spec0r
-                $spec1r
-                $spec2r
-                $spec3r
+                       CanReadFieldArray $origNameTxtQQ $structTypeTxt where
                 type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
                 {-# INLINE fieldArrayLength #-}
                 fieldArrayLength = $lentxt
-                {-# INLINE getFieldArray #-}
-                getFieldArray = f
+                {-# INLINE getFieldArrayUnsafe #-}
+                getFieldArrayUnsafe i = f
                   where
                     {-# NOINLINE f #-}
                     f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
-                    off = $offsetExpr + $esizeExpr * fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                {-# INLINE readFieldArray #-}
-                readFieldArray p = peekByteOff p
-                  ( $offsetExpr + $esizeExpr *
-                    fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                  )
+                    off = $offsetExpr + $esizeExpr * i
+                {-# INLINE readFieldArrayUnsafe #-}
+                readFieldArrayUnsafe i p = peekByteOff p
+                  ( $offsetExpr + $esizeExpr * i )
               |]
           dsWrite =
             if False -- returnedonly structAttrs
@@ -376,19 +345,10 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
                 |]
               Just _ -> parseDecls [text|
                 instance {-# OVERLAPPING #-}
-                         ( KnownNat idx
-                         , IndexInBounds $origNameTxtQQ idx $structTypeTxt
-                         )
-                      => CanWriteFieldArray $origNameTxtQQ idx $structTypeTxt where
-                  $spec0w
-                  $spec1w
-                  $spec2w
-                  $spec3w
-                  {-# INLINE writeFieldArray #-}
-                  writeFieldArray p = pokeByteOff p
-                    ( $offsetExpr + $esizeExpr *
-                      fromInteger ( natVal' (proxy# :: Proxy# idx) )
-                    )
+                         CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
+                  {-# INLINE writeFieldArrayUnsafe #-}
+                  writeFieldArrayUnsafe i p = pokeByteOff p
+                    ( $offsetExpr + $esizeExpr * i )
                 |]
 
       when (isJust sfiTyElemN) $ do

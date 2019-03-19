@@ -189,63 +189,33 @@ instance {-# OVERLAPPING #-} HasField "color" VkDebugUtilsLabelEXT
         fieldOffset = #{offset VkDebugUtilsLabelEXT, color}
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "color" idx VkDebugUtilsLabelEXT) =>
-         CanReadFieldArray "color" idx VkDebugUtilsLabelEXT
-         where
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 0 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 1 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 2 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanReadFieldArray "color" 3 VkDebugUtilsLabelEXT #-}
+         CanReadFieldArray "color" VkDebugUtilsLabelEXT where
         type FieldArrayLength "color" VkDebugUtilsLabelEXT = 4
 
         {-# INLINE fieldArrayLength #-}
         fieldArrayLength = 4
 
-        {-# INLINE getFieldArray #-}
-        getFieldArray = f
+        {-# INLINE getFieldArrayUnsafe #-}
+        getFieldArrayUnsafe i = f
           where {-# NOINLINE f #-}
                 f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
                 off
                   = #{offset VkDebugUtilsLabelEXT, color} +
-                      sizeOf (undefined :: #{type float}) *
-                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+                      sizeOf (undefined :: #{type float}) * i
 
-        {-# INLINE readFieldArray #-}
-        readFieldArray p
+        {-# INLINE readFieldArrayUnsafe #-}
+        readFieldArrayUnsafe i p
           = peekByteOff p
               (#{offset VkDebugUtilsLabelEXT, color} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance {-# OVERLAPPING #-}
-         (KnownNat idx, IndexInBounds "color" idx VkDebugUtilsLabelEXT) =>
-         CanWriteFieldArray "color" idx VkDebugUtilsLabelEXT
-         where
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 0 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 1 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 2 VkDebugUtilsLabelEXT #-}
-
-        {-# SPECIALISE instance
-                       CanWriteFieldArray "color" 3 VkDebugUtilsLabelEXT #-}
-
-        {-# INLINE writeFieldArray #-}
-        writeFieldArray p
+         CanWriteFieldArray "color" VkDebugUtilsLabelEXT where
+        {-# INLINE writeFieldArrayUnsafe #-}
+        writeFieldArrayUnsafe i p
           = pokeByteOff p
               (#{offset VkDebugUtilsLabelEXT, color} +
-                 sizeOf (undefined :: #{type float}) *
-                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
+                 sizeOf (undefined :: #{type float}) * i)
 
 instance Show VkDebugUtilsLabelEXT where
         showsPrec d x
