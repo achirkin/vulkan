@@ -12,7 +12,7 @@
 #else
   #include <dlfcn.h>
   #if defined(__APPLE__) || defined(darwin_HOST_OS)
-    #define _vk_dlopen() dlopen("libMoltenVK.dylib", RTLD_LAZY | RTLD_LOCAL)
+    #define _vk_dlopen() dlopen("libvulkan.1.dylib", RTLD_LAZY | RTLD_LOCAL)
   #else
     #define _vk_dlopen() dlopen("libvulkan.so", RTLD_LAZY | RTLD_LOCAL)
   #endif
