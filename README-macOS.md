@@ -1,6 +1,6 @@
 # Getting started with Vulkan on macOS using Haskell
 
-This is for the [vulkan-api](https://github.com/achirkin/vulkan) haskell library.
+This is for the [vulkan-api](https://github.com/achirkin/vulkan) Haskell library.
 There is another vulkan library for Haskell, see the README of vulkan-api for differences.
 Instructions tested with cabal v2-commands, not yet with stack.
 
@@ -18,14 +18,14 @@ While the SDK documentation claims it can't be installed, I recommend the follow
 
 ### Option 1, tested
 
-  cd ~
-  tar xzf Downloads/vulkan-sdk.tar.gz
-  cd vulkansdk-macos-1.1.101.0/macOS
-  mkdir ~/.local/lib
-  cp -a lib/*.dylib ~/.local/lib
-  mkdir ~/.local/share/vulkan
-  cp -a etc/vulkan/* ~/.local/share/vulkan
-  cp -a bin/* ~/bin
+    cd ~
+    tar xzf Downloads/vulkan-sdk.tar.gz
+    cd vulkansdk-macos-1.1.101.0/macOS
+    mkdir ~/.local/lib
+    cp -a lib/*.dylib ~/.local/lib
+    mkdir ~/.local/share/vulkan
+    cp -a etc/vulkan/* ~/.local/share/vulkan
+    cp -a bin/* ~/bin
 
 Make sure $HOME/bin is on your path, or use another location.
 
@@ -41,16 +41,16 @@ so make sure the Vulkan loader can find MoltenVK.
 
 ### Option 2, untested
 
-  cd ~
-  tar xzf Downloads/vulkan-sdk.tar.gz
+    cd ~
+    tar xzf Downloads/vulkan-sdk.tar.gz
 
 When developing:
 
-  VULKAN_SDK="${HOME}/vulkansdk-macos-1.1.101.0/macOS"
-  export VK_LAYER_PATH="${VULKAN_SDK}/etc/vulkan/explicit_layer.d"
-  export VK_ICD_FILENAMES="${VULKAN_SDK}/etc/vulkan/icd.d/MoltenVK_icd.json"
-  export PATH="${VULKAN_SDK}/bin:${PATH}"
-  export DYLD_LIBRARY_PATH="${VULKAN_SDK}/lib"
+    VULKAN_SDK="${HOME}/vulkansdk-macos-1.1.101.0/macOS"
+    export VK_LAYER_PATH="${VULKAN_SDK}/etc/vulkan/explicit_layer.d"
+    export VK_ICD_FILENAMES="${VULKAN_SDK}/etc/vulkan/icd.d/MoltenVK_icd.json"
+    export PATH="${VULKAN_SDK}/bin:${PATH}"
+    export DYLD_LIBRARY_PATH="${VULKAN_SDK}/lib"
 
 ### Workaround for compile-time linking vulkan-api
 
@@ -65,7 +65,7 @@ The executables don't have any @rpath entries, and even if they had, @rpath is r
 are generated in various build directories.
 It can be worked around by changing the install name of the file to an absolute path (assuming $VULKAN_SDK is absolute as above):
 
-  install_name_tool -id "${VULKAN_SDK}/lib/libvulkan.1.dylib" "${VULKAN_SDK}/lib/libvulkan.1.dylib"
+    install_name_tool -id "${VULKAN_SDK}/lib/libvulkan.1.dylib" "${VULKAN_SDK}/lib/libvulkan.1.dylib"
 
 You don't need to do this if you use vulkan-api without the useNativeFFI-1-1 or useNativeFFI-1-0 flag.
 
@@ -82,11 +82,11 @@ Where to get the right versions depends on if the following pull requests have b
 
 You can use a cabal.project file to get them compiled together with your code, i.e. in vulkan/vulkan-examples the content might be
 
-  packages: ., ../../bindings-GLFW, ../../GLFW-b, ../vulkan-api
+    packages: ., ../../bindings-GLFW, ../../GLFW-b, ../vulkan-api
 
 When launching Haskell programs that use GLFW-b (via bindings-GLFW), you need to:
 
-  export DYLD_LIBRARY_PATH="~/.local/lib"
+    export DYLD_LIBRARY_PATH="~/.local/lib"
 
 You can also prefix your `cabal v2-run/v2-repl` commands with `DYLD_LIBRARY_PATH="~/.local/lib"` instead.
 
