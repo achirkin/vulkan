@@ -96,7 +96,7 @@ genCabalFile unsafeFFIDefaultDef coreVersions eModules = T.unlines $
                 if os(windows)
                   extra-libraries: vulkan-1
                 if os(darwin)
-                  frameworks:      MoltenVK
+                  extra-libraries: vulkan
                 if !os(windows) && !os(darwin)
                   extra-libraries: vulkan
               else
