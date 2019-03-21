@@ -72,13 +72,12 @@ You don't need to do this if you use vulkan-api without the useNativeFFI-1-1 or 
 ## Installing the needed Haskell libraries
 
 GLFW supports Vulkan on macOS only since version 3.3, which isn't released yet at the time of writing. You need to use bindings-GLFW and
-GLFW-b with a version >= 3.3 and vulkan-api with a version >= 1.1.3.2.
+GLFW-b with a version >= 3.3 and vulkan-api with a version >= 1.1.3.1.
 
 Check if the right versions have been released yet first.
 Where to get the right versions depends on if the following pull requests have been merged:
 - https://github.com/bsl/bindings-GLFW/pull/65
 - https://github.com/bsl/GLFW-b/pull/83
-- https://github.com/achirkin/vulkan/pull/27  (vulkan-examples and vulkan-triangles is there as well)
 
 You can use a cabal.project file to get them compiled together with your code, i.e. in vulkan/vulkan-examples the content might be
 
