@@ -412,13 +412,19 @@ enumPattern VkEnum {..} = do
           return Nothing
 
     VkEnumIntegral n tnametxt
-      | Just (VkTypeName cname) <- _vkEnumTName
+      | Just (VkTypeName cnametxt) <- _vkEnumTName
+      , tname <-
+          if T.isInfixOf "FlagBits" tnametxt then
+            T.append (T.replace "FlagBits" "Bitmask" tnametxt) " a"
+          else
+            tnametxt
+      , cname <- T.replace "FlagBits" "Bitmask" cnametxt
       , patval <- T.pack $
           if n < 0 then "(" ++ show n ++ ")" else show n
         -> do
           writeImport $ DIThing tnametxt DITAll
           writeDecl . setComment rezComment
-                    $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
+                    $ parseDecl' [text|pattern $patnametxt :: $tname|]
           writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
           return $ Just patnametxt
 
