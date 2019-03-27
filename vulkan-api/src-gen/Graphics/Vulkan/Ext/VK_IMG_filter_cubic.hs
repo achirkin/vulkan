@@ -65,7 +65,7 @@ pattern VK_FILTER_CUBIC_IMG = VkFilter 1000015000
 --
 --   bitpos = @13@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG =
-        VkFormatFeatureFlagBits 8192
+        VkFormatFeatureBitmask 8192

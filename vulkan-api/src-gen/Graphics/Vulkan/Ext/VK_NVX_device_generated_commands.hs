@@ -747,22 +747,23 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_FEATURES_NVX =
 
 -- | bitpos = @17@
 pattern VK_PIPELINE_STAGE_COMMAND_PROCESS_BIT_NVX ::
-        VkPipelineStageFlagBits
+        VkPipelineStageBitmask a
 
 pattern VK_PIPELINE_STAGE_COMMAND_PROCESS_BIT_NVX =
-        VkPipelineStageFlagBits 131072
+        VkPipelineStageBitmask 131072
 
 -- | bitpos = @17@
-pattern VK_ACCESS_COMMAND_PROCESS_READ_BIT_NVX :: VkAccessFlagBits
+pattern VK_ACCESS_COMMAND_PROCESS_READ_BIT_NVX :: VkAccessBitmask a
 
 pattern VK_ACCESS_COMMAND_PROCESS_READ_BIT_NVX =
-        VkAccessFlagBits 131072
+        VkAccessBitmask 131072
 
 -- | bitpos = @18@
-pattern VK_ACCESS_COMMAND_PROCESS_WRITE_BIT_NVX :: VkAccessFlagBits
+pattern VK_ACCESS_COMMAND_PROCESS_WRITE_BIT_NVX ::
+        VkAccessBitmask a
 
 pattern VK_ACCESS_COMMAND_PROCESS_WRITE_BIT_NVX =
-        VkAccessFlagBits 262144
+        VkAccessBitmask 262144
 
 -- | VkobjectTableNVX
 pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX :: VkObjectType

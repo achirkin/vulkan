@@ -105,7 +105,7 @@ pattern VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT =
 --
 --   bitpos = @16@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT =
-        VkFormatFeatureFlagBits 65536
+        VkFormatFeatureBitmask 65536

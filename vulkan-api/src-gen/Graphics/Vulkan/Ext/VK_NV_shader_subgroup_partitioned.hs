@@ -61,7 +61,7 @@ type VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME =
 
 -- | bitpos = @8@
 pattern VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV ::
-        VkSubgroupFeatureFlagBits
+        VkSubgroupFeatureBitmask a
 
 pattern VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV =
-        VkSubgroupFeatureFlagBits 256
+        VkSubgroupFeatureBitmask 256

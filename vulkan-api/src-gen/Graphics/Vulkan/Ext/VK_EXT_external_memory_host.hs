@@ -189,14 +189,14 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT
 
 -- | bitpos = @7@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT ::
-        VkExternalMemoryHandleTypeFlagBits
+        VkExternalMemoryHandleTypeBitmask a
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT =
-        VkExternalMemoryHandleTypeFlagBits 128
+        VkExternalMemoryHandleTypeBitmask 128
 
 -- | bitpos = @8@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT
-        :: VkExternalMemoryHandleTypeFlagBits
+        :: VkExternalMemoryHandleTypeBitmask a
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT
-        = VkExternalMemoryHandleTypeFlagBits 256
+        = VkExternalMemoryHandleTypeBitmask 256

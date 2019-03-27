@@ -242,10 +242,10 @@ type VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME =
 
 -- | bitpos = @12@
 pattern VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT
-        :: VkImageCreateFlagBits
+        :: VkImageCreateBitmask a
 
 pattern VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT =
-        VkImageCreateFlagBits 4096
+        VkImageCreateBitmask 4096
 
 pattern VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT ::
         VkStructureType

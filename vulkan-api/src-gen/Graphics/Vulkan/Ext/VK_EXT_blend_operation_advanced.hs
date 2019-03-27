@@ -326,7 +326,7 @@ pattern VK_BLEND_OP_BLUE_EXT = VkBlendOp 1000148045
 
 -- | bitpos = @19@
 pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT ::
-        VkAccessFlagBits
+        VkAccessBitmask a
 
 pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT =
-        VkAccessFlagBits 524288
+        VkAccessBitmask 524288
