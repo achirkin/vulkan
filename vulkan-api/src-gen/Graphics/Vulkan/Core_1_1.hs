@@ -1132,9 +1132,9 @@ pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO =
         VkStructureType 1000157001
 
 -- | bitpos = @10@
-pattern VK_IMAGE_CREATE_ALIAS_BIT :: VkImageCreateFlagBits
+pattern VK_IMAGE_CREATE_ALIAS_BIT :: VkImageCreateBitmask a
 
-pattern VK_IMAGE_CREATE_ALIAS_BIT = VkImageCreateFlagBits 1024
+pattern VK_IMAGE_CREATE_ALIAS_BIT = VkImageCreateBitmask 1024
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES ::
         VkStructureType
@@ -1844,24 +1844,24 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO =
 
 -- | bitpos = @3@
 pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT ::
-        VkPipelineCreateFlagBits
+        VkPipelineCreateBitmask a
 
 pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT =
-        VkPipelineCreateFlagBits 8
+        VkPipelineCreateBitmask 8
 
 -- | bitpos = @4@
 pattern VK_PIPELINE_CREATE_DISPATCH_BASE ::
-        VkPipelineCreateFlagBits
+        VkPipelineCreateBitmask a
 
 pattern VK_PIPELINE_CREATE_DISPATCH_BASE =
-        VkPipelineCreateFlagBits 16
+        VkPipelineCreateBitmask 16
 
 -- | Dependency is across devices
 --
 --   bitpos = @2@
-pattern VK_DEPENDENCY_DEVICE_GROUP_BIT :: VkDependencyFlagBits
+pattern VK_DEPENDENCY_DEVICE_GROUP_BIT :: VkDependencyBitmask a
 
-pattern VK_DEPENDENCY_DEVICE_GROUP_BIT = VkDependencyFlagBits 4
+pattern VK_DEPENDENCY_DEVICE_GROUP_BIT = VkDependencyBitmask 4
 
 pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO ::
         VkStructureType
@@ -1879,10 +1879,10 @@ pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO =
 --
 --   bitpos = @6@
 pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT ::
-        VkImageCreateFlagBits
+        VkImageCreateBitmask a
 
 pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT =
-        VkImageCreateFlagBits 64
+        VkImageCreateBitmask 64
 
 pattern VkEnumeratePhysicalDeviceGroups :: CString
 
@@ -2121,9 +2121,9 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO =
 -- | If set, heap allocations allocate multiple instances by default
 --
 --   bitpos = @1@
-pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT :: VkMemoryHeapFlagBits
+pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT :: VkMemoryHeapBitmask a
 
-pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = VkMemoryHeapFlagBits 2
+pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = VkMemoryHeapBitmask 2
 
 pattern VkGetImageMemoryRequirements2 :: CString
 
@@ -4478,41 +4478,42 @@ pattern VK_ERROR_OUT_OF_POOL_MEMORY = VkResult (-1000069000)
 --
 --   bitpos = @14@
 pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT =
-        VkFormatFeatureFlagBits 16384
+        VkFormatFeatureBitmask 16384
 
 -- | Format can be used as the destination image of image transfer commands
 --
 --   bitpos = @15@
 pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT =
-        VkFormatFeatureFlagBits 32768
+        VkFormatFeatureBitmask 32768
 
 -- | The 3D image can be viewed as a 2D or 2D array image
 --
 --   bitpos = @5@
 pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT ::
-        VkImageCreateFlagBits
+        VkImageCreateBitmask a
 
 pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT =
-        VkImageCreateFlagBits 32
+        VkImageCreateBitmask 32
 
 -- | bitpos = @7@
 pattern VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT ::
-        VkImageCreateFlagBits
+        VkImageCreateBitmask a
 
 pattern VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT =
-        VkImageCreateFlagBits 128
+        VkImageCreateBitmask 128
 
 -- | bitpos = @8@
-pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT :: VkImageCreateFlagBits
+pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT ::
+        VkImageCreateBitmask a
 
 pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT =
-        VkImageCreateFlagBits 256
+        VkImageCreateBitmask 256
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES
         :: VkStructureType
@@ -4569,9 +4570,9 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES =
         VkStructureType 1000053002
 
 -- | bitpos = @1@
-pattern VK_DEPENDENCY_VIEW_LOCAL_BIT :: VkDependencyFlagBits
+pattern VK_DEPENDENCY_VIEW_LOCAL_BIT :: VkDependencyBitmask a
 
-pattern VK_DEPENDENCY_VIEW_LOCAL_BIT = VkDependencyFlagBits 2
+pattern VK_DEPENDENCY_VIEW_LOCAL_BIT = VkDependencyBitmask 2
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
         :: VkStructureType
@@ -4786,50 +4787,50 @@ pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_INFO_2 =
 -- | Queues may support protected operations
 --
 --   bitpos = @4@
-pattern VK_QUEUE_PROTECTED_BIT :: VkQueueFlagBits
+pattern VK_QUEUE_PROTECTED_BIT :: VkQueueBitmask a
 
-pattern VK_QUEUE_PROTECTED_BIT = VkQueueFlagBits 16
+pattern VK_QUEUE_PROTECTED_BIT = VkQueueBitmask 16
 
 -- | Queue is a protected-capable device queue
 --
 --   bitpos = @0@
 pattern VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT ::
-        VkDeviceQueueCreateFlagBits
+        VkDeviceQueueCreateBitmask a
 
 pattern VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT =
-        VkDeviceQueueCreateFlagBits 1
+        VkDeviceQueueCreateBitmask 1
 
 -- | Memory is protected
 --
 --   bitpos = @5@
 pattern VK_MEMORY_PROPERTY_PROTECTED_BIT ::
-        VkMemoryPropertyFlagBits
+        VkMemoryPropertyBitmask a
 
 pattern VK_MEMORY_PROPERTY_PROTECTED_BIT =
-        VkMemoryPropertyFlagBits 32
+        VkMemoryPropertyBitmask 32
 
 -- | Buffer requires protected memory
 --
 --   bitpos = @3@
-pattern VK_BUFFER_CREATE_PROTECTED_BIT :: VkBufferCreateFlagBits
+pattern VK_BUFFER_CREATE_PROTECTED_BIT :: VkBufferCreateBitmask a
 
-pattern VK_BUFFER_CREATE_PROTECTED_BIT = VkBufferCreateFlagBits 8
+pattern VK_BUFFER_CREATE_PROTECTED_BIT = VkBufferCreateBitmask 8
 
 -- | Image requires protected memory
 --
 --   bitpos = @11@
-pattern VK_IMAGE_CREATE_PROTECTED_BIT :: VkImageCreateFlagBits
+pattern VK_IMAGE_CREATE_PROTECTED_BIT :: VkImageCreateBitmask a
 
-pattern VK_IMAGE_CREATE_PROTECTED_BIT = VkImageCreateFlagBits 2048
+pattern VK_IMAGE_CREATE_PROTECTED_BIT = VkImageCreateBitmask 2048
 
 -- | Command buffers allocated from pool are protected command buffers
 --
 --   bitpos = @2@
 pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT ::
-        VkCommandPoolCreateFlagBits
+        VkCommandPoolCreateBitmask a
 
 pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT =
-        VkCommandPoolCreateFlagBits 4
+        VkCommandPoolCreateBitmask 4
 
 pattern VkCreateSamplerYcbcrConversion :: CString
 
@@ -5488,82 +5489,82 @@ pattern VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM =
         VkFormat 1000156033
 
 -- | bitpos = @4@
-pattern VK_IMAGE_ASPECT_PLANE_0_BIT :: VkImageAspectFlagBits
+pattern VK_IMAGE_ASPECT_PLANE_0_BIT :: VkImageAspectBitmask a
 
-pattern VK_IMAGE_ASPECT_PLANE_0_BIT = VkImageAspectFlagBits 16
+pattern VK_IMAGE_ASPECT_PLANE_0_BIT = VkImageAspectBitmask 16
 
 -- | bitpos = @5@
-pattern VK_IMAGE_ASPECT_PLANE_1_BIT :: VkImageAspectFlagBits
+pattern VK_IMAGE_ASPECT_PLANE_1_BIT :: VkImageAspectBitmask a
 
-pattern VK_IMAGE_ASPECT_PLANE_1_BIT = VkImageAspectFlagBits 32
+pattern VK_IMAGE_ASPECT_PLANE_1_BIT = VkImageAspectBitmask 32
 
 -- | bitpos = @6@
-pattern VK_IMAGE_ASPECT_PLANE_2_BIT :: VkImageAspectFlagBits
+pattern VK_IMAGE_ASPECT_PLANE_2_BIT :: VkImageAspectBitmask a
 
-pattern VK_IMAGE_ASPECT_PLANE_2_BIT = VkImageAspectFlagBits 64
+pattern VK_IMAGE_ASPECT_PLANE_2_BIT = VkImageAspectBitmask 64
 
 -- | bitpos = @9@
-pattern VK_IMAGE_CREATE_DISJOINT_BIT :: VkImageCreateFlagBits
+pattern VK_IMAGE_CREATE_DISJOINT_BIT :: VkImageCreateBitmask a
 
-pattern VK_IMAGE_CREATE_DISJOINT_BIT = VkImageCreateFlagBits 512
+pattern VK_IMAGE_CREATE_DISJOINT_BIT = VkImageCreateBitmask 512
 
 -- | Format can have midpoint rather than cosited chroma samples
 --
 --   bitpos = @17@
 pattern VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT =
-        VkFormatFeatureFlagBits 131072
+        VkFormatFeatureBitmask 131072
 
 -- | Format can be used with linear filtering whilst color conversion is enabled
 --
 --   bitpos = @18@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT
-        :: VkFormatFeatureFlagBits
+        :: VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT
-        = VkFormatFeatureFlagBits 262144
+        = VkFormatFeatureBitmask 262144
 
 -- | Format can have different chroma, min and mag filters
 --
 --   bitpos = @19@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT
-        :: VkFormatFeatureFlagBits
+        :: VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT
-        = VkFormatFeatureFlagBits 524288
+        = VkFormatFeatureBitmask 524288
 
 -- | bitpos = @20@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT
-        :: VkFormatFeatureFlagBits
+        :: VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT
-        = VkFormatFeatureFlagBits 1048576
+        = VkFormatFeatureBitmask 1048576
 
 -- | bitpos = @21@
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT
-        :: VkFormatFeatureFlagBits
+        :: VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT
-        = VkFormatFeatureFlagBits 2097152
+        = VkFormatFeatureBitmask 2097152
 
 -- | Format supports disjoint planes
 --
 --   bitpos = @22@
-pattern VK_FORMAT_FEATURE_DISJOINT_BIT :: VkFormatFeatureFlagBits
+pattern VK_FORMAT_FEATURE_DISJOINT_BIT :: VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_DISJOINT_BIT =
-        VkFormatFeatureFlagBits 4194304
+        VkFormatFeatureBitmask 4194304
 
 -- | Format can have cosited rather than midpoint chroma samples
 --
 --   bitpos = @23@
 pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT ::
-        VkFormatFeatureFlagBits
+        VkFormatFeatureBitmask a
 
 pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT =
-        VkFormatFeatureFlagBits 8388608
+        VkFormatFeatureBitmask 8388608
 
 pattern VkCreateDescriptorUpdateTemplate :: CString
 

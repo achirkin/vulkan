@@ -12,6 +12,7 @@ module Write.Types.Enum
   , genBitmaskPair
   ) where
 
+import           Control.Lens
 import           Control.Monad
 import           Control.Monad.Reader.Class
 import           Data.Maybe
@@ -342,9 +343,6 @@ genAlias t = error $ "genAlias: expected a simple enum type, but got: "
                   <> show t
 
 
-
-
-
 bitmaskPattern :: Monad m => Text -> Text -> VkEnum -> ModuleWriter m Text
 bitmaskPattern tnameTxt constrTxt
   VkEnum
@@ -363,7 +361,7 @@ bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m (Maybe Text)
-enumPattern VkEnum {..} = do
+enumPattern vke@VkEnum {..} = do
   writePragma "PatternSynonyms"
   indeed <- isIdentDeclared patnameDeclared
   if indeed
@@ -413,14 +411,20 @@ enumPattern VkEnum {..} = do
 
     VkEnumIntegral n tnametxt
       | Just (VkTypeName cname) <- _vkEnumTName
-      , patval <- T.pack $
-          if n < 0 then "(" ++ show n ++ ")" else show n
+      , patval <- T.pack $ showParen (n < 0) (shows n) ""
         -> do
           writeImport $ DIThing tnametxt DITAll
-          writeDecl . setComment rezComment
-                    $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
-          writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
-          return $ Just patnametxt
+          mIsBits <- preview $ to (Map.lookup (Just $ VkTypeName tnametxt) . globEnums)
+                                  ._Just.vkEnumsIsBits
+          case mIsBits of
+            Just True -> do
+              let basenametxt = T.replace "FlagBits" "Bitmask" tnametxt
+              Just <$> bitmaskPattern (basenametxt <> " a") basenametxt vke
+            _ -> do
+              writeDecl . setComment rezComment
+                        $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
+              writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
+              return $ Just patnametxt
 
       | Nothing <- _vkEnumTName
       , patval <- T.pack $ show n

@@ -2186,16 +2186,16 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR =
 --
 --   bitpos = @0@
 pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR ::
-        VkSwapchainCreateFlagBitsKHR
+        VkSwapchainCreateBitmaskKHR a
 
 pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR =
-        VkSwapchainCreateFlagBitsKHR 1
+        VkSwapchainCreateBitmaskKHR 1
 
 -- | Swapchain is protected
 --
 --   bitpos = @1@
 pattern VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR ::
-        VkSwapchainCreateFlagBitsKHR
+        VkSwapchainCreateBitmaskKHR a
 
 pattern VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR =
-        VkSwapchainCreateFlagBitsKHR 2
+        VkSwapchainCreateBitmaskKHR 2

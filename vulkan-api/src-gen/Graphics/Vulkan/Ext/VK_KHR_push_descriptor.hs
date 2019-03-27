@@ -177,10 +177,10 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR
 --
 --   bitpos = @0@
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR ::
-        VkDescriptorSetLayoutCreateFlagBits
+        VkDescriptorSetLayoutCreateBitmask a
 
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR =
-        VkDescriptorSetLayoutCreateFlagBits 1
+        VkDescriptorSetLayoutCreateBitmask 1
 
 pattern VkCmdPushDescriptorSetWithTemplateKHR :: CString
 

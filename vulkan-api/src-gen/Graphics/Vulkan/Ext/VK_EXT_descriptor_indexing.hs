@@ -126,17 +126,17 @@ pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPOR
 
 -- | bitpos = @1@
 pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT ::
-        VkDescriptorPoolCreateFlagBits
+        VkDescriptorPoolCreateBitmask a
 
 pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT =
-        VkDescriptorPoolCreateFlagBits 2
+        VkDescriptorPoolCreateBitmask 2
 
 -- | bitpos = @1@
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT
-        :: VkDescriptorSetLayoutCreateFlagBits
+        :: VkDescriptorSetLayoutCreateBitmask a
 
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT
-        = VkDescriptorSetLayoutCreateFlagBits 2
+        = VkDescriptorSetLayoutCreateBitmask 2
 
 pattern VK_ERROR_FRAGMENTATION_EXT :: VkResult
 

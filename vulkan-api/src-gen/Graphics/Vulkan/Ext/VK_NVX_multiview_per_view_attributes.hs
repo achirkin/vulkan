@@ -88,14 +88,14 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTI
 
 -- | bitpos = @0@
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX ::
-        VkSubpassDescriptionFlagBits
+        VkSubpassDescriptionBitmask a
 
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX =
-        VkSubpassDescriptionFlagBits 1
+        VkSubpassDescriptionBitmask 1
 
 -- | bitpos = @1@
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX ::
-        VkSubpassDescriptionFlagBits
+        VkSubpassDescriptionBitmask a
 
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX =
-        VkSubpassDescriptionFlagBits 2
+        VkSubpassDescriptionBitmask 2

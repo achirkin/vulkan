@@ -276,10 +276,10 @@ type VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_EXTENSION_NAME
 
 -- | bitpos = @10@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID
-        :: VkExternalMemoryHandleTypeFlagBits
+        :: VkExternalMemoryHandleTypeBitmask a
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID
-        = VkExternalMemoryHandleTypeFlagBits 1024
+        = VkExternalMemoryHandleTypeBitmask 1024
 
 pattern VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_USAGE_ANDROID ::
         VkStructureType

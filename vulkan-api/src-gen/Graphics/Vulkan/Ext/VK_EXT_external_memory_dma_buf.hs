@@ -65,7 +65,7 @@ type VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME =
 
 -- | bitpos = @9@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT ::
-        VkExternalMemoryHandleTypeFlagBits
+        VkExternalMemoryHandleTypeBitmask a
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT =
-        VkExternalMemoryHandleTypeFlagBits 512
+        VkExternalMemoryHandleTypeBitmask 512
