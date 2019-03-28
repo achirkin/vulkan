@@ -167,21 +167,42 @@ createGraphicsPipeline
         runVk . vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL
 
 
+createDescriptorSetLayout :: VkDevice -> Program r VkDescriptorSetLayout
+createDescriptorSetLayout dev =
+  allocResource
+    (\dsl -> liftIO $ vkDestroyDescriptorSetLayout dev dsl VK_NULL) $
+    withVkPtr dslCreateInfo $ \dslciPtr -> allocaPeek $
+      runVk . vkCreateDescriptorSetLayout dev dslciPtr VK_NULL
+  where
+    dslCreateInfo = createVk @VkDescriptorSetLayoutCreateInfo
+      $ set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO
+      &* set @"pNext" VK_NULL
+      &* set @"flags" 0
+      &* set @"bindingCount" 1
+      &* setVkRef @"pBindings" dslBinding
+
+    dslBinding = createVk @VkDescriptorSetLayoutBinding
+      $ set @"binding" 0
+      &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
+      &* set @"descriptorCount" 1
+      &* set @"stageFlags" VK_SHADER_STAGE_VERTEX_BIT
+      &* set @"pImmutableSamplers" VK_NULL
+
 createPipelineLayout :: VkDevice -> Program r VkPipelineLayout
-createPipelineLayout dev =
+createPipelineLayout dev = do
+  dsl <- createDescriptorSetLayout dev
+  let plCreateInfo = createVk @VkPipelineLayoutCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"setLayoutCount"         1       -- Optional
+        &* setListRef @"pSetLayouts"     [dsl]   -- Optional
+        &* set @"pushConstantRangeCount" 0       -- Optional
+        &* set @"pPushConstantRanges"    VK_NULL -- Optional
   allocResource
     (\pl -> liftIO $ vkDestroyPipelineLayout dev pl VK_NULL) $
     withVkPtr plCreateInfo $ \plciPtr -> allocaPeek $
       runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
-  where
-    plCreateInfo = createVk @VkPipelineLayoutCreateInfo
-      $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-      &* set @"pNext" VK_NULL
-      &* set @"flags" 0
-      &* set @"setLayoutCount"         0       -- Optional
-      &* set @"pSetLayouts"            VK_NULL -- Optional
-      &* set @"pushConstantRangeCount" 0       -- Optional
-      &* set @"pPushConstantRanges"    VK_NULL -- Optional
 
 
 createRenderPass :: VkDevice -> SwapChainImgInfo
