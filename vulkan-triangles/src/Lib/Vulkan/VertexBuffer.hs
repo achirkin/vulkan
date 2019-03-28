@@ -6,6 +6,7 @@
 module Lib.Vulkan.VertexBuffer
   ( createVertexBuffer
   , createIndexBuffer
+  , createUniformBuffers
   ) where
 
 
@@ -86,6 +87,18 @@ createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
     return vertexBuf
+
+
+createUniformBuffers
+  :: VkPhysicalDevice
+  -> VkDevice
+  -> VkDeviceSize
+  -> Int
+  -> Program r [(VkDeviceMemory, VkBuffer)]
+createUniformBuffers pdev dev bSize n = do
+      sequence $ replicate n $ createBuffer pdev dev bSize
+         VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT
+         ( VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT .|. VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )
 
 
 createBuffer :: VkPhysicalDevice

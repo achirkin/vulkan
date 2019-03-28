@@ -2,6 +2,7 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE RankNTypes #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
@@ -69,7 +70,7 @@ createCommandBuffers :: VkDevice
                      -> VkBuffer -- vertex data
                      -> (Word32, VkBuffer) -- nr of indices and index data
                      -> [VkFramebuffer]
-                     -> Program r [VkCommandBuffer]
+                     -> Program r (Ptr VkCommandBuffer)
 createCommandBuffers
     dev pipeline commandPool rpass  SwapChainImgInfo{..}
     vertexBuffer
@@ -141,7 +142,7 @@ createCommandBuffers
 
       runVk $ vkEndCommandBuffer cmdBuffer
 
-    return commandBuffers
+    return cbsPtr
 
 
 createSemaphore :: VkDevice -> Program r VkSemaphore
@@ -165,22 +166,25 @@ data RenderData
   , swapChainInfo  :: SwapChainImgInfo
   , deviceQueues   :: DevQueues
   , imgIndexPtr    :: Ptr Word32
-  , commandBuffers :: [VkCommandBuffer]
+  , commandBuffers :: Ptr VkCommandBuffer
+  , uniformBuffers :: Ptr VkDeviceMemory
+  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Program r ()
   }
 
 
 drawFrame :: RenderData -> Program r ()
 drawFrame RenderData {..} = do
-    commandBuffersPtr <- newArrayRes commandBuffers
-
     -- Acquiring an image from the swap chain
     runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
-    bufPtr <- (\i -> commandBuffersPtr `plusPtr`
-                        (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
-              ) <$> peek imgIndexPtr
-
+    imgIndex <- peek imgIndexPtr
+    let bufPtr = commandBuffers `plusPtr`
+                 (fromIntegral imgIndex * sizeOf (undefined :: VkCommandBuffer))
+    let uniformBufPtr = uniformBuffers `plusPtr`
+                 (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
+    uniBuf <- peek @VkDeviceMemory uniformBufPtr
+    updateUniformBuffer device uniBuf
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL

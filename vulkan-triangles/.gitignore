@@ -1,7 +1,10 @@
 *.o
 *.hi
 *.summary
+cabal.project.local
 dist/
+dist-*/
+.ghc.environment.*
 .ghc-sandbox/
 .ghcjs-sandbox/
 *.tmp
@@ -10,3 +13,4 @@ dist/
 *.pdf
 *.prof
 *.aux
+.dir-locals.el

@@ -6,10 +6,13 @@
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
+import           Foreign.Ptr                              (castPtr)
+import           Foreign.Storable                         (poke)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Numeric.DataFrame
 import           Numeric.Dimensions
+--import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
 import           Data.Maybe                               (fromJust)
 
 import           Lib.GLFW
@@ -57,6 +60,22 @@ indices = fromJust $ fromList (D @3)
     -- triangle
   , 4, 5, 6
   ]
+
+rotX :: Float -> Mat44f
+rotX a = mat44 (vec4 1 0 0 0)
+               (vec4 0 (cos a) (- sin a) 0)
+               (vec4 0 (sin a) (cos a) 0)
+               (vec4 0 0 0 1)
+
+trans :: Float -> Mat44f
+trans time = rotX (time * pi / 2)
+
+updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
+updateUB device uniBuf =
+    alloca $ \uboPtr -> do
+      runVk $ vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0 uboPtr
+      liftIO $ poke (castPtr uboPtr) (trans 23)
+      liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
@@ -107,7 +126,12 @@ runVulkanProgram = runProgram checkStatus $ do
     redoOnOutdate $ do
       scsd <- querySwapChainSupport pdev vulkanSurface
       swInfo <- createSwapChain dev scsd queues vulkanSurface
+      let swapChainLen = length (swImgs swInfo)
       imgViews <- createImageViews dev swInfo
+
+      uniformBuffers <-
+        createUniformBuffers pdev dev
+          (fromIntegral $ sizeOf (undefined :: Mat44f)) swapChainLen
 
       renderPass <- createRenderPass dev swInfo
       graphicsPipeline
@@ -119,11 +143,13 @@ runVulkanProgram = runProgram checkStatus $ do
       framebuffers
         <- createFramebuffers dev renderPass swInfo imgViews
 
-      cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
+      cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
                                          renderPass swInfo
                                          vertexBuffer
                                          (fromIntegral $ dimSize1 indices, indexBuffer)
                                          framebuffers
+
+      uniformBuffersPtr <- newArrayRes $ map fst uniformBuffers
 
       let rdata = RenderData
             { renderFinished = rendFinS
@@ -132,13 +158,16 @@ runVulkanProgram = runProgram checkStatus $ do
             , swapChainInfo  = swInfo
             , deviceQueues   = queues
             , imgIndexPtr    = imgIPtr
-            , commandBuffers = cmdBuffers
+            , commandBuffers = cmdBuffersPtr
+            , uniformBuffers = uniformBuffersPtr
+            , updateUniformBuffer = updateUB
             }
 
       logInfo $ "Createad image views: " ++ show imgViews
       logInfo $ "Createad renderpass: " ++ show renderPass
       logInfo $ "Createad pipeline: " ++ show graphicsPipeline
       logInfo $ "Createad framebuffers: " ++ show framebuffers
+      cmdBuffers <- peekArray swapChainLen cmdBuffersPtr
       logInfo $ "Createad command buffers: " ++ show cmdBuffers
 
       glfwMainLoop window $ do
