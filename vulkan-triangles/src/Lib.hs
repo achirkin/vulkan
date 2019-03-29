@@ -6,14 +6,17 @@
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
-import           Foreign.Ptr                              (castPtr)
-import           Foreign.Storable                         (poke)
+import           Control.Monad                        (forM_)
+import           Foreign.Marshal.Array                (pokeArray)
+import           Foreign.Ptr                          (castPtr)
+import           Foreign.Storable                     (poke)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import           Graphics.Vulkan.Marshal.Create
 import           Numeric.DataFrame
 import           Numeric.Dimensions
 --import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
-import           Data.Maybe                               (fromJust)
+import           Data.Maybe                           (fromJust)
 
 import           Lib.GLFW
 import           Lib.Program
@@ -67,14 +70,26 @@ rotX a = mat44 (vec4 1 0 0 0)
                (vec4 0 (sin a) (cos a) 0)
                (vec4 0 0 0 1)
 
-trans :: Float -> Mat44f
-trans time = rotX (time * pi / 2)
+rotZ :: Float -> Mat44f
+rotZ a = mat44 (vec4 (cos a) (- sin a) 0 0)
+               (vec4 (sin a) (cos a) 0 0)
+               (vec4 0 0 1 0)
+               (vec4 0 0 0 1)
 
-updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
-updateUB device uniBuf =
-    alloca $ \uboPtr -> do
-      runVk $ vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0 uboPtr
-      liftIO $ poke (castPtr uboPtr) (trans 23)
+identM :: Mat44f
+identM = mat44 (vec4 1 0 0 0)
+               (vec4 0 1 0 0)
+               (vec4 0 0 1 0)
+               (vec4 0 0 0 1)
+
+trans :: Float -> Mat44f
+trans time = rotZ (time * pi / 2)
+
+updateUB :: VkDevice -> VkDeviceMemory -> Float -> Program r ()
+updateUB device uniBuf seconds = do
+      uboPtr <- allocaPeek $
+        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0
+      liftIO $ poke (castPtr uboPtr) (trans seconds)
       liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
@@ -121,6 +136,8 @@ runVulkanProgram = runProgram checkStatus $ do
     indexBuffer <-
       createIndexBuffer pdev dev commandPool (graphicsQueue queues) indices
 
+    descriptorSetLayout <- createDescriptorSetLayout dev
+
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
     redoOnOutdate $ do
@@ -133,21 +150,48 @@ runVulkanProgram = runProgram checkStatus $ do
         createUniformBuffers pdev dev
           (fromIntegral $ sizeOf (undefined :: Mat44f)) swapChainLen
 
+      descriptorPool <- createDescriptorPool dev swapChainLen
+      descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
+      descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
+
+      forM_ (zip (map snd uniformBuffers) descriptorSets) . uncurry $
+        \uniformBuffer descriptorSet ->
+          let bufferInfo = createVk @VkDescriptorBufferInfo
+                $  set @"buffer" uniformBuffer
+                &* set @"offset" 0
+                &* set @"range" (fromIntegral $ sizeOf (undefined :: Mat44f))
+              descriptorWrite = createVk @VkWriteDescriptorSet
+                $  set @"sType" VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
+                &* set @"pNext" VK_NULL
+                &* set @"dstSet" descriptorSet
+                &* set @"dstBinding" 0
+                &* set @"dstArrayElement" 0
+                &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
+                &* set @"descriptorCount" 1
+                &* setVkRef @"pBufferInfo" bufferInfo
+                &* set @"pImageInfo" VK_NULL
+                &* set @"pTexelBufferView" VK_NULL
+          in withVkPtr descriptorWrite $ \dwPtr ->
+             liftIO $ vkUpdateDescriptorSets dev 1 dwPtr 0 VK_NULL
+
       renderPass <- createRenderPass dev swInfo
+      pipelineLayout <- createPipelineLayout dev descriptorSetLayout
       graphicsPipeline
         <- createGraphicsPipeline dev swInfo
                                   vertIBD vertIADs
                                   [shaderVert, shaderFrag]
                                   renderPass
+                                  pipelineLayout
 
       framebuffers
         <- createFramebuffers dev renderPass swInfo imgViews
 
       cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
-                                         renderPass swInfo
+                                         renderPass pipelineLayout swInfo
                                          vertexBuffer
                                          (fromIntegral $ dimSize1 indices, indexBuffer)
                                          framebuffers
+                                         descriptorSets
 
       uniformBuffersPtr <- newArrayRes $ map fst uniformBuffers
 

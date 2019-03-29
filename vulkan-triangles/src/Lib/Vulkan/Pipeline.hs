@@ -7,6 +7,8 @@
 module Lib.Vulkan.Pipeline
   ( createGraphicsPipeline
   , createRenderPass
+  , createDescriptorSetLayout
+  , createPipelineLayout
   ) where
 
 import           Data.Bits
@@ -32,9 +34,10 @@ createGraphicsPipeline :: ( KnownDim (n :: k)
                        -> Vector VkVertexInputAttributeDescription n
                        -> [VkPipelineShaderStageCreateInfo]
                        -> VkRenderPass
+                       -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass =
+    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -138,8 +141,6 @@ createGraphicsPipeline
 
     -- finally, create pipeline!
   in do
-    pipelineLayout <- createPipelineLayout dev
-
     let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
           &* set @"pNext" VK_NULL
@@ -188,9 +189,8 @@ createDescriptorSetLayout dev =
       &* set @"stageFlags" VK_SHADER_STAGE_VERTEX_BIT
       &* set @"pImmutableSamplers" VK_NULL
 
-createPipelineLayout :: VkDevice -> Program r VkPipelineLayout
-createPipelineLayout dev = do
-  dsl <- createDescriptorSetLayout dev
+createPipelineLayout :: VkDevice -> VkDescriptorSetLayout -> Program r VkPipelineLayout
+createPipelineLayout dev dsl = do
   let plCreateInfo = createVk @VkPipelineLayoutCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
         &* set @"pNext" VK_NULL

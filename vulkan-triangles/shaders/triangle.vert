@@ -15,7 +15,6 @@ out gl_PerVertex {
 };
 
 void main() {
-  //gl_Position = ubo.trans * vec4(inPosition, 0.0, 1.0);
-    gl_Position = vec4(inPosition, 0.0, 1.0);
+    gl_Position = ubo.trans * vec4(inPosition, 0.0, 1.0);
     fragColor = inColor;
 }
