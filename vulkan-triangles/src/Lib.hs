@@ -8,12 +8,10 @@ module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
 import           Control.Monad                        (forM_)
-import           Foreign.Marshal.Array                (pokeArray)
 import           Foreign.Ptr                          (castPtr)
 import           Foreign.Storable                     (poke)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Graphics.Vulkan.Marshal.Create
 import           Numeric.DataFrame
 import           Numeric.Dimensions
 --import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
@@ -89,10 +87,11 @@ trans seconds =
       (_::Int, phaseTau) = properFraction $ seconds * rate
   in rotZ (realToFrac phaseTau * 2 * pi)
 
-updateUB :: VkDevice -> VkDeviceMemory -> Double -> Program r ()
-updateUB device uniBuf seconds = do
+updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
+updateUB device uniBuf = do
       uboPtr <- allocaPeek $
         runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0
+      seconds <- getTime
       liftIO $ poke (castPtr uboPtr) (trans seconds)
       liftIO $ vkUnmapMemory device uniBuf
 
@@ -159,24 +158,7 @@ runVulkanProgram = runProgram checkStatus $ do
       descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
 
       forM_ (zip (map snd uniformBuffers) descriptorSets) . uncurry $
-        \uniformBuffer descriptorSet ->
-          let bufferInfo = createVk @VkDescriptorBufferInfo
-                $  set @"buffer" uniformBuffer
-                &* set @"offset" 0
-                &* set @"range" (fromIntegral $ sizeOf (undefined :: Mat44f))
-              descriptorWrite = createVk @VkWriteDescriptorSet
-                $  set @"sType" VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
-                &* set @"pNext" VK_NULL
-                &* set @"dstSet" descriptorSet
-                &* set @"dstBinding" 0
-                &* set @"dstArrayElement" 0
-                &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-                &* set @"descriptorCount" 1
-                &* setVkRef @"pBufferInfo" bufferInfo
-                &* set @"pImageInfo" VK_NULL
-                &* set @"pTexelBufferView" VK_NULL
-          in withVkPtr descriptorWrite $ \dwPtr ->
-             liftIO $ vkUpdateDescriptorSets dev 1 dwPtr 0 VK_NULL
+        prepareDescriptorSet dev
 
       renderPass <- createRenderPass dev swInfo
       pipelineLayout <- createPipelineLayout dev descriptorSetLayout

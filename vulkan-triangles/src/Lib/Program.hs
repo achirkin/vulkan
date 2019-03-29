@@ -2,6 +2,7 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE StrictData            #-}
 -- | Provide a `Program` monad to execute vulkan actions, carry state,
 --   manage allocated resources, and process exceptions.
@@ -25,6 +26,8 @@ module Lib.Program
     , isDev, inDev
       -- * Vulkan marshal utilies
     , liftIOWith, withVkPtr
+      -- * Other
+    , getTime
     ) where
 
 
@@ -322,3 +325,16 @@ withVkPtr :: VulkanMarshal a
           -> Program r b
 withVkPtr x = liftIOWith (withPtr x)
 {-# INLINE withVkPtr #-}
+
+-- | Low latency time in seconds since the start
+getTime :: Program r Double
+getTime = do
+    now <- liftIO getSystemTime
+    start <- startTime <$> get
+    let deltaSeconds = systemSeconds now - systemSeconds start
+        -- Have to nanoseconds convert from Word64 before subtraction to allow negative delta.
+        deltaNanoseconds :: Int64 = fromIntegral (systemNanoseconds now) - fromIntegral (systemNanoseconds start)
+        -- Seconds in Double keep at least microsecond-precision for 285 years.
+        -- Float is not good enough even for millisecond-precision over more than a few hours.
+        seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
+    return seconds
