@@ -13,10 +13,10 @@ module Lib.Vulkan.Drawing
   , createDescriptorSets
   , createSemaphore
   , drawFrame
+  , prepareDescriptorSet
   ) where
 
 import           Control.Monad                            (forM_)
-import           Data.Time.Clock.System
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -86,6 +86,25 @@ createDescriptorSets dev descriptorPool n layoutsPtr =
       runVk $ vkAllocateDescriptorSets dev dsaiPtr dsPtr
       peekArray n dsPtr
 
+prepareDescriptorSet :: VkDevice -> VkBuffer -> VkDescriptorSet -> Program r ()
+prepareDescriptorSet dev uniformBuffer descriptorSet =
+  let bufferInfo = createVk @VkDescriptorBufferInfo
+        $  set @"buffer" uniformBuffer
+        &* set @"offset" 0
+        &* set @"range" (fromIntegral $ sizeOf (undefined :: Mat44f))
+      descriptorWrite = createVk @VkWriteDescriptorSet
+        $  set @"sType" VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
+        &* set @"pNext" VK_NULL
+        &* set @"dstSet" descriptorSet
+        &* set @"dstBinding" 0
+        &* set @"dstArrayElement" 0
+        &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
+        &* set @"descriptorCount" 1
+        &* setVkRef @"pBufferInfo" bufferInfo
+        &* set @"pImageInfo" VK_NULL
+        &* set @"pTexelBufferView" VK_NULL
+  in withVkPtr descriptorWrite $ \dwPtr ->
+      liftIO $ vkUpdateDescriptorSets dev 1 dwPtr 0 VK_NULL
 
 createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
 createCommandPool dev DevQueues{..} =
@@ -210,7 +229,7 @@ data RenderData
   , imgIndexPtr         :: Ptr Word32
   , commandBuffers      :: Ptr VkCommandBuffer
   , uniformBuffers      :: Ptr VkDeviceMemory
-  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Double -> Program r ()
+  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Program r ()
   }
 
 
@@ -226,15 +245,7 @@ drawFrame RenderData {..} = do
     let uniformBufPtr = uniformBuffers `plusPtr`
                  (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
     uniBuf <- peek @VkDeviceMemory uniformBufPtr
-    now <- liftIO getSystemTime
-    startTime <- startTime <$> get
-    let deltaSeconds = systemSeconds now - systemSeconds startTime
-        -- Have to nanoseconds convert from Word64 before subtraction to allow negative delta.
-        deltaNanoseconds :: Int64 = fromIntegral (systemNanoseconds now) - fromIntegral (systemNanoseconds startTime)
-        -- Seconds in Double keep at least microsecond-precision for 285 years.
-        -- Float is not good enough even for millisecond-precision over more than a few hours.
-        seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
-    updateUniformBuffer device uniBuf seconds
+    updateUniformBuffer device uniBuf
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
