@@ -1,9 +1,9 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE RankNTypes       #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE Strict           #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE RankNTypes          #-}
+{-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TypeApplications    #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
@@ -14,19 +14,46 @@ module Lib.Vulkan.Drawing
   , createSemaphore
   , drawFrame
   , prepareDescriptorSet
+  , UniformBufferObject (..)
   ) where
 
 import           Control.Monad                            (forM_)
+import           Foreign.Storable                         hiding (peek, poke)
+import qualified Foreign.Storable as FS
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Marshal.Create.DataFrame
+import           Linear.Matrix as LM
 import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
+
+data UniformBufferObject = UBO
+  { model :: M44 Float
+  , view  :: M44 Float
+  , proj  :: M44 Float
+  } deriving (Show)
+
+getPtr :: Ptr UniformBufferObject -> Int -> Ptr (M44 Float)
+getPtr ptr ix = ptr `plusPtr` (fromIntegral $ ix * sizeOf (undefined :: M44 Float))
+
+-- Transpose because package linear has row-major representation
+-- while glsl reads as column-major representation by default.
+instance Storable UniformBufferObject where
+  sizeOf = const $ sizeOf (undefined :: M44 Float) * 3
+  alignment = const 4
+  peek ptr = 
+    UBO <$> (LM.transpose <$> (FS.peek $ getPtr ptr 0))
+        <*> (LM.transpose <$> (FS.peek $ getPtr ptr 1))
+        <*> (LM.transpose <$> (FS.peek $ getPtr ptr 2))
+  poke ptr UBO {..} = do
+    FS.poke (getPtr ptr 0) $ LM.transpose model
+    FS.poke (getPtr ptr 1) $ LM.transpose view
+    FS.poke (getPtr ptr 2) $ LM.transpose proj
 
 
 createFramebuffers :: VkDevice
@@ -91,7 +118,7 @@ prepareDescriptorSet dev uniformBuffer descriptorSet =
   let bufferInfo = createVk @VkDescriptorBufferInfo
         $  set @"buffer" uniformBuffer
         &* set @"offset" 0
-        &* set @"range" (fromIntegral $ sizeOf (undefined :: Mat44f))
+        &* set @"range" (fromIntegral $ sizeOf (undefined :: UniformBufferObject))
       descriptorWrite = createVk @VkWriteDescriptorSet
         $  set @"sType" VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
         &* set @"pNext" VK_NULL

@@ -51,6 +51,7 @@ library
                       , easytensor-vulkan >=1.0.1 && < 2
                       , dimensions >=1.0.1 && < 2
                       , time
+                      , linear
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
