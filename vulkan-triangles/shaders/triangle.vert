@@ -2,6 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(binding = 0) uniform UniformBufferObject {
+  vec2 foo; // alignment test
   mat4 model;
   mat4 view;
   mat4 proj;
