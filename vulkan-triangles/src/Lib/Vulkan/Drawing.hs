@@ -15,71 +15,45 @@ module Lib.Vulkan.Drawing
   , drawFrame
   , prepareDescriptorSet
   , UniformBufferObject (..)
-  , GpuStorable (..)
   ) where
 
 import           Control.Monad                            (forM_)
-import           Foreign.Ptr                              (castPtr, ptrToIntPtr)
 import           Foreign.Storable                         hiding (peek, poke)
-import qualified Foreign.Storable                         as FS
+import qualified Foreign.Storable as FS
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Marshal.Create.DataFrame
-import           Linear.Matrix                            as LM
-import           Linear.V2
+import           Linear.Matrix as LM
 import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
-newtype GpuStorable a = GpuStorable { unwrapGpuStorable :: a } deriving Show
-
-instance Storable a => Storable (GpuStorable a) where
-  peek ptr = GpuStorable <$> FS.peek (castPtr ptr :: Ptr a)
-  poke ptr val = FS.poke (castPtr ptr :: Ptr a) (unwrapGpuStorable val)
-  sizeOf val = FS.sizeOf (unwrapGpuStorable val)
-  alignment val = if sizeOf val > 8 then 16 else alignment (unwrapGpuStorable val)
-
-padPtr :: forall a. Storable a => Ptr a -> Ptr a
-padPtr ptr =
-  let al = alignment (undefined :: a)
-      overhang = fromIntegral (ptrToIntPtr ptr `mod` fromIntegral al)
-      pad = if overhang > 0 then al - overhang else 0
-  in ptr `plusPtr` pad
-
 data UniformBufferObject = UBO
-  { foo   :: GpuStorable (V2 Float)
-  , model :: GpuStorable (M44 Float)
-  , view  :: GpuStorable (M44 Float)
-  , proj  :: GpuStorable (M44 Float)
+  { model :: M44 Float
+  , view  :: M44 Float
+  , proj  :: M44 Float
   } deriving (Show)
 
-getUBOFooPtr :: Ptr UniformBufferObject -> Ptr (V2 Float)
-getUBOFooPtr = castPtr
-
-getUBOModelPtr :: Ptr UniformBufferObject -> Ptr (M44 Float)
-getUBOModelPtr ptr = padPtr $ castPtr $ getUBOFooPtr ptr `plusPtr` (fromIntegral $ sizeOf (GpuStorable (V2 0 0 :: V2 Float)))
-
-getUBOMatrixPtr :: Ptr UniformBufferObject -> Int -> Ptr (M44 Float)
-getUBOMatrixPtr ptr ix = getUBOModelPtr ptr `plusPtr` (fromIntegral $ ix * sizeOf (undefined :: M44 Float))
+getPtr :: Ptr UniformBufferObject -> Int -> Ptr (M44 Float)
+getPtr ptr ix = ptr `plusPtr` (fromIntegral $ ix * sizeOf (undefined :: M44 Float))
 
 -- Transpose because package linear has row-major representation
 -- while glsl reads as column-major representation by default.
 instance Storable UniformBufferObject where
   sizeOf = const $ sizeOf (undefined :: M44 Float) * 3
-  alignment = const 16
-  peek ptr =
-    UBO <$> (FS.peek $ castPtr ptr)
-        <*> (GpuStorable . LM.transpose <$> (FS.peek $ getUBOMatrixPtr ptr 0))
-        <*> (GpuStorable . LM.transpose <$> (FS.peek $ getUBOMatrixPtr ptr 1))
-        <*> (GpuStorable . LM.transpose <$> (FS.peek $ getUBOMatrixPtr ptr 2))
+  alignment = const 4
+  peek ptr = 
+    UBO <$> (LM.transpose <$> (FS.peek $ getPtr ptr 0))
+        <*> (LM.transpose <$> (FS.peek $ getPtr ptr 1))
+        <*> (LM.transpose <$> (FS.peek $ getPtr ptr 2))
   poke ptr UBO {..} = do
-    FS.poke (getUBOMatrixPtr ptr 0) $ LM.transpose . unwrapGpuStorable $ model
-    FS.poke (getUBOMatrixPtr ptr 1) $ LM.transpose . unwrapGpuStorable $ view
-    FS.poke (getUBOMatrixPtr ptr 2) $ LM.transpose . unwrapGpuStorable $ proj
+    FS.poke (getPtr ptr 0) $ LM.transpose model
+    FS.poke (getPtr ptr 1) $ LM.transpose view
+    FS.poke (getPtr ptr 2) $ LM.transpose proj
 
 
 createFramebuffers :: VkDevice

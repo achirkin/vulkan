@@ -12,11 +12,10 @@ import           Foreign.Ptr                          (castPtr)
 import           Foreign.Storable
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Linear.Matrix                        as LM
+import           Linear.V3
+import           Linear.Matrix as LM 
 import           Linear.Projection
 import           Linear.Quaternion
-import           Linear.V2
-import           Linear.V3
 import           Numeric.DataFrame
 import           Numeric.Dimensions
 --import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
@@ -80,10 +79,9 @@ updateUB device uniBuf = do
         runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) 0
       seconds <- getTime
       let ubo = UBO
-            { foo = GpuStorable $ V2 1 1
-            , model = GpuStorable $ mkTransformation (rotation seconds) (V3 0 0 0)
-            , view = GpuStorable $ lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1))
-            , proj = GpuStorable $ perspective (1/8*2*pi) (800/600) 0.1 20
+            { model = mkTransformation (rotation seconds) (V3 0 0 0)
+            , view = lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1))
+            , proj = perspective (1/8*2*pi) (800/600) 0.1 20
             }
       liftIO $ poke (castPtr uboPtr) ubo
       liftIO $ vkUnmapMemory device uniBuf
