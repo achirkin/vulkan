@@ -1,9 +1,9 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE Strict           #-}
-{-# LANGUAGE TemplateHaskell  #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TemplateHaskell     #-}
+{-# LANGUAGE TypeApplications    #-}
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
@@ -12,6 +12,10 @@ import           Foreign.Ptr                          (castPtr)
 import           Foreign.Storable                     (poke)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import           Linear.V3
+import           Linear.Matrix as LM
+import           Linear.Projection
+import           Linear.Quaternion
 import           Numeric.DataFrame
 import           Numeric.Dimensions
 --import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
@@ -63,36 +67,25 @@ indices = fromJust $ fromList (D @3)
   , 4, 5, 6
   ]
 
-rotX :: Float -> Mat44f
-rotX a = mat44 (vec4 1 0 0 0)
-               (vec4 0 (cos a) (- sin a) 0)
-               (vec4 0 (sin a) (cos a) 0)
-               (vec4 0 0 0 1)
-
-rotZ :: Float -> Mat44f
-rotZ a = mat44 (vec4 (cos a) (- sin a) 0 0)
-               (vec4 (sin a) (cos a) 0 0)
-               (vec4 0 0 1 0)
-               (vec4 0 0 0 1)
-
-identM :: Mat44f
-identM = mat44 (vec4 1 0 0 0)
-               (vec4 0 1 0 0)
-               (vec4 0 0 1 0)
-               (vec4 0 0 0 1)
-
-trans :: Double -> Mat44f
-trans seconds =
+rotation :: Double -> Quaternion Float
+rotation seconds =
   let rate = 0.25 -- rotations per second
       (_::Int, phaseTau) = properFraction $ seconds * rate
-  in rotZ (realToFrac phaseTau * 2 * pi)
+  in axisAngle (V3 0 0 1) (realToFrac phaseTau * 2 * pi)
 
 updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
 updateUB device uniBuf = do
       uboPtr <- allocaPeek $
         runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0
       seconds <- getTime
-      liftIO $ poke (castPtr uboPtr) (trans seconds)
+      -- proj (perspective) * view (lookAt) * model (rotate)
+      -- Transpose because package linear has row-major representation
+      -- while glsl reads as column-major representation by default.
+      let transformation = LM.transpose $
+            perspective (1/8*2*pi) (800/600) 0.1 20 !*!
+            lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1)) !*!
+            mkTransformation (rotation seconds) (V3 0 0 0)
+      liftIO $ poke (castPtr uboPtr) transformation
       liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
