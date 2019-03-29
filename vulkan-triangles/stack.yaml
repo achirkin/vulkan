@@ -14,8 +14,8 @@ flags:
 extra-deps:
   - bindings-GLFW-3.2.1.1
   - GLFW-b-3.2.1.0
-  - dimensions-1.0.0.0
-  - easytensor-1.0.0.1
+  - dimensions-1.0.1.1
+  - easytensor-1.0.1.0
   - easytensor-vulkan-1.0.1.0
 
 packages:
