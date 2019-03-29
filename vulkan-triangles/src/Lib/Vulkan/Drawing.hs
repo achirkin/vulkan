@@ -1,18 +1,21 @@
 {-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE RankNTypes       #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE RankNTypes #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
   , createCommandPool
   , createCommandBuffers
+  , createDescriptorPool
+  , createDescriptorSets
   , createSemaphore
   , drawFrame
   ) where
 
-import           Control.Monad                        (forM_)
+import           Control.Monad                            (forM_)
+import           Data.Time.Clock
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -49,6 +52,39 @@ createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
 
+createDescriptorPool :: VkDevice -> Int -> Program r VkDescriptorPool
+createDescriptorPool dev n =
+  allocResource (liftIO . flip (vkDestroyDescriptorPool dev) VK_NULL) $
+    allocaPeek $ \pPtr -> withVkPtr
+      ( createVk
+        $  set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"poolSizeCount" 1
+        &* setVkRef @"pPoolSizes"
+          ( createVk
+          $  set @"type" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
+          &* set @"descriptorCount" (fromIntegral n)
+          )
+        &* set @"maxSets" (fromIntegral n)
+      ) $ \ciPtr -> runVk $ vkCreateDescriptorPool dev ciPtr VK_NULL pPtr
+
+createDescriptorSets :: VkDevice
+                     -> VkDescriptorPool
+                     -> Int
+                     -> Ptr VkDescriptorSetLayout
+                     -> Program r [VkDescriptorSet]
+createDescriptorSets dev descriptorPool n layoutsPtr =
+  let dsai = createVk @VkDescriptorSetAllocateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"descriptorPool" descriptorPool
+        &* set @"descriptorSetCount" (fromIntegral n)
+        &* set @"pSetLayouts" layoutsPtr
+  in allocaArray n $ \dsPtr -> withVkPtr dsai $ \dsaiPtr -> do
+      runVk $ vkAllocateDescriptorSets dev dsaiPtr dsPtr
+      peekArray n dsPtr
+
 
 createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
 createCommandPool dev DevQueues{..} =
@@ -66,15 +102,17 @@ createCommandBuffers :: VkDevice
                      -> VkPipeline
                      -> VkCommandPool
                      -> VkRenderPass
+                     -> VkPipelineLayout
                      -> SwapChainImgInfo
                      -> VkBuffer -- vertex data
                      -> (Word32, VkBuffer) -- nr of indices and index data
                      -> [VkFramebuffer]
+                     -> [VkDescriptorSet]
                      -> Program r (Ptr VkCommandBuffer)
 createCommandBuffers
-    dev pipeline commandPool rpass  SwapChainImgInfo{..}
+    dev pipeline commandPool rpass pipelineLayout SwapChainImgInfo{..}
     vertexBuffer
-    (nIndices, indexBuffer) fbs
+    (nIndices, indexBuffer) fbs descriptorSets
   | buffersCount <- length fbs = do
   -- allocate a pointer to an array of command buffer handles
   cbsPtr <- mallocArrayRes buffersCount
@@ -99,7 +137,8 @@ createCommandBuffers
     commandBuffers <- peekArray buffersCount cbsPtr
 
     -- record command buffers
-    forM_ (zip fbs commandBuffers) $ \(frameBuffer, cmdBuffer) -> do
+    forM_ (zip3 fbs descriptorSets commandBuffers) $
+      \(frameBuffer, descriptorSet, cmdBuffer) -> do
 
       -- begin commands
       let cmdBufBeginInfo = createVk @VkCommandBufferBeginInfo
@@ -135,6 +174,8 @@ createCommandBuffers
       liftIO $ vkCmdBindVertexBuffers
                  cmdBuffer 0 1 vertexBufArr vertexOffArr
       liftIO $ vkCmdBindIndexBuffer cmdBuffer indexBuffer 0 VK_INDEX_TYPE_UINT16
+      dsPtr <- newArrayRes [descriptorSet]
+      liftIO $ vkCmdBindDescriptorSets cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipelineLayout 0 1 dsPtr 0 VK_NULL
       liftIO $ vkCmdDrawIndexed cmdBuffer nIndices 1 0 0 0
 
       -- finishing up
@@ -160,15 +201,15 @@ createSemaphore dev =
 
 data RenderData
   = RenderData
-  { renderFinished :: VkSemaphore
-  , imageAvailable :: VkSemaphore
-  , device         :: VkDevice
-  , swapChainInfo  :: SwapChainImgInfo
-  , deviceQueues   :: DevQueues
-  , imgIndexPtr    :: Ptr Word32
-  , commandBuffers :: Ptr VkCommandBuffer
-  , uniformBuffers :: Ptr VkDeviceMemory
-  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Program r ()
+  { renderFinished      :: VkSemaphore
+  , imageAvailable      :: VkSemaphore
+  , device              :: VkDevice
+  , swapChainInfo       :: SwapChainImgInfo
+  , deviceQueues        :: DevQueues
+  , imgIndexPtr         :: Ptr Word32
+  , commandBuffers      :: Ptr VkCommandBuffer
+  , uniformBuffers      :: Ptr VkDeviceMemory
+  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Float -> Program r ()
   }
 
 
@@ -184,7 +225,10 @@ drawFrame RenderData {..} = do
     let uniformBufPtr = uniformBuffers `plusPtr`
                  (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
     uniBuf <- peek @VkDeviceMemory uniformBufPtr
-    updateUniformBuffer device uniBuf
+    now <- liftIO getCurrentTime
+    startTime <- startTime <$> get
+    let deltaSeconds = realToFrac $ diffUTCTime now startTime
+    updateUniformBuffer device uniBuf deltaSeconds
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
