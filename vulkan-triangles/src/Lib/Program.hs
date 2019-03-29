@@ -38,7 +38,7 @@ import qualified Control.Monad.Logger.CallStack as LoggerCS
 import           Control.Monad.State.Class
 import           Data.IORef
 import           Data.String                    (fromString)
-import           Data.Time.Clock
+import           Data.Time.Clock.System
 import           Data.Tuple                     (swap)
 import           GHC.Stack
 import           Graphics.Vulkan
@@ -55,14 +55,15 @@ data ProgramState
                   -> Logger.LogLevel
                   -> Logger.LogStr -> IO ()
     -- ^ Enable monad-logger.
-  , startTime :: UTCTime
+  , startTime :: SystemTime
+    -- ^ Time for animations and physics
   }
 
 iProgState :: IO ProgramState
 iProgState = do
   -- get logger function from Control.Monad.Logger transformer
   logFun <- Logger.runStdoutLoggingT $ Logger.LoggingT pure
-  time <- getCurrentTime
+  time <- getSystemTime
   return ProgramState
     { currentStatus = VK_SUCCESS
     , loggingFunc   = logFun
