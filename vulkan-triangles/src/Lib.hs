@@ -3,6 +3,7 @@
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
@@ -82,10 +83,13 @@ identM = mat44 (vec4 1 0 0 0)
                (vec4 0 0 1 0)
                (vec4 0 0 0 1)
 
-trans :: Float -> Mat44f
-trans time = rotZ (time * pi / 2)
+trans :: Double -> Mat44f
+trans seconds =
+  let rate = 0.25 -- rotations per second
+      (_::Int, phaseTau) = properFraction $ seconds * rate
+  in rotZ (realToFrac phaseTau * 2 * pi)
 
-updateUB :: VkDevice -> VkDeviceMemory -> Float -> Program r ()
+updateUB :: VkDevice -> VkDeviceMemory -> Double -> Program r ()
 updateUB device uniBuf seconds = do
       uboPtr <- allocaPeek $
         runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0

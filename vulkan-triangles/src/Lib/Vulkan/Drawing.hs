@@ -3,6 +3,7 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
@@ -15,7 +16,7 @@ module Lib.Vulkan.Drawing
   ) where
 
 import           Control.Monad                            (forM_)
-import           Data.Time.Clock
+import           Data.Time.Clock.System
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -209,7 +210,7 @@ data RenderData
   , imgIndexPtr         :: Ptr Word32
   , commandBuffers      :: Ptr VkCommandBuffer
   , uniformBuffers      :: Ptr VkDeviceMemory
-  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Float -> Program r ()
+  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Double -> Program r ()
   }
 
 
@@ -225,10 +226,15 @@ drawFrame RenderData {..} = do
     let uniformBufPtr = uniformBuffers `plusPtr`
                  (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
     uniBuf <- peek @VkDeviceMemory uniformBufPtr
-    now <- liftIO getCurrentTime
+    now <- liftIO getSystemTime
     startTime <- startTime <$> get
-    let deltaSeconds = realToFrac $ diffUTCTime now startTime
-    updateUniformBuffer device uniBuf deltaSeconds
+    let deltaSeconds = systemSeconds now - systemSeconds startTime
+        -- Have to nanoseconds convert from Word64 before subtraction to allow negative delta.
+        deltaNanoseconds :: Int64 = fromIntegral (systemNanoseconds now) - fromIntegral (systemNanoseconds startTime)
+        -- Seconds in Double keep at least microsecond-precision for 285 years.
+        -- Float is not good enough even for millisecond-precision over more than a few hours.
+        seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
+    updateUniformBuffer device uniBuf seconds
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
