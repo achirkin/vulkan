@@ -9,11 +9,11 @@ module Lib (runVulkanProgram) where
 import           Control.Exception                    (displayException)
 import           Control.Monad                        (forM_)
 import           Foreign.Ptr                          (castPtr)
-import           Foreign.Storable                     (poke)
+import           Foreign.Storable
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Linear.V3
-import           Linear.Matrix as LM
+import           Linear.Matrix as LM 
 import           Linear.Projection
 import           Linear.Quaternion
 import           Numeric.DataFrame
@@ -76,16 +76,14 @@ rotation seconds =
 updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
 updateUB device uniBuf = do
       uboPtr <- allocaPeek $
-        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: Mat44f)) 0
+        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) 0
       seconds <- getTime
-      -- proj (perspective) * view (lookAt) * model (rotate)
-      -- Transpose because package linear has row-major representation
-      -- while glsl reads as column-major representation by default.
-      let transformation = LM.transpose $
-            perspective (1/8*2*pi) (800/600) 0.1 20 !*!
-            lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1)) !*!
-            mkTransformation (rotation seconds) (V3 0 0 0)
-      liftIO $ poke (castPtr uboPtr) transformation
+      let ubo = UBO
+            { model = mkTransformation (rotation seconds) (V3 0 0 0)
+            , view = lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1))
+            , proj = perspective (1/8*2*pi) (800/600) 0.1 20
+            }
+      liftIO $ poke (castPtr uboPtr) ubo
       liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
@@ -144,7 +142,7 @@ runVulkanProgram = runProgram checkStatus $ do
 
       uniformBuffers <-
         createUniformBuffers pdev dev
-          (fromIntegral $ sizeOf (undefined :: Mat44f)) swapChainLen
+          (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) swapChainLen
 
       descriptorPool <- createDescriptorPool dev swapChainLen
       descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
