@@ -47,9 +47,9 @@ library
                       , transformers
                       , mtl
                       , monad-logger
-                      , easytensor >=1.0.0.1
-                      , easytensor-vulkan >=1
-                      , dimensions >=1
+                      , easytensor >=1.0.1 && < 2
+                      , easytensor-vulkan >=1.0.1 && < 2
+                      , dimensions >=1.0.1 && < 2
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
