@@ -73,15 +73,18 @@ rotation seconds =
       (_::Int, phaseTau) = properFraction $ seconds * rate
   in axisAngle (V3 0 0 1) (realToFrac phaseTau * 2 * pi)
 
-updateUB :: VkDevice -> VkDeviceMemory -> Program r ()
-updateUB device uniBuf = do
+updateUB :: VkExtent2D ->  VkDevice -> VkDeviceMemory -> Program r ()
+updateUB extent device uniBuf = do
       uboPtr <- allocaPeek $
         runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) 0
       seconds <- getTime
+      let width = getField @"width" extent
+      let height = getField @"height" extent
+      let aspectRatio = fromIntegral width / fromIntegral height
       let ubo = UBO
             { model = mkTransformation (rotation seconds) (V3 0 0 0)
             , view = lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1))
-            , proj = perspective (1/8*2*pi) (800/600) 0.1 20
+            , proj = perspective (45/360*2*pi) aspectRatio 0.1 20
             }
       liftIO $ poke (castPtr uboPtr) ubo
       liftIO $ vkUnmapMemory device uniBuf
@@ -181,7 +184,7 @@ runVulkanProgram = runProgram checkStatus $ do
             , imgIndexPtr    = imgIPtr
             , commandBuffers = cmdBuffersPtr
             , uniformBuffers = uniformBuffersPtr
-            , updateUniformBuffer = updateUB
+            , updateUniformBuffer = updateUB (swExtent swInfo)
             }
 
       logInfo $ "Createad image views: " ++ show imgViews
