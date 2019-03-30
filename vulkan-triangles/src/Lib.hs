@@ -12,13 +12,8 @@ import           Foreign.Ptr                          (castPtr)
 import           Foreign.Storable
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Linear.V3
-import           Linear.Matrix as LM 
-import           Linear.Projection
-import           Linear.Quaternion
 import           Numeric.DataFrame
 import           Numeric.Dimensions
---import           Numeric.Matrix.Class (rotateZ) -- is not implemented yet
 import           Data.Maybe                           (fromJust)
 
 import           Lib.GLFW
@@ -67,26 +62,26 @@ indices = fromJust $ fromList (D @3)
   , 4, 5, 6
   ]
 
-rotation :: Double -> Quaternion Float
+rotation :: Double -> Mat44f
 rotation seconds =
   let rate = 0.25 -- rotations per second
       (_::Int, phaseTau) = properFraction $ seconds * rate
-  in axisAngle (V3 0 0 1) (realToFrac phaseTau * 2 * pi)
+  in rotate (vec3 0 0 1) (realToFrac phaseTau * 2 * pi)
 
 updateUB :: VkExtent2D ->  VkDevice -> VkDeviceMemory -> Program r ()
 updateUB extent device uniBuf = do
       uboPtr <- allocaPeek $
-        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) 0
+        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf @(Scalar UniformBufferObject) undefined) 0
       seconds <- getTime
       let width = getField @"width" extent
       let height = getField @"height" extent
       let aspectRatio = fromIntegral width / fromIntegral height
       let ubo = UBO
-            { model = mkTransformation (rotation seconds) (V3 0 0 0)
-            , view = lookAt (V3 2 2 2) (V3 0 0 0) (V3 0 0 (-1))
-            , proj = perspective (45/360*2*pi) aspectRatio 0.1 20
+            { model = rotation seconds
+            , view = lookAt (vec3 0 0 (-1)) (vec3 2 2 2) (vec3 0 0 0)
+            , proj = perspective 0.1 20 (45/360*2*pi) aspectRatio
             }
-      liftIO $ poke (castPtr uboPtr) ubo
+      liftIO $ poke (castPtr uboPtr) (scalar ubo)
       liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
@@ -145,7 +140,7 @@ runVulkanProgram = runProgram checkStatus $ do
 
       uniformBuffers <-
         createUniformBuffers pdev dev
-          (fromIntegral $ sizeOf (undefined :: UniformBufferObject)) swapChainLen
+          (fromIntegral $ sizeOf @(Scalar UniformBufferObject) undefined) swapChainLen
 
       descriptorPool <- createDescriptorPool dev swapChainLen
       descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
