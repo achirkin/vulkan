@@ -8,23 +8,23 @@ module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
 import           Control.Monad                        (forM_)
-import           Foreign.Ptr                          (castPtr)
-import           Foreign.Storable
+import           Data.Maybe                           (fromJust)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Numeric.DataFrame
 import           Numeric.Dimensions
-import           Data.Maybe                           (fromJust)
 
 import           Lib.GLFW
 import           Lib.Program
 import           Lib.Program.Foreign
+import           Lib.Vulkan.Descriptor
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
 import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
+import           Lib.Vulkan.TransformationObject
 import           Lib.Vulkan.Vertex
 import           Lib.Vulkan.VertexBuffer
 
@@ -61,28 +61,6 @@ indices = fromJust $ fromList (D @3)
     -- triangle
   , 4, 5, 6
   ]
-
-rotation :: Double -> Mat44f
-rotation seconds =
-  let rate = 0.25 -- rotations per second
-      (_::Int, phaseTau) = properFraction $ seconds * rate
-  in rotate (vec3 0 0 1) (realToFrac phaseTau * 2 * pi)
-
-updateUB :: VkExtent2D ->  VkDevice -> VkDeviceMemory -> Program r ()
-updateUB extent device uniBuf = do
-      uboPtr <- allocaPeek $
-        runVk . vkMapMemory device uniBuf 0 (fromIntegral $ sizeOf @(Scalar UniformBufferObject) undefined) 0
-      seconds <- getTime
-      let width = getField @"width" extent
-      let height = getField @"height" extent
-      let aspectRatio = fromIntegral width / fromIntegral height
-      let ubo = UBO
-            { model = rotation seconds
-            , view = lookAt (vec3 0 0 (-1)) (vec3 2 2 2) (vec3 0 0 0)
-            , proj = perspective 0.1 20 (45/360*2*pi) aspectRatio
-            }
-      liftIO $ poke (castPtr uboPtr) (scalar ubo)
-      liftIO $ vkUnmapMemory device uniBuf
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
@@ -138,15 +116,14 @@ runVulkanProgram = runProgram checkStatus $ do
       let swapChainLen = length (swImgs swInfo)
       imgViews <- createImageViews dev swInfo
 
-      uniformBuffers <-
-        createUniformBuffers pdev dev
-          (fromIntegral $ sizeOf @(Scalar UniformBufferObject) undefined) swapChainLen
+      transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
+      descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
 
       descriptorPool <- createDescriptorPool dev swapChainLen
       descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
       descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
 
-      forM_ (zip (map snd uniformBuffers) descriptorSets) . uncurry $
+      forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
         prepareDescriptorSet dev
 
       renderPass <- createRenderPass dev swInfo
@@ -168,7 +145,7 @@ runVulkanProgram = runProgram checkStatus $ do
                                          framebuffers
                                          descriptorSets
 
-      uniformBuffersPtr <- newArrayRes $ map fst uniformBuffers
+      transObjMemories <- newArrayRes $ map fst transObjBuffers
 
       let rdata = RenderData
             { renderFinished = rendFinS
@@ -178,8 +155,8 @@ runVulkanProgram = runProgram checkStatus $ do
             , deviceQueues   = queues
             , imgIndexPtr    = imgIPtr
             , commandBuffers = cmdBuffersPtr
-            , uniformBuffers = uniformBuffersPtr
-            , updateUniformBuffer = updateUB (swExtent swInfo)
+            , memories       = transObjMemories
+            , memoryMutator  = updateTransObj dev (swExtent swInfo)
             }
 
       logInfo $ "Createad image views: " ++ show imgViews

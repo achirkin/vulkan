@@ -10,36 +10,23 @@ module Lib.Vulkan.Drawing
   , createFramebuffers
   , createCommandPool
   , createCommandBuffers
-  , createDescriptorPool
-  , createDescriptorSets
   , createSemaphore
   , drawFrame
-  , prepareDescriptorSet
-  , UniformBufferObject (..)
   ) where
 
 import           Control.Monad                            (forM_)
 import           Foreign.Storable                         hiding (peek, poke)
-import           GHC.Generics                             (Generic)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Marshal.Create.DataFrame
 import           Numeric.DataFrame
-import           Numeric.PrimBytes
 
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
-data UniformBufferObject = UBO
-  { model :: Mat44f
-  , view  :: Mat44f
-  , proj  :: Mat44f
-  } deriving (Show, Generic)
-
-instance PrimBytes UniformBufferObject
 
 createFramebuffers :: VkDevice
                    -> VkRenderPass
@@ -64,59 +51,6 @@ createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
             &* set @"layers" 1
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
-
-createDescriptorPool :: VkDevice -> Int -> Program r VkDescriptorPool
-createDescriptorPool dev n =
-  allocResource (liftIO . flip (vkDestroyDescriptorPool dev) VK_NULL) $
-    allocaPeek $ \pPtr -> withVkPtr
-      ( createVk
-        $  set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" 0
-        &* set @"poolSizeCount" 1
-        &* setVkRef @"pPoolSizes"
-          ( createVk
-          $  set @"type" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-          &* set @"descriptorCount" (fromIntegral n)
-          )
-        &* set @"maxSets" (fromIntegral n)
-      ) $ \ciPtr -> runVk $ vkCreateDescriptorPool dev ciPtr VK_NULL pPtr
-
-createDescriptorSets :: VkDevice
-                     -> VkDescriptorPool
-                     -> Int
-                     -> Ptr VkDescriptorSetLayout
-                     -> Program r [VkDescriptorSet]
-createDescriptorSets dev descriptorPool n layoutsPtr =
-  let dsai = createVk @VkDescriptorSetAllocateInfo
-        $  set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"descriptorPool" descriptorPool
-        &* set @"descriptorSetCount" (fromIntegral n)
-        &* set @"pSetLayouts" layoutsPtr
-  in allocaArray n $ \dsPtr -> withVkPtr dsai $ \dsaiPtr -> do
-      runVk $ vkAllocateDescriptorSets dev dsaiPtr dsPtr
-      peekArray n dsPtr
-
-prepareDescriptorSet :: VkDevice -> VkBuffer -> VkDescriptorSet -> Program r ()
-prepareDescriptorSet dev uniformBuffer descriptorSet =
-  let bufferInfo = createVk @VkDescriptorBufferInfo
-        $  set @"buffer" uniformBuffer
-        &* set @"offset" 0
-        &* set @"range" (fromIntegral $ sizeOf @(Scalar UniformBufferObject) undefined)
-      descriptorWrite = createVk @VkWriteDescriptorSet
-        $  set @"sType" VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
-        &* set @"pNext" VK_NULL
-        &* set @"dstSet" descriptorSet
-        &* set @"dstBinding" 0
-        &* set @"dstArrayElement" 0
-        &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-        &* set @"descriptorCount" 1
-        &* setVkRef @"pBufferInfo" bufferInfo
-        &* set @"pImageInfo" VK_NULL
-        &* set @"pTexelBufferView" VK_NULL
-  in withVkPtr descriptorWrite $ \dwPtr ->
-      liftIO $ vkUpdateDescriptorSets dev 1 dwPtr 0 VK_NULL
 
 createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
 createCommandPool dev DevQueues{..} =
@@ -233,15 +167,18 @@ createSemaphore dev =
 
 data RenderData
   = RenderData
-  { renderFinished      :: VkSemaphore
-  , imageAvailable      :: VkSemaphore
-  , device              :: VkDevice
-  , swapChainInfo       :: SwapChainImgInfo
-  , deviceQueues        :: DevQueues
-  , imgIndexPtr         :: Ptr Word32
-  , commandBuffers      :: Ptr VkCommandBuffer
-  , uniformBuffers      :: Ptr VkDeviceMemory
-  , updateUniformBuffer :: forall r. VkDevice -> VkDeviceMemory -> Program r ()
+  { renderFinished :: VkSemaphore
+  , imageAvailable :: VkSemaphore
+  , device         :: VkDevice
+  , swapChainInfo  :: SwapChainImgInfo
+  , deviceQueues   :: DevQueues
+  , imgIndexPtr    :: Ptr Word32
+  , commandBuffers :: Ptr VkCommandBuffer
+    -- ^ one per swapchain image
+  , memories       :: Ptr VkDeviceMemory
+    -- ^ one per swapchain image
+  , memoryMutator  :: forall r. VkDeviceMemory -> Program r ()
+    -- ^ to execute on memories[*imgIndexPtr] before drawing
   }
 
 
@@ -254,10 +191,10 @@ drawFrame RenderData {..} = do
     imgIndex <- peek imgIndexPtr
     let bufPtr = commandBuffers `plusPtr`
                  (fromIntegral imgIndex * sizeOf (undefined :: VkCommandBuffer))
-    let uniformBufPtr = uniformBuffers `plusPtr`
+    let memoryPtr = memories `plusPtr`
                  (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
-    uniBuf <- peek @VkDeviceMemory uniformBufPtr
-    updateUniformBuffer device uniBuf
+    mem <- peek @VkDeviceMemory memoryPtr
+    memoryMutator mem
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL

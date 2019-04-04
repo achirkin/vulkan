@@ -3,7 +3,6 @@
 {-# LANGUAGE PolyKinds        #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
-
 module Lib.Vulkan.Buffer
   ( createBuffer
   , copyBuffer
@@ -18,6 +17,7 @@ import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
+
 
 createBuffer :: VkPhysicalDevice
              -> VkDevice
