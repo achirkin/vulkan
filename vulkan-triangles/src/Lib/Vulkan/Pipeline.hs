@@ -7,7 +7,6 @@
 module Lib.Vulkan.Pipeline
   ( createGraphicsPipeline
   , createRenderPass
-  , createDescriptorSetLayout
   , createPipelineLayout
   ) where
 
@@ -23,7 +22,6 @@ import           Numeric.Dimensions
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
-
 
 
 createGraphicsPipeline :: ( KnownDim (n :: k)
@@ -167,27 +165,6 @@ createGraphicsPipeline
       withVkPtr gpCreateInfo $ \gpciPtr -> allocaPeek $
         runVk . vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL
 
-
-createDescriptorSetLayout :: VkDevice -> Program r VkDescriptorSetLayout
-createDescriptorSetLayout dev =
-  allocResource
-    (\dsl -> liftIO $ vkDestroyDescriptorSetLayout dev dsl VK_NULL) $
-    withVkPtr dslCreateInfo $ \dslciPtr -> allocaPeek $
-      runVk . vkCreateDescriptorSetLayout dev dslciPtr VK_NULL
-  where
-    dslCreateInfo = createVk @VkDescriptorSetLayoutCreateInfo
-      $ set @"sType" VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO
-      &* set @"pNext" VK_NULL
-      &* set @"flags" 0
-      &* set @"bindingCount" 1
-      &* setVkRef @"pBindings" dslBinding
-
-    dslBinding = createVk @VkDescriptorSetLayoutBinding
-      $ set @"binding" 0
-      &* set @"descriptorType" VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-      &* set @"descriptorCount" 1
-      &* set @"stageFlags" VK_SHADER_STAGE_VERTEX_BIT
-      &* set @"pImmutableSamplers" VK_NULL
 
 createPipelineLayout :: VkDevice -> VkDescriptorSetLayout -> Program r VkPipelineLayout
 createPipelineLayout dev dsl = do
