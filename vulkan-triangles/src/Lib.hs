@@ -1,26 +1,30 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE Strict           #-}
-{-# LANGUAGE TemplateHaskell  #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE RecordWildCards     #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TemplateHaskell     #-}
+{-# LANGUAGE TypeApplications    #-}
 module Lib (runVulkanProgram) where
 
 import           Control.Exception                    (displayException)
+import           Control.Monad                        (forM_)
+import           Data.Maybe                           (fromJust)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Numeric.DataFrame
 import           Numeric.Dimensions
-import           Data.Maybe                               (fromJust)
 
 import           Lib.GLFW
 import           Lib.Program
 import           Lib.Program.Foreign
+import           Lib.Vulkan.Descriptor
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
 import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
+import           Lib.Vulkan.TransformationObject
 import           Lib.Vulkan.Vertex
 import           Lib.Vulkan.VertexBuffer
 
@@ -102,28 +106,46 @@ runVulkanProgram = runProgram checkStatus $ do
     indexBuffer <-
       createIndexBuffer pdev dev commandPool (graphicsQueue queues) indices
 
+    descriptorSetLayout <- createDescriptorSetLayout dev
+
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
     redoOnOutdate $ do
       scsd <- querySwapChainSupport pdev vulkanSurface
       swInfo <- createSwapChain dev scsd queues vulkanSurface
+      let swapChainLen = length (swImgs swInfo)
       imgViews <- createImageViews dev swInfo
 
+      transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
+      descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
+
+      descriptorPool <- createDescriptorPool dev swapChainLen
+      descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
+      descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
+
+      forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
+        prepareDescriptorSet dev
+
       renderPass <- createRenderPass dev swInfo
+      pipelineLayout <- createPipelineLayout dev descriptorSetLayout
       graphicsPipeline
         <- createGraphicsPipeline dev swInfo
                                   vertIBD vertIADs
                                   [shaderVert, shaderFrag]
                                   renderPass
+                                  pipelineLayout
 
       framebuffers
         <- createFramebuffers dev renderPass swInfo imgViews
 
-      cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
-                                         renderPass swInfo
+      cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
+                                         renderPass pipelineLayout swInfo
                                          vertexBuffer
                                          (fromIntegral $ dimSize1 indices, indexBuffer)
                                          framebuffers
+                                         descriptorSets
+
+      transObjMemories <- newArrayRes $ map fst transObjBuffers
 
       let rdata = RenderData
             { renderFinished = rendFinS
@@ -132,13 +154,16 @@ runVulkanProgram = runProgram checkStatus $ do
             , swapChainInfo  = swInfo
             , deviceQueues   = queues
             , imgIndexPtr    = imgIPtr
-            , commandBuffers = cmdBuffers
+            , commandBuffers = cmdBuffersPtr
+            , memories       = transObjMemories
+            , memoryMutator  = updateTransObj dev (swExtent swInfo)
             }
 
       logInfo $ "Createad image views: " ++ show imgViews
       logInfo $ "Createad renderpass: " ++ show renderPass
       logInfo $ "Createad pipeline: " ++ show graphicsPipeline
       logInfo $ "Createad framebuffers: " ++ show framebuffers
+      cmdBuffers <- peekArray swapChainLen cmdBuffersPtr
       logInfo $ "Createad command buffers: " ++ show cmdBuffers
 
       glfwMainLoop window $ do

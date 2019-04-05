@@ -1,7 +1,10 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE Strict           #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE RankNTypes          #-}
+{-# LANGUAGE RecordWildCards     #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TypeApplications    #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
@@ -11,7 +14,8 @@ module Lib.Vulkan.Drawing
   , drawFrame
   ) where
 
-import           Control.Monad                        (forM_)
+import           Control.Monad                            (forM_)
+import           Foreign.Storable                         hiding (peek, poke)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -48,7 +52,6 @@ createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
 
-
 createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
 createCommandPool dev DevQueues{..} =
   allocResource (liftIO . flip (vkDestroyCommandPool dev) VK_NULL) $
@@ -65,15 +68,17 @@ createCommandBuffers :: VkDevice
                      -> VkPipeline
                      -> VkCommandPool
                      -> VkRenderPass
+                     -> VkPipelineLayout
                      -> SwapChainImgInfo
                      -> VkBuffer -- vertex data
                      -> (Word32, VkBuffer) -- nr of indices and index data
                      -> [VkFramebuffer]
-                     -> Program r [VkCommandBuffer]
+                     -> [VkDescriptorSet]
+                     -> Program r (Ptr VkCommandBuffer)
 createCommandBuffers
-    dev pipeline commandPool rpass  SwapChainImgInfo{..}
+    dev pipeline commandPool rpass pipelineLayout SwapChainImgInfo{..}
     vertexBuffer
-    (nIndices, indexBuffer) fbs
+    (nIndices, indexBuffer) fbs descriptorSets
   | buffersCount <- length fbs = do
   -- allocate a pointer to an array of command buffer handles
   cbsPtr <- mallocArrayRes buffersCount
@@ -98,7 +103,8 @@ createCommandBuffers
     commandBuffers <- peekArray buffersCount cbsPtr
 
     -- record command buffers
-    forM_ (zip fbs commandBuffers) $ \(frameBuffer, cmdBuffer) -> do
+    forM_ (zip3 fbs descriptorSets commandBuffers) $
+      \(frameBuffer, descriptorSet, cmdBuffer) -> do
 
       -- begin commands
       let cmdBufBeginInfo = createVk @VkCommandBufferBeginInfo
@@ -134,6 +140,8 @@ createCommandBuffers
       liftIO $ vkCmdBindVertexBuffers
                  cmdBuffer 0 1 vertexBufArr vertexOffArr
       liftIO $ vkCmdBindIndexBuffer cmdBuffer indexBuffer 0 VK_INDEX_TYPE_UINT16
+      dsPtr <- newArrayRes [descriptorSet]
+      liftIO $ vkCmdBindDescriptorSets cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipelineLayout 0 1 dsPtr 0 VK_NULL
       liftIO $ vkCmdDrawIndexed cmdBuffer nIndices 1 0 0 0
 
       -- finishing up
@@ -141,7 +149,7 @@ createCommandBuffers
 
       runVk $ vkEndCommandBuffer cmdBuffer
 
-    return commandBuffers
+    return cbsPtr
 
 
 createSemaphore :: VkDevice -> Program r VkSemaphore
@@ -165,22 +173,28 @@ data RenderData
   , swapChainInfo  :: SwapChainImgInfo
   , deviceQueues   :: DevQueues
   , imgIndexPtr    :: Ptr Word32
-  , commandBuffers :: [VkCommandBuffer]
+  , commandBuffers :: Ptr VkCommandBuffer
+    -- ^ one per swapchain image
+  , memories       :: Ptr VkDeviceMemory
+    -- ^ one per swapchain image
+  , memoryMutator  :: forall r. VkDeviceMemory -> Program r ()
+    -- ^ to execute on memories[*imgIndexPtr] before drawing
   }
 
 
 drawFrame :: RenderData -> Program r ()
 drawFrame RenderData {..} = do
-    commandBuffersPtr <- newArrayRes commandBuffers
-
     -- Acquiring an image from the swap chain
     runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
-    bufPtr <- (\i -> commandBuffersPtr `plusPtr`
-                        (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
-              ) <$> peek imgIndexPtr
-
+    imgIndex <- peek imgIndexPtr
+    let bufPtr = commandBuffers `plusPtr`
+                 (fromIntegral imgIndex * sizeOf (undefined :: VkCommandBuffer))
+    let memoryPtr = memories `plusPtr`
+                 (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
+    mem <- peek @VkDeviceMemory memoryPtr
+    memoryMutator mem
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
