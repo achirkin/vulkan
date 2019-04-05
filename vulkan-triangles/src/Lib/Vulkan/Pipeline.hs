@@ -7,6 +7,7 @@
 module Lib.Vulkan.Pipeline
   ( createGraphicsPipeline
   , createRenderPass
+  , createPipelineLayout
   ) where
 
 import           Data.Bits
@@ -23,7 +24,6 @@ import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
 
-
 createGraphicsPipeline :: ( KnownDim (n :: k)
                           , VulkanDataFrame VkVertexInputAttributeDescription '[n])
                        => VkDevice
@@ -32,9 +32,10 @@ createGraphicsPipeline :: ( KnownDim (n :: k)
                        -> Vector VkVertexInputAttributeDescription n
                        -> [VkPipelineShaderStageCreateInfo]
                        -> VkRenderPass
+                       -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass =
+    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -138,8 +139,6 @@ createGraphicsPipeline
 
     -- finally, create pipeline!
   in do
-    pipelineLayout <- createPipelineLayout dev
-
     let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
           &* set @"pNext" VK_NULL
@@ -167,21 +166,20 @@ createGraphicsPipeline
         runVk . vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL
 
 
-createPipelineLayout :: VkDevice -> Program r VkPipelineLayout
-createPipelineLayout dev =
+createPipelineLayout :: VkDevice -> VkDescriptorSetLayout -> Program r VkPipelineLayout
+createPipelineLayout dev dsl = do
+  let plCreateInfo = createVk @VkPipelineLayoutCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"setLayoutCount"         1       -- Optional
+        &* setListRef @"pSetLayouts"     [dsl]   -- Optional
+        &* set @"pushConstantRangeCount" 0       -- Optional
+        &* set @"pPushConstantRanges"    VK_NULL -- Optional
   allocResource
     (\pl -> liftIO $ vkDestroyPipelineLayout dev pl VK_NULL) $
     withVkPtr plCreateInfo $ \plciPtr -> allocaPeek $
       runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
-  where
-    plCreateInfo = createVk @VkPipelineLayoutCreateInfo
-      $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-      &* set @"pNext" VK_NULL
-      &* set @"flags" 0
-      &* set @"setLayoutCount"         0       -- Optional
-      &* set @"pSetLayouts"            VK_NULL -- Optional
-      &* set @"pushConstantRangeCount" 0       -- Optional
-      &* set @"pPushConstantRanges"    VK_NULL -- Optional
 
 
 createRenderPass :: VkDevice -> SwapChainImgInfo
