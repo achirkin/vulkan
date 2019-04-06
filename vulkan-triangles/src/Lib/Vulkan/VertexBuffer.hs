@@ -8,17 +8,16 @@ module Lib.Vulkan.VertexBuffer
   , createIndexBuffer
   ) where
 
-import Data.Bits
-import Foreign.Ptr              (castPtr)
-import Foreign.Storable         (poke)
-import Graphics.Vulkan
-import Graphics.Vulkan.Core_1_0
-import Numeric.DataFrame
+import           Data.Bits
+import           Foreign.Ptr              (castPtr)
+import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
+import           Numeric.DataFrame
 
-import Lib.Program
-import Lib.Program.Foreign
-import Lib.Vulkan.Buffer
-import Lib.Vulkan.Vertex
+import           Lib.Program
+import           Lib.Program.Foreign
+import           Lib.Vulkan.Buffer
+import           Lib.Vulkan.Vertex
 
 
 createVertexBuffer :: VkPhysicalDevice
@@ -46,7 +45,7 @@ createVertexBuffer pdev dev cmdPool cmdQueue (XFrame vertices) = do
       -- copy data
       dataPtr <- allocaPeek $
         runVk . vkMapMemory dev stagingMem 0 bSize 0
-      liftIO $ poke (castPtr dataPtr) vertices
+      poke (castPtr dataPtr) vertices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
@@ -78,7 +77,7 @@ createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
       -- copy data
       dataPtr <- allocaPeek $
         runVk . vkMapMemory dev stagingMem 0 bSize 0
-      liftIO $ poke (castPtr dataPtr) indices
+      poke (castPtr dataPtr) indices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
