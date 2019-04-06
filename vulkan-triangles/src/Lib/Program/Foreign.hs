@@ -7,7 +7,7 @@
 module Lib.Program.Foreign
     ( Ptr, plusPtr, Storable.sizeOf
     , alloca, allocaArray
-    , peek, peekArray
+    , peek, peekArray, poke
     , asListVk
     , allocaPeek, allocaPeekVk, allocaPeekDF
     , mallocRes, mallocArrayRes, newArrayRes
@@ -76,6 +76,9 @@ peekArray n = liftIO . Foreign.peekArray n
 
 peek :: Storable a => Ptr a -> Program r a
 peek = liftIO . Storable.peek
+
+poke :: Storable a => Ptr a -> a -> Program r ()
+poke p v = liftIO $ Storable.poke p v
 
 
 -- | Get size of action output and then get the result,

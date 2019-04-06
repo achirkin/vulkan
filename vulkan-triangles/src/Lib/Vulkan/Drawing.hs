@@ -10,11 +10,13 @@ module Lib.Vulkan.Drawing
   , createFramebuffers
   , createCommandPool
   , createCommandBuffers
-  , createSemaphore
+  , createSemaphores
+  , createFences
   , drawFrame
   ) where
 
 import           Control.Monad                            (forM_)
+import           Data.IORef
 import           Foreign.Storable                         hiding (peek, poke)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
@@ -27,6 +29,8 @@ import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
+_MAX_FRAMES_IN_FLIGHT :: Int
+_MAX_FRAMES_IN_FLIGHT = 2
 
 createFramebuffers :: VkDevice
                    -> VkRenderPass
@@ -163,65 +167,96 @@ createSemaphore dev =
         &* set @"flags" 0
       ) $ \ciPtr -> runVk $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
 
+createSemaphores :: VkDevice -> Program r (Ptr VkSemaphore)
+createSemaphores dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createSemaphore dev))
 
+createFence :: VkDevice -> Program r VkFence
+createFence dev =
+  allocResource
+    (liftIO .  flip (vkDestroyFence dev) VK_NULL)
+    $ allocaPeek $ \sPtr -> withVkPtr
+      ( createVk
+        $  set @"sType" VK_STRUCTURE_TYPE_FENCE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" VK_FENCE_CREATE_SIGNALED_BIT
+      ) $ \ciPtr -> runVk $ vkCreateFence dev ciPtr VK_NULL sPtr
+
+createFences :: VkDevice -> Program r (Ptr VkFence)
+createFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createFence dev))
 
 data RenderData
   = RenderData
-  { renderFinished :: VkSemaphore
-  , imageAvailable :: VkSemaphore
-  , device         :: VkDevice
-  , swapChainInfo  :: SwapChainImgInfo
-  , deviceQueues   :: DevQueues
-  , imgIndexPtr    :: Ptr Word32
-  , commandBuffers :: Ptr VkCommandBuffer
+  { device             :: VkDevice
+  , swapChainInfo      :: SwapChainImgInfo
+  , deviceQueues       :: DevQueues
+  , imgIndexPtr        :: Ptr Word32
+  , currentFrame       :: IORef Int
+  , renderFinishedSems :: Ptr VkSemaphore
+    -- ^ one per frame-in-flight
+  , imageAvailableSems :: Ptr VkSemaphore
+    -- ^ one per frame-in-flight
+  , inFlightFences     :: Ptr VkFence
+    -- ^ one per frame-in-flight
+  , commandBuffers     :: Ptr VkCommandBuffer
     -- ^ one per swapchain image
-  , memories       :: Ptr VkDeviceMemory
+  , memories           :: Ptr VkDeviceMemory
     -- ^ one per swapchain image
-  , memoryMutator  :: forall r. VkDeviceMemory -> Program r ()
+  , memoryMutator      :: forall r. VkDeviceMemory -> Program r ()
     -- ^ to execute on memories[*imgIndexPtr] before drawing
   }
 
+ptrAtIndex :: forall a. Storable a => Ptr a -> Int -> Ptr a
+ptrAtIndex ptr i = ptr `plusPtr` (i * sizeOf @a undefined)
 
 drawFrame :: RenderData -> Program r ()
 drawFrame RenderData {..} = do
+    frameIndex <- liftIO $ readIORef currentFrame
+    let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
+    runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+    runVk $ vkResetFences device 1 inFlightFencePtr
+
+    let SwapChainImgInfo {..} = swapChainInfo
+        DevQueues {..} = deviceQueues
+
+    imageAvailable <- peek (imageAvailableSems `ptrAtIndex` frameIndex)
+    renderFinished <- peek (renderFinishedSems `ptrAtIndex` frameIndex)
+    inFlightFence <- peek inFlightFencePtr
     -- Acquiring an image from the swap chain
     runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
-    imgIndex <- peek imgIndexPtr
-    let bufPtr = commandBuffers `plusPtr`
-                 (fromIntegral imgIndex * sizeOf (undefined :: VkCommandBuffer))
-    let memoryPtr = memories `plusPtr`
-                 (fromIntegral imgIndex * sizeOf (undefined :: VkDeviceMemory))
-    mem <- peek @VkDeviceMemory memoryPtr
+    imgIndex <- fromIntegral <$> peek imgIndexPtr
+    let bufPtr = commandBuffers `ptrAtIndex` imgIndex
+    let memoryPtr = memories `ptrAtIndex` imgIndex
+    mem <- peek memoryPtr
     memoryMutator mem
-    -- Submitting the command buffer
-    withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
-      runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
 
-    -- RENDERRR!!!
+    -- Submitting the command buffer
+    let submitInfo = createVk @VkSubmitInfo
+          $  set @"sType" VK_STRUCTURE_TYPE_SUBMIT_INFO
+          &* set @"pNext" VK_NULL
+          &* set @"waitSemaphoreCount" 1
+          &* setListRef @"pWaitSemaphores"   [imageAvailable]
+          &* setListRef @"pWaitDstStageMask" [VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]
+          &* set @"commandBufferCount" 1
+          &* set @"pCommandBuffers" bufPtr
+          &* set @"signalSemaphoreCount" 1
+          &* setListRef @"pSignalSemaphores" [renderFinished]
+
+    withVkPtr submitInfo $ \siPtr ->
+      runVk $ vkQueueSubmit graphicsQueue 1 siPtr inFlightFence
+
+    -- Presentation
+    let presentInfo = createVk @VkPresentInfoKHR
+          $  set @"sType" VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
+          &* set @"pNext" VK_NULL
+          &* set @"pImageIndices" imgIndexPtr
+          &* set        @"waitSemaphoreCount" 1
+          &* setListRef @"pWaitSemaphores" [renderFinished]
+          &* set        @"swapchainCount" 1
+          &* setListRef @"pSwapchains"    [swapchain]
+
     withVkPtr presentInfo $
       runVk . vkQueuePresentKHR presentQueue
-  where
-    SwapChainImgInfo {..} = swapChainInfo
-    DevQueues {..} = deviceQueues
-    -- Submitting the command buffer
-    mkSubmitInfo bufPtr = createVk @VkSubmitInfo
-      $  set @"sType" VK_STRUCTURE_TYPE_SUBMIT_INFO
-      &* set @"pNext" VK_NULL
-      &* set @"waitSemaphoreCount" 1
-      &* setListRef @"pWaitSemaphores"   [imageAvailable]
-      &* setListRef @"pWaitDstStageMask" [VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]
-      &* set @"commandBufferCount" 1
-      &* set @"pCommandBuffers" bufPtr
-      &* set @"signalSemaphoreCount" 1
-      &* setListRef @"pSignalSemaphores" [renderFinished]
-    -- Presentation
-    presentInfo = createVk @VkPresentInfoKHR
-      $  set @"sType" VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
-      &* set @"pNext" VK_NULL
-      &* set @"pImageIndices" imgIndexPtr
-      &* set        @"waitSemaphoreCount" 1
-      &* setListRef @"pWaitSemaphores" [renderFinished]
-      &* set        @"swapchainCount" 1
-      &* setListRef @"pSwapchains"    [swapchain]
+
+    liftIO $ writeIORef currentFrame $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
