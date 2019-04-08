@@ -1,5 +1,7 @@
 {-# LANGUAGE DataKinds           #-}
 {-# LANGUAGE KindSignatures      #-}
+{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE Strict              #-}
@@ -70,11 +72,16 @@ dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
   n :* _ -> fromIntegral $ dimVal n
   U      -> 1
 
+data OnDemand = OnDemand
+  { oldChainLen      :: Int
+  , descriptorSets   :: [VkDescriptorSet]
+  , transObjMemories :: Ptr VkDeviceMemory
+  }
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
-
-    window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
+    windowSizeChanged <- liftIO $ newIORef False
+    window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW" windowSizeChanged
 
     vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
 
@@ -119,23 +126,49 @@ runVulkanProgram = runProgram checkStatus $ do
 
     descriptorSetLayout <- createDescriptorSetLayout dev
 
+    onDemand <- liftIO $ newIORef Nothing
+
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
     --  (window resize event kind-of).
-    redoOnOutdate $ do
+    redoOnOutdate dev $ do
+      -- wait as long as window has width=0 and height=0
+      glfwWaitMinimized window
+      -- If a window size change did happen, it will be respected by (re-)creating
+      -- the swap chain below, no matter if it was signalled via exception or
+      -- the IORef, so reset the IORef now:
+      liftIO $ atomicWriteIORef windowSizeChanged False
+
       scsd <- querySwapChainSupport pdev vulkanSurface
       swInfo <- createSwapChain dev scsd queues vulkanSurface
       let swapChainLen = length (swImgs swInfo)
       imgViews <- createImageViews dev swInfo
 
-      transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
-      descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
+      -- things that only need to be recreated when the swapchain length changes
+      let redoOnDemand = do
+            transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
+            descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
 
-      descriptorPool <- createDescriptorPool dev swapChainLen
-      descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
-      descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
+            descriptorPool <- createDescriptorPool dev swapChainLen
+            descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
+            descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
 
-      forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
-        prepareDescriptorSet dev
+            forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
+              prepareDescriptorSet dev
+
+            transObjMemories <- newArrayRes $ map fst transObjBuffers
+
+            let val = OnDemand { oldChainLen = swapChainLen, .. }
+            liftIO $ writeIORef onDemand $ Just val
+            return val
+
+      OnDemand {..} <- liftIO (readIORef onDemand) >>= \case
+        Nothing -> redoOnDemand
+        Just OnDemand { oldChainLen }
+          | oldChainLen /= swapChainLen -> do
+              -- no idea if this can actually happen
+              logInfo "Swap chain length changed, recreating length dependents"
+              redoOnDemand
+        Just x -> return x
 
       renderPass <- createRenderPass dev swInfo
       pipelineLayout <- createPipelineLayout dev descriptorSetLayout
@@ -155,8 +188,6 @@ runVulkanProgram = runProgram checkStatus $ do
                                          (dfLen indices, indexBuffer)
                                          framebuffers
                                          descriptorSets
-
-      transObjMemories <- newArrayRes $ map fst transObjBuffers
 
       let rdata = RenderData
             { device             = dev
@@ -189,7 +220,7 @@ runVulkanProgram = runProgram checkStatus $ do
         -- Not needed anymore after waiting for inFlightFence has been implemented:
         -- runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
 
-        drawFrame rdata
+        isSuboptimal <- drawFrame rdata
 
         -- part of dumb fps counter
         seconds <- getTime
@@ -203,10 +234,9 @@ runVulkanProgram = runProgram checkStatus $ do
           else do
             modifyIORef frameCount $ \c -> c + 1
 
-      -- Doesn't seem to be necessary, not sure why. Theoretically things need
-      -- to be idle before being destroyed. If needed, this comes after the main
-      -- loop:
-      -- runVk $ vkDeviceWaitIdle dev
+        sizeChanged <- liftIO $ readIORef windowSizeChanged
+        return $ isSuboptimal || sizeChanged -- triggers redo
+
 
 checkStatus :: Either VulkanException () -> IO ()
 checkStatus (Right ()) = pure ()
@@ -215,12 +245,18 @@ checkStatus (Left err) = putStrLn $ displayException err
 -- | Run the whole sequence of commands one more time if a particular error happens.
 --   Run that sequence locally, so that all acquired resources are released
 --   before running it again.
-redoOnOutdate :: Program' a -> Program r a
-redoOnOutdate action =
-  locally action `catchError` ( \err@(VulkanException ecode _) ->
-    case ecode of
-      Just VK_ERROR_OUT_OF_DATE_KHR -> do
-        logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error, retrying..."
-        redoOnOutdate action
-      _ -> throwError err
-  )
+--   Ensures that vkDeviceWaitIdle happens before releasing resources, it is
+--   needed for most release actions like vkDestroySwapchainKHR to succeed.
+--   The action can return True if it wishes to be restarted without an exception.
+redoOnOutdate :: VkDevice -> Program' Bool -> Program r ()
+redoOnOutdate dev action = go >> return () where
+  action' = finally action (runVk $ vkDeviceWaitIdle dev)
+  go = do
+    restart <- locally action' `catchError` ( \err@(VulkanException ecode _) ->
+      case ecode of
+        Just VK_ERROR_OUT_OF_DATE_KHR -> do
+          logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error, retrying..."
+          return True
+        _ -> throwError err
+      )
+    if restart then go else return False
