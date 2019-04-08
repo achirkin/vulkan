@@ -15,7 +15,7 @@ module Lib.Vulkan.Drawing
   , drawFrame
   ) where
 
-import           Control.Monad                            (forM_)
+import           Control.Monad                            (forM_, when)
 import           Data.IORef
 import           Foreign.Storable                         hiding (peek, poke)
 import           Graphics.Vulkan
@@ -90,11 +90,8 @@ createCommandBuffers
   vertexOffArr <- newArrayRes [0]
 
   allocResource
-    ( \_ -> do
-      runVk $ vkDeviceWaitIdle dev
-      liftIO $
-        vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
-    ) $ do
+    (const $ liftIO $ vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr)
+    $ do
     let allocInfo = createVk @VkCommandBufferAllocateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
           &* set @"pNext" VK_NULL
@@ -208,12 +205,11 @@ data RenderData
 ptrAtIndex :: forall a. Storable a => Ptr a -> Int -> Ptr a
 ptrAtIndex ptr i = ptr `plusPtr` (i * sizeOf @a undefined)
 
-drawFrame :: RenderData -> Program r ()
+drawFrame :: RenderData -> Program r Bool
 drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef currentFrame
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
     runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
-    runVk $ vkResetFences device 1 inFlightFencePtr
 
     let SwapChainImgInfo {..} = swapChainInfo
         DevQueues {..} = deviceQueues
@@ -243,6 +239,7 @@ drawFrame RenderData {..} = do
           &* set @"signalSemaphoreCount" 1
           &* setListRef @"pSignalSemaphores" [renderFinished]
 
+    runVk $ vkResetFences device 1 inFlightFencePtr
     withVkPtr submitInfo $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr inFlightFence
 
@@ -258,5 +255,8 @@ drawFrame RenderData {..} = do
 
     withVkPtr presentInfo $
       runVk . vkQueuePresentKHR presentQueue
+    isSuboptimal <- (== VK_SUBOPTIMAL_KHR) . currentStatus <$> get
 
     liftIO $ writeIORef currentFrame $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
+
+    return isSuboptimal
