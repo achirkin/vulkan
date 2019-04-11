@@ -24,6 +24,7 @@ import           Lib.Program.Foreign
 import           Lib.Vulkan.Descriptor
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
+import           Lib.Vulkan.Image
 import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
@@ -48,14 +49,14 @@ import           Lib.Vulkan.VertexBuffer
 vertices :: DataFrame Vertex '[XN 3]
 vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
-    scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0)
-  , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0)
-  , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1)
-  , scalar $ Vertex (vec2 (-0.5)   0.4 ) (vec3 1 1 1)
+    scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0) (vec2 0 0)
+  , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0) (vec2 1 0)
+  , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1) (vec2 1 1)
+  , scalar $ Vertex (vec2 (-0.5)   0.4 ) (vec3 1 1 1) (vec2 0 1)
     -- triangle
-  , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
-  , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
-  , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
+  -- , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
+  -- , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
+  -- , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
   ]
 
 indices :: DataFrame Word16 '[XN 3]
@@ -126,6 +127,10 @@ runVulkanProgram = runProgram checkStatus $ do
 
     descriptorSetLayout <- createDescriptorSetLayout dev
 
+    texture <- createTextureImage pdev dev commandPool (graphicsQueue queues) "textures/texture.jpg"
+    textureView <- createTextureImageView dev texture
+    textureSampler <- createTextureSampler dev
+
     onDemand <- liftIO $ newIORef Nothing
 
     -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
@@ -141,19 +146,20 @@ runVulkanProgram = runProgram checkStatus $ do
       scsd <- querySwapChainSupport pdev vulkanSurface
       swInfo <- createSwapChain dev scsd queues vulkanSurface
       let swapChainLen = length (swImgs swInfo)
-      imgViews <- createImageViews dev swInfo
+      imgViews <- mapM (flip (createImageView dev) (swImgFormat swInfo)) (swImgs swInfo)
 
       -- things that only need to be recreated when the swapchain length changes
       let redoOnDemand = do
             transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
             descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
+            descriptorTextureInfo <- textureImageInfo textureView textureSampler
 
             descriptorPool <- createDescriptorPool dev swapChainLen
             descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
             descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
 
-            forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
-              prepareDescriptorSet dev
+            forM_ (zip descriptorBufferInfos descriptorSets) $
+              \(bufInfo, dSet) -> prepareDescriptorSet dev bufInfo descriptorTextureInfo dSet
 
             transObjMemories <- newArrayRes $ map fst transObjBuffers
 
@@ -168,7 +174,9 @@ runVulkanProgram = runProgram checkStatus $ do
               -- no idea if this can actually happen
               logInfo "Swap chain length changed, recreating length dependents"
               redoOnDemand
-        Just x -> return x
+        -- Just x -> return x
+        -- TODO temporary workaround here
+        Just _ -> redoOnDemand
 
       renderPass <- createRenderPass dev swInfo
       pipelineLayout <- createPipelineLayout dev descriptorSetLayout

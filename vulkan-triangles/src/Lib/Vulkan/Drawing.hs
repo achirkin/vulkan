@@ -15,7 +15,7 @@ module Lib.Vulkan.Drawing
   , drawFrame
   ) where
 
-import           Control.Monad                            (forM_, when)
+import           Control.Monad                            (forM_)
 import           Data.IORef
 import           Foreign.Storable                         hiding (peek, poke)
 import           Graphics.Vulkan

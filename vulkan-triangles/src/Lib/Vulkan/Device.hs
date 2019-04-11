@@ -96,4 +96,9 @@ isDeviceSuitable mVkSurf pdev = do
                  && not (null presentModes)
               )
 
-  pure (mscsd, extsGood && surfGood)
+  supportedFeatures <- allocaPeek $
+    liftIO . vkGetPhysicalDeviceFeatures pdev
+
+  let supportsAnisotropy = getField @"samplerAnisotropy" supportedFeatures == VK_TRUE
+
+  pure (mscsd, extsGood && surfGood && supportsAnisotropy)
