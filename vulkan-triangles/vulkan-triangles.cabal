@@ -28,6 +28,7 @@ library
                         Lib.Program
                         Lib.Program.Foreign
                         Lib.Vulkan.Buffer
+                        Lib.Vulkan.Command
                         Lib.Vulkan.Descriptor
                         Lib.Vulkan.Device
                         Lib.Vulkan.Drawing
@@ -36,6 +37,7 @@ library
                         Lib.Vulkan.Presentation
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
+                        Lib.Vulkan.Image
                         Lib.Vulkan.Vertex
                         Lib.Vulkan.VertexBuffer
                         Lib.Vulkan.TransformationObject
@@ -54,6 +56,8 @@ library
                       , easytensor-vulkan >=2 && < 3
                       , dimensions >=2 && < 3
                       , time
+                      , JuicyPixels
+                      , vector
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT

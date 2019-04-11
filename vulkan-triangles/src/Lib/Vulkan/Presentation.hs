@@ -8,7 +8,7 @@
 module Lib.Vulkan.Presentation
   ( SwapChainImgInfo (..)
   , DevQueues (..)
-  , createSurface, createGraphicsDevice, createSwapChain, createImageViews
+  , createSurface, createGraphicsDevice, createSwapChain
   ) where
 
 import           Control.Monad
@@ -88,8 +88,8 @@ data DevQueues
 
 
 createGraphicsDevice :: VkPhysicalDevice
-                   -> VkSurfaceKHR
-                   -> Program r (VkDevice, DevQueues)
+                     -> VkSurfaceKHR
+                     -> Program r (VkDevice, DevQueues)
 createGraphicsDevice pdev surf
   | layers <- defaultLayers
   , extensions <- [VK_KHR_SWAPCHAIN_EXTENSION_NAME] = do
@@ -111,8 +111,8 @@ createGraphicsDevice pdev surf
         &* set @"queueCount" 1
         &* setListRef @"pQueuePriorities" [1.0]
 
-      pdevFeatures = createVk
-       (pure () :: CreateVkStruct VkPhysicalDeviceFeatures '[] ())
+      pdevFeatures = createVk @VkPhysicalDeviceFeatures
+        $  set @"samplerAnisotropy" VK_TRUE
 
       devCreateInfo = createVk @VkDeviceCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
@@ -268,36 +268,3 @@ createSwapChain dev scsd queues surf = do
         , swExtent    = sExtent
         }
 
-
-createImageViews :: VkDevice
-                 -> SwapChainImgInfo
-                 -> Program r [VkImageView]
-createImageViews dev SwapChainImgInfo {..} = do
-    let cmapping = createVk
-          $  set @"r" VK_COMPONENT_SWIZZLE_IDENTITY
-          &* set @"g" VK_COMPONENT_SWIZZLE_IDENTITY
-          &* set @"b" VK_COMPONENT_SWIZZLE_IDENTITY
-          &* set @"a" VK_COMPONENT_SWIZZLE_IDENTITY
-        srrange = createVk
-          $  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
-          &* set @"baseMipLevel" 0
-          &* set @"levelCount" 1
-          &* set @"baseArrayLayer" 0
-          &* set @"layerCount" 1
-        imgvCreateInfos = map (mkImageViewCreateInfo cmapping srrange) swImgs
-
-
-    allocResource (liftIO . mapM_ (flip (vkDestroyImageView dev) VK_NULL)) $
-      forM imgvCreateInfos $ flip withVkPtr $ \imgvciPtr ->
-         allocaPeek $ runVk . vkCreateImageView dev imgvciPtr VK_NULL
-  where
-    mkImageViewCreateInfo cmapping srrange img
-      = createVk @VkImageViewCreateInfo
-      $  set @"sType" VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
-      &* set @"pNext" VK_NULL_HANDLE
-      &* set @"flags" 0
-      &* set @"image" img
-      &* set @"viewType" VK_IMAGE_VIEW_TYPE_2D
-      &* set @"format" swImgFormat
-      &* set @"components" cmapping
-      &* set @"subresourceRange" srrange

@@ -21,8 +21,9 @@ import qualified Numeric.DataFrame.ST                     as ST
 
 -- | Preparing Vertex data to make an interleaved array.
 data Vertex = Vertex
-  { pos   :: Vec2f
-  , color :: Vec3f
+  { pos      :: Vec2f
+  , color    :: Vec3f
+  , texCoord :: Vec2f
   } deriving (Eq, Show, Generic)
 
 -- We need an instance of PrimBytes to fit Vertex into a DataFrame.
@@ -41,7 +42,7 @@ vertIBD = createVk
 -- a vulkan function with no copy.
 --
 -- However, we must make sure the created DataFrame is pinned!
-vertIADs :: Vector VkVertexInputAttributeDescription 2
+vertIADs :: Vector VkVertexInputAttributeDescription 3
 vertIADs = ST.runST $ do
     mv <- ST.newPinnedDataFrame
     ST.writeDataFrame mv 0 . scalar $ createVk
@@ -56,4 +57,9 @@ vertIADs = ST.runST $ do
         &* set @"offset" (bFieldOffsetOf @"color" @Vertex undefined)
                           -- Now we can use bFieldOffsetOf derived
                           -- in PrimBytes via Generics. How cool is that!
+    ST.writeDataFrame mv 3 . scalar $ createVk
+        $  set @"location" 2
+        &* set @"binding" 0
+        &* set @"format" VK_FORMAT_R32G32_SFLOAT
+        &* set @"offset" (bFieldOffsetOf @"texCoord" @Vertex undefined)
     ST.unsafeFreezeDataFrame mv
