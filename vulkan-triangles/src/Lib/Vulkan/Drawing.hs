@@ -214,7 +214,7 @@ drawFrame RenderData {..} = do
     imageAvailable <- peek (imageAvailableSems `ptrAtIndex` frameIndex)
     renderFinished <- peek (renderFinishedSems `ptrAtIndex` frameIndex)
     inFlightFence <- peek inFlightFencePtr
-    -- Acquiring an image from the swap chain
+    -- Acquiring an image from the swapchain
     runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr

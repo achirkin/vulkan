@@ -45,7 +45,7 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
     <- (liftIO $ readImage path) >>= \case
       Left err -> throwVkMsg err
       Right dynImg -> pure $ convertRGBA8 dynImg
-  let (imageDataPtr, imageDataLen) = Vec.unsafeToForeignPtr0 imageData
+  let (imageDataForeignPtr, imageDataLen) = Vec.unsafeToForeignPtr0 imageData
       bufSize :: VkDeviceSize = fromIntegral imageDataLen
 
   -- we don't need to access the VkDeviceMemory of the image, copyBufferToImage works with the VkImage
@@ -63,10 +63,10 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
         ( VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT .|. VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )
 
     -- copy data
-    dataPtr <- allocaPeek $
+    stagingDataPtr <- allocaPeek $
       runVk . vkMapMemory dev stagingMem 0 bufSize 0
-    liftIO $ withForeignPtr imageDataPtr $ \imagePtr ->
-      copyArray (castPtr dataPtr) imagePtr imageDataLen
+    liftIO $ withForeignPtr imageDataForeignPtr $ \imageDataPtr ->
+      copyArray (castPtr stagingDataPtr) imageDataPtr imageDataLen
     liftIO $ vkUnmapMemory dev stagingMem
 
     copyBufferToImage dev cmdPool cmdQueue stagingBuf image

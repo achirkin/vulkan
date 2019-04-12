@@ -49,6 +49,7 @@ import           Lib.Vulkan.VertexBuffer
 vertices :: DataFrame Vertex '[XN 3]
 vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
+    --              coordinate           color        texture coordinate
     scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0) (vec2 0 0)
   , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0) (vec2 1 0)
   , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1) (vec2 1 1)
@@ -139,7 +140,7 @@ runVulkanProgram = runProgram checkStatus $ do
       -- wait as long as window has width=0 and height=0
       glfwWaitMinimized window
       -- If a window size change did happen, it will be respected by (re-)creating
-      -- the swap chain below, no matter if it was signalled via exception or
+      -- the swapchain below, no matter if it was signalled via exception or
       -- the IORef, so reset the IORef now:
       liftIO $ atomicWriteIORef windowSizeChanged False
 
@@ -150,8 +151,8 @@ runVulkanProgram = runProgram checkStatus $ do
 
       -- things that only need to be recreated when the swapchain length changes
       let redoOnDemand = do
-            transObjBuffers <- createTransObjBuffers pdev dev swapchainLen
-            descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
+            (transObjMems, transObjBufs) <- unzip <$> createTransObjBuffers pdev dev swapchainLen
+            descriptorBufferInfos <- mapM transObjBufferInfo transObjBufs
             descriptorTextureInfo <- textureImageInfo textureView textureSampler
 
             descriptorPool <- createDescriptorPool dev swapchainLen
@@ -161,7 +162,7 @@ runVulkanProgram = runProgram checkStatus $ do
             forM_ (zip descriptorBufferInfos descriptorSets) $
               \(bufInfo, dSet) -> prepareDescriptorSet dev bufInfo descriptorTextureInfo dSet
 
-            transObjMemories <- newArrayRes $ map fst transObjBuffers
+            transObjMemories <- newArrayRes $ transObjMems
 
             let val = OnDemand { oldSwapchainLen = swapchainLen, .. }
             liftIO $ writeIORef onDemand $ Just val
