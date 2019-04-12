@@ -57,7 +57,7 @@ vertIADs = ST.runST $ do
         &* set @"offset" (bFieldOffsetOf @"color" @Vertex undefined)
                           -- Now we can use bFieldOffsetOf derived
                           -- in PrimBytes via Generics. How cool is that!
-    ST.writeDataFrame mv 3 . scalar $ createVk
+    ST.writeDataFrame mv 2 . scalar $ createVk
         $  set @"location" 2
         &* set @"binding" 0
         &* set @"format" VK_FORMAT_R32G32_SFLOAT

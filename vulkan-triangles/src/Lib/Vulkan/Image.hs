@@ -238,7 +238,7 @@ createImage pdev dev width height format tiling usage propFlags = do
         &* set @"samples" VK_SAMPLE_COUNT_1_BIT
         &* set @"queueFamilyIndexCount" 0
         &* set @"pQueueFamilyIndices" VK_NULL
-  image <- allocResource
+  (image, freeImageLater) <- allocResource'
       (\img -> liftIO (vkDestroyImage dev img VK_NULL)) $
       withVkPtr ici $ \iciPtr -> allocaPeek $ \imgPtr ->
         runVk $ vkCreateImage dev iciPtr VK_NULL imgPtr
@@ -260,6 +260,9 @@ createImage pdev dev width height format tiling usage propFlags = do
     (\iMem -> liftIO $ vkFreeMemory dev iMem VK_NULL) $
     withVkPtr allocInfo $ \aiPtr -> allocaPeek $
       runVk . vkAllocateMemory dev aiPtr VK_NULL
+
+  -- release the image before releasing the memory that is bound to it
+  freeImageLater
 
   runVk $ vkBindImageMemory dev image imageMemory 0
 
