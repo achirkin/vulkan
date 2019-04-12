@@ -88,7 +88,7 @@ chooseSwapExtent SwapchainSupportDetails {..}
 
 data SwapchainInfo
   = SwapchainInfo
-  { swapchain   :: VkSwapchainKHR
+  { swapchain     :: VkSwapchainKHR
   , swapImgs      :: [VkImage]
   , swapImgFormat :: VkFormat
   , swapExtent    :: VkExtent2D
@@ -149,7 +149,7 @@ createSwapchain dev scsd queues surf = do
     $ \x -> runVk . vkGetSwapchainImagesKHR dev swapchain x
 
   return SwapchainInfo
-        { swapchain   = swapchain
+        { swapchain     = swapchain
         , swapImgs      = swapImgs
         , swapImgFormat = getField @"format" surfFmt
         , swapExtent    = sExtent
