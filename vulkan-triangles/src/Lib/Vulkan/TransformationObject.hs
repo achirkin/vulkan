@@ -13,7 +13,6 @@ module Lib.Vulkan.TransformationObject
 
 import           Data.Bits                      ((.|.))
 import           Foreign.Ptr                    (castPtr)
-import           Foreign.Storable               hiding (poke)
 import           GHC.Generics                   (Generic)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0

@@ -6,14 +6,11 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeApplications      #-}
 module Lib.Vulkan.Presentation
-  ( SwapChainImgInfo (..)
-  , DevQueues (..)
-  , createSurface, createGraphicsDevice, createSwapChain
+  ( SwapchainInfo (..)
+  , createSurface
+  , createSwapchain
   ) where
 
-import           Control.Monad
-import           Data.Bits
-import qualified Data.Map                             as Map
 import           Data.Maybe                           (fromMaybe)
 import           Data.Semigroup
 import qualified Graphics.UI.GLFW                     as GLFW
@@ -26,7 +23,6 @@ import           Graphics.Vulkan.Marshal.Create
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Device
-import           Lib.Vulkan.Instance
 
 
 createSurface :: VkInstance -> GLFW.Window -> Program r VkSurfaceKHR
@@ -36,120 +32,9 @@ createSurface vkInstance window =
       runVk . GLFW.createWindowSurface vkInstance window VK_NULL
 
 
-
-
-
-
-getQueueFamilies :: VkPhysicalDevice -> Program r [(Word32, VkQueueFamilyProperties)]
-getQueueFamilies pdev = do
-  fams <- asListVk
-    $ \c -> liftIO . vkGetPhysicalDeviceQueueFamilyProperties pdev c
-  when (null fams) $ throwVkMsg "Zero queue family count!"
-  return $ zip [0..] fams
-
-
--- | Throw an error otherwise
-selectGraphicsFamily :: [(Word32, VkQueueFamilyProperties)]
-                     -> Program r (Word32, VkQueueFamilyProperties)
-selectGraphicsFamily []
-  = throwVkMsg "selectGraphicsFamily: not found!"
-selectGraphicsFamily (x@(_,qfp):xs)
-  = if  getField @"queueCount" qfp > 0
-     && getField @"queueFlags" qfp .&. VK_QUEUE_GRAPHICS_BIT /= zeroBits
-    then pure x
-    else selectGraphicsFamily xs
-
-
--- | Throw an error otherwise
-selectPresentationFamily :: VkPhysicalDevice
-                         -> VkSurfaceKHR
-                         -> [(Word32, VkQueueFamilyProperties)]
-                         -> Program r (Word32, VkQueueFamilyProperties)
-selectPresentationFamily _ _ []
-  = throwVkMsg "selectPresentationFamily: not found!"
-selectPresentationFamily dev surf (x@(i,qfp):xs)
-  | getField @"queueCount" qfp <= 0 = selectGraphicsFamily xs
-  | otherwise = do
-    supported <- allocaPeek $
-      runVk . vkGetPhysicalDeviceSurfaceSupportKHR dev i surf
-    if supported == VK_TRUE
-    then pure x
-    else selectPresentationFamily dev surf xs
-
-
-data DevQueues
-  = DevQueues
-  { graphicsQueue  :: VkQueue
-  , presentQueue   :: VkQueue
-  , qFamIndices    :: Ptr Word32
-  , graphicsFamIdx :: Word32
-  , presentFamIdx  :: Word32
-  } deriving (Eq, Show)
-
-
-createGraphicsDevice :: VkPhysicalDevice
-                     -> VkSurfaceKHR
-                     -> Program r (VkDevice, DevQueues)
-createGraphicsDevice pdev surf
-  | layers <- defaultLayers
-  , extensions <- [VK_KHR_SWAPCHAIN_EXTENSION_NAME] = do
-  -- check physical device extensions
-
-  -- find an appropriate queue family
-  qfams <- getQueueFamilies pdev
-  (gFamIdx, _gFam) <- selectGraphicsFamily qfams
-  (pFamIdx, _pFam) <- selectPresentationFamily pdev surf qfams
-  let qFamIndices = Map.fromList [(gFamIdx, gFamIdx), (pFamIdx, pFamIdx)]
-  famIndsPtr <- newArrayRes $ Map.elems qFamIndices
-
-  let qcInfoMap = flip fmap qFamIndices $ \qFamIdx ->
-               createVk @VkDeviceQueueCreateInfo
-        $  set @"sType" VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" 0
-        &* set @"queueFamilyIndex" qFamIdx
-        &* set @"queueCount" 1
-        &* setListRef @"pQueuePriorities" [1.0]
-
-      pdevFeatures = createVk @VkPhysicalDeviceFeatures
-        $  set @"samplerAnisotropy" VK_TRUE
-
-      devCreateInfo = createVk @VkDeviceCreateInfo
-        $  set @"sType" VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" 0
-        &* setListRef @"pQueueCreateInfos" (Map.elems qcInfoMap)
-        &* set @"queueCreateInfoCount" (fromIntegral $ Map.size qcInfoMap)
-        &* set @"enabledLayerCount" (fromIntegral $ length layers)
-        &* setStrListRef @"ppEnabledLayerNames" layers
-        &* set @"enabledExtensionCount" (fromIntegral $ length extensions)
-        &* setListRef @"ppEnabledExtensionNames" extensions
-        &* setVkRef @"pEnabledFeatures" pdevFeatures
-
-  -- try to create a device
-  dev <- allocResource (\dev -> liftIO $ vkDestroyDevice dev VK_NULL) $
-    withVkPtr devCreateInfo $ \dciPtr ->
-      allocaPeek $ runVk . vkCreateDevice pdev dciPtr VK_NULL
-
-  -- get the queues
-  gQueues <- flip Map.traverseWithKey qcInfoMap $ \qFamIdx _ ->
-             allocaPeek $ liftIO . vkGetDeviceQueue dev qFamIdx 0
-
-  mdevQueues <- maybe (throwVkMsg "Some queues lost!") pure
-                $ DevQueues
-               <$> Map.lookup gFamIdx gQueues
-               <*> Map.lookup pFamIdx gQueues
-               <*> Just famIndsPtr
-               <*> Just gFamIdx
-               <*> Just pFamIdx
-
-  return (dev, mdevQueues)
-
-
-
-chooseSwapSurfaceFormat :: SwapChainSupportDetails
+chooseSwapSurfaceFormat :: SwapchainSupportDetails
                         -> Program r VkSurfaceFormatKHR
-chooseSwapSurfaceFormat SwapChainSupportDetails {..}
+chooseSwapSurfaceFormat SwapchainSupportDetails {..}
     = maybe (throwVkMsg "No available surface formats!")
             (pure . argVal . getMin)
     . getOption
@@ -167,8 +52,8 @@ chooseSwapSurfaceFormat SwapChainSupportDetails {..}
       (_, _) -> Arg 2 f
 
 
-chooseSwapPresentMode :: SwapChainSupportDetails -> VkPresentModeKHR
-chooseSwapPresentMode SwapChainSupportDetails {..}
+chooseSwapPresentMode :: SwapchainSupportDetails -> VkPresentModeKHR
+chooseSwapPresentMode SwapchainSupportDetails {..}
     = argVal . getMin
     . fromMaybe (Min $ Arg 0 VK_PRESENT_MODE_FIFO_KHR)
                 -- VK_PRESENT_MODE_FIFO_KHR is guaranteed to be available
@@ -182,8 +67,9 @@ chooseSwapPresentMode SwapChainSupportDetails {..}
     pmCost VK_PRESENT_MODE_FIFO_KHR = Min $ Arg 2 VK_PRESENT_MODE_FIFO_KHR
     pmCost pm = Min $ Arg 3 pm
 
-chooseSwapExtent :: SwapChainSupportDetails -> VkExtent2D
-chooseSwapExtent SwapChainSupportDetails {..}
+
+chooseSwapExtent :: SwapchainSupportDetails -> VkExtent2D
+chooseSwapExtent SwapchainSupportDetails {..}
     = createVk @VkExtent2D
     $  set @"width"
       ( max (ew $ getField @"minImageExtent" capabilities)
@@ -200,20 +86,21 @@ chooseSwapExtent SwapChainSupportDetails {..}
     eh = getField @"height"
 
 
-data SwapChainImgInfo
-  = SwapChainImgInfo
+data SwapchainInfo
+  = SwapchainInfo
   { swapchain   :: VkSwapchainKHR
-  , swImgs      :: [VkImage]
-  , swImgFormat :: VkFormat
-  , swExtent    :: VkExtent2D
+  , swapImgs      :: [VkImage]
+  , swapImgFormat :: VkFormat
+  , swapExtent    :: VkExtent2D
   } deriving (Eq, Show)
 
-createSwapChain :: VkDevice
-                -> SwapChainSupportDetails
+
+createSwapchain :: VkDevice
+                -> SwapchainSupportDetails
                 -> DevQueues
                 -> VkSurfaceKHR
-                -> Program r SwapChainImgInfo
-createSwapChain dev scsd queues surf = do
+                -> Program r SwapchainInfo
+createSwapchain dev scsd queues surf = do
   surfFmt <- chooseSwapSurfaceFormat scsd
   let spMode = chooseSwapPresentMode scsd
       sExtent = chooseSwapExtent scsd
@@ -252,19 +139,18 @@ createSwapChain dev scsd queues surf = do
         &* set @"clipped" VK_TRUE
         &* set @"oldSwapchain" VK_NULL_HANDLE
 
-  swapChain <- allocResource
+  swapchain <- allocResource
     (\sw -> liftIO $ vkDestroySwapchainKHR dev sw VK_NULL)
     $ withVkPtr swCreateInfo $ \swciPtr -> allocaPeek
       $ runVk . vkCreateSwapchainKHR dev swciPtr VK_NULL
 
 
-  swImgs <- asListVk
-    $ \x -> runVk . vkGetSwapchainImagesKHR dev swapChain x
+  swapImgs <- asListVk
+    $ \x -> runVk . vkGetSwapchainImagesKHR dev swapchain x
 
-  return SwapChainImgInfo
-        { swapchain   = swapChain
-        , swImgs      = swImgs
-        , swImgFormat = getField @"format" surfFmt
-        , swExtent    = sExtent
+  return SwapchainInfo
+        { swapchain   = swapchain
+        , swapImgs      = swapImgs
+        , swapImgFormat = getField @"format" surfFmt
+        , swapExtent    = sExtent
         }
-

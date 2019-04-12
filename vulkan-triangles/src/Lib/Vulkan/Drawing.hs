@@ -17,7 +17,6 @@ module Lib.Vulkan.Drawing
 
 import           Control.Monad                            (forM_)
 import           Data.IORef
-import           Foreign.Storable                         hiding (peek, poke)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -28,16 +27,17 @@ import           Numeric.DataFrame
 import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
+import           Lib.Vulkan.Device
 
 _MAX_FRAMES_IN_FLIGHT :: Int
 _MAX_FRAMES_IN_FLIGHT = 2
 
 createFramebuffers :: VkDevice
                    -> VkRenderPass
-                   -> SwapChainImgInfo
+                   -> SwapchainInfo
                    -> [VkImageView]
                    -> Program r [VkFramebuffer]
-createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
+createFramebuffers dev renderPass SwapchainInfo{..} imgviews =
     allocResource
       (liftIO . mapM_  (\fb -> vkDestroyFramebuffer dev fb VK_NULL) )
       (mapM createFB imgviews)
@@ -50,8 +50,8 @@ createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
             &* set @"renderPass" renderPass
             &* set @"attachmentCount" 1
             &* setListRef @"pAttachments" [imgView]
-            &* set @"width" (getField @"width" swExtent)
-            &* set @"height" (getField @"height" swExtent)
+            &* set @"width" (getField @"width" swapExtent)
+            &* set @"height" (getField @"height" swapExtent)
             &* set @"layers" 1
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
@@ -73,14 +73,14 @@ createCommandBuffers :: VkDevice
                      -> VkCommandPool
                      -> VkRenderPass
                      -> VkPipelineLayout
-                     -> SwapChainImgInfo
+                     -> SwapchainInfo
                      -> VkBuffer -- vertex data
                      -> (Word32, VkBuffer) -- nr of indices and index data
                      -> [VkFramebuffer]
                      -> [VkDescriptorSet]
                      -> Program r (Ptr VkCommandBuffer)
 createCommandBuffers
-    dev pipeline commandPool rpass pipelineLayout SwapChainImgInfo{..}
+    dev pipeline commandPool rpass pipelineLayout SwapchainInfo{..}
     vertexBuffer
     (nIndices, indexBuffer) fbs descriptorSets
   | buffersCount <- length fbs = do
@@ -125,7 +125,7 @@ createCommandBuffers
             &* setVk @"renderArea"
                 (  setVk @"offset"
                    ( set @"x" 0 &* set @"y" 0 )
-                &* set @"extent" swExtent
+                &* set @"extent" swapExtent
                 )
             &* set @"clearValueCount" 1
             &* setVkRef @"pClearValues"
@@ -184,7 +184,7 @@ createFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (
 data RenderData
   = RenderData
   { device             :: VkDevice
-  , swapChainInfo      :: SwapChainImgInfo
+  , swapchainInfo      :: SwapchainInfo
   , deviceQueues       :: DevQueues
   , imgIndexPtr        :: Ptr Word32
   , currentFrame       :: IORef Int
@@ -202,16 +202,13 @@ data RenderData
     -- ^ to execute on memories[*imgIndexPtr] before drawing
   }
 
-ptrAtIndex :: forall a. Storable a => Ptr a -> Int -> Ptr a
-ptrAtIndex ptr i = ptr `plusPtr` (i * sizeOf @a undefined)
-
 drawFrame :: RenderData -> Program r Bool
 drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef currentFrame
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
     runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
 
-    let SwapChainImgInfo {..} = swapChainInfo
+    let SwapchainInfo {..} = swapchainInfo
         DevQueues {..} = deviceQueues
 
     imageAvailable <- peek (imageAvailableSems `ptrAtIndex` frameIndex)

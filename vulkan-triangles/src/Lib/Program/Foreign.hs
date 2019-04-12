@@ -8,6 +8,7 @@ module Lib.Program.Foreign
     ( Ptr, plusPtr, Storable.sizeOf
     , alloca, allocaArray
     , peek, peekArray, poke
+    , ptrAtIndex
     , asListVk
     , allocaPeek, allocaPeekVk, allocaPeekDF
     , mallocRes, mallocArrayRes, newArrayRes
@@ -79,6 +80,9 @@ peek = liftIO . Storable.peek
 
 poke :: Storable a => Ptr a -> a -> Program r ()
 poke p v = liftIO $ Storable.poke p v
+
+ptrAtIndex :: forall a. Storable a => Ptr a -> Int -> Ptr a
+ptrAtIndex ptr i = ptr `plusPtr` (i * Storable.sizeOf @a undefined)
 
 
 -- | Get size of action output and then get the result,

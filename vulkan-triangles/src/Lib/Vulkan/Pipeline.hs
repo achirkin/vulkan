@@ -26,7 +26,7 @@ import Lib.Vulkan.Presentation
 
 createGraphicsPipeline :: KnownDim n
                        => VkDevice
-                       -> SwapChainImgInfo
+                       -> SwapchainInfo
                        -> VkVertexInputBindingDescription
                        -> Vector VkVertexInputAttributeDescription n
                        -> [VkPipelineShaderStageCreateInfo]
@@ -34,7 +34,7 @@ createGraphicsPipeline :: KnownDim n
                        -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
+    dev SwapchainInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -59,13 +59,13 @@ createGraphicsPipeline
       viewPort = createVk @VkViewport
         $  set @"x" 0
         &* set @"y" 0
-        &* set @"width" (fromIntegral $ getField @"width" swExtent)
-        &* set @"height" (fromIntegral $ getField @"height" swExtent)
+        &* set @"width" (fromIntegral $ getField @"width" swapExtent)
+        &* set @"height" (fromIntegral $ getField @"height" swapExtent)
         &* set @"minDepth" 0
         &* set @"maxDepth" 1
 
       scissor = createVk @VkRect2D
-        $  set   @"extent" swExtent
+        $  set   @"extent" swapExtent
         &* setVk @"offset" ( set @"x" 0 &* set @"y" 0 )
 
       viewPortState = createVk @VkPipelineViewportStateCreateInfo
@@ -181,13 +181,14 @@ createPipelineLayout dev dsl = do
       runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
 
 
-createRenderPass :: VkDevice -> SwapChainImgInfo
+createRenderPass :: VkDevice
+                 -> SwapchainInfo
                  -> Program r VkRenderPass
-createRenderPass dev SwapChainImgInfo{..} =
+createRenderPass dev SwapchainInfo{..} =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
-        &* set @"format" swImgFormat
+        &* set @"format" swapImgFormat
         &* set @"samples" VK_SAMPLE_COUNT_1_BIT
         &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
         &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
