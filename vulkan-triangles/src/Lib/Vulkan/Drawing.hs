@@ -37,11 +37,12 @@ createFramebuffers :: VkDevice
                    -> VkRenderPass
                    -> SwapchainInfo
                    -> [VkImageView]
+                   -> VkImageView
                    -> Program r [VkFramebuffer]
-createFramebuffers dev renderPass SwapchainInfo{..} imgviews =
+createFramebuffers dev renderPass SwapchainInfo{..} swapImgViews depthImgView =
     allocResource
       (liftIO . mapM_  (\fb -> vkDestroyFramebuffer dev fb VK_NULL) )
-      (mapM createFB imgviews)
+      (mapM createFB swapImgViews)
   where
     createFB imgView =
       let fbci = createVk @VkFramebufferCreateInfo
@@ -49,8 +50,7 @@ createFramebuffers dev renderPass SwapchainInfo{..} imgviews =
             &* set @"pNext" VK_NULL
             &* set @"flags" 0
             &* set @"renderPass" renderPass
-            &* set @"attachmentCount" 1
-            &* setListRef @"pAttachments" [imgView]
+            &* setListCountAndRef @"attachmentCount" @"pAttachments" [imgView, depthImgView]
             &* set @"width" (getField @"width" swapExtent)
             &* set @"height" (getField @"height" swapExtent)
             &* set @"layers" 1
@@ -128,11 +128,17 @@ createCommandBuffers
                    ( set @"x" 0 &* set @"y" 0 )
                 &* set @"extent" swapExtent
                 )
-            &* set @"clearValueCount" 1
-            &* setVkRef @"pClearValues"
-               ( createVk $ setVk @"color"
-                  $ setVec @"float32" (vec4 0 0 0.2 1)
-               )
+            &* setListCountAndRef @"clearValueCount" @"pClearValues"
+                [ ( createVk @VkClearValue
+                    $ setVk @"color"
+                      $ setVec @"float32" (vec4 0 0 0.2 1)
+                  )
+                , ( createVk @VkClearValue
+                    $ setVk @"depthStencil"
+                      $  set @"depth" 1.0
+                      &* set @"stencil" 0
+                  )
+                ]
 
       withVkPtr renderPassBeginInfo $ \rpibPtr ->
         liftIO $ vkCmdBeginRenderPass cmdBuffer rpibPtr VK_SUBPASS_CONTENTS_INLINE

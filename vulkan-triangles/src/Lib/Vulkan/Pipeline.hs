@@ -135,6 +135,35 @@ createGraphicsPipeline
         &* setAt @"blendConstants" @2 0.0 -- Optional
         &* setAt @"blendConstants" @3 0.0 -- Optional
 
+      depthStencilState = createVk @VkPipelineDepthStencilStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"depthTestEnable" VK_TRUE
+        &* set @"depthWriteEnable" VK_TRUE
+        &* set @"depthCompareOp" VK_COMPARE_OP_LESS
+        &* set @"depthBoundsTestEnable" VK_FALSE
+        &* set @"minDepthBounds" 0.0
+        &* set @"maxDepthBounds" 1.0
+        &* set @"stencilTestEnable" VK_FALSE
+        &* setVk @"front"
+            (  set @"failOp" VK_STENCIL_OP_KEEP
+            &* set @"passOp" VK_STENCIL_OP_KEEP
+            &* set @"depthFailOp" VK_STENCIL_OP_KEEP
+            &* set @"compareOp" VK_COMPARE_OP_NEVER
+            &* set @"compareMask" 0
+            &* set @"writeMask" 0
+            &* set @"reference" 0
+            )
+        &* setVk @"back"
+            (  set @"failOp" VK_STENCIL_OP_KEEP
+            &* set @"passOp" VK_STENCIL_OP_KEEP
+            &* set @"depthFailOp" VK_STENCIL_OP_KEEP
+            &* set @"compareOp" VK_COMPARE_OP_NEVER
+            &* set @"compareMask" 0
+            &* set @"writeMask" 0
+            &* set @"reference" 0
+            )
 
     -- finally, create pipeline!
   in do
@@ -150,7 +179,7 @@ createGraphicsPipeline
           &* setVkRef @"pViewportState" viewPortState
           &* setVkRef @"pRasterizationState" rasterizer
           &* setVkRef @"pMultisampleState" multisampling
-          &* set @"pDepthStencilState" VK_NULL
+          &* setVkRef @"pDepthStencilState" depthStencilState
           &* setVkRef @"pColorBlendState" colorBlending
           &* set @"pDynamicState" VK_NULL
           &* set @"layout" pipelineLayout
@@ -183,8 +212,9 @@ createPipelineLayout dev dsl = do
 
 createRenderPass :: VkDevice
                  -> SwapchainInfo
+                 -> VkFormat
                  -> Program r VkRenderPass
-createRenderPass dev SwapchainInfo{..} =
+createRenderPass dev SwapchainInfo{..} depthFormat =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
@@ -197,15 +227,31 @@ createRenderPass dev SwapchainInfo{..} =
         &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
         &* set @"finalLayout" VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 
+      depthAttachment = createVk @VkAttachmentDescription
+        $  set @"flags" 0
+        &* set @"format" depthFormat
+        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
+        &* set @"storeOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
       -- subpasses and attachment references
       colorAttachmentRef = createVk @VkAttachmentReference
         $  set @"attachment" 0
         &* set @"layout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
 
+      depthAttachmentRef = createVk @VkAttachmentReference
+        $  set @"attachment" 1
+        &* set @"layout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
       subpass = createVk @VkSubpassDescription
         $  set @"pipelineBindPoint" VK_PIPELINE_BIND_POINT_GRAPHICS
         &* set @"colorAttachmentCount" 1
         &* setVkRef @"pColorAttachments" colorAttachmentRef
+        &* setVkRef @"pDepthStencilAttachment" depthAttachmentRef
         &* set @"pPreserveAttachments" VK_NULL
         &* set @"pInputAttachments" VK_NULL
 
@@ -224,8 +270,7 @@ createRenderPass dev SwapchainInfo{..} =
       rpCreateInfo = createVk @VkRenderPassCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"attachmentCount" 1
-        &* setVkRef @"pAttachments" colorAttachment
+        &* setListCountAndRef @"attachmentCount" @"pAttachments" [colorAttachment, depthAttachment]
         &* set @"subpassCount" 1
         &* setVkRef @"pSubpasses" subpass
         &* set @"dependencyCount" 1
