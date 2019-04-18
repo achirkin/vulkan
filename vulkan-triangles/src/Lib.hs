@@ -50,11 +50,19 @@ import           Lib.Vulkan.VertexBuffer
 vertices :: DataFrame Vertex '[XN 3]
 vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
-    --              coordinate           color        texture coordinate
-    scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0) (vec2 0 0)
-  , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0) (vec2 1 0)
-  , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1) (vec2 1 1)
-  , scalar $ Vertex (vec2 (-0.5)   0.4 ) (vec3 1 1 1) (vec2 0 1)
+    --              coordinate                  color        texture coordinate
+    scalar $ Vertex (vec3 (-0.5) (-0.5)   0.0 ) (vec3 1 0 0) (vec2 0 0)
+  , scalar $ Vertex (vec3   0.4  (-0.5)   0.0 ) (vec3 0 1 0) (vec2 1 0)
+  , scalar $ Vertex (vec3   0.4    0.4    0.0 ) (vec3 0 0 1) (vec2 1 1)
+  , scalar $ Vertex (vec3 (-0.5)   0.4    0.0 ) (vec3 1 1 1) (vec2 0 1)
+
+    -- rectangle
+    --              coordinate                  color        texture coordinate
+  , scalar $ Vertex (vec3 (-0.5) (-0.5) (-0.5)) (vec3 1 0 0) (vec2 0 0)
+  , scalar $ Vertex (vec3   0.4  (-0.5) (-0.5)) (vec3 0 1 0) (vec2 1 0)
+  , scalar $ Vertex (vec3   0.4    0.4  (-0.5)) (vec3 0 0 1) (vec2 1 1)
+  , scalar $ Vertex (vec3 (-0.5)   0.4  (-0.5)) (vec3 1 1 1) (vec2 0 1)
+
     -- triangle
   -- , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
   -- , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
@@ -65,8 +73,10 @@ indices :: DataFrame Word16 '[XN 3]
 indices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
     0, 1, 2, 2, 3, 0
+    -- rectangle
+  , 4, 5, 6, 6, 7, 4
     -- triangle
-  , 4, 5, 6
+  -- , 4, 5, 6
   ]
 
 -- | Get number of points in a vector
@@ -126,6 +136,7 @@ runVulkanProgram = runProgram checkStatus $ do
     texture <- createTextureImage pdev dev commandPool (graphicsQueue queues) "textures/texture.jpg"
     textureView <- createTextureImageView dev texture
     textureSampler <- createTextureSampler dev
+    depthFormat <- findDepthFormat pdev
 
     -- handling lifetime of swapchain manually. createSwapChain does not deallocate via continuation.
     swapchainResource <- liftIO $ newEmptyMVar
@@ -167,12 +178,12 @@ runVulkanProgram = runProgram checkStatus $ do
       -- The code below re-runs when the swapchain was re-created and has the
       -- same number of images as before, or continues from enclosing scope.
       whileStatus SameLength $ do
-        logInfo "Creating things that depend on the swapchain, but not its length.."
+        logInfo "Creating things that depend on the swapchain, not only its length.."
         swapInfo <- liftIO $ readIORef swapInfoRef
         let swapchainLen = length (swapImgs swapInfo)
-        imgViews <- mapM (flip (createImageView dev) (swapImgFormat swapInfo)) (swapImgs swapInfo)
+        imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT) (swapImgs swapInfo)
 
-        renderPass <- createRenderPass dev swapInfo
+        renderPass <- createRenderPass dev swapInfo depthFormat
         pipelineLayout <- createPipelineLayout dev descriptorSetLayout
         graphicsPipeline
           <- createGraphicsPipeline dev swapInfo
@@ -181,8 +192,10 @@ runVulkanProgram = runProgram checkStatus $ do
                                     renderPass
                                     pipelineLayout
 
+        depthImgView <- createDepthImgView pdev dev commandPool (graphicsQueue queues) (swapExtent swapInfo)
+
         framebuffers
-          <- createFramebuffers dev renderPass swapInfo imgViews
+          <- createFramebuffers dev renderPass swapInfo imgViews depthImgView
 
         cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
                                           renderPass pipelineLayout swapInfo

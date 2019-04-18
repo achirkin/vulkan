@@ -13,9 +13,14 @@ module Lib.Vulkan.Image
   , createImageView
   , createImage
   , copyBufferToImage
+  , findSupportedFormat
+  , findDepthFormat
+  , hasStencilComponent
+  , createDepthImgView
   ) where
 
 import           Codec.Picture
+import           Control.Monad
 import           Data.Bits
 import qualified Data.Vector.Storable           as Vec
 import           Foreign.Marshal.Array          (copyArray)
@@ -32,7 +37,7 @@ import           Lib.Vulkan.Command
 
 
 createTextureImageView :: VkDevice -> VkImage -> Program r VkImageView
-createTextureImageView dev img = createImageView dev img VK_FORMAT_R8G8B8A8_UNORM
+createTextureImageView dev img = createImageView dev img VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_ASPECT_COLOR_BIT
 
 createTextureImage :: VkPhysicalDevice
                    -> VkDevice
@@ -54,7 +59,7 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
     (VK_IMAGE_USAGE_TRANSFER_DST_BIT .|. VK_IMAGE_USAGE_SAMPLED_BIT)
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
-  transitionImageLayout dev cmdPool cmdQueue image Undef_TransDst
+  transitionImageLayout dev cmdPool cmdQueue image VK_FORMAT_R8G8B8A8_UNORM Undef_TransDst
 
   -- Use "locally" to destroy temporary staging buffer after data copy is complete
   locally $ do
@@ -72,7 +77,7 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
     copyBufferToImage dev cmdPool cmdQueue stagingBuf image
       (fromIntegral imageWidth) (fromIntegral imageHeight)
 
-  transitionImageLayout dev cmdPool cmdQueue image TransDst_ShaderRO
+  transitionImageLayout dev cmdPool cmdQueue image VK_FORMAT_R8G8B8A8_UNORM TransDst_ShaderRO
 
   return image
 
@@ -114,15 +119,16 @@ textureImageInfo view sampler = return $ createVk @VkDescriptorImageInfo
 createImageView :: VkDevice
                 -> VkImage
                 -> VkFormat
+                -> VkImageAspectFlags
                 -> Program r VkImageView
-createImageView dev image format = do
+createImageView dev image format aspectFlags = do
     let cmapping = createVk
           $  set @"r" VK_COMPONENT_SWIZZLE_IDENTITY
           &* set @"g" VK_COMPONENT_SWIZZLE_IDENTITY
           &* set @"b" VK_COMPONENT_SWIZZLE_IDENTITY
           &* set @"a" VK_COMPONENT_SWIZZLE_IDENTITY
         srrange = createVk
-          $  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
+          $  set @"aspectMask" aspectFlags
           &* set @"baseMipLevel" 0
           &* set @"levelCount" 1
           &* set @"baseArrayLayer" 0
@@ -142,7 +148,7 @@ createImageView dev image format = do
          allocaPeek $ runVk . vkCreateImageView dev imgvciPtr VK_NULL
 
 
-data ImageLayoutTransition = Undef_TransDst | TransDst_ShaderRO
+data ImageLayoutTransition = Undef_TransDst | TransDst_ShaderRO | Undef_DepthStencil
 
 data TransitionDependent = TransitionDependent
   { oldLayout     :: VkImageLayout
@@ -172,16 +178,33 @@ dependents TransDst_ShaderRO =
   , srcStageMask    = VK_PIPELINE_STAGE_TRANSFER_BIT
   , dstStageMask    = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
   }
+dependents Undef_DepthStencil =
+  TransitionDependent
+  { oldLayout       = VK_IMAGE_LAYOUT_UNDEFINED
+  , newLayout       = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+  , srcAccessMask   = 0
+  , dstAccessMask   = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT .|. VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
+  , srcStageMask    = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
+  , dstStageMask    = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
+  }
 
 transitionImageLayout :: VkDevice
                       -> VkCommandPool
                       -> VkQueue
                       -> VkImage
+                      -> VkFormat
                       -> ImageLayoutTransition
                       -> Program r ()
-transitionImageLayout dev cmdPool cmdQueue image transition =
+transitionImageLayout dev cmdPool cmdQueue image format transition =
   runCommandsOnce dev cmdPool cmdQueue $ \cmdBuf -> do
     let TransitionDependent {..} = dependents transition
+    let aspectMask = case newLayout of
+          VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+            | hasStencilComponent format ->
+              VK_IMAGE_ASPECT_DEPTH_BIT .|. VK_IMAGE_ASPECT_STENCIL_BIT
+            | otherwise ->
+              VK_IMAGE_ASPECT_DEPTH_BIT
+          _ -> VK_IMAGE_ASPECT_COLOR_BIT
     let barrier = createVk @VkImageMemoryBarrier
           $  set @"sType" VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
           &* set @"pNext" VK_NULL
@@ -191,7 +214,7 @@ transitionImageLayout dev cmdPool cmdQueue image transition =
           &* set @"dstQueueFamilyIndex" VK_QUEUE_FAMILY_IGNORED
           &* set @"image" image
           &* setVk @"subresourceRange"
-              (  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
+              (  set @"aspectMask" aspectMask
               &* set @"baseMipLevel" 0
               &* set @"levelCount" 1
               &* set @"baseArrayLayer" 0
@@ -302,3 +325,56 @@ copyBufferToImage dev cmdPool cmdQueue buffer image width height =
     withVkPtr region $ \regPtr -> liftIO $
       vkCmdCopyBufferToImage cmdBuf buffer image
         VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL 1 regPtr
+
+
+findSupportedFormat :: VkPhysicalDevice
+                    -> [VkFormat]
+                    -> VkImageTiling
+                    -> VkFormatFeatureFlags
+                    -> Program r VkFormat
+findSupportedFormat pdev candidates tiling features = do
+  goodCands <- flip filterM candidates $ \format -> do
+    props <- allocaPeek $ \propsPtr ->
+      liftIO $ vkGetPhysicalDeviceFormatProperties pdev format propsPtr
+    return $ case tiling of
+      VK_IMAGE_TILING_LINEAR ->
+        getField @"linearTilingFeatures" props .&. features == features
+      VK_IMAGE_TILING_OPTIMAL ->
+        getField @"optimalTilingFeatures" props .&. features == features
+      _ -> False
+  case goodCands of
+    x:_ -> return x
+    []  -> throwVkMsg "failed to find supported format"
+
+
+findDepthFormat :: VkPhysicalDevice
+                -> Program r VkFormat
+findDepthFormat pdev =
+  findSupportedFormat pdev
+    [VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT]
+    VK_IMAGE_TILING_OPTIMAL
+    VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
+
+
+hasStencilComponent :: VkFormat
+                    -> Bool
+hasStencilComponent format = format `elem`
+  [VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT]
+
+
+createDepthImgView :: VkPhysicalDevice
+                   -> VkDevice
+                   -> VkCommandPool
+                   -> VkQueue
+                   -> VkExtent2D
+                   -> Program r VkImageView
+createDepthImgView pdev dev cmdPool cmdQueue extent = do
+  depthFormat <- findDepthFormat pdev
+
+  (_, depthImage) <- createImage pdev dev
+    (getField @"width" extent) (getField @"height" extent) depthFormat
+    VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
+
+  depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT
+  transitionImageLayout dev cmdPool cmdQueue depthImage depthFormat Undef_DepthStencil
+  return depthImageView

@@ -21,7 +21,7 @@ import qualified Numeric.DataFrame.ST                     as ST
 
 -- | Preparing Vertex data to make an interleaved array.
 data Vertex = Vertex
-  { pos      :: Vec2f
+  { pos      :: Vec3f
   , color    :: Vec3f
   , texCoord :: Vec2f
   } deriving (Eq, Show, Generic)
@@ -48,7 +48,7 @@ vertIADs = ST.runST $ do
     ST.writeDataFrame mv 0 . scalar $ createVk
         $  set @"location" 0
         &* set @"binding" 0
-        &* set @"format" VK_FORMAT_R32G32_SFLOAT
+        &* set @"format" VK_FORMAT_R32G32B32_SFLOAT
         &* set @"offset" (bFieldOffsetOf @"pos" @Vertex undefined)
     ST.writeDataFrame mv 1 . scalar $ createVk
         $  set @"location" 1
