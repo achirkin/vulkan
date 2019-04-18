@@ -56,17 +56,17 @@ initGLFWWindow w h n windowSizeChanged = do
 -- | action returns False -> continue to loop,
 --   action returns True -> stop loop and return True
 --   window should close -> stop loop and return False
-glfwMainLoop :: GLFW.Window -> Program' Bool -> Program r Bool
+glfwMainLoop :: GLFW.Window -> Program' Status -> Program r Status
 glfwMainLoop w action = go
   where
     go = do
       should <- liftIO $ GLFW.windowShouldClose w
       if not should then do
-        restart <- liftIO GLFW.pollEvents >> locally action
-        if restart
-        then return True
+        status <- liftIO GLFW.pollEvents >> locally action
+        if status /= OK
+        then return status
         else go
-      else return False
+      else return Exit
 
 
 glfwWaitMinimized :: GLFW.Window -> Program r ()

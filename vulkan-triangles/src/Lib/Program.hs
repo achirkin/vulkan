@@ -28,6 +28,8 @@ module Lib.Program
     , liftIOWith, withVkPtr
       -- * Other
     , getTime
+    , Status (..)
+    , whileStatus
     ) where
 
 
@@ -338,3 +340,11 @@ getTime = do
         -- Float is not good enough even for millisecond-precision over more than a few hours.
         seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
     return seconds
+
+data Status = OK | SameLength | DifferentLength | Exit deriving Eq
+
+whileStatus :: Status -> Program' Status -> Program r Status
+whileStatus status action = go where
+  go = do
+    s <- locally action
+    if s == status then go else return s

@@ -13,6 +13,7 @@ module Lib.Vulkan.Drawing
   , createSemaphores
   , createFences
   , drawFrame
+  , _MAX_FRAMES_IN_FLIGHT
   ) where
 
 import           Control.Monad                            (forM_)
@@ -207,6 +208,7 @@ drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef currentFrame
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
     runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+    -- framerate counter should be incremented here
 
     let SwapchainInfo {..} = swapchainInfo
         DevQueues {..} = deviceQueues
