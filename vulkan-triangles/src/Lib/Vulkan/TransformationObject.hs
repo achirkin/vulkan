@@ -34,7 +34,7 @@ instance PrimBytes TransformationObject
 
 rotation :: Double -> Mat44f
 rotation seconds =
-  let rate = 0.25 -- rotations per second
+  let rate = 1/16 -- rotations per second
       (_::Int, phaseTau) = properFraction $ seconds * rate
   in rotate (vec3 0 0 1) (realToFrac phaseTau * 2 * pi)
 

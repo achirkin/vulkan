@@ -147,7 +147,7 @@ createCommandBuffers
       liftIO $ vkCmdBindPipeline cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipeline
       liftIO $ vkCmdBindVertexBuffers
                  cmdBuffer 0 1 vertexBufArr vertexOffArr
-      liftIO $ vkCmdBindIndexBuffer cmdBuffer indexBuffer 0 VK_INDEX_TYPE_UINT16
+      liftIO $ vkCmdBindIndexBuffer cmdBuffer indexBuffer 0 VK_INDEX_TYPE_UINT32
       dsPtr <- newArrayRes [descriptorSet]
       liftIO $ vkCmdBindDescriptorSets cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipelineLayout 0 1 dsPtr 0 VK_NULL
       liftIO $ vkCmdDrawIndexed cmdBuffer nIndices 1 0 0 0
