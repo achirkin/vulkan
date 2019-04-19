@@ -56,7 +56,7 @@ createIndexBuffer :: VkPhysicalDevice
                   -> VkDevice
                   -> VkCommandPool
                   -> VkQueue
-                  -> DataFrame Word16 '[XN 3]
+                  -> DataFrame Word32 '[XN 3]
                      -- ^ A collection of at least three indices
                   -> Program r VkBuffer
 createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do

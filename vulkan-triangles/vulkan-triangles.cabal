@@ -58,6 +58,7 @@ library
                       , time
                       , JuicyPixels
                       , vector
+                      , wavefront
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
