@@ -38,7 +38,8 @@ module Lib.Program
 import           Control.Concurrent
 import           Control.Exception              (BlockedIndefinitelyOnMVar,
                                                  Exception, catch,
-                                                 displayException)
+                                                 displayException,
+                                                 throwIO)
 import           Control.Monad
 import           Control.Monad.Error.Class
 import           Control.Monad.IO.Class
@@ -377,18 +378,25 @@ data RedoSignal = SigRedo | SigExit deriving Eq
 --
 --   Enables deferred deallocation.
 asyncRedo :: ((RedoSignal -> Program s ()) -> Program' ()) -> Program r ()
-asyncRedo prog = do
-  signal <- liftIO $ newMVar SigRedo
-  let trigger nextSig = liftIO $ putMVar signal nextSig >> yield
-  let loop = do
-        -- TODO handle not signalling or signalling multiple times.
-        sig <- liftIO $ takeMVar signal
-        when (sig == SigRedo) $ do
-          Program $ \ref c -> do
-            -- TODO use forkOS when using unsafe ffi calls?
-            -- don't need the threadId
-            _ <- debugForkIO (unProgram (prog trigger) ref pure >>= checkStatus)
-            -- can't have a real result after forking
-            c (Right ())
-          loop
-  loop
+asyncRedo prog = go where
+  go = do
+    control <- liftIO $ newEmptyMVar
+    let trigger sig = do
+          success <- liftIO $ tryPutMVar control sig
+          when (not success) $ throwVkMsg "asyncRedo action tried to signal more than once"
+          liftIO yield
+    let finish res = do
+          -- When the redo-thread exits, we only need to signal exit to the
+          -- parent asyncRedo if nothing else has been signalled yet.
+          _ <- tryPutMVar control SigExit
+          -- rethrow any exception, we don't want to suppress it
+          case res of Left ex -> throwIO ex
+                      _ -> return ()
+    Program $ \ref c -> do
+      -- TODO use forkOS when using unsafe ffi calls?
+      -- don't need the threadId
+      _ <- forkFinally (unProgram (prog trigger) ref pure >>= checkStatus) finish
+      -- can't have a real result after forking
+      c (Right ())
+    sig <- liftIO $ takeMVar control
+    when (sig == SigRedo) go
