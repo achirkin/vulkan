@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds           #-}
 {-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -27,8 +28,8 @@ import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
-import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Device
+import           Lib.Vulkan.Presentation
 
 _MAX_FRAMES_IN_FLIGHT :: Int
 _MAX_FRAMES_IN_FLIGHT = 2
@@ -39,7 +40,7 @@ createFramebuffers :: VkDevice
                    -> [VkImageView]
                    -> VkImageView
                    -> Program r [VkFramebuffer]
-createFramebuffers dev renderPass SwapchainInfo{..} swapImgViews depthImgView =
+createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depthImgView =
     allocResource
       (liftIO . mapM_  (\fb -> vkDestroyFramebuffer dev fb VK_NULL) )
       (mapM createFB swapImgViews)
@@ -81,7 +82,7 @@ createCommandBuffers :: VkDevice
                      -> [VkDescriptorSet]
                      -> Program r (Ptr VkCommandBuffer)
 createCommandBuffers
-    dev pipeline commandPool rpass pipelineLayout SwapchainInfo{..}
+    dev pipeline commandPool rpass pipelineLayout SwapchainInfo{ swapExtent }
     vertexBuffer
     (nIndices, indexBuffer) fbs descriptorSets
   | buffersCount <- length fbs = do
