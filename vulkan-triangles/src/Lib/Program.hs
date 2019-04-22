@@ -30,16 +30,12 @@ module Lib.Program
     , getTime
     , LoopControl (..)
     , checkStatus
-    , RedoSignal (..)
     , asyncRedo
     ) where
 
 
 import           Control.Concurrent
-import           Control.Exception              (BlockedIndefinitelyOnMVar,
-                                                 Exception, catch,
-                                                 displayException,
-                                                 throwIO)
+import           Control.Exception              (Exception, displayException)
 import           Control.Monad
 import           Control.Monad.Error.Class
 import           Control.Monad.IO.Class
@@ -377,26 +373,24 @@ data RedoSignal = SigRedo | SigExit deriving Eq
 -- | Allows restarting the given prog in a new thread while the old one is still running.
 --
 --   Enables deferred deallocation.
-asyncRedo :: ((RedoSignal -> Program s ()) -> Program' ()) -> Program r ()
+asyncRedo :: (Program s () -> Program' ()) -> Program r ()
 asyncRedo prog = go where
   go = do
     control <- liftIO $ newEmptyMVar
-    let trigger sig = do
-          success <- liftIO $ tryPutMVar control sig
+    let trigger = do
+          success <- liftIO $ tryPutMVar control SigRedo
           when (not success) $ throwVkMsg "asyncRedo action tried to signal more than once"
           liftIO yield
-    let finish res = do
-          -- When the redo-thread exits, we only need to signal exit to the
-          -- parent asyncRedo if nothing else has been signalled yet.
-          _ <- tryPutMVar control SigExit
-          -- rethrow any exception, we don't want to suppress it
-          case res of Left ex -> throwIO ex
-                      _ -> return ()
+    -- this program launches the redo-thread and continues with result () immediately
     Program $ \ref c -> do
       -- TODO use forkOS when using unsafe ffi calls?
       -- don't need the threadId
-      _ <- forkFinally (unProgram (prog trigger) ref pure >>= checkStatus) finish
-      -- can't have a real result after forking
+      _ <- debugForkIO $ do
+        unProgram (prog trigger) ref pure >>= checkStatus
+        -- When the redo-thread exits, we only need to signal exit to the parent
+        -- if nothing else has been signalled yet.
+        tryPutMVar control SigExit >> return ()
+      -- can't have a real result after forking, but the continuation needs to be called
       c (Right ())
     sig <- liftIO $ takeMVar control
     when (sig == SigRedo) go
