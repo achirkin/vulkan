@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE NamedFieldPuns   #-}
 {-# LANGUAGE PolyKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
@@ -34,7 +35,7 @@ createGraphicsPipeline :: KnownDim n
                        -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapchainInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
+    dev SwapchainInfo{ swapExtent } bindDesc attrDescs shaderDescs renderPass pipelineLayout =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -214,7 +215,7 @@ createRenderPass :: VkDevice
                  -> SwapchainInfo
                  -> VkFormat
                  -> Program r VkRenderPass
-createRenderPass dev SwapchainInfo{..} depthFormat =
+createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0

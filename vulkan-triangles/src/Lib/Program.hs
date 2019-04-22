@@ -28,13 +28,17 @@ module Lib.Program
     , liftIOWith, withVkPtr
       -- * Other
     , getTime
-    , Status (..)
-    , whileStatus
+    , LoopControl (..)
+    , checkStatus
+    , RedoSignal (..)
+    , asyncRedo
     ) where
 
 
-import           Control.Exception              (Exception)
-import qualified Control.Exception              as Exception
+import           Control.Concurrent
+import           Control.Exception              (BlockedIndefinitelyOnMVar,
+                                                 Exception, catch,
+                                                 displayException)
 import           Control.Monad
 import           Control.Monad.Error.Class
 import           Control.Monad.IO.Class
@@ -48,6 +52,7 @@ import           Data.Tuple                     (swap)
 import           GHC.Stack
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
+import           System.Exit
 
 
 data ProgramState
@@ -341,10 +346,49 @@ getTime = do
         seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
     return seconds
 
-data Status = OK | SameLength | DifferentLength | Exit deriving Eq
 
-whileStatus :: Status -> Program' Status -> Program r Status
-whileStatus status action = go where
-  go = do
-    s <- locally action
-    if s == status then go else return s
+data LoopControl = ContinueLoop | AbortLoop deriving Eq
+
+
+checkStatus :: Either VulkanException () -> IO ()
+checkStatus (Right ()) = pure ()
+checkStatus (Left err) = do
+  putStrLn $ displayException err
+  exitFailure
+
+
+-- | Like forkIO, but prints when the thread starts and ends, and tells if it ends with an exception
+debugForkIO :: IO () -> IO ThreadId
+debugForkIO action = forkFinally (announce >> action) finish where
+  announce = do
+    tid <- myThreadId
+    putStrLn $ "New Thread (" ++ show tid ++ ")"
+  finish res = do
+    tid <- myThreadId
+    let resStr = case res of Right _ -> "normally"
+                             Left ex -> "with an exception: " ++ show ex
+    putStrLn $ "Terminated Thread (" ++ show tid ++ ") " ++ resStr
+
+
+data RedoSignal = SigRedo | SigExit deriving Eq
+
+
+-- | Allows restarting the given prog in a new thread while the old one is still running.
+--
+--   Enables deferred deallocation.
+asyncRedo :: ((RedoSignal -> Program s ()) -> Program' ()) -> Program r ()
+asyncRedo prog = do
+  signal <- liftIO $ newMVar SigRedo
+  let trigger nextSig = liftIO $ putMVar signal nextSig >> yield
+  let loop = do
+        -- TODO handle not signalling or signalling multiple times.
+        sig <- liftIO $ takeMVar signal
+        when (sig == SigRedo) $ do
+          Program $ \ref c -> do
+            -- TODO use forkOS when using unsafe ffi calls?
+            -- don't need the threadId
+            _ <- debugForkIO (unProgram (prog trigger) ref pure >>= checkStatus)
+            -- can't have a real result after forking
+            c (Right ())
+          loop
+  loop
