@@ -176,7 +176,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     -- The code below re-runs when the swapchain was re-created and has a
     -- different number of images than before:
     _ <- flip finally (destroySwapchainIfNecessary dev swapchainResource)
-      $ asyncRedo $ \signalDifferentLength -> do
+      $ asyncRedo $ \redoDifferentLength -> do
       logInfo "New thread: Creating things that depend on the swapchain length.."
       swapInfo0 <- liftIO $ readIORef swapInfoRef
       let swapchainLen0 = length (swapImgs swapInfo0)
@@ -195,7 +195,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
       -- The code below re-runs when the swapchain was re-created and has the
       -- same number of images as before, or continues from enclosing scope.
-      asyncRedo $ \signalSameLength -> do
+      asyncRedo $ \redoSameLength -> do
         logInfo "New thread: Creating things that depend on the swapchain, not only its length.."
         swapInfo <- liftIO $ readIORef swapInfoRef
         let swapchainLen = length (swapImgs swapInfo)
@@ -243,11 +243,9 @@ runVulkanProgram demo = runProgram checkStatus $ do
         frameCount <- liftIO $ newIORef @Int 0
         currentSec <- liftIO $ newIORef @Int 0
 
+        -- TODO get event processing out of here, has to be in main thread always
         glfwMainLoop window $ do
           return () -- do some app logic
-
-          -- Not needed anymore after waiting for inFlightFence has been implemented:
-          -- runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
 
           needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
             case ecode of
@@ -279,15 +277,15 @@ runVulkanProgram demo = runProgram checkStatus $ do
             newSwapInfo <- createSwapchain dev newScsd queues vulkanSurface swapchainResource
             liftIO $ writeIORef swapInfoRef newSwapInfo
             let newSwapchainLen = length (swapImgs newSwapInfo)
-            (if oldSwapchainLen /= newSwapchainLen
-             then signalDifferentLength
-             else signalSameLength) SigRedo
-            frameIndex <- liftIO $ readIORef (currentFrame rdata)
-            let inFlightFencePtr = (inFlightFences rdata) `ptrAtIndex` frameIndex
-            runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
-            logInfo "Old thread finished waiting before deallocating."
+            if oldSwapchainLen /= newSwapchainLen
+            then redoDifferentLength else redoSameLength
             return AbortLoop
           else return ContinueLoop
-    -- TODO fix exit via glfw window close
+        -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
+        frameIndex <- liftIO $ readIORef (currentFrame rdata)
+        let inFlightFencePtr = (inFlightFences rdata) `ptrAtIndex`
+                                 ((frameIndex + _MAX_FRAMES_IN_FLIGHT - 1) `mod` _MAX_FRAMES_IN_FLIGHT)
+        runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+        logInfo "Finished waiting after main loop termination before deallocating."
     runVk $ vkDeviceWaitIdle dev
     return ()
