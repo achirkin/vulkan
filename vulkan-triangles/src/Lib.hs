@@ -92,14 +92,15 @@ data WhichDemo = Squares | Chalet
 
 runVulkanProgram :: WhichDemo -> IO ()
 runVulkanProgram demo = runProgram checkStatus $ do
-    windowSizeChanged <- liftIO $ newIORef False
-    window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW" windowSizeChanged
+  windowSizeChanged <- liftIO $ newIORef False
+  window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW" windowSizeChanged
 
-    vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
+  vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
 
-    vulkanSurface <- createSurface vulkanInstance window
-    logInfo $ "Createad surface: " ++ show vulkanSurface
+  vulkanSurface <- createSurface vulkanInstance window
+  logInfo $ "Createad surface: " ++ show vulkanSurface
 
+  glfwWaitEventsMeanwhile $ do
     (_, pdev) <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
     logInfo $ "Selected physical device: " ++ show pdev
 
@@ -160,9 +161,12 @@ runVulkanProgram demo = runProgram checkStatus $ do
     -- handling lifetime of swapchain manually. createSwapChain does not deallocate via continuation.
     swapchainResource <- liftIO $ newEmptyMVar
 
-    let beforeSwapchainCreation = do
+    let beforeSwapchainCreation :: Program r ()
+        beforeSwapchainCreation = do
           -- wait as long as window has width=0 and height=0
-          glfwWaitMinimized window
+          -- commented out because this only works in the main thread:
+          -- glfwWaitMinimized window
+
           -- If a window size change did happen, it will be respected by (re-)creating
           -- the swapchain below, no matter if it was signalled via exception or
           -- the IORef, so reset the IORef now:
@@ -243,7 +247,6 @@ runVulkanProgram demo = runProgram checkStatus $ do
         frameCount <- liftIO $ newIORef @Int 0
         currentSec <- liftIO $ newIORef @Int 0
 
-        -- TODO get event processing out of here, has to be in main thread always
         glfwMainLoop window $ do
           return () -- do some app logic
 
@@ -282,10 +285,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
             return AbortLoop
           else return ContinueLoop
         -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
-        frameIndex <- liftIO $ readIORef (currentFrame rdata)
-        let inFlightFencePtr = (inFlightFences rdata) `ptrAtIndex`
-                                 ((frameIndex + _MAX_FRAMES_IN_FLIGHT - 1) `mod` _MAX_FRAMES_IN_FLIGHT)
-        runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+        runVk $ vkWaitForFences dev (fromIntegral _MAX_FRAMES_IN_FLIGHT) inFlightF VK_TRUE (maxBound :: Word64)
         logInfo "Finished waiting after main loop termination before deallocating."
     runVk $ vkDeviceWaitIdle dev
     return ()
