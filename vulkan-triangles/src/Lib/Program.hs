@@ -31,11 +31,14 @@ module Lib.Program
     , LoopControl (..)
     , checkStatus
     , asyncRedo
+    , occupyThreadAndFork
     ) where
 
 
 import           Control.Concurrent
-import           Control.Exception              (Exception, displayException)
+import           Control.Exception              (Exception, catch,
+                                                 displayException, throw,
+                                                 throwTo)
 import           Control.Monad
 import           Control.Monad.Error.Class
 import           Control.Monad.IO.Class
@@ -385,7 +388,7 @@ asyncRedo prog = go where
     Program $ \ref c -> do
       -- TODO use forkOS when using unsafe ffi calls?
       -- don't need the threadId
-      _ <- debugForkIO $ do
+      _ <- forkIO $ do
         unProgram (prog trigger) ref pure >>= checkStatus
         -- When the redo-thread exits, we only need to signal exit to the parent
         -- if nothing else has been signalled yet.
@@ -394,3 +397,15 @@ asyncRedo prog = go where
       c (Right ())
     sig <- liftIO $ takeMVar control
     when (sig == SigRedo) go
+
+
+-- | For C functions that have to run in the main thread as long as the program runs.
+occupyThreadAndFork :: Program' () -> Program' () -> Program r ()
+occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
+  mainThreadId <- myThreadId
+  _ <- forkFinally (runInBoundThread $ unProgram deputyProg ref pure >>= checkStatus) $ \res ->
+    case res of Left exception -> throw exception
+                Right _        -> throwTo mainThreadId ExitSuccess
+  exitCode <- catch (unProgram mainProg ref pure >>= checkStatus >> return ExitSuccess) $
+                    \(exitCode :: ExitCode) -> return exitCode
+  c (Right ()) >> exitWith exitCode

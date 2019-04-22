@@ -4,9 +4,10 @@ module Lib.GLFW
     , initGLFWWindow
     , glfwMainLoop
     , glfwWaitMinimized
+    , glfwWaitEventsMeanwhile
     ) where
 
-import           Control.Monad       (unless, when)
+import           Control.Monad       (unless, when, forever)
 import           Data.IORef
 import           Graphics.UI.GLFW    (ClientAPI (..), WindowHint (..))
 import qualified Graphics.UI.GLFW    as GLFW
@@ -53,17 +54,19 @@ initGLFWWindow w h n windowSizeChanged = do
           return window
 
 
--- | action returns False -> continue to loop,
---   action returns True -> stop loop and return True
---   window should close -> stop loop and return False
+-- | Repeats until WindowShouldClose flag is set
 glfwMainLoop :: GLFW.Window -> Program' LoopControl -> Program r ()
 glfwMainLoop w action = go
   where
     go = do
       should <- liftIO $ GLFW.windowShouldClose w
       when (not should) $ do
-        status <- liftIO GLFW.pollEvents >> locally action
+        status <- locally action
         when (status == ContinueLoop) go
+
+
+glfwWaitEventsMeanwhile :: Program' () -> Program r ()
+glfwWaitEventsMeanwhile action = occupyThreadAndFork (liftIO $ forever GLFW.waitEvents) action
 
 
 glfwWaitMinimized :: GLFW.Window -> Program r ()

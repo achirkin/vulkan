@@ -69,7 +69,7 @@ library
 executable vulkan-triangles
     hs-source-dirs:      app
     main-is:             Main.hs
-    ghc-options:         -Wall
+    ghc-options:         -threaded
     build-depends:       base
                        , vulkan-triangles
     default-language:    Haskell2010
