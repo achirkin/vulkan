@@ -122,9 +122,9 @@ runVulkanProgram demo = runProgram checkStatus $ do
     logInfo $ "Createad fragment shader module: " ++ show shaderFrag
 
     curFrameRef <- liftIO $ newIORef 0
-    rendFinS <- createSemaphores dev
-    imAvailS <- createSemaphores dev
-    inFlightF <- createFences dev
+    rendFinS <- createFrameSemaphores dev
+    imAvailS <- createFrameSemaphores dev
+    inFlightF <- createFrameFences dev
     commandPool <- createCommandPool dev queues
     logInfo $ "Createad command pool: " ++ show commandPool
 
