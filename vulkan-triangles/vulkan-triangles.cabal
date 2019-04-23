@@ -32,15 +32,16 @@ library
                         Lib.Vulkan.Descriptor
                         Lib.Vulkan.Device
                         Lib.Vulkan.Drawing
+                        Lib.Vulkan.Image
                         Lib.Vulkan.Instance
                         Lib.Vulkan.Pipeline
                         Lib.Vulkan.Presentation
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
-                        Lib.Vulkan.Image
+                        Lib.Vulkan.Sync
+                        Lib.Vulkan.TransformationObject
                         Lib.Vulkan.Vertex
                         Lib.Vulkan.VertexBuffer
-                        Lib.Vulkan.TransformationObject
     build-depends:      base >= 4.11 && < 5
                       , vulkan-api >= 1.2.0.0
                       , GLFW-b >= 3.2.1

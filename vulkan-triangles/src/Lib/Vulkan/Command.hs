@@ -15,6 +15,7 @@ import           Numeric.DataFrame
 
 import           Lib.Program
 import           Lib.Program.Foreign
+import           Lib.Vulkan.Sync
 
 
 runCommandsOnce :: VkDevice
@@ -57,6 +58,11 @@ runCommandsOnce dev commandPool cmdQueue action = do
               &* setDFRef @"pCommandBuffers" cmdBufs
               &* set @"signalSemaphoreCount" 0
               &* set @"pSignalSemaphores" VK_NULL
-        withVkPtr submitInfo $ \siPtr ->
-          runVk $ vkQueueSubmit cmdQueue 1 siPtr VK_NULL_HANDLE
-        runVk $ vkQueueWaitIdle cmdQueue
+        locally $ do
+          -- TODO maybe add a param if it should wait here, or submit a
+          -- different fence that is waited for elsewhere, or whatever
+          fence <- createFence dev False
+          withVkPtr submitInfo $ \siPtr ->
+            runVk $ vkQueueSubmit cmdQueue 1 siPtr fence
+          fencePtr <- newArrayRes [fence]
+          runVk $ vkWaitForFences dev 1 fencePtr VK_TRUE (maxBound :: Word64)

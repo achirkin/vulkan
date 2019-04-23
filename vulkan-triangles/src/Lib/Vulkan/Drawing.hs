@@ -11,8 +11,8 @@ module Lib.Vulkan.Drawing
   , createFramebuffers
   , createCommandPool
   , createCommandBuffers
-  , createSemaphores
-  , createFences
+  , createFrameSemaphores
+  , createFrameFences
   , drawFrame
   , _MAX_FRAMES_IN_FLIGHT
   ) where
@@ -30,9 +30,12 @@ import           Lib.Program
 import           Lib.Program.Foreign
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Presentation
+import           Lib.Vulkan.Sync
+
 
 _MAX_FRAMES_IN_FLIGHT :: Int
 _MAX_FRAMES_IN_FLIGHT = 2
+
 
 createFramebuffers :: VkDevice
                    -> VkRenderPass
@@ -57,6 +60,7 @@ createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depth
             &* set @"layers" 1
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
+
 
 createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
 createCommandPool dev DevQueues{..} =
@@ -161,33 +165,13 @@ createCommandBuffers
     return cbsPtr
 
 
-createSemaphore :: VkDevice -> Program r VkSemaphore
-createSemaphore dev =
-  allocResource
-    (liftIO .  flip (vkDestroySemaphore dev) VK_NULL)
-    $ allocaPeek $ \sPtr -> withVkPtr
-      ( createVk
-        $  set @"sType" VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" 0
-      ) $ \ciPtr -> runVk $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
+createFrameSemaphores :: VkDevice -> Program r (Ptr VkSemaphore)
+createFrameSemaphores dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createSemaphore dev))
 
-createSemaphores :: VkDevice -> Program r (Ptr VkSemaphore)
-createSemaphores dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createSemaphore dev))
 
-createFence :: VkDevice -> Program r VkFence
-createFence dev =
-  allocResource
-    (liftIO .  flip (vkDestroyFence dev) VK_NULL)
-    $ allocaPeek $ \sPtr -> withVkPtr
-      ( createVk
-        $  set @"sType" VK_STRUCTURE_TYPE_FENCE_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" VK_FENCE_CREATE_SIGNALED_BIT
-      ) $ \ciPtr -> runVk $ vkCreateFence dev ciPtr VK_NULL sPtr
+createFrameFences :: VkDevice -> Program r (Ptr VkFence)
+createFrameFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createFence dev True))
 
-createFences :: VkDevice -> Program r (Ptr VkFence)
-createFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createFence dev))
 
 data RenderData
   = RenderData
