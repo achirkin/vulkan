@@ -97,71 +97,76 @@ data SwapchainInfo
   } deriving (Eq, Show)
 
 
+-- | When recreating the swapchain, the old one has to be destroyed manually.
+--
+--   Destroy the old one after non of its images are in use any more.
 createSwapchain :: VkDevice
                 -> SwapchainSupportDetails
                 -> DevQueues
                 -> VkSurfaceKHR
                 -> MVar VkSwapchainKHR
+                -> MVar VkSwapchainKHR
                 -> Program r SwapchainInfo
-createSwapchain dev scsd queues surf resource = do
+createSwapchain dev scsd queues surf resource oldResource = do
   mayOldSwapchain <- liftIO $ tryTakeMVar resource
-  -- the old one was taken out of the mvar, so we need to make sure it's destroyed manually
-  flip finally (liftIO $ sequence_ $ flip (vkDestroySwapchainKHR dev) VK_NULL <$> mayOldSwapchain) $ do
-    surfFmt <- chooseSwapSurfaceFormat scsd
-    let spMode = chooseSwapPresentMode scsd
-        sExtent = chooseSwapExtent scsd
+  liftIO $ tryTakeMVar oldResource >> return ()
+  liftIO $ sequence_ $ putMVar oldResource <$> mayOldSwapchain
 
-    -- try tripple buffering
-    let maxIC = getField @"maxImageCount" $ capabilities scsd
-        minIC = getField @"minImageCount" $ capabilities scsd
-        imageCount = if maxIC <= 0
-                    then max minIC 3
-                    else min maxIC $ max minIC 3
+  surfFmt <- chooseSwapSurfaceFormat scsd
+  let spMode = chooseSwapPresentMode scsd
+      sExtent = chooseSwapExtent scsd
 
-    -- write VkSwapchainCreateInfoKHR
-    let swCreateInfo = createVk @VkSwapchainCreateInfoKHR
-          $  set @"sType" VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
-          &* set @"pNext" VK_NULL_HANDLE
-          &* set @"flags" 0
-          &* set @"surface" surf
-          &* set @"minImageCount" imageCount
-          &* set @"imageFormat" (getField @"format" surfFmt)
-          &* set @"imageColorSpace" (getField @"colorSpace" surfFmt)
-          &* set @"imageExtent" sExtent
-          &* set @"imageArrayLayers" 1
-          &* set @"imageUsage" VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
-          &*
-          ( if graphicsQueue queues /= presentQueue queues
-            then set @"imageSharingMode" VK_SHARING_MODE_CONCURRENT
-              &* set @"queueFamilyIndexCount" 2
-              &* set @"pQueueFamilyIndices" (qFamIndices queues)
-            else set @"imageSharingMode" VK_SHARING_MODE_EXCLUSIVE
-              &* set @"queueFamilyIndexCount" 0
-              &* set @"pQueueFamilyIndices" VK_NULL_HANDLE
-          )
-          &* set @"preTransform" (getField @"currentTransform" $ capabilities scsd)
-          &* set @"compositeAlpha" VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-          &* set @"presentMode" spMode
-          &* set @"clipped" VK_TRUE
-          &* set @"oldSwapchain" (maybe VK_NULL_HANDLE id mayOldSwapchain)
+  -- try tripple buffering
+  let maxIC = getField @"maxImageCount" $ capabilities scsd
+      minIC = getField @"minImageCount" $ capabilities scsd
+      imageCount = if maxIC <= 0
+                  then max minIC 3
+                  else min maxIC $ max minIC 3
 
-    swapchain <- withVkPtr swCreateInfo $ \swciPtr -> allocaPeek
-      $ runVk . vkCreateSwapchainKHR dev swciPtr VK_NULL
-    liftIO $ putMVar resource swapchain
+  -- write VkSwapchainCreateInfoKHR
+  let swCreateInfo = createVk @VkSwapchainCreateInfoKHR
+        $  set @"sType" VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
+        &* set @"pNext" VK_NULL_HANDLE
+        &* set @"flags" 0
+        &* set @"surface" surf
+        &* set @"minImageCount" imageCount
+        &* set @"imageFormat" (getField @"format" surfFmt)
+        &* set @"imageColorSpace" (getField @"colorSpace" surfFmt)
+        &* set @"imageExtent" sExtent
+        &* set @"imageArrayLayers" 1
+        &* set @"imageUsage" VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+        &*
+        ( if graphicsQueue queues /= presentQueue queues
+          then set @"imageSharingMode" VK_SHARING_MODE_CONCURRENT
+            &* set @"queueFamilyIndexCount" 2
+            &* set @"pQueueFamilyIndices" (qFamIndices queues)
+          else set @"imageSharingMode" VK_SHARING_MODE_EXCLUSIVE
+            &* set @"queueFamilyIndexCount" 0
+            &* set @"pQueueFamilyIndices" VK_NULL_HANDLE
+        )
+        &* set @"preTransform" (getField @"currentTransform" $ capabilities scsd)
+        &* set @"compositeAlpha" VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
+        &* set @"presentMode" spMode
+        &* set @"clipped" VK_TRUE
+        &* set @"oldSwapchain" (maybe VK_NULL_HANDLE id mayOldSwapchain)
 
-    swapImgs <- asListVk
-      $ \x -> runVk . vkGetSwapchainImagesKHR dev swapchain x
+  swapchain <- withVkPtr swCreateInfo $ \swciPtr -> allocaPeek
+    $ runVk . vkCreateSwapchainKHR dev swciPtr VK_NULL
+  liftIO $ putMVar resource swapchain
 
-    return SwapchainInfo
-          { swapchain     = swapchain
-          , swapImgs      = swapImgs
-          , swapImgFormat = getField @"format" surfFmt
-          , swapExtent    = sExtent
-          }
+  swapImgs <- asListVk
+    $ \x -> runVk . vkGetSwapchainImagesKHR dev swapchain x
+
+  return SwapchainInfo
+        { swapchain     = swapchain
+        , swapImgs      = swapImgs
+        , swapImgFormat = getField @"format" surfFmt
+        , swapExtent    = sExtent
+        }
 
 destroySwapchainIfNecessary :: VkDevice
                             -> MVar VkSwapchainKHR
                             -> Program r ()
 destroySwapchainIfNecessary dev resource = do
-  mayOldSwapchain <- liftIO $ tryTakeMVar resource
-  liftIO $ sequence_ $ flip (vkDestroySwapchainKHR dev) VK_NULL <$> mayOldSwapchain
+  maySwapchain <- liftIO $ tryTakeMVar resource
+  liftIO $ sequence_ $ flip (vkDestroySwapchainKHR dev) VK_NULL <$> maySwapchain
