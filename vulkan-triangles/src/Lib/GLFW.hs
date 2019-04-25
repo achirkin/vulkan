@@ -54,15 +54,16 @@ initGLFWWindow w h n windowSizeChanged = do
           return window
 
 
--- | Repeats until WindowShouldClose flag is set
-glfwMainLoop :: GLFW.Window -> Program' LoopControl -> Program r ()
+-- | Repeats until WindowShouldClose flag is set. Returns true if program should exit.
+glfwMainLoop :: GLFW.Window -> Program' LoopControl -> Program r Bool
 glfwMainLoop w action = go
   where
     go = do
       should <- liftIO $ GLFW.windowShouldClose w
-      when (not should) $ do
+      if not should then do
         status <- locally action
-        when (status == ContinueLoop) go
+        if status == ContinueLoop then go else return False
+      else return True
 
 
 glfwWaitEventsMeanwhile :: Program' () -> Program r ()

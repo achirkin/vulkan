@@ -163,7 +163,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     swapchainResource <- liftIO $ newEmptyMVar
     oldSwapchainResource <- liftIO $ newEmptyMVar
 
-    oldSwapchainFence <- createFence dev False
+    oldSwapchainFence <- createFence dev True
     oldSwapchainFencePtr <- newArrayRes [oldSwapchainFence]
 
     let beforeSwapchainCreation :: Program r ()
@@ -204,7 +204,6 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
       -- The code below re-runs when the swapchain was re-created and has the
       -- same number of images as before, or continues from enclosing scope.
-      -- TODO find something better than vkDeviceWaitIdle for destruction of old swapchain that doesn't crash occasionally
       asyncRedo $ \redoSameLength -> flip finally (destroySwapchainIfNecessary dev oldSwapchainResource) $ do
         logInfo "New thread: Creating things that depend on the swapchain, not only its length.."
         swapInfo <- liftIO $ readIORef swapInfoRef
@@ -253,7 +252,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
         frameCount <- liftIO $ newIORef @Int 0
         currentSec <- liftIO $ newIORef @Int 0
 
-        glfwMainLoop window $ do
+        shouldExit <- glfwMainLoop window $ do
           return () -- do some app logic
 
           needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
@@ -284,8 +283,12 @@ runVulkanProgram demo = runProgram checkStatus $ do
             logInfo "Recreating swapchain.."
             newScsd <- querySwapchainSupport pdev vulkanSurface
             newSwapInfo <- createSwapchain dev newScsd queues vulkanSurface swapchainResource oldSwapchainResource
-            runVk $ vkQueueSubmit (graphicsQueue queues) 0 VK_NULL oldSwapchainFence
-            liftIO $ writeIORef swapInfoRef newSwapInfo
+            -- wait here is only to prevent concurrent wait & reset access to the fence
+            runVk $ vkWaitForFences dev 1 oldSwapchainFencePtr VK_TRUE (maxBound :: Word64)
+            runVk $ vkResetFences dev 1 oldSwapchainFencePtr
+            -- TODO not sure if this has to be presentQueue or if graphicsQueue is good enough
+            runVk $ vkQueueSubmit (presentQueue queues) 0 VK_NULL oldSwapchainFence
+            liftIO $ atomicWriteIORef swapInfoRef newSwapInfo
             let newSwapchainLen = length (swapImgs newSwapInfo)
             if oldSwapchainLen /= newSwapchainLen
             then redoDifferentLength else redoSameLength
@@ -293,7 +296,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
           else return ContinueLoop
         -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
         runVk $ vkWaitForFences dev 1 oldSwapchainFencePtr VK_TRUE (maxBound :: Word64)
-        runVk $ vkWaitForFences dev (fromIntegral _MAX_FRAMES_IN_FLIGHT) inFlightF VK_TRUE (maxBound :: Word64)
+        when shouldExit $ runVk $ vkDeviceWaitIdle dev
         logInfo "Finished waiting after main loop termination before deallocating."
     runVk $ vkDeviceWaitIdle dev
     return ()

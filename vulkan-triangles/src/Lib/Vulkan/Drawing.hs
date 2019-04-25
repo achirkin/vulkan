@@ -199,6 +199,7 @@ drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef currentFrame
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
     runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+    -- TODO counter or queue to notify deallocators
     -- framerate counter should be incremented here
 
     let SwapchainInfo {..} = swapchainInfo
@@ -208,6 +209,7 @@ drawFrame RenderData {..} = do
     renderFinished <- peek (renderFinishedSems `ptrAtIndex` frameIndex)
     inFlightFence <- peek inFlightFencePtr
     -- Acquiring an image from the swapchain
+    -- Can throw VK_ERROR_OUT_OF_DATE_KHR
     runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
@@ -243,10 +245,12 @@ drawFrame RenderData {..} = do
           &* set        @"swapchainCount" 1
           &* setListRef @"pSwapchains"    [swapchain]
 
+    -- doing this before vkQueuePresentKHR because that might throw VK_ERROR_OUT_OF_DATE_KHR
+    liftIO $ writeIORef currentFrame $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
+
     withVkPtr presentInfo $
+      -- Can throw VK_ERROR_OUT_OF_DATE_KHR
       runVk . vkQueuePresentKHR presentQueue
     isSuboptimal <- (== VK_SUBOPTIMAL_KHR) . currentStatus <$> get
-
-    liftIO $ writeIORef currentFrame $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
 
     return isSuboptimal
