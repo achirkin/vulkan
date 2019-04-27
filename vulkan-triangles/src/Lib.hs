@@ -127,7 +127,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     imageAvailableSems <- createFrameSemaphores dev
     inFlightFences <- createFrameFences dev
     frameFinishedEvent <- liftIO $ Event.new
-    frameOnQueueVars <- liftIO $ sequence $ replicate 2 $ newEmptyMVar
+    frameOnQueueVars <- liftIO $ sequence $ replicate _MAX_FRAMES_IN_FLIGHT $ newEmptyMVar
 
     commandPool <- createCommandPool dev queues
     logInfo $ "Createad command pool: " ++ show commandPool
