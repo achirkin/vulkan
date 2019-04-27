@@ -178,22 +178,22 @@ createFrameFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLI
 
 data RenderData
   = RenderData
-  { device             :: VkDevice
-  , swapchainInfo      :: SwapchainInfo
-  , deviceQueues       :: DevQueues
+  { dev                :: VkDevice
+  , swapInfo           :: SwapchainInfo
+  , queues             :: DevQueues
   , imgIndexPtr        :: Ptr Word32
-  , currentFrame       :: IORef Int
+  , frameIndexRef      :: IORef Int
   , renderFinishedSems :: Ptr VkSemaphore
     -- ^ one per frame-in-flight
   , imageAvailableSems :: Ptr VkSemaphore
     -- ^ one per frame-in-flight
   , inFlightFences     :: Ptr VkFence
     -- ^ one per frame-in-flight
-  , frameFinished      :: Event
+  , frameFinishedEvent :: Event
     -- ^ signals completion of a frame to deallocators
-  , frameOnQueue       :: [MVar ()]
+  , frameOnQueueVars   :: [MVar ()]
     -- ^ one per frame-in-flight
-  , commandBuffers     :: Ptr VkCommandBuffer
+  , cmdBuffersPtr      :: Ptr VkCommandBuffer
     -- ^ one per swapchain image
   , memories           :: Ptr VkDeviceMemory
     -- ^ one per swapchain image
@@ -203,17 +203,18 @@ data RenderData
 
 drawFrame :: RenderData -> Program r Bool
 drawFrame RenderData {..} = do
-    frameIndex <- liftIO $ readIORef currentFrame
+    frameIndex <- liftIO $ readIORef frameIndexRef
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
-    isOnQueue <- liftIO $ maybe False (const True) <$> tryTakeMVar (frameOnQueue !! frameIndex)
+    isOnQueue <- liftIO $
+      maybe False (const True) <$> tryTakeMVar (frameOnQueueVars !! frameIndex)
     -- could be not on queue because of retry due to VK_ERROR_OUT_OF_DATE_KHR below
     when isOnQueue $ do
-      runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+      runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
       -- could also take current time here to measure frametimes
-      liftIO $ Event.signal frameFinished
+      liftIO $ Event.signal frameFinishedEvent
 
-    let SwapchainInfo {..} = swapchainInfo
-        DevQueues {..} = deviceQueues
+    let SwapchainInfo {..} = swapInfo
+        DevQueues {..} = queues
 
     imageAvailable <- peek (imageAvailableSems `ptrAtIndex` frameIndex)
     renderFinished <- peek (renderFinishedSems `ptrAtIndex` frameIndex)
@@ -221,10 +222,10 @@ drawFrame RenderData {..} = do
     -- Acquiring an image from the swapchain
     -- Can throw VK_ERROR_OUT_OF_DATE_KHR
     runVk $ vkAcquireNextImageKHR
-          device swapchain maxBound
+          dev swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
     imgIndex <- fromIntegral <$> peek imgIndexPtr
-    let bufPtr = commandBuffers `ptrAtIndex` imgIndex
+    let bufPtr = cmdBuffersPtr `ptrAtIndex` imgIndex
     let memoryPtr = memories `ptrAtIndex` imgIndex
     mem <- peek memoryPtr
     memoryMutator mem
@@ -241,10 +242,10 @@ drawFrame RenderData {..} = do
           &* set @"signalSemaphoreCount" 1
           &* setListRef @"pSignalSemaphores" [renderFinished]
 
-    runVk $ vkResetFences device 1 inFlightFencePtr
+    runVk $ vkResetFences dev 1 inFlightFencePtr
     withVkPtr submitInfo $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr inFlightFence
-    liftIO $ putMVar (frameOnQueue !! frameIndex) ()
+    liftIO $ putMVar (frameOnQueueVars !! frameIndex) ()
 
     -- Presentation
     let presentInfo = createVk @VkPresentInfoKHR
@@ -257,7 +258,7 @@ drawFrame RenderData {..} = do
           &* setListRef @"pSwapchains"    [swapchain]
 
     -- doing this before vkQueuePresentKHR because that might throw VK_ERROR_OUT_OF_DATE_KHR
-    liftIO $ writeIORef currentFrame $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
+    liftIO $ writeIORef frameIndexRef $ (frameIndex + 1) `mod` _MAX_FRAMES_IN_FLIGHT
 
     withVkPtr presentInfo $
       -- Can throw VK_ERROR_OUT_OF_DATE_KHR
