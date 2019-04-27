@@ -122,10 +122,10 @@ runVulkanProgram demo = runProgram checkStatus $ do
     logInfo $ "Createad vertex shader module: " ++ show shaderVert
     logInfo $ "Createad fragment shader module: " ++ show shaderFrag
 
-    curFrameRef <- liftIO $ newIORef 0
-    rendFinS <- createFrameSemaphores dev
-    imAvailS <- createFrameSemaphores dev
-    inFlightF <- createFrameFences dev
+    frameIndexRef <- liftIO $ newIORef 0
+    renderFinishedSems <- createFrameSemaphores dev
+    imageAvailableSems <- createFrameSemaphores dev
+    inFlightFences <- createFrameFences dev
     frameFinishedEvent <- liftIO $ Event.new
     frameOnQueueVars <- liftIO $ sequence $ replicate 2 $ newEmptyMVar
 
@@ -133,7 +133,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     logInfo $ "Createad command pool: " ++ show commandPool
 
     -- we need this later, but don't want to realloc every swapchain recreation.
-    imgIPtr <- mallocRes
+    imgIndexPtr <- mallocRes
 
     (vertices, indices) <- case demo of
       Squares -> return (rectVertices, rectIndices)
@@ -227,17 +227,17 @@ runVulkanProgram demo = runProgram checkStatus $ do
                                           descriptorSets
 
         let rdata = RenderData
-              { device             = dev
-              , swapchainInfo      = swapInfo
-              , deviceQueues       = queues
-              , imgIndexPtr        = imgIPtr
-              , currentFrame       = curFrameRef
-              , renderFinishedSems = rendFinS
-              , imageAvailableSems = imAvailS
-              , inFlightFences     = inFlightF
-              , frameFinished      = frameFinishedEvent
-              , frameOnQueue       = frameOnQueueVars
-              , commandBuffers     = cmdBuffersPtr
+              { dev
+              , swapInfo
+              , queues
+              , imgIndexPtr
+              , frameIndexRef
+              , renderFinishedSems
+              , imageAvailableSems
+              , inFlightFences
+              , frameFinishedEvent
+              , frameOnQueueVars
+              , cmdBuffersPtr
               , memories           = transObjMemories
               , memoryMutator      = updateTransObj dev (swapExtent swapInfo)
               }
