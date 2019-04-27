@@ -12,6 +12,7 @@ module Lib
   , WhichDemo (..)
   ) where
 
+import qualified Control.Concurrent.Event             as Event
 import           Control.Concurrent.MVar
 import           Control.Monad                        (forM_, when)
 import           Data.IORef
@@ -33,7 +34,6 @@ import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
 import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
-import           Lib.Vulkan.Sync
 import           Lib.Vulkan.TransformationObject
 import           Lib.Vulkan.Vertex
 import           Lib.Vulkan.VertexBuffer
@@ -126,6 +126,9 @@ runVulkanProgram demo = runProgram checkStatus $ do
     rendFinS <- createFrameSemaphores dev
     imAvailS <- createFrameSemaphores dev
     inFlightF <- createFrameFences dev
+    frameFinishedEvent <- liftIO $ Event.new
+    frameOnQueueVars <- liftIO $ sequence $ replicate 2 $ newEmptyMVar
+
     commandPool <- createCommandPool dev queues
     logInfo $ "Createad command pool: " ++ show commandPool
 
@@ -159,13 +162,6 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
     depthFormat <- findDepthFormat pdev
 
-    -- handling lifetime of swapchain manually. createSwapChain does not deallocate via continuation.
-    swapchainResource <- liftIO $ newEmptyMVar
-    oldSwapchainResource <- liftIO $ newEmptyMVar
-
-    oldSwapchainFence <- createFence dev True
-    oldSwapchainFencePtr <- newArrayRes [oldSwapchainFence]
-
     let beforeSwapchainCreation :: Program r ()
         beforeSwapchainCreation = do
           -- wait as long as window has width=0 and height=0
@@ -180,12 +176,13 @@ runVulkanProgram demo = runProgram checkStatus $ do
     -- creating first swapchain before loop
     beforeSwapchainCreation
     scsd <- querySwapchainSupport pdev vulkanSurface
-    swapInfoRef <- createSwapchain dev scsd queues vulkanSurface swapchainResource oldSwapchainResource >>= liftIO . newIORef
+
+    swapchainSlot <- createSwapchainSlot dev
+    swapInfoRef <- createSwapchain dev scsd queues vulkanSurface swapchainSlot Nothing >>= liftIO . newIORef
 
     -- The code below re-runs when the swapchain was re-created and has a
     -- different number of images than before:
-    _ <- flip finally (destroySwapchainIfNecessary dev swapchainResource)
-      $ asyncRedo $ \redoDifferentLength -> do
+    asyncRedo $ \redoDifferentLength -> do
       logInfo "New thread: Creating things that depend on the swapchain length.."
       swapInfo0 <- liftIO $ readIORef swapInfoRef
       let swapchainLen0 = length (swapImgs swapInfo0)
@@ -204,8 +201,10 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
       -- The code below re-runs when the swapchain was re-created and has the
       -- same number of images as before, or continues from enclosing scope.
-      asyncRedo $ \redoSameLength -> flip finally (destroySwapchainIfNecessary dev oldSwapchainResource) $ do
+      asyncRedo $ \redoSameLength -> do
         logInfo "New thread: Creating things that depend on the swapchain, not only its length.."
+        -- need this for delayed destruction of the old swapchain if it gets replaced
+        oldSwapchainSlot <- createSwapchainSlot dev
         swapInfo <- liftIO $ readIORef swapInfoRef
         let swapchainLen = length (swapImgs swapInfo)
         imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT) (swapImgs swapInfo)
@@ -236,6 +235,8 @@ runVulkanProgram demo = runProgram checkStatus $ do
               , renderFinishedSems = rendFinS
               , imageAvailableSems = imAvailS
               , inFlightFences     = inFlightF
+              , frameFinished      = frameFinishedEvent
+              , frameOnQueue       = frameOnQueueVars
               , commandBuffers     = cmdBuffersPtr
               , memories           = transObjMemories
               , memoryMutator      = updateTransObj dev (swapExtent swapInfo)
@@ -282,12 +283,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
             let oldSwapchainLen = length (swapImgs swapInfo)
             logInfo "Recreating swapchain.."
             newScsd <- querySwapchainSupport pdev vulkanSurface
-            newSwapInfo <- createSwapchain dev newScsd queues vulkanSurface swapchainResource oldSwapchainResource
-            -- wait here is only to prevent concurrent wait & reset access to the fence
-            runVk $ vkWaitForFences dev 1 oldSwapchainFencePtr VK_TRUE (maxBound :: Word64)
-            runVk $ vkResetFences dev 1 oldSwapchainFencePtr
-            -- TODO not sure if this has to be presentQueue or if graphicsQueue is good enough
-            runVk $ vkQueueSubmit (presentQueue queues) 0 VK_NULL oldSwapchainFence
+            newSwapInfo <- createSwapchain dev newScsd queues vulkanSurface swapchainSlot (Just oldSwapchainSlot)
             liftIO $ atomicWriteIORef swapInfoRef newSwapInfo
             let newSwapchainLen = length (swapImgs newSwapInfo)
             if oldSwapchainLen /= newSwapchainLen
@@ -295,8 +291,9 @@ runVulkanProgram demo = runProgram checkStatus $ do
             return AbortLoop
           else return ContinueLoop
         -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
-        runVk $ vkWaitForFences dev 1 oldSwapchainFencePtr VK_TRUE (maxBound :: Word64)
-        when shouldExit $ runVk $ vkDeviceWaitIdle dev
-        logInfo "Finished waiting after main loop termination before deallocating."
-    runVk $ vkDeviceWaitIdle dev
+        if shouldExit
+        then runVk $ vkDeviceWaitIdle dev
+        -- using Event here properly deals with multiple waiting threads, in contrast to using plain MVars
+        else liftIO $ Event.wait frameFinishedEvent
+        -- logInfo "Finished waiting after main loop termination before deallocating."
     return ()
