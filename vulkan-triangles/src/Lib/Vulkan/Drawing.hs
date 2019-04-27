@@ -17,7 +17,10 @@ module Lib.Vulkan.Drawing
   , _MAX_FRAMES_IN_FLIGHT
   ) where
 
-import           Control.Monad                            (forM_)
+import           Control.Concurrent.Event                 (Event)
+import qualified Control.Concurrent.Event                 as Event
+import           Control.Concurrent.MVar
+import           Control.Monad                            (forM_, when)
 import           Data.IORef
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
@@ -186,6 +189,10 @@ data RenderData
     -- ^ one per frame-in-flight
   , inFlightFences     :: Ptr VkFence
     -- ^ one per frame-in-flight
+  , frameFinished      :: Event
+    -- ^ signals completion of a frame to deallocators
+  , frameOnQueue       :: [MVar ()]
+    -- ^ one per frame-in-flight
   , commandBuffers     :: Ptr VkCommandBuffer
     -- ^ one per swapchain image
   , memories           :: Ptr VkDeviceMemory
@@ -198,9 +205,12 @@ drawFrame :: RenderData -> Program r Bool
 drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef currentFrame
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
-    runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
-    -- TODO counter or queue to notify deallocators
-    -- framerate counter should be incremented here
+    isOnQueue <- liftIO $ maybe False (const True) <$> tryTakeMVar (frameOnQueue !! frameIndex)
+    -- could be not on queue because of retry due to VK_ERROR_OUT_OF_DATE_KHR below
+    when isOnQueue $ do
+      runVk $ vkWaitForFences device 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
+      -- could also take current time here to measure frametimes
+      liftIO $ Event.signal frameFinished
 
     let SwapchainInfo {..} = swapchainInfo
         DevQueues {..} = deviceQueues
@@ -234,6 +244,7 @@ drawFrame RenderData {..} = do
     runVk $ vkResetFences device 1 inFlightFencePtr
     withVkPtr submitInfo $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr inFlightFence
+    liftIO $ putMVar (frameOnQueue !! frameIndex) ()
 
     -- Presentation
     let presentInfo = createVk @VkPresentInfoKHR

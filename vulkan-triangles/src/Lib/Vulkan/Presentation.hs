@@ -9,7 +9,7 @@ module Lib.Vulkan.Presentation
   ( SwapchainInfo (..)
   , createSurface
   , createSwapchain
-  , destroySwapchainIfNecessary
+  , createSwapchainSlot
   ) where
 
 import           Control.Concurrent.MVar
@@ -105,12 +105,11 @@ createSwapchain :: VkDevice
                 -> DevQueues
                 -> VkSurfaceKHR
                 -> MVar VkSwapchainKHR
-                -> MVar VkSwapchainKHR
+                -> Maybe (MVar VkSwapchainKHR)
                 -> Program r SwapchainInfo
-createSwapchain dev scsd queues surf resource oldResource = do
-  mayOldSwapchain <- liftIO $ tryTakeMVar resource
-  liftIO $ tryTakeMVar oldResource >> return ()
-  liftIO $ sequence_ $ putMVar oldResource <$> mayOldSwapchain
+createSwapchain dev scsd queues surf slot mayOldSlot = do
+  mayOldSwapchain <- liftIO $ tryTakeMVar slot
+  liftIO $ sequence_ $ putMVar <$> mayOldSlot <*> mayOldSwapchain
 
   surfFmt <- chooseSwapSurfaceFormat scsd
   let spMode = chooseSwapPresentMode scsd
@@ -152,7 +151,7 @@ createSwapchain dev scsd queues surf resource oldResource = do
 
   swapchain <- withVkPtr swCreateInfo $ \swciPtr -> allocaPeek
     $ runVk . vkCreateSwapchainKHR dev swciPtr VK_NULL
-  liftIO $ putMVar resource swapchain
+  liftIO $ putMVar slot swapchain
 
   swapImgs <- asListVk
     $ \x -> runVk . vkGetSwapchainImagesKHR dev swapchain x
@@ -164,9 +163,17 @@ createSwapchain dev scsd queues surf resource oldResource = do
         , swapExtent    = sExtent
         }
 
+
 destroySwapchainIfNecessary :: VkDevice
                             -> MVar VkSwapchainKHR
                             -> Program r ()
-destroySwapchainIfNecessary dev resource = do
-  maySwapchain <- liftIO $ tryTakeMVar resource
+destroySwapchainIfNecessary dev slot = do
+  maySwapchain <- liftIO $ tryTakeMVar slot
   liftIO $ sequence_ $ flip (vkDestroySwapchainKHR dev) VK_NULL <$> maySwapchain
+
+
+createSwapchainSlot :: VkDevice -> Program r (MVar VkSwapchainKHR)
+createSwapchainSlot dev =
+  allocResource
+    (destroySwapchainIfNecessary dev)
+    (liftIO newEmptyMVar)

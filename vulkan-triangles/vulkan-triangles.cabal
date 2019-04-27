@@ -60,6 +60,7 @@ library
                       , JuicyPixels
                       , vector
                       , wavefront
+                      , concurrent-extra
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
