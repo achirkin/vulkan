@@ -26,6 +26,7 @@ import           System.Directory                     (doesFileExist)
 import           Lib.GLFW
 import           Lib.Program
 import           Lib.Program.Foreign
+import           Lib.Vulkan.Command
 import           Lib.Vulkan.Descriptor
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
@@ -294,6 +295,6 @@ runVulkanProgram demo = runProgram checkStatus $ do
         if shouldExit
         then runVk $ vkDeviceWaitIdle dev
         -- using Event here properly deals with multiple waiting threads, in contrast to using plain MVars
-        else liftIO $ Event.wait frameFinishedEvent
+        else liftIO $ sequence_ $ replicate 2 $ Event.wait frameFinishedEvent
         -- logInfo "Finished waiting after main loop termination before deallocating."
     return ()
