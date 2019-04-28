@@ -59,7 +59,8 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
     (VK_IMAGE_USAGE_TRANSFER_DST_BIT .|. VK_IMAGE_USAGE_SAMPLED_BIT)
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
-  transitionImageLayout dev cmdPool cmdQueue image VK_FORMAT_R8G8B8A8_UNORM Undef_TransDst
+  runCommandsOnce dev cmdPool cmdQueue $
+    transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM Undef_TransDst
 
   -- Use "locally" to destroy temporary staging buffer after data copy is complete
   locally $ do
@@ -77,7 +78,8 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
     copyBufferToImage dev cmdPool cmdQueue stagingBuf image
       (fromIntegral imageWidth) (fromIntegral imageHeight)
 
-  transitionImageLayout dev cmdPool cmdQueue image VK_FORMAT_R8G8B8A8_UNORM TransDst_ShaderRO
+  runCommandsOnce dev cmdPool cmdQueue $
+    transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM TransDst_ShaderRO
 
   return image
 
@@ -188,15 +190,13 @@ dependents Undef_DepthStencil =
   , dstStageMask    = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
   }
 
-transitionImageLayout :: VkDevice
-                      -> VkCommandPool
-                      -> VkQueue
-                      -> VkImage
+transitionImageLayout :: VkImage
                       -> VkFormat
                       -> ImageLayoutTransition
+                      -> VkCommandBuffer
                       -> Program r ()
-transitionImageLayout dev cmdPool cmdQueue image format transition =
-  runCommandsOnce dev cmdPool cmdQueue $ \cmdBuf -> do
+transitionImageLayout image format transition cmdBuf =
+  do
     let TransitionDependent {..} = dependents transition
     let aspectMask = case newLayout of
           VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
@@ -368,7 +368,7 @@ createDepthImgView :: VkPhysicalDevice
                    -> VkQueue
                    -> VkExtent2D
                    -> Program r VkImageView
-createDepthImgView pdev dev cmdPool cmdQueue extent = do
+createDepthImgView pdev dev cmdPool queue extent = do
   depthFormat <- findDepthFormat pdev
 
   (_, depthImage) <- createImage pdev dev
@@ -376,5 +376,6 @@ createDepthImgView pdev dev cmdPool cmdQueue extent = do
     VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
   depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT
-  transitionImageLayout dev cmdPool cmdQueue depthImage depthFormat Undef_DepthStencil
+  runCommandsAsync dev cmdPool queue $
+    transitionImageLayout depthImage depthFormat Undef_DepthStencil
   return depthImageView

@@ -9,7 +9,6 @@
 module Lib.Vulkan.Drawing
   ( RenderData (..)
   , createFramebuffers
-  , createCommandPool
   , createCommandBuffers
   , createFrameSemaphores
   , createFrameFences
@@ -63,18 +62,6 @@ createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depth
             &* set @"layers" 1
       in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
           runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
-
-
-createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
-createCommandPool dev DevQueues{..} =
-  allocResource (liftIO . flip (vkDestroyCommandPool dev) VK_NULL) $
-    allocaPeek $ \pPtr -> withVkPtr
-      ( createVk
-        $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
-        &* set @"pNext" VK_NULL
-        &* set @"flags" 0
-        &* set @"queueFamilyIndex" graphicsFamIdx
-      ) $ \ciPtr -> runVk $ vkCreateCommandPool dev ciPtr VK_NULL pPtr
 
 
 createCommandBuffers :: VkDevice
