@@ -6,8 +6,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 module Lib.Vulkan.Image
-  ( createTextureImage
-  , createTextureImageView
+  ( createTextureImageView
   , createTextureSampler
   , textureImageInfo
   , createImageView
@@ -36,31 +35,30 @@ import           Lib.Vulkan.Command
 
 
 
-createTextureImageView :: VkDevice -> VkImage -> Program r VkImageView
-createTextureImageView dev img = createImageView dev img VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_ASPECT_COLOR_BIT
-
-createTextureImage :: VkPhysicalDevice
-                   -> VkDevice
-                   -> VkCommandPool
-                   -> VkQueue
-                   -> FilePath
-                   -> Program r VkImage
-createTextureImage pdev dev cmdPool cmdQueue path = do
+createTextureImageView :: VkPhysicalDevice
+                       -> VkDevice
+                       -> VkCommandPool
+                       -> VkQueue
+                       -> FilePath
+                       -> Program r (VkImageView, Word32)
+createTextureImageView pdev dev cmdPool cmdQueue path = do
   Image { imageWidth, imageHeight, imageData }
     <- (liftIO $ readImage path) >>= \case
       Left err -> throwVkMsg err
       Right dynImg -> pure $ convertRGBA8 dynImg
   let (imageDataForeignPtr, imageDataLen) = Vec.unsafeToForeignPtr0 imageData
       bufSize :: VkDeviceSize = fromIntegral imageDataLen
+      log2 (x::Float) = log x / log 2
+      mipLevels = (floor . log2 . fromIntegral $ max imageWidth imageHeight) + 1
 
   -- we don't need to access the VkDeviceMemory of the image, copyBufferToImage works with the VkImage
-  (_, image) <- createImage pdev dev (fromIntegral imageWidth) (fromIntegral imageHeight)
+  (_, image) <- createImage pdev dev (fromIntegral imageWidth) (fromIntegral imageHeight) mipLevels
     VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TILING_OPTIMAL
-    (VK_IMAGE_USAGE_TRANSFER_DST_BIT .|. VK_IMAGE_USAGE_SAMPLED_BIT)
+    (VK_IMAGE_USAGE_TRANSFER_SRC_BIT .|. VK_IMAGE_USAGE_TRANSFER_DST_BIT .|. VK_IMAGE_USAGE_SAMPLED_BIT)
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
   runCommandsOnce dev cmdPool cmdQueue $
-    transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM Undef_TransDst
+    transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM Undef_TransDst mipLevels
 
   -- Use "locally" to destroy temporary staging buffer after data copy is complete
   locally $ do
@@ -79,14 +77,141 @@ createTextureImage pdev dev cmdPool cmdQueue path = do
       (fromIntegral imageWidth) (fromIntegral imageHeight)
 
   runCommandsOnce dev cmdPool cmdQueue $
-    transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM TransDst_ShaderRO
+    -- generateMipmaps does this as a side effect:
+    -- transitionImageLayout image VK_FORMAT_R8G8B8A8_UNORM TransDst_ShaderRO mipLevels
+    generateMipmaps pdev image VK_FORMAT_R8G8B8A8_UNORM (fromIntegral imageWidth) (fromIntegral imageHeight) mipLevels
 
-  return image
+  imageView <- createImageView dev image VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_ASPECT_COLOR_BIT mipLevels
+
+  return (imageView, mipLevels)
+
+
+generateMipmaps :: VkPhysicalDevice
+                -> VkImage
+                -> VkFormat
+                -> Word32
+                -> Word32
+                -> Word32
+                -> VkCommandBuffer
+                -> Program r ()
+generateMipmaps pdev image format width height mipLevels cmdBuf = do
+  formatProps <- allocaPeek $ \propsPtr ->
+    liftIO $ vkGetPhysicalDeviceFormatProperties pdev format propsPtr
+  let supported = getField @"optimalTilingFeatures" formatProps
+                  .&. VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT
+   in when (supported == 0) $
+      throwVkMsg "texture image format does not support linear blitting!"
+  mapM_ createLvl
+    (zip3
+     [1 .. mipLevels-1]
+     (iterate nextLen (fromIntegral width))
+     (iterate nextLen (fromIntegral height)))
+
+  let barrier = barrierStruct (mipLevels - 1)
+        VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        VK_ACCESS_TRANSFER_WRITE_BIT VK_ACCESS_SHADER_READ_BIT
+   in withVkPtr barrier $ \barrPtr -> liftIO $
+      vkCmdPipelineBarrier cmdBuf
+        VK_PIPELINE_STAGE_TRANSFER_BIT VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
+        0
+        0 VK_NULL
+        0 VK_NULL
+        1 barrPtr
+
+  where
+
+  nextLen l = if l > 1 then l `div` 2 else 1
+  barrierStruct mipLevel oldLayout newLayout srcAccessMask dstAccessMask =
+    createVk @VkImageMemoryBarrier
+    $  set @"sType" VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
+    &* set @"pNext" VK_NULL
+    &* set @"oldLayout" oldLayout
+    &* set @"newLayout" newLayout
+    &* set @"srcQueueFamilyIndex" VK_QUEUE_FAMILY_IGNORED
+    &* set @"dstQueueFamilyIndex" VK_QUEUE_FAMILY_IGNORED
+    &* set @"image" image
+    &* setVk @"subresourceRange"
+        (  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
+        &* set @"baseMipLevel" mipLevel
+        &* set @"levelCount" 1
+        &* set @"baseArrayLayer" 0
+        &* set @"layerCount" 1
+        )
+    &* set @"srcAccessMask" srcAccessMask
+    &* set @"dstAccessMask" dstAccessMask
+  blitStruct mipLevel srcWidth srcHeight =
+    createVk @VkImageBlit
+    $  setAt @"srcOffsets" @0
+        (createVk
+         $  set @"x" 0
+         &* set @"y" 0
+         &* set @"z" 0
+        )
+    &* setAt @"srcOffsets" @1
+        (createVk
+         $  set @"x" srcWidth
+         &* set @"y" srcHeight
+         &* set @"z" 1
+        )
+    &* setAt @"dstOffsets" @0
+        (createVk
+         $  set @"x" 0
+         &* set @"y" 0
+         &* set @"z" 0
+        )
+    &* setAt @"dstOffsets" @1
+        (createVk
+         $  set @"x" (nextLen srcWidth)
+         &* set @"y" (nextLen srcHeight)
+         &* set @"z" 1
+        )
+    &* setVk @"srcSubresource"
+        (  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
+        &* set @"mipLevel" (mipLevel - 1)
+        &* set @"baseArrayLayer" 0
+        &* set @"layerCount" 1
+        )
+    &* setVk @"dstSubresource"
+        (  set @"aspectMask" VK_IMAGE_ASPECT_COLOR_BIT
+        &* set @"mipLevel" mipLevel
+        &* set @"baseArrayLayer" 0
+        &* set @"layerCount" 1
+        )
+  createLvl (mipLevel, srcWidth, srcHeight) = do
+    let barrier = barrierStruct (mipLevel - 1)
+          VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL
+          VK_ACCESS_TRANSFER_WRITE_BIT VK_ACCESS_TRANSFER_READ_BIT
+     in withVkPtr barrier $ \barrPtr -> liftIO $
+        vkCmdPipelineBarrier cmdBuf
+          VK_PIPELINE_STAGE_TRANSFER_BIT VK_PIPELINE_STAGE_TRANSFER_BIT
+          0
+          0 VK_NULL
+          0 VK_NULL
+          1 barrPtr
+
+    withVkPtr (blitStruct mipLevel srcWidth srcHeight) $ \blitPtr -> liftIO $
+      vkCmdBlitImage cmdBuf
+        image VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL
+        image VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+        1 blitPtr
+        VK_FILTER_LINEAR
+
+    let barrier = barrierStruct (mipLevel - 1)
+          VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+          VK_ACCESS_TRANSFER_READ_BIT VK_ACCESS_SHADER_READ_BIT
+     in withVkPtr barrier $ \barrPtr -> liftIO $
+        vkCmdPipelineBarrier cmdBuf
+          VK_PIPELINE_STAGE_TRANSFER_BIT VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
+          0
+          0 VK_NULL
+          0 VK_NULL
+          1 barrPtr
 
 
 createTextureSampler :: VkDevice
+                     -> Word32
                      -> Program r VkSampler
-createTextureSampler dev = do
+createTextureSampler dev mipLevels = do
   let samplerCreateInfo = createVk @VkSamplerCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO
         &* set @"pNext" VK_NULL_HANDLE
@@ -104,7 +229,7 @@ createTextureSampler dev = do
         &* set @"mipmapMode" VK_SAMPLER_MIPMAP_MODE_LINEAR
         &* set @"mipLodBias" 0
         &* set @"minLod" 0
-        &* set @"maxLod" 0
+        &* set @"maxLod" (fromIntegral mipLevels)
 
   allocResource (liftIO . (flip (vkDestroySampler dev) VK_NULL)) $
     withVkPtr samplerCreateInfo $ \sciPtr ->
@@ -122,8 +247,9 @@ createImageView :: VkDevice
                 -> VkImage
                 -> VkFormat
                 -> VkImageAspectFlags
+                -> Word32
                 -> Program r VkImageView
-createImageView dev image format aspectFlags = do
+createImageView dev image format aspectFlags mipLevels = do
     let cmapping = createVk
           $  set @"r" VK_COMPONENT_SWIZZLE_IDENTITY
           &* set @"g" VK_COMPONENT_SWIZZLE_IDENTITY
@@ -132,7 +258,7 @@ createImageView dev image format aspectFlags = do
         srrange = createVk
           $  set @"aspectMask" aspectFlags
           &* set @"baseMipLevel" 0
-          &* set @"levelCount" 1
+          &* set @"levelCount" mipLevels
           &* set @"baseArrayLayer" 0
           &* set @"layerCount" 1
         imgvCreateInfo = createVk @VkImageViewCreateInfo
@@ -193,9 +319,10 @@ dependents Undef_DepthStencil =
 transitionImageLayout :: VkImage
                       -> VkFormat
                       -> ImageLayoutTransition
+                      -> Word32
                       -> VkCommandBuffer
                       -> Program r ()
-transitionImageLayout image format transition cmdBuf =
+transitionImageLayout image format transition mipLevels cmdBuf =
   do
     let TransitionDependent {..} = dependents transition
     let aspectMask = case newLayout of
@@ -216,7 +343,7 @@ transitionImageLayout image format transition cmdBuf =
           &* setVk @"subresourceRange"
               (  set @"aspectMask" aspectMask
               &* set @"baseMipLevel" 0
-              &* set @"levelCount" 1
+              &* set @"levelCount" mipLevels
               &* set @"baseArrayLayer" 0
               &* set @"layerCount" 1
               )
@@ -235,12 +362,13 @@ createImage :: VkPhysicalDevice
             -> VkDevice
             -> Word32
             -> Word32
+            -> Word32
             -> VkFormat
             -> VkImageTiling
             -> VkImageUsageFlags
             -> VkMemoryPropertyFlags
             -> Program r (VkDeviceMemory, VkImage)
-createImage pdev dev width height format tiling usage propFlags = do
+createImage pdev dev width height mipLevels format tiling usage propFlags = do
   let ici = createVk @VkImageCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO
         &* set @"pNext" VK_NULL
@@ -251,7 +379,7 @@ createImage pdev dev width height format tiling usage propFlags = do
             &* set @"height" height
             &* set @"depth" 1
             )
-        &* set @"mipLevels" 1
+        &* set @"mipLevels" mipLevels
         &* set @"arrayLayers" 1
         &* set @"format" format
         &* set @"tiling" tiling
@@ -372,10 +500,10 @@ createDepthImgView pdev dev cmdPool queue extent = do
   depthFormat <- findDepthFormat pdev
 
   (_, depthImage) <- createImage pdev dev
-    (getField @"width" extent) (getField @"height" extent) depthFormat
+    (getField @"width" extent) (getField @"height" extent) 1 depthFormat
     VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
-  depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT
+  depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT 1
   runCommandsAsync dev cmdPool queue $
-    transitionImageLayout depthImage depthFormat Undef_DepthStencil
+    transitionImageLayout depthImage depthFormat Undef_DepthStencil 1
   return depthImageView
