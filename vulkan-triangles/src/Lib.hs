@@ -156,9 +156,8 @@ runVulkanProgram demo = runProgram checkStatus $ do
     let texturePath = case demo of
           Squares -> "textures/texture.jpg"
           Chalet  -> "textures/chalet.jpg"
-    texture <- createTextureImage pdev dev commandPool (graphicsQueue queues) texturePath
-    textureView <- createTextureImageView dev texture
-    textureSampler <- createTextureSampler dev
+    (textureView, mipLevels) <- createTextureImageView pdev dev commandPool (graphicsQueue queues) texturePath
+    textureSampler <- createTextureSampler dev mipLevels
     descriptorTextureInfo <- textureImageInfo textureView textureSampler
 
     depthFormat <- findDepthFormat pdev
@@ -208,7 +207,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
         oldSwapchainSlot <- createSwapchainSlot dev
         swapInfo <- liftIO $ readIORef swapInfoRef
         let swapchainLen = length (swapImgs swapInfo)
-        imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT) (swapImgs swapInfo)
+        imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
         renderPass <- createRenderPass dev swapInfo depthFormat
         graphicsPipeline
           <- createGraphicsPipeline dev swapInfo
