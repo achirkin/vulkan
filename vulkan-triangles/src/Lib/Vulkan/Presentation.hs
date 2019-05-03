@@ -114,6 +114,8 @@ createSwapchain dev scsd queues surf slot mayOldSlot = do
   surfFmt <- chooseSwapSurfaceFormat scsd
   let spMode = chooseSwapPresentMode scsd
       sExtent = chooseSwapExtent scsd
+  logInfo $ "available present modes " ++ show (presentModes scsd)
+  logInfo $ "using present mode " ++ show spMode
 
   -- try tripple buffering
   let maxIC = getField @"maxImageCount" $ capabilities scsd
