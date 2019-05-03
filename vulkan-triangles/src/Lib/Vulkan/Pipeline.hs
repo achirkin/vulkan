@@ -33,9 +33,10 @@ createGraphicsPipeline :: KnownDim n
                        -> [VkPipelineShaderStageCreateInfo]
                        -> VkRenderPass
                        -> VkPipelineLayout
+                       -> VkSampleCountFlagBits
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapchainInfo{ swapExtent } bindDesc attrDescs shaderDescs renderPass pipelineLayout =
+    dev SwapchainInfo{ swapExtent } bindDesc attrDescs shaderDescs renderPass pipelineLayout msaaSamples=
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -101,7 +102,7 @@ createGraphicsPipeline
         &* set @"pNext" VK_NULL
         &* set @"flags" 0
         &* set @"sampleShadingEnable" VK_FALSE
-        &* set @"rasterizationSamples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"rasterizationSamples" msaaSamples
         &* set @"minSampleShading" 1.0 -- Optional
         &* set @"pSampleMask" VK_NULL -- Optional
         &* set @"alphaToCoverageEnable" VK_FALSE -- Optional
@@ -214,30 +215,42 @@ createPipelineLayout dev dsl = do
 createRenderPass :: VkDevice
                  -> SwapchainInfo
                  -> VkFormat
+                 -> VkSampleCountFlagBits
                  -> Program r VkRenderPass
-createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat =
+createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat samples =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
         &* set @"format" swapImgFormat
-        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"samples" samples
         &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
         &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
         &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
         &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
         &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
-        &* set @"finalLayout" VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
 
       depthAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
         &* set @"format" depthFormat
-        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"samples" samples
         &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
         &* set @"storeOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
         &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
         &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
         &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
         &* set @"finalLayout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
+      colorAttachmentResolve = createVk @VkAttachmentDescription
+        $  set @"flags" 0
+        &* set @"format" swapImgFormat
+        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
+        &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 
       -- subpasses and attachment references
       colorAttachmentRef = createVk @VkAttachmentReference
@@ -248,11 +261,16 @@ createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat =
         $  set @"attachment" 1
         &* set @"layout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
 
+      colorAttachmentResolveRef = createVk @VkAttachmentReference
+        $  set @"attachment" 2
+        &* set @"layout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+
       subpass = createVk @VkSubpassDescription
         $  set @"pipelineBindPoint" VK_PIPELINE_BIND_POINT_GRAPHICS
         &* set @"colorAttachmentCount" 1
         &* setVkRef @"pColorAttachments" colorAttachmentRef
         &* setVkRef @"pDepthStencilAttachment" depthAttachmentRef
+        &* setVkRef @"pResolveAttachments" colorAttachmentResolveRef
         &* set @"pPreserveAttachments" VK_NULL
         &* set @"pInputAttachments" VK_NULL
 
@@ -271,7 +289,8 @@ createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat =
       rpCreateInfo = createVk @VkRenderPassCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* setListCountAndRef @"attachmentCount" @"pAttachments" [colorAttachment, depthAttachment]
+        &* setListCountAndRef @"attachmentCount" @"pAttachments"
+            [colorAttachment, depthAttachment, colorAttachmentResolve]
         &* set @"subpassCount" 1
         &* setVkRef @"pSubpasses" subpass
         &* set @"dependencyCount" 1

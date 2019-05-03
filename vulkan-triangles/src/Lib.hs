@@ -105,6 +105,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
   glfwWaitEventsMeanwhile $ do
     (_, pdev) <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
     logInfo $ "Selected physical device: " ++ show pdev
+    msaaSamples <- getMaxUsableSampleCount pdev
 
     (dev, queues) <- createGraphicsDevice pdev vulkanSurface
     logInfo $ "Createad device: " ++ show dev
@@ -208,17 +209,21 @@ runVulkanProgram demo = runProgram checkStatus $ do
         swapInfo <- liftIO $ readIORef swapInfoRef
         let swapchainLen = length (swapImgs swapInfo)
         imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
-        renderPass <- createRenderPass dev swapInfo depthFormat
+        renderPass <- createRenderPass dev swapInfo depthFormat msaaSamples
         graphicsPipeline
           <- createGraphicsPipeline dev swapInfo
                                     vertIBD vertIADs
                                     [shaderVert, shaderFrag]
                                     renderPass
                                     pipelineLayout
+                                    msaaSamples
 
-        depthImgView <- createDepthImgView pdev dev commandPool (graphicsQueue queues) (swapExtent swapInfo)
+        colorAttImgView <- createColorAttImgView pdev dev commandPool (graphicsQueue queues)
+                           (swapImgFormat swapInfo) (swapExtent swapInfo) msaaSamples
+        depthAttImgView <- createDepthAttImgView pdev dev commandPool (graphicsQueue queues)
+                           (swapExtent swapInfo) msaaSamples
         framebuffers
-          <- createFramebuffers dev renderPass swapInfo imgViews depthImgView
+          <- createFramebuffers dev renderPass swapInfo imgViews depthAttImgView colorAttImgView
         cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
                                           renderPass pipelineLayout swapInfo
                                           vertexBuffer

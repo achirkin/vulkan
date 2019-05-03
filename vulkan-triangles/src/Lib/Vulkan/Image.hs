@@ -15,7 +15,8 @@ module Lib.Vulkan.Image
   , findSupportedFormat
   , findDepthFormat
   , hasStencilComponent
-  , createDepthImgView
+  , createDepthAttImgView
+  , createColorAttImgView
   ) where
 
 import           Codec.Picture
@@ -52,7 +53,8 @@ createTextureImageView pdev dev cmdPool cmdQueue path = do
       mipLevels = (floor . log2 . fromIntegral $ max imageWidth imageHeight) + 1
 
   -- we don't need to access the VkDeviceMemory of the image, copyBufferToImage works with the VkImage
-  (_, image) <- createImage pdev dev (fromIntegral imageWidth) (fromIntegral imageHeight) mipLevels
+  (_, image) <- createImage pdev dev
+    (fromIntegral imageWidth) (fromIntegral imageHeight) mipLevels VK_SAMPLE_COUNT_1_BIT
     VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TILING_OPTIMAL
     (VK_IMAGE_USAGE_TRANSFER_SRC_BIT .|. VK_IMAGE_USAGE_TRANSFER_DST_BIT .|. VK_IMAGE_USAGE_SAMPLED_BIT)
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
@@ -276,7 +278,7 @@ createImageView dev image format aspectFlags mipLevels = do
          allocaPeek $ runVk . vkCreateImageView dev imgvciPtr VK_NULL
 
 
-data ImageLayoutTransition = Undef_TransDst | TransDst_ShaderRO | Undef_DepthStencil
+data ImageLayoutTransition = Undef_TransDst | TransDst_ShaderRO | Undef_DepthStencilAtt | Undef_ColorAtt
 
 data TransitionDependent = TransitionDependent
   { oldLayout     :: VkImageLayout
@@ -306,7 +308,7 @@ dependents TransDst_ShaderRO =
   , srcStageMask    = VK_PIPELINE_STAGE_TRANSFER_BIT
   , dstStageMask    = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
   }
-dependents Undef_DepthStencil =
+dependents Undef_DepthStencilAtt =
   TransitionDependent
   { oldLayout       = VK_IMAGE_LAYOUT_UNDEFINED
   , newLayout       = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
@@ -314,6 +316,15 @@ dependents Undef_DepthStencil =
   , dstAccessMask   = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT .|. VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
   , srcStageMask    = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
   , dstStageMask    = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
+  }
+dependents Undef_ColorAtt =
+  TransitionDependent
+  { oldLayout       = VK_IMAGE_LAYOUT_UNDEFINED
+  , newLayout       = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+  , srcAccessMask   = 0
+  , dstAccessMask   = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT .|. VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+  , srcStageMask    = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
+  , dstStageMask    = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
   }
 
 transitionImageLayout :: VkImage
@@ -363,12 +374,13 @@ createImage :: VkPhysicalDevice
             -> Word32
             -> Word32
             -> Word32
+            -> VkSampleCountFlagBits
             -> VkFormat
             -> VkImageTiling
             -> VkImageUsageFlags
             -> VkMemoryPropertyFlags
             -> Program r (VkDeviceMemory, VkImage)
-createImage pdev dev width height mipLevels format tiling usage propFlags = do
+createImage pdev dev width height mipLevels samples format tiling usage propFlags = do
   let ici = createVk @VkImageCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO
         &* set @"pNext" VK_NULL
@@ -386,7 +398,7 @@ createImage pdev dev width height mipLevels format tiling usage propFlags = do
         &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
         &* set @"usage" usage
         &* set @"sharingMode" VK_SHARING_MODE_EXCLUSIVE
-        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"samples" samples
         &* set @"queueFamilyIndexCount" 0
         &* set @"pQueueFamilyIndices" VK_NULL
   (image, freeImageLater) <- allocResource'
@@ -490,20 +502,42 @@ hasStencilComponent format = format `elem`
   [VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT]
 
 
-createDepthImgView :: VkPhysicalDevice
-                   -> VkDevice
-                   -> VkCommandPool
-                   -> VkQueue
-                   -> VkExtent2D
-                   -> Program r VkImageView
-createDepthImgView pdev dev cmdPool queue extent = do
+createDepthAttImgView :: VkPhysicalDevice
+                      -> VkDevice
+                      -> VkCommandPool
+                      -> VkQueue
+                      -> VkExtent2D
+                      -> VkSampleCountFlagBits
+                      -> Program r VkImageView
+createDepthAttImgView pdev dev cmdPool queue extent samples = do
   depthFormat <- findDepthFormat pdev
 
   (_, depthImage) <- createImage pdev dev
-    (getField @"width" extent) (getField @"height" extent) 1 depthFormat
+    (getField @"width" extent) (getField @"height" extent) 1 samples depthFormat
     VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
   depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT 1
   runCommandsAsync dev cmdPool queue $
-    transitionImageLayout depthImage depthFormat Undef_DepthStencil 1
+    transitionImageLayout depthImage depthFormat Undef_DepthStencilAtt 1
   return depthImageView
+
+
+createColorAttImgView :: VkPhysicalDevice
+                      -> VkDevice
+                      -> VkCommandPool
+                      -> VkQueue
+                      -> VkFormat
+                      -> VkExtent2D
+                      -> VkSampleCountFlagBits
+                      -> Program r VkImageView
+createColorAttImgView pdev dev cmdPool queue format extent samples = do
+  (_, colorImage) <- createImage pdev dev
+    (getField @"width" extent) (getField @"height" extent) 1 samples format
+    VK_IMAGE_TILING_OPTIMAL
+    -- not sure why tutorial uses VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT
+    (VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT .|. VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT)
+    VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
+  colorImageView <- createImageView dev colorImage format VK_IMAGE_ASPECT_COLOR_BIT 1
+  runCommandsAsync dev cmdPool queue $
+    transitionImageLayout colorImage format Undef_ColorAtt 1
+  return colorImageView
