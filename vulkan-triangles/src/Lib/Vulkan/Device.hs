@@ -5,6 +5,7 @@
 module Lib.Vulkan.Device
     ( pickPhysicalDevice
     , isDeviceSuitable
+    , getMaxUsableSampleCount
     , DevQueues (..)
     , SwapchainSupportDetails (..)
     , querySwapchainSupport
@@ -109,6 +110,32 @@ isDeviceSuitable mVkSurf pdev = do
   let supportsAnisotropy = getField @"samplerAnisotropy" supportedFeatures == VK_TRUE
 
   pure (mscsd, extsGood && surfGood && supportsAnisotropy)
+
+
+
+getMaxUsableSampleCount :: VkPhysicalDevice
+                        -> Program r VkSampleCountFlagBits
+getMaxUsableSampleCount pdev = do
+  devProps <- allocaPeek $ \propsPtr ->
+    liftIO $ vkGetPhysicalDeviceProperties pdev propsPtr
+  let limits = getField @"limits" devProps
+      colorSampleCounts = getField @"framebufferColorSampleCounts" limits
+      depthSampleCounts = getField @"framebufferDepthSampleCounts" limits
+      counts = min colorSampleCounts depthSampleCounts
+      splitCounts = filter ((/= 0) . (counts .&.))
+        [ VK_SAMPLE_COUNT_64_BIT
+        , VK_SAMPLE_COUNT_32_BIT
+        , VK_SAMPLE_COUNT_16_BIT
+        , VK_SAMPLE_COUNT_8_BIT
+        , VK_SAMPLE_COUNT_4_BIT
+        , VK_SAMPLE_COUNT_2_BIT
+        , VK_SAMPLE_COUNT_1_BIT
+        ]
+      highestCount = head splitCounts
+      -- need to convert from "VkSampleCountBitmask FlagMask" to "VkSampleCountBitmask FlagBit"
+      VkSampleCountBitmask rawFlags = highestCount
+      result = VkSampleCountBitmask rawFlags
+  return result
 
 
 

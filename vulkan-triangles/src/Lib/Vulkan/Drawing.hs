@@ -44,19 +44,20 @@ createFramebuffers :: VkDevice
                    -> SwapchainInfo
                    -> [VkImageView]
                    -> VkImageView
+                   -> VkImageView
                    -> Program r [VkFramebuffer]
-createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depthImgView =
+createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depthImgView colorImgView =
     allocResource
       (liftIO . mapM_  (\fb -> vkDestroyFramebuffer dev fb VK_NULL) )
       (mapM createFB swapImgViews)
   where
-    createFB imgView =
+    createFB swapImgView =
       let fbci = createVk @VkFramebufferCreateInfo
             $  set @"sType" VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
             &* set @"pNext" VK_NULL
             &* set @"flags" 0
             &* set @"renderPass" renderPass
-            &* setListCountAndRef @"attachmentCount" @"pAttachments" [imgView, depthImgView]
+            &* setListCountAndRef @"attachmentCount" @"pAttachments" [colorImgView, depthImgView, swapImgView]
             &* set @"width" (getField @"width" swapExtent)
             &* set @"height" (getField @"height" swapExtent)
             &* set @"layers" 1
