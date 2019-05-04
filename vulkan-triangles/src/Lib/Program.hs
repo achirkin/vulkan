@@ -30,8 +30,8 @@ module Lib.Program
     , getTime
     , LoopControl (..)
     , checkStatus
-    , asyncRedo
     , occupyThreadAndFork
+    , loop
     ) where
 
 
@@ -357,48 +357,6 @@ checkStatus (Left err) = do
   exitFailure
 
 
--- | Like forkIO, but prints when the thread starts and ends, and tells if it ends with an exception
-debugForkIO :: IO () -> IO ThreadId
-debugForkIO action = forkFinally (announce >> action) finish where
-  announce = do
-    tid <- myThreadId
-    putStrLn $ "New Thread (" ++ show tid ++ ")"
-  finish res = do
-    tid <- myThreadId
-    let resStr = case res of Right _ -> "normally"
-                             Left ex -> "with an exception: " ++ show ex
-    putStrLn $ "Terminated Thread (" ++ show tid ++ ") " ++ resStr
-
-
-data RedoSignal = SigRedo | SigExit deriving Eq
-
-
--- | Allows restarting the given prog in a new thread while the old one is still running.
---
---   Enables deferred deallocation.
-asyncRedo :: (Program s () -> Program' ()) -> Program r ()
-asyncRedo prog = go where
-  go = do
-    control <- liftIO $ newEmptyMVar
-    let trigger = do
-          success <- liftIO $ tryPutMVar control SigRedo
-          when (not success) $ throwVkMsg "asyncRedo action tried to signal more than once"
-          liftIO yield
-    -- this program launches the redo-thread and continues with result () immediately
-    Program $ \ref c -> do
-      -- TODO use forkOS when using unsafe ffi calls?
-      -- don't need the threadId
-      _ <- forkIO $ do
-        unProgram (prog trigger) ref pure >>= checkStatus
-        -- When the redo-thread exits, we only need to signal exit to the parent
-        -- if nothing else has been signalled yet.
-        tryPutMVar control SigExit >> return ()
-      -- can't have a real result after forking, but the continuation needs to be called
-      c (Right ())
-    sig <- liftIO $ takeMVar control
-    when (sig == SigRedo) go
-
-
 -- | For C functions that have to run in the main thread as long as the program runs.
 occupyThreadAndFork :: Program' () -> Program' () -> Program r ()
 occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
@@ -409,3 +367,9 @@ occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
   exitCode <- catch (unProgram mainProg ref pure >>= checkStatus >> return ExitSuccess) $
                     \(exitCode :: ExitCode) -> return exitCode
   c (Right ()) >> exitWith exitCode
+
+
+loop :: Program' LoopControl -> Program r ()
+loop action = do
+  status <- locally action
+  if status == ContinueLoop then loop action else return ()

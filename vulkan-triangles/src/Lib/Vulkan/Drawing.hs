@@ -16,10 +16,7 @@ module Lib.Vulkan.Drawing
   , _MAX_FRAMES_IN_FLIGHT
   ) where
 
-import           Control.Concurrent.Event                 (Event)
-import qualified Control.Concurrent.Event                 as Event
-import           Control.Concurrent.MVar
-import           Control.Monad                            (forM_, when)
+import           Control.Monad                            (forM_)
 import           Data.IORef
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
@@ -177,10 +174,6 @@ data RenderData
     -- ^ one per frame-in-flight
   , inFlightFences     :: Ptr VkFence
     -- ^ one per frame-in-flight
-  , frameFinishedEvent :: Event
-    -- ^ signals completion of a frame to deallocators
-  , frameOnQueueVars   :: [MVar ()]
-    -- ^ one per frame-in-flight
   , cmdBuffersPtr      :: Ptr VkCommandBuffer
     -- ^ one per swapchain image
   , memories           :: Ptr VkDeviceMemory
@@ -193,13 +186,7 @@ drawFrame :: RenderData -> Program r Bool
 drawFrame RenderData {..} = do
     frameIndex <- liftIO $ readIORef frameIndexRef
     let inFlightFencePtr = inFlightFences `ptrAtIndex` frameIndex
-    isOnQueue <- liftIO $
-      maybe False (const True) <$> tryTakeMVar (frameOnQueueVars !! frameIndex)
-    -- could be not on queue because of retry due to VK_ERROR_OUT_OF_DATE_KHR below
-    when isOnQueue $ do
-      runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
-      -- could also take current time here to measure frametimes
-      liftIO $ Event.signal frameFinishedEvent
+    runVk $ vkWaitForFences dev 1 inFlightFencePtr VK_TRUE (maxBound :: Word64)
 
     let SwapchainInfo {..} = swapInfo
         DevQueues {..} = queues
@@ -233,7 +220,6 @@ drawFrame RenderData {..} = do
     runVk $ vkResetFences dev 1 inFlightFencePtr
     withVkPtr submitInfo $ \siPtr ->
       runVk $ vkQueueSubmit graphicsQueue 1 siPtr inFlightFence
-    liftIO $ putMVar (frameOnQueueVars !! frameIndex) ()
 
     -- Presentation
     let presentInfo = createVk @VkPresentInfoKHR
