@@ -12,8 +12,6 @@ module Lib
   , WhichDemo (..)
   ) where
 
-import qualified Control.Concurrent.Event             as Event
-import           Control.Concurrent.MVar
 import           Control.Monad                        (forM_, when)
 import           Data.IORef
 import           Data.Maybe                           (fromJust)
@@ -128,8 +126,6 @@ runVulkanProgram demo = runProgram checkStatus $ do
     renderFinishedSems <- createFrameSemaphores dev
     imageAvailableSems <- createFrameSemaphores dev
     inFlightFences <- createFrameFences dev
-    frameFinishedEvent <- liftIO $ Event.new
-    frameOnQueueVars <- liftIO $ sequence $ replicate _MAX_FRAMES_IN_FLIGHT $ newEmptyMVar
 
     commandPool <- createCommandPool dev queues
     logInfo $ "Createad command pool: " ++ show commandPool
@@ -174,131 +170,100 @@ runVulkanProgram demo = runProgram checkStatus $ do
           -- the IORef, so reset the IORef now:
           liftIO $ atomicWriteIORef windowSizeChanged False
 
-    -- creating first swapchain before loop
-    beforeSwapchainCreation
-    scsd <- querySwapchainSupport pdev vulkanSurface
+    -- The code below re-runs when the swapchain was re-created
+    loop $ do
+      scsd <- querySwapchainSupport pdev vulkanSurface
+      beforeSwapchainCreation
+      swapInfo <- createSwapchain dev scsd queues vulkanSurface
+      let swapchainLen = length (swapImgs swapInfo)
 
-    swapchainSlot <- createSwapchainSlot dev
-    swapInfoRef <- createSwapchain dev scsd queues vulkanSurface swapchainSlot Nothing >>= liftIO . newIORef
-
-    -- The code below re-runs when the swapchain was re-created and has a
-    -- different number of images than before:
-    asyncRedo $ \redoDifferentLength -> do
-      logInfo "New thread: Creating things that depend on the swapchain length.."
-      swapInfo0 <- liftIO $ readIORef swapInfoRef
-      let swapchainLen0 = length (swapImgs swapInfo0)
-
-      (transObjMems, transObjBufs) <- unzip <$> createTransObjBuffers pdev dev swapchainLen0
+      (transObjMems, transObjBufs) <- unzip <$> createTransObjBuffers pdev dev swapchainLen
       descriptorBufferInfos <- mapM transObjBufferInfo transObjBufs
 
-      descriptorPool <- createDescriptorPool dev swapchainLen0
-      descriptorSetLayouts <- newArrayRes $ replicate swapchainLen0 descriptorSetLayout
-      descriptorSets <- createDescriptorSets dev descriptorPool swapchainLen0 descriptorSetLayouts
+      descriptorPool <- createDescriptorPool dev swapchainLen
+      descriptorSetLayouts <- newArrayRes $ replicate swapchainLen descriptorSetLayout
+      descriptorSets <- createDescriptorSets dev descriptorPool swapchainLen descriptorSetLayouts
 
       forM_ (zip descriptorBufferInfos descriptorSets) $
         \(bufInfo, dSet) -> prepareDescriptorSet dev bufInfo descriptorTextureInfo dSet
 
       transObjMemories <- newArrayRes $ transObjMems
 
-      -- The code below re-runs when the swapchain was re-created and has the
-      -- same number of images as before, or continues from enclosing scope.
-      asyncRedo $ \redoSameLength -> do
-        logInfo "New thread: Creating things that depend on the swapchain, not only its length.."
-        -- need this for delayed destruction of the old swapchain if it gets replaced
-        oldSwapchainSlot <- createSwapchainSlot dev
-        swapInfo <- liftIO $ readIORef swapInfoRef
-        let swapchainLen = length (swapImgs swapInfo)
-        imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
-        renderPass <- createRenderPass dev swapInfo depthFormat msaaSamples
-        graphicsPipeline
-          <- createGraphicsPipeline dev swapInfo
-                                    vertIBD vertIADs
-                                    [shaderVert, shaderFrag]
-                                    renderPass
-                                    pipelineLayout
-                                    msaaSamples
+      imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
+      renderPass <- createRenderPass dev swapInfo depthFormat msaaSamples
+      graphicsPipeline
+        <- createGraphicsPipeline dev swapInfo
+                                  vertIBD vertIADs
+                                  [shaderVert, shaderFrag]
+                                  renderPass
+                                  pipelineLayout
+                                  msaaSamples
 
-        colorAttImgView <- createColorAttImgView pdev dev commandPool (graphicsQueue queues)
-                           (swapImgFormat swapInfo) (swapExtent swapInfo) msaaSamples
-        depthAttImgView <- createDepthAttImgView pdev dev commandPool (graphicsQueue queues)
-                           (swapExtent swapInfo) msaaSamples
-        framebuffers
-          <- createFramebuffers dev renderPass swapInfo imgViews depthAttImgView colorAttImgView
-        cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
-                                          renderPass pipelineLayout swapInfo
-                                          vertexBuffer
-                                          (dfLen indices, indexBuffer)
-                                          framebuffers
-                                          descriptorSets
+      colorAttImgView <- createColorAttImgView pdev dev commandPool (graphicsQueue queues)
+                          (swapImgFormat swapInfo) (swapExtent swapInfo) msaaSamples
+      depthAttImgView <- createDepthAttImgView pdev dev commandPool (graphicsQueue queues)
+                          (swapExtent swapInfo) msaaSamples
+      framebuffers
+        <- createFramebuffers dev renderPass swapInfo imgViews depthAttImgView colorAttImgView
+      cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
+                                        renderPass pipelineLayout swapInfo
+                                        vertexBuffer
+                                        (dfLen indices, indexBuffer)
+                                        framebuffers
+                                        descriptorSets
 
-        let rdata = RenderData
-              { dev
-              , swapInfo
-              , queues
-              , imgIndexPtr
-              , frameIndexRef
-              , renderFinishedSems
-              , imageAvailableSems
-              , inFlightFences
-              , frameFinishedEvent
-              , frameOnQueueVars
-              , cmdBuffersPtr
-              , memories           = transObjMemories
-              , memoryMutator      = updateTransObj dev (swapExtent swapInfo)
-              }
+      let rdata = RenderData
+            { dev
+            , swapInfo
+            , queues
+            , imgIndexPtr
+            , frameIndexRef
+            , renderFinishedSems
+            , imageAvailableSems
+            , inFlightFences
+            , cmdBuffersPtr
+            , memories           = transObjMemories
+            , memoryMutator      = updateTransObj dev (swapExtent swapInfo)
+            }
 
-        logInfo $ "Createad image views: " ++ show imgViews
-        logInfo $ "Createad renderpass: " ++ show renderPass
-        logInfo $ "Createad pipeline: " ++ show graphicsPipeline
-        logInfo $ "Createad framebuffers: " ++ show framebuffers
-        cmdBuffers <- peekArray swapchainLen cmdBuffersPtr
-        logInfo $ "Createad command buffers: " ++ show cmdBuffers
+      logInfo $ "Createad image views: " ++ show imgViews
+      logInfo $ "Createad renderpass: " ++ show renderPass
+      logInfo $ "Createad pipeline: " ++ show graphicsPipeline
+      logInfo $ "Createad framebuffers: " ++ show framebuffers
+      cmdBuffers <- peekArray swapchainLen cmdBuffersPtr
+      logInfo $ "Createad command buffers: " ++ show cmdBuffers
+
+      -- part of dumb fps counter
+      frameCount <- liftIO $ newIORef @Int 0
+      currentSec <- liftIO $ newIORef @Int 0
+
+      shouldExit <- glfwMainLoop window $ do
+        return () -- do some app logic
+
+        needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
+          case ecode of
+            Just VK_ERROR_OUT_OF_DATE_KHR -> do
+              logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error"
+              return True
+            _ -> throwError err
+          )
 
         -- part of dumb fps counter
-        frameCount <- liftIO $ newIORef @Int 0
-        currentSec <- liftIO $ newIORef @Int 0
+        seconds <- getTime
+        liftIO $ do
+          cur <- readIORef currentSec
+          if floor seconds /= cur then do
+            count <- readIORef frameCount
+            when (cur /= 0) $ print count
+            writeIORef currentSec (floor seconds)
+            writeIORef frameCount 0
+          else do
+            modifyIORef frameCount $ \c -> c + 1
 
-        shouldExit <- glfwMainLoop window $ do
-          return () -- do some app logic
-
-          needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
-            case ecode of
-              Just VK_ERROR_OUT_OF_DATE_KHR -> do
-                logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error"
-                return True
-              _ -> throwError err
-            )
-
-          -- part of dumb fps counter
-          seconds <- getTime
-          liftIO $ do
-            cur <- readIORef currentSec
-            if floor seconds /= cur then do
-              count <- readIORef frameCount
-              when (cur /= 0) $ print count
-              writeIORef currentSec (floor seconds)
-              writeIORef frameCount 0
-            else do
-              modifyIORef frameCount $ \c -> c + 1
-
-          sizeChanged <- liftIO $ readIORef windowSizeChanged
-          when sizeChanged $ logInfo "Have got a windowSizeCallback from GLFW"
-          if needRecreation || sizeChanged then do
-            beforeSwapchainCreation
-            let oldSwapchainLen = length (swapImgs swapInfo)
-            logInfo "Recreating swapchain.."
-            newScsd <- querySwapchainSupport pdev vulkanSurface
-            newSwapInfo <- createSwapchain dev newScsd queues vulkanSurface swapchainSlot (Just oldSwapchainSlot)
-            liftIO $ atomicWriteIORef swapInfoRef newSwapInfo
-            let newSwapchainLen = length (swapImgs newSwapInfo)
-            if oldSwapchainLen /= newSwapchainLen
-            then redoDifferentLength else redoSameLength
-            return AbortLoop
-          else return ContinueLoop
-        -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
-        if shouldExit
-        then runVk $ vkDeviceWaitIdle dev
-        -- using Event here properly deals with multiple waiting threads, in contrast to using plain MVars
-        else liftIO $ sequence_ $ replicate 2 $ Event.wait frameFinishedEvent
-        -- logInfo "Finished waiting after main loop termination before deallocating."
-    return ()
+        sizeChanged <- liftIO $ readIORef windowSizeChanged
+        when sizeChanged $ logInfo "Have got a windowSizeCallback from GLFW"
+        return $ if needRecreation || sizeChanged then AbortLoop else ContinueLoop
+      -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
+      runVk $ vkDeviceWaitIdle dev
+      return $ if shouldExit then AbortLoop else ContinueLoop
+  return ()

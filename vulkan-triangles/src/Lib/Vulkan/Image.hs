@@ -517,7 +517,7 @@ createDepthAttImgView pdev dev cmdPool queue extent samples = do
     VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
 
   depthImageView <- createImageView dev depthImage depthFormat VK_IMAGE_ASPECT_DEPTH_BIT 1
-  runCommandsAsync dev cmdPool queue $
+  runCommandsOnce dev cmdPool queue $
     transitionImageLayout depthImage depthFormat Undef_DepthStencilAtt 1
   return depthImageView
 
@@ -538,6 +538,6 @@ createColorAttImgView pdev dev cmdPool queue format extent samples = do
     (VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT .|. VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT)
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
   colorImageView <- createImageView dev colorImage format VK_IMAGE_ASPECT_COLOR_BIT 1
-  runCommandsAsync dev cmdPool queue $
+  runCommandsOnce dev cmdPool queue $
     transitionImageLayout colorImage format Undef_ColorAtt 1
   return colorImageView
