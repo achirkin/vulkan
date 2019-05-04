@@ -110,7 +110,7 @@ generateMipmaps pdev image format width height mipLevels cmdBuf = do
      (iterate nextLen (fromIntegral height)))
 
   let barrier = barrierStruct (mipLevels - 1)
-        VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         VK_ACCESS_TRANSFER_WRITE_BIT VK_ACCESS_SHADER_READ_BIT
    in withVkPtr barrier $ \barrPtr -> liftIO $
       vkCmdPipelineBarrier cmdBuf
