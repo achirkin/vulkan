@@ -170,8 +170,9 @@ runVulkanProgram demo = runProgram checkStatus $ do
           -- the IORef, so reset the IORef now:
           liftIO $ atomicWriteIORef windowSizeChanged False
 
-    -- The code below re-runs when the swapchain was re-created
+    -- The code below re-runs when the swapchain needs to be re-created
     loop $ do
+      logInfo $ "Creating new swapchain.."
       scsd <- querySwapchainSupport pdev vulkanSurface
       beforeSwapchainCreation
       swapInfo <- createSwapchain dev scsd queues vulkanSurface
@@ -264,6 +265,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
         when sizeChanged $ logInfo "Have got a windowSizeCallback from GLFW"
         return $ if needRecreation || sizeChanged then AbortLoop else ContinueLoop
       -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
+      -- things are deallocated implicitly thanks to allocResource
       runVk $ vkDeviceWaitIdle dev
       return $ if shouldExit then AbortLoop else ContinueLoop
   return ()
