@@ -117,12 +117,11 @@ createSwapchain dev scsd queues surf slot mayOldSlot = do
   logInfo $ "available present modes " ++ show (presentModes scsd)
   logInfo $ "using present mode " ++ show spMode
 
-  -- try tripple buffering
   let maxIC = getField @"maxImageCount" $ capabilities scsd
       minIC = getField @"minImageCount" $ capabilities scsd
       imageCount = if maxIC <= 0
-                  then max minIC 3
-                  else min maxIC $ max minIC 3
+                  then minIC + 1
+                  else min maxIC (minIC + 1)
 
   -- write VkSwapchainCreateInfoKHR
   let swCreateInfo = createVk @VkSwapchainCreateInfoKHR
