@@ -3,9 +3,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE Strict              #-}
 {-# LANGUAGE TypeApplications    #-}
+{-# LANGUAGE MagicHash           #-}
+{-# LANGUAGE UnboxedTuples       #-}
 -- | Collection of functions adapted from @Foreign@ module hierarchy
 module Lib.Program.Foreign
     ( Ptr, plusPtr, Storable.sizeOf
+    , withVkArrayLen
     , alloca, allocaArray
     , peek, peekArray, poke
     , ptrAtIndex
@@ -14,6 +17,7 @@ module Lib.Program.Foreign
     , mallocRes, mallocArrayRes, newArrayRes
     ) where
 
+import qualified GHC.Base
 
 import           Control.Concurrent.MVar
 import           Control.Monad.IO.Class
@@ -29,7 +33,23 @@ import           Numeric.Dimensions
 
 import Lib.Program
 
+-- | This should probably be in Graphics.Vulkan.Marshal
+withArrayLen :: (Storable a, VulkanMarshal a) => [a] -> (Word32 -> Ptr a -> IO b) -> IO b
+withArrayLen xs pf = do
+  ret <- Foreign.withArrayLen xs (pf . fromIntegral)
+  touch xs
+  return ret
+{-# INLINE withArrayLen #-}
 
+withVkArrayLen :: (Storable a, VulkanMarshal a) => [a] -> (Word32 -> Ptr a -> Program' b) -> Program r b
+withVkArrayLen xs pf = liftIOWith (withArrayLen xs . curry) (uncurry pf)
+{-# INLINE withVkArrayLen #-}
+
+
+-- | Prevent earlier GC of given value
+touch :: a -> IO ()
+touch x = GHC.Base.IO $ \s -> case GHC.Base.touch# x s of s' -> (# s', () #)
+{-# INLINE touch #-}
 
 alloca :: Storable a
        => (Ptr a -> Program' b)

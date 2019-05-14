@@ -12,7 +12,6 @@ module Lib.Vulkan.Descriptor
   , createDescriptorSetLayout
   ) where
 
-import           Foreign.Marshal.Array          (withArray)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create
@@ -113,8 +112,6 @@ prepareDescriptorSet dev bufferInfo imageInfo descriptorSet =
           &* setVkRef @"pImageInfo" imageInfo
           &* set @"pTexelBufferView" VK_NULL
         ]
-  in liftIO $ withArray descriptorWrites $ \dwPtr ->
-      vkUpdateDescriptorSets dev
-        (fromIntegral $ length descriptorWrites) dwPtr
-        0 VK_NULL
+  in withVkArrayLen descriptorWrites $ \dwLen dwPtr ->
+      liftIO $ vkUpdateDescriptorSets dev dwLen dwPtr 0 VK_NULL
 
