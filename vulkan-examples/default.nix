@@ -8,14 +8,6 @@ mkDerivation {
   isLibrary = false;
   isExecutable = true;
   executableSystemDepends = [ vulkan ] ++ glfwFrameworks;
-  # VK_LAYER_PATH="${vulkan}/etc/vulkan/explicit_layer.d";
-  # VK_ICD_FILENAMES="${vulkan}/etc/vulkan/icd.d/MoltenVK_icd.json";
-  # DYLD_LIBRARY_PATH="${vulkan}/lib";
-  # shellHook = ''
-  #   export VK_LAYER_PATH="${vulkan}/etc/vulkan/explicit_layer.d"
-  #   export VK_ICD_FILENAMES="${vulkan}/etc/vulkan/icd.d/MoltenVK_icd.json"
-  #   export DYLD_LIBRARY_PATH="${vulkan}/lib"
-  # '';
   executableHaskellDepends = [
     base containers directory filepath GLFW-b process template-haskell
     vulkan-api
