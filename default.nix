@@ -1,8 +1,9 @@
+{ localVulkan ? "/Users/timpierson/Downloads/vulkansdk-macos-1.1.106.0.tar.gz"}:
 let
   vulkan = import ./vulkan.nix {
     stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
-    localVulkanSdktargz = /Users/timpierson/Downloads/vulkansdk-macos-1.1.106.0.tar.gz;
+    localVulkanSdktargz = localVulkan;
   };
   frameworks = pkgs.darwin.apple_sdk.frameworks;
   glfwFrameworks = [
