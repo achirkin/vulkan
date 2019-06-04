@@ -98,5 +98,10 @@ in {
     vulkan = vulkan;
     drv = drv;
   });
+  # re-exports
+  glfwFrameworks = glfwFrameworks;
+  vulkan = vulkan;
+  vulkan-api = vulkan-api;
+  vulkanEnvHooks = drv: vulkanEnvHooks {vulkan = vulkan; drv = drv; };
 }
 # test with: nix-shell -A vulkan-triangles --command 'result-2/bin/vulkan-triangles'
