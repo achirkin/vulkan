@@ -36,8 +36,8 @@ module Lib.Program
 
 
 import           Control.Concurrent
-import           Control.Exception              (Exception, catch,
-                                                 displayException, throw,
+import           Control.Exception              (Exception,
+                                                 displayException,
                                                  throwTo)
 import           Control.Monad
 import           Control.Monad.Error.Class
@@ -358,15 +358,18 @@ checkStatus (Left err) = do
 
 
 -- | For C functions that have to run in the main thread as long as the program runs.
-occupyThreadAndFork :: Program' () -> Program' () -> Program r ()
+--
+--   Caveat: The separate thread is not a bound thread, in contrast to the main thread.
+--   Use `runInBoundThread` there if you need thread local state for C libs.
+occupyThreadAndFork :: Program r () -- ^ the program to run in the main thread
+                    -> Program' () -- ^ the program to run in a separate thread
+                    -> Program r ()
 occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
   mainThreadId <- myThreadId
-  _ <- forkFinally (runInBoundThread $ unProgram deputyProg ref pure >>= checkStatus) $ \res ->
-    case res of Left exception -> throw exception
-                Right _        -> throwTo mainThreadId ExitSuccess
-  exitCode <- catch (unProgram mainProg ref pure >>= checkStatus >> return ExitSuccess) $
-                    \(exitCode :: ExitCode) -> return exitCode
-  c (Right ()) >> exitWith exitCode
+  _ <- Control.Concurrent.forkFinally (unProgram deputyProg ref pure >>= checkStatus) $ \res ->
+    case res of Left exception -> throwTo mainThreadId exception
+                Right ()       -> throwTo mainThreadId ExitSuccess
+  unProgram mainProg ref c
 
 
 loop :: Program' LoopControl -> Program r ()
