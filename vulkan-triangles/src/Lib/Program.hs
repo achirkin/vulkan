@@ -366,9 +366,10 @@ occupyThreadAndFork :: Program r () -- ^ the program to run in the main thread
                     -> Program r ()
 occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
   mainThreadId <- myThreadId
-  _ <- Control.Concurrent.forkFinally (unProgram deputyProg ref pure >>= checkStatus) $ \res ->
-    case res of Left exception -> throwTo mainThreadId exception
-                Right ()       -> throwTo mainThreadId ExitSuccess
+  threadRef <- newIORef =<< readIORef ref
+  _ <- Control.Concurrent.forkFinally (unProgram deputyProg threadRef pure >>= checkStatus) $ \case
+    Left exception -> throwTo mainThreadId exception
+    Right ()       -> throwTo mainThreadId ExitSuccess
   unProgram mainProg ref c
 
 
