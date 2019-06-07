@@ -8,15 +8,15 @@ module Lib.Vulkan.Buffer
   , copyBuffer
   ) where
 
-import           Data.Bits
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Marshal.Create
-import           Graphics.Vulkan.Marshal.Create.DataFrame
-import           Numeric.DataFrame
+import Data.Bits
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Marshal.Create
+import Graphics.Vulkan.Marshal.Create.DataFrame
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
+import Lib.Program
+import Lib.Program.Foreign
 
 
 createBuffer :: VkPhysicalDevice
@@ -124,7 +124,9 @@ findMemoryType :: VkPhysicalDevice
                -> VkMemoryPropertyFlags
                   -- ^ desired memory properties
                -> Program r Word32
-findMemoryType pdev typeFilter properties = do
+findMemoryType pdev typeFilter properties
+  | Dict <- inferVkPrimBytes @VkMemoryType
+  = do
     memProps <- allocaPeek $ liftIO . vkGetPhysicalDeviceMemoryProperties pdev
     let mtCount = getField @"memoryTypeCount" memProps
         memTypes = getVec @"memoryTypes" memProps

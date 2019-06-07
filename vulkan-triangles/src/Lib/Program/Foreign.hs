@@ -25,9 +25,8 @@ import           Graphics.Vulkan.Marshal
 import           Numeric.DataFrame
 import           Numeric.DataFrame.IO
 import           Numeric.Dimensions
-import           Numeric.PrimBytes
 
-import           Lib.Program
+import Lib.Program
 
 
 
@@ -51,8 +50,7 @@ allocaPeekDF :: forall a (ns :: [Nat]) r
              => (Ptr a -> Program () ())
              -> Program r (DataFrame a ns)
 allocaPeekDF pf
-  | E <- inferASing' @a @ns
-  , E <- inferPrim' @a @ns
+  | Dict <- inferKnownBackend @a @ns
   = Program $ \ref c -> do
     mdf <- newPinnedDataFrame
     locVar <- liftIO newEmptyMVar
