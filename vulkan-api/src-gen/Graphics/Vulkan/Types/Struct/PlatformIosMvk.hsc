@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformIosMvk
-       (VkIOSSurfaceCreateInfoMVK(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkIOSSurfaceCreateFlagsMVK)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkIOSSurfaceCreateInfoMVK, VkIOSSurfaceCreateInfoMVK') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkIOSSurfaceCreateFlagsMVK)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkIOSSurfaceCreateInfoMVK {
 --   >     VkStructureType sType;
@@ -27,18 +24,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkIOSSurfaceCreateInfoMVK;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIOSSurfaceCreateInfoMVK VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
-data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK## Addr##
-                                                            ByteArray##
+type VkIOSSurfaceCreateInfoMVK =
+     VulkanStruct VkIOSSurfaceCreateInfoMVK' -- ' closing tick for hsc2hs
+
+data VkIOSSurfaceCreateInfoMVK' -- ' closing tick for hsc2hs
 
 instance Eq VkIOSSurfaceCreateInfoMVK where
-        (VkIOSSurfaceCreateInfoMVK## a _) ==
-          x@(VkIOSSurfaceCreateInfoMVK## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkIOSSurfaceCreateInfoMVK where
-        (VkIOSSurfaceCreateInfoMVK## a _) `compare`
-          x@(VkIOSSurfaceCreateInfoMVK## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -55,19 +52,6 @@ instance Storable VkIOSSurfaceCreateInfoMVK where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkIOSSurfaceCreateInfoMVK where
-        unsafeAddr (VkIOSSurfaceCreateInfoMVK## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkIOSSurfaceCreateInfoMVK## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkIOSSurfaceCreateInfoMVK## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkIOSSurfaceCreateInfoMVK where
         type StructFields VkIOSSurfaceCreateInfoMVK =

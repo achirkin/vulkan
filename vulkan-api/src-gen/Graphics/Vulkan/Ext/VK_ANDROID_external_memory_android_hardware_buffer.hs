@@ -29,19 +29,30 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         --
 
         -- ** Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign'.
-        module Graphics.Vulkan.Types.Struct.PlatformAndroidKhr,
+        VkAndroidHardwareBufferFormatPropertiesANDROID,
+        VkAndroidHardwareBufferFormatPropertiesANDROID',
+        VkAndroidHardwareBufferPropertiesANDROID,
+        VkAndroidHardwareBufferPropertiesANDROID',
+        VkAndroidHardwareBufferUsageANDROID,
+        VkAndroidHardwareBufferUsageANDROID',
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.ChromaLocation,
-        module Graphics.Vulkan.Types.Struct.ComponentMapping,
-        module Graphics.Vulkan.Types.Enum.ComponentSwizzle,
-        module Graphics.Vulkan.Types.Struct.Extent,
+        VkComponentMapping, VkComponentMapping',
+        module Graphics.Vulkan.Types.Enum.ComponentSwizzle, VkExtent3D,
+        VkExtent3D', VkExternalFormatANDROID, VkExternalFormatANDROID',
         module Graphics.Vulkan.Types.Enum.Filter,
         module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.Memory,
+        module Graphics.Vulkan.Types.Enum.Image, VkImageCreateInfo,
+        VkImageCreateInfo', VkImageFormatProperties,
+        VkImageFormatProperties', VkImageFormatProperties2,
+        VkImageFormatProperties2',
+        VkImportAndroidHardwareBufferInfoANDROID,
+        VkImportAndroidHardwareBufferInfoANDROID', VkMemoryAllocateInfo,
+        VkMemoryAllocateInfo', VkMemoryGetAndroidHardwareBufferInfoANDROID,
+        VkMemoryGetAndroidHardwareBufferInfoANDROID',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Struct.Sampler,
+        VkSamplerYcbcrConversionCreateInfo,
+        VkSamplerYcbcrConversionCreateInfo',
         module Graphics.Vulkan.Types.Enum.Sampler,
         module Graphics.Vulkan.Types.Enum.SharingMode,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -57,6 +68,7 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.PlatformAndroidKhr,
         VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION,
         pattern VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION,
         VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_EXTENSION_NAME,
@@ -69,30 +81,38 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID)
        where
-import           GHC.Ptr                                         (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Defines                   (AHardwareBuffer)
-import           Graphics.Vulkan.Types.Enum.ChromaLocation
-import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
-import           Graphics.Vulkan.Types.Enum.External             (VkExternalMemoryHandleTypeBitmask (..),
-                                                                  VkExternalMemoryHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.Filter
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.Sampler
-import           Graphics.Vulkan.Types.Enum.SharingMode
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.ComponentMapping
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.Memory
-import           Graphics.Vulkan.Types.Struct.PlatformAndroidKhr
-import           Graphics.Vulkan.Types.Struct.Sampler
+import GHC.Ptr                                         (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Defines                   (AHardwareBuffer)
+import Graphics.Vulkan.Types.Enum.ChromaLocation
+import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.External             (VkExternalMemoryHandleTypeBitmask (..),
+                                                        VkExternalMemoryHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Filter
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.Sampler
+import Graphics.Vulkan.Types.Enum.SharingMode
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.ComponentMapping   (VkComponentMapping,
+                                                        VkComponentMapping')
+import Graphics.Vulkan.Types.Struct.Extent             (VkExtent3D, VkExtent3D')
+import Graphics.Vulkan.Types.Struct.Image              (VkImageCreateInfo,
+                                                        VkImageCreateInfo',
+                                                        VkImageFormatProperties,
+                                                        VkImageFormatProperties',
+                                                        VkImageFormatProperties2,
+                                                        VkImageFormatProperties2')
+import Graphics.Vulkan.Types.Struct.Memory             (VkMemoryAllocateInfo,
+                                                        VkMemoryAllocateInfo')
+import Graphics.Vulkan.Types.Struct.PlatformAndroidKhr
+import Graphics.Vulkan.Types.Struct.Sampler            (VkSamplerYcbcrConversionCreateInfo,
+                                                        VkSamplerYcbcrConversionCreateInfo')
 
 pattern VkGetAndroidHardwareBufferPropertiesANDROID :: CString
 

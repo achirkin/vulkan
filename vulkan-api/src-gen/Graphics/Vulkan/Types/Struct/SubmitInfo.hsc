@@ -7,19 +7,15 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
-module Graphics.Vulkan.Types.Struct.SubmitInfo (VkSubmitInfo(..))
-       where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineStageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkCommandBuffer,
-                                                           VkSemaphore)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+module Graphics.Vulkan.Types.Struct.SubmitInfo
+       (VkSubmitInfo, VkSubmitInfo') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineStageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkCommandBuffer, VkSemaphore)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubmitInfo {
 --   >     VkStructureType sType;
@@ -34,17 +30,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkSubmitInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubmitInfo VkSubmitInfo registry at www.khronos.org>
-data VkSubmitInfo = VkSubmitInfo## Addr## ByteArray##
+type VkSubmitInfo = VulkanStruct VkSubmitInfo' -- ' closing tick for hsc2hs
+
+data VkSubmitInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSubmitInfo where
-        (VkSubmitInfo## a _) == x@(VkSubmitInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubmitInfo where
-        (VkSubmitInfo## a _) `compare` x@(VkSubmitInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -61,18 +57,6 @@ instance Storable VkSubmitInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSubmitInfo where
-        unsafeAddr (VkSubmitInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSubmitInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSubmitInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubmitInfo where
         type StructFields VkSubmitInfo =

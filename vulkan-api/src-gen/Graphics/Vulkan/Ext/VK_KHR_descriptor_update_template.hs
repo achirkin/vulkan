@@ -63,28 +63,28 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         -- ** Required extensions: 'VK_EXT_debug_report'.
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR_EXT)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                          (pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE,
-                                                                    pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO)
-import           Graphics.Vulkan.Ext.VK_EXT_debug_report           (pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT)
-import           Graphics.Vulkan.Ext.VK_KHR_push_descriptor        (HS_vkCmdPushDescriptorSetWithTemplateKHR,
-                                                                    PFN_vkCmdPushDescriptorSetWithTemplateKHR,
-                                                                    pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
-                                                                    pattern VkCmdPushDescriptorSetWithTemplateKHR)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Descriptor
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.Descriptor
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Core_1_1                          (pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE,
+                                                          pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO)
+import Graphics.Vulkan.Ext.VK_EXT_debug_report           (pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT)
+import Graphics.Vulkan.Ext.VK_KHR_push_descriptor        (HS_vkCmdPushDescriptorSetWithTemplateKHR,
+                                                          PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+                                                          pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
+                                                          pattern VkCmdPushDescriptorSetWithTemplateKHR)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Descriptor
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.Descriptor
 
 pattern VkCreateDescriptorUpdateTemplateKHR :: CString
 

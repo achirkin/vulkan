@@ -23,13 +23,30 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         --
         -- Extension number: @87@
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Cmd,
-        module Graphics.Vulkan.Types.Struct.Device,
+        VkCmdProcessCommandsInfoNVX, VkCmdProcessCommandsInfoNVX',
+        VkCmdReserveSpaceForCommandsInfoNVX,
+        VkCmdReserveSpaceForCommandsInfoNVX',
+        VkDeviceGeneratedCommandsFeaturesNVX,
+        VkDeviceGeneratedCommandsFeaturesNVX',
+        VkDeviceGeneratedCommandsLimitsNVX,
+        VkDeviceGeneratedCommandsLimitsNVX',
         module Graphics.Vulkan.Types.Enum.IndexType,
-        module Graphics.Vulkan.Types.Struct.IndirectCommands,
+        VkIndirectCommandsLayoutCreateInfoNVX,
+        VkIndirectCommandsLayoutCreateInfoNVX',
+        VkIndirectCommandsLayoutTokenNVX,
+        VkIndirectCommandsLayoutTokenNVX',
         module Graphics.Vulkan.Types.Enum.IndirectCommands,
+        VkIndirectCommandsTokenNVX, VkIndirectCommandsTokenNVX',
         module Graphics.Vulkan.Types.Enum.Object,
-        module Graphics.Vulkan.Types.Struct.ObjectTable,
+        VkObjectTableCreateInfoNVX, VkObjectTableCreateInfoNVX',
+        VkObjectTableDescriptorSetEntryNVX,
+        VkObjectTableDescriptorSetEntryNVX', VkObjectTableEntryNVX,
+        VkObjectTableEntryNVX', VkObjectTableIndexBufferEntryNVX,
+        VkObjectTableIndexBufferEntryNVX', VkObjectTablePipelineEntryNVX,
+        VkObjectTablePipelineEntryNVX', VkObjectTablePushConstantEntryNVX,
+        VkObjectTablePushConstantEntryNVX',
+        VkObjectTableVertexBufferEntryNVX,
+        VkObjectTableVertexBufferEntryNVX',
         module Graphics.Vulkan.Types.Enum.Pipeline,
         module Graphics.Vulkan.Types.Enum.Shader,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -67,6 +84,10 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.Cmd,
+        module Graphics.Vulkan.Types.Struct.Device,
+        module Graphics.Vulkan.Types.Struct.IndirectCommands,
+        module Graphics.Vulkan.Types.Struct.ObjectTable,
         VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION,
         pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION,
         VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME,
@@ -83,28 +104,28 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX,
         pattern VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..),
-                                                                    VkAccessFlagBits)
-import           Graphics.Vulkan.Types.Enum.IndexType
-import           Graphics.Vulkan.Types.Enum.IndirectCommands
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Object
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.Cmd
-import           Graphics.Vulkan.Types.Struct.Device
-import           Graphics.Vulkan.Types.Struct.IndirectCommands
-import           Graphics.Vulkan.Types.Struct.ObjectTable
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..),
+                                                          VkAccessFlagBits)
+import Graphics.Vulkan.Types.Enum.IndexType
+import Graphics.Vulkan.Types.Enum.IndirectCommands
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.Cmd
+import Graphics.Vulkan.Types.Struct.Device
+import Graphics.Vulkan.Types.Struct.IndirectCommands
+import Graphics.Vulkan.Types.Struct.ObjectTable
 
 pattern VkCmdProcessCommandsNVX :: CString
 

@@ -7,7 +7,7 @@ module Graphics.Vulkan.Types.Include
         MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
         WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT)
        where
-import           Graphics.Vulkan.Marshal (CULong (..), CWchar (..), Ptr, Word32)
+import Graphics.Vulkan.Marshal (CULong (..), CWchar (..), Ptr, Word32)
 
 -- | Requires @windows.h@
 type DWORD = Word32

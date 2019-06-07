@@ -8,23 +8,22 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.IndirectCommands
-       (VkIndirectCommandsLayoutCreateInfoNVX(..),
-        VkIndirectCommandsLayoutTokenNVX(..),
-        VkIndirectCommandsTokenNVX(..))
+       (VkIndirectCommandsLayoutCreateInfoNVX,
+        VkIndirectCommandsLayoutCreateInfoNVX', -- ' closing tick for hsc2hs
+        VkIndirectCommandsLayoutTokenNVX,
+        VkIndirectCommandsLayoutTokenNVX', VkIndirectCommandsTokenNVX, -- ' closing tick for hsc2hs
+        VkIndirectCommandsTokenNVX') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                            (Storable (..))
-import           GHC.Base                                    (Addr##, ByteArray##,
-                                                              byteArrayContents##,
-                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes             (VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.IndirectCommands (VkIndirectCommandsLayoutUsageFlagsNVX,
-                                                              VkIndirectCommandsTokenTypeNVX)
-import           Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint)
-import           Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
-import           Graphics.Vulkan.Types.Handles               (VkBuffer)
-import           System.IO.Unsafe                            (unsafeDupablePerformIO)
+import Foreign.Storable                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes             (VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.IndirectCommands (VkIndirectCommandsLayoutUsageFlagsNVX,
+                                                    VkIndirectCommandsTokenTypeNVX)
+import Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint)
+import Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
+import Graphics.Vulkan.Types.Handles               (VkBuffer)
+import System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkIndirectCommandsLayoutCreateInfoNVX {
 --   >     VkStructureType sType;
@@ -36,20 +35,18 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   > } VkIndirectCommandsLayoutCreateInfoNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsLayoutCreateInfoNVX VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
-data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX## Addr##
-                                                                                    ByteArray##
+type VkIndirectCommandsLayoutCreateInfoNVX =
+     VulkanStruct VkIndirectCommandsLayoutCreateInfoNVX' -- ' closing tick for hsc2hs
+
+data VkIndirectCommandsLayoutCreateInfoNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkIndirectCommandsLayoutCreateInfoNVX where
-        (VkIndirectCommandsLayoutCreateInfoNVX## a _) ==
-          x@(VkIndirectCommandsLayoutCreateInfoNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkIndirectCommandsLayoutCreateInfoNVX where
-        (VkIndirectCommandsLayoutCreateInfoNVX## a _) `compare`
-          x@(VkIndirectCommandsLayoutCreateInfoNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -68,21 +65,6 @@ instance Storable VkIndirectCommandsLayoutCreateInfoNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        unsafeAddr (VkIndirectCommandsLayoutCreateInfoNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkIndirectCommandsLayoutCreateInfoNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkIndirectCommandsLayoutCreateInfoNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkIndirectCommandsLayoutCreateInfoNVX where
         type StructFields VkIndirectCommandsLayoutCreateInfoNVX =
@@ -346,20 +328,18 @@ instance Show VkIndirectCommandsLayoutCreateInfoNVX where
 --   > } VkIndirectCommandsLayoutTokenNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsLayoutTokenNVX VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
-data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX## Addr##
-                                                                          ByteArray##
+type VkIndirectCommandsLayoutTokenNVX =
+     VulkanStruct VkIndirectCommandsLayoutTokenNVX' -- ' closing tick for hsc2hs
+
+data VkIndirectCommandsLayoutTokenNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkIndirectCommandsLayoutTokenNVX where
-        (VkIndirectCommandsLayoutTokenNVX## a _) ==
-          x@(VkIndirectCommandsLayoutTokenNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkIndirectCommandsLayoutTokenNVX where
-        (VkIndirectCommandsLayoutTokenNVX## a _) `compare`
-          x@(VkIndirectCommandsLayoutTokenNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -377,20 +357,6 @@ instance Storable VkIndirectCommandsLayoutTokenNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkIndirectCommandsLayoutTokenNVX where
-        unsafeAddr (VkIndirectCommandsLayoutTokenNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkIndirectCommandsLayoutTokenNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkIndirectCommandsLayoutTokenNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkIndirectCommandsLayoutTokenNVX where
         type StructFields VkIndirectCommandsLayoutTokenNVX =
@@ -560,19 +526,18 @@ instance Show VkIndirectCommandsLayoutTokenNVX where
 --   > } VkIndirectCommandsTokenNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsTokenNVX VkIndirectCommandsTokenNVX registry at www.khronos.org>
-data VkIndirectCommandsTokenNVX = VkIndirectCommandsTokenNVX## Addr##
-                                                              ByteArray##
+type VkIndirectCommandsTokenNVX =
+     VulkanStruct VkIndirectCommandsTokenNVX' -- ' closing tick for hsc2hs
+
+data VkIndirectCommandsTokenNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkIndirectCommandsTokenNVX where
-        (VkIndirectCommandsTokenNVX## a _) ==
-          x@(VkIndirectCommandsTokenNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkIndirectCommandsTokenNVX where
-        (VkIndirectCommandsTokenNVX## a _) `compare`
-          x@(VkIndirectCommandsTokenNVX## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -589,20 +554,6 @@ instance Storable VkIndirectCommandsTokenNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkIndirectCommandsTokenNVX where
-        unsafeAddr (VkIndirectCommandsTokenNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkIndirectCommandsTokenNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkIndirectCommandsTokenNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkIndirectCommandsTokenNVX where
         type StructFields VkIndirectCommandsTokenNVX =

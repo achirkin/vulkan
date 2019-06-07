@@ -12,55 +12,52 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.Device
-       (VkDeviceCreateInfo(..), VkDeviceEventInfoEXT(..),
-        VkDeviceGeneratedCommandsFeaturesNVX(..),
-        VkDeviceGeneratedCommandsLimitsNVX(..),
-        VkDeviceGroupBindSparseInfo(..), VkDeviceGroupBindSparseInfoKHR,
-        VkDeviceGroupCommandBufferBeginInfo(..),
+       (VkDeviceCreateInfo, VkDeviceCreateInfo', VkDeviceEventInfoEXT, -- ' closing tick for hsc2hs
+        VkDeviceEventInfoEXT', VkDeviceGeneratedCommandsFeaturesNVX, -- ' closing tick for hsc2hs
+        VkDeviceGeneratedCommandsFeaturesNVX', -- ' closing tick for hsc2hs
+        VkDeviceGeneratedCommandsLimitsNVX,
+        VkDeviceGeneratedCommandsLimitsNVX', VkDeviceGroupBindSparseInfo, -- ' closing tick for hsc2hs
+        VkDeviceGroupBindSparseInfo', VkDeviceGroupBindSparseInfoKHR, -- ' closing tick for hsc2hs
+        VkDeviceGroupCommandBufferBeginInfo,
+        VkDeviceGroupCommandBufferBeginInfo', -- ' closing tick for hsc2hs
         VkDeviceGroupCommandBufferBeginInfoKHR,
-        VkDeviceGroupDeviceCreateInfo(..),
+        VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfo', -- ' closing tick for hsc2hs
         VkDeviceGroupDeviceCreateInfoKHR,
-        VkDeviceGroupPresentCapabilitiesKHR(..),
-        VkDeviceGroupPresentInfoKHR(..),
-        VkDeviceGroupRenderPassBeginInfo(..),
-        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo(..),
-        VkDeviceGroupSubmitInfoKHR,
-        VkDeviceGroupSwapchainCreateInfoKHR(..),
-        VkDeviceQueueCreateInfo(..),
-        VkDeviceQueueGlobalPriorityCreateInfoEXT(..),
-        VkDeviceQueueInfo2(..))
+        VkDeviceGroupPresentCapabilitiesKHR,
+        VkDeviceGroupPresentCapabilitiesKHR', VkDeviceGroupPresentInfoKHR, -- ' closing tick for hsc2hs
+        VkDeviceGroupPresentInfoKHR', VkDeviceGroupRenderPassBeginInfo, -- ' closing tick for hsc2hs
+        VkDeviceGroupRenderPassBeginInfo', -- ' closing tick for hsc2hs
+        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
+        VkDeviceGroupSubmitInfo', VkDeviceGroupSubmitInfoKHR, -- ' closing tick for hsc2hs
+        VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceGroupSwapchainCreateInfoKHR', VkDeviceQueueCreateInfo, -- ' closing tick for hsc2hs
+        VkDeviceQueueCreateInfo', VkDeviceQueueGlobalPriorityCreateInfoEXT, -- ' closing tick for hsc2hs
+        VkDeviceQueueGlobalPriorityCreateInfoEXT', VkDeviceQueueInfo2, -- ' closing tick for hsc2hs
+        VkDeviceQueueInfo2') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                    (Storable (..))
-import           GHC.Base                                            (Addr##,
-                                                                      ByteArray##,
-                                                                      Proxy##,
-                                                                      byteArrayContents##,
-                                                                      plusAddr##,
-                                                                      proxy##)
-import           GHC.TypeLits                                        (KnownNat,
-                                                                      natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Constants                           (VK_MAX_DEVICE_GROUP_SIZE,
-                                                                      pattern VK_MAX_DEVICE_GROUP_SIZE)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                     (VkBool32)
-import           Graphics.Vulkan.Types.Bitmasks                      (VkDeviceCreateFlags)
-import           Graphics.Vulkan.Types.Enum.Device                   (VkDeviceEventTypeEXT,
-                                                                      VkDeviceGroupPresentModeFlagBitsKHR,
-                                                                      VkDeviceGroupPresentModeFlagsKHR,
-                                                                      VkDeviceQueueCreateFlags)
-import           Graphics.Vulkan.Types.Enum.Queue                    (VkQueueGlobalPriorityEXT)
-import           Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice)
-import           Graphics.Vulkan.Types.Struct.Bind                   (VkBindSparseInfo)
-import           Graphics.Vulkan.Types.Struct.Command                (VkCommandBufferBeginInfo)
-import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
-import           Graphics.Vulkan.Types.Struct.Present                (VkPresentInfoKHR)
-import           Graphics.Vulkan.Types.Struct.Rect                   (VkRect2D)
-import           Graphics.Vulkan.Types.Struct.RenderPass             (VkRenderPassBeginInfo)
-import           Graphics.Vulkan.Types.Struct.SubmitInfo             (VkSubmitInfo)
-import           Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInfoKHR)
-import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
+import Foreign.Storable                                    (Storable (..))
+import Graphics.Vulkan.Constants                           (VK_MAX_DEVICE_GROUP_SIZE,
+                                                            pattern VK_MAX_DEVICE_GROUP_SIZE)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes                     (VkBool32)
+import Graphics.Vulkan.Types.Bitmasks                      (VkDeviceCreateFlags)
+import Graphics.Vulkan.Types.Enum.Device                   (VkDeviceEventTypeEXT,
+                                                            VkDeviceGroupPresentModeFlagBitsKHR,
+                                                            VkDeviceGroupPresentModeFlagsKHR,
+                                                            VkDeviceQueueCreateFlags)
+import Graphics.Vulkan.Types.Enum.Queue                    (VkQueueGlobalPriorityEXT)
+import Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
+import Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice)
+import Graphics.Vulkan.Types.Struct.Bind                   (VkBindSparseInfo)
+import Graphics.Vulkan.Types.Struct.Command                (VkCommandBufferBeginInfo)
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import Graphics.Vulkan.Types.Struct.Present                (VkPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Rect                   (VkRect2D)
+import Graphics.Vulkan.Types.Struct.RenderPass             (VkRenderPassBeginInfo)
+import Graphics.Vulkan.Types.Struct.SubmitInfo             (VkSubmitInfo)
+import Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInfoKHR)
+import System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceCreateInfo {
 --   >     VkStructureType sType;
@@ -76,17 +73,17 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   > } VkDeviceCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceCreateInfo VkDeviceCreateInfo registry at www.khronos.org>
-data VkDeviceCreateInfo = VkDeviceCreateInfo## Addr## ByteArray##
+type VkDeviceCreateInfo = VulkanStruct VkDeviceCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceCreateInfo where
-        (VkDeviceCreateInfo## a _) == x@(VkDeviceCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceCreateInfo where
-        (VkDeviceCreateInfo## a _) `compare` x@(VkDeviceCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -103,18 +100,6 @@ instance Storable VkDeviceCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceCreateInfo where
-        unsafeAddr (VkDeviceCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceCreateInfo where
         type StructFields VkDeviceCreateInfo =
@@ -508,17 +493,17 @@ instance Show VkDeviceCreateInfo where
 --   > } VkDeviceEventInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventInfoEXT VkDeviceEventInfoEXT registry at www.khronos.org>
-data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## Addr## ByteArray##
+type VkDeviceEventInfoEXT = VulkanStruct VkDeviceEventInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDeviceEventInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceEventInfoEXT where
-        (VkDeviceEventInfoEXT## a _) == x@(VkDeviceEventInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceEventInfoEXT where
-        (VkDeviceEventInfoEXT## a _) `compare` x@(VkDeviceEventInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -535,18 +520,6 @@ instance Storable VkDeviceEventInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceEventInfoEXT where
-        unsafeAddr (VkDeviceEventInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceEventInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceEventInfoEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceEventInfoEXT where
         type StructFields VkDeviceEventInfoEXT =
@@ -669,20 +642,18 @@ instance Show VkDeviceEventInfoEXT where
 --   > } VkDeviceGeneratedCommandsFeaturesNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGeneratedCommandsFeaturesNVX VkDeviceGeneratedCommandsFeaturesNVX registry at www.khronos.org>
-data VkDeviceGeneratedCommandsFeaturesNVX = VkDeviceGeneratedCommandsFeaturesNVX## Addr##
-                                                                                  ByteArray##
+type VkDeviceGeneratedCommandsFeaturesNVX =
+     VulkanStruct VkDeviceGeneratedCommandsFeaturesNVX' -- ' closing tick for hsc2hs
+
+data VkDeviceGeneratedCommandsFeaturesNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGeneratedCommandsFeaturesNVX where
-        (VkDeviceGeneratedCommandsFeaturesNVX## a _) ==
-          x@(VkDeviceGeneratedCommandsFeaturesNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGeneratedCommandsFeaturesNVX where
-        (VkDeviceGeneratedCommandsFeaturesNVX## a _) `compare`
-          x@(VkDeviceGeneratedCommandsFeaturesNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -701,21 +672,6 @@ instance Storable VkDeviceGeneratedCommandsFeaturesNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        unsafeAddr (VkDeviceGeneratedCommandsFeaturesNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGeneratedCommandsFeaturesNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGeneratedCommandsFeaturesNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGeneratedCommandsFeaturesNVX where
         type StructFields VkDeviceGeneratedCommandsFeaturesNVX =
@@ -864,20 +820,18 @@ instance Show VkDeviceGeneratedCommandsFeaturesNVX where
 --   > } VkDeviceGeneratedCommandsLimitsNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGeneratedCommandsLimitsNVX VkDeviceGeneratedCommandsLimitsNVX registry at www.khronos.org>
-data VkDeviceGeneratedCommandsLimitsNVX = VkDeviceGeneratedCommandsLimitsNVX## Addr##
-                                                                              ByteArray##
+type VkDeviceGeneratedCommandsLimitsNVX =
+     VulkanStruct VkDeviceGeneratedCommandsLimitsNVX' -- ' closing tick for hsc2hs
+
+data VkDeviceGeneratedCommandsLimitsNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGeneratedCommandsLimitsNVX where
-        (VkDeviceGeneratedCommandsLimitsNVX## a _) ==
-          x@(VkDeviceGeneratedCommandsLimitsNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGeneratedCommandsLimitsNVX where
-        (VkDeviceGeneratedCommandsLimitsNVX## a _) `compare`
-          x@(VkDeviceGeneratedCommandsLimitsNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -895,20 +849,6 @@ instance Storable VkDeviceGeneratedCommandsLimitsNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGeneratedCommandsLimitsNVX where
-        unsafeAddr (VkDeviceGeneratedCommandsLimitsNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGeneratedCommandsLimitsNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGeneratedCommandsLimitsNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
         type StructFields VkDeviceGeneratedCommandsLimitsNVX =
@@ -1262,19 +1202,18 @@ instance Show VkDeviceGeneratedCommandsLimitsNVX where
 --   > } VkDeviceGroupBindSparseInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupBindSparseInfo VkDeviceGroupBindSparseInfo registry at www.khronos.org>
-data VkDeviceGroupBindSparseInfo = VkDeviceGroupBindSparseInfo## Addr##
-                                                                ByteArray##
+type VkDeviceGroupBindSparseInfo =
+     VulkanStruct VkDeviceGroupBindSparseInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupBindSparseInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupBindSparseInfo where
-        (VkDeviceGroupBindSparseInfo## a _) ==
-          x@(VkDeviceGroupBindSparseInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupBindSparseInfo where
-        (VkDeviceGroupBindSparseInfo## a _) `compare`
-          x@(VkDeviceGroupBindSparseInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1291,20 +1230,6 @@ instance Storable VkDeviceGroupBindSparseInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupBindSparseInfo where
-        unsafeAddr (VkDeviceGroupBindSparseInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupBindSparseInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupBindSparseInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupBindSparseInfo where
         type StructFields VkDeviceGroupBindSparseInfo =
@@ -1478,20 +1403,18 @@ type VkDeviceGroupBindSparseInfoKHR = VkDeviceGroupBindSparseInfo
 --   > } VkDeviceGroupCommandBufferBeginInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupCommandBufferBeginInfo VkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
-data VkDeviceGroupCommandBufferBeginInfo = VkDeviceGroupCommandBufferBeginInfo## Addr##
-                                                                                ByteArray##
+type VkDeviceGroupCommandBufferBeginInfo =
+     VulkanStruct VkDeviceGroupCommandBufferBeginInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupCommandBufferBeginInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupCommandBufferBeginInfo where
-        (VkDeviceGroupCommandBufferBeginInfo## a _) ==
-          x@(VkDeviceGroupCommandBufferBeginInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupCommandBufferBeginInfo where
-        (VkDeviceGroupCommandBufferBeginInfo## a _) `compare`
-          x@(VkDeviceGroupCommandBufferBeginInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1509,21 +1432,6 @@ instance Storable VkDeviceGroupCommandBufferBeginInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupCommandBufferBeginInfo
-         where
-        unsafeAddr (VkDeviceGroupCommandBufferBeginInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupCommandBufferBeginInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupCommandBufferBeginInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupCommandBufferBeginInfo where
         type StructFields VkDeviceGroupCommandBufferBeginInfo =
@@ -1663,19 +1571,18 @@ type VkDeviceGroupCommandBufferBeginInfoKHR =
 --   > } VkDeviceGroupDeviceCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupDeviceCreateInfo VkDeviceGroupDeviceCreateInfo registry at www.khronos.org>
-data VkDeviceGroupDeviceCreateInfo = VkDeviceGroupDeviceCreateInfo## Addr##
-                                                                    ByteArray##
+type VkDeviceGroupDeviceCreateInfo =
+     VulkanStruct VkDeviceGroupDeviceCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupDeviceCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupDeviceCreateInfo where
-        (VkDeviceGroupDeviceCreateInfo## a _) ==
-          x@(VkDeviceGroupDeviceCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupDeviceCreateInfo where
-        (VkDeviceGroupDeviceCreateInfo## a _) `compare`
-          x@(VkDeviceGroupDeviceCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1693,20 +1600,6 @@ instance Storable VkDeviceGroupDeviceCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupDeviceCreateInfo where
-        unsafeAddr (VkDeviceGroupDeviceCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupDeviceCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupDeviceCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupDeviceCreateInfo where
         type StructFields VkDeviceGroupDeviceCreateInfo =
@@ -1885,20 +1778,18 @@ type VkDeviceGroupDeviceCreateInfoKHR =
 --   > } VkDeviceGroupPresentCapabilitiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupPresentCapabilitiesKHR VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
-data VkDeviceGroupPresentCapabilitiesKHR = VkDeviceGroupPresentCapabilitiesKHR## Addr##
-                                                                                ByteArray##
+type VkDeviceGroupPresentCapabilitiesKHR =
+     VulkanStruct VkDeviceGroupPresentCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupPresentCapabilitiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupPresentCapabilitiesKHR where
-        (VkDeviceGroupPresentCapabilitiesKHR## a _) ==
-          x@(VkDeviceGroupPresentCapabilitiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupPresentCapabilitiesKHR where
-        (VkDeviceGroupPresentCapabilitiesKHR## a _) `compare`
-          x@(VkDeviceGroupPresentCapabilitiesKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1916,21 +1807,6 @@ instance Storable VkDeviceGroupPresentCapabilitiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupPresentCapabilitiesKHR
-         where
-        unsafeAddr (VkDeviceGroupPresentCapabilitiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupPresentCapabilitiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupPresentCapabilitiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupPresentCapabilitiesKHR where
         type StructFields VkDeviceGroupPresentCapabilitiesKHR =
@@ -2138,19 +2014,18 @@ instance Show VkDeviceGroupPresentCapabilitiesKHR where
 --   > } VkDeviceGroupPresentInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupPresentInfoKHR VkDeviceGroupPresentInfoKHR registry at www.khronos.org>
-data VkDeviceGroupPresentInfoKHR = VkDeviceGroupPresentInfoKHR## Addr##
-                                                                ByteArray##
+type VkDeviceGroupPresentInfoKHR =
+     VulkanStruct VkDeviceGroupPresentInfoKHR' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupPresentInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupPresentInfoKHR where
-        (VkDeviceGroupPresentInfoKHR## a _) ==
-          x@(VkDeviceGroupPresentInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupPresentInfoKHR where
-        (VkDeviceGroupPresentInfoKHR## a _) `compare`
-          x@(VkDeviceGroupPresentInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2167,20 +2042,6 @@ instance Storable VkDeviceGroupPresentInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupPresentInfoKHR where
-        unsafeAddr (VkDeviceGroupPresentInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupPresentInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupPresentInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupPresentInfoKHR where
         type StructFields VkDeviceGroupPresentInfoKHR =
@@ -2385,20 +2246,18 @@ instance Show VkDeviceGroupPresentInfoKHR where
 --   > } VkDeviceGroupRenderPassBeginInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupRenderPassBeginInfo VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
-data VkDeviceGroupRenderPassBeginInfo = VkDeviceGroupRenderPassBeginInfo## Addr##
-                                                                          ByteArray##
+type VkDeviceGroupRenderPassBeginInfo =
+     VulkanStruct VkDeviceGroupRenderPassBeginInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupRenderPassBeginInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupRenderPassBeginInfo where
-        (VkDeviceGroupRenderPassBeginInfo## a _) ==
-          x@(VkDeviceGroupRenderPassBeginInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupRenderPassBeginInfo where
-        (VkDeviceGroupRenderPassBeginInfo## a _) `compare`
-          x@(VkDeviceGroupRenderPassBeginInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2416,20 +2275,6 @@ instance Storable VkDeviceGroupRenderPassBeginInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupRenderPassBeginInfo where
-        unsafeAddr (VkDeviceGroupRenderPassBeginInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupRenderPassBeginInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupRenderPassBeginInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupRenderPassBeginInfo where
         type StructFields VkDeviceGroupRenderPassBeginInfo =
@@ -2665,18 +2510,18 @@ type VkDeviceGroupRenderPassBeginInfoKHR =
 --   > } VkDeviceGroupSubmitInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSubmitInfo VkDeviceGroupSubmitInfo registry at www.khronos.org>
-data VkDeviceGroupSubmitInfo = VkDeviceGroupSubmitInfo## Addr##
-                                                        ByteArray##
+type VkDeviceGroupSubmitInfo =
+     VulkanStruct VkDeviceGroupSubmitInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupSubmitInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupSubmitInfo where
-        (VkDeviceGroupSubmitInfo## a _) == x@(VkDeviceGroupSubmitInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupSubmitInfo where
-        (VkDeviceGroupSubmitInfo## a _) `compare`
-          x@(VkDeviceGroupSubmitInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2693,18 +2538,6 @@ instance Storable VkDeviceGroupSubmitInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupSubmitInfo where
-        unsafeAddr (VkDeviceGroupSubmitInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupSubmitInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupSubmitInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupSubmitInfo where
         type StructFields VkDeviceGroupSubmitInfo =
@@ -3057,20 +2890,18 @@ type VkDeviceGroupSubmitInfoKHR = VkDeviceGroupSubmitInfo
 --   > } VkDeviceGroupSwapchainCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSwapchainCreateInfoKHR VkDeviceGroupSwapchainCreateInfoKHR registry at www.khronos.org>
-data VkDeviceGroupSwapchainCreateInfoKHR = VkDeviceGroupSwapchainCreateInfoKHR## Addr##
-                                                                                ByteArray##
+type VkDeviceGroupSwapchainCreateInfoKHR =
+     VulkanStruct VkDeviceGroupSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkDeviceGroupSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceGroupSwapchainCreateInfoKHR where
-        (VkDeviceGroupSwapchainCreateInfoKHR## a _) ==
-          x@(VkDeviceGroupSwapchainCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceGroupSwapchainCreateInfoKHR where
-        (VkDeviceGroupSwapchainCreateInfoKHR## a _) `compare`
-          x@(VkDeviceGroupSwapchainCreateInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3088,21 +2919,6 @@ instance Storable VkDeviceGroupSwapchainCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceGroupSwapchainCreateInfoKHR
-         where
-        unsafeAddr (VkDeviceGroupSwapchainCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceGroupSwapchainCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceGroupSwapchainCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHR where
         type StructFields VkDeviceGroupSwapchainCreateInfoKHR =
@@ -3239,18 +3055,18 @@ instance Show VkDeviceGroupSwapchainCreateInfoKHR where
 --   > } VkDeviceQueueCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueCreateInfo VkDeviceQueueCreateInfo registry at www.khronos.org>
-data VkDeviceQueueCreateInfo = VkDeviceQueueCreateInfo## Addr##
-                                                        ByteArray##
+type VkDeviceQueueCreateInfo =
+     VulkanStruct VkDeviceQueueCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceQueueCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceQueueCreateInfo where
-        (VkDeviceQueueCreateInfo## a _) == x@(VkDeviceQueueCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceQueueCreateInfo where
-        (VkDeviceQueueCreateInfo## a _) `compare`
-          x@(VkDeviceQueueCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3267,18 +3083,6 @@ instance Storable VkDeviceQueueCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceQueueCreateInfo where
-        unsafeAddr (VkDeviceQueueCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceQueueCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceQueueCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceQueueCreateInfo where
         type StructFields VkDeviceQueueCreateInfo =
@@ -3512,20 +3316,18 @@ instance Show VkDeviceQueueCreateInfo where
 --   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueGlobalPriorityCreateInfoEXT VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
-data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## Addr##
-                                                                                          ByteArray##
+type VkDeviceQueueGlobalPriorityCreateInfoEXT =
+     VulkanStruct VkDeviceQueueGlobalPriorityCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDeviceQueueGlobalPriorityCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) ==
-          x@(VkDeviceQueueGlobalPriorityCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) `compare`
-          x@(VkDeviceQueueGlobalPriorityCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3544,21 +3346,6 @@ instance Storable VkDeviceQueueGlobalPriorityCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceQueueGlobalPriorityCreateInfoEXT
-         where
-        unsafeAddr (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceQueueGlobalPriorityCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceQueueGlobalPriorityCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
@@ -3707,17 +3494,17 @@ instance Show VkDeviceQueueGlobalPriorityCreateInfoEXT where
 --   > } VkDeviceQueueInfo2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueInfo2 VkDeviceQueueInfo2 registry at www.khronos.org>
-data VkDeviceQueueInfo2 = VkDeviceQueueInfo2## Addr## ByteArray##
+type VkDeviceQueueInfo2 = VulkanStruct VkDeviceQueueInfo2' -- ' closing tick for hsc2hs
+
+data VkDeviceQueueInfo2' -- ' closing tick for hsc2hs
 
 instance Eq VkDeviceQueueInfo2 where
-        (VkDeviceQueueInfo2## a _) == x@(VkDeviceQueueInfo2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceQueueInfo2 where
-        (VkDeviceQueueInfo2## a _) `compare` x@(VkDeviceQueueInfo2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3734,18 +3521,6 @@ instance Storable VkDeviceQueueInfo2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDeviceQueueInfo2 where
-        unsafeAddr (VkDeviceQueueInfo2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDeviceQueueInfo2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDeviceQueueInfo2## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceQueueInfo2 where
         type StructFields VkDeviceQueueInfo2 =

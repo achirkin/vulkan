@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_array2
         VK_NV_VIEWPORT_ARRAY2_EXTENSION_NAME,
         pattern VK_NV_VIEWPORT_ARRAY2_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_NV_VIEWPORT_ARRAY2_SPEC_VERSION :: (Num a, Eq a) => a
 

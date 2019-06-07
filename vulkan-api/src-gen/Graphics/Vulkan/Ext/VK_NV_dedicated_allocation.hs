@@ -18,14 +18,16 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         --
         -- Extension number: @27@
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Buffer,
-        module Graphics.Vulkan.Types.Struct.Buffer,
-        module Graphics.Vulkan.Types.Struct.DedicatedAllocation,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.Memory,
+        module Graphics.Vulkan.Types.Enum.Buffer, VkBufferCreateInfo,
+        VkBufferCreateInfo', VkDedicatedAllocationBufferCreateInfoNV,
+        VkDedicatedAllocationBufferCreateInfoNV',
+        VkDedicatedAllocationImageCreateInfoNV,
+        VkDedicatedAllocationImageCreateInfoNV',
+        VkDedicatedAllocationMemoryAllocateInfoNV,
+        VkDedicatedAllocationMemoryAllocateInfoNV', VkExtent3D,
+        VkExtent3D', module Graphics.Vulkan.Types.Enum.Format,
+        module Graphics.Vulkan.Types.Enum.Image, VkImageCreateInfo,
+        VkImageCreateInfo', VkMemoryAllocateInfo, VkMemoryAllocateInfo',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.SharingMode,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -38,20 +40,29 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV)
        where
-import           GHC.Ptr                                          (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Buffer
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.SharingMode
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Buffer
-import           Graphics.Vulkan.Types.Struct.DedicatedAllocation
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.Memory
+import GHC.Ptr                                          (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Buffer
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.SharingMode
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Buffer              (VkBufferCreateInfo,
+                                                         VkBufferCreateInfo')
+import Graphics.Vulkan.Types.Struct.DedicatedAllocation (VkDedicatedAllocationBufferCreateInfoNV,
+                                                         VkDedicatedAllocationBufferCreateInfoNV',
+                                                         VkDedicatedAllocationImageCreateInfoNV,
+                                                         VkDedicatedAllocationImageCreateInfoNV',
+                                                         VkDedicatedAllocationMemoryAllocateInfoNV,
+                                                         VkDedicatedAllocationMemoryAllocateInfoNV')
+import Graphics.Vulkan.Types.Struct.Extent              (VkExtent3D,
+                                                         VkExtent3D')
+import Graphics.Vulkan.Types.Struct.Image               (VkImageCreateInfo,
+                                                         VkImageCreateInfo')
+import Graphics.Vulkan.Types.Struct.Memory              (VkMemoryAllocateInfo,
+                                                         VkMemoryAllocateInfo')
 
 pattern VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION :: (Num a, Eq a) =>
         a

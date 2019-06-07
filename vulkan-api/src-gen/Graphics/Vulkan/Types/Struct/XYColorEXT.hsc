@@ -7,15 +7,12 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
-module Graphics.Vulkan.Types.Struct.XYColorEXT (VkXYColorEXT(..))
-       where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+module Graphics.Vulkan.Types.Struct.XYColorEXT
+       (VkXYColorEXT, VkXYColorEXT') where -- ' closing tick for hsc2hs
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | Chromaticity coordinate
 --
@@ -25,17 +22,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkXYColorEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkXYColorEXT VkXYColorEXT registry at www.khronos.org>
-data VkXYColorEXT = VkXYColorEXT## Addr## ByteArray##
+type VkXYColorEXT = VulkanStruct VkXYColorEXT' -- ' closing tick for hsc2hs
+
+data VkXYColorEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkXYColorEXT where
-        (VkXYColorEXT## a _) == x@(VkXYColorEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkXYColorEXT where
-        (VkXYColorEXT## a _) `compare` x@(VkXYColorEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -52,18 +49,6 @@ instance Storable VkXYColorEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkXYColorEXT where
-        unsafeAddr (VkXYColorEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkXYColorEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkXYColorEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkXYColorEXT where
         type StructFields VkXYColorEXT = '["x", "y"] -- ' closing tick for hsc2hs

@@ -15,14 +15,14 @@ module Graphics.Vulkan.Types.Enum.Result
                  VK_ERROR_INCOMPATIBLE_DRIVER, VK_ERROR_TOO_MANY_OBJECTS,
                  VK_ERROR_FORMAT_NOT_SUPPORTED, VK_ERROR_FRAGMENTED_POOL))
        where
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | API result codes
 --

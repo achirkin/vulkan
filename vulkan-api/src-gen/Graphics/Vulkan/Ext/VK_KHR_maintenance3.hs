@@ -47,18 +47,18 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT_KHR)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
-                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Descriptor
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Descriptor
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
+                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Descriptor
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Descriptor
+import Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkGetDescriptorSetLayoutSupportKHR :: CString
 

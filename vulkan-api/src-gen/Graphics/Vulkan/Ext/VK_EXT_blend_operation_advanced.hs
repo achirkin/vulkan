@@ -21,14 +21,28 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         module Graphics.Vulkan.Types.Enum.Blend,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Device,
-        module Graphics.Vulkan.Types.Enum.Device,
+        module Graphics.Vulkan.Types.Bitmasks, VkDeviceCreateInfo,
+        VkDeviceCreateInfo', module Graphics.Vulkan.Types.Enum.Device,
+        VkDeviceQueueCreateInfo, VkDeviceQueueCreateInfo',
         module Graphics.Vulkan.Types.Enum.LogicOp,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
-        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
+        VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures',
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2',
+        VkPhysicalDeviceLimits, VkPhysicalDeviceLimits',
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties',
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2',
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties',
         module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
+        VkPipelineColorBlendAdvancedStateCreateInfoEXT,
+        VkPipelineColorBlendAdvancedStateCreateInfoEXT',
+        VkPipelineColorBlendAttachmentState,
+        VkPipelineColorBlendAttachmentState',
+        VkPipelineColorBlendStateCreateInfo,
+        VkPipelineColorBlendStateCreateInfo',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -73,23 +87,45 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         pattern VK_BLEND_OP_GREEN_EXT, pattern VK_BLEND_OP_BLUE_EXT,
         pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT)
        where
-import           GHC.Ptr                                             (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..),
-                                                                      VkAccessFlagBits)
-import           Graphics.Vulkan.Types.Enum.Blend
-import           Graphics.Vulkan.Types.Enum.Color
-import           Graphics.Vulkan.Types.Enum.Device
-import           Graphics.Vulkan.Types.Enum.LogicOp
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Device
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.Pipeline
+import GHC.Ptr                                             (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..),
+                                                            VkAccessFlagBits)
+import Graphics.Vulkan.Types.Enum.Blend
+import Graphics.Vulkan.Types.Enum.Color
+import Graphics.Vulkan.Types.Enum.Device
+import Graphics.Vulkan.Types.Enum.LogicOp
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo,
+                                                            VkDeviceCreateInfo',
+                                                            VkDeviceQueueCreateInfo,
+                                                            VkDeviceQueueCreateInfo')
+import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+                                                            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
+                                                            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+                                                            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
+                                                            VkPhysicalDeviceFeatures2,
+                                                            VkPhysicalDeviceFeatures2',
+                                                            VkPhysicalDeviceLimits,
+                                                            VkPhysicalDeviceLimits',
+                                                            VkPhysicalDeviceProperties,
+                                                            VkPhysicalDeviceProperties',
+                                                            VkPhysicalDeviceProperties2,
+                                                            VkPhysicalDeviceProperties2',
+                                                            VkPhysicalDeviceSparseProperties,
+                                                            VkPhysicalDeviceSparseProperties')
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures,
+                                                            VkPhysicalDeviceFeatures')
+import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineColorBlendAdvancedStateCreateInfoEXT,
+                                                            VkPipelineColorBlendAdvancedStateCreateInfoEXT',
+                                                            VkPipelineColorBlendAttachmentState,
+                                                            VkPipelineColorBlendAttachmentState',
+                                                            VkPipelineColorBlendStateCreateInfo,
+                                                            VkPipelineColorBlendStateCreateInfo')
 
 pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION ::
         (Num a, Eq a) => a

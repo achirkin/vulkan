@@ -8,28 +8,27 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ObjectTable
-       (VkObjectTableCreateInfoNVX(..),
-        VkObjectTableDescriptorSetEntryNVX(..), VkObjectTableEntryNVX(..),
-        VkObjectTableIndexBufferEntryNVX(..),
-        VkObjectTablePipelineEntryNVX(..),
-        VkObjectTablePushConstantEntryNVX(..),
-        VkObjectTableVertexBufferEntryNVX(..))
+       (VkObjectTableCreateInfoNVX, VkObjectTableCreateInfoNVX', -- ' closing tick for hsc2hs
+        VkObjectTableDescriptorSetEntryNVX,
+        VkObjectTableDescriptorSetEntryNVX', VkObjectTableEntryNVX, -- ' closing tick for hsc2hs
+        VkObjectTableEntryNVX', VkObjectTableIndexBufferEntryNVX, -- ' closing tick for hsc2hs
+        VkObjectTableIndexBufferEntryNVX', VkObjectTablePipelineEntryNVX, -- ' closing tick for hsc2hs
+        VkObjectTablePipelineEntryNVX', VkObjectTablePushConstantEntryNVX, -- ' closing tick for hsc2hs
+        VkObjectTablePushConstantEntryNVX', -- ' closing tick for hsc2hs
+        VkObjectTableVertexBufferEntryNVX,
+        VkObjectTableVertexBufferEntryNVX') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.IndexType     (VkIndexType)
-import           Graphics.Vulkan.Types.Enum.Object        (VkObjectEntryTypeNVX, VkObjectEntryUsageFlagsNVX)
-import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer,
-                                                           VkDescriptorSet,
-                                                           VkPipeline,
-                                                           VkPipelineLayout)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.IndexType     (VkIndexType)
+import Graphics.Vulkan.Types.Enum.Object        (VkObjectEntryTypeNVX,
+                                                 VkObjectEntryUsageFlagsNVX)
+import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDescriptorSet,
+                                                 VkPipeline, VkPipelineLayout)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkObjectTableCreateInfoNVX {
 --   >     VkStructureType sType;
@@ -46,19 +45,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkObjectTableCreateInfoNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableCreateInfoNVX VkObjectTableCreateInfoNVX registry at www.khronos.org>
-data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX## Addr##
-                                                              ByteArray##
+type VkObjectTableCreateInfoNVX =
+     VulkanStruct VkObjectTableCreateInfoNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTableCreateInfoNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTableCreateInfoNVX where
-        (VkObjectTableCreateInfoNVX## a _) ==
-          x@(VkObjectTableCreateInfoNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTableCreateInfoNVX where
-        (VkObjectTableCreateInfoNVX## a _) `compare`
-          x@(VkObjectTableCreateInfoNVX## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -75,20 +73,6 @@ instance Storable VkObjectTableCreateInfoNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTableCreateInfoNVX where
-        unsafeAddr (VkObjectTableCreateInfoNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTableCreateInfoNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTableCreateInfoNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTableCreateInfoNVX where
         type StructFields VkObjectTableCreateInfoNVX =
@@ -596,20 +580,18 @@ instance Show VkObjectTableCreateInfoNVX where
 --   > } VkObjectTableDescriptorSetEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableDescriptorSetEntryNVX VkObjectTableDescriptorSetEntryNVX registry at www.khronos.org>
-data VkObjectTableDescriptorSetEntryNVX = VkObjectTableDescriptorSetEntryNVX## Addr##
-                                                                              ByteArray##
+type VkObjectTableDescriptorSetEntryNVX =
+     VulkanStruct VkObjectTableDescriptorSetEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTableDescriptorSetEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTableDescriptorSetEntryNVX where
-        (VkObjectTableDescriptorSetEntryNVX## a _) ==
-          x@(VkObjectTableDescriptorSetEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTableDescriptorSetEntryNVX where
-        (VkObjectTableDescriptorSetEntryNVX## a _) `compare`
-          x@(VkObjectTableDescriptorSetEntryNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -627,20 +609,6 @@ instance Storable VkObjectTableDescriptorSetEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTableDescriptorSetEntryNVX where
-        unsafeAddr (VkObjectTableDescriptorSetEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTableDescriptorSetEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTableDescriptorSetEntryNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTableDescriptorSetEntryNVX where
         type StructFields VkObjectTableDescriptorSetEntryNVX =
@@ -821,18 +789,17 @@ instance Show VkObjectTableDescriptorSetEntryNVX where
 --   > } VkObjectTableEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableEntryNVX VkObjectTableEntryNVX registry at www.khronos.org>
-data VkObjectTableEntryNVX = VkObjectTableEntryNVX## Addr##
-                                                    ByteArray##
+type VkObjectTableEntryNVX = VulkanStruct VkObjectTableEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTableEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTableEntryNVX where
-        (VkObjectTableEntryNVX## a _) == x@(VkObjectTableEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTableEntryNVX where
-        (VkObjectTableEntryNVX## a _) `compare`
-          x@(VkObjectTableEntryNVX## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -849,18 +816,6 @@ instance Storable VkObjectTableEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTableEntryNVX where
-        unsafeAddr (VkObjectTableEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTableEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTableEntryNVX## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTableEntryNVX where
         type StructFields VkObjectTableEntryNVX = '["type", "flags"] -- ' closing tick for hsc2hs
@@ -948,20 +903,18 @@ instance Show VkObjectTableEntryNVX where
 --   > } VkObjectTableIndexBufferEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableIndexBufferEntryNVX VkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
-data VkObjectTableIndexBufferEntryNVX = VkObjectTableIndexBufferEntryNVX## Addr##
-                                                                          ByteArray##
+type VkObjectTableIndexBufferEntryNVX =
+     VulkanStruct VkObjectTableIndexBufferEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTableIndexBufferEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTableIndexBufferEntryNVX where
-        (VkObjectTableIndexBufferEntryNVX## a _) ==
-          x@(VkObjectTableIndexBufferEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTableIndexBufferEntryNVX where
-        (VkObjectTableIndexBufferEntryNVX## a _) `compare`
-          x@(VkObjectTableIndexBufferEntryNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -979,20 +932,6 @@ instance Storable VkObjectTableIndexBufferEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTableIndexBufferEntryNVX where
-        unsafeAddr (VkObjectTableIndexBufferEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTableIndexBufferEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTableIndexBufferEntryNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTableIndexBufferEntryNVX where
         type StructFields VkObjectTableIndexBufferEntryNVX =
@@ -1159,19 +1098,18 @@ instance Show VkObjectTableIndexBufferEntryNVX where
 --   > } VkObjectTablePipelineEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTablePipelineEntryNVX VkObjectTablePipelineEntryNVX registry at www.khronos.org>
-data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX## Addr##
-                                                                    ByteArray##
+type VkObjectTablePipelineEntryNVX =
+     VulkanStruct VkObjectTablePipelineEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTablePipelineEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTablePipelineEntryNVX where
-        (VkObjectTablePipelineEntryNVX## a _) ==
-          x@(VkObjectTablePipelineEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTablePipelineEntryNVX where
-        (VkObjectTablePipelineEntryNVX## a _) `compare`
-          x@(VkObjectTablePipelineEntryNVX## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1189,20 +1127,6 @@ instance Storable VkObjectTablePipelineEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTablePipelineEntryNVX where
-        unsafeAddr (VkObjectTablePipelineEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTablePipelineEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTablePipelineEntryNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTablePipelineEntryNVX where
         type StructFields VkObjectTablePipelineEntryNVX =
@@ -1331,20 +1255,18 @@ instance Show VkObjectTablePipelineEntryNVX where
 --   > } VkObjectTablePushConstantEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTablePushConstantEntryNVX VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
-data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX## Addr##
-                                                                            ByteArray##
+type VkObjectTablePushConstantEntryNVX =
+     VulkanStruct VkObjectTablePushConstantEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTablePushConstantEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTablePushConstantEntryNVX where
-        (VkObjectTablePushConstantEntryNVX## a _) ==
-          x@(VkObjectTablePushConstantEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTablePushConstantEntryNVX where
-        (VkObjectTablePushConstantEntryNVX## a _) `compare`
-          x@(VkObjectTablePushConstantEntryNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1362,20 +1284,6 @@ instance Storable VkObjectTablePushConstantEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTablePushConstantEntryNVX where
-        unsafeAddr (VkObjectTablePushConstantEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTablePushConstantEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTablePushConstantEntryNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTablePushConstantEntryNVX where
         type StructFields VkObjectTablePushConstantEntryNVX =
@@ -1550,20 +1458,18 @@ instance Show VkObjectTablePushConstantEntryNVX where
 --   > } VkObjectTableVertexBufferEntryNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectTableVertexBufferEntryNVX VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
-data VkObjectTableVertexBufferEntryNVX = VkObjectTableVertexBufferEntryNVX## Addr##
-                                                                            ByteArray##
+type VkObjectTableVertexBufferEntryNVX =
+     VulkanStruct VkObjectTableVertexBufferEntryNVX' -- ' closing tick for hsc2hs
+
+data VkObjectTableVertexBufferEntryNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkObjectTableVertexBufferEntryNVX where
-        (VkObjectTableVertexBufferEntryNVX## a _) ==
-          x@(VkObjectTableVertexBufferEntryNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkObjectTableVertexBufferEntryNVX where
-        (VkObjectTableVertexBufferEntryNVX## a _) `compare`
-          x@(VkObjectTableVertexBufferEntryNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1581,20 +1487,6 @@ instance Storable VkObjectTableVertexBufferEntryNVX where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkObjectTableVertexBufferEntryNVX where
-        unsafeAddr (VkObjectTableVertexBufferEntryNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkObjectTableVertexBufferEntryNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkObjectTableVertexBufferEntryNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkObjectTableVertexBufferEntryNVX where
         type StructFields VkObjectTableVertexBufferEntryNVX =

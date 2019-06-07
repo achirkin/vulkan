@@ -8,21 +8,19 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT
-       (VkDebugUtilsMessengerCreateInfoEXT(..)) where
-import           Foreign.Storable                                (Storable (..))
-import           GHC.Base                                        (Addr##,
-                                                                  ByteArray##,
-                                                                  byteArrayContents##,
-                                                                  plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks                  (VkDebugUtilsMessengerCreateFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.Debug                (VkDebugUtilsMessageSeverityFlagsEXT,
-                                                                  VkDebugUtilsMessageTypeFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import           Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugUtilsMessengerCallbackEXT)
-import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
-import           System.IO.Unsafe                                (unsafeDupablePerformIO)
+       (VkDebugUtilsMessengerCreateInfoEXT,
+        VkDebugUtilsMessengerCreateInfoEXT') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                                (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks                  (VkDebugUtilsMessengerCreateFlagsEXT)
+import Graphics.Vulkan.Types.Enum.Debug                (VkDebugUtilsMessageSeverityFlagsEXT,
+                                                        VkDebugUtilsMessageTypeFlagsEXT)
+import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugUtilsMessengerCallbackEXT)
+import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugUtilsMessengerCreateInfoEXT {
 --   >     VkStructureType sType;
@@ -35,20 +33,18 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   > } VkDebugUtilsMessengerCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsMessengerCreateInfoEXT VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
-data VkDebugUtilsMessengerCreateInfoEXT = VkDebugUtilsMessengerCreateInfoEXT## Addr##
-                                                                              ByteArray##
+type VkDebugUtilsMessengerCreateInfoEXT =
+     VulkanStruct VkDebugUtilsMessengerCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugUtilsMessengerCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugUtilsMessengerCreateInfoEXT where
-        (VkDebugUtilsMessengerCreateInfoEXT## a _) ==
-          x@(VkDebugUtilsMessengerCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugUtilsMessengerCreateInfoEXT where
-        (VkDebugUtilsMessengerCreateInfoEXT## a _) `compare`
-          x@(VkDebugUtilsMessengerCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -66,20 +62,6 @@ instance Storable VkDebugUtilsMessengerCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugUtilsMessengerCreateInfoEXT where
-        unsafeAddr (VkDebugUtilsMessengerCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugUtilsMessengerCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugUtilsMessengerCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugUtilsMessengerCreateInfoEXT where
         type StructFields VkDebugUtilsMessengerCreateInfoEXT =

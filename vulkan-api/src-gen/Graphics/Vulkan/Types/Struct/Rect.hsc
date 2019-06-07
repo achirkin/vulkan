@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Rect
-       (VkRect2D(..), VkRectLayerKHR(..)) where
-import           Foreign.Storable                    (Storable (..))
-import           GHC.Base                            (Addr##, ByteArray##,
-                                                      byteArrayContents##,
-                                                      plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Struct.Extent (VkExtent2D)
-import           Graphics.Vulkan.Types.Struct.Offset (VkOffset2D)
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+       (VkRect2D, VkRect2D', VkRectLayerKHR, VkRectLayerKHR') where
+import Foreign.Storable                    (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Struct.Extent (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Offset (VkOffset2D)
+import System.IO.Unsafe                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRect2D {
 --   >     VkOffset2D     offset;
@@ -25,17 +22,17 @@ import           System.IO.Unsafe                    (unsafeDupablePerformIO)
 --   > } VkRect2D;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRect2D VkRect2D registry at www.khronos.org>
-data VkRect2D = VkRect2D## Addr## ByteArray##
+type VkRect2D = VulkanStruct VkRect2D' -- ' closing tick for hsc2hs
+
+data VkRect2D' -- ' closing tick for hsc2hs
 
 instance Eq VkRect2D where
-        (VkRect2D## a _) == x@(VkRect2D## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRect2D where
-        (VkRect2D## a _) `compare` x@(VkRect2D## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -52,18 +49,6 @@ instance Storable VkRect2D where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRect2D where
-        unsafeAddr (VkRect2D## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRect2D## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRect2D## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRect2D where
         type StructFields VkRect2D = '["offset", "extent"] -- ' closing tick for hsc2hs
@@ -139,17 +124,17 @@ instance Show VkRect2D where
 --   > } VkRectLayerKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRectLayerKHR VkRectLayerKHR registry at www.khronos.org>
-data VkRectLayerKHR = VkRectLayerKHR## Addr## ByteArray##
+type VkRectLayerKHR = VulkanStruct VkRectLayerKHR' -- ' closing tick for hsc2hs
+
+data VkRectLayerKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkRectLayerKHR where
-        (VkRectLayerKHR## a _) == x@(VkRectLayerKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRectLayerKHR where
-        (VkRectLayerKHR## a _) `compare` x@(VkRectLayerKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -166,18 +151,6 @@ instance Storable VkRectLayerKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRectLayerKHR where
-        unsafeAddr (VkRectLayerKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRectLayerKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRectLayerKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRectLayerKHR where
         type StructFields VkRectLayerKHR = '["offset", "extent", "layer"] -- ' closing tick for hsc2hs

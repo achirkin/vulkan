@@ -1,4 +1,5 @@
 {-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE MagicHash                 #-}
 {-# LANGUAGE ScopedTypeVariables       #-}
 {-# LANGUAGE Strict                    #-}
@@ -11,7 +12,7 @@
 --   This is an internal module; it can change a lot between package versions;
 --   it provides low-level functions, most of which have user-friendly analogues.
 module Graphics.Vulkan.Marshal.Internal
-  ( VulkanMarshalPrim (..)
+  ( VulkanStruct (..), unsafeFromByteArrayOffset
   , fromForeignPtr#
   , toForeignPtr#, toPlainForeignPtr#
   , touchVkData#
@@ -21,46 +22,52 @@ module Graphics.Vulkan.Marshal.Internal
   , peekVkData#, pokeVkData#
   ) where
 
-import           Foreign.C.Types    (CInt (..), CSize (..))
-import           Foreign.ForeignPtr (ForeignPtr, newForeignPtr_)
-import           Foreign.Storable   (Storable (..))
-import           GHC.Base           (Addr#, ByteArray#, IO (..), Int (..), Int#,
-                                     byteArrayContents#, copyAddrToByteArray#,
-                                     eqAddr#, isTrue#, minusAddr#,
-                                     newAlignedPinnedByteArray#, touch#,
-                                     unsafeCoerce#, unsafeFreezeByteArray#,
-                                     (*#), (+#), (>=#))
-import           GHC.Ptr            (Ptr (..))
+import Foreign.C.Types    (CInt (..), CSize (..))
+import Foreign.ForeignPtr (ForeignPtr, newForeignPtr_)
+import Foreign.Storable   (Storable (..))
+import GHC.Base           (Addr#, ByteArray#, IO (..), Int (..), Int#,
+                           byteArrayContents#, copyAddrToByteArray#, eqAddr#,
+                           isTrue#, minusAddr#, newAlignedPinnedByteArray#,
+                           plusAddr#, touch#, unsafeCoerce#,
+                           unsafeFreezeByteArray#, (*#), (+#), (>=#))
+import GHC.Ptr            (Ptr (..))
 
-import           GHC.ForeignPtr     (ForeignPtr (..), ForeignPtrContents (..))
+import GHC.ForeignPtr (ForeignPtr (..), ForeignPtrContents (..))
 
 
--- | This class gives low-level access to memory location occupied by Vulkan data.
---
---   Meant for internal use only.
-class VulkanMarshalPrim a where
-  -- | Get address of vulkan structure.
-  --   Note, the address is only valid as long as a given vulkan structure exists.
-  --   Structures created with newVkData are stored in pinned byte arrays,
-  --   so their memory is maintained by Haskell GC.
-  unsafeAddr :: a -> Addr#
-  -- | Get a @ByteArray#@ that keeps the data.
-  --
-  --   Note, the data structure does not necessarily starts at zero offset.
-  unsafeByteArray :: a -> ByteArray#
-  -- | Combine a vulkan structure from ByteArray and an offset in this array.
-  unsafeFromByteArrayOffset :: Int# -> ByteArray# -> a
+
+{- | Internal representation of all Vulkan structures:
+     a pinned byte array and an address pointing to an area in this array.
+ -}
+data VulkanStruct a = VulkanStruct
+  { unsafeAddr      :: Addr#
+    -- ^ Get address of vulkan structure.
+    --   Note, the address is only valid as long as a given vulkan structure exists.
+    --   Structures created with newVkData are stored in pinned byte arrays,
+    --   so their memory is maintained by Haskell GC.
+  , unsafeByteArray :: ByteArray#
+    -- ^ Get a @ByteArray#@ that keeps the data.
+    --
+    --   Note, the data structure does not necessarily starts at zero offset.
+  }
+
+
+-- | Combine a vulkan structure from ByteArray and an offset in this array.
+unsafeFromByteArrayOffset :: Int# -> ByteArray# -> VulkanStruct a
+unsafeFromByteArrayOffset off b
+  = VulkanStruct (plusAddr# (byteArrayContents# b) off) b
+{-# INLINE unsafeFromByteArrayOffset #-}
 
 
 
 
 -- | Create a `ByteArray#`-based type from `ForeignPtr`.
 --   Try to not copy data, but do it if necessary.
-fromForeignPtr# :: forall a . (Storable a, VulkanMarshalPrim a)
-                => ForeignPtr a -> IO a
+fromForeignPtr# :: forall a . Storable (VulkanStruct a)
+                => ForeignPtr (VulkanStruct a) -> IO (VulkanStruct a)
 fromForeignPtr# (ForeignPtr addr PlainForeignPtr{})
-  | I# n <- sizeOf (undefined :: a)
-  , I# a <- alignment (undefined :: a)
+  | I# n <- sizeOf (undefined :: (VulkanStruct a))
+  , I# a <- alignment (undefined :: (VulkanStruct a))
   = IO
   (\s0 -> case newAlignedPinnedByteArray# n a s0 of
     (# s1, mba #) -> case copyAddrToByteArray# addr mba 0# n s1 of
@@ -83,7 +90,7 @@ fromForeignPtr# (ForeignPtr addr (PlainPtr mba))
 
 
 -- | Create a `ForeignPtr` referencing the structure without copying data.
-toForeignPtr# :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
+toForeignPtr# :: VulkanStruct a -> IO (ForeignPtr (VulkanStruct a))
 toForeignPtr# x
   | a <- unsafeAddr x
   , b <- unsafeByteArray x = do
@@ -99,25 +106,22 @@ toForeignPtr# x
 -- @toPlainForeignPtr@.
 -- Attempts to add a finalizer to a ForeignPtr created this way, or to
 -- finalize such a pointer, will throw an exception.
-toPlainForeignPtr# :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
-toPlainForeignPtr# x
-  | a <- unsafeAddr x
-  , b <- unsafeByteArray x = IO
+toPlainForeignPtr# :: VulkanStruct a -> IO (ForeignPtr (VulkanStruct a))
+toPlainForeignPtr# (VulkanStruct a b) = IO
     (\s -> (# s, ForeignPtr a (PlainPtr (unsafeCoerce# b)) #))
 {-# INLINE toPlainForeignPtr# #-}
 
 -- | Make sure the region of memory is not collected at this moment in time.
-touchVkData# :: VulkanMarshalPrim a => a -> IO ()
-touchVkData# a = IO (\s -> (# touch# (unsafeByteArray a) s, () #))
+touchVkData# :: VulkanStruct a -> IO ()
+touchVkData# (VulkanStruct _ b) = IO (\s -> (# touch# b s, () #))
 {-# INLINE touchVkData# #-}
 
 
-newVkData# :: forall a
-            . (Storable a, VulkanMarshalPrim a)
-           => (Ptr a -> IO ()) -> IO a
+newVkData# :: forall a . Storable (VulkanStruct a)
+           => (Ptr (VulkanStruct a) -> IO ()) -> IO (VulkanStruct a)
 newVkData# f
-  | I# n <- sizeOf (undefined :: a)
-  , I# a <- alignment (undefined :: a)
+  | I# n <- sizeOf (undefined :: (VulkanStruct a))
+  , I# a <- alignment (undefined :: (VulkanStruct a))
   = IO
   (\s0 -> case newAlignedPinnedByteArray# n a s0 of
     (# s1, mba #) -> case unsafeFreezeByteArray# mba s1 of
@@ -127,12 +131,10 @@ newVkData# f
   )
 {-# INLINE newVkData# #-}
 
-mallocVkData# :: forall a
-             . (Storable a, VulkanMarshalPrim a)
-            => IO a
+mallocVkData# :: forall a . Storable (VulkanStruct a) => IO (VulkanStruct a)
 mallocVkData#
-  | I# n <- sizeOf (undefined :: a)
-  , I# a <- alignment (undefined :: a)
+  | I# n <- sizeOf (undefined :: (VulkanStruct a))
+  , I# a <- alignment (undefined :: (VulkanStruct a))
   = IO
   (\s0 -> case newAlignedPinnedByteArray# n a s0 of
     (# s1, mba #) -> case unsafeFreezeByteArray# mba s1 of
@@ -140,12 +142,11 @@ mallocVkData#
   )
 {-# INLINE mallocVkData# #-}
 
-mallocVkDataArray# :: forall a
-                    . (Storable a, VulkanMarshalPrim a)
-                   => Int -> IO (Ptr a, [a])
+mallocVkDataArray# :: forall a . Storable (VulkanStruct a)
+                   => Int -> IO (Ptr (VulkanStruct a), [(VulkanStruct a)])
 mallocVkDataArray# (I# m)
-  | I# n <- sizeOf (undefined :: a)
-  , I# a <- alignment (undefined :: a)
+  | I# n <- sizeOf (undefined :: (VulkanStruct a))
+  , I# a <- alignment (undefined :: (VulkanStruct a))
   , nm <- n *# m
   = IO
   (\s0 -> case newAlignedPinnedByteArray# nm a s0 of
@@ -163,12 +164,11 @@ mallocVkDataArray# (I# m)
 {-# INLINE mallocVkDataArray# #-}
 
 
-peekVkData# :: forall a
-             . (Storable a, VulkanMarshalPrim a)
-            => Ptr a -> IO a
+peekVkData# :: forall a . (Storable (VulkanStruct a))
+            => Ptr (VulkanStruct a) -> IO (VulkanStruct a)
 peekVkData# (Ptr addr)
-  | I# n <- sizeOf (undefined :: a)
-  , I# a <- alignment (undefined :: a)
+  | I# n <- sizeOf (undefined :: (VulkanStruct a))
+  , I# a <- alignment (undefined :: (VulkanStruct a))
   = IO
   (\s -> case newAlignedPinnedByteArray# n a s of
     (# s1, mba #) -> case copyAddrToByteArray# addr mba 0# n s1 of
@@ -177,9 +177,8 @@ peekVkData# (Ptr addr)
   )
 {-# INLINE peekVkData# #-}
 
-pokeVkData# :: forall a
-             . (Storable a, VulkanMarshalPrim a)
-            => Ptr a -> a -> IO ()
+pokeVkData# :: forall a . Storable (VulkanStruct a)
+            => Ptr (VulkanStruct a) -> (VulkanStruct a) -> IO ()
 pokeVkData# (Ptr addr) x
   = c_memcpy addr (unsafeAddr x) (fromIntegral $ sizeOf x)
 {-# INLINE pokeVkData# #-}

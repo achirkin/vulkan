@@ -12,19 +12,17 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.Clear
-       (VkClearAttachment(..), VkClearColorValue(..),
-        VkClearDepthStencilValue(..), VkClearRect(..), VkClearValue(..))
+       (VkClearAttachment, VkClearAttachment', VkClearColorValue, -- ' closing tick for hsc2hs
+        VkClearColorValue', VkClearDepthStencilValue, -- ' closing tick for hsc2hs
+        VkClearDepthStencilValue', VkClearRect, VkClearRect', VkClearValue,
+        VkClearValue') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                  (Storable (..))
-import           GHC.Base                          (Addr##, ByteArray##, Proxy##,
-                                                    byteArrayContents##,
-                                                    plusAddr##, proxy##)
-import           GHC.TypeLits                      (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Image  (VkImageAspectFlags)
-import           Graphics.Vulkan.Types.Struct.Rect (VkRect2D)
-import           System.IO.Unsafe                  (unsafeDupablePerformIO)
+import Foreign.Storable                  (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Image  (VkImageAspectFlags)
+import Graphics.Vulkan.Types.Struct.Rect (VkRect2D)
+import System.IO.Unsafe                  (unsafeDupablePerformIO)
 
 -- | > typedef struct VkClearAttachment {
 --   >     VkImageAspectFlags     aspectMask;
@@ -33,17 +31,17 @@ import           System.IO.Unsafe                  (unsafeDupablePerformIO)
 --   > } VkClearAttachment;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearAttachment VkClearAttachment registry at www.khronos.org>
-data VkClearAttachment = VkClearAttachment## Addr## ByteArray##
+type VkClearAttachment = VulkanStruct VkClearAttachment' -- ' closing tick for hsc2hs
+
+data VkClearAttachment' -- ' closing tick for hsc2hs
 
 instance Eq VkClearAttachment where
-        (VkClearAttachment## a _) == x@(VkClearAttachment## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkClearAttachment where
-        (VkClearAttachment## a _) `compare` x@(VkClearAttachment## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -60,18 +58,6 @@ instance Storable VkClearAttachment where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkClearAttachment where
-        unsafeAddr (VkClearAttachment## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkClearAttachment## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkClearAttachment## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkClearAttachment where
         type StructFields VkClearAttachment =
@@ -195,17 +181,17 @@ instance Show VkClearAttachment where
 --   > } VkClearColorValue;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearColorValue VkClearColorValue registry at www.khronos.org>
-data VkClearColorValue = VkClearColorValue## Addr## ByteArray##
+type VkClearColorValue = VulkanStruct VkClearColorValue' -- ' closing tick for hsc2hs
+
+data VkClearColorValue' -- ' closing tick for hsc2hs
 
 instance Eq VkClearColorValue where
-        (VkClearColorValue## a _) == x@(VkClearColorValue## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkClearColorValue where
-        (VkClearColorValue## a _) `compare` x@(VkClearColorValue## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -222,18 +208,6 @@ instance Storable VkClearColorValue where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkClearColorValue where
-        unsafeAddr (VkClearColorValue## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkClearColorValue## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkClearColorValue## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkClearColorValue where
         type StructFields VkClearColorValue =
@@ -421,18 +395,18 @@ instance Show VkClearColorValue where
 --   > } VkClearDepthStencilValue;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearDepthStencilValue VkClearDepthStencilValue registry at www.khronos.org>
-data VkClearDepthStencilValue = VkClearDepthStencilValue## Addr##
-                                                          ByteArray##
+type VkClearDepthStencilValue =
+     VulkanStruct VkClearDepthStencilValue' -- ' closing tick for hsc2hs
+
+data VkClearDepthStencilValue' -- ' closing tick for hsc2hs
 
 instance Eq VkClearDepthStencilValue where
-        (VkClearDepthStencilValue## a _) ==
-          x@(VkClearDepthStencilValue## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkClearDepthStencilValue where
-        (VkClearDepthStencilValue## a _) `compare`
-          x@(VkClearDepthStencilValue## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -449,19 +423,6 @@ instance Storable VkClearDepthStencilValue where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkClearDepthStencilValue where
-        unsafeAddr (VkClearDepthStencilValue## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkClearDepthStencilValue## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkClearDepthStencilValue## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkClearDepthStencilValue where
         type StructFields VkClearDepthStencilValue = '["depth", "stencil"] -- ' closing tick for hsc2hs
@@ -549,17 +510,17 @@ instance Show VkClearDepthStencilValue where
 --   > } VkClearRect;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearRect VkClearRect registry at www.khronos.org>
-data VkClearRect = VkClearRect## Addr## ByteArray##
+type VkClearRect = VulkanStruct VkClearRect' -- ' closing tick for hsc2hs
+
+data VkClearRect' -- ' closing tick for hsc2hs
 
 instance Eq VkClearRect where
-        (VkClearRect## a _) == x@(VkClearRect## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkClearRect where
-        (VkClearRect## a _) `compare` x@(VkClearRect## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -576,18 +537,6 @@ instance Storable VkClearRect where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkClearRect where
-        unsafeAddr (VkClearRect## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkClearRect## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkClearRect## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkClearRect where
         type StructFields VkClearRect =
@@ -705,17 +654,17 @@ instance Show VkClearRect where
 --   > } VkClearValue;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearValue VkClearValue registry at www.khronos.org>
-data VkClearValue = VkClearValue## Addr## ByteArray##
+type VkClearValue = VulkanStruct VkClearValue' -- ' closing tick for hsc2hs
+
+data VkClearValue' -- ' closing tick for hsc2hs
 
 instance Eq VkClearValue where
-        (VkClearValue## a _) == x@(VkClearValue## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkClearValue where
-        (VkClearValue## a _) `compare` x@(VkClearValue## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -732,18 +681,6 @@ instance Storable VkClearValue where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkClearValue where
-        unsafeAddr (VkClearValue## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkClearValue## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkClearValue## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkClearValue where
         type StructFields VkClearValue = '["color", "depthStencil"] -- ' closing tick for hsc2hs

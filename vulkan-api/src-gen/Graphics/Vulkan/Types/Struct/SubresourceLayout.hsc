@@ -8,15 +8,12 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SubresourceLayout
-       (VkSubresourceLayout(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkSubresourceLayout, VkSubresourceLayout') where -- ' closing tick for hsc2hs
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubresourceLayout {
 --   >     VkDeviceSize           offset;
@@ -27,17 +24,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSubresourceLayout;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubresourceLayout VkSubresourceLayout registry at www.khronos.org>
-data VkSubresourceLayout = VkSubresourceLayout## Addr## ByteArray##
+type VkSubresourceLayout = VulkanStruct VkSubresourceLayout' -- ' closing tick for hsc2hs
+
+data VkSubresourceLayout' -- ' closing tick for hsc2hs
 
 instance Eq VkSubresourceLayout where
-        (VkSubresourceLayout## a _) == x@(VkSubresourceLayout## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubresourceLayout where
-        (VkSubresourceLayout## a _) `compare` x@(VkSubresourceLayout## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -54,18 +51,6 @@ instance Storable VkSubresourceLayout where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSubresourceLayout where
-        unsafeAddr (VkSubresourceLayout## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSubresourceLayout## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSubresourceLayout## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubresourceLayout where
         type StructFields VkSubresourceLayout =

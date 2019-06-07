@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_NV_sample_mask_override_coverage
         VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_EXTENSION_NAME,
         pattern VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION ::
         (Num a, Eq a) => a

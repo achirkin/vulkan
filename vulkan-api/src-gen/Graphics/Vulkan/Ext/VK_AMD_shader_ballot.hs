@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_ballot
         VK_AMD_SHADER_BALLOT_EXTENSION_NAME,
         pattern VK_AMD_SHADER_BALLOT_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_AMD_SHADER_BALLOT_SPEC_VERSION :: (Num a, Eq a) => a
 

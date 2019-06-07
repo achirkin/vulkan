@@ -11,17 +11,17 @@ module Graphics.Vulkan.Types.Enum.PointClippingBehavior
                                 VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY),
         VkPointClippingBehaviorKHR(..))
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

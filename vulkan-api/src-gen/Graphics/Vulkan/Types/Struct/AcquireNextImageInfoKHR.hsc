@@ -8,17 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
-       (VkAcquireNextImageInfoKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkFence, VkSemaphore,
-                                                           VkSwapchainKHR)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkAcquireNextImageInfoKHR, VkAcquireNextImageInfoKHR') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkFence, VkSemaphore,
+                                                 VkSwapchainKHR)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAcquireNextImageInfoKHR {
 --   >     VkStructureType sType;
@@ -31,18 +28,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkAcquireNextImageInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAcquireNextImageInfoKHR VkAcquireNextImageInfoKHR registry at www.khronos.org>
-data VkAcquireNextImageInfoKHR = VkAcquireNextImageInfoKHR## Addr##
-                                                            ByteArray##
+type VkAcquireNextImageInfoKHR =
+     VulkanStruct VkAcquireNextImageInfoKHR' -- ' closing tick for hsc2hs
+
+data VkAcquireNextImageInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkAcquireNextImageInfoKHR where
-        (VkAcquireNextImageInfoKHR## a _) ==
-          x@(VkAcquireNextImageInfoKHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAcquireNextImageInfoKHR where
-        (VkAcquireNextImageInfoKHR## a _) `compare`
-          x@(VkAcquireNextImageInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -59,19 +56,6 @@ instance Storable VkAcquireNextImageInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAcquireNextImageInfoKHR where
-        unsafeAddr (VkAcquireNextImageInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAcquireNextImageInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAcquireNextImageInfoKHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAcquireNextImageInfoKHR where
         type StructFields VkAcquireNextImageInfoKHR =

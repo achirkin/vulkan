@@ -8,18 +8,17 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SampleLocation
-       (VkSampleLocationEXT(..), VkSampleLocationsInfoEXT(..)) where
-import           Foreign.Storable                            (Storable (..))
-import           GHC.Base                                    (Addr##, ByteArray##,
-                                                              byteArrayContents##,
-                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
-import           Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Extent         (VkExtent2D)
-import           Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
-import           System.IO.Unsafe                            (unsafeDupablePerformIO)
+       (VkSampleLocationEXT, VkSampleLocationEXT', -- ' closing tick for hsc2hs
+        VkSampleLocationsInfoEXT, VkSampleLocationsInfoEXT') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
+import Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Extent         (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
+import System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSampleLocationEXT {
 --   >     float                            x;
@@ -27,17 +26,17 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   > } VkSampleLocationEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSampleLocationEXT VkSampleLocationEXT registry at www.khronos.org>
-data VkSampleLocationEXT = VkSampleLocationEXT## Addr## ByteArray##
+type VkSampleLocationEXT = VulkanStruct VkSampleLocationEXT' -- ' closing tick for hsc2hs
+
+data VkSampleLocationEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSampleLocationEXT where
-        (VkSampleLocationEXT## a _) == x@(VkSampleLocationEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSampleLocationEXT where
-        (VkSampleLocationEXT## a _) `compare` x@(VkSampleLocationEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -54,18 +53,6 @@ instance Storable VkSampleLocationEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSampleLocationEXT where
-        unsafeAddr (VkSampleLocationEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSampleLocationEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSampleLocationEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSampleLocationEXT where
         type StructFields VkSampleLocationEXT = '["x", "y"] -- ' closing tick for hsc2hs
@@ -151,18 +138,18 @@ instance Show VkSampleLocationEXT where
 --   > } VkSampleLocationsInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSampleLocationsInfoEXT VkSampleLocationsInfoEXT registry at www.khronos.org>
-data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## Addr##
-                                                          ByteArray##
+type VkSampleLocationsInfoEXT =
+     VulkanStruct VkSampleLocationsInfoEXT' -- ' closing tick for hsc2hs
+
+data VkSampleLocationsInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSampleLocationsInfoEXT where
-        (VkSampleLocationsInfoEXT## a _) ==
-          x@(VkSampleLocationsInfoEXT## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSampleLocationsInfoEXT where
-        (VkSampleLocationsInfoEXT## a _) `compare`
-          x@(VkSampleLocationsInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -179,19 +166,6 @@ instance Storable VkSampleLocationsInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSampleLocationsInfoEXT where
-        unsafeAddr (VkSampleLocationsInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSampleLocationsInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSampleLocationsInfoEXT## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSampleLocationsInfoEXT where
         type StructFields VkSampleLocationsInfoEXT =

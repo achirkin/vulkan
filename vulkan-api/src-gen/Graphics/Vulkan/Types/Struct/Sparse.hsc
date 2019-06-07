@@ -8,34 +8,33 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Sparse
-       (VkSparseBufferMemoryBindInfo(..),
-        VkSparseImageFormatProperties(..),
-        VkSparseImageFormatProperties2(..),
-        VkSparseImageFormatProperties2KHR, VkSparseImageMemoryBind(..),
-        VkSparseImageMemoryBindInfo(..),
-        VkSparseImageMemoryRequirements(..),
-        VkSparseImageMemoryRequirements2(..),
+       (VkSparseBufferMemoryBindInfo, VkSparseBufferMemoryBindInfo', -- ' closing tick for hsc2hs
+        VkSparseImageFormatProperties, VkSparseImageFormatProperties', -- ' closing tick for hsc2hs
+        VkSparseImageFormatProperties2, VkSparseImageFormatProperties2', -- ' closing tick for hsc2hs
+        VkSparseImageFormatProperties2KHR, VkSparseImageMemoryBind,
+        VkSparseImageMemoryBind', VkSparseImageMemoryBindInfo, -- ' closing tick for hsc2hs
+        VkSparseImageMemoryBindInfo', VkSparseImageMemoryRequirements, -- ' closing tick for hsc2hs
+        VkSparseImageMemoryRequirements', VkSparseImageMemoryRequirements2, -- ' closing tick for hsc2hs
+        VkSparseImageMemoryRequirements2', -- ' closing tick for hsc2hs
         VkSparseImageMemoryRequirements2KHR,
-        VkSparseImageOpaqueMemoryBindInfo(..), VkSparseMemoryBind(..))
+        VkSparseImageOpaqueMemoryBindInfo,
+        VkSparseImageOpaqueMemoryBindInfo', VkSparseMemoryBind, -- ' closing tick for hsc2hs
+        VkSparseMemoryBind') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlags)
-import           Graphics.Vulkan.Types.Enum.Sparse        (VkSparseImageFormatFlags,
-                                                           VkSparseMemoryBindFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer,
-                                                           VkDeviceMemory,
-                                                           VkImage)
-import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import           Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
-import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlags)
+import Graphics.Vulkan.Types.Enum.Sparse        (VkSparseImageFormatFlags,
+                                                 VkSparseMemoryBindFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
+                                                 VkImage)
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
+import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSparseBufferMemoryBindInfo {
 --   >     VkBuffer buffer;
@@ -44,19 +43,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkSparseBufferMemoryBindInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseBufferMemoryBindInfo VkSparseBufferMemoryBindInfo registry at www.khronos.org>
-data VkSparseBufferMemoryBindInfo = VkSparseBufferMemoryBindInfo## Addr##
-                                                                  ByteArray##
+type VkSparseBufferMemoryBindInfo =
+     VulkanStruct VkSparseBufferMemoryBindInfo' -- ' closing tick for hsc2hs
+
+data VkSparseBufferMemoryBindInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseBufferMemoryBindInfo where
-        (VkSparseBufferMemoryBindInfo## a _) ==
-          x@(VkSparseBufferMemoryBindInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseBufferMemoryBindInfo where
-        (VkSparseBufferMemoryBindInfo## a _) `compare`
-          x@(VkSparseBufferMemoryBindInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -74,20 +72,6 @@ instance Storable VkSparseBufferMemoryBindInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseBufferMemoryBindInfo where
-        unsafeAddr (VkSparseBufferMemoryBindInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseBufferMemoryBindInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseBufferMemoryBindInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseBufferMemoryBindInfo where
         type StructFields VkSparseBufferMemoryBindInfo =
@@ -213,19 +197,18 @@ instance Show VkSparseBufferMemoryBindInfo where
 --   > } VkSparseImageFormatProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageFormatProperties VkSparseImageFormatProperties registry at www.khronos.org>
-data VkSparseImageFormatProperties = VkSparseImageFormatProperties## Addr##
-                                                                    ByteArray##
+type VkSparseImageFormatProperties =
+     VulkanStruct VkSparseImageFormatProperties' -- ' closing tick for hsc2hs
+
+data VkSparseImageFormatProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageFormatProperties where
-        (VkSparseImageFormatProperties## a _) ==
-          x@(VkSparseImageFormatProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageFormatProperties where
-        (VkSparseImageFormatProperties## a _) `compare`
-          x@(VkSparseImageFormatProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -243,20 +226,6 @@ instance Storable VkSparseImageFormatProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageFormatProperties where
-        unsafeAddr (VkSparseImageFormatProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageFormatProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageFormatProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageFormatProperties where
         type StructFields VkSparseImageFormatProperties =
@@ -388,19 +357,18 @@ instance Show VkSparseImageFormatProperties where
 --   > } VkSparseImageFormatProperties2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageFormatProperties2 VkSparseImageFormatProperties2 registry at www.khronos.org>
-data VkSparseImageFormatProperties2 = VkSparseImageFormatProperties2## Addr##
-                                                                      ByteArray##
+type VkSparseImageFormatProperties2 =
+     VulkanStruct VkSparseImageFormatProperties2' -- ' closing tick for hsc2hs
+
+data VkSparseImageFormatProperties2' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageFormatProperties2 where
-        (VkSparseImageFormatProperties2## a _) ==
-          x@(VkSparseImageFormatProperties2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageFormatProperties2 where
-        (VkSparseImageFormatProperties2## a _) `compare`
-          x@(VkSparseImageFormatProperties2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -418,20 +386,6 @@ instance Storable VkSparseImageFormatProperties2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageFormatProperties2 where
-        unsafeAddr (VkSparseImageFormatProperties2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageFormatProperties2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageFormatProperties2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageFormatProperties2 where
         type StructFields VkSparseImageFormatProperties2 =
@@ -566,18 +520,18 @@ type VkSparseImageFormatProperties2KHR =
 --   > } VkSparseImageMemoryBind;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryBind VkSparseImageMemoryBind registry at www.khronos.org>
-data VkSparseImageMemoryBind = VkSparseImageMemoryBind## Addr##
-                                                        ByteArray##
+type VkSparseImageMemoryBind =
+     VulkanStruct VkSparseImageMemoryBind' -- ' closing tick for hsc2hs
+
+data VkSparseImageMemoryBind' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageMemoryBind where
-        (VkSparseImageMemoryBind## a _) == x@(VkSparseImageMemoryBind## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageMemoryBind where
-        (VkSparseImageMemoryBind## a _) `compare`
-          x@(VkSparseImageMemoryBind## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -594,18 +548,6 @@ instance Storable VkSparseImageMemoryBind where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageMemoryBind where
-        unsafeAddr (VkSparseImageMemoryBind## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageMemoryBind## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageMemoryBind## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageMemoryBind where
         type StructFields VkSparseImageMemoryBind =
@@ -834,19 +776,18 @@ instance Show VkSparseImageMemoryBind where
 --   > } VkSparseImageMemoryBindInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryBindInfo VkSparseImageMemoryBindInfo registry at www.khronos.org>
-data VkSparseImageMemoryBindInfo = VkSparseImageMemoryBindInfo## Addr##
-                                                                ByteArray##
+type VkSparseImageMemoryBindInfo =
+     VulkanStruct VkSparseImageMemoryBindInfo' -- ' closing tick for hsc2hs
+
+data VkSparseImageMemoryBindInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageMemoryBindInfo where
-        (VkSparseImageMemoryBindInfo## a _) ==
-          x@(VkSparseImageMemoryBindInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageMemoryBindInfo where
-        (VkSparseImageMemoryBindInfo## a _) `compare`
-          x@(VkSparseImageMemoryBindInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -863,20 +804,6 @@ instance Storable VkSparseImageMemoryBindInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageMemoryBindInfo where
-        unsafeAddr (VkSparseImageMemoryBindInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageMemoryBindInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageMemoryBindInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageMemoryBindInfo where
         type StructFields VkSparseImageMemoryBindInfo =
@@ -1003,19 +930,18 @@ instance Show VkSparseImageMemoryBindInfo where
 --   > } VkSparseImageMemoryRequirements;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryRequirements VkSparseImageMemoryRequirements registry at www.khronos.org>
-data VkSparseImageMemoryRequirements = VkSparseImageMemoryRequirements## Addr##
-                                                                        ByteArray##
+type VkSparseImageMemoryRequirements =
+     VulkanStruct VkSparseImageMemoryRequirements' -- ' closing tick for hsc2hs
+
+data VkSparseImageMemoryRequirements' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageMemoryRequirements where
-        (VkSparseImageMemoryRequirements## a _) ==
-          x@(VkSparseImageMemoryRequirements## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageMemoryRequirements where
-        (VkSparseImageMemoryRequirements## a _) `compare`
-          x@(VkSparseImageMemoryRequirements## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1033,20 +959,6 @@ instance Storable VkSparseImageMemoryRequirements where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageMemoryRequirements where
-        unsafeAddr (VkSparseImageMemoryRequirements## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageMemoryRequirements## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageMemoryRequirements##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageMemoryRequirements where
         type StructFields VkSparseImageMemoryRequirements =
@@ -1288,20 +1200,18 @@ instance Show VkSparseImageMemoryRequirements where
 --   > } VkSparseImageMemoryRequirements2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryRequirements2 VkSparseImageMemoryRequirements2 registry at www.khronos.org>
-data VkSparseImageMemoryRequirements2 = VkSparseImageMemoryRequirements2## Addr##
-                                                                          ByteArray##
+type VkSparseImageMemoryRequirements2 =
+     VulkanStruct VkSparseImageMemoryRequirements2' -- ' closing tick for hsc2hs
+
+data VkSparseImageMemoryRequirements2' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageMemoryRequirements2 where
-        (VkSparseImageMemoryRequirements2## a _) ==
-          x@(VkSparseImageMemoryRequirements2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageMemoryRequirements2 where
-        (VkSparseImageMemoryRequirements2## a _) `compare`
-          x@(VkSparseImageMemoryRequirements2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1319,20 +1229,6 @@ instance Storable VkSparseImageMemoryRequirements2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageMemoryRequirements2 where
-        unsafeAddr (VkSparseImageMemoryRequirements2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageMemoryRequirements2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageMemoryRequirements2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageMemoryRequirements2 where
         type StructFields VkSparseImageMemoryRequirements2 =
@@ -1474,20 +1370,18 @@ type VkSparseImageMemoryRequirements2KHR =
 --   > } VkSparseImageOpaqueMemoryBindInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageOpaqueMemoryBindInfo VkSparseImageOpaqueMemoryBindInfo registry at www.khronos.org>
-data VkSparseImageOpaqueMemoryBindInfo = VkSparseImageOpaqueMemoryBindInfo## Addr##
-                                                                            ByteArray##
+type VkSparseImageOpaqueMemoryBindInfo =
+     VulkanStruct VkSparseImageOpaqueMemoryBindInfo' -- ' closing tick for hsc2hs
+
+data VkSparseImageOpaqueMemoryBindInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseImageOpaqueMemoryBindInfo where
-        (VkSparseImageOpaqueMemoryBindInfo## a _) ==
-          x@(VkSparseImageOpaqueMemoryBindInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseImageOpaqueMemoryBindInfo where
-        (VkSparseImageOpaqueMemoryBindInfo## a _) `compare`
-          x@(VkSparseImageOpaqueMemoryBindInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1505,20 +1399,6 @@ instance Storable VkSparseImageOpaqueMemoryBindInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseImageOpaqueMemoryBindInfo where
-        unsafeAddr (VkSparseImageOpaqueMemoryBindInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseImageOpaqueMemoryBindInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseImageOpaqueMemoryBindInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseImageOpaqueMemoryBindInfo where
         type StructFields VkSparseImageOpaqueMemoryBindInfo =
@@ -1652,17 +1532,17 @@ instance Show VkSparseImageOpaqueMemoryBindInfo where
 --   > } VkSparseMemoryBind;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseMemoryBind VkSparseMemoryBind registry at www.khronos.org>
-data VkSparseMemoryBind = VkSparseMemoryBind## Addr## ByteArray##
+type VkSparseMemoryBind = VulkanStruct VkSparseMemoryBind' -- ' closing tick for hsc2hs
+
+data VkSparseMemoryBind' -- ' closing tick for hsc2hs
 
 instance Eq VkSparseMemoryBind where
-        (VkSparseMemoryBind## a _) == x@(VkSparseMemoryBind## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSparseMemoryBind where
-        (VkSparseMemoryBind## a _) `compare` x@(VkSparseMemoryBind## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1679,18 +1559,6 @@ instance Storable VkSparseMemoryBind where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSparseMemoryBind where
-        unsafeAddr (VkSparseMemoryBind## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSparseMemoryBind## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSparseMemoryBind## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSparseMemoryBind where
         type StructFields VkSparseMemoryBind =

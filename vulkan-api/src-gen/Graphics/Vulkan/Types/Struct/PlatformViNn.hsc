@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformViNn
-       (VkViSurfaceCreateInfoNN(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkViSurfaceCreateFlagsNN)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkViSurfaceCreateInfoNN, VkViSurfaceCreateInfoNN') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkViSurfaceCreateFlagsNN)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkViSurfaceCreateInfoNN {
 --   >     VkStructureType sType;
@@ -27,18 +24,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkViSurfaceCreateInfoNN;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViSurfaceCreateInfoNN VkViSurfaceCreateInfoNN registry at www.khronos.org>
-data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN## Addr##
-                                                        ByteArray##
+type VkViSurfaceCreateInfoNN =
+     VulkanStruct VkViSurfaceCreateInfoNN' -- ' closing tick for hsc2hs
+
+data VkViSurfaceCreateInfoNN' -- ' closing tick for hsc2hs
 
 instance Eq VkViSurfaceCreateInfoNN where
-        (VkViSurfaceCreateInfoNN## a _) == x@(VkViSurfaceCreateInfoNN## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkViSurfaceCreateInfoNN where
-        (VkViSurfaceCreateInfoNN## a _) `compare`
-          x@(VkViSurfaceCreateInfoNN## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -55,18 +52,6 @@ instance Storable VkViSurfaceCreateInfoNN where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkViSurfaceCreateInfoNN where
-        unsafeAddr (VkViSurfaceCreateInfoNN## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkViSurfaceCreateInfoNN## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkViSurfaceCreateInfoNN## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkViSurfaceCreateInfoNN where
         type StructFields VkViSurfaceCreateInfoNN =

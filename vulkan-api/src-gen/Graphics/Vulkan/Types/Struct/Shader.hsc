@@ -12,23 +12,20 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.Shader
-       (VkShaderModuleCreateInfo(..),
-        VkShaderModuleValidationCacheCreateInfoEXT(..),
-        VkShaderResourceUsageAMD(..), VkShaderStatisticsInfoAMD(..))
+       (VkShaderModuleCreateInfo, VkShaderModuleCreateInfo', -- ' closing tick for hsc2hs
+        VkShaderModuleValidationCacheCreateInfoEXT,
+        VkShaderModuleValidationCacheCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkShaderResourceUsageAMD, VkShaderResourceUsageAMD', -- ' closing tick for hsc2hs
+        VkShaderStatisticsInfoAMD, VkShaderStatisticsInfoAMD') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           Proxy##,
-                                                           byteArrayContents##,
-                                                           plusAddr##, proxy##)
-import           GHC.TypeLits                             (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkShaderModuleCreateFlags)
-import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkShaderModuleCreateFlags)
+import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkShaderModuleCreateInfo {
 --   >     VkStructureType sType;
@@ -39,18 +36,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkShaderModuleCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderModuleCreateInfo VkShaderModuleCreateInfo registry at www.khronos.org>
-data VkShaderModuleCreateInfo = VkShaderModuleCreateInfo## Addr##
-                                                          ByteArray##
+type VkShaderModuleCreateInfo =
+     VulkanStruct VkShaderModuleCreateInfo' -- ' closing tick for hsc2hs
+
+data VkShaderModuleCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkShaderModuleCreateInfo where
-        (VkShaderModuleCreateInfo## a _) ==
-          x@(VkShaderModuleCreateInfo## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderModuleCreateInfo where
-        (VkShaderModuleCreateInfo## a _) `compare`
-          x@(VkShaderModuleCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -67,19 +64,6 @@ instance Storable VkShaderModuleCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkShaderModuleCreateInfo where
-        unsafeAddr (VkShaderModuleCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkShaderModuleCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkShaderModuleCreateInfo## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderModuleCreateInfo where
         type StructFields VkShaderModuleCreateInfo =
@@ -270,20 +254,18 @@ instance Show VkShaderModuleCreateInfo where
 --   > } VkShaderModuleValidationCacheCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderModuleValidationCacheCreateInfoEXT VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
-data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## Addr##
-                                                                                              ByteArray##
+type VkShaderModuleValidationCacheCreateInfoEXT =
+     VulkanStruct VkShaderModuleValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkShaderModuleValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkShaderModuleValidationCacheCreateInfoEXT where
-        (VkShaderModuleValidationCacheCreateInfoEXT## a _) ==
-          x@(VkShaderModuleValidationCacheCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderModuleValidationCacheCreateInfoEXT where
-        (VkShaderModuleValidationCacheCreateInfoEXT## a _) `compare`
-          x@(VkShaderModuleValidationCacheCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -302,23 +284,6 @@ instance Storable VkShaderModuleValidationCacheCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkShaderModuleValidationCacheCreateInfoEXT
-         where
-        unsafeAddr (VkShaderModuleValidationCacheCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkShaderModuleValidationCacheCreateInfoEXT## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkShaderModuleValidationCacheCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
          where
@@ -477,18 +442,18 @@ instance Show VkShaderModuleValidationCacheCreateInfoEXT where
 --   > } VkShaderResourceUsageAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderResourceUsageAMD VkShaderResourceUsageAMD registry at www.khronos.org>
-data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## Addr##
-                                                          ByteArray##
+type VkShaderResourceUsageAMD =
+     VulkanStruct VkShaderResourceUsageAMD' -- ' closing tick for hsc2hs
+
+data VkShaderResourceUsageAMD' -- ' closing tick for hsc2hs
 
 instance Eq VkShaderResourceUsageAMD where
-        (VkShaderResourceUsageAMD## a _) ==
-          x@(VkShaderResourceUsageAMD## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderResourceUsageAMD where
-        (VkShaderResourceUsageAMD## a _) `compare`
-          x@(VkShaderResourceUsageAMD## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -505,19 +470,6 @@ instance Storable VkShaderResourceUsageAMD where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkShaderResourceUsageAMD where
-        unsafeAddr (VkShaderResourceUsageAMD## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkShaderResourceUsageAMD## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkShaderResourceUsageAMD## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderResourceUsageAMD where
         type StructFields VkShaderResourceUsageAMD =
@@ -736,18 +688,18 @@ instance Show VkShaderResourceUsageAMD where
 --   > } VkShaderStatisticsInfoAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderStatisticsInfoAMD VkShaderStatisticsInfoAMD registry at www.khronos.org>
-data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## Addr##
-                                                            ByteArray##
+type VkShaderStatisticsInfoAMD =
+     VulkanStruct VkShaderStatisticsInfoAMD' -- ' closing tick for hsc2hs
+
+data VkShaderStatisticsInfoAMD' -- ' closing tick for hsc2hs
 
 instance Eq VkShaderStatisticsInfoAMD where
-        (VkShaderStatisticsInfoAMD## a _) ==
-          x@(VkShaderStatisticsInfoAMD## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderStatisticsInfoAMD where
-        (VkShaderStatisticsInfoAMD## a _) `compare`
-          x@(VkShaderStatisticsInfoAMD## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -764,19 +716,6 @@ instance Storable VkShaderStatisticsInfoAMD where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkShaderStatisticsInfoAMD where
-        unsafeAddr (VkShaderStatisticsInfoAMD## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkShaderStatisticsInfoAMD## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkShaderStatisticsInfoAMD## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderStatisticsInfoAMD where
         type StructFields VkShaderStatisticsInfoAMD =

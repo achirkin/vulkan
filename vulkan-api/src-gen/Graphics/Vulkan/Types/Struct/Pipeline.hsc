@@ -12,99 +12,112 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.Pipeline
-       (VkGraphicsPipelineCreateInfo(..), VkPipelineCacheCreateInfo(..),
-        VkPipelineColorBlendAdvancedStateCreateInfoEXT(..),
-        VkPipelineColorBlendAttachmentState(..),
-        VkPipelineColorBlendStateCreateInfo(..),
-        VkPipelineCoverageModulationStateCreateInfoNV(..),
-        VkPipelineCoverageToColorStateCreateInfoNV(..),
-        VkPipelineDepthStencilStateCreateInfo(..),
-        VkPipelineDiscardRectangleStateCreateInfoEXT(..),
-        VkPipelineDynamicStateCreateInfo(..),
-        VkPipelineInputAssemblyStateCreateInfo(..),
-        VkPipelineLayoutCreateInfo(..),
-        VkPipelineMultisampleStateCreateInfo(..),
-        VkPipelineRasterizationConservativeStateCreateInfoEXT(..),
-        VkPipelineRasterizationStateCreateInfo(..),
-        VkPipelineRasterizationStateRasterizationOrderAMD(..),
-        VkPipelineSampleLocationsStateCreateInfoEXT(..),
-        VkPipelineShaderStageCreateInfo(..),
-        VkPipelineTessellationDomainOriginStateCreateInfo(..),
+       (VkGraphicsPipelineCreateInfo, VkGraphicsPipelineCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineCacheCreateInfo, VkPipelineCacheCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineColorBlendAdvancedStateCreateInfoEXT,
+        VkPipelineColorBlendAdvancedStateCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkPipelineColorBlendAttachmentState,
+        VkPipelineColorBlendAttachmentState', -- ' closing tick for hsc2hs
+        VkPipelineColorBlendStateCreateInfo,
+        VkPipelineColorBlendStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineCoverageModulationStateCreateInfoNV,
+        VkPipelineCoverageModulationStateCreateInfoNV', -- ' closing tick for hsc2hs
+        VkPipelineCoverageToColorStateCreateInfoNV,
+        VkPipelineCoverageToColorStateCreateInfoNV', -- ' closing tick for hsc2hs
+        VkPipelineDepthStencilStateCreateInfo,
+        VkPipelineDepthStencilStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineDiscardRectangleStateCreateInfoEXT,
+        VkPipelineDiscardRectangleStateCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkPipelineDynamicStateCreateInfo,
+        VkPipelineDynamicStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineInputAssemblyStateCreateInfo,
+        VkPipelineInputAssemblyStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineLayoutCreateInfo, VkPipelineLayoutCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineMultisampleStateCreateInfo,
+        VkPipelineMultisampleStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineRasterizationConservativeStateCreateInfoEXT,
+        VkPipelineRasterizationConservativeStateCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkPipelineRasterizationStateCreateInfo,
+        VkPipelineRasterizationStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineRasterizationStateRasterizationOrderAMD,
+        VkPipelineRasterizationStateRasterizationOrderAMD', -- ' closing tick for hsc2hs
+        VkPipelineSampleLocationsStateCreateInfoEXT,
+        VkPipelineSampleLocationsStateCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkPipelineShaderStageCreateInfo, VkPipelineShaderStageCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineTessellationDomainOriginStateCreateInfo,
+        VkPipelineTessellationDomainOriginStateCreateInfo', -- ' closing tick for hsc2hs
         VkPipelineTessellationDomainOriginStateCreateInfoKHR,
-        VkPipelineTessellationStateCreateInfo(..),
-        VkPipelineVertexInputDivisorStateCreateInfoEXT(..),
-        VkPipelineVertexInputStateCreateInfo(..),
-        VkPipelineViewportStateCreateInfo(..),
-        VkPipelineViewportSwizzleStateCreateInfoNV(..),
-        VkPipelineViewportWScalingStateCreateInfoNV(..))
+        VkPipelineTessellationStateCreateInfo,
+        VkPipelineTessellationStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineVertexInputDivisorStateCreateInfoEXT,
+        VkPipelineVertexInputDivisorStateCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkPipelineVertexInputStateCreateInfo,
+        VkPipelineVertexInputStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineViewportStateCreateInfo,
+        VkPipelineViewportStateCreateInfo', -- ' closing tick for hsc2hs
+        VkPipelineViewportSwizzleStateCreateInfoNV,
+        VkPipelineViewportSwizzleStateCreateInfoNV', -- ' closing tick for hsc2hs
+        VkPipelineViewportWScalingStateCreateInfoNV,
+        VkPipelineViewportWScalingStateCreateInfoNV') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                            (Storable (..))
-import           GHC.Base                                                    (Addr##,
-                                                                              ByteArray##,
-                                                                              Proxy##,
-                                                                              byteArrayContents##,
-                                                                              plusAddr##,
-                                                                              proxy##)
-import           GHC.TypeLits                                                (KnownNat,
-                                                                              natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32,
-                                                                              VkSampleMask)
-import           Graphics.Vulkan.Types.Bitmasks                              (VkPipelineCacheCreateFlags,
-                                                                              VkPipelineColorBlendStateCreateFlags,
-                                                                              VkPipelineCoverageModulationStateCreateFlagsNV,
-                                                                              VkPipelineCoverageToColorStateCreateFlagsNV,
-                                                                              VkPipelineDepthStencilStateCreateFlags,
-                                                                              VkPipelineDiscardRectangleStateCreateFlagsEXT,
-                                                                              VkPipelineDynamicStateCreateFlags,
-                                                                              VkPipelineInputAssemblyStateCreateFlags,
-                                                                              VkPipelineLayoutCreateFlags,
-                                                                              VkPipelineMultisampleStateCreateFlags,
-                                                                              VkPipelineRasterizationConservativeStateCreateFlagsEXT,
-                                                                              VkPipelineRasterizationStateCreateFlags,
-                                                                              VkPipelineShaderStageCreateFlags,
-                                                                              VkPipelineTessellationStateCreateFlags,
-                                                                              VkPipelineVertexInputStateCreateFlags,
-                                                                              VkPipelineViewportStateCreateFlags,
-                                                                              VkPipelineViewportSwizzleStateCreateFlagsNV)
-import           Graphics.Vulkan.Types.Enum.Blend                            (VkBlendFactor,
-                                                                              VkBlendOp,
-                                                                              VkBlendOverlapEXT)
-import           Graphics.Vulkan.Types.Enum.Color                            (VkColorComponentFlags)
-import           Graphics.Vulkan.Types.Enum.CompareOp                        (VkCompareOp)
-import           Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT (VkConservativeRasterizationModeEXT)
-import           Graphics.Vulkan.Types.Enum.CoverageModulationModeNV         (VkCoverageModulationModeNV)
-import           Graphics.Vulkan.Types.Enum.CullModeFlags                    (VkCullModeFlags)
-import           Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT          (VkDiscardRectangleModeEXT)
-import           Graphics.Vulkan.Types.Enum.DynamicState                     (VkDynamicState)
-import           Graphics.Vulkan.Types.Enum.FrontFace                        (VkFrontFace)
-import           Graphics.Vulkan.Types.Enum.LogicOp                          (VkLogicOp)
-import           Graphics.Vulkan.Types.Enum.Pipeline                         (VkPipelineCreateFlags)
-import           Graphics.Vulkan.Types.Enum.PolygonMode                      (VkPolygonMode)
-import           Graphics.Vulkan.Types.Enum.PrimitiveTopology                (VkPrimitiveTopology)
-import           Graphics.Vulkan.Types.Enum.RasterizationOrderAMD            (VkRasterizationOrderAMD)
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags                 (VkSampleCountFlagBits)
-import           Graphics.Vulkan.Types.Enum.Shader                           (VkShaderStageFlagBits)
-import           Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.TessellationDomainOrigin         (VkTessellationDomainOrigin)
-import           Graphics.Vulkan.Types.Handles                               (VkDescriptorSetLayout,
-                                                                              VkPipeline,
-                                                                              VkPipelineLayout,
-                                                                              VkRenderPass,
-                                                                              VkShaderModule)
-import           Graphics.Vulkan.Types.Struct.PushConstantRange              (VkPushConstantRange)
-import           Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
-import           Graphics.Vulkan.Types.Struct.SampleLocation                 (VkSampleLocationsInfoEXT)
-import           Graphics.Vulkan.Types.Struct.Specialization                 (VkSpecializationInfo)
-import           Graphics.Vulkan.Types.Struct.StencilOpState                 (VkStencilOpState)
-import           Graphics.Vulkan.Types.Struct.VertexInput                    (VkVertexInputAttributeDescription,
-                                                                              VkVertexInputBindingDescription,
-                                                                              VkVertexInputBindingDivisorDescriptionEXT)
-import           Graphics.Vulkan.Types.Struct.Viewport                       (VkViewport,
-                                                                              VkViewportSwizzleNV,
-                                                                              VkViewportWScalingNV)
-import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import Foreign.Storable                                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes                             (VkBool32,
+                                                                    VkSampleMask)
+import Graphics.Vulkan.Types.Bitmasks                              (VkPipelineCacheCreateFlags,
+                                                                    VkPipelineColorBlendStateCreateFlags,
+                                                                    VkPipelineCoverageModulationStateCreateFlagsNV,
+                                                                    VkPipelineCoverageToColorStateCreateFlagsNV,
+                                                                    VkPipelineDepthStencilStateCreateFlags,
+                                                                    VkPipelineDiscardRectangleStateCreateFlagsEXT,
+                                                                    VkPipelineDynamicStateCreateFlags,
+                                                                    VkPipelineInputAssemblyStateCreateFlags,
+                                                                    VkPipelineLayoutCreateFlags,
+                                                                    VkPipelineMultisampleStateCreateFlags,
+                                                                    VkPipelineRasterizationConservativeStateCreateFlagsEXT,
+                                                                    VkPipelineRasterizationStateCreateFlags,
+                                                                    VkPipelineShaderStageCreateFlags,
+                                                                    VkPipelineTessellationStateCreateFlags,
+                                                                    VkPipelineVertexInputStateCreateFlags,
+                                                                    VkPipelineViewportStateCreateFlags,
+                                                                    VkPipelineViewportSwizzleStateCreateFlagsNV)
+import Graphics.Vulkan.Types.Enum.Blend                            (VkBlendFactor,
+                                                                    VkBlendOp,
+                                                                    VkBlendOverlapEXT)
+import Graphics.Vulkan.Types.Enum.Color                            (VkColorComponentFlags)
+import Graphics.Vulkan.Types.Enum.CompareOp                        (VkCompareOp)
+import Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT (VkConservativeRasterizationModeEXT)
+import Graphics.Vulkan.Types.Enum.CoverageModulationModeNV         (VkCoverageModulationModeNV)
+import Graphics.Vulkan.Types.Enum.CullModeFlags                    (VkCullModeFlags)
+import Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT          (VkDiscardRectangleModeEXT)
+import Graphics.Vulkan.Types.Enum.DynamicState                     (VkDynamicState)
+import Graphics.Vulkan.Types.Enum.FrontFace                        (VkFrontFace)
+import Graphics.Vulkan.Types.Enum.LogicOp                          (VkLogicOp)
+import Graphics.Vulkan.Types.Enum.Pipeline                         (VkPipelineCreateFlags)
+import Graphics.Vulkan.Types.Enum.PolygonMode                      (VkPolygonMode)
+import Graphics.Vulkan.Types.Enum.PrimitiveTopology                (VkPrimitiveTopology)
+import Graphics.Vulkan.Types.Enum.RasterizationOrderAMD            (VkRasterizationOrderAMD)
+import Graphics.Vulkan.Types.Enum.SampleCountFlags                 (VkSampleCountFlagBits)
+import Graphics.Vulkan.Types.Enum.Shader                           (VkShaderStageFlagBits)
+import Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
+import Graphics.Vulkan.Types.Enum.TessellationDomainOrigin         (VkTessellationDomainOrigin)
+import Graphics.Vulkan.Types.Handles                               (VkDescriptorSetLayout,
+                                                                    VkPipeline,
+                                                                    VkPipelineLayout,
+                                                                    VkRenderPass,
+                                                                    VkShaderModule)
+import Graphics.Vulkan.Types.Struct.PushConstantRange              (VkPushConstantRange)
+import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
+import Graphics.Vulkan.Types.Struct.SampleLocation                 (VkSampleLocationsInfoEXT)
+import Graphics.Vulkan.Types.Struct.Specialization                 (VkSpecializationInfo)
+import Graphics.Vulkan.Types.Struct.StencilOpState                 (VkStencilOpState)
+import Graphics.Vulkan.Types.Struct.VertexInput                    (VkVertexInputAttributeDescription,
+                                                                    VkVertexInputBindingDescription,
+                                                                    VkVertexInputBindingDivisorDescriptionEXT)
+import Graphics.Vulkan.Types.Struct.Viewport                       (VkViewport, VkViewportSwizzleNV,
+                                                                    VkViewportWScalingNV)
+import System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkGraphicsPipelineCreateInfo {
 --   >     VkStructureType sType;
@@ -129,19 +142,18 @@ import           System.IO.Unsafe                                            (un
 --   > } VkGraphicsPipelineCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkGraphicsPipelineCreateInfo VkGraphicsPipelineCreateInfo registry at www.khronos.org>
-data VkGraphicsPipelineCreateInfo = VkGraphicsPipelineCreateInfo## Addr##
-                                                                  ByteArray##
+type VkGraphicsPipelineCreateInfo =
+     VulkanStruct VkGraphicsPipelineCreateInfo' -- ' closing tick for hsc2hs
+
+data VkGraphicsPipelineCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkGraphicsPipelineCreateInfo where
-        (VkGraphicsPipelineCreateInfo## a _) ==
-          x@(VkGraphicsPipelineCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkGraphicsPipelineCreateInfo where
-        (VkGraphicsPipelineCreateInfo## a _) `compare`
-          x@(VkGraphicsPipelineCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -159,20 +171,6 @@ instance Storable VkGraphicsPipelineCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkGraphicsPipelineCreateInfo where
-        unsafeAddr (VkGraphicsPipelineCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkGraphicsPipelineCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkGraphicsPipelineCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkGraphicsPipelineCreateInfo where
         type StructFields VkGraphicsPipelineCreateInfo =
@@ -1016,18 +1014,18 @@ instance Show VkGraphicsPipelineCreateInfo where
 --   > } VkPipelineCacheCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCacheCreateInfo VkPipelineCacheCreateInfo registry at www.khronos.org>
-data VkPipelineCacheCreateInfo = VkPipelineCacheCreateInfo## Addr##
-                                                            ByteArray##
+type VkPipelineCacheCreateInfo =
+     VulkanStruct VkPipelineCacheCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineCacheCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineCacheCreateInfo where
-        (VkPipelineCacheCreateInfo## a _) ==
-          x@(VkPipelineCacheCreateInfo## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineCacheCreateInfo where
-        (VkPipelineCacheCreateInfo## a _) `compare`
-          x@(VkPipelineCacheCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1044,19 +1042,6 @@ instance Storable VkPipelineCacheCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineCacheCreateInfo where
-        unsafeAddr (VkPipelineCacheCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineCacheCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineCacheCreateInfo## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineCacheCreateInfo where
         type StructFields VkPipelineCacheCreateInfo =
@@ -1256,20 +1241,18 @@ instance Show VkPipelineCacheCreateInfo where
 --   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineColorBlendAdvancedStateCreateInfoEXT VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## Addr##
-                                                                                                      ByteArray##
+type VkPipelineColorBlendAdvancedStateCreateInfoEXT =
+     VulkanStruct VkPipelineColorBlendAdvancedStateCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkPipelineColorBlendAdvancedStateCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _) ==
-          x@(VkPipelineColorBlendAdvancedStateCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _) `compare`
-          x@(VkPipelineColorBlendAdvancedStateCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1289,24 +1272,6 @@ instance Storable VkPipelineColorBlendAdvancedStateCreateInfoEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineColorBlendAdvancedStateCreateInfoEXT
-         where
-        unsafeAddr (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineColorBlendAdvancedStateCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1577,20 +1542,18 @@ instance Show VkPipelineColorBlendAdvancedStateCreateInfoEXT where
 --   > } VkPipelineColorBlendAttachmentState;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineColorBlendAttachmentState VkPipelineColorBlendAttachmentState registry at www.khronos.org>
-data VkPipelineColorBlendAttachmentState = VkPipelineColorBlendAttachmentState## Addr##
-                                                                                ByteArray##
+type VkPipelineColorBlendAttachmentState =
+     VulkanStruct VkPipelineColorBlendAttachmentState' -- ' closing tick for hsc2hs
+
+data VkPipelineColorBlendAttachmentState' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineColorBlendAttachmentState where
-        (VkPipelineColorBlendAttachmentState## a _) ==
-          x@(VkPipelineColorBlendAttachmentState## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineColorBlendAttachmentState where
-        (VkPipelineColorBlendAttachmentState## a _) `compare`
-          x@(VkPipelineColorBlendAttachmentState## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1608,21 +1571,6 @@ instance Storable VkPipelineColorBlendAttachmentState where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineColorBlendAttachmentState
-         where
-        unsafeAddr (VkPipelineColorBlendAttachmentState## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineColorBlendAttachmentState## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineColorBlendAttachmentState##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineColorBlendAttachmentState where
         type StructFields VkPipelineColorBlendAttachmentState =
@@ -2013,20 +1961,18 @@ instance Show VkPipelineColorBlendAttachmentState where
 --   > } VkPipelineColorBlendStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineColorBlendStateCreateInfo VkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
-data VkPipelineColorBlendStateCreateInfo = VkPipelineColorBlendStateCreateInfo## Addr##
-                                                                                ByteArray##
+type VkPipelineColorBlendStateCreateInfo =
+     VulkanStruct VkPipelineColorBlendStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineColorBlendStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineColorBlendStateCreateInfo where
-        (VkPipelineColorBlendStateCreateInfo## a _) ==
-          x@(VkPipelineColorBlendStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineColorBlendStateCreateInfo where
-        (VkPipelineColorBlendStateCreateInfo## a _) `compare`
-          x@(VkPipelineColorBlendStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2044,21 +1990,6 @@ instance Storable VkPipelineColorBlendStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineColorBlendStateCreateInfo
-         where
-        unsafeAddr (VkPipelineColorBlendStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineColorBlendStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineColorBlendStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineColorBlendStateCreateInfo where
         type StructFields VkPipelineColorBlendStateCreateInfo =
@@ -2446,20 +2377,18 @@ instance Show VkPipelineColorBlendStateCreateInfo where
 --   > } VkPipelineCoverageModulationStateCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCoverageModulationStateCreateInfoNV VkPipelineCoverageModulationStateCreateInfoNV registry at www.khronos.org>
-data VkPipelineCoverageModulationStateCreateInfoNV = VkPipelineCoverageModulationStateCreateInfoNV## Addr##
-                                                                                                    ByteArray##
+type VkPipelineCoverageModulationStateCreateInfoNV =
+     VulkanStruct VkPipelineCoverageModulationStateCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkPipelineCoverageModulationStateCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineCoverageModulationStateCreateInfoNV where
-        (VkPipelineCoverageModulationStateCreateInfoNV## a _) ==
-          x@(VkPipelineCoverageModulationStateCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineCoverageModulationStateCreateInfoNV where
-        (VkPipelineCoverageModulationStateCreateInfoNV## a _) `compare`
-          x@(VkPipelineCoverageModulationStateCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2479,23 +2408,6 @@ instance Storable VkPipelineCoverageModulationStateCreateInfoNV
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineCoverageModulationStateCreateInfoNV
-         where
-        unsafeAddr (VkPipelineCoverageModulationStateCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineCoverageModulationStateCreateInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineCoverageModulationStateCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineCoverageModulationStateCreateInfoNV
@@ -2861,20 +2773,18 @@ instance Show VkPipelineCoverageModulationStateCreateInfoNV where
 --   > } VkPipelineCoverageToColorStateCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCoverageToColorStateCreateInfoNV VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
-data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV## Addr##
-                                                                                              ByteArray##
+type VkPipelineCoverageToColorStateCreateInfoNV =
+     VulkanStruct VkPipelineCoverageToColorStateCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkPipelineCoverageToColorStateCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineCoverageToColorStateCreateInfoNV where
-        (VkPipelineCoverageToColorStateCreateInfoNV## a _) ==
-          x@(VkPipelineCoverageToColorStateCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineCoverageToColorStateCreateInfoNV where
-        (VkPipelineCoverageToColorStateCreateInfoNV## a _) `compare`
-          x@(VkPipelineCoverageToColorStateCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2893,23 +2803,6 @@ instance Storable VkPipelineCoverageToColorStateCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineCoverageToColorStateCreateInfoNV
-         where
-        unsafeAddr (VkPipelineCoverageToColorStateCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineCoverageToColorStateCreateInfoNV## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineCoverageToColorStateCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineCoverageToColorStateCreateInfoNV
          where
@@ -3169,20 +3062,18 @@ instance Show VkPipelineCoverageToColorStateCreateInfoNV where
 --   > } VkPipelineDepthStencilStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineDepthStencilStateCreateInfo VkPipelineDepthStencilStateCreateInfo registry at www.khronos.org>
-data VkPipelineDepthStencilStateCreateInfo = VkPipelineDepthStencilStateCreateInfo## Addr##
-                                                                                    ByteArray##
+type VkPipelineDepthStencilStateCreateInfo =
+     VulkanStruct VkPipelineDepthStencilStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineDepthStencilStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineDepthStencilStateCreateInfo where
-        (VkPipelineDepthStencilStateCreateInfo## a _) ==
-          x@(VkPipelineDepthStencilStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineDepthStencilStateCreateInfo where
-        (VkPipelineDepthStencilStateCreateInfo## a _) `compare`
-          x@(VkPipelineDepthStencilStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3201,21 +3092,6 @@ instance Storable VkPipelineDepthStencilStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineDepthStencilStateCreateInfo
-         where
-        unsafeAddr (VkPipelineDepthStencilStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineDepthStencilStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineDepthStencilStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineDepthStencilStateCreateInfo where
         type StructFields VkPipelineDepthStencilStateCreateInfo =
@@ -3781,20 +3657,18 @@ instance Show VkPipelineDepthStencilStateCreateInfo where
 --   > } VkPipelineDiscardRectangleStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineDiscardRectangleStateCreateInfoEXT VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## Addr##
-                                                                                                  ByteArray##
+type VkPipelineDiscardRectangleStateCreateInfoEXT =
+     VulkanStruct VkPipelineDiscardRectangleStateCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkPipelineDiscardRectangleStateCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineDiscardRectangleStateCreateInfoEXT where
-        (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) ==
-          x@(VkPipelineDiscardRectangleStateCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineDiscardRectangleStateCreateInfoEXT where
-        (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) `compare`
-          x@(VkPipelineDiscardRectangleStateCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3814,23 +3688,6 @@ instance Storable VkPipelineDiscardRectangleStateCreateInfoEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        unsafeAddr (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineDiscardRectangleStateCreateInfoEXT## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineDiscardRectangleStateCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineDiscardRectangleStateCreateInfoEXT
          where
@@ -4136,20 +3993,18 @@ instance Show VkPipelineDiscardRectangleStateCreateInfoEXT where
 --   > } VkPipelineDynamicStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineDynamicStateCreateInfo VkPipelineDynamicStateCreateInfo registry at www.khronos.org>
-data VkPipelineDynamicStateCreateInfo = VkPipelineDynamicStateCreateInfo## Addr##
-                                                                          ByteArray##
+type VkPipelineDynamicStateCreateInfo =
+     VulkanStruct VkPipelineDynamicStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineDynamicStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineDynamicStateCreateInfo where
-        (VkPipelineDynamicStateCreateInfo## a _) ==
-          x@(VkPipelineDynamicStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineDynamicStateCreateInfo where
-        (VkPipelineDynamicStateCreateInfo## a _) `compare`
-          x@(VkPipelineDynamicStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4167,20 +4022,6 @@ instance Storable VkPipelineDynamicStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineDynamicStateCreateInfo where
-        unsafeAddr (VkPipelineDynamicStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineDynamicStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineDynamicStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineDynamicStateCreateInfo where
         type StructFields VkPipelineDynamicStateCreateInfo =
@@ -4396,20 +4237,18 @@ instance Show VkPipelineDynamicStateCreateInfo where
 --   > } VkPipelineInputAssemblyStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineInputAssemblyStateCreateInfo VkPipelineInputAssemblyStateCreateInfo registry at www.khronos.org>
-data VkPipelineInputAssemblyStateCreateInfo = VkPipelineInputAssemblyStateCreateInfo## Addr##
-                                                                                      ByteArray##
+type VkPipelineInputAssemblyStateCreateInfo =
+     VulkanStruct VkPipelineInputAssemblyStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineInputAssemblyStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineInputAssemblyStateCreateInfo where
-        (VkPipelineInputAssemblyStateCreateInfo## a _) ==
-          x@(VkPipelineInputAssemblyStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineInputAssemblyStateCreateInfo where
-        (VkPipelineInputAssemblyStateCreateInfo## a _) `compare`
-          x@(VkPipelineInputAssemblyStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4428,21 +4267,6 @@ instance Storable VkPipelineInputAssemblyStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineInputAssemblyStateCreateInfo
-         where
-        unsafeAddr (VkPipelineInputAssemblyStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineInputAssemblyStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineInputAssemblyStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineInputAssemblyStateCreateInfo where
         type StructFields VkPipelineInputAssemblyStateCreateInfo =
@@ -4671,19 +4495,18 @@ instance Show VkPipelineInputAssemblyStateCreateInfo where
 --   > } VkPipelineLayoutCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineLayoutCreateInfo VkPipelineLayoutCreateInfo registry at www.khronos.org>
-data VkPipelineLayoutCreateInfo = VkPipelineLayoutCreateInfo## Addr##
-                                                              ByteArray##
+type VkPipelineLayoutCreateInfo =
+     VulkanStruct VkPipelineLayoutCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineLayoutCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineLayoutCreateInfo where
-        (VkPipelineLayoutCreateInfo## a _) ==
-          x@(VkPipelineLayoutCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineLayoutCreateInfo where
-        (VkPipelineLayoutCreateInfo## a _) `compare`
-          x@(VkPipelineLayoutCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4700,20 +4523,6 @@ instance Storable VkPipelineLayoutCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineLayoutCreateInfo where
-        unsafeAddr (VkPipelineLayoutCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineLayoutCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineLayoutCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineLayoutCreateInfo where
         type StructFields VkPipelineLayoutCreateInfo =
@@ -5003,20 +4812,18 @@ instance Show VkPipelineLayoutCreateInfo where
 --   > } VkPipelineMultisampleStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineMultisampleStateCreateInfo VkPipelineMultisampleStateCreateInfo registry at www.khronos.org>
-data VkPipelineMultisampleStateCreateInfo = VkPipelineMultisampleStateCreateInfo## Addr##
-                                                                                  ByteArray##
+type VkPipelineMultisampleStateCreateInfo =
+     VulkanStruct VkPipelineMultisampleStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineMultisampleStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineMultisampleStateCreateInfo where
-        (VkPipelineMultisampleStateCreateInfo## a _) ==
-          x@(VkPipelineMultisampleStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineMultisampleStateCreateInfo where
-        (VkPipelineMultisampleStateCreateInfo## a _) `compare`
-          x@(VkPipelineMultisampleStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5035,21 +4842,6 @@ instance Storable VkPipelineMultisampleStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineMultisampleStateCreateInfo
-         where
-        unsafeAddr (VkPipelineMultisampleStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineMultisampleStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineMultisampleStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineMultisampleStateCreateInfo where
         type StructFields VkPipelineMultisampleStateCreateInfo =
@@ -5475,23 +5267,20 @@ instance Show VkPipelineMultisampleStateCreateInfo where
 --   > } VkPipelineRasterizationConservativeStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineRasterizationConservativeStateCreateInfoEXT VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## Addr##
-                                                                                                                    ByteArray##
+type VkPipelineRasterizationConservativeStateCreateInfoEXT =
+     VulkanStruct VkPipelineRasterizationConservativeStateCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkPipelineRasterizationConservativeStateCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _) ==
-          x@(VkPipelineRasterizationConservativeStateCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _)
-          `compare`
-          x@(VkPipelineRasterizationConservativeStateCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5512,24 +5301,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        unsafeAddr
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineRasterizationConservativeStateCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineRasterizationConservativeStateCreateInfoEXT
@@ -5818,20 +5589,18 @@ instance Show VkPipelineRasterizationConservativeStateCreateInfoEXT
 --   > } VkPipelineRasterizationStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineRasterizationStateCreateInfo VkPipelineRasterizationStateCreateInfo registry at www.khronos.org>
-data VkPipelineRasterizationStateCreateInfo = VkPipelineRasterizationStateCreateInfo## Addr##
-                                                                                      ByteArray##
+type VkPipelineRasterizationStateCreateInfo =
+     VulkanStruct VkPipelineRasterizationStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineRasterizationStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineRasterizationStateCreateInfo where
-        (VkPipelineRasterizationStateCreateInfo## a _) ==
-          x@(VkPipelineRasterizationStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineRasterizationStateCreateInfo where
-        (VkPipelineRasterizationStateCreateInfo## a _) `compare`
-          x@(VkPipelineRasterizationStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5850,21 +5619,6 @@ instance Storable VkPipelineRasterizationStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineRasterizationStateCreateInfo
-         where
-        unsafeAddr (VkPipelineRasterizationStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineRasterizationStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineRasterizationStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineRasterizationStateCreateInfo where
         type StructFields VkPipelineRasterizationStateCreateInfo =
@@ -6492,21 +6246,19 @@ instance Show VkPipelineRasterizationStateCreateInfo where
 --   > } VkPipelineRasterizationStateRasterizationOrderAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineRasterizationStateRasterizationOrderAMD VkPipelineRasterizationStateRasterizationOrderAMD registry at www.khronos.org>
-data VkPipelineRasterizationStateRasterizationOrderAMD = VkPipelineRasterizationStateRasterizationOrderAMD## Addr##
-                                                                                                            ByteArray##
+type VkPipelineRasterizationStateRasterizationOrderAMD =
+     VulkanStruct VkPipelineRasterizationStateRasterizationOrderAMD' -- ' closing tick for hsc2hs
+
+data VkPipelineRasterizationStateRasterizationOrderAMD' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineRasterizationStateRasterizationOrderAMD where
-        (VkPipelineRasterizationStateRasterizationOrderAMD## a _) ==
-          x@(VkPipelineRasterizationStateRasterizationOrderAMD## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineRasterizationStateRasterizationOrderAMD
          where
-        (VkPipelineRasterizationStateRasterizationOrderAMD## a _) `compare`
-          x@(VkPipelineRasterizationStateRasterizationOrderAMD## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6526,24 +6278,6 @@ instance Storable VkPipelineRasterizationStateRasterizationOrderAMD
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineRasterizationStateRasterizationOrderAMD
-         where
-        unsafeAddr (VkPipelineRasterizationStateRasterizationOrderAMD## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineRasterizationStateRasterizationOrderAMD## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineRasterizationStateRasterizationOrderAMD##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineRasterizationStateRasterizationOrderAMD
@@ -6716,20 +6450,18 @@ instance Show VkPipelineRasterizationStateRasterizationOrderAMD
 --   > } VkPipelineSampleLocationsStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineSampleLocationsStateCreateInfoEXT VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## Addr##
-                                                                                                ByteArray##
+type VkPipelineSampleLocationsStateCreateInfoEXT =
+     VulkanStruct VkPipelineSampleLocationsStateCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkPipelineSampleLocationsStateCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineSampleLocationsStateCreateInfoEXT where
-        (VkPipelineSampleLocationsStateCreateInfoEXT## a _) ==
-          x@(VkPipelineSampleLocationsStateCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineSampleLocationsStateCreateInfoEXT where
-        (VkPipelineSampleLocationsStateCreateInfoEXT## a _) `compare`
-          x@(VkPipelineSampleLocationsStateCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6748,23 +6480,6 @@ instance Storable VkPipelineSampleLocationsStateCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineSampleLocationsStateCreateInfoEXT
-         where
-        unsafeAddr (VkPipelineSampleLocationsStateCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineSampleLocationsStateCreateInfoEXT## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineSampleLocationsStateCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineSampleLocationsStateCreateInfoEXT
          where
@@ -6977,19 +6692,18 @@ instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
 --   > } VkPipelineShaderStageCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineShaderStageCreateInfo VkPipelineShaderStageCreateInfo registry at www.khronos.org>
-data VkPipelineShaderStageCreateInfo = VkPipelineShaderStageCreateInfo## Addr##
-                                                                        ByteArray##
+type VkPipelineShaderStageCreateInfo =
+     VulkanStruct VkPipelineShaderStageCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineShaderStageCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineShaderStageCreateInfo where
-        (VkPipelineShaderStageCreateInfo## a _) ==
-          x@(VkPipelineShaderStageCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineShaderStageCreateInfo where
-        (VkPipelineShaderStageCreateInfo## a _) `compare`
-          x@(VkPipelineShaderStageCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -7007,20 +6721,6 @@ instance Storable VkPipelineShaderStageCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineShaderStageCreateInfo where
-        unsafeAddr (VkPipelineShaderStageCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineShaderStageCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineShaderStageCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineShaderStageCreateInfo where
         type StructFields VkPipelineShaderStageCreateInfo =
@@ -7302,21 +7002,19 @@ instance Show VkPipelineShaderStageCreateInfo where
 --   > } VkPipelineTessellationDomainOriginStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineTessellationDomainOriginStateCreateInfo VkPipelineTessellationDomainOriginStateCreateInfo registry at www.khronos.org>
-data VkPipelineTessellationDomainOriginStateCreateInfo = VkPipelineTessellationDomainOriginStateCreateInfo## Addr##
-                                                                                                            ByteArray##
+type VkPipelineTessellationDomainOriginStateCreateInfo =
+     VulkanStruct VkPipelineTessellationDomainOriginStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineTessellationDomainOriginStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineTessellationDomainOriginStateCreateInfo where
-        (VkPipelineTessellationDomainOriginStateCreateInfo## a _) ==
-          x@(VkPipelineTessellationDomainOriginStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineTessellationDomainOriginStateCreateInfo
          where
-        (VkPipelineTessellationDomainOriginStateCreateInfo## a _) `compare`
-          x@(VkPipelineTessellationDomainOriginStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -7336,24 +7034,6 @@ instance Storable VkPipelineTessellationDomainOriginStateCreateInfo
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineTessellationDomainOriginStateCreateInfo
-         where
-        unsafeAddr (VkPipelineTessellationDomainOriginStateCreateInfo## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineTessellationDomainOriginStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineTessellationDomainOriginStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineTessellationDomainOriginStateCreateInfo
@@ -7530,20 +7210,18 @@ type VkPipelineTessellationDomainOriginStateCreateInfoKHR =
 --   > } VkPipelineTessellationStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineTessellationStateCreateInfo VkPipelineTessellationStateCreateInfo registry at www.khronos.org>
-data VkPipelineTessellationStateCreateInfo = VkPipelineTessellationStateCreateInfo## Addr##
-                                                                                    ByteArray##
+type VkPipelineTessellationStateCreateInfo =
+     VulkanStruct VkPipelineTessellationStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineTessellationStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineTessellationStateCreateInfo where
-        (VkPipelineTessellationStateCreateInfo## a _) ==
-          x@(VkPipelineTessellationStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineTessellationStateCreateInfo where
-        (VkPipelineTessellationStateCreateInfo## a _) `compare`
-          x@(VkPipelineTessellationStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -7562,21 +7240,6 @@ instance Storable VkPipelineTessellationStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineTessellationStateCreateInfo
-         where
-        unsafeAddr (VkPipelineTessellationStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineTessellationStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineTessellationStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineTessellationStateCreateInfo where
         type StructFields VkPipelineTessellationStateCreateInfo =
@@ -7758,20 +7421,18 @@ instance Show VkPipelineTessellationStateCreateInfo where
 --   > } VkPipelineVertexInputDivisorStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineVertexInputDivisorStateCreateInfoEXT VkPipelineVertexInputDivisorStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineVertexInputDivisorStateCreateInfoEXT = VkPipelineVertexInputDivisorStateCreateInfoEXT## Addr##
-                                                                                                      ByteArray##
+type VkPipelineVertexInputDivisorStateCreateInfoEXT =
+     VulkanStruct VkPipelineVertexInputDivisorStateCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkPipelineVertexInputDivisorStateCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineVertexInputDivisorStateCreateInfoEXT where
-        (VkPipelineVertexInputDivisorStateCreateInfoEXT## a _) ==
-          x@(VkPipelineVertexInputDivisorStateCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineVertexInputDivisorStateCreateInfoEXT where
-        (VkPipelineVertexInputDivisorStateCreateInfoEXT## a _) `compare`
-          x@(VkPipelineVertexInputDivisorStateCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -7791,24 +7452,6 @@ instance Storable VkPipelineVertexInputDivisorStateCreateInfoEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineVertexInputDivisorStateCreateInfoEXT
-         where
-        unsafeAddr (VkPipelineVertexInputDivisorStateCreateInfoEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPipelineVertexInputDivisorStateCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineVertexInputDivisorStateCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineVertexInputDivisorStateCreateInfoEXT
@@ -8029,20 +7672,18 @@ instance Show VkPipelineVertexInputDivisorStateCreateInfoEXT where
 --   > } VkPipelineVertexInputStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineVertexInputStateCreateInfo VkPipelineVertexInputStateCreateInfo registry at www.khronos.org>
-data VkPipelineVertexInputStateCreateInfo = VkPipelineVertexInputStateCreateInfo## Addr##
-                                                                                  ByteArray##
+type VkPipelineVertexInputStateCreateInfo =
+     VulkanStruct VkPipelineVertexInputStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineVertexInputStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineVertexInputStateCreateInfo where
-        (VkPipelineVertexInputStateCreateInfo## a _) ==
-          x@(VkPipelineVertexInputStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineVertexInputStateCreateInfo where
-        (VkPipelineVertexInputStateCreateInfo## a _) `compare`
-          x@(VkPipelineVertexInputStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -8061,21 +7702,6 @@ instance Storable VkPipelineVertexInputStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineVertexInputStateCreateInfo
-         where
-        unsafeAddr (VkPipelineVertexInputStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineVertexInputStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineVertexInputStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineVertexInputStateCreateInfo where
         type StructFields VkPipelineVertexInputStateCreateInfo =
@@ -8414,20 +8040,18 @@ instance Show VkPipelineVertexInputStateCreateInfo where
 --   > } VkPipelineViewportStateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineViewportStateCreateInfo VkPipelineViewportStateCreateInfo registry at www.khronos.org>
-data VkPipelineViewportStateCreateInfo = VkPipelineViewportStateCreateInfo## Addr##
-                                                                            ByteArray##
+type VkPipelineViewportStateCreateInfo =
+     VulkanStruct VkPipelineViewportStateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkPipelineViewportStateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineViewportStateCreateInfo where
-        (VkPipelineViewportStateCreateInfo## a _) ==
-          x@(VkPipelineViewportStateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineViewportStateCreateInfo where
-        (VkPipelineViewportStateCreateInfo## a _) `compare`
-          x@(VkPipelineViewportStateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -8445,20 +8069,6 @@ instance Storable VkPipelineViewportStateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPipelineViewportStateCreateInfo where
-        unsafeAddr (VkPipelineViewportStateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineViewportStateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineViewportStateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineViewportStateCreateInfo where
         type StructFields VkPipelineViewportStateCreateInfo =
@@ -8751,20 +8361,18 @@ instance Show VkPipelineViewportStateCreateInfo where
 --   > } VkPipelineViewportSwizzleStateCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineViewportSwizzleStateCreateInfoNV VkPipelineViewportSwizzleStateCreateInfoNV registry at www.khronos.org>
-data VkPipelineViewportSwizzleStateCreateInfoNV = VkPipelineViewportSwizzleStateCreateInfoNV## Addr##
-                                                                                              ByteArray##
+type VkPipelineViewportSwizzleStateCreateInfoNV =
+     VulkanStruct VkPipelineViewportSwizzleStateCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkPipelineViewportSwizzleStateCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineViewportSwizzleStateCreateInfoNV where
-        (VkPipelineViewportSwizzleStateCreateInfoNV## a _) ==
-          x@(VkPipelineViewportSwizzleStateCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineViewportSwizzleStateCreateInfoNV where
-        (VkPipelineViewportSwizzleStateCreateInfoNV## a _) `compare`
-          x@(VkPipelineViewportSwizzleStateCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -8783,23 +8391,6 @@ instance Storable VkPipelineViewportSwizzleStateCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineViewportSwizzleStateCreateInfoNV
-         where
-        unsafeAddr (VkPipelineViewportSwizzleStateCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineViewportSwizzleStateCreateInfoNV## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineViewportSwizzleStateCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineViewportSwizzleStateCreateInfoNV
          where
@@ -9049,20 +8640,18 @@ instance Show VkPipelineViewportSwizzleStateCreateInfoNV where
 --   > } VkPipelineViewportWScalingStateCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineViewportWScalingStateCreateInfoNV VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
-data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## Addr##
-                                                                                                ByteArray##
+type VkPipelineViewportWScalingStateCreateInfoNV =
+     VulkanStruct VkPipelineViewportWScalingStateCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkPipelineViewportWScalingStateCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkPipelineViewportWScalingStateCreateInfoNV where
-        (VkPipelineViewportWScalingStateCreateInfoNV## a _) ==
-          x@(VkPipelineViewportWScalingStateCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineViewportWScalingStateCreateInfoNV where
-        (VkPipelineViewportWScalingStateCreateInfoNV## a _) `compare`
-          x@(VkPipelineViewportWScalingStateCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -9081,23 +8670,6 @@ instance Storable VkPipelineViewportWScalingStateCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPipelineViewportWScalingStateCreateInfoNV
-         where
-        unsafeAddr (VkPipelineViewportWScalingStateCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPipelineViewportWScalingStateCreateInfoNV## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPipelineViewportWScalingStateCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineViewportWScalingStateCreateInfoNV
          where

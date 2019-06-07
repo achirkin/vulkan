@@ -19,17 +19,17 @@ module Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
                                    VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT),
         VkPeerMemoryFeatureFlags, VkPeerMemoryFeatureFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBitsKHR VkFlags
                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,

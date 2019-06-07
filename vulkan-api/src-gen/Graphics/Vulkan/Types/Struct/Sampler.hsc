@@ -8,38 +8,39 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Sampler
-       (VkSamplerCreateInfo(..), VkSamplerReductionModeCreateInfoEXT(..),
-        VkSamplerYcbcrConversionCreateInfo(..),
+       (VkSamplerCreateInfo, VkSamplerCreateInfo', -- ' closing tick for hsc2hs
+        VkSamplerReductionModeCreateInfoEXT,
+        VkSamplerReductionModeCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkSamplerYcbcrConversionCreateInfo,
+        VkSamplerYcbcrConversionCreateInfo', -- ' closing tick for hsc2hs
         VkSamplerYcbcrConversionCreateInfoKHR,
-        VkSamplerYcbcrConversionImageFormatProperties(..),
+        VkSamplerYcbcrConversionImageFormatProperties,
+        VkSamplerYcbcrConversionImageFormatProperties', -- ' closing tick for hsc2hs
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
-        VkSamplerYcbcrConversionInfo(..), VkSamplerYcbcrConversionInfoKHR)
+        VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfo', -- ' closing tick for hsc2hs
+        VkSamplerYcbcrConversionInfoKHR)
        where
-import           Foreign.Storable                              (Storable (..))
-import           GHC.Base                                      (Addr##,
-                                                                ByteArray##,
-                                                                byteArrayContents##,
-                                                                plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes               (VkBool32)
-import           Graphics.Vulkan.Types.Bitmasks                (VkSamplerCreateFlags)
-import           Graphics.Vulkan.Types.Enum.BorderColor        (VkBorderColor)
-import           Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
-import           Graphics.Vulkan.Types.Enum.CompareOp          (VkCompareOp)
-import           Graphics.Vulkan.Types.Enum.Filter             (VkFilter)
-import           Graphics.Vulkan.Types.Enum.Format             (VkFormat)
-import           Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerAddressMode,
-                                                                VkSamplerMipmapMode,
-                                                                VkSamplerReductionModeEXT,
-                                                                VkSamplerYcbcrModelConversion,
-                                                                VkSamplerYcbcrRange)
-import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                 (VkSamplerYcbcrConversion)
-import           Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import           Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
-                                                                VkImageViewCreateInfo)
-import           System.IO.Unsafe                              (unsafeDupablePerformIO)
+import Foreign.Storable                              (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes               (VkBool32)
+import Graphics.Vulkan.Types.Bitmasks                (VkSamplerCreateFlags)
+import Graphics.Vulkan.Types.Enum.BorderColor        (VkBorderColor)
+import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
+import Graphics.Vulkan.Types.Enum.CompareOp          (VkCompareOp)
+import Graphics.Vulkan.Types.Enum.Filter             (VkFilter)
+import Graphics.Vulkan.Types.Enum.Format             (VkFormat)
+import Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerAddressMode,
+                                                      VkSamplerMipmapMode,
+                                                      VkSamplerReductionModeEXT,
+                                                      VkSamplerYcbcrModelConversion,
+                                                      VkSamplerYcbcrRange)
+import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import Graphics.Vulkan.Types.Handles                 (VkSamplerYcbcrConversion)
+import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
+import Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
+                                                      VkImageViewCreateInfo)
+import System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSamplerCreateInfo {
 --   >     VkStructureType sType;
@@ -63,17 +64,17 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   > } VkSamplerCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerCreateInfo VkSamplerCreateInfo registry at www.khronos.org>
-data VkSamplerCreateInfo = VkSamplerCreateInfo## Addr## ByteArray##
+type VkSamplerCreateInfo = VulkanStruct VkSamplerCreateInfo' -- ' closing tick for hsc2hs
+
+data VkSamplerCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSamplerCreateInfo where
-        (VkSamplerCreateInfo## a _) == x@(VkSamplerCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerCreateInfo where
-        (VkSamplerCreateInfo## a _) `compare` x@(VkSamplerCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -90,18 +91,6 @@ instance Storable VkSamplerCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSamplerCreateInfo where
-        unsafeAddr (VkSamplerCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSamplerCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSamplerCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerCreateInfo where
         type StructFields VkSamplerCreateInfo =
@@ -825,20 +814,18 @@ instance Show VkSamplerCreateInfo where
 --   > } VkSamplerReductionModeCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerReductionModeCreateInfoEXT VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
-data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## Addr##
-                                                                                ByteArray##
+type VkSamplerReductionModeCreateInfoEXT =
+     VulkanStruct VkSamplerReductionModeCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkSamplerReductionModeCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSamplerReductionModeCreateInfoEXT where
-        (VkSamplerReductionModeCreateInfoEXT## a _) ==
-          x@(VkSamplerReductionModeCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerReductionModeCreateInfoEXT where
-        (VkSamplerReductionModeCreateInfoEXT## a _) `compare`
-          x@(VkSamplerReductionModeCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -856,21 +843,6 @@ instance Storable VkSamplerReductionModeCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSamplerReductionModeCreateInfoEXT
-         where
-        unsafeAddr (VkSamplerReductionModeCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSamplerReductionModeCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSamplerReductionModeCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
         type StructFields VkSamplerReductionModeCreateInfoEXT =
@@ -1017,20 +989,18 @@ instance Show VkSamplerReductionModeCreateInfoEXT where
 --   > } VkSamplerYcbcrConversionCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionCreateInfo VkSamplerYcbcrConversionCreateInfo registry at www.khronos.org>
-data VkSamplerYcbcrConversionCreateInfo = VkSamplerYcbcrConversionCreateInfo## Addr##
-                                                                              ByteArray##
+type VkSamplerYcbcrConversionCreateInfo =
+     VulkanStruct VkSamplerYcbcrConversionCreateInfo' -- ' closing tick for hsc2hs
+
+data VkSamplerYcbcrConversionCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSamplerYcbcrConversionCreateInfo where
-        (VkSamplerYcbcrConversionCreateInfo## a _) ==
-          x@(VkSamplerYcbcrConversionCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionCreateInfo where
-        (VkSamplerYcbcrConversionCreateInfo## a _) `compare`
-          x@(VkSamplerYcbcrConversionCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1048,20 +1018,6 @@ instance Storable VkSamplerYcbcrConversionCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSamplerYcbcrConversionCreateInfo where
-        unsafeAddr (VkSamplerYcbcrConversionCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSamplerYcbcrConversionCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSamplerYcbcrConversionCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionCreateInfo where
         type StructFields VkSamplerYcbcrConversionCreateInfo =
@@ -1500,20 +1456,18 @@ type VkSamplerYcbcrConversionCreateInfoKHR =
 --   > } VkSamplerYcbcrConversionImageFormatProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionImageFormatProperties VkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
-data VkSamplerYcbcrConversionImageFormatProperties = VkSamplerYcbcrConversionImageFormatProperties## Addr##
-                                                                                                    ByteArray##
+type VkSamplerYcbcrConversionImageFormatProperties =
+     VulkanStruct VkSamplerYcbcrConversionImageFormatProperties' -- ' closing tick for hsc2hs
+
+data VkSamplerYcbcrConversionImageFormatProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkSamplerYcbcrConversionImageFormatProperties where
-        (VkSamplerYcbcrConversionImageFormatProperties## a _) ==
-          x@(VkSamplerYcbcrConversionImageFormatProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionImageFormatProperties where
-        (VkSamplerYcbcrConversionImageFormatProperties## a _) `compare`
-          x@(VkSamplerYcbcrConversionImageFormatProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1533,23 +1487,6 @@ instance Storable VkSamplerYcbcrConversionImageFormatProperties
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkSamplerYcbcrConversionImageFormatProperties
-         where
-        unsafeAddr (VkSamplerYcbcrConversionImageFormatProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkSamplerYcbcrConversionImageFormatProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSamplerYcbcrConversionImageFormatProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkSamplerYcbcrConversionImageFormatProperties
@@ -1719,19 +1656,18 @@ type VkSamplerYcbcrConversionImageFormatPropertiesKHR =
 --   > } VkSamplerYcbcrConversionInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionInfo VkSamplerYcbcrConversionInfo registry at www.khronos.org>
-data VkSamplerYcbcrConversionInfo = VkSamplerYcbcrConversionInfo## Addr##
-                                                                  ByteArray##
+type VkSamplerYcbcrConversionInfo =
+     VulkanStruct VkSamplerYcbcrConversionInfo' -- ' closing tick for hsc2hs
+
+data VkSamplerYcbcrConversionInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSamplerYcbcrConversionInfo where
-        (VkSamplerYcbcrConversionInfo## a _) ==
-          x@(VkSamplerYcbcrConversionInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionInfo where
-        (VkSamplerYcbcrConversionInfo## a _) `compare`
-          x@(VkSamplerYcbcrConversionInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1749,20 +1685,6 @@ instance Storable VkSamplerYcbcrConversionInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSamplerYcbcrConversionInfo where
-        unsafeAddr (VkSamplerYcbcrConversionInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSamplerYcbcrConversionInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSamplerYcbcrConversionInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionInfo where
         type StructFields VkSamplerYcbcrConversionInfo =

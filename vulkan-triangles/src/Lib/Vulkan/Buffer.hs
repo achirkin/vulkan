@@ -124,9 +124,7 @@ findMemoryType :: VkPhysicalDevice
                -> VkMemoryPropertyFlags
                   -- ^ desired memory properties
                -> Program r Word32
-findMemoryType pdev typeFilter properties
-  | Dict <- inferVkPrimBytes @VkMemoryType
-  = do
+findMemoryType pdev typeFilter properties = do
     memProps <- allocaPeek $ liftIO . vkGetPhysicalDeviceMemoryProperties pdev
     let mtCount = getField @"memoryTypeCount" memProps
         memTypes = getVec @"memoryTypes" memProps

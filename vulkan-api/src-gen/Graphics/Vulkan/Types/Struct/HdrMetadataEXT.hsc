@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.HdrMetadataEXT
-       (VkHdrMetadataEXT(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.XYColorEXT  (VkXYColorEXT)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkHdrMetadataEXT, VkHdrMetadataEXT') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.XYColorEXT  (VkXYColorEXT)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkHdrMetadataEXT {
 --   >     VkStructureType sType;
@@ -33,17 +30,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkHdrMetadataEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkHdrMetadataEXT VkHdrMetadataEXT registry at www.khronos.org>
-data VkHdrMetadataEXT = VkHdrMetadataEXT## Addr## ByteArray##
+type VkHdrMetadataEXT = VulkanStruct VkHdrMetadataEXT' -- ' closing tick for hsc2hs
+
+data VkHdrMetadataEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkHdrMetadataEXT where
-        (VkHdrMetadataEXT## a _) == x@(VkHdrMetadataEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkHdrMetadataEXT where
-        (VkHdrMetadataEXT## a _) `compare` x@(VkHdrMetadataEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -60,18 +57,6 @@ instance Storable VkHdrMetadataEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkHdrMetadataEXT where
-        unsafeAddr (VkHdrMetadataEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkHdrMetadataEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkHdrMetadataEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkHdrMetadataEXT where
         type StructFields VkHdrMetadataEXT =

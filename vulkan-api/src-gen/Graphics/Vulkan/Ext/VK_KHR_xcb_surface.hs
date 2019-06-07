@@ -33,13 +33,12 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.PlatformXcbKhr,
-        -- > #include "vk_platform.h"
-        VkCreateXcbSurfaceKHR, pattern VkCreateXcbSurfaceKHR,
-        HS_vkCreateXcbSurfaceKHR, PFN_vkCreateXcbSurfaceKHR,
-        vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHRUnsafe,
-        vkCreateXcbSurfaceKHRSafe,
+        module Graphics.Vulkan.Types.Bitmasks, VkXcbSurfaceCreateInfoKHR,
+        VkXcbSurfaceCreateInfoKHR', -- > #include "vk_platform.h"
+                                    VkCreateXcbSurfaceKHR,
+        pattern VkCreateXcbSurfaceKHR, HS_vkCreateXcbSurfaceKHR,
+        PFN_vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHR,
+        vkCreateXcbSurfaceKHRUnsafe, vkCreateXcbSurfaceKHRSafe,
         VkGetPhysicalDeviceXcbPresentationSupportKHR,
         pattern VkGetPhysicalDeviceXcbPresentationSupportKHR,
         HS_vkGetPhysicalDeviceXcbPresentationSupportKHR,
@@ -55,27 +54,28 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Include,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.PlatformXcbKhr,
         VK_KHR_XCB_SURFACE_SPEC_VERSION,
         pattern VK_KHR_XCB_SURFACE_SPEC_VERSION,
         VK_KHR_XCB_SURFACE_EXTENSION_NAME,
         pattern VK_KHR_XCB_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.PlatformXcbKhr
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Include
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.PlatformXcbKhr
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkCreateXcbSurfaceKHR :: CString
 

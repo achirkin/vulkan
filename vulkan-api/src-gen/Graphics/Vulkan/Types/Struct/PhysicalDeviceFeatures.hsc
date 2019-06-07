@@ -8,15 +8,12 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-       (VkPhysicalDeviceFeatures(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures') where -- ' closing tick for hsc2hs
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceFeatures {
 --   >     VkBool32               robustBufferAccess;
@@ -77,18 +74,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceFeatures VkPhysicalDeviceFeatures registry at www.khronos.org>
-data VkPhysicalDeviceFeatures = VkPhysicalDeviceFeatures## Addr##
-                                                          ByteArray##
+type VkPhysicalDeviceFeatures =
+     VulkanStruct VkPhysicalDeviceFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceFeatures where
-        (VkPhysicalDeviceFeatures## a _) ==
-          x@(VkPhysicalDeviceFeatures## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceFeatures where
-        (VkPhysicalDeviceFeatures## a _) `compare`
-          x@(VkPhysicalDeviceFeatures## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -105,19 +102,6 @@ instance Storable VkPhysicalDeviceFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceFeatures where
-        unsafeAddr (VkPhysicalDeviceFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceFeatures## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceFeatures where
         type StructFields VkPhysicalDeviceFeatures =

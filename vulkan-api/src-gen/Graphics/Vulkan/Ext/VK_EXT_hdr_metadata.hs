@@ -27,26 +27,27 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain'.
-        module Graphics.Vulkan.Types.Struct.HdrMetadataEXT,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.XYColorEXT,
-        -- > #include "vk_platform.h"
-        VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
+        VkHdrMetadataEXT, VkHdrMetadataEXT',
+        module Graphics.Vulkan.Types.Enum.StructureType, VkXYColorEXT,
+        VkXYColorEXT', -- > #include "vk_platform.h"
+                       VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
         HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.HdrMetadataEXT,
+        module Graphics.Vulkan.Types.Struct.XYColorEXT,
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_HDR_METADATA_EXT)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.HdrMetadataEXT
-import           Graphics.Vulkan.Types.Struct.XYColorEXT
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.HdrMetadataEXT
+import Graphics.Vulkan.Types.Struct.XYColorEXT
 
 pattern VkSetHdrMetadataEXT :: CString
 

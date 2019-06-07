@@ -8,29 +8,29 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Buffer
-       (VkBufferCopy(..), VkBufferCreateInfo(..), VkBufferImageCopy(..),
-        VkBufferMemoryBarrier(..), VkBufferMemoryRequirementsInfo2(..),
-        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo(..))
+       (VkBufferCopy, VkBufferCopy', VkBufferCreateInfo, -- ' closing tick for hsc2hs
+        VkBufferCreateInfo', VkBufferImageCopy, VkBufferImageCopy',
+        VkBufferMemoryBarrier, VkBufferMemoryBarrier', -- ' closing tick for hsc2hs
+        VkBufferMemoryRequirementsInfo2, VkBufferMemoryRequirementsInfo2', -- ' closing tick for hsc2hs
+        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo,
+        VkBufferViewCreateInfo') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import           Graphics.Vulkan.Types.Bitmasks           (VkBufferViewCreateFlags)
-import           Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
-import           Graphics.Vulkan.Types.Enum.Buffer        (VkBufferCreateFlags,
-                                                           VkBufferUsageFlags)
-import           Graphics.Vulkan.Types.Enum.Format        (VkFormat)
-import           Graphics.Vulkan.Types.Enum.SharingMode   (VkSharingMode)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer)
-import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import           Graphics.Vulkan.Types.Struct.Image       (VkImageSubresourceLayers)
-import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import Graphics.Vulkan.Types.Bitmasks           (VkBufferViewCreateFlags)
+import Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
+import Graphics.Vulkan.Types.Enum.Buffer        (VkBufferCreateFlags,
+                                                 VkBufferUsageFlags)
+import Graphics.Vulkan.Types.Enum.Format        (VkFormat)
+import Graphics.Vulkan.Types.Enum.SharingMode   (VkSharingMode)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer)
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresourceLayers)
+import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBufferCopy {
 --   >     VkDeviceSize           srcOffset;
@@ -39,17 +39,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkBufferCopy;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCopy VkBufferCopy registry at www.khronos.org>
-data VkBufferCopy = VkBufferCopy## Addr## ByteArray##
+type VkBufferCopy = VulkanStruct VkBufferCopy' -- ' closing tick for hsc2hs
+
+data VkBufferCopy' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferCopy where
-        (VkBufferCopy## a _) == x@(VkBufferCopy## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferCopy where
-        (VkBufferCopy## a _) `compare` x@(VkBufferCopy## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -66,18 +66,6 @@ instance Storable VkBufferCopy where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferCopy where
-        unsafeAddr (VkBufferCopy## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferCopy## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferCopy## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferCopy where
         type StructFields VkBufferCopy =
@@ -201,17 +189,17 @@ instance Show VkBufferCopy where
 --   > } VkBufferCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCreateInfo VkBufferCreateInfo registry at www.khronos.org>
-data VkBufferCreateInfo = VkBufferCreateInfo## Addr## ByteArray##
+type VkBufferCreateInfo = VulkanStruct VkBufferCreateInfo' -- ' closing tick for hsc2hs
+
+data VkBufferCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferCreateInfo where
-        (VkBufferCreateInfo## a _) == x@(VkBufferCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferCreateInfo where
-        (VkBufferCreateInfo## a _) `compare` x@(VkBufferCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -228,18 +216,6 @@ instance Storable VkBufferCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferCreateInfo where
-        unsafeAddr (VkBufferCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferCreateInfo where
         type StructFields VkBufferCreateInfo =
@@ -544,17 +520,17 @@ instance Show VkBufferCreateInfo where
 --   > } VkBufferImageCopy;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferImageCopy VkBufferImageCopy registry at www.khronos.org>
-data VkBufferImageCopy = VkBufferImageCopy## Addr## ByteArray##
+type VkBufferImageCopy = VulkanStruct VkBufferImageCopy' -- ' closing tick for hsc2hs
+
+data VkBufferImageCopy' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferImageCopy where
-        (VkBufferImageCopy## a _) == x@(VkBufferImageCopy## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferImageCopy where
-        (VkBufferImageCopy## a _) `compare` x@(VkBufferImageCopy## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -571,18 +547,6 @@ instance Storable VkBufferImageCopy where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferImageCopy where
-        unsafeAddr (VkBufferImageCopy## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferImageCopy## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferImageCopy## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferImageCopy where
         type StructFields VkBufferImageCopy =
@@ -816,18 +780,17 @@ instance Show VkBufferImageCopy where
 --   > } VkBufferMemoryBarrier;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferMemoryBarrier VkBufferMemoryBarrier registry at www.khronos.org>
-data VkBufferMemoryBarrier = VkBufferMemoryBarrier## Addr##
-                                                    ByteArray##
+type VkBufferMemoryBarrier = VulkanStruct VkBufferMemoryBarrier' -- ' closing tick for hsc2hs
+
+data VkBufferMemoryBarrier' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferMemoryBarrier where
-        (VkBufferMemoryBarrier## a _) == x@(VkBufferMemoryBarrier## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferMemoryBarrier where
-        (VkBufferMemoryBarrier## a _) `compare`
-          x@(VkBufferMemoryBarrier## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -844,18 +807,6 @@ instance Storable VkBufferMemoryBarrier where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferMemoryBarrier where
-        unsafeAddr (VkBufferMemoryBarrier## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferMemoryBarrier## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferMemoryBarrier## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferMemoryBarrier where
         type StructFields VkBufferMemoryBarrier =
@@ -1193,19 +1144,18 @@ instance Show VkBufferMemoryBarrier where
 --   > } VkBufferMemoryRequirementsInfo2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferMemoryRequirementsInfo2 VkBufferMemoryRequirementsInfo2 registry at www.khronos.org>
-data VkBufferMemoryRequirementsInfo2 = VkBufferMemoryRequirementsInfo2## Addr##
-                                                                        ByteArray##
+type VkBufferMemoryRequirementsInfo2 =
+     VulkanStruct VkBufferMemoryRequirementsInfo2' -- ' closing tick for hsc2hs
+
+data VkBufferMemoryRequirementsInfo2' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferMemoryRequirementsInfo2 where
-        (VkBufferMemoryRequirementsInfo2## a _) ==
-          x@(VkBufferMemoryRequirementsInfo2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferMemoryRequirementsInfo2 where
-        (VkBufferMemoryRequirementsInfo2## a _) `compare`
-          x@(VkBufferMemoryRequirementsInfo2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1223,20 +1173,6 @@ instance Storable VkBufferMemoryRequirementsInfo2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferMemoryRequirementsInfo2 where
-        unsafeAddr (VkBufferMemoryRequirementsInfo2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferMemoryRequirementsInfo2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferMemoryRequirementsInfo2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferMemoryRequirementsInfo2 where
         type StructFields VkBufferMemoryRequirementsInfo2 =
@@ -1370,18 +1306,17 @@ type VkBufferMemoryRequirementsInfo2KHR =
 --   > } VkBufferViewCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferViewCreateInfo VkBufferViewCreateInfo registry at www.khronos.org>
-data VkBufferViewCreateInfo = VkBufferViewCreateInfo## Addr##
-                                                      ByteArray##
+type VkBufferViewCreateInfo = VulkanStruct VkBufferViewCreateInfo' -- ' closing tick for hsc2hs
+
+data VkBufferViewCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBufferViewCreateInfo where
-        (VkBufferViewCreateInfo## a _) == x@(VkBufferViewCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBufferViewCreateInfo where
-        (VkBufferViewCreateInfo## a _) `compare`
-          x@(VkBufferViewCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1398,18 +1333,6 @@ instance Storable VkBufferViewCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferViewCreateInfo where
-        unsafeAddr (VkBufferViewCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferViewCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferViewCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBufferViewCreateInfo where
         type StructFields VkBufferViewCreateInfo =

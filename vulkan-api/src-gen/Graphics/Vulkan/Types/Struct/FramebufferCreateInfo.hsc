@@ -8,18 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
-       (VkFramebufferCreateInfo(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkFramebufferCreateFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkImageView,
-                                                           VkRenderPass)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkFramebufferCreateInfo, VkFramebufferCreateInfo') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkFramebufferCreateFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkImageView, VkRenderPass)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkFramebufferCreateInfo {
 --   >     VkStructureType sType;
@@ -34,18 +30,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkFramebufferCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFramebufferCreateInfo VkFramebufferCreateInfo registry at www.khronos.org>
-data VkFramebufferCreateInfo = VkFramebufferCreateInfo## Addr##
-                                                        ByteArray##
+type VkFramebufferCreateInfo =
+     VulkanStruct VkFramebufferCreateInfo' -- ' closing tick for hsc2hs
+
+data VkFramebufferCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkFramebufferCreateInfo where
-        (VkFramebufferCreateInfo## a _) == x@(VkFramebufferCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkFramebufferCreateInfo where
-        (VkFramebufferCreateInfo## a _) `compare`
-          x@(VkFramebufferCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -62,18 +58,6 @@ instance Storable VkFramebufferCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkFramebufferCreateInfo where
-        unsafeAddr (VkFramebufferCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkFramebufferCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkFramebufferCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkFramebufferCreateInfo where
         type StructFields VkFramebufferCreateInfo =

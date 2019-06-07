@@ -28,11 +28,19 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
 
         -- ** Required extensions: 'VK_KHR_display'.
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Display,
+        module Graphics.Vulkan.Types.BaseTypes, VkDisplayModeParametersKHR,
+        VkDisplayModeParametersKHR', VkDisplayModeProperties2KHR,
+        VkDisplayModeProperties2KHR', VkDisplayModePropertiesKHR,
+        VkDisplayModePropertiesKHR',
         module Graphics.Vulkan.Types.Enum.Display,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
+        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilities2KHR',
+        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR',
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneInfo2KHR',
+        VkDisplayPlaneProperties2KHR, VkDisplayPlaneProperties2KHR',
+        VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR',
+        VkDisplayProperties2KHR, VkDisplayProperties2KHR',
+        VkDisplayPropertiesKHR, VkDisplayPropertiesKHR', VkExtent2D,
+        VkExtent2D', VkOffset2D, VkOffset2D',
         module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Enum.Surface,
         -- > #include "vk_platform.h"
@@ -54,6 +62,9 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         PFN_vkGetDisplayPlaneCapabilities2KHR,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Display,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.Offset,
         VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME,
@@ -64,18 +75,18 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         pattern VK_STRUCTURE_TYPE_DISPLAY_PLANE_INFO_2_KHR,
         pattern VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Display
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Display
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Display
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Display
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Offset
 
 pattern VkGetPhysicalDeviceDisplayProperties2KHR :: CString
 

@@ -29,17 +29,21 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         --
 
         -- ** Required extensions: 'VK_KHR_external_semaphore'.
-        module Graphics.Vulkan.Types.Struct.PlatformWin32Khr,
+        VkD3D12FenceSubmitInfoKHR, VkD3D12FenceSubmitInfoKHR',
+        VkExportSemaphoreWin32HandleInfoKHR,
+        VkExportSemaphoreWin32HandleInfoKHR',
         module Graphics.Vulkan.Types.Enum.External,
         module Graphics.Vulkan.Types.BaseTypes,
+        VkImportSemaphoreWin32HandleInfoKHR,
+        VkImportSemaphoreWin32HandleInfoKHR',
         module Graphics.Vulkan.Types.Enum.Pipeline,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Semaphore,
+        module Graphics.Vulkan.Types.Bitmasks, VkSemaphoreCreateInfo,
+        VkSemaphoreCreateInfo', VkSemaphoreGetWin32HandleInfoKHR,
+        VkSemaphoreGetWin32HandleInfoKHR',
         module Graphics.Vulkan.Types.Enum.SemaphoreImportFlag,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.SubmitInfo,
-        -- > #include "vk_platform.h"
-        VkImportSemaphoreWin32HandleKHR,
+        module Graphics.Vulkan.Types.Enum.StructureType, VkSubmitInfo,
+        VkSubmitInfo', -- > #include "vk_platform.h"
+                       VkImportSemaphoreWin32HandleKHR,
         pattern VkImportSemaphoreWin32HandleKHR,
         HS_vkImportSemaphoreWin32HandleKHR,
         PFN_vkImportSemaphoreWin32HandleKHR, VkGetSemaphoreWin32HandleKHR,
@@ -49,6 +53,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Include,
+        module Graphics.Vulkan.Types.Struct.PlatformWin32Khr,
         VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_WIN32_EXTENSION_NAME,
@@ -58,21 +63,23 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         pattern VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR)
        where
-import           GHC.Ptr                                        (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.External
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include
-import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr
-import           Graphics.Vulkan.Types.Struct.Semaphore
-import           Graphics.Vulkan.Types.Struct.SubmitInfo
+import GHC.Ptr                                        (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.External
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Include
+import Graphics.Vulkan.Types.Struct.PlatformWin32Khr
+import Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo,
+                                                       VkSemaphoreCreateInfo')
+import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo,
+                                                       VkSubmitInfo')
 
 pattern VkImportSemaphoreWin32HandleKHR :: CString
 

@@ -23,10 +23,10 @@ module Graphics.Vulkan.Ext.VK_NV_shader_subgroup_partitioned
         pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME,
         pattern VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV)
        where
-import           GHC.Ptr                                         (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags (VkSubgroupFeatureBitmask (..),
-                                                                  VkSubgroupFeatureFlagBits)
+import GHC.Ptr                                         (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags (VkSubgroupFeatureBitmask (..),
+                                                        VkSubgroupFeatureFlagBits)
 
 pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION ::
         (Num a, Eq a) => a

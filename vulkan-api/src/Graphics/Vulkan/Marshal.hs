@@ -25,7 +25,7 @@
 --   Instead, it is hand-written to provide common types and classes.
 module Graphics.Vulkan.Marshal
   ( FlagType (..), FlagMask, FlagBit
-  , VulkanMarshal (..), VulkanMarshalPrim ()
+  , VulkanMarshal (..)
   , VulkanPtr (..)
   , VkPtr (..)
   , pattern VK_NULL_HANDLE, pattern VK_NULL
@@ -48,29 +48,27 @@ module Graphics.Vulkan.Marshal
   , cmpCStrings, cmpCStringsN
   ) where
 
-import           Data.Data                        (Data)
-import           Data.Int                         (Int16, Int32, Int64, Int8)
-import           Data.Kind                        (Constraint, Type)
-import           Data.Void                        (Void)
-import           Data.Word                        (Word16, Word32, Word64,
-                                                   Word8)
-import           Foreign.C.String                 (CString, peekCString)
-import           Foreign.C.Types                  (CChar (..), CWchar (..), CInt (..), CSize (..), CULong (..))
-import           Foreign.ForeignPtr               (ForeignPtr,
-                                                   addForeignPtrFinalizer,
-                                                   mallocForeignPtr,
-                                                   withForeignPtr)
-import           Foreign.Marshal.Array            (pokeArray0)
-import           Foreign.Marshal.Utils            (fillBytes)
-import           Foreign.Ptr                      (FunPtr, nullPtr, plusPtr)
-import           Foreign.Storable                 (Storable (sizeOf))
-import           GHC.Exts                         (Proxy#, proxy#)
-import           GHC.Generics                     (Generic)
-import           GHC.Ptr                          (Ptr (..))
-import           GHC.TypeLits
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import Data.Data             (Data)
+import Data.Int              (Int16, Int32, Int64, Int8)
+import Data.Kind             (Constraint, Type)
+import Data.Void             (Void)
+import Data.Word             (Word16, Word32, Word64, Word8)
+import Foreign.C.String      (CString, peekCString)
+import Foreign.C.Types       (CChar (..), CInt (..), CSize (..), CULong (..),
+                              CWchar (..))
+import Foreign.ForeignPtr    (ForeignPtr, addForeignPtrFinalizer,
+                              mallocForeignPtr, withForeignPtr)
+import Foreign.Marshal.Array (pokeArray0)
+import Foreign.Marshal.Utils (fillBytes)
+import Foreign.Ptr           (FunPtr, nullPtr, plusPtr)
+import Foreign.Storable      (Storable (sizeOf))
+import GHC.Exts              (Proxy#, proxy#)
+import GHC.Generics          (Generic)
+import GHC.Ptr               (Ptr (..))
+import GHC.TypeLits
+import System.IO.Unsafe      (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Marshal.Internal
 
 
 -- | Distinguish single bits and bitmasks in vulkan flags
@@ -107,7 +105,7 @@ class VulkanMarshal a where
   --
   --   Note, the memory is managed by GHC, thus no need for freeing it manually.
   newVkData :: (Ptr a -> IO ()) -> IO a
-  default newVkData :: (Storable a, VulkanMarshalPrim a)
+  default newVkData :: (Storable a, a ~ VulkanStruct b)
                     => (Ptr a -> IO ()) -> IO a
   newVkData = newVkData#
   {-# INLINE newVkData #-}
@@ -119,7 +117,7 @@ class VulkanMarshal a where
   --
   --   Note, the memory is managed by GHC, thus no need for freeing it manually.
   mallocVkData :: IO a
-  default mallocVkData :: (Storable a, VulkanMarshalPrim a) => IO a
+  default mallocVkData :: (Storable a, a ~ VulkanStruct b) => IO a
   mallocVkData = mallocVkData#
   {-# INLINE mallocVkData #-}
   -- | Allocate a pinned aligned byte array to keep vulkan data structures.
@@ -139,7 +137,7 @@ class VulkanMarshal a where
   --
   --   Note, the memory is managed by GHC, thus no need for freeing it manually.
   mallocVkDataArray :: Int -> IO (Ptr a, [a])
-  default mallocVkDataArray :: (Storable a, VulkanMarshalPrim a)
+  default mallocVkDataArray :: (Storable a, a ~ VulkanStruct b)
                             => Int -> IO (Ptr a, [a])
   mallocVkDataArray = mallocVkDataArray#
   {-# INLINE mallocVkDataArray #-}
@@ -148,7 +146,7 @@ class VulkanMarshal a where
   --   Structures created with newVkData are stored in pinned byte arrays,
   --   so their memory is maintained by Haskell GC.
   unsafePtr  :: a -> Ptr a
-  default unsafePtr :: VulkanMarshalPrim a => a -> Ptr a
+  default unsafePtr :: a ~ VulkanStruct b => a -> Ptr a
   unsafePtr a = Ptr (unsafeAddr a)
   {-# INLINE unsafePtr #-}
   -- | Get vulkan structure referenced by a 'ForeignPtr' trying to avoid copying data.
@@ -163,13 +161,13 @@ class VulkanMarshal a where
   --   Thus, if all references to original `ForeignPtr` are lost,
   --     its attached finalizers may run even if the created structure is alive.
   fromForeignPtr :: ForeignPtr a -> IO a
-  default fromForeignPtr :: (Storable a, VulkanMarshalPrim a)
-                         => ForeignPtr a -> IO a
+  default fromForeignPtr :: (Storable a, a ~ VulkanStruct b)
+                         => ForeignPtr a-> IO a
   fromForeignPtr = fromForeignPtr#
   {-# INLINE fromForeignPtr #-}
   -- | Create a `ForeignPtr` referencing the structure without copying data.
   toForeignPtr :: a -> IO (ForeignPtr a)
-  default toForeignPtr :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
+  default toForeignPtr :: a ~ VulkanStruct b => a -> IO (ForeignPtr a)
   toForeignPtr = toForeignPtr#
   {-# INLINE toForeignPtr #-}
   -- | Create a `ForeignPtr` referencing the structure without copying data.
@@ -180,12 +178,12 @@ class VulkanMarshal a where
   -- Attempts to add a finalizer to a ForeignPtr created this way, or to
   -- finalize such a pointer, will throw an exception.
   toPlainForeignPtr :: a -> IO (ForeignPtr a)
-  default toPlainForeignPtr :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
+  default toPlainForeignPtr :: a ~ VulkanStruct b => a -> IO (ForeignPtr a)
   toPlainForeignPtr = toPlainForeignPtr#
   {-# INLINE toPlainForeignPtr #-}
   -- | Make sure this data is alive at a given point in a sequence of IO actions.
   touchVkData  :: a -> IO ()
-  default touchVkData :: VulkanMarshalPrim a => a -> IO ()
+  default touchVkData :: a ~ VulkanStruct b => a -> IO ()
   touchVkData = touchVkData#
   {-# INLINE touchVkData #-}
 

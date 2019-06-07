@@ -8,17 +8,15 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformWaylandKhr
-       (VkWaylandSurfaceCreateInfoKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkWaylandSurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Include            (WlDisplay, WlSurface)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkWaylandSurfaceCreateInfoKHR, VkWaylandSurfaceCreateInfoKHR') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkWaylandSurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Include            (WlDisplay, WlSurface)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkWaylandSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;
@@ -29,19 +27,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkWaylandSurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWaylandSurfaceCreateInfoKHR VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
-data VkWaylandSurfaceCreateInfoKHR = VkWaylandSurfaceCreateInfoKHR## Addr##
-                                                                    ByteArray##
+type VkWaylandSurfaceCreateInfoKHR =
+     VulkanStruct VkWaylandSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkWaylandSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkWaylandSurfaceCreateInfoKHR where
-        (VkWaylandSurfaceCreateInfoKHR## a _) ==
-          x@(VkWaylandSurfaceCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkWaylandSurfaceCreateInfoKHR where
-        (VkWaylandSurfaceCreateInfoKHR## a _) `compare`
-          x@(VkWaylandSurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -59,20 +56,6 @@ instance Storable VkWaylandSurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkWaylandSurfaceCreateInfoKHR where
-        unsafeAddr (VkWaylandSurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkWaylandSurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkWaylandSurfaceCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWaylandSurfaceCreateInfoKHR where
         type StructFields VkWaylandSurfaceCreateInfoKHR =

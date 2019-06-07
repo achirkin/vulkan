@@ -8,36 +8,39 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformAndroidKhr
-       (VkAndroidHardwareBufferFormatPropertiesANDROID(..),
-        VkAndroidHardwareBufferPropertiesANDROID(..),
-        VkAndroidHardwareBufferUsageANDROID(..),
-        VkAndroidSurfaceCreateInfoKHR(..), VkExternalFormatANDROID(..),
-        VkImportAndroidHardwareBufferInfoANDROID(..),
-        VkMemoryGetAndroidHardwareBufferInfoANDROID(..))
+       (VkAndroidHardwareBufferFormatPropertiesANDROID,
+        VkAndroidHardwareBufferFormatPropertiesANDROID', -- ' closing tick for hsc2hs
+        VkAndroidHardwareBufferPropertiesANDROID,
+        VkAndroidHardwareBufferPropertiesANDROID', -- ' closing tick for hsc2hs
+        VkAndroidHardwareBufferUsageANDROID,
+        VkAndroidHardwareBufferUsageANDROID', -- ' closing tick for hsc2hs
+        VkAndroidSurfaceCreateInfoKHR, VkAndroidSurfaceCreateInfoKHR', -- ' closing tick for hsc2hs
+        VkExternalFormatANDROID, VkExternalFormatANDROID', -- ' closing tick for hsc2hs
+        VkImportAndroidHardwareBufferInfoANDROID,
+        VkImportAndroidHardwareBufferInfoANDROID', -- ' closing tick for hsc2hs
+        VkMemoryGetAndroidHardwareBufferInfoANDROID,
+        VkMemoryGetAndroidHardwareBufferInfoANDROID') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                              (Storable (..))
-import           GHC.Base                                      (Addr##,
-                                                                ByteArray##,
-                                                                byteArrayContents##,
-                                                                plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
-import           Graphics.Vulkan.Types.Bitmasks                (VkAndroidSurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Defines                 (AHardwareBuffer,
-                                                                ANativeWindow)
-import           Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
-import           Graphics.Vulkan.Types.Enum.Format             (VkFormat, VkFormatFeatureFlags)
-import           Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerYcbcrModelConversion,
-                                                                VkSamplerYcbcrRange)
-import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                 (VkDeviceMemory)
-import           Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import           Graphics.Vulkan.Types.Struct.Image            (VkImageCreateInfo,
-                                                                VkImageFormatProperties2)
-import           Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
-import           Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerYcbcrConversionCreateInfo)
-import           System.IO.Unsafe                              (unsafeDupablePerformIO)
+import Foreign.Storable                              (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
+import Graphics.Vulkan.Types.Bitmasks                (VkAndroidSurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Defines                 (AHardwareBuffer,
+                                                      ANativeWindow)
+import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
+import Graphics.Vulkan.Types.Enum.Format             (VkFormat,
+                                                      VkFormatFeatureFlags)
+import Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerYcbcrModelConversion,
+                                                      VkSamplerYcbcrRange)
+import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import Graphics.Vulkan.Types.Handles                 (VkDeviceMemory)
+import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
+import Graphics.Vulkan.Types.Struct.Image            (VkImageCreateInfo,
+                                                      VkImageFormatProperties2)
+import Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
+import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerYcbcrConversionCreateInfo)
+import System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAndroidHardwareBufferFormatPropertiesANDROID {
 --   >     VkStructureType sType;
@@ -53,20 +56,18 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   > } VkAndroidHardwareBufferFormatPropertiesANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferFormatPropertiesANDROID VkAndroidHardwareBufferFormatPropertiesANDROID registry at www.khronos.org>
-data VkAndroidHardwareBufferFormatPropertiesANDROID = VkAndroidHardwareBufferFormatPropertiesANDROID## Addr##
-                                                                                                      ByteArray##
+type VkAndroidHardwareBufferFormatPropertiesANDROID =
+     VulkanStruct VkAndroidHardwareBufferFormatPropertiesANDROID' -- ' closing tick for hsc2hs
+
+data VkAndroidHardwareBufferFormatPropertiesANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkAndroidHardwareBufferFormatPropertiesANDROID where
-        (VkAndroidHardwareBufferFormatPropertiesANDROID## a _) ==
-          x@(VkAndroidHardwareBufferFormatPropertiesANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAndroidHardwareBufferFormatPropertiesANDROID where
-        (VkAndroidHardwareBufferFormatPropertiesANDROID## a _) `compare`
-          x@(VkAndroidHardwareBufferFormatPropertiesANDROID## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -86,24 +87,6 @@ instance Storable VkAndroidHardwareBufferFormatPropertiesANDROID
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkAndroidHardwareBufferFormatPropertiesANDROID
-         where
-        unsafeAddr (VkAndroidHardwareBufferFormatPropertiesANDROID## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkAndroidHardwareBufferFormatPropertiesANDROID## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAndroidHardwareBufferFormatPropertiesANDROID##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkAndroidHardwareBufferFormatPropertiesANDROID
@@ -632,20 +615,18 @@ instance Show VkAndroidHardwareBufferFormatPropertiesANDROID where
 --   > } VkAndroidHardwareBufferPropertiesANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferPropertiesANDROID VkAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
-data VkAndroidHardwareBufferPropertiesANDROID = VkAndroidHardwareBufferPropertiesANDROID## Addr##
-                                                                                          ByteArray##
+type VkAndroidHardwareBufferPropertiesANDROID =
+     VulkanStruct VkAndroidHardwareBufferPropertiesANDROID' -- ' closing tick for hsc2hs
+
+data VkAndroidHardwareBufferPropertiesANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkAndroidHardwareBufferPropertiesANDROID where
-        (VkAndroidHardwareBufferPropertiesANDROID## a _) ==
-          x@(VkAndroidHardwareBufferPropertiesANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAndroidHardwareBufferPropertiesANDROID where
-        (VkAndroidHardwareBufferPropertiesANDROID## a _) `compare`
-          x@(VkAndroidHardwareBufferPropertiesANDROID## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -664,21 +645,6 @@ instance Storable VkAndroidHardwareBufferPropertiesANDROID where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAndroidHardwareBufferPropertiesANDROID
-         where
-        unsafeAddr (VkAndroidHardwareBufferPropertiesANDROID## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAndroidHardwareBufferPropertiesANDROID## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAndroidHardwareBufferPropertiesANDROID##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAndroidHardwareBufferPropertiesANDROID
          where
@@ -872,20 +838,18 @@ instance Show VkAndroidHardwareBufferPropertiesANDROID where
 --   > } VkAndroidHardwareBufferUsageANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferUsageANDROID VkAndroidHardwareBufferUsageANDROID registry at www.khronos.org>
-data VkAndroidHardwareBufferUsageANDROID = VkAndroidHardwareBufferUsageANDROID## Addr##
-                                                                                ByteArray##
+type VkAndroidHardwareBufferUsageANDROID =
+     VulkanStruct VkAndroidHardwareBufferUsageANDROID' -- ' closing tick for hsc2hs
+
+data VkAndroidHardwareBufferUsageANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkAndroidHardwareBufferUsageANDROID where
-        (VkAndroidHardwareBufferUsageANDROID## a _) ==
-          x@(VkAndroidHardwareBufferUsageANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAndroidHardwareBufferUsageANDROID where
-        (VkAndroidHardwareBufferUsageANDROID## a _) `compare`
-          x@(VkAndroidHardwareBufferUsageANDROID## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -903,21 +867,6 @@ instance Storable VkAndroidHardwareBufferUsageANDROID where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAndroidHardwareBufferUsageANDROID
-         where
-        unsafeAddr (VkAndroidHardwareBufferUsageANDROID## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAndroidHardwareBufferUsageANDROID## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAndroidHardwareBufferUsageANDROID##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAndroidHardwareBufferUsageANDROID where
         type StructFields VkAndroidHardwareBufferUsageANDROID =
@@ -1064,19 +1013,18 @@ instance Show VkAndroidHardwareBufferUsageANDROID where
 --   > } VkAndroidSurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidSurfaceCreateInfoKHR VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
-data VkAndroidSurfaceCreateInfoKHR = VkAndroidSurfaceCreateInfoKHR## Addr##
-                                                                    ByteArray##
+type VkAndroidSurfaceCreateInfoKHR =
+     VulkanStruct VkAndroidSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkAndroidSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkAndroidSurfaceCreateInfoKHR where
-        (VkAndroidSurfaceCreateInfoKHR## a _) ==
-          x@(VkAndroidSurfaceCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAndroidSurfaceCreateInfoKHR where
-        (VkAndroidSurfaceCreateInfoKHR## a _) `compare`
-          x@(VkAndroidSurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1094,20 +1042,6 @@ instance Storable VkAndroidSurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAndroidSurfaceCreateInfoKHR where
-        unsafeAddr (VkAndroidSurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAndroidSurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAndroidSurfaceCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAndroidSurfaceCreateInfoKHR where
         type StructFields VkAndroidSurfaceCreateInfoKHR =
@@ -1269,18 +1203,18 @@ instance Show VkAndroidSurfaceCreateInfoKHR where
 --   > } VkExternalFormatANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalFormatANDROID VkExternalFormatANDROID registry at www.khronos.org>
-data VkExternalFormatANDROID = VkExternalFormatANDROID## Addr##
-                                                        ByteArray##
+type VkExternalFormatANDROID =
+     VulkanStruct VkExternalFormatANDROID' -- ' closing tick for hsc2hs
+
+data VkExternalFormatANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalFormatANDROID where
-        (VkExternalFormatANDROID## a _) == x@(VkExternalFormatANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalFormatANDROID where
-        (VkExternalFormatANDROID## a _) `compare`
-          x@(VkExternalFormatANDROID## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1297,18 +1231,6 @@ instance Storable VkExternalFormatANDROID where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalFormatANDROID where
-        unsafeAddr (VkExternalFormatANDROID## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalFormatANDROID## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalFormatANDROID## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalFormatANDROID where
         type StructFields VkExternalFormatANDROID =
@@ -1432,20 +1354,18 @@ instance Show VkExternalFormatANDROID where
 --   > } VkImportAndroidHardwareBufferInfoANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportAndroidHardwareBufferInfoANDROID VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
-data VkImportAndroidHardwareBufferInfoANDROID = VkImportAndroidHardwareBufferInfoANDROID## Addr##
-                                                                                          ByteArray##
+type VkImportAndroidHardwareBufferInfoANDROID =
+     VulkanStruct VkImportAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
+
+data VkImportAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkImportAndroidHardwareBufferInfoANDROID where
-        (VkImportAndroidHardwareBufferInfoANDROID## a _) ==
-          x@(VkImportAndroidHardwareBufferInfoANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportAndroidHardwareBufferInfoANDROID where
-        (VkImportAndroidHardwareBufferInfoANDROID## a _) `compare`
-          x@(VkImportAndroidHardwareBufferInfoANDROID## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1464,21 +1384,6 @@ instance Storable VkImportAndroidHardwareBufferInfoANDROID where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportAndroidHardwareBufferInfoANDROID
-         where
-        unsafeAddr (VkImportAndroidHardwareBufferInfoANDROID## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportAndroidHardwareBufferInfoANDROID## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportAndroidHardwareBufferInfoANDROID##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportAndroidHardwareBufferInfoANDROID
          where
@@ -1619,20 +1524,18 @@ instance Show VkImportAndroidHardwareBufferInfoANDROID where
 --   > } VkMemoryGetAndroidHardwareBufferInfoANDROID;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetAndroidHardwareBufferInfoANDROID VkMemoryGetAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
-data VkMemoryGetAndroidHardwareBufferInfoANDROID = VkMemoryGetAndroidHardwareBufferInfoANDROID## Addr##
-                                                                                                ByteArray##
+type VkMemoryGetAndroidHardwareBufferInfoANDROID =
+     VulkanStruct VkMemoryGetAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
+
+data VkMemoryGetAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryGetAndroidHardwareBufferInfoANDROID where
-        (VkMemoryGetAndroidHardwareBufferInfoANDROID## a _) ==
-          x@(VkMemoryGetAndroidHardwareBufferInfoANDROID## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryGetAndroidHardwareBufferInfoANDROID where
-        (VkMemoryGetAndroidHardwareBufferInfoANDROID## a _) `compare`
-          x@(VkMemoryGetAndroidHardwareBufferInfoANDROID## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1651,23 +1554,6 @@ instance Storable VkMemoryGetAndroidHardwareBufferInfoANDROID where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkMemoryGetAndroidHardwareBufferInfoANDROID
-         where
-        unsafeAddr (VkMemoryGetAndroidHardwareBufferInfoANDROID## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryGetAndroidHardwareBufferInfoANDROID## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryGetAndroidHardwareBufferInfoANDROID##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryGetAndroidHardwareBufferInfoANDROID
          where

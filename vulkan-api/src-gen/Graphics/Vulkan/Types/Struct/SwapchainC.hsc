@@ -8,30 +8,27 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SwapchainC
-       (VkSwapchainCounterCreateInfoEXT(..), VkSwapchainCreateInfoKHR(..))
+       (VkSwapchainCounterCreateInfoEXT, VkSwapchainCounterCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkSwapchainCreateInfoKHR, VkSwapchainCreateInfoKHR') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                   (Storable (..))
-import           GHC.Base                                           (Addr##,
-                                                                     ByteArray##,
-                                                                     byteArrayContents##,
-                                                                     plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                    (VkBool32)
-import           Graphics.Vulkan.Types.Enum.Color                   (VkColorSpaceKHR)
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR  (VkCompositeAlphaFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.Format                  (VkFormat)
-import           Graphics.Vulkan.Types.Enum.Image                   (VkImageUsageFlags)
-import           Graphics.Vulkan.Types.Enum.PresentModeKHR          (VkPresentModeKHR)
-import           Graphics.Vulkan.Types.Enum.SharingMode             (VkSharingMode)
-import           Graphics.Vulkan.Types.Enum.StructureType           (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.Surface                 (VkSurfaceCounterFlagsEXT,
-                                                                     VkSurfaceTransformFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR (VkSwapchainCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Handles                      (VkSurfaceKHR,
-                                                                     VkSwapchainKHR)
-import           Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
-import           System.IO.Unsafe                                   (unsafeDupablePerformIO)
+import Foreign.Storable                                   (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes                    (VkBool32)
+import Graphics.Vulkan.Types.Enum.Color                   (VkColorSpaceKHR)
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR  (VkCompositeAlphaFlagBitsKHR)
+import Graphics.Vulkan.Types.Enum.Format                  (VkFormat)
+import Graphics.Vulkan.Types.Enum.Image                   (VkImageUsageFlags)
+import Graphics.Vulkan.Types.Enum.PresentModeKHR          (VkPresentModeKHR)
+import Graphics.Vulkan.Types.Enum.SharingMode             (VkSharingMode)
+import Graphics.Vulkan.Types.Enum.StructureType           (VkStructureType)
+import Graphics.Vulkan.Types.Enum.Surface                 (VkSurfaceCounterFlagsEXT,
+                                                           VkSurfaceTransformFlagBitsKHR)
+import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR (VkSwapchainCreateFlagsKHR)
+import Graphics.Vulkan.Types.Handles                      (VkSurfaceKHR,
+                                                           VkSwapchainKHR)
+import Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
+import System.IO.Unsafe                                   (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSwapchainCounterCreateInfoEXT {
 --   >     VkStructureType sType;
@@ -40,19 +37,18 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   > } VkSwapchainCounterCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSwapchainCounterCreateInfoEXT VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
-data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## Addr##
-                                                                        ByteArray##
+type VkSwapchainCounterCreateInfoEXT =
+     VulkanStruct VkSwapchainCounterCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkSwapchainCounterCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSwapchainCounterCreateInfoEXT where
-        (VkSwapchainCounterCreateInfoEXT## a _) ==
-          x@(VkSwapchainCounterCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSwapchainCounterCreateInfoEXT where
-        (VkSwapchainCounterCreateInfoEXT## a _) `compare`
-          x@(VkSwapchainCounterCreateInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -70,20 +66,6 @@ instance Storable VkSwapchainCounterCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSwapchainCounterCreateInfoEXT where
-        unsafeAddr (VkSwapchainCounterCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSwapchainCounterCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSwapchainCounterCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSwapchainCounterCreateInfoEXT where
         type StructFields VkSwapchainCounterCreateInfoEXT =
@@ -231,18 +213,18 @@ instance Show VkSwapchainCounterCreateInfoEXT where
 --   > } VkSwapchainCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSwapchainCreateInfoKHR VkSwapchainCreateInfoKHR registry at www.khronos.org>
-data VkSwapchainCreateInfoKHR = VkSwapchainCreateInfoKHR## Addr##
-                                                          ByteArray##
+type VkSwapchainCreateInfoKHR =
+     VulkanStruct VkSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSwapchainCreateInfoKHR where
-        (VkSwapchainCreateInfoKHR## a _) ==
-          x@(VkSwapchainCreateInfoKHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSwapchainCreateInfoKHR where
-        (VkSwapchainCreateInfoKHR## a _) `compare`
-          x@(VkSwapchainCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -259,19 +241,6 @@ instance Storable VkSwapchainCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSwapchainCreateInfoKHR where
-        unsafeAddr (VkSwapchainCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSwapchainCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSwapchainCreateInfoKHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSwapchainCreateInfoKHR where
         type StructFields VkSwapchainCreateInfoKHR =

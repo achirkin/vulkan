@@ -28,12 +28,13 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
 
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_get_physical_device_properties2', 'VK_KHR_get_surface_capabilities2'.
         module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.BaseTypes,
+        VkExtent2D, VkExtent2D', module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR,
+        VkSharedPresentSurfaceCapabilitiesKHR,
+        VkSharedPresentSurfaceCapabilitiesKHR',
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.Surface,
+        VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR',
+        VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR',
         module Graphics.Vulkan.Types.Enum.Surface, -- > #include "vk_platform.h"
                                                    VkGetSwapchainStatusKHR,
         pattern VkGetSwapchainStatusKHR, HS_vkGetSwapchainStatusKHR,
@@ -49,23 +50,25 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         pattern VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR,
         pattern VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR)
        where
-import           GHC.Ptr
-                                                                                   (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-                                                                                   (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.PresentModeKHR
-                                                                                   (VkPresentModeKHR (..))
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR
-import           Graphics.Vulkan.Types.Struct.Surface
+import GHC.Ptr                                                          (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                                     (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.PresentModeKHR                        (VkPresentModeKHR (..))
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent2D,
+                                                                         VkExtent2D')
+import Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR (VkSharedPresentSurfaceCapabilitiesKHR,
+                                                                         VkSharedPresentSurfaceCapabilitiesKHR')
+import Graphics.Vulkan.Types.Struct.Surface                             (VkSurfaceCapabilities2KHR,
+                                                                         VkSurfaceCapabilities2KHR',
+                                                                         VkSurfaceCapabilitiesKHR,
+                                                                         VkSurfaceCapabilitiesKHR')
 
 pattern VkGetSwapchainStatusKHR :: CString
 

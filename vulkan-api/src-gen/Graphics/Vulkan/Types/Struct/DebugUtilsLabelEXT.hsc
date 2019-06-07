@@ -12,17 +12,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT
-       (VkDebugUtilsLabelEXT(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           Proxy##,
-                                                           byteArrayContents##,
-                                                           plusAddr##, proxy##)
-import           GHC.TypeLits                             (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkDebugUtilsLabelEXT, VkDebugUtilsLabelEXT') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugUtilsLabelEXT {
 --   >     VkStructureType sType;
@@ -32,17 +27,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkDebugUtilsLabelEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsLabelEXT VkDebugUtilsLabelEXT registry at www.khronos.org>
-data VkDebugUtilsLabelEXT = VkDebugUtilsLabelEXT## Addr## ByteArray##
+type VkDebugUtilsLabelEXT = VulkanStruct VkDebugUtilsLabelEXT' -- ' closing tick for hsc2hs
+
+data VkDebugUtilsLabelEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugUtilsLabelEXT where
-        (VkDebugUtilsLabelEXT## a _) == x@(VkDebugUtilsLabelEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugUtilsLabelEXT where
-        (VkDebugUtilsLabelEXT## a _) `compare` x@(VkDebugUtilsLabelEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -59,18 +54,6 @@ instance Storable VkDebugUtilsLabelEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugUtilsLabelEXT where
-        unsafeAddr (VkDebugUtilsLabelEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugUtilsLabelEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugUtilsLabelEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugUtilsLabelEXT where
         type StructFields VkDebugUtilsLabelEXT =

@@ -8,19 +8,17 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.QueueFamilyProperties
-       (VkQueueFamilyProperties(..), VkQueueFamilyProperties2(..),
+       (VkQueueFamilyProperties, VkQueueFamilyProperties', -- ' closing tick for hsc2hs
+        VkQueueFamilyProperties2, VkQueueFamilyProperties2', -- ' closing tick for hsc2hs
         VkQueueFamilyProperties2KHR)
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Queue         (VkQueueFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Queue         (VkQueueFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkQueueFamilyProperties {
 --   >     VkQueueFlags           queueFlags;
@@ -30,18 +28,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkQueueFamilyProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueueFamilyProperties VkQueueFamilyProperties registry at www.khronos.org>
-data VkQueueFamilyProperties = VkQueueFamilyProperties## Addr##
-                                                        ByteArray##
+type VkQueueFamilyProperties =
+     VulkanStruct VkQueueFamilyProperties' -- ' closing tick for hsc2hs
+
+data VkQueueFamilyProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkQueueFamilyProperties where
-        (VkQueueFamilyProperties## a _) == x@(VkQueueFamilyProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkQueueFamilyProperties where
-        (VkQueueFamilyProperties## a _) `compare`
-          x@(VkQueueFamilyProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -58,18 +56,6 @@ instance Storable VkQueueFamilyProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkQueueFamilyProperties where
-        unsafeAddr (VkQueueFamilyProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkQueueFamilyProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkQueueFamilyProperties## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkQueueFamilyProperties where
         type StructFields VkQueueFamilyProperties =
@@ -244,18 +230,18 @@ instance Show VkQueueFamilyProperties where
 --   > } VkQueueFamilyProperties2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueueFamilyProperties2 VkQueueFamilyProperties2 registry at www.khronos.org>
-data VkQueueFamilyProperties2 = VkQueueFamilyProperties2## Addr##
-                                                          ByteArray##
+type VkQueueFamilyProperties2 =
+     VulkanStruct VkQueueFamilyProperties2' -- ' closing tick for hsc2hs
+
+data VkQueueFamilyProperties2' -- ' closing tick for hsc2hs
 
 instance Eq VkQueueFamilyProperties2 where
-        (VkQueueFamilyProperties2## a _) ==
-          x@(VkQueueFamilyProperties2## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkQueueFamilyProperties2 where
-        (VkQueueFamilyProperties2## a _) `compare`
-          x@(VkQueueFamilyProperties2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -272,19 +258,6 @@ instance Storable VkQueueFamilyProperties2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkQueueFamilyProperties2 where
-        unsafeAddr (VkQueueFamilyProperties2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkQueueFamilyProperties2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkQueueFamilyProperties2## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkQueueFamilyProperties2 where
         type StructFields VkQueueFamilyProperties2 =

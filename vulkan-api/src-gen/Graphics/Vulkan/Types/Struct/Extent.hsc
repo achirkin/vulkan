@@ -8,14 +8,11 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Extent
-       (VkExtent2D(..), VkExtent3D(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkExtent2D, VkExtent2D', VkExtent3D, VkExtent3D') where
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExtent2D {
 --   >     uint32_t        width;
@@ -23,17 +20,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkExtent2D;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtent2D VkExtent2D registry at www.khronos.org>
-data VkExtent2D = VkExtent2D## Addr## ByteArray##
+type VkExtent2D = VulkanStruct VkExtent2D' -- ' closing tick for hsc2hs
+
+data VkExtent2D' -- ' closing tick for hsc2hs
 
 instance Eq VkExtent2D where
-        (VkExtent2D## a _) == x@(VkExtent2D## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExtent2D where
-        (VkExtent2D## a _) `compare` x@(VkExtent2D## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -50,18 +47,6 @@ instance Storable VkExtent2D where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExtent2D where
-        unsafeAddr (VkExtent2D## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExtent2D## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExtent2D## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExtent2D where
         type StructFields VkExtent2D = '["width", "height"] -- ' closing tick for hsc2hs
@@ -141,17 +126,17 @@ instance Show VkExtent2D where
 --   > } VkExtent3D;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtent3D VkExtent3D registry at www.khronos.org>
-data VkExtent3D = VkExtent3D## Addr## ByteArray##
+type VkExtent3D = VulkanStruct VkExtent3D' -- ' closing tick for hsc2hs
+
+data VkExtent3D' -- ' closing tick for hsc2hs
 
 instance Eq VkExtent3D where
-        (VkExtent3D## a _) == x@(VkExtent3D## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExtent3D where
-        (VkExtent3D## a _) `compare` x@(VkExtent3D## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -168,18 +153,6 @@ instance Storable VkExtent3D where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExtent3D where
-        unsafeAddr (VkExtent3D## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExtent3D## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExtent3D## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExtent3D where
         type StructFields VkExtent3D = '["width", "height", "depth"] -- ' closing tick for hsc2hs

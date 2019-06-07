@@ -8,14 +8,12 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PastPresentationTimingGOOGLE
-       (VkPastPresentationTimingGOOGLE(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkPastPresentationTimingGOOGLE, VkPastPresentationTimingGOOGLE') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPastPresentationTimingGOOGLE {
 --   >     uint32_t                         presentID;
@@ -26,19 +24,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPastPresentationTimingGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPastPresentationTimingGOOGLE VkPastPresentationTimingGOOGLE registry at www.khronos.org>
-data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## Addr##
-                                                                      ByteArray##
+type VkPastPresentationTimingGOOGLE =
+     VulkanStruct VkPastPresentationTimingGOOGLE' -- ' closing tick for hsc2hs
+
+data VkPastPresentationTimingGOOGLE' -- ' closing tick for hsc2hs
 
 instance Eq VkPastPresentationTimingGOOGLE where
-        (VkPastPresentationTimingGOOGLE## a _) ==
-          x@(VkPastPresentationTimingGOOGLE## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPastPresentationTimingGOOGLE where
-        (VkPastPresentationTimingGOOGLE## a _) `compare`
-          x@(VkPastPresentationTimingGOOGLE## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,20 +53,6 @@ instance Storable VkPastPresentationTimingGOOGLE where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPastPresentationTimingGOOGLE where
-        unsafeAddr (VkPastPresentationTimingGOOGLE## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPastPresentationTimingGOOGLE## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPastPresentationTimingGOOGLE##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPastPresentationTimingGOOGLE where
         type StructFields VkPastPresentationTimingGOOGLE =

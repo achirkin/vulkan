@@ -38,16 +38,15 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR)
        where
-import           GHC.Ptr                         (Ptr (..))
-import           Graphics.Vulkan.Core_1_1        (pattern VK_ERROR_OUT_OF_POOL_MEMORY,
-                                                  pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
-                                                  pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT,
-                                                  pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc    (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Handles
+import GHC.Ptr                         (Ptr (..))
+import Graphics.Vulkan.Core_1_1        (pattern VK_ERROR_OUT_OF_POOL_MEMORY, pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
+                                        pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT,
+                                        pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc    (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Handles
 
 pattern VkTrimCommandPoolKHR :: CString
 

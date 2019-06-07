@@ -10,14 +10,14 @@ module Graphics.Vulkan.Types.Enum.PresentModeKHR
                          VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_FIFO_KHR,
                          VK_PRESENT_MODE_FIFO_RELAXED_KHR))
        where
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

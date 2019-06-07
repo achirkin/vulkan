@@ -30,8 +30,8 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
 
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.PlatformIosMvk,
+        module Graphics.Vulkan.Types.Bitmasks, VkIOSSurfaceCreateInfoMVK,
+        VkIOSSurfaceCreateInfoMVK',
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkCreateIOSSurfaceMVK, pattern VkCreateIOSSurfaceMVK,
@@ -43,25 +43,26 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.PlatformIosMvk,
         VK_MVK_IOS_SURFACE_SPEC_VERSION,
         pattern VK_MVK_IOS_SURFACE_SPEC_VERSION,
         VK_MVK_IOS_SURFACE_EXTENSION_NAME,
         pattern VK_MVK_IOS_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.PlatformIosMvk
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.PlatformIosMvk
 
 pattern VkCreateIOSSurfaceMVK :: CString
 

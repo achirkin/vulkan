@@ -56,24 +56,24 @@ module Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
         pattern VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2_KHR,
         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2_KHR)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                 (pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2,
-                                                           pattern VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2,
-                                                           pattern VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
-                                                           pattern VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2,
-                                                           pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Sparse
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Buffer
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.Memory
-import           Graphics.Vulkan.Types.Struct.Sparse
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Core_1_1                 (pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2,
+                                                 pattern VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2,
+                                                 pattern VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
+                                                 pattern VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2,
+                                                 pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Sparse
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Buffer
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Image
+import Graphics.Vulkan.Types.Struct.Memory
+import Graphics.Vulkan.Types.Struct.Sparse
 
 pattern VkGetImageMemoryRequirements2KHR :: CString
 

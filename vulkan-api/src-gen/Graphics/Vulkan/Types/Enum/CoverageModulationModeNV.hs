@@ -12,14 +12,14 @@ module Graphics.Vulkan.Types.Enum.CoverageModulationModeNV
                                    VK_COVERAGE_MODULATION_MODE_ALPHA_NV,
                                    VK_COVERAGE_MODULATION_MODE_RGBA_NV))
        where
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

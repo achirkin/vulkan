@@ -8,32 +8,33 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Bind
-       (VkBindBufferMemoryDeviceGroupInfo(..),
-        VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo(..),
-        VkBindBufferMemoryInfoKHR, VkBindImageMemoryDeviceGroupInfo(..),
-        VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo(..),
-        VkBindImageMemoryInfoKHR, VkBindImageMemorySwapchainInfoKHR(..),
-        VkBindImagePlaneMemoryInfo(..), VkBindImagePlaneMemoryInfoKHR,
-        VkBindSparseInfo(..))
+       (VkBindBufferMemoryDeviceGroupInfo,
+        VkBindBufferMemoryDeviceGroupInfo', -- ' closing tick for hsc2hs
+        VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo,
+        VkBindBufferMemoryInfo', VkBindBufferMemoryInfoKHR, -- ' closing tick for hsc2hs
+        VkBindImageMemoryDeviceGroupInfo,
+        VkBindImageMemoryDeviceGroupInfo', -- ' closing tick for hsc2hs
+        VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo,
+        VkBindImageMemoryInfo', VkBindImageMemoryInfoKHR, -- ' closing tick for hsc2hs
+        VkBindImageMemorySwapchainInfoKHR,
+        VkBindImageMemorySwapchainInfoKHR', VkBindImagePlaneMemoryInfo, -- ' closing tick for hsc2hs
+        VkBindImagePlaneMemoryInfo', VkBindImagePlaneMemoryInfoKHR, -- ' closing tick for hsc2hs
+        VkBindSparseInfo, VkBindSparseInfo') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlagBits)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer,
-                                                           VkDeviceMemory,
-                                                           VkImage, VkSemaphore,
-                                                           VkSwapchainKHR)
-import           Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
-import           Graphics.Vulkan.Types.Struct.Sparse      (VkSparseBufferMemoryBindInfo,
-                                                           VkSparseImageMemoryBindInfo,
-                                                           VkSparseImageOpaqueMemoryBindInfo)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlagBits)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
+                                                 VkImage, VkSemaphore,
+                                                 VkSwapchainKHR)
+import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import Graphics.Vulkan.Types.Struct.Sparse      (VkSparseBufferMemoryBindInfo,
+                                                 VkSparseImageMemoryBindInfo,
+                                                 VkSparseImageOpaqueMemoryBindInfo)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBindBufferMemoryDeviceGroupInfo {
 --   >     VkStructureType sType;
@@ -43,20 +44,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkBindBufferMemoryDeviceGroupInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindBufferMemoryDeviceGroupInfo VkBindBufferMemoryDeviceGroupInfo registry at www.khronos.org>
-data VkBindBufferMemoryDeviceGroupInfo = VkBindBufferMemoryDeviceGroupInfo## Addr##
-                                                                            ByteArray##
+type VkBindBufferMemoryDeviceGroupInfo =
+     VulkanStruct VkBindBufferMemoryDeviceGroupInfo' -- ' closing tick for hsc2hs
+
+data VkBindBufferMemoryDeviceGroupInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindBufferMemoryDeviceGroupInfo where
-        (VkBindBufferMemoryDeviceGroupInfo## a _) ==
-          x@(VkBindBufferMemoryDeviceGroupInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindBufferMemoryDeviceGroupInfo where
-        (VkBindBufferMemoryDeviceGroupInfo## a _) `compare`
-          x@(VkBindBufferMemoryDeviceGroupInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -74,20 +73,6 @@ instance Storable VkBindBufferMemoryDeviceGroupInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindBufferMemoryDeviceGroupInfo where
-        unsafeAddr (VkBindBufferMemoryDeviceGroupInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindBufferMemoryDeviceGroupInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindBufferMemoryDeviceGroupInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindBufferMemoryDeviceGroupInfo where
         type StructFields VkBindBufferMemoryDeviceGroupInfo =
@@ -275,18 +260,17 @@ type VkBindBufferMemoryDeviceGroupInfoKHR =
 --   > } VkBindBufferMemoryInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindBufferMemoryInfo VkBindBufferMemoryInfo registry at www.khronos.org>
-data VkBindBufferMemoryInfo = VkBindBufferMemoryInfo## Addr##
-                                                      ByteArray##
+type VkBindBufferMemoryInfo = VulkanStruct VkBindBufferMemoryInfo' -- ' closing tick for hsc2hs
+
+data VkBindBufferMemoryInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindBufferMemoryInfo where
-        (VkBindBufferMemoryInfo## a _) == x@(VkBindBufferMemoryInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindBufferMemoryInfo where
-        (VkBindBufferMemoryInfo## a _) `compare`
-          x@(VkBindBufferMemoryInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -303,18 +287,6 @@ instance Storable VkBindBufferMemoryInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindBufferMemoryInfo where
-        unsafeAddr (VkBindBufferMemoryInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindBufferMemoryInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindBufferMemoryInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindBufferMemoryInfo where
         type StructFields VkBindBufferMemoryInfo =
@@ -510,20 +482,18 @@ type VkBindBufferMemoryInfoKHR = VkBindBufferMemoryInfo
 --   > } VkBindImageMemoryDeviceGroupInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImageMemoryDeviceGroupInfo VkBindImageMemoryDeviceGroupInfo registry at www.khronos.org>
-data VkBindImageMemoryDeviceGroupInfo = VkBindImageMemoryDeviceGroupInfo## Addr##
-                                                                          ByteArray##
+type VkBindImageMemoryDeviceGroupInfo =
+     VulkanStruct VkBindImageMemoryDeviceGroupInfo' -- ' closing tick for hsc2hs
+
+data VkBindImageMemoryDeviceGroupInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindImageMemoryDeviceGroupInfo where
-        (VkBindImageMemoryDeviceGroupInfo## a _) ==
-          x@(VkBindImageMemoryDeviceGroupInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindImageMemoryDeviceGroupInfo where
-        (VkBindImageMemoryDeviceGroupInfo## a _) `compare`
-          x@(VkBindImageMemoryDeviceGroupInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -541,20 +511,6 @@ instance Storable VkBindImageMemoryDeviceGroupInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindImageMemoryDeviceGroupInfo where
-        unsafeAddr (VkBindImageMemoryDeviceGroupInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindImageMemoryDeviceGroupInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindImageMemoryDeviceGroupInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindImageMemoryDeviceGroupInfo where
         type StructFields VkBindImageMemoryDeviceGroupInfo =
@@ -839,18 +795,17 @@ type VkBindImageMemoryDeviceGroupInfoKHR =
 --   > } VkBindImageMemoryInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImageMemoryInfo VkBindImageMemoryInfo registry at www.khronos.org>
-data VkBindImageMemoryInfo = VkBindImageMemoryInfo## Addr##
-                                                    ByteArray##
+type VkBindImageMemoryInfo = VulkanStruct VkBindImageMemoryInfo' -- ' closing tick for hsc2hs
+
+data VkBindImageMemoryInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindImageMemoryInfo where
-        (VkBindImageMemoryInfo## a _) == x@(VkBindImageMemoryInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindImageMemoryInfo where
-        (VkBindImageMemoryInfo## a _) `compare`
-          x@(VkBindImageMemoryInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -867,18 +822,6 @@ instance Storable VkBindImageMemoryInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindImageMemoryInfo where
-        unsafeAddr (VkBindImageMemoryInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindImageMemoryInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindImageMemoryInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindImageMemoryInfo where
         type StructFields VkBindImageMemoryInfo =
@@ -1072,20 +1015,18 @@ type VkBindImageMemoryInfoKHR = VkBindImageMemoryInfo
 --   > } VkBindImageMemorySwapchainInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImageMemorySwapchainInfoKHR VkBindImageMemorySwapchainInfoKHR registry at www.khronos.org>
-data VkBindImageMemorySwapchainInfoKHR = VkBindImageMemorySwapchainInfoKHR## Addr##
-                                                                            ByteArray##
+type VkBindImageMemorySwapchainInfoKHR =
+     VulkanStruct VkBindImageMemorySwapchainInfoKHR' -- ' closing tick for hsc2hs
+
+data VkBindImageMemorySwapchainInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkBindImageMemorySwapchainInfoKHR where
-        (VkBindImageMemorySwapchainInfoKHR## a _) ==
-          x@(VkBindImageMemorySwapchainInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindImageMemorySwapchainInfoKHR where
-        (VkBindImageMemorySwapchainInfoKHR## a _) `compare`
-          x@(VkBindImageMemorySwapchainInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1103,20 +1044,6 @@ instance Storable VkBindImageMemorySwapchainInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindImageMemorySwapchainInfoKHR where
-        unsafeAddr (VkBindImageMemorySwapchainInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindImageMemorySwapchainInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindImageMemorySwapchainInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindImageMemorySwapchainInfoKHR where
         type StructFields VkBindImageMemorySwapchainInfoKHR =
@@ -1287,19 +1214,18 @@ instance Show VkBindImageMemorySwapchainInfoKHR where
 --   > } VkBindImagePlaneMemoryInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindImagePlaneMemoryInfo VkBindImagePlaneMemoryInfo registry at www.khronos.org>
-data VkBindImagePlaneMemoryInfo = VkBindImagePlaneMemoryInfo## Addr##
-                                                              ByteArray##
+type VkBindImagePlaneMemoryInfo =
+     VulkanStruct VkBindImagePlaneMemoryInfo' -- ' closing tick for hsc2hs
+
+data VkBindImagePlaneMemoryInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindImagePlaneMemoryInfo where
-        (VkBindImagePlaneMemoryInfo## a _) ==
-          x@(VkBindImagePlaneMemoryInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindImagePlaneMemoryInfo where
-        (VkBindImagePlaneMemoryInfo## a _) `compare`
-          x@(VkBindImagePlaneMemoryInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1316,20 +1242,6 @@ instance Storable VkBindImagePlaneMemoryInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindImagePlaneMemoryInfo where
-        unsafeAddr (VkBindImagePlaneMemoryInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindImagePlaneMemoryInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindImagePlaneMemoryInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindImagePlaneMemoryInfo where
         type StructFields VkBindImagePlaneMemoryInfo =
@@ -1468,17 +1380,17 @@ type VkBindImagePlaneMemoryInfoKHR = VkBindImagePlaneMemoryInfo
 --   > } VkBindSparseInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBindSparseInfo VkBindSparseInfo registry at www.khronos.org>
-data VkBindSparseInfo = VkBindSparseInfo## Addr## ByteArray##
+type VkBindSparseInfo = VulkanStruct VkBindSparseInfo' -- ' closing tick for hsc2hs
+
+data VkBindSparseInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkBindSparseInfo where
-        (VkBindSparseInfo## a _) == x@(VkBindSparseInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindSparseInfo where
-        (VkBindSparseInfo## a _) `compare` x@(VkBindSparseInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1495,18 +1407,6 @@ instance Storable VkBindSparseInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBindSparseInfo where
-        unsafeAddr (VkBindSparseInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBindSparseInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBindSparseInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindSparseInfo where
         type StructFields VkBindSparseInfo =

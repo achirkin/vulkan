@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.StencilOpState
-       (VkStencilOpState(..)) where
-import           Foreign.Storable                     (Storable (..))
-import           GHC.Base                             (Addr##, ByteArray##,
-                                                       byteArrayContents##,
-                                                       plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.CompareOp (VkCompareOp)
-import           Graphics.Vulkan.Types.Enum.Stencil   (VkStencilOp)
-import           System.IO.Unsafe                     (unsafeDupablePerformIO)
+       (VkStencilOpState, VkStencilOpState') where -- ' closing tick for hsc2hs
+import Foreign.Storable                     (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.CompareOp (VkCompareOp)
+import Graphics.Vulkan.Types.Enum.Stencil   (VkStencilOp)
+import System.IO.Unsafe                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkStencilOpState {
 --   >     VkStencilOp            failOp;
@@ -30,17 +27,17 @@ import           System.IO.Unsafe                     (unsafeDupablePerformIO)
 --   > } VkStencilOpState;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkStencilOpState VkStencilOpState registry at www.khronos.org>
-data VkStencilOpState = VkStencilOpState## Addr## ByteArray##
+type VkStencilOpState = VulkanStruct VkStencilOpState' -- ' closing tick for hsc2hs
+
+data VkStencilOpState' -- ' closing tick for hsc2hs
 
 instance Eq VkStencilOpState where
-        (VkStencilOpState## a _) == x@(VkStencilOpState## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkStencilOpState where
-        (VkStencilOpState## a _) `compare` x@(VkStencilOpState## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -57,18 +54,6 @@ instance Storable VkStencilOpState where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkStencilOpState where
-        unsafeAddr (VkStencilOpState## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkStencilOpState## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkStencilOpState## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkStencilOpState where
         type StructFields VkStencilOpState =

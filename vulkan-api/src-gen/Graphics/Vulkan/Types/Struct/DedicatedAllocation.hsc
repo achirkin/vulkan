@@ -8,23 +8,23 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DedicatedAllocation
-       (VkDedicatedAllocationBufferCreateInfoNV(..),
-        VkDedicatedAllocationImageCreateInfoNV(..),
-        VkDedicatedAllocationMemoryAllocateInfoNV(..))
+       (VkDedicatedAllocationBufferCreateInfoNV,
+        VkDedicatedAllocationBufferCreateInfoNV', -- ' closing tick for hsc2hs
+        VkDedicatedAllocationImageCreateInfoNV,
+        VkDedicatedAllocationImageCreateInfoNV', -- ' closing tick for hsc2hs
+        VkDedicatedAllocationMemoryAllocateInfoNV,
+        VkDedicatedAllocationMemoryAllocateInfoNV') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer, VkImage)
-import           Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
-import           Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo)
-import           Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkImage)
+import Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
+import Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo)
+import Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDedicatedAllocationBufferCreateInfoNV {
 --   >     VkStructureType sType;
@@ -33,20 +33,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkDedicatedAllocationBufferCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationBufferCreateInfoNV VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
-data VkDedicatedAllocationBufferCreateInfoNV = VkDedicatedAllocationBufferCreateInfoNV## Addr##
-                                                                                        ByteArray##
+type VkDedicatedAllocationBufferCreateInfoNV =
+     VulkanStruct VkDedicatedAllocationBufferCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkDedicatedAllocationBufferCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkDedicatedAllocationBufferCreateInfoNV where
-        (VkDedicatedAllocationBufferCreateInfoNV## a _) ==
-          x@(VkDedicatedAllocationBufferCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDedicatedAllocationBufferCreateInfoNV where
-        (VkDedicatedAllocationBufferCreateInfoNV## a _) `compare`
-          x@(VkDedicatedAllocationBufferCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -65,21 +63,6 @@ instance Storable VkDedicatedAllocationBufferCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDedicatedAllocationBufferCreateInfoNV
-         where
-        unsafeAddr (VkDedicatedAllocationBufferCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDedicatedAllocationBufferCreateInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDedicatedAllocationBufferCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDedicatedAllocationBufferCreateInfoNV
          where
@@ -225,20 +208,18 @@ instance Show VkDedicatedAllocationBufferCreateInfoNV where
 --   > } VkDedicatedAllocationImageCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationImageCreateInfoNV VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
-data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV## Addr##
-                                                                                      ByteArray##
+type VkDedicatedAllocationImageCreateInfoNV =
+     VulkanStruct VkDedicatedAllocationImageCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkDedicatedAllocationImageCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkDedicatedAllocationImageCreateInfoNV where
-        (VkDedicatedAllocationImageCreateInfoNV## a _) ==
-          x@(VkDedicatedAllocationImageCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDedicatedAllocationImageCreateInfoNV where
-        (VkDedicatedAllocationImageCreateInfoNV## a _) `compare`
-          x@(VkDedicatedAllocationImageCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -257,21 +238,6 @@ instance Storable VkDedicatedAllocationImageCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDedicatedAllocationImageCreateInfoNV
-         where
-        unsafeAddr (VkDedicatedAllocationImageCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDedicatedAllocationImageCreateInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDedicatedAllocationImageCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDedicatedAllocationImageCreateInfoNV where
         type StructFields VkDedicatedAllocationImageCreateInfoNV =
@@ -417,20 +383,18 @@ instance Show VkDedicatedAllocationImageCreateInfoNV where
 --   > } VkDedicatedAllocationMemoryAllocateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationMemoryAllocateInfoNV VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
-data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV## Addr##
-                                                                                            ByteArray##
+type VkDedicatedAllocationMemoryAllocateInfoNV =
+     VulkanStruct VkDedicatedAllocationMemoryAllocateInfoNV' -- ' closing tick for hsc2hs
+
+data VkDedicatedAllocationMemoryAllocateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkDedicatedAllocationMemoryAllocateInfoNV where
-        (VkDedicatedAllocationMemoryAllocateInfoNV## a _) ==
-          x@(VkDedicatedAllocationMemoryAllocateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDedicatedAllocationMemoryAllocateInfoNV where
-        (VkDedicatedAllocationMemoryAllocateInfoNV## a _) `compare`
-          x@(VkDedicatedAllocationMemoryAllocateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -449,23 +413,6 @@ instance Storable VkDedicatedAllocationMemoryAllocateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkDedicatedAllocationMemoryAllocateInfoNV
-         where
-        unsafeAddr (VkDedicatedAllocationMemoryAllocateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDedicatedAllocationMemoryAllocateInfoNV## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDedicatedAllocationMemoryAllocateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDedicatedAllocationMemoryAllocateInfoNV
          where

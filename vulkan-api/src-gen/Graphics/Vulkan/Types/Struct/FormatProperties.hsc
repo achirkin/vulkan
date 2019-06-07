@@ -8,18 +8,15 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.FormatProperties
-       (VkFormatProperties(..), VkFormatProperties2(..),
-        VkFormatProperties2KHR)
+       (VkFormatProperties, VkFormatProperties', VkFormatProperties2, -- ' closing tick for hsc2hs
+        VkFormatProperties2', VkFormatProperties2KHR) -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Format        (VkFormatFeatureFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Format        (VkFormatFeatureFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkFormatProperties {
 --   >     VkFormatFeatureFlags   linearTilingFeatures;
@@ -28,17 +25,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkFormatProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormatProperties VkFormatProperties registry at www.khronos.org>
-data VkFormatProperties = VkFormatProperties## Addr## ByteArray##
+type VkFormatProperties = VulkanStruct VkFormatProperties' -- ' closing tick for hsc2hs
+
+data VkFormatProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkFormatProperties where
-        (VkFormatProperties## a _) == x@(VkFormatProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkFormatProperties where
-        (VkFormatProperties## a _) `compare` x@(VkFormatProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -55,18 +52,6 @@ instance Storable VkFormatProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkFormatProperties where
-        unsafeAddr (VkFormatProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkFormatProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkFormatProperties## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkFormatProperties where
         type StructFields VkFormatProperties =
@@ -198,17 +183,17 @@ instance Show VkFormatProperties where
 --   > } VkFormatProperties2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormatProperties2 VkFormatProperties2 registry at www.khronos.org>
-data VkFormatProperties2 = VkFormatProperties2## Addr## ByteArray##
+type VkFormatProperties2 = VulkanStruct VkFormatProperties2' -- ' closing tick for hsc2hs
+
+data VkFormatProperties2' -- ' closing tick for hsc2hs
 
 instance Eq VkFormatProperties2 where
-        (VkFormatProperties2## a _) == x@(VkFormatProperties2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkFormatProperties2 where
-        (VkFormatProperties2## a _) `compare` x@(VkFormatProperties2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -225,18 +210,6 @@ instance Storable VkFormatProperties2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkFormatProperties2 where
-        unsafeAddr (VkFormatProperties2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkFormatProperties2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkFormatProperties2## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkFormatProperties2 where
         type StructFields VkFormatProperties2 =

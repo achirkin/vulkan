@@ -8,19 +8,16 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.AllocationCallbacks
-       (VkAllocationCallbacks(..)) where
-import           Foreign.Storable                   (Storable (..))
-import           GHC.Base                           (Addr##, ByteArray##,
-                                                     byteArrayContents##,
-                                                     plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
-                                                     PFN_vkFreeFunction,
-                                                     PFN_vkInternalAllocationNotification,
-                                                     PFN_vkInternalFreeNotification,
-                                                     PFN_vkReallocationFunction)
-import           System.IO.Unsafe                   (unsafeDupablePerformIO)
+       (VkAllocationCallbacks, VkAllocationCallbacks') where -- ' closing tick for hsc2hs
+import Foreign.Storable                   (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
+                                           PFN_vkFreeFunction,
+                                           PFN_vkInternalAllocationNotification,
+                                           PFN_vkInternalFreeNotification,
+                                           PFN_vkReallocationFunction)
+import System.IO.Unsafe                   (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAllocationCallbacks {
 --   >     void*           pUserData;
@@ -32,18 +29,17 @@ import           System.IO.Unsafe                   (unsafeDupablePerformIO)
 --   > } VkAllocationCallbacks;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
-data VkAllocationCallbacks = VkAllocationCallbacks## Addr##
-                                                    ByteArray##
+type VkAllocationCallbacks = VulkanStruct VkAllocationCallbacks' -- ' closing tick for hsc2hs
+
+data VkAllocationCallbacks' -- ' closing tick for hsc2hs
 
 instance Eq VkAllocationCallbacks where
-        (VkAllocationCallbacks## a _) == x@(VkAllocationCallbacks## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAllocationCallbacks where
-        (VkAllocationCallbacks## a _) `compare`
-          x@(VkAllocationCallbacks## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -60,18 +56,6 @@ instance Storable VkAllocationCallbacks where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAllocationCallbacks where
-        unsafeAddr (VkAllocationCallbacks## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAllocationCallbacks## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAllocationCallbacks## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAllocationCallbacks where
         type StructFields VkAllocationCallbacks =

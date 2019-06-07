@@ -29,14 +29,15 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Types.Enum.Color,
         module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.BaseTypes,
+        VkExtent2D, VkExtent2D', module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.Format,
         module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        VkPhysicalDeviceSurfaceInfo2KHR, VkPhysicalDeviceSurfaceInfo2KHR',
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.Surface,
-        module Graphics.Vulkan.Types.Enum.Surface,
+        VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR',
+        VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR',
+        VkSurfaceFormat2KHR, VkSurfaceFormat2KHR', VkSurfaceFormatKHR,
+        VkSurfaceFormatKHR', module Graphics.Vulkan.Types.Enum.Surface,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceSurfaceCapabilities2KHR,
         pattern VkGetPhysicalDeviceSurfaceCapabilities2KHR,
@@ -49,6 +50,9 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Struct.Surface,
         VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION,
         VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME,
@@ -57,21 +61,21 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR,
         pattern VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Color
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.Surface
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Color
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import Graphics.Vulkan.Types.Struct.Surface
 
 pattern VkGetPhysicalDeviceSurfaceCapabilities2KHR :: CString
 

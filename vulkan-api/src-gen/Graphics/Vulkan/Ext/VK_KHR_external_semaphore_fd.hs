@@ -29,9 +29,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         -- ** Required extensions: 'VK_KHR_external_semaphore'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.External,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Import,
-        module Graphics.Vulkan.Types.Struct.Semaphore,
+        module Graphics.Vulkan.Types.BaseTypes, VkImportSemaphoreFdInfoKHR,
+        VkImportSemaphoreFdInfoKHR', VkSemaphoreGetFdInfoKHR,
+        VkSemaphoreGetFdInfoKHR',
         module Graphics.Vulkan.Types.Enum.SemaphoreImportFlag,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -41,6 +41,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         HS_vkGetSemaphoreFdKHR, PFN_vkGetSemaphoreFdKHR,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Import,
+        module Graphics.Vulkan.Types.Struct.Semaphore,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME,
@@ -48,17 +50,17 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR)
        where
-import           GHC.Ptr                                        (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.External
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Import
-import           Graphics.Vulkan.Types.Struct.Semaphore
+import GHC.Ptr                                        (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.External
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Import
+import Graphics.Vulkan.Types.Struct.Semaphore
 
 pattern VkImportSemaphoreFdKHR :: CString
 

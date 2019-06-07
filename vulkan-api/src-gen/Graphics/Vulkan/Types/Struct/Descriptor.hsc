@@ -8,44 +8,46 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Descriptor
-       (VkDescriptorBufferInfo(..), VkDescriptorImageInfo(..),
-        VkDescriptorPoolCreateInfo(..), VkDescriptorPoolSize(..),
-        VkDescriptorSetAllocateInfo(..), VkDescriptorSetLayoutBinding(..),
-        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT(..),
-        VkDescriptorSetLayoutCreateInfo(..),
-        VkDescriptorSetLayoutSupport(..), VkDescriptorSetLayoutSupportKHR,
-        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT(..),
-        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT(..),
-        VkDescriptorUpdateTemplateCreateInfo(..),
+       (VkDescriptorBufferInfo, VkDescriptorBufferInfo', -- ' closing tick for hsc2hs
+        VkDescriptorImageInfo, VkDescriptorImageInfo', -- ' closing tick for hsc2hs
+        VkDescriptorPoolCreateInfo, VkDescriptorPoolCreateInfo', -- ' closing tick for hsc2hs
+        VkDescriptorPoolSize, VkDescriptorPoolSize', -- ' closing tick for hsc2hs
+        VkDescriptorSetAllocateInfo, VkDescriptorSetAllocateInfo', -- ' closing tick for hsc2hs
+        VkDescriptorSetLayoutBinding, VkDescriptorSetLayoutBinding', -- ' closing tick for hsc2hs
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutCreateInfo', -- ' closing tick for hsc2hs
+        VkDescriptorSetLayoutSupport, VkDescriptorSetLayoutSupport', -- ' closing tick for hsc2hs
+        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT', -- ' closing tick for hsc2hs
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT', -- ' closing tick for hsc2hs
+        VkDescriptorUpdateTemplateCreateInfo,
+        VkDescriptorUpdateTemplateCreateInfo', -- ' closing tick for hsc2hs
         VkDescriptorUpdateTemplateCreateInfoKHR,
-        VkDescriptorUpdateTemplateEntry(..),
+        VkDescriptorUpdateTemplateEntry, VkDescriptorUpdateTemplateEntry', -- ' closing tick for hsc2hs
         VkDescriptorUpdateTemplateEntryKHR)
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkBool32,
-                                                           VkDeviceSize)
-import           Graphics.Vulkan.Types.Bitmasks           (VkDescriptorUpdateTemplateCreateFlags)
-import           Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlagsEXT,
-                                                           VkDescriptorPoolCreateFlags,
-                                                           VkDescriptorSetLayoutCreateFlags,
-                                                           VkDescriptorType,
-                                                           VkDescriptorUpdateTemplateType)
-import           Graphics.Vulkan.Types.Enum.Image         (VkImageLayout)
-import           Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineBindPoint)
-import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer,
-                                                           VkDescriptorPool,
-                                                           VkDescriptorSetLayout,
-                                                           VkImageView,
-                                                           VkPipelineLayout,
-                                                           VkSampler)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkBool32, VkDeviceSize)
+import Graphics.Vulkan.Types.Bitmasks           (VkDescriptorUpdateTemplateCreateFlags)
+import Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlagsEXT,
+                                                 VkDescriptorPoolCreateFlags,
+                                                 VkDescriptorSetLayoutCreateFlags,
+                                                 VkDescriptorType,
+                                                 VkDescriptorUpdateTemplateType)
+import Graphics.Vulkan.Types.Enum.Image         (VkImageLayout)
+import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineBindPoint)
+import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDescriptorPool,
+                                                 VkDescriptorSetLayout,
+                                                 VkImageView, VkPipelineLayout,
+                                                 VkSampler)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorBufferInfo {
 --   >     VkBuffer               buffer;
@@ -54,18 +56,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkDescriptorBufferInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorBufferInfo VkDescriptorBufferInfo registry at www.khronos.org>
-data VkDescriptorBufferInfo = VkDescriptorBufferInfo## Addr##
-                                                      ByteArray##
+type VkDescriptorBufferInfo = VulkanStruct VkDescriptorBufferInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorBufferInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorBufferInfo where
-        (VkDescriptorBufferInfo## a _) == x@(VkDescriptorBufferInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorBufferInfo where
-        (VkDescriptorBufferInfo## a _) `compare`
-          x@(VkDescriptorBufferInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -82,18 +83,6 @@ instance Storable VkDescriptorBufferInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorBufferInfo where
-        unsafeAddr (VkDescriptorBufferInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorBufferInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorBufferInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorBufferInfo where
         type StructFields VkDescriptorBufferInfo =
@@ -214,18 +203,17 @@ instance Show VkDescriptorBufferInfo where
 --   > } VkDescriptorImageInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorImageInfo VkDescriptorImageInfo registry at www.khronos.org>
-data VkDescriptorImageInfo = VkDescriptorImageInfo## Addr##
-                                                    ByteArray##
+type VkDescriptorImageInfo = VulkanStruct VkDescriptorImageInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorImageInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorImageInfo where
-        (VkDescriptorImageInfo## a _) == x@(VkDescriptorImageInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorImageInfo where
-        (VkDescriptorImageInfo## a _) `compare`
-          x@(VkDescriptorImageInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -242,18 +230,6 @@ instance Storable VkDescriptorImageInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorImageInfo where
-        unsafeAddr (VkDescriptorImageInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorImageInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorImageInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorImageInfo where
         type StructFields VkDescriptorImageInfo =
@@ -379,19 +355,18 @@ instance Show VkDescriptorImageInfo where
 --   > } VkDescriptorPoolCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorPoolCreateInfo VkDescriptorPoolCreateInfo registry at www.khronos.org>
-data VkDescriptorPoolCreateInfo = VkDescriptorPoolCreateInfo## Addr##
-                                                              ByteArray##
+type VkDescriptorPoolCreateInfo =
+     VulkanStruct VkDescriptorPoolCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorPoolCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorPoolCreateInfo where
-        (VkDescriptorPoolCreateInfo## a _) ==
-          x@(VkDescriptorPoolCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorPoolCreateInfo where
-        (VkDescriptorPoolCreateInfo## a _) `compare`
-          x@(VkDescriptorPoolCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -408,20 +383,6 @@ instance Storable VkDescriptorPoolCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorPoolCreateInfo where
-        unsafeAddr (VkDescriptorPoolCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorPoolCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorPoolCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorPoolCreateInfo where
         type StructFields VkDescriptorPoolCreateInfo =
@@ -654,17 +615,17 @@ instance Show VkDescriptorPoolCreateInfo where
 --   > } VkDescriptorPoolSize;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorPoolSize VkDescriptorPoolSize registry at www.khronos.org>
-data VkDescriptorPoolSize = VkDescriptorPoolSize## Addr## ByteArray##
+type VkDescriptorPoolSize = VulkanStruct VkDescriptorPoolSize' -- ' closing tick for hsc2hs
+
+data VkDescriptorPoolSize' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorPoolSize where
-        (VkDescriptorPoolSize## a _) == x@(VkDescriptorPoolSize## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorPoolSize where
-        (VkDescriptorPoolSize## a _) `compare` x@(VkDescriptorPoolSize## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -681,18 +642,6 @@ instance Storable VkDescriptorPoolSize where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorPoolSize where
-        unsafeAddr (VkDescriptorPoolSize## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorPoolSize## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorPoolSize## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorPoolSize where
         type StructFields VkDescriptorPoolSize =
@@ -782,19 +731,18 @@ instance Show VkDescriptorPoolSize where
 --   > } VkDescriptorSetAllocateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetAllocateInfo VkDescriptorSetAllocateInfo registry at www.khronos.org>
-data VkDescriptorSetAllocateInfo = VkDescriptorSetAllocateInfo## Addr##
-                                                                ByteArray##
+type VkDescriptorSetAllocateInfo =
+     VulkanStruct VkDescriptorSetAllocateInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetAllocateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetAllocateInfo where
-        (VkDescriptorSetAllocateInfo## a _) ==
-          x@(VkDescriptorSetAllocateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetAllocateInfo where
-        (VkDescriptorSetAllocateInfo## a _) `compare`
-          x@(VkDescriptorSetAllocateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -811,20 +759,6 @@ instance Storable VkDescriptorSetAllocateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorSetAllocateInfo where
-        unsafeAddr (VkDescriptorSetAllocateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorSetAllocateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetAllocateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorSetAllocateInfo where
         type StructFields VkDescriptorSetAllocateInfo =
@@ -1032,19 +966,18 @@ instance Show VkDescriptorSetAllocateInfo where
 --   > } VkDescriptorSetLayoutBinding;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutBinding VkDescriptorSetLayoutBinding registry at www.khronos.org>
-data VkDescriptorSetLayoutBinding = VkDescriptorSetLayoutBinding## Addr##
-                                                                  ByteArray##
+type VkDescriptorSetLayoutBinding =
+     VulkanStruct VkDescriptorSetLayoutBinding' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetLayoutBinding' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetLayoutBinding where
-        (VkDescriptorSetLayoutBinding## a _) ==
-          x@(VkDescriptorSetLayoutBinding## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetLayoutBinding where
-        (VkDescriptorSetLayoutBinding## a _) `compare`
-          x@(VkDescriptorSetLayoutBinding## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1062,20 +995,6 @@ instance Storable VkDescriptorSetLayoutBinding where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorSetLayoutBinding where
-        unsafeAddr (VkDescriptorSetLayoutBinding## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorSetLayoutBinding## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetLayoutBinding##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorSetLayoutBinding where
         type StructFields VkDescriptorSetLayoutBinding =
@@ -1288,20 +1207,18 @@ instance Show VkDescriptorSetLayoutBinding where
 --   > } VkDescriptorSetLayoutBindingFlagsCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutBindingFlagsCreateInfoEXT VkDescriptorSetLayoutBindingFlagsCreateInfoEXT registry at www.khronos.org>
-data VkDescriptorSetLayoutBindingFlagsCreateInfoEXT = VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## Addr##
-                                                                                                      ByteArray##
+type VkDescriptorSetLayoutBindingFlagsCreateInfoEXT =
+     VulkanStruct VkDescriptorSetLayoutBindingFlagsCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetLayoutBindingFlagsCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetLayoutBindingFlagsCreateInfoEXT where
-        (VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## a _) ==
-          x@(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetLayoutBindingFlagsCreateInfoEXT where
-        (VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## a _) `compare`
-          x@(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1321,24 +1238,6 @@ instance Storable VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
-         where
-        unsafeAddr (VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkDescriptorSetLayoutBindingFlagsCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetLayoutBindingFlagsCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
@@ -1556,19 +1455,18 @@ instance Show VkDescriptorSetLayoutBindingFlagsCreateInfoEXT where
 --   > } VkDescriptorSetLayoutCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutCreateInfo VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
-data VkDescriptorSetLayoutCreateInfo = VkDescriptorSetLayoutCreateInfo## Addr##
-                                                                        ByteArray##
+type VkDescriptorSetLayoutCreateInfo =
+     VulkanStruct VkDescriptorSetLayoutCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetLayoutCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetLayoutCreateInfo where
-        (VkDescriptorSetLayoutCreateInfo## a _) ==
-          x@(VkDescriptorSetLayoutCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetLayoutCreateInfo where
-        (VkDescriptorSetLayoutCreateInfo## a _) `compare`
-          x@(VkDescriptorSetLayoutCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1586,20 +1484,6 @@ instance Storable VkDescriptorSetLayoutCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorSetLayoutCreateInfo where
-        unsafeAddr (VkDescriptorSetLayoutCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorSetLayoutCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetLayoutCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorSetLayoutCreateInfo where
         type StructFields VkDescriptorSetLayoutCreateInfo =
@@ -1801,19 +1685,18 @@ instance Show VkDescriptorSetLayoutCreateInfo where
 --   > } VkDescriptorSetLayoutSupport;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutSupport VkDescriptorSetLayoutSupport registry at www.khronos.org>
-data VkDescriptorSetLayoutSupport = VkDescriptorSetLayoutSupport## Addr##
-                                                                  ByteArray##
+type VkDescriptorSetLayoutSupport =
+     VulkanStruct VkDescriptorSetLayoutSupport' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetLayoutSupport' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetLayoutSupport where
-        (VkDescriptorSetLayoutSupport## a _) ==
-          x@(VkDescriptorSetLayoutSupport## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetLayoutSupport where
-        (VkDescriptorSetLayoutSupport## a _) `compare`
-          x@(VkDescriptorSetLayoutSupport## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1831,20 +1714,6 @@ instance Storable VkDescriptorSetLayoutSupport where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorSetLayoutSupport where
-        unsafeAddr (VkDescriptorSetLayoutSupport## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorSetLayoutSupport## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetLayoutSupport##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorSetLayoutSupport where
         type StructFields VkDescriptorSetLayoutSupport =
@@ -1974,23 +1843,20 @@ type VkDescriptorSetLayoutSupportKHR = VkDescriptorSetLayoutSupport
 --   > } VkDescriptorSetVariableDescriptorCountAllocateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountAllocateInfoEXT VkDescriptorSetVariableDescriptorCountAllocateInfoEXT registry at www.khronos.org>
-data VkDescriptorSetVariableDescriptorCountAllocateInfoEXT = VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## Addr##
-                                                                                                                    ByteArray##
+type VkDescriptorSetVariableDescriptorCountAllocateInfoEXT =
+     VulkanStruct VkDescriptorSetVariableDescriptorCountAllocateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetVariableDescriptorCountAllocateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
          where
-        (VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## a _) ==
-          x@(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
          where
-        (VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## a _)
-          `compare`
-          x@(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2011,24 +1877,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
-         where
-        unsafeAddr
-          (VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetVariableDescriptorCountAllocateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
@@ -2255,23 +2103,21 @@ instance Show VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
 --   > } VkDescriptorSetVariableDescriptorCountLayoutSupportEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountLayoutSupportEXT VkDescriptorSetVariableDescriptorCountLayoutSupportEXT registry at www.khronos.org>
-data VkDescriptorSetVariableDescriptorCountLayoutSupportEXT = VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## Addr##
-                                                                                                                      ByteArray##
+type VkDescriptorSetVariableDescriptorCountLayoutSupportEXT =
+     VulkanStruct
+       VkDescriptorSetVariableDescriptorCountLayoutSupportEXT' -- ' closing tick for hsc2hs
+
+data VkDescriptorSetVariableDescriptorCountLayoutSupportEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
          where
-        (VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## a _) ==
-          x@(VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
          where
-        (VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## a _)
-          `compare`
-          x@(VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2292,24 +2138,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
-         where
-        unsafeAddr
-          (VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkDescriptorSetVariableDescriptorCountLayoutSupportEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorSetVariableDescriptorCountLayoutSupportEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
@@ -2496,20 +2324,18 @@ instance Show
 --   > } VkDescriptorUpdateTemplateCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateCreateInfo VkDescriptorUpdateTemplateCreateInfo registry at www.khronos.org>
-data VkDescriptorUpdateTemplateCreateInfo = VkDescriptorUpdateTemplateCreateInfo## Addr##
-                                                                                  ByteArray##
+type VkDescriptorUpdateTemplateCreateInfo =
+     VulkanStruct VkDescriptorUpdateTemplateCreateInfo' -- ' closing tick for hsc2hs
+
+data VkDescriptorUpdateTemplateCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorUpdateTemplateCreateInfo where
-        (VkDescriptorUpdateTemplateCreateInfo## a _) ==
-          x@(VkDescriptorUpdateTemplateCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorUpdateTemplateCreateInfo where
-        (VkDescriptorUpdateTemplateCreateInfo## a _) `compare`
-          x@(VkDescriptorUpdateTemplateCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2528,21 +2354,6 @@ instance Storable VkDescriptorUpdateTemplateCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorUpdateTemplateCreateInfo
-         where
-        unsafeAddr (VkDescriptorUpdateTemplateCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorUpdateTemplateCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorUpdateTemplateCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfo where
         type StructFields VkDescriptorUpdateTemplateCreateInfo =
@@ -3012,19 +2823,18 @@ type VkDescriptorUpdateTemplateCreateInfoKHR =
 --   > } VkDescriptorUpdateTemplateEntry;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateEntry VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
-data VkDescriptorUpdateTemplateEntry = VkDescriptorUpdateTemplateEntry## Addr##
-                                                                        ByteArray##
+type VkDescriptorUpdateTemplateEntry =
+     VulkanStruct VkDescriptorUpdateTemplateEntry' -- ' closing tick for hsc2hs
+
+data VkDescriptorUpdateTemplateEntry' -- ' closing tick for hsc2hs
 
 instance Eq VkDescriptorUpdateTemplateEntry where
-        (VkDescriptorUpdateTemplateEntry## a _) ==
-          x@(VkDescriptorUpdateTemplateEntry## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorUpdateTemplateEntry where
-        (VkDescriptorUpdateTemplateEntry## a _) `compare`
-          x@(VkDescriptorUpdateTemplateEntry## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3042,20 +2852,6 @@ instance Storable VkDescriptorUpdateTemplateEntry where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDescriptorUpdateTemplateEntry where
-        unsafeAddr (VkDescriptorUpdateTemplateEntry## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDescriptorUpdateTemplateEntry## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDescriptorUpdateTemplateEntry##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorUpdateTemplateEntry where
         type StructFields VkDescriptorUpdateTemplateEntry =

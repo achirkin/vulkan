@@ -49,12 +49,12 @@ module Graphics.Vulkan.Types.Bitmasks
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..))
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags)
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Data.Data                       (Data)
+import Foreign.Storable                (Storable)
+import GHC.Generics                    (Generic)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags)
 
 newtype VkAndroidSurfaceCreateFlagsKHR = VkAndroidSurfaceCreateFlagsKHR VkFlags
                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,

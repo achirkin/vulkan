@@ -31,37 +31,37 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.PlatformViNn,
-        -- > #include "vk_platform.h"
-        VkCreateViSurfaceNN, pattern VkCreateViSurfaceNN,
-        HS_vkCreateViSurfaceNN, PFN_vkCreateViSurfaceNN,
-        module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.Bitmasks, VkViSurfaceCreateInfoNN,
+        VkViSurfaceCreateInfoNN', -- > #include "vk_platform.h"
+                                  VkCreateViSurfaceNN,
+        pattern VkCreateViSurfaceNN, HS_vkCreateViSurfaceNN,
+        PFN_vkCreateViSurfaceNN, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.InternalAllocationType,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.PlatformViNn,
         VK_NN_VI_SURFACE_SPEC_VERSION,
         pattern VK_NN_VI_SURFACE_SPEC_VERSION,
         VK_NN_VI_SURFACE_EXTENSION_NAME,
         pattern VK_NN_VI_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.PlatformViNn
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.PlatformViNn
 
 pattern VkCreateViSurfaceNN :: CString
 

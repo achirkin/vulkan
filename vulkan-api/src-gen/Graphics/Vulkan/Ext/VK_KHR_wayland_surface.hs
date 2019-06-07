@@ -34,7 +34,7 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.PlatformWaylandKhr,
+        VkWaylandSurfaceCreateInfoKHR, VkWaylandSurfaceCreateInfoKHR',
         -- > #include "vk_platform.h"
         VkCreateWaylandSurfaceKHR, pattern VkCreateWaylandSurfaceKHR,
         HS_vkCreateWaylandSurfaceKHR, PFN_vkCreateWaylandSurfaceKHR,
@@ -55,27 +55,28 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Include,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.PlatformWaylandKhr,
         VK_KHR_WAYLAND_SURFACE_SPEC_VERSION,
         pattern VK_KHR_WAYLAND_SURFACE_SPEC_VERSION,
         VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
         pattern VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.PlatformWaylandKhr
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Include
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.PlatformWaylandKhr
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkCreateWaylandSurfaceKHR :: CString
 

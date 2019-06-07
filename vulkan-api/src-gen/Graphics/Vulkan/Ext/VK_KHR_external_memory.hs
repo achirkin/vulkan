@@ -35,15 +35,15 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR,
         pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
        where
-import           GHC.Ptr                               (Ptr (..))
-import           Graphics.Vulkan.Constants             (pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
-import           Graphics.Vulkan.Core_1_1              (pattern VK_ERROR_INVALID_EXTERNAL_HANDLE,
-                                                        pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO,
-                                                        pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
-                                                        pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Struct.Export
-import           Graphics.Vulkan.Types.Struct.External
+import GHC.Ptr                               (Ptr (..))
+import Graphics.Vulkan.Constants             (pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
+import Graphics.Vulkan.Core_1_1              (pattern VK_ERROR_INVALID_EXTERNAL_HANDLE,
+                                              pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO,
+                                              pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
+                                              pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Struct.Export
+import Graphics.Vulkan.Types.Struct.External
 
 pattern VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION :: (Num a, Eq a) => a
 

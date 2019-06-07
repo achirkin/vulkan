@@ -8,19 +8,15 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
-       (VkComputePipelineCreateInfo(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineCreateFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkPipeline,
-                                                           VkPipelineLayout)
-import           Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkComputePipelineCreateInfo, VkComputePipelineCreateInfo') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineCreateFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkPipeline, VkPipelineLayout)
+import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkComputePipelineCreateInfo {
 --   >     VkStructureType sType;
@@ -33,19 +29,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkComputePipelineCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkComputePipelineCreateInfo VkComputePipelineCreateInfo registry at www.khronos.org>
-data VkComputePipelineCreateInfo = VkComputePipelineCreateInfo## Addr##
-                                                                ByteArray##
+type VkComputePipelineCreateInfo =
+     VulkanStruct VkComputePipelineCreateInfo' -- ' closing tick for hsc2hs
+
+data VkComputePipelineCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkComputePipelineCreateInfo where
-        (VkComputePipelineCreateInfo## a _) ==
-          x@(VkComputePipelineCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkComputePipelineCreateInfo where
-        (VkComputePipelineCreateInfo## a _) `compare`
-          x@(VkComputePipelineCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -62,20 +57,6 @@ instance Storable VkComputePipelineCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkComputePipelineCreateInfo where
-        unsafeAddr (VkComputePipelineCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkComputePipelineCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkComputePipelineCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkComputePipelineCreateInfo where
         type StructFields VkComputePipelineCreateInfo =

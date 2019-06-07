@@ -15,20 +15,11 @@ extra-deps:
   - bindings-GLFW-3.2.1.1
   - GLFW-b-3.2.1.0
   - constraints-deriving-1.0.4.0
-  # - dimensions-2.0.0.0
-  # - easytensor-2.0.0.0
-  # - easytensor-vulkan-2.0.0.0
+  - dimensions-2.0.0.0
+  - easytensor-2.0.0.0
+  - easytensor-vulkan-2.0.0.0
 
 packages:
   - .
   - location: ../vulkan-api
-    extra-dep: true
-
-  - location:
-      git: https://github.com/achirkin/easytensor.git
-      commit: c9e31022e52e586593a7a2ae2c7e6c622ecb663f
-    subdirs:
-      - dimensions
-      - easytensor
-      - easytensor-vulkan
     extra-dep: true
