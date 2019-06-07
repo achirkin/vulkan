@@ -8,17 +8,16 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR
-       (VkSharedPresentSurfaceCapabilitiesKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Image         (VkImageUsageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Surface     (VkSurfaceCapabilities2KHR)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkSharedPresentSurfaceCapabilitiesKHR,
+        VkSharedPresentSurfaceCapabilitiesKHR') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Image         (VkImageUsageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Surface     (VkSurfaceCapabilities2KHR)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
 --   >     VkStructureType sType;
@@ -27,20 +26,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkSharedPresentSurfaceCapabilitiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSharedPresentSurfaceCapabilitiesKHR VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
-data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR## Addr##
-                                                                                    ByteArray##
+type VkSharedPresentSurfaceCapabilitiesKHR =
+     VulkanStruct VkSharedPresentSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+data VkSharedPresentSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSharedPresentSurfaceCapabilitiesKHR where
-        (VkSharedPresentSurfaceCapabilitiesKHR## a _) ==
-          x@(VkSharedPresentSurfaceCapabilitiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSharedPresentSurfaceCapabilitiesKHR where
-        (VkSharedPresentSurfaceCapabilitiesKHR## a _) `compare`
-          x@(VkSharedPresentSurfaceCapabilitiesKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -59,21 +56,6 @@ instance Storable VkSharedPresentSurfaceCapabilitiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        unsafeAddr (VkSharedPresentSurfaceCapabilitiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSharedPresentSurfaceCapabilitiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSharedPresentSurfaceCapabilitiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSharedPresentSurfaceCapabilitiesKHR where
         type StructFields VkSharedPresentSurfaceCapabilitiesKHR =

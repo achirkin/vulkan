@@ -1,5 +1,5 @@
 name:                vulkan-triangles
-version:             0.3.0.0
+version:             0.4.0.0
 synopsis:            Haskell-vulkan program rendering triangles
 description:         An example of using vulkan-api bindings to create a GLFW window
                      and render some simple geometry.
@@ -40,7 +40,7 @@ library
                         Lib.Vulkan.VertexBuffer
                         Lib.Vulkan.TransformationObject
     build-depends:      base >= 4.11 && < 5
-                      , vulkan-api >= 1.1.4.0
+                      , vulkan-api >= 1.2.0.0
                       , GLFW-b >= 3.2.1
                       , containers
                       , template-haskell

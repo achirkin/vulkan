@@ -25,9 +25,10 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         -- Extension number: @43@
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Shader,
-        module Graphics.Vulkan.Types.Struct.Shader, -- > #include "vk_platform.h"
-                                                    VkGetShaderInfoAMD,
+        module Graphics.Vulkan.Types.Enum.Shader, VkShaderResourceUsageAMD,
+        VkShaderResourceUsageAMD', VkShaderStatisticsInfoAMD,
+        VkShaderStatisticsInfoAMD', -- > #include "vk_platform.h"
+                                    VkGetShaderInfoAMD,
         pattern VkGetShaderInfoAMD, HS_vkGetShaderInfoAMD,
         PFN_vkGetShaderInfoAMD, module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
@@ -36,14 +37,17 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         VK_AMD_SHADER_INFO_EXTENSION_NAME,
         pattern VK_AMD_SHADER_INFO_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Shader
+import GHC.Ptr                             (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Shader (VkShaderResourceUsageAMD,
+                                            VkShaderResourceUsageAMD',
+                                            VkShaderStatisticsInfoAMD,
+                                            VkShaderStatisticsInfoAMD')
 
 pattern VkGetShaderInfoAMD :: CString
 

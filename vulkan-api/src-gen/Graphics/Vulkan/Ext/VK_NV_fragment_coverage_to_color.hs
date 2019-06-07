@@ -19,7 +19,10 @@ module Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
         -- Extension number: @150@
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
+        VkPipelineCoverageToColorStateCreateInfoNV,
+        VkPipelineCoverageToColorStateCreateInfoNV',
+        VkPipelineMultisampleStateCreateInfo,
+        VkPipelineMultisampleStateCreateInfo',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -29,13 +32,16 @@ module Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
         pattern VK_NV_FRAGMENT_COVERAGE_TO_COLOR_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Pipeline
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Pipeline       (VkPipelineCoverageToColorStateCreateInfoNV,
+                                                    VkPipelineCoverageToColorStateCreateInfoNV',
+                                                    VkPipelineMultisampleStateCreateInfo,
+                                                    VkPipelineMultisampleStateCreateInfo')
 
 pattern VK_NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -23,18 +23,18 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         -- type: @instance@
         --
         -- Extension number: @129@
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Struct.ApplicationInfo,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT,
+        module Graphics.Vulkan.Marshal, VkApplicationInfo,
+        VkApplicationInfo', module Graphics.Vulkan.Types.BaseTypes,
+        VkDebugUtilsLabelEXT, VkDebugUtilsLabelEXT',
         module Graphics.Vulkan.Types.Enum.Debug,
-        module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT,
+        VkDebugUtilsMessengerCallbackDataEXT,
+        VkDebugUtilsMessengerCallbackDataEXT',
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT,
-        module Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT,
-        module Graphics.Vulkan.Types.Struct.Debug,
-        module Graphics.Vulkan.Types.Struct.InstanceCreateInfo,
-        module Graphics.Vulkan.Types.Enum.Object,
+        VkDebugUtilsMessengerCreateInfoEXT,
+        VkDebugUtilsMessengerCreateInfoEXT', VkDebugUtilsObjectNameInfoEXT,
+        VkDebugUtilsObjectNameInfoEXT', VkDebugUtilsObjectTagInfoEXT,
+        VkDebugUtilsObjectTagInfoEXT', VkInstanceCreateInfo,
+        VkInstanceCreateInfo', module Graphics.Vulkan.Types.Enum.Object,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VkSetDebugUtilsObjectNameEXT, pattern VkSetDebugUtilsObjectNameEXT,
@@ -74,6 +74,13 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.ApplicationInfo,
+        module Graphics.Vulkan.Types.Struct.Debug,
+        module Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT,
+        module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT,
+        module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT,
+        module Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT,
+        module Graphics.Vulkan.Types.Struct.InstanceCreateInfo,
         VK_EXT_DEBUG_UTILS_SPEC_VERSION,
         pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION,
         VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
@@ -85,27 +92,27 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         pattern VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
         pattern VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT)
        where
-import           GHC.Ptr                                                         (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                                    (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Debug
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Object
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.ApplicationInfo
-import           Graphics.Vulkan.Types.Struct.Debug
-import           Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT
-import           Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT
-import           Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT
-import           Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT
-import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo
+import GHC.Ptr                                                         (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                                    (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Debug
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.ApplicationInfo
+import Graphics.Vulkan.Types.Struct.Debug
+import Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT
+import Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT
+import Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT
+import Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT
+import Graphics.Vulkan.Types.Struct.InstanceCreateInfo
 
 pattern VkSetDebugUtilsObjectNameEXT :: CString
 

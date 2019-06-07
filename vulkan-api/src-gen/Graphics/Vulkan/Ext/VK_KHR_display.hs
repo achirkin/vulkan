@@ -31,11 +31,16 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Display,
+        module Graphics.Vulkan.Types.Bitmasks, VkDisplayModeCreateInfoKHR,
+        VkDisplayModeCreateInfoKHR', VkDisplayModeParametersKHR,
+        VkDisplayModeParametersKHR', VkDisplayModePropertiesKHR,
+        VkDisplayModePropertiesKHR',
         module Graphics.Vulkan.Types.Enum.Display,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
+        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR',
+        VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR',
+        VkDisplayPropertiesKHR, VkDisplayPropertiesKHR',
+        VkDisplaySurfaceCreateInfoKHR, VkDisplaySurfaceCreateInfoKHR',
+        VkExtent2D, VkExtent2D', VkOffset2D, VkOffset2D',
         module Graphics.Vulkan.Types.Enum.StructureType,
         module Graphics.Vulkan.Types.Enum.Surface,
         -- > #include "vk_platform.h"
@@ -88,6 +93,9 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.Display,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.Offset,
         VK_KHR_DISPLAY_SPEC_VERSION, pattern VK_KHR_DISPLAY_SPEC_VERSION,
         VK_KHR_DISPLAY_EXTENSION_NAME,
         pattern VK_KHR_DISPLAY_EXTENSION_NAME,
@@ -96,25 +104,25 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         pattern VK_OBJECT_TYPE_DISPLAY_KHR,
         pattern VK_OBJECT_TYPE_DISPLAY_MODE_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Display
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.Display
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Display
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.Display
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Offset
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkGetPhysicalDeviceDisplayPropertiesKHR :: CString
 

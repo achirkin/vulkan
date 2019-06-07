@@ -28,8 +28,14 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.BaseTypes, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProperties2',
+        VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDevicePushDescriptorPropertiesKHR',
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties',
         module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -55,20 +61,29 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         PFN_vkCmdPushDescriptorSetWithTemplateKHR,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)
        where
-import           GHC.Ptr                                         (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Descriptor
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Descriptor
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.WriteDescriptorSet
+import GHC.Ptr                                         (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Descriptor
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Descriptor
+import Graphics.Vulkan.Types.Struct.PhysicalDevice     (VkPhysicalDeviceLimits,
+                                                        VkPhysicalDeviceLimits',
+                                                        VkPhysicalDeviceProperties,
+                                                        VkPhysicalDeviceProperties',
+                                                        VkPhysicalDeviceProperties2,
+                                                        VkPhysicalDeviceProperties2',
+                                                        VkPhysicalDevicePushDescriptorPropertiesKHR,
+                                                        VkPhysicalDevicePushDescriptorPropertiesKHR',
+                                                        VkPhysicalDeviceSparseProperties,
+                                                        VkPhysicalDeviceSparseProperties')
+import Graphics.Vulkan.Types.Struct.WriteDescriptorSet
 
 pattern VkCmdPushDescriptorSetKHR :: CString
 

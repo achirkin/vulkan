@@ -8,14 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Specialization
-       (VkSpecializationInfo(..), VkSpecializationMapEntry(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkSpecializationInfo, VkSpecializationInfo', -- ' closing tick for hsc2hs
+        VkSpecializationMapEntry, VkSpecializationMapEntry') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSpecializationInfo {
 --   >     uint32_t               mapEntryCount;
@@ -25,17 +24,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSpecializationInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSpecializationInfo VkSpecializationInfo registry at www.khronos.org>
-data VkSpecializationInfo = VkSpecializationInfo## Addr## ByteArray##
+type VkSpecializationInfo = VulkanStruct VkSpecializationInfo' -- ' closing tick for hsc2hs
+
+data VkSpecializationInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSpecializationInfo where
-        (VkSpecializationInfo## a _) == x@(VkSpecializationInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSpecializationInfo where
-        (VkSpecializationInfo## a _) `compare` x@(VkSpecializationInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -52,18 +51,6 @@ instance Storable VkSpecializationInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSpecializationInfo where
-        unsafeAddr (VkSpecializationInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSpecializationInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSpecializationInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSpecializationInfo where
         type StructFields VkSpecializationInfo =
@@ -221,18 +208,18 @@ instance Show VkSpecializationInfo where
 --   > } VkSpecializationMapEntry;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSpecializationMapEntry VkSpecializationMapEntry registry at www.khronos.org>
-data VkSpecializationMapEntry = VkSpecializationMapEntry## Addr##
-                                                          ByteArray##
+type VkSpecializationMapEntry =
+     VulkanStruct VkSpecializationMapEntry' -- ' closing tick for hsc2hs
+
+data VkSpecializationMapEntry' -- ' closing tick for hsc2hs
 
 instance Eq VkSpecializationMapEntry where
-        (VkSpecializationMapEntry## a _) ==
-          x@(VkSpecializationMapEntry## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSpecializationMapEntry where
-        (VkSpecializationMapEntry## a _) `compare`
-          x@(VkSpecializationMapEntry## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -249,19 +236,6 @@ instance Storable VkSpecializationMapEntry where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSpecializationMapEntry where
-        unsafeAddr (VkSpecializationMapEntry## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSpecializationMapEntry## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSpecializationMapEntry## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSpecializationMapEntry where
         type StructFields VkSpecializationMapEntry =

@@ -8,23 +8,21 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Subpass
-       (VkSubpassDependency(..), VkSubpassDescription(..),
-        VkSubpassSampleLocationsEXT(..))
+       (VkSubpassDependency, VkSubpassDependency', VkSubpassDescription, -- ' closing tick for hsc2hs
+        VkSubpassDescription', VkSubpassSampleLocationsEXT, -- ' closing tick for hsc2hs
+        VkSubpassSampleLocationsEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                            (Storable (..))
-import           GHC.Base                                    (Addr##, ByteArray##,
-                                                              byteArrayContents##,
-                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.AccessFlags      (VkAccessFlags)
-import           Graphics.Vulkan.Types.Enum.DependencyFlags  (VkDependencyFlags)
-import           Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint,
-                                                              VkPipelineStageFlags)
-import           Graphics.Vulkan.Types.Enum.Subpass          (VkSubpassDescriptionFlags)
-import           Graphics.Vulkan.Types.Struct.Attachment     (VkAttachmentReference)
-import           Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
-import           System.IO.Unsafe                            (unsafeDupablePerformIO)
+import Foreign.Storable                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.AccessFlags      (VkAccessFlags)
+import Graphics.Vulkan.Types.Enum.DependencyFlags  (VkDependencyFlags)
+import Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint,
+                                                    VkPipelineStageFlags)
+import Graphics.Vulkan.Types.Enum.Subpass          (VkSubpassDescriptionFlags)
+import Graphics.Vulkan.Types.Struct.Attachment     (VkAttachmentReference)
+import Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
+import System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubpassDependency {
 --   >     uint32_t               srcSubpass;
@@ -37,17 +35,17 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   > } VkSubpassDependency;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassDependency VkSubpassDependency registry at www.khronos.org>
-data VkSubpassDependency = VkSubpassDependency## Addr## ByteArray##
+type VkSubpassDependency = VulkanStruct VkSubpassDependency' -- ' closing tick for hsc2hs
+
+data VkSubpassDependency' -- ' closing tick for hsc2hs
 
 instance Eq VkSubpassDependency where
-        (VkSubpassDependency## a _) == x@(VkSubpassDependency## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubpassDependency where
-        (VkSubpassDependency## a _) `compare` x@(VkSubpassDependency## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -64,18 +62,6 @@ instance Storable VkSubpassDependency where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSubpassDependency where
-        unsafeAddr (VkSubpassDependency## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSubpassDependency## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSubpassDependency## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubpassDependency where
         type StructFields VkSubpassDependency =
@@ -349,17 +335,17 @@ instance Show VkSubpassDependency where
 --   > } VkSubpassDescription;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassDescription VkSubpassDescription registry at www.khronos.org>
-data VkSubpassDescription = VkSubpassDescription## Addr## ByteArray##
+type VkSubpassDescription = VulkanStruct VkSubpassDescription' -- ' closing tick for hsc2hs
+
+data VkSubpassDescription' -- ' closing tick for hsc2hs
 
 instance Eq VkSubpassDescription where
-        (VkSubpassDescription## a _) == x@(VkSubpassDescription## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubpassDescription where
-        (VkSubpassDescription## a _) `compare` x@(VkSubpassDescription## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -376,18 +362,6 @@ instance Storable VkSubpassDescription where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSubpassDescription where
-        unsafeAddr (VkSubpassDescription## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSubpassDescription## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSubpassDescription## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubpassDescription where
         type StructFields VkSubpassDescription =
@@ -795,19 +769,18 @@ instance Show VkSubpassDescription where
 --   > } VkSubpassSampleLocationsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassSampleLocationsEXT VkSubpassSampleLocationsEXT registry at www.khronos.org>
-data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT## Addr##
-                                                                ByteArray##
+type VkSubpassSampleLocationsEXT =
+     VulkanStruct VkSubpassSampleLocationsEXT' -- ' closing tick for hsc2hs
+
+data VkSubpassSampleLocationsEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSubpassSampleLocationsEXT where
-        (VkSubpassSampleLocationsEXT## a _) ==
-          x@(VkSubpassSampleLocationsEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubpassSampleLocationsEXT where
-        (VkSubpassSampleLocationsEXT## a _) `compare`
-          x@(VkSubpassSampleLocationsEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -824,20 +797,6 @@ instance Storable VkSubpassSampleLocationsEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSubpassSampleLocationsEXT where
-        unsafeAddr (VkSubpassSampleLocationsEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSubpassSampleLocationsEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSubpassSampleLocationsEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubpassSampleLocationsEXT where
         type StructFields VkSubpassSampleLocationsEXT =

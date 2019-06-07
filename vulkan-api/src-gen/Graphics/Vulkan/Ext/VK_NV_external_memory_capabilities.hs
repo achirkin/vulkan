@@ -23,11 +23,11 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         -- type: @instance@
         --
         -- Extension number: @56@
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.External,
+        module Graphics.Vulkan.Types.BaseTypes, VkExtent3D, VkExtent3D',
+        VkExternalImageFormatPropertiesNV,
+        VkExternalImageFormatPropertiesNV',
         module Graphics.Vulkan.Types.Enum.External,
-        module Graphics.Vulkan.Types.Struct.Image,
+        VkImageFormatProperties, VkImageFormatProperties',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
@@ -39,24 +39,27 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         module Graphics.Vulkan.Types.Enum.Image,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Types.Struct.External,
+        module Graphics.Vulkan.Types.Struct.Image,
         VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME,
         pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.External
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.External
-import           Graphics.Vulkan.Types.Struct.Image
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.External
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.External
+import Graphics.Vulkan.Types.Struct.Image
 
 pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
         CString

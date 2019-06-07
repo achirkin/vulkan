@@ -8,14 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DrawInd
-       (VkDrawIndexedIndirectCommand(..), VkDrawIndirectCommand(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkDrawIndexedIndirectCommand, VkDrawIndexedIndirectCommand', -- ' closing tick for hsc2hs
+        VkDrawIndirectCommand, VkDrawIndirectCommand') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDrawIndexedIndirectCommand {
 --   >     uint32_t               indexCount;
@@ -26,19 +25,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDrawIndexedIndirectCommand;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDrawIndexedIndirectCommand VkDrawIndexedIndirectCommand registry at www.khronos.org>
-data VkDrawIndexedIndirectCommand = VkDrawIndexedIndirectCommand## Addr##
-                                                                  ByteArray##
+type VkDrawIndexedIndirectCommand =
+     VulkanStruct VkDrawIndexedIndirectCommand' -- ' closing tick for hsc2hs
+
+data VkDrawIndexedIndirectCommand' -- ' closing tick for hsc2hs
 
 instance Eq VkDrawIndexedIndirectCommand where
-        (VkDrawIndexedIndirectCommand## a _) ==
-          x@(VkDrawIndexedIndirectCommand## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDrawIndexedIndirectCommand where
-        (VkDrawIndexedIndirectCommand## a _) `compare`
-          x@(VkDrawIndexedIndirectCommand## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,20 +54,6 @@ instance Storable VkDrawIndexedIndirectCommand where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDrawIndexedIndirectCommand where
-        unsafeAddr (VkDrawIndexedIndirectCommand## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDrawIndexedIndirectCommand## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDrawIndexedIndirectCommand##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDrawIndexedIndirectCommand where
         type StructFields VkDrawIndexedIndirectCommand =
@@ -277,18 +261,17 @@ instance Show VkDrawIndexedIndirectCommand where
 --   > } VkDrawIndirectCommand;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDrawIndirectCommand VkDrawIndirectCommand registry at www.khronos.org>
-data VkDrawIndirectCommand = VkDrawIndirectCommand## Addr##
-                                                    ByteArray##
+type VkDrawIndirectCommand = VulkanStruct VkDrawIndirectCommand' -- ' closing tick for hsc2hs
+
+data VkDrawIndirectCommand' -- ' closing tick for hsc2hs
 
 instance Eq VkDrawIndirectCommand where
-        (VkDrawIndirectCommand## a _) == x@(VkDrawIndirectCommand## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDrawIndirectCommand where
-        (VkDrawIndirectCommand## a _) `compare`
-          x@(VkDrawIndirectCommand## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -305,18 +288,6 @@ instance Storable VkDrawIndirectCommand where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDrawIndirectCommand where
-        unsafeAddr (VkDrawIndirectCommand## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDrawIndirectCommand## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDrawIndirectCommand## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDrawIndirectCommand where
         type StructFields VkDrawIndirectCommand =

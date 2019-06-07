@@ -8,16 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Viewport
-       (VkViewport(..), VkViewportSwizzleNV(..), VkViewportWScalingNV(..))
+       (VkViewport, VkViewport', VkViewportSwizzleNV, -- ' closing tick for hsc2hs
+        VkViewportSwizzleNV', VkViewportWScalingNV, VkViewportWScalingNV')
        where
-import           Foreign.Storable                                       (Storable (..))
-import           GHC.Base                                               (Addr##, ByteArray##,
-                                                                         byteArrayContents##,
-                                                                         plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
-import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
+import Foreign.Storable                                       (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
+import System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 -- | > typedef struct VkViewport {
 --   >     float          x;
@@ -29,17 +27,17 @@ import           System.IO.Unsafe                                       (unsafeD
 --   > } VkViewport;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewport VkViewport registry at www.khronos.org>
-data VkViewport = VkViewport## Addr## ByteArray##
+type VkViewport = VulkanStruct VkViewport' -- ' closing tick for hsc2hs
+
+data VkViewport' -- ' closing tick for hsc2hs
 
 instance Eq VkViewport where
-        (VkViewport## a _) == x@(VkViewport## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkViewport where
-        (VkViewport## a _) `compare` x@(VkViewport## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,18 +54,6 @@ instance Storable VkViewport where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkViewport where
-        unsafeAddr (VkViewport## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkViewport## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkViewport## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkViewport where
         type StructFields VkViewport =
@@ -273,17 +259,17 @@ instance Show VkViewport where
 --   > } VkViewportSwizzleNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewportSwizzleNV VkViewportSwizzleNV registry at www.khronos.org>
-data VkViewportSwizzleNV = VkViewportSwizzleNV## Addr## ByteArray##
+type VkViewportSwizzleNV = VulkanStruct VkViewportSwizzleNV' -- ' closing tick for hsc2hs
+
+data VkViewportSwizzleNV' -- ' closing tick for hsc2hs
 
 instance Eq VkViewportSwizzleNV where
-        (VkViewportSwizzleNV## a _) == x@(VkViewportSwizzleNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkViewportSwizzleNV where
-        (VkViewportSwizzleNV## a _) `compare` x@(VkViewportSwizzleNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -300,18 +286,6 @@ instance Storable VkViewportSwizzleNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkViewportSwizzleNV where
-        unsafeAddr (VkViewportSwizzleNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkViewportSwizzleNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkViewportSwizzleNV## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkViewportSwizzleNV where
         type StructFields VkViewportSwizzleNV = '["x", "y", "z", "w"] -- ' closing tick for hsc2hs
@@ -463,17 +437,17 @@ instance Show VkViewportSwizzleNV where
 --   > } VkViewportWScalingNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewportWScalingNV VkViewportWScalingNV registry at www.khronos.org>
-data VkViewportWScalingNV = VkViewportWScalingNV## Addr## ByteArray##
+type VkViewportWScalingNV = VulkanStruct VkViewportWScalingNV' -- ' closing tick for hsc2hs
+
+data VkViewportWScalingNV' -- ' closing tick for hsc2hs
 
 instance Eq VkViewportWScalingNV where
-        (VkViewportWScalingNV## a _) == x@(VkViewportWScalingNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkViewportWScalingNV where
-        (VkViewportWScalingNV## a _) `compare` x@(VkViewportWScalingNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -490,18 +464,6 @@ instance Storable VkViewportWScalingNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkViewportWScalingNV where
-        unsafeAddr (VkViewportWScalingNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkViewportWScalingNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkViewportWScalingNV## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkViewportWScalingNV where
         type StructFields VkViewportWScalingNV = '["xcoeff", "ycoeff"] -- ' closing tick for hsc2hs

@@ -12,110 +12,138 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.PhysicalDevice
-       (VkPhysicalDevice16BitStorageFeatures(..),
+       (VkPhysicalDevice16BitStorageFeatures,
+        VkPhysicalDevice16BitStorageFeatures', -- ' closing tick for hsc2hs
         VkPhysicalDevice16BitStorageFeaturesKHR,
-        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT(..),
-        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT(..),
-        VkPhysicalDeviceConservativeRasterizationPropertiesEXT(..),
-        VkPhysicalDeviceDescriptorIndexingFeaturesEXT(..),
-        VkPhysicalDeviceDescriptorIndexingPropertiesEXT(..),
-        VkPhysicalDeviceDiscardRectanglePropertiesEXT(..),
-        VkPhysicalDeviceExternalBufferInfo(..),
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceConservativeRasterizationPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingFeaturesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDescriptorIndexingPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceDiscardRectanglePropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceExternalBufferInfo,
+        VkPhysicalDeviceExternalBufferInfo', -- ' closing tick for hsc2hs
         VkPhysicalDeviceExternalBufferInfoKHR,
-        VkPhysicalDeviceExternalFenceInfo(..),
+        VkPhysicalDeviceExternalFenceInfo,
+        VkPhysicalDeviceExternalFenceInfo', -- ' closing tick for hsc2hs
         VkPhysicalDeviceExternalFenceInfoKHR,
-        VkPhysicalDeviceExternalImageFormatInfo(..),
+        VkPhysicalDeviceExternalImageFormatInfo,
+        VkPhysicalDeviceExternalImageFormatInfo', -- ' closing tick for hsc2hs
         VkPhysicalDeviceExternalImageFormatInfoKHR,
-        VkPhysicalDeviceExternalMemoryHostPropertiesEXT(..),
-        VkPhysicalDeviceExternalSemaphoreInfo(..),
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceExternalSemaphoreInfo,
+        VkPhysicalDeviceExternalSemaphoreInfo', -- ' closing tick for hsc2hs
         VkPhysicalDeviceExternalSemaphoreInfoKHR,
-        VkPhysicalDeviceFeatures2(..), VkPhysicalDeviceFeatures2KHR,
-        VkPhysicalDeviceGroupProperties(..),
-        VkPhysicalDeviceGroupPropertiesKHR,
-        VkPhysicalDeviceIDProperties(..), VkPhysicalDeviceIDPropertiesKHR,
-        VkPhysicalDeviceImageFormatInfo2(..),
-        VkPhysicalDeviceImageFormatInfo2KHR, VkPhysicalDeviceLimits(..),
-        VkPhysicalDeviceMaintenance3Properties(..),
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceFeatures2KHR, VkPhysicalDeviceGroupProperties,
+        VkPhysicalDeviceGroupProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
+        VkPhysicalDeviceIDProperties', VkPhysicalDeviceIDPropertiesKHR, -- ' closing tick for hsc2hs
+        VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceImageFormatInfo2', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceImageFormatInfo2KHR, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceLimits', VkPhysicalDeviceMaintenance3Properties, -- ' closing tick for hsc2hs
+        VkPhysicalDeviceMaintenance3Properties', -- ' closing tick for hsc2hs
         VkPhysicalDeviceMaintenance3PropertiesKHR,
-        VkPhysicalDeviceMemoryProperties(..),
-        VkPhysicalDeviceMemoryProperties2(..),
+        VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceMemoryProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceMemoryProperties2,
+        VkPhysicalDeviceMemoryProperties2', -- ' closing tick for hsc2hs
         VkPhysicalDeviceMemoryProperties2KHR,
-        VkPhysicalDeviceMultiviewFeatures(..),
+        VkPhysicalDeviceMultiviewFeatures,
+        VkPhysicalDeviceMultiviewFeatures', -- ' closing tick for hsc2hs
         VkPhysicalDeviceMultiviewFeaturesKHR,
-        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX(..),
-        VkPhysicalDeviceMultiviewProperties(..),
+        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
+        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceMultiviewProperties,
+        VkPhysicalDeviceMultiviewProperties', -- ' closing tick for hsc2hs
         VkPhysicalDeviceMultiviewPropertiesKHR,
-        VkPhysicalDevicePointClippingProperties(..),
+        VkPhysicalDevicePointClippingProperties,
+        VkPhysicalDevicePointClippingProperties', -- ' closing tick for hsc2hs
         VkPhysicalDevicePointClippingPropertiesKHR,
-        VkPhysicalDeviceProperties(..), VkPhysicalDeviceProperties2(..),
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2', -- ' closing tick for hsc2hs
         VkPhysicalDeviceProperties2KHR,
-        VkPhysicalDeviceProtectedMemoryFeatures(..),
-        VkPhysicalDeviceProtectedMemoryProperties(..),
-        VkPhysicalDevicePushDescriptorPropertiesKHR(..),
-        VkPhysicalDeviceSampleLocationsPropertiesEXT(..),
-        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT(..),
-        VkPhysicalDeviceSamplerYcbcrConversionFeatures(..),
+        VkPhysicalDeviceProtectedMemoryFeatures,
+        VkPhysicalDeviceProtectedMemoryFeatures', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceProtectedMemoryProperties,
+        VkPhysicalDeviceProtectedMemoryProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDevicePushDescriptorPropertiesKHR', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSampleLocationsPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSamplerYcbcrConversionFeatures,
+        VkPhysicalDeviceSamplerYcbcrConversionFeatures', -- ' closing tick for hsc2hs
         VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
-        VkPhysicalDeviceShaderCorePropertiesAMD(..),
-        VkPhysicalDeviceShaderDrawParameterFeatures(..),
-        VkPhysicalDeviceSparseImageFormatInfo2(..),
+        VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderCorePropertiesAMD', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceShaderDrawParameterFeatures', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSparseImageFormatInfo2,
+        VkPhysicalDeviceSparseImageFormatInfo2', -- ' closing tick for hsc2hs
         VkPhysicalDeviceSparseImageFormatInfo2KHR,
-        VkPhysicalDeviceSparseProperties(..),
-        VkPhysicalDeviceSubgroupProperties(..),
-        VkPhysicalDeviceSurfaceInfo2KHR(..),
-        VkPhysicalDeviceVariablePointerFeatures(..),
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSubgroupProperties', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceSurfaceInfo2KHR, VkPhysicalDeviceSurfaceInfo2KHR', -- ' closing tick for hsc2hs
+        VkPhysicalDeviceVariablePointerFeatures,
+        VkPhysicalDeviceVariablePointerFeatures', -- ' closing tick for hsc2hs
         VkPhysicalDeviceVariablePointerFeaturesKHR,
-        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT(..))
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                    (Storable (..))
-import           GHC.Base                                            (Addr##,
-                                                                      ByteArray##,
-                                                                      Proxy##,
-                                                                      byteArrayContents##,
-                                                                      plusAddr##,
-                                                                      proxy##)
-import           GHC.TypeLits                                        (KnownNat,
-                                                                      natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Constants                           (VK_LUID_SIZE,
-                                                                      pattern VK_LUID_SIZE,
-                                                                      VK_MAX_DEVICE_GROUP_SIZE,
-                                                                      pattern VK_MAX_DEVICE_GROUP_SIZE,
-                                                                      VK_MAX_MEMORY_HEAPS,
-                                                                      pattern VK_MAX_MEMORY_HEAPS,
-                                                                      VK_MAX_MEMORY_TYPES,
-                                                                      pattern VK_MAX_MEMORY_TYPES,
-                                                                      VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
-                                                                      pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
-                                                                      VK_UUID_SIZE,
-                                                                      pattern VK_UUID_SIZE)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                     (VkBool32, VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.Buffer                   (VkBufferCreateFlags,
-                                                                      VkBufferUsageFlags)
-import           Graphics.Vulkan.Types.Enum.External                 (VkExternalFenceHandleTypeFlagBits,
-                                                                      VkExternalMemoryHandleTypeFlagBits,
-                                                                      VkExternalSemaphoreHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.Format                   (VkFormat)
-import           Graphics.Vulkan.Types.Enum.Image                    (VkImageCreateFlags,
-                                                                      VkImageTiling,
-                                                                      VkImageType,
-                                                                      VkImageUsageFlags)
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType       (VkPhysicalDeviceType)
-import           Graphics.Vulkan.Types.Enum.PointClippingBehavior    (VkPointClippingBehavior)
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags         (VkSampleCountFlagBits,
-                                                                      VkSampleCountFlags)
-import           Graphics.Vulkan.Types.Enum.Shader                   (VkShaderStageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags     (VkSubgroupFeatureFlags)
-import           Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice,
-                                                                      VkSurfaceKHR)
-import           Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo)
-import           Graphics.Vulkan.Types.Struct.Extent                 (VkExtent2D)
-import           Graphics.Vulkan.Types.Struct.Memory                 (VkMemoryHeap,
-                                                                      VkMemoryType)
-import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
-import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
+import Foreign.Storable                                    (Storable (..))
+import Graphics.Vulkan.Constants                           (VK_LUID_SIZE,
+                                                            pattern VK_LUID_SIZE,
+                                                            VK_MAX_DEVICE_GROUP_SIZE,
+                                                            pattern VK_MAX_DEVICE_GROUP_SIZE,
+                                                            VK_MAX_MEMORY_HEAPS,
+                                                            pattern VK_MAX_MEMORY_HEAPS,
+                                                            VK_MAX_MEMORY_TYPES,
+                                                            pattern VK_MAX_MEMORY_TYPES,
+                                                            VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
+                                                            pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
+                                                            VK_UUID_SIZE,
+                                                            pattern VK_UUID_SIZE)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes                     (VkBool32,
+                                                            VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.Buffer                   (VkBufferCreateFlags,
+                                                            VkBufferUsageFlags)
+import Graphics.Vulkan.Types.Enum.External                 (VkExternalFenceHandleTypeFlagBits,
+                                                            VkExternalMemoryHandleTypeFlagBits,
+                                                            VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Format                   (VkFormat)
+import Graphics.Vulkan.Types.Enum.Image                    (VkImageCreateFlags,
+                                                            VkImageTiling,
+                                                            VkImageType,
+                                                            VkImageUsageFlags)
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType       (VkPhysicalDeviceType)
+import Graphics.Vulkan.Types.Enum.PointClippingBehavior    (VkPointClippingBehavior)
+import Graphics.Vulkan.Types.Enum.SampleCountFlags         (VkSampleCountFlagBits,
+                                                            VkSampleCountFlags)
+import Graphics.Vulkan.Types.Enum.Shader                   (VkShaderStageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
+import Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags     (VkSubgroupFeatureFlags)
+import Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice,
+                                                            VkSurfaceKHR)
+import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo)
+import Graphics.Vulkan.Types.Struct.Extent                 (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Memory                 (VkMemoryHeap,
+                                                            VkMemoryType)
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevice16BitStorageFeatures {
 --   >     VkStructureType sType;
@@ -127,20 +155,18 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   > } VkPhysicalDevice16BitStorageFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDevice16BitStorageFeatures VkPhysicalDevice16BitStorageFeatures registry at www.khronos.org>
-data VkPhysicalDevice16BitStorageFeatures = VkPhysicalDevice16BitStorageFeatures## Addr##
-                                                                                  ByteArray##
+type VkPhysicalDevice16BitStorageFeatures =
+     VulkanStruct VkPhysicalDevice16BitStorageFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDevice16BitStorageFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDevice16BitStorageFeatures where
-        (VkPhysicalDevice16BitStorageFeatures## a _) ==
-          x@(VkPhysicalDevice16BitStorageFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDevice16BitStorageFeatures where
-        (VkPhysicalDevice16BitStorageFeatures## a _) `compare`
-          x@(VkPhysicalDevice16BitStorageFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -159,21 +185,6 @@ instance Storable VkPhysicalDevice16BitStorageFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDevice16BitStorageFeatures
-         where
-        unsafeAddr (VkPhysicalDevice16BitStorageFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDevice16BitStorageFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDevice16BitStorageFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDevice16BitStorageFeatures where
         type StructFields VkPhysicalDevice16BitStorageFeatures =
@@ -472,21 +483,19 @@ type VkPhysicalDevice16BitStorageFeaturesKHR =
 --   > } VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
-data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## Addr##
-                                                                                                            ByteArray##
+type VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT =
+     VulkanStruct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
-        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _) ==
-          x@(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _) `compare`
-          x@(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -506,24 +515,6 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -701,23 +692,20 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 --   > } VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## Addr##
-                                                                                                                ByteArray##
+type VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _)
-          `compare`
-          x@(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -738,24 +726,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        unsafeAddr
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -1200,23 +1170,21 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
 --   > } VkPhysicalDeviceConservativeRasterizationPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceConservativeRasterizationPropertiesEXT VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## Addr##
-                                                                                                                      ByteArray##
+type VkPhysicalDeviceConservativeRasterizationPropertiesEXT =
+     VulkanStruct
+       VkPhysicalDeviceConservativeRasterizationPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceConservativeRasterizationPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _)
-          `compare`
-          x@(VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1237,24 +1205,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        unsafeAddr
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceConservativeRasterizationPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -1885,20 +1835,18 @@ instance Show
 --   > } VkPhysicalDeviceDescriptorIndexingFeaturesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceDescriptorIndexingFeaturesEXT VkPhysicalDeviceDescriptorIndexingFeaturesEXT registry at www.khronos.org>
-data VkPhysicalDeviceDescriptorIndexingFeaturesEXT = VkPhysicalDeviceDescriptorIndexingFeaturesEXT## Addr##
-                                                                                                    ByteArray##
+type VkPhysicalDeviceDescriptorIndexingFeaturesEXT =
+     VulkanStruct VkPhysicalDeviceDescriptorIndexingFeaturesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceDescriptorIndexingFeaturesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceDescriptorIndexingFeaturesEXT where
-        (VkPhysicalDeviceDescriptorIndexingFeaturesEXT## a _) ==
-          x@(VkPhysicalDeviceDescriptorIndexingFeaturesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceDescriptorIndexingFeaturesEXT where
-        (VkPhysicalDeviceDescriptorIndexingFeaturesEXT## a _) `compare`
-          x@(VkPhysicalDeviceDescriptorIndexingFeaturesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1918,23 +1866,6 @@ instance Storable VkPhysicalDeviceDescriptorIndexingFeaturesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceDescriptorIndexingFeaturesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceDescriptorIndexingFeaturesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceDescriptorIndexingFeaturesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceDescriptorIndexingFeaturesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceDescriptorIndexingFeaturesEXT
@@ -3218,20 +3149,18 @@ instance Show VkPhysicalDeviceDescriptorIndexingFeaturesEXT where
 --   > } VkPhysicalDeviceDescriptorIndexingPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceDescriptorIndexingPropertiesEXT VkPhysicalDeviceDescriptorIndexingPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceDescriptorIndexingPropertiesEXT = VkPhysicalDeviceDescriptorIndexingPropertiesEXT## Addr##
-                                                                                                        ByteArray##
+type VkPhysicalDeviceDescriptorIndexingPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceDescriptorIndexingPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceDescriptorIndexingPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceDescriptorIndexingPropertiesEXT where
-        (VkPhysicalDeviceDescriptorIndexingPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceDescriptorIndexingPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceDescriptorIndexingPropertiesEXT where
-        (VkPhysicalDeviceDescriptorIndexingPropertiesEXT## a _) `compare`
-          x@(VkPhysicalDeviceDescriptorIndexingPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3251,24 +3180,6 @@ instance Storable VkPhysicalDeviceDescriptorIndexingPropertiesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceDescriptorIndexingPropertiesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceDescriptorIndexingPropertiesEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceDescriptorIndexingPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceDescriptorIndexingPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceDescriptorIndexingPropertiesEXT
@@ -4741,20 +4652,18 @@ instance Show VkPhysicalDeviceDescriptorIndexingPropertiesEXT where
 --   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceDiscardRectanglePropertiesEXT VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## Addr##
-                                                                                                    ByteArray##
+type VkPhysicalDeviceDiscardRectanglePropertiesEXT =
+     VulkanStruct VkPhysicalDeviceDiscardRectanglePropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceDiscardRectanglePropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceDiscardRectanglePropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) `compare`
-          x@(VkPhysicalDeviceDiscardRectanglePropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4774,23 +4683,6 @@ instance Storable VkPhysicalDeviceDiscardRectanglePropertiesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceDiscardRectanglePropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceDiscardRectanglePropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -4957,20 +4849,18 @@ instance Show VkPhysicalDeviceDiscardRectanglePropertiesEXT where
 --   > } VkPhysicalDeviceExternalBufferInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalBufferInfo VkPhysicalDeviceExternalBufferInfo registry at www.khronos.org>
-data VkPhysicalDeviceExternalBufferInfo = VkPhysicalDeviceExternalBufferInfo## Addr##
-                                                                              ByteArray##
+type VkPhysicalDeviceExternalBufferInfo =
+     VulkanStruct VkPhysicalDeviceExternalBufferInfo' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceExternalBufferInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceExternalBufferInfo where
-        (VkPhysicalDeviceExternalBufferInfo## a _) ==
-          x@(VkPhysicalDeviceExternalBufferInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalBufferInfo where
-        (VkPhysicalDeviceExternalBufferInfo## a _) `compare`
-          x@(VkPhysicalDeviceExternalBufferInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4988,20 +4878,6 @@ instance Storable VkPhysicalDeviceExternalBufferInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceExternalBufferInfo where
-        unsafeAddr (VkPhysicalDeviceExternalBufferInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceExternalBufferInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceExternalBufferInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalBufferInfo where
         type StructFields VkPhysicalDeviceExternalBufferInfo =
@@ -5214,20 +5090,18 @@ type VkPhysicalDeviceExternalBufferInfoKHR =
 --   > } VkPhysicalDeviceExternalFenceInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalFenceInfo VkPhysicalDeviceExternalFenceInfo registry at www.khronos.org>
-data VkPhysicalDeviceExternalFenceInfo = VkPhysicalDeviceExternalFenceInfo## Addr##
-                                                                            ByteArray##
+type VkPhysicalDeviceExternalFenceInfo =
+     VulkanStruct VkPhysicalDeviceExternalFenceInfo' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceExternalFenceInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceExternalFenceInfo where
-        (VkPhysicalDeviceExternalFenceInfo## a _) ==
-          x@(VkPhysicalDeviceExternalFenceInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalFenceInfo where
-        (VkPhysicalDeviceExternalFenceInfo## a _) `compare`
-          x@(VkPhysicalDeviceExternalFenceInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5245,20 +5119,6 @@ instance Storable VkPhysicalDeviceExternalFenceInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceExternalFenceInfo where
-        unsafeAddr (VkPhysicalDeviceExternalFenceInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceExternalFenceInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceExternalFenceInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalFenceInfo where
         type StructFields VkPhysicalDeviceExternalFenceInfo =
@@ -5394,20 +5254,18 @@ type VkPhysicalDeviceExternalFenceInfoKHR =
 --   > } VkPhysicalDeviceExternalImageFormatInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalImageFormatInfo VkPhysicalDeviceExternalImageFormatInfo registry at www.khronos.org>
-data VkPhysicalDeviceExternalImageFormatInfo = VkPhysicalDeviceExternalImageFormatInfo## Addr##
-                                                                                        ByteArray##
+type VkPhysicalDeviceExternalImageFormatInfo =
+     VulkanStruct VkPhysicalDeviceExternalImageFormatInfo' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceExternalImageFormatInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceExternalImageFormatInfo where
-        (VkPhysicalDeviceExternalImageFormatInfo## a _) ==
-          x@(VkPhysicalDeviceExternalImageFormatInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalImageFormatInfo where
-        (VkPhysicalDeviceExternalImageFormatInfo## a _) `compare`
-          x@(VkPhysicalDeviceExternalImageFormatInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5426,21 +5284,6 @@ instance Storable VkPhysicalDeviceExternalImageFormatInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceExternalImageFormatInfo
-         where
-        unsafeAddr (VkPhysicalDeviceExternalImageFormatInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceExternalImageFormatInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceExternalImageFormatInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalImageFormatInfo
          where
@@ -5585,20 +5428,18 @@ type VkPhysicalDeviceExternalImageFormatInfoKHR =
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalMemoryHostPropertiesEXT VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
-                                                                                                        ByteArray##
+type VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceExternalMemoryHostPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceExternalMemoryHostPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _) `compare`
-          x@(VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5618,24 +5459,6 @@ instance Storable VkPhysicalDeviceExternalMemoryHostPropertiesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceExternalMemoryHostPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
@@ -5805,20 +5628,18 @@ instance Show VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
 --   > } VkPhysicalDeviceExternalSemaphoreInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceExternalSemaphoreInfo VkPhysicalDeviceExternalSemaphoreInfo registry at www.khronos.org>
-data VkPhysicalDeviceExternalSemaphoreInfo = VkPhysicalDeviceExternalSemaphoreInfo## Addr##
-                                                                                    ByteArray##
+type VkPhysicalDeviceExternalSemaphoreInfo =
+     VulkanStruct VkPhysicalDeviceExternalSemaphoreInfo' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceExternalSemaphoreInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceExternalSemaphoreInfo where
-        (VkPhysicalDeviceExternalSemaphoreInfo## a _) ==
-          x@(VkPhysicalDeviceExternalSemaphoreInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalSemaphoreInfo where
-        (VkPhysicalDeviceExternalSemaphoreInfo## a _) `compare`
-          x@(VkPhysicalDeviceExternalSemaphoreInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -5837,21 +5658,6 @@ instance Storable VkPhysicalDeviceExternalSemaphoreInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceExternalSemaphoreInfo
-         where
-        unsafeAddr (VkPhysicalDeviceExternalSemaphoreInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceExternalSemaphoreInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceExternalSemaphoreInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalSemaphoreInfo where
         type StructFields VkPhysicalDeviceExternalSemaphoreInfo =
@@ -5993,18 +5799,18 @@ type VkPhysicalDeviceExternalSemaphoreInfoKHR =
 --   > } VkPhysicalDeviceFeatures2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceFeatures2 VkPhysicalDeviceFeatures2 registry at www.khronos.org>
-data VkPhysicalDeviceFeatures2 = VkPhysicalDeviceFeatures2## Addr##
-                                                            ByteArray##
+type VkPhysicalDeviceFeatures2 =
+     VulkanStruct VkPhysicalDeviceFeatures2' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceFeatures2' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceFeatures2 where
-        (VkPhysicalDeviceFeatures2## a _) ==
-          x@(VkPhysicalDeviceFeatures2## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceFeatures2 where
-        (VkPhysicalDeviceFeatures2## a _) `compare`
-          x@(VkPhysicalDeviceFeatures2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6021,19 +5827,6 @@ instance Storable VkPhysicalDeviceFeatures2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceFeatures2 where
-        unsafeAddr (VkPhysicalDeviceFeatures2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceFeatures2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceFeatures2## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceFeatures2 where
         type StructFields VkPhysicalDeviceFeatures2 =
@@ -6164,19 +5957,18 @@ type VkPhysicalDeviceFeatures2KHR = VkPhysicalDeviceFeatures2
 --   > } VkPhysicalDeviceGroupProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceGroupProperties VkPhysicalDeviceGroupProperties registry at www.khronos.org>
-data VkPhysicalDeviceGroupProperties = VkPhysicalDeviceGroupProperties## Addr##
-                                                                        ByteArray##
+type VkPhysicalDeviceGroupProperties =
+     VulkanStruct VkPhysicalDeviceGroupProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceGroupProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceGroupProperties where
-        (VkPhysicalDeviceGroupProperties## a _) ==
-          x@(VkPhysicalDeviceGroupProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceGroupProperties where
-        (VkPhysicalDeviceGroupProperties## a _) `compare`
-          x@(VkPhysicalDeviceGroupProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6194,20 +5986,6 @@ instance Storable VkPhysicalDeviceGroupProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceGroupProperties where
-        unsafeAddr (VkPhysicalDeviceGroupProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceGroupProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceGroupProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceGroupProperties where
         type StructFields VkPhysicalDeviceGroupProperties =
@@ -6469,19 +6247,18 @@ type VkPhysicalDeviceGroupPropertiesKHR =
 --   > } VkPhysicalDeviceIDProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceIDProperties VkPhysicalDeviceIDProperties registry at www.khronos.org>
-data VkPhysicalDeviceIDProperties = VkPhysicalDeviceIDProperties## Addr##
-                                                                  ByteArray##
+type VkPhysicalDeviceIDProperties =
+     VulkanStruct VkPhysicalDeviceIDProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceIDProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceIDProperties where
-        (VkPhysicalDeviceIDProperties## a _) ==
-          x@(VkPhysicalDeviceIDProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceIDProperties where
-        (VkPhysicalDeviceIDProperties## a _) `compare`
-          x@(VkPhysicalDeviceIDProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6499,20 +6276,6 @@ instance Storable VkPhysicalDeviceIDProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceIDProperties where
-        unsafeAddr (VkPhysicalDeviceIDProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceIDProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceIDProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceIDProperties where
         type StructFields VkPhysicalDeviceIDProperties =
@@ -6878,20 +6641,18 @@ type VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDProperties
 --   > } VkPhysicalDeviceImageFormatInfo2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceImageFormatInfo2 VkPhysicalDeviceImageFormatInfo2 registry at www.khronos.org>
-data VkPhysicalDeviceImageFormatInfo2 = VkPhysicalDeviceImageFormatInfo2## Addr##
-                                                                          ByteArray##
+type VkPhysicalDeviceImageFormatInfo2 =
+     VulkanStruct VkPhysicalDeviceImageFormatInfo2' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceImageFormatInfo2' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceImageFormatInfo2 where
-        (VkPhysicalDeviceImageFormatInfo2## a _) ==
-          x@(VkPhysicalDeviceImageFormatInfo2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceImageFormatInfo2 where
-        (VkPhysicalDeviceImageFormatInfo2## a _) `compare`
-          x@(VkPhysicalDeviceImageFormatInfo2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -6909,20 +6670,6 @@ instance Storable VkPhysicalDeviceImageFormatInfo2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceImageFormatInfo2 where
-        unsafeAddr (VkPhysicalDeviceImageFormatInfo2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceImageFormatInfo2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceImageFormatInfo2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceImageFormatInfo2 where
         type StructFields VkPhysicalDeviceImageFormatInfo2 =
@@ -7305,18 +7052,17 @@ type VkPhysicalDeviceImageFormatInfo2KHR =
 --   > } VkPhysicalDeviceLimits;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceLimits VkPhysicalDeviceLimits registry at www.khronos.org>
-data VkPhysicalDeviceLimits = VkPhysicalDeviceLimits## Addr##
-                                                      ByteArray##
+type VkPhysicalDeviceLimits = VulkanStruct VkPhysicalDeviceLimits' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceLimits' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceLimits where
-        (VkPhysicalDeviceLimits## a _) == x@(VkPhysicalDeviceLimits## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceLimits where
-        (VkPhysicalDeviceLimits## a _) `compare`
-          x@(VkPhysicalDeviceLimits## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -7333,18 +7079,6 @@ instance Storable VkPhysicalDeviceLimits where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceLimits where
-        unsafeAddr (VkPhysicalDeviceLimits## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceLimits## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceLimits## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceLimits where
         type StructFields VkPhysicalDeviceLimits =
@@ -13099,20 +12833,18 @@ instance Show VkPhysicalDeviceLimits where
 --   > } VkPhysicalDeviceMaintenance3Properties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMaintenance3Properties VkPhysicalDeviceMaintenance3Properties registry at www.khronos.org>
-data VkPhysicalDeviceMaintenance3Properties = VkPhysicalDeviceMaintenance3Properties## Addr##
-                                                                                      ByteArray##
+type VkPhysicalDeviceMaintenance3Properties =
+     VulkanStruct VkPhysicalDeviceMaintenance3Properties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMaintenance3Properties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMaintenance3Properties where
-        (VkPhysicalDeviceMaintenance3Properties## a _) ==
-          x@(VkPhysicalDeviceMaintenance3Properties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMaintenance3Properties where
-        (VkPhysicalDeviceMaintenance3Properties## a _) `compare`
-          x@(VkPhysicalDeviceMaintenance3Properties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -13131,21 +12863,6 @@ instance Storable VkPhysicalDeviceMaintenance3Properties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceMaintenance3Properties
-         where
-        unsafeAddr (VkPhysicalDeviceMaintenance3Properties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceMaintenance3Properties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMaintenance3Properties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMaintenance3Properties where
         type StructFields VkPhysicalDeviceMaintenance3Properties =
@@ -13345,20 +13062,18 @@ type VkPhysicalDeviceMaintenance3PropertiesKHR =
 --   > } VkPhysicalDeviceMemoryProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMemoryProperties VkPhysicalDeviceMemoryProperties registry at www.khronos.org>
-data VkPhysicalDeviceMemoryProperties = VkPhysicalDeviceMemoryProperties## Addr##
-                                                                          ByteArray##
+type VkPhysicalDeviceMemoryProperties =
+     VulkanStruct VkPhysicalDeviceMemoryProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMemoryProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMemoryProperties where
-        (VkPhysicalDeviceMemoryProperties## a _) ==
-          x@(VkPhysicalDeviceMemoryProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMemoryProperties where
-        (VkPhysicalDeviceMemoryProperties## a _) `compare`
-          x@(VkPhysicalDeviceMemoryProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -13376,20 +13091,6 @@ instance Storable VkPhysicalDeviceMemoryProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceMemoryProperties where
-        unsafeAddr (VkPhysicalDeviceMemoryProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceMemoryProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMemoryProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMemoryProperties where
         type StructFields VkPhysicalDeviceMemoryProperties =
@@ -13631,20 +13332,18 @@ instance Show VkPhysicalDeviceMemoryProperties where
 --   > } VkPhysicalDeviceMemoryProperties2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMemoryProperties2 VkPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
-data VkPhysicalDeviceMemoryProperties2 = VkPhysicalDeviceMemoryProperties2## Addr##
-                                                                            ByteArray##
+type VkPhysicalDeviceMemoryProperties2 =
+     VulkanStruct VkPhysicalDeviceMemoryProperties2' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMemoryProperties2' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMemoryProperties2 where
-        (VkPhysicalDeviceMemoryProperties2## a _) ==
-          x@(VkPhysicalDeviceMemoryProperties2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMemoryProperties2 where
-        (VkPhysicalDeviceMemoryProperties2## a _) `compare`
-          x@(VkPhysicalDeviceMemoryProperties2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -13662,20 +13361,6 @@ instance Storable VkPhysicalDeviceMemoryProperties2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceMemoryProperties2 where
-        unsafeAddr (VkPhysicalDeviceMemoryProperties2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceMemoryProperties2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMemoryProperties2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMemoryProperties2 where
         type StructFields VkPhysicalDeviceMemoryProperties2 =
@@ -13819,20 +13504,18 @@ type VkPhysicalDeviceMemoryProperties2KHR =
 --   > } VkPhysicalDeviceMultiviewFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMultiviewFeatures VkPhysicalDeviceMultiviewFeatures registry at www.khronos.org>
-data VkPhysicalDeviceMultiviewFeatures = VkPhysicalDeviceMultiviewFeatures## Addr##
-                                                                            ByteArray##
+type VkPhysicalDeviceMultiviewFeatures =
+     VulkanStruct VkPhysicalDeviceMultiviewFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMultiviewFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMultiviewFeatures where
-        (VkPhysicalDeviceMultiviewFeatures## a _) ==
-          x@(VkPhysicalDeviceMultiviewFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMultiviewFeatures where
-        (VkPhysicalDeviceMultiviewFeatures## a _) `compare`
-          x@(VkPhysicalDeviceMultiviewFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -13850,20 +13533,6 @@ instance Storable VkPhysicalDeviceMultiviewFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceMultiviewFeatures where
-        unsafeAddr (VkPhysicalDeviceMultiviewFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceMultiviewFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMultiviewFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewFeatures where
         type StructFields VkPhysicalDeviceMultiviewFeatures =
@@ -14100,24 +13769,22 @@ type VkPhysicalDeviceMultiviewFeaturesKHR =
 --   > } VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
-data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## Addr##
-                                                                                                                        ByteArray##
+type VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX =
+     VulkanStruct
+       VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
-        (VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## a _) ==
-          x@(VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
-        (VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## a _)
-          `compare`
-          x@(VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -14138,24 +13805,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-         where
-        unsafeAddr
-          (VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -14336,20 +13985,18 @@ instance Show
 --   > } VkPhysicalDeviceMultiviewProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceMultiviewProperties VkPhysicalDeviceMultiviewProperties registry at www.khronos.org>
-data VkPhysicalDeviceMultiviewProperties = VkPhysicalDeviceMultiviewProperties## Addr##
-                                                                                ByteArray##
+type VkPhysicalDeviceMultiviewProperties =
+     VulkanStruct VkPhysicalDeviceMultiviewProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceMultiviewProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceMultiviewProperties where
-        (VkPhysicalDeviceMultiviewProperties## a _) ==
-          x@(VkPhysicalDeviceMultiviewProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMultiviewProperties where
-        (VkPhysicalDeviceMultiviewProperties## a _) `compare`
-          x@(VkPhysicalDeviceMultiviewProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -14367,21 +14014,6 @@ instance Storable VkPhysicalDeviceMultiviewProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceMultiviewProperties
-         where
-        unsafeAddr (VkPhysicalDeviceMultiviewProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceMultiviewProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceMultiviewProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewProperties where
         type StructFields VkPhysicalDeviceMultiviewProperties =
@@ -14581,20 +14213,18 @@ type VkPhysicalDeviceMultiviewPropertiesKHR =
 --   > } VkPhysicalDevicePointClippingProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDevicePointClippingProperties VkPhysicalDevicePointClippingProperties registry at www.khronos.org>
-data VkPhysicalDevicePointClippingProperties = VkPhysicalDevicePointClippingProperties## Addr##
-                                                                                        ByteArray##
+type VkPhysicalDevicePointClippingProperties =
+     VulkanStruct VkPhysicalDevicePointClippingProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDevicePointClippingProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDevicePointClippingProperties where
-        (VkPhysicalDevicePointClippingProperties## a _) ==
-          x@(VkPhysicalDevicePointClippingProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDevicePointClippingProperties where
-        (VkPhysicalDevicePointClippingProperties## a _) `compare`
-          x@(VkPhysicalDevicePointClippingProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -14613,21 +14243,6 @@ instance Storable VkPhysicalDevicePointClippingProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDevicePointClippingProperties
-         where
-        unsafeAddr (VkPhysicalDevicePointClippingProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDevicePointClippingProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDevicePointClippingProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDevicePointClippingProperties
          where
@@ -14783,19 +14398,18 @@ type VkPhysicalDevicePointClippingPropertiesKHR =
 --   > } VkPhysicalDeviceProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceProperties VkPhysicalDeviceProperties registry at www.khronos.org>
-data VkPhysicalDeviceProperties = VkPhysicalDeviceProperties## Addr##
-                                                              ByteArray##
+type VkPhysicalDeviceProperties =
+     VulkanStruct VkPhysicalDeviceProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceProperties where
-        (VkPhysicalDeviceProperties## a _) ==
-          x@(VkPhysicalDeviceProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceProperties where
-        (VkPhysicalDeviceProperties## a _) `compare`
-          x@(VkPhysicalDeviceProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -14812,20 +14426,6 @@ instance Storable VkPhysicalDeviceProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceProperties where
-        unsafeAddr (VkPhysicalDeviceProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceProperties where
         type StructFields VkPhysicalDeviceProperties =
@@ -15236,19 +14836,18 @@ instance Show VkPhysicalDeviceProperties where
 --   > } VkPhysicalDeviceProperties2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceProperties2 VkPhysicalDeviceProperties2 registry at www.khronos.org>
-data VkPhysicalDeviceProperties2 = VkPhysicalDeviceProperties2## Addr##
-                                                                ByteArray##
+type VkPhysicalDeviceProperties2 =
+     VulkanStruct VkPhysicalDeviceProperties2' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceProperties2' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceProperties2 where
-        (VkPhysicalDeviceProperties2## a _) ==
-          x@(VkPhysicalDeviceProperties2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceProperties2 where
-        (VkPhysicalDeviceProperties2## a _) `compare`
-          x@(VkPhysicalDeviceProperties2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -15265,20 +14864,6 @@ instance Storable VkPhysicalDeviceProperties2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceProperties2 where
-        unsafeAddr (VkPhysicalDeviceProperties2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceProperties2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceProperties2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceProperties2 where
         type StructFields VkPhysicalDeviceProperties2 =
@@ -15408,20 +14993,18 @@ type VkPhysicalDeviceProperties2KHR = VkPhysicalDeviceProperties2
 --   > } VkPhysicalDeviceProtectedMemoryFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceProtectedMemoryFeatures VkPhysicalDeviceProtectedMemoryFeatures registry at www.khronos.org>
-data VkPhysicalDeviceProtectedMemoryFeatures = VkPhysicalDeviceProtectedMemoryFeatures## Addr##
-                                                                                        ByteArray##
+type VkPhysicalDeviceProtectedMemoryFeatures =
+     VulkanStruct VkPhysicalDeviceProtectedMemoryFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceProtectedMemoryFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceProtectedMemoryFeatures where
-        (VkPhysicalDeviceProtectedMemoryFeatures## a _) ==
-          x@(VkPhysicalDeviceProtectedMemoryFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceProtectedMemoryFeatures where
-        (VkPhysicalDeviceProtectedMemoryFeatures## a _) `compare`
-          x@(VkPhysicalDeviceProtectedMemoryFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -15440,21 +15023,6 @@ instance Storable VkPhysicalDeviceProtectedMemoryFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceProtectedMemoryFeatures
-         where
-        unsafeAddr (VkPhysicalDeviceProtectedMemoryFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceProtectedMemoryFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceProtectedMemoryFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceProtectedMemoryFeatures
          where
@@ -15599,20 +15167,18 @@ instance Show VkPhysicalDeviceProtectedMemoryFeatures where
 --   > } VkPhysicalDeviceProtectedMemoryProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceProtectedMemoryProperties VkPhysicalDeviceProtectedMemoryProperties registry at www.khronos.org>
-data VkPhysicalDeviceProtectedMemoryProperties = VkPhysicalDeviceProtectedMemoryProperties## Addr##
-                                                                                            ByteArray##
+type VkPhysicalDeviceProtectedMemoryProperties =
+     VulkanStruct VkPhysicalDeviceProtectedMemoryProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceProtectedMemoryProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceProtectedMemoryProperties where
-        (VkPhysicalDeviceProtectedMemoryProperties## a _) ==
-          x@(VkPhysicalDeviceProtectedMemoryProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceProtectedMemoryProperties where
-        (VkPhysicalDeviceProtectedMemoryProperties## a _) `compare`
-          x@(VkPhysicalDeviceProtectedMemoryProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -15631,23 +15197,6 @@ instance Storable VkPhysicalDeviceProtectedMemoryProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceProtectedMemoryProperties
-         where
-        unsafeAddr (VkPhysicalDeviceProtectedMemoryProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceProtectedMemoryProperties## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceProtectedMemoryProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceProtectedMemoryProperties
          where
@@ -15802,20 +15351,18 @@ instance Show VkPhysicalDeviceProtectedMemoryProperties where
 --   > } VkPhysicalDevicePushDescriptorPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDevicePushDescriptorPropertiesKHR VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
-data VkPhysicalDevicePushDescriptorPropertiesKHR = VkPhysicalDevicePushDescriptorPropertiesKHR## Addr##
-                                                                                                ByteArray##
+type VkPhysicalDevicePushDescriptorPropertiesKHR =
+     VulkanStruct VkPhysicalDevicePushDescriptorPropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkPhysicalDevicePushDescriptorPropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDevicePushDescriptorPropertiesKHR where
-        (VkPhysicalDevicePushDescriptorPropertiesKHR## a _) ==
-          x@(VkPhysicalDevicePushDescriptorPropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDevicePushDescriptorPropertiesKHR where
-        (VkPhysicalDevicePushDescriptorPropertiesKHR## a _) `compare`
-          x@(VkPhysicalDevicePushDescriptorPropertiesKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -15834,23 +15381,6 @@ instance Storable VkPhysicalDevicePushDescriptorPropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDevicePushDescriptorPropertiesKHR
-         where
-        unsafeAddr (VkPhysicalDevicePushDescriptorPropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDevicePushDescriptorPropertiesKHR## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDevicePushDescriptorPropertiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDevicePushDescriptorPropertiesKHR
          where
@@ -16014,20 +15544,18 @@ instance Show VkPhysicalDevicePushDescriptorPropertiesKHR where
 --   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSampleLocationsPropertiesEXT VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## Addr##
-                                                                                                  ByteArray##
+type VkPhysicalDeviceSampleLocationsPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceSampleLocationsPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSampleLocationsPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceSampleLocationsPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) `compare`
-          x@(VkPhysicalDeviceSampleLocationsPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -16047,23 +15575,6 @@ instance Storable VkPhysicalDeviceSampleLocationsPropertiesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceSampleLocationsPropertiesEXT## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSampleLocationsPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
@@ -16454,20 +15965,18 @@ instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
 --   > } VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## Addr##
-                                                                                                          ByteArray##
+type VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _) `compare`
-          x@(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -16487,24 +15996,6 @@ instance Storable VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-         where
-        unsafeAddr (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -16726,20 +16217,18 @@ instance Show VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
 --   > } VkPhysicalDeviceSamplerYcbcrConversionFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSamplerYcbcrConversionFeatures VkPhysicalDeviceSamplerYcbcrConversionFeatures registry at www.khronos.org>
-data VkPhysicalDeviceSamplerYcbcrConversionFeatures = VkPhysicalDeviceSamplerYcbcrConversionFeatures## Addr##
-                                                                                                      ByteArray##
+type VkPhysicalDeviceSamplerYcbcrConversionFeatures =
+     VulkanStruct VkPhysicalDeviceSamplerYcbcrConversionFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSamplerYcbcrConversionFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSamplerYcbcrConversionFeatures where
-        (VkPhysicalDeviceSamplerYcbcrConversionFeatures## a _) ==
-          x@(VkPhysicalDeviceSamplerYcbcrConversionFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSamplerYcbcrConversionFeatures where
-        (VkPhysicalDeviceSamplerYcbcrConversionFeatures## a _) `compare`
-          x@(VkPhysicalDeviceSamplerYcbcrConversionFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -16759,24 +16248,6 @@ instance Storable VkPhysicalDeviceSamplerYcbcrConversionFeatures
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceSamplerYcbcrConversionFeatures
-         where
-        unsafeAddr (VkPhysicalDeviceSamplerYcbcrConversionFeatures## a _)
-          = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceSamplerYcbcrConversionFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSamplerYcbcrConversionFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceSamplerYcbcrConversionFeatures
@@ -16960,20 +16431,18 @@ type VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR =
 --   > } VkPhysicalDeviceShaderCorePropertiesAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceShaderCorePropertiesAMD VkPhysicalDeviceShaderCorePropertiesAMD registry at www.khronos.org>
-data VkPhysicalDeviceShaderCorePropertiesAMD = VkPhysicalDeviceShaderCorePropertiesAMD## Addr##
-                                                                                        ByteArray##
+type VkPhysicalDeviceShaderCorePropertiesAMD =
+     VulkanStruct VkPhysicalDeviceShaderCorePropertiesAMD' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceShaderCorePropertiesAMD' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceShaderCorePropertiesAMD where
-        (VkPhysicalDeviceShaderCorePropertiesAMD## a _) ==
-          x@(VkPhysicalDeviceShaderCorePropertiesAMD## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceShaderCorePropertiesAMD where
-        (VkPhysicalDeviceShaderCorePropertiesAMD## a _) `compare`
-          x@(VkPhysicalDeviceShaderCorePropertiesAMD## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -16992,21 +16461,6 @@ instance Storable VkPhysicalDeviceShaderCorePropertiesAMD where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceShaderCorePropertiesAMD
-         where
-        unsafeAddr (VkPhysicalDeviceShaderCorePropertiesAMD## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceShaderCorePropertiesAMD## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceShaderCorePropertiesAMD##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceShaderCorePropertiesAMD
          where
@@ -17846,20 +17300,18 @@ instance Show VkPhysicalDeviceShaderCorePropertiesAMD where
 --   > } VkPhysicalDeviceShaderDrawParameterFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceShaderDrawParameterFeatures VkPhysicalDeviceShaderDrawParameterFeatures registry at www.khronos.org>
-data VkPhysicalDeviceShaderDrawParameterFeatures = VkPhysicalDeviceShaderDrawParameterFeatures## Addr##
-                                                                                                ByteArray##
+type VkPhysicalDeviceShaderDrawParameterFeatures =
+     VulkanStruct VkPhysicalDeviceShaderDrawParameterFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceShaderDrawParameterFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceShaderDrawParameterFeatures where
-        (VkPhysicalDeviceShaderDrawParameterFeatures## a _) ==
-          x@(VkPhysicalDeviceShaderDrawParameterFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceShaderDrawParameterFeatures where
-        (VkPhysicalDeviceShaderDrawParameterFeatures## a _) `compare`
-          x@(VkPhysicalDeviceShaderDrawParameterFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -17878,23 +17330,6 @@ instance Storable VkPhysicalDeviceShaderDrawParameterFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceShaderDrawParameterFeatures
-         where
-        unsafeAddr (VkPhysicalDeviceShaderDrawParameterFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceShaderDrawParameterFeatures## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceShaderDrawParameterFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceShaderDrawParameterFeatures
          where
@@ -18058,20 +17493,18 @@ instance Show VkPhysicalDeviceShaderDrawParameterFeatures where
 --   > } VkPhysicalDeviceSparseImageFormatInfo2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSparseImageFormatInfo2 VkPhysicalDeviceSparseImageFormatInfo2 registry at www.khronos.org>
-data VkPhysicalDeviceSparseImageFormatInfo2 = VkPhysicalDeviceSparseImageFormatInfo2## Addr##
-                                                                                      ByteArray##
+type VkPhysicalDeviceSparseImageFormatInfo2 =
+     VulkanStruct VkPhysicalDeviceSparseImageFormatInfo2' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSparseImageFormatInfo2' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSparseImageFormatInfo2 where
-        (VkPhysicalDeviceSparseImageFormatInfo2## a _) ==
-          x@(VkPhysicalDeviceSparseImageFormatInfo2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSparseImageFormatInfo2 where
-        (VkPhysicalDeviceSparseImageFormatInfo2## a _) `compare`
-          x@(VkPhysicalDeviceSparseImageFormatInfo2## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -18090,21 +17523,6 @@ instance Storable VkPhysicalDeviceSparseImageFormatInfo2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceSparseImageFormatInfo2
-         where
-        unsafeAddr (VkPhysicalDeviceSparseImageFormatInfo2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceSparseImageFormatInfo2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSparseImageFormatInfo2##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSparseImageFormatInfo2 where
         type StructFields VkPhysicalDeviceSparseImageFormatInfo2 =
@@ -18397,20 +17815,18 @@ type VkPhysicalDeviceSparseImageFormatInfo2KHR =
 --   > } VkPhysicalDeviceSparseProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSparseProperties VkPhysicalDeviceSparseProperties registry at www.khronos.org>
-data VkPhysicalDeviceSparseProperties = VkPhysicalDeviceSparseProperties## Addr##
-                                                                          ByteArray##
+type VkPhysicalDeviceSparseProperties =
+     VulkanStruct VkPhysicalDeviceSparseProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSparseProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSparseProperties where
-        (VkPhysicalDeviceSparseProperties## a _) ==
-          x@(VkPhysicalDeviceSparseProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSparseProperties where
-        (VkPhysicalDeviceSparseProperties## a _) `compare`
-          x@(VkPhysicalDeviceSparseProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -18428,20 +17844,6 @@ instance Storable VkPhysicalDeviceSparseProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceSparseProperties where
-        unsafeAddr (VkPhysicalDeviceSparseProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceSparseProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSparseProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSparseProperties where
         type StructFields VkPhysicalDeviceSparseProperties =
@@ -18713,20 +18115,18 @@ instance Show VkPhysicalDeviceSparseProperties where
 --   > } VkPhysicalDeviceSubgroupProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSubgroupProperties VkPhysicalDeviceSubgroupProperties registry at www.khronos.org>
-data VkPhysicalDeviceSubgroupProperties = VkPhysicalDeviceSubgroupProperties## Addr##
-                                                                              ByteArray##
+type VkPhysicalDeviceSubgroupProperties =
+     VulkanStruct VkPhysicalDeviceSubgroupProperties' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSubgroupProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSubgroupProperties where
-        (VkPhysicalDeviceSubgroupProperties## a _) ==
-          x@(VkPhysicalDeviceSubgroupProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSubgroupProperties where
-        (VkPhysicalDeviceSubgroupProperties## a _) `compare`
-          x@(VkPhysicalDeviceSubgroupProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -18744,20 +18144,6 @@ instance Storable VkPhysicalDeviceSubgroupProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceSubgroupProperties where
-        unsafeAddr (VkPhysicalDeviceSubgroupProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceSubgroupProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSubgroupProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSubgroupProperties where
         type StructFields VkPhysicalDeviceSubgroupProperties =
@@ -19038,19 +18424,18 @@ instance Show VkPhysicalDeviceSubgroupProperties where
 --   > } VkPhysicalDeviceSurfaceInfo2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceSurfaceInfo2KHR VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
-data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## Addr##
-                                                                        ByteArray##
+type VkPhysicalDeviceSurfaceInfo2KHR =
+     VulkanStruct VkPhysicalDeviceSurfaceInfo2KHR' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceSurfaceInfo2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceSurfaceInfo2KHR where
-        (VkPhysicalDeviceSurfaceInfo2KHR## a _) ==
-          x@(VkPhysicalDeviceSurfaceInfo2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSurfaceInfo2KHR where
-        (VkPhysicalDeviceSurfaceInfo2KHR## a _) `compare`
-          x@(VkPhysicalDeviceSurfaceInfo2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -19068,20 +18453,6 @@ instance Storable VkPhysicalDeviceSurfaceInfo2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceSurfaceInfo2KHR where
-        unsafeAddr (VkPhysicalDeviceSurfaceInfo2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceSurfaceInfo2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceSurfaceInfo2KHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSurfaceInfo2KHR where
         type StructFields VkPhysicalDeviceSurfaceInfo2KHR =
@@ -19210,20 +18581,18 @@ instance Show VkPhysicalDeviceSurfaceInfo2KHR where
 --   > } VkPhysicalDeviceVariablePointerFeatures;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceVariablePointerFeatures VkPhysicalDeviceVariablePointerFeatures registry at www.khronos.org>
-data VkPhysicalDeviceVariablePointerFeatures = VkPhysicalDeviceVariablePointerFeatures## Addr##
-                                                                                        ByteArray##
+type VkPhysicalDeviceVariablePointerFeatures =
+     VulkanStruct VkPhysicalDeviceVariablePointerFeatures' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceVariablePointerFeatures' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceVariablePointerFeatures where
-        (VkPhysicalDeviceVariablePointerFeatures## a _) ==
-          x@(VkPhysicalDeviceVariablePointerFeatures## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceVariablePointerFeatures where
-        (VkPhysicalDeviceVariablePointerFeatures## a _) `compare`
-          x@(VkPhysicalDeviceVariablePointerFeatures## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -19242,21 +18611,6 @@ instance Storable VkPhysicalDeviceVariablePointerFeatures where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPhysicalDeviceVariablePointerFeatures
-         where
-        unsafeAddr (VkPhysicalDeviceVariablePointerFeatures## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPhysicalDeviceVariablePointerFeatures## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceVariablePointerFeatures##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceVariablePointerFeatures
          where
@@ -19455,23 +18809,20 @@ type VkPhysicalDeviceVariablePointerFeaturesKHR =
 --   > } VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## Addr##
-                                                                                                                ByteArray##
+type VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT =
+     VulkanStruct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
          where
-        (VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## a _) ==
-          x@(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
          where
-        (VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## a _)
-          `compare`
-          x@(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -19492,24 +18843,6 @@ instance Storable
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
-         where
-        unsafeAddr
-          (VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray
-          (VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT

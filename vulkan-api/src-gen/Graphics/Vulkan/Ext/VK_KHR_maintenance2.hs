@@ -42,23 +42,23 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance2
         pattern VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT_KHR,
         pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR)
        where
-import           GHC.Ptr                                                     (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                                    (pattern VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT,
-                                                                              pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT,
-                                                                              pattern VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL,
-                                                                              pattern VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL,
-                                                                              pattern VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO,
-                                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
-                                                                              pattern VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
-                                                                              pattern VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.PointClippingBehavior
-import           Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.Pipeline
-import           Graphics.Vulkan.Types.Struct.RenderPass
+import GHC.Ptr                                                     (Ptr (..))
+import Graphics.Vulkan.Core_1_1                                    (pattern VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT,
+                                                                    pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT,
+                                                                    pattern VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL,
+                                                                    pattern VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL,
+                                                                    pattern VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO,
+                                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
+                                                                    pattern VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
+                                                                    pattern VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.PointClippingBehavior
+import Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
+import Graphics.Vulkan.Types.Struct.Image
+import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
+import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import Graphics.Vulkan.Types.Struct.Pipeline
+import Graphics.Vulkan.Types.Struct.RenderPass
 
 pattern VK_KHR_MAINTENANCE2_SPEC_VERSION :: (Num a, Eq a) => a
 

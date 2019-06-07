@@ -8,22 +8,19 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Present
-       (VkPresentInfoKHR(..), VkPresentRegionKHR(..),
-        VkPresentRegionsKHR(..), VkPresentTimeGOOGLE(..),
-        VkPresentTimesInfoGOOGLE(..))
+       (VkPresentInfoKHR, VkPresentInfoKHR', VkPresentRegionKHR, -- ' closing tick for hsc2hs
+        VkPresentRegionKHR', VkPresentRegionsKHR, VkPresentRegionsKHR',
+        VkPresentTimeGOOGLE, VkPresentTimeGOOGLE', -- ' closing tick for hsc2hs
+        VkPresentTimesInfoGOOGLE, VkPresentTimesInfoGOOGLE') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Result        (VkResult)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkSemaphore,
-                                                           VkSwapchainKHR)
-import           Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Result        (VkResult)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkSemaphore, VkSwapchainKHR)
+import Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPresentInfoKHR {
 --   >     VkStructureType sType;
@@ -37,17 +34,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkPresentInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentInfoKHR VkPresentInfoKHR registry at www.khronos.org>
-data VkPresentInfoKHR = VkPresentInfoKHR## Addr## ByteArray##
+type VkPresentInfoKHR = VulkanStruct VkPresentInfoKHR' -- ' closing tick for hsc2hs
+
+data VkPresentInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkPresentInfoKHR where
-        (VkPresentInfoKHR## a _) == x@(VkPresentInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentInfoKHR where
-        (VkPresentInfoKHR## a _) `compare` x@(VkPresentInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -64,18 +61,6 @@ instance Storable VkPresentInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPresentInfoKHR where
-        unsafeAddr (VkPresentInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPresentInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPresentInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentInfoKHR where
         type StructFields VkPresentInfoKHR =
@@ -370,17 +355,17 @@ instance Show VkPresentInfoKHR where
 --   > } VkPresentRegionKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionKHR VkPresentRegionKHR registry at www.khronos.org>
-data VkPresentRegionKHR = VkPresentRegionKHR## Addr## ByteArray##
+type VkPresentRegionKHR = VulkanStruct VkPresentRegionKHR' -- ' closing tick for hsc2hs
+
+data VkPresentRegionKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkPresentRegionKHR where
-        (VkPresentRegionKHR## a _) == x@(VkPresentRegionKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentRegionKHR where
-        (VkPresentRegionKHR## a _) `compare` x@(VkPresentRegionKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -397,18 +382,6 @@ instance Storable VkPresentRegionKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPresentRegionKHR where
-        unsafeAddr (VkPresentRegionKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPresentRegionKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPresentRegionKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentRegionKHR where
         type StructFields VkPresentRegionKHR =
@@ -498,17 +471,17 @@ instance Show VkPresentRegionKHR where
 --   > } VkPresentRegionsKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionsKHR VkPresentRegionsKHR registry at www.khronos.org>
-data VkPresentRegionsKHR = VkPresentRegionsKHR## Addr## ByteArray##
+type VkPresentRegionsKHR = VulkanStruct VkPresentRegionsKHR' -- ' closing tick for hsc2hs
+
+data VkPresentRegionsKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkPresentRegionsKHR where
-        (VkPresentRegionsKHR## a _) == x@(VkPresentRegionsKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentRegionsKHR where
-        (VkPresentRegionsKHR## a _) `compare` x@(VkPresentRegionsKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -525,18 +498,6 @@ instance Storable VkPresentRegionsKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPresentRegionsKHR where
-        unsafeAddr (VkPresentRegionsKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPresentRegionsKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPresentRegionsKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentRegionsKHR where
         type StructFields VkPresentRegionsKHR =
@@ -692,17 +653,17 @@ instance Show VkPresentRegionsKHR where
 --   > } VkPresentTimeGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentTimeGOOGLE VkPresentTimeGOOGLE registry at www.khronos.org>
-data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE## Addr## ByteArray##
+type VkPresentTimeGOOGLE = VulkanStruct VkPresentTimeGOOGLE' -- ' closing tick for hsc2hs
+
+data VkPresentTimeGOOGLE' -- ' closing tick for hsc2hs
 
 instance Eq VkPresentTimeGOOGLE where
-        (VkPresentTimeGOOGLE## a _) == x@(VkPresentTimeGOOGLE## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentTimeGOOGLE where
-        (VkPresentTimeGOOGLE## a _) `compare` x@(VkPresentTimeGOOGLE## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -719,18 +680,6 @@ instance Storable VkPresentTimeGOOGLE where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPresentTimeGOOGLE where
-        unsafeAddr (VkPresentTimeGOOGLE## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPresentTimeGOOGLE## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPresentTimeGOOGLE## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentTimeGOOGLE where
         type StructFields VkPresentTimeGOOGLE =
@@ -820,18 +769,18 @@ instance Show VkPresentTimeGOOGLE where
 --   > } VkPresentTimesInfoGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentTimesInfoGOOGLE VkPresentTimesInfoGOOGLE registry at www.khronos.org>
-data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## Addr##
-                                                          ByteArray##
+type VkPresentTimesInfoGOOGLE =
+     VulkanStruct VkPresentTimesInfoGOOGLE' -- ' closing tick for hsc2hs
+
+data VkPresentTimesInfoGOOGLE' -- ' closing tick for hsc2hs
 
 instance Eq VkPresentTimesInfoGOOGLE where
-        (VkPresentTimesInfoGOOGLE## a _) ==
-          x@(VkPresentTimesInfoGOOGLE## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentTimesInfoGOOGLE where
-        (VkPresentTimesInfoGOOGLE## a _) `compare`
-          x@(VkPresentTimesInfoGOOGLE## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -848,19 +797,6 @@ instance Storable VkPresentTimesInfoGOOGLE where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkPresentTimesInfoGOOGLE where
-        unsafeAddr (VkPresentTimesInfoGOOGLE## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkPresentTimesInfoGOOGLE## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkPresentTimesInfoGOOGLE## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentTimesInfoGOOGLE where
         type StructFields VkPresentTimesInfoGOOGLE =

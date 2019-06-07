@@ -36,11 +36,11 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc      (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Handles
+import GHC.Ptr                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc      (VulkanProc (..))
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Handles
 
 pattern VkReleaseDisplayEXT :: CString
 

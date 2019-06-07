@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.MultisamplePropertiesEXT
-       (VkMultisamplePropertiesEXT(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkMultisamplePropertiesEXT, VkMultisamplePropertiesEXT') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMultisamplePropertiesEXT {
 --   >     VkStructureType sType;
@@ -26,19 +23,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkMultisamplePropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMultisamplePropertiesEXT VkMultisamplePropertiesEXT registry at www.khronos.org>
-data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## Addr##
-                                                              ByteArray##
+type VkMultisamplePropertiesEXT =
+     VulkanStruct VkMultisamplePropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkMultisamplePropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkMultisamplePropertiesEXT where
-        (VkMultisamplePropertiesEXT## a _) ==
-          x@(VkMultisamplePropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMultisamplePropertiesEXT where
-        (VkMultisamplePropertiesEXT## a _) `compare`
-          x@(VkMultisamplePropertiesEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -55,20 +51,6 @@ instance Storable VkMultisamplePropertiesEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMultisamplePropertiesEXT where
-        unsafeAddr (VkMultisamplePropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMultisamplePropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMultisamplePropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMultisamplePropertiesEXT where
         type StructFields VkMultisamplePropertiesEXT =

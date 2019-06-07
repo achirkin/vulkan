@@ -8,18 +8,17 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Semaphore
-       (VkSemaphoreCreateInfo(..), VkSemaphoreGetFdInfoKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkSemaphoreCreateFlags)
-import           Graphics.Vulkan.Types.Enum.External      (VkExternalSemaphoreHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkSemaphore)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkSemaphoreCreateInfo, VkSemaphoreCreateInfo', -- ' closing tick for hsc2hs
+        VkSemaphoreGetFdInfoKHR, VkSemaphoreGetFdInfoKHR') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkSemaphoreCreateFlags)
+import Graphics.Vulkan.Types.Enum.External      (VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkSemaphore)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSemaphoreCreateInfo {
 --   >     VkStructureType sType;
@@ -28,18 +27,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkSemaphoreCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSemaphoreCreateInfo VkSemaphoreCreateInfo registry at www.khronos.org>
-data VkSemaphoreCreateInfo = VkSemaphoreCreateInfo## Addr##
-                                                    ByteArray##
+type VkSemaphoreCreateInfo = VulkanStruct VkSemaphoreCreateInfo' -- ' closing tick for hsc2hs
+
+data VkSemaphoreCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkSemaphoreCreateInfo where
-        (VkSemaphoreCreateInfo## a _) == x@(VkSemaphoreCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSemaphoreCreateInfo where
-        (VkSemaphoreCreateInfo## a _) `compare`
-          x@(VkSemaphoreCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,18 +54,6 @@ instance Storable VkSemaphoreCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSemaphoreCreateInfo where
-        unsafeAddr (VkSemaphoreCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSemaphoreCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSemaphoreCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSemaphoreCreateInfo where
         type StructFields VkSemaphoreCreateInfo =
@@ -190,18 +176,18 @@ instance Show VkSemaphoreCreateInfo where
 --   > } VkSemaphoreGetFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSemaphoreGetFdInfoKHR VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
-data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## Addr##
-                                                        ByteArray##
+type VkSemaphoreGetFdInfoKHR =
+     VulkanStruct VkSemaphoreGetFdInfoKHR' -- ' closing tick for hsc2hs
+
+data VkSemaphoreGetFdInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSemaphoreGetFdInfoKHR where
-        (VkSemaphoreGetFdInfoKHR## a _) == x@(VkSemaphoreGetFdInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSemaphoreGetFdInfoKHR where
-        (VkSemaphoreGetFdInfoKHR## a _) `compare`
-          x@(VkSemaphoreGetFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -218,18 +204,6 @@ instance Storable VkSemaphoreGetFdInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSemaphoreGetFdInfoKHR where
-        unsafeAddr (VkSemaphoreGetFdInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSemaphoreGetFdInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSemaphoreGetFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSemaphoreGetFdInfoKHR where
         type StructFields VkSemaphoreGetFdInfoKHR =

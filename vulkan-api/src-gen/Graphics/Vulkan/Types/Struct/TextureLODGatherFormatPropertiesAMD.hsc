@@ -8,17 +8,16 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD
-       (VkTextureLODGatherFormatPropertiesAMD(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Image       (VkImageFormatProperties2)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkTextureLODGatherFormatPropertiesAMD,
+        VkTextureLODGatherFormatPropertiesAMD') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Image       (VkImageFormatProperties2)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;
@@ -27,20 +26,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkTextureLODGatherFormatPropertiesAMD VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
-data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## Addr##
-                                                                                    ByteArray##
+type VkTextureLODGatherFormatPropertiesAMD =
+     VulkanStruct VkTextureLODGatherFormatPropertiesAMD' -- ' closing tick for hsc2hs
+
+data VkTextureLODGatherFormatPropertiesAMD' -- ' closing tick for hsc2hs
 
 instance Eq VkTextureLODGatherFormatPropertiesAMD where
-        (VkTextureLODGatherFormatPropertiesAMD## a _) ==
-          x@(VkTextureLODGatherFormatPropertiesAMD## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkTextureLODGatherFormatPropertiesAMD where
-        (VkTextureLODGatherFormatPropertiesAMD## a _) `compare`
-          x@(VkTextureLODGatherFormatPropertiesAMD## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -59,21 +56,6 @@ instance Storable VkTextureLODGatherFormatPropertiesAMD where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkTextureLODGatherFormatPropertiesAMD
-         where
-        unsafeAddr (VkTextureLODGatherFormatPropertiesAMD## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkTextureLODGatherFormatPropertiesAMD## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkTextureLODGatherFormatPropertiesAMD##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkTextureLODGatherFormatPropertiesAMD where
         type StructFields VkTextureLODGatherFormatPropertiesAMD =

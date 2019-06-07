@@ -33,13 +33,12 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         -- ** Required extensions: 'VK_KHR_surface'.
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.PlatformWin32Khr,
-        -- > #include "vk_platform.h"
-        VkCreateWin32SurfaceKHR, pattern VkCreateWin32SurfaceKHR,
-        HS_vkCreateWin32SurfaceKHR, PFN_vkCreateWin32SurfaceKHR,
-        vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHRUnsafe,
-        vkCreateWin32SurfaceKHRSafe,
+        module Graphics.Vulkan.Types.Bitmasks, VkWin32SurfaceCreateInfoKHR,
+        VkWin32SurfaceCreateInfoKHR', -- > #include "vk_platform.h"
+                                      VkCreateWin32SurfaceKHR,
+        pattern VkCreateWin32SurfaceKHR, HS_vkCreateWin32SurfaceKHR,
+        PFN_vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHR,
+        vkCreateWin32SurfaceKHRUnsafe, vkCreateWin32SurfaceKHRSafe,
         VkGetPhysicalDeviceWin32PresentationSupportKHR,
         pattern VkGetPhysicalDeviceWin32PresentationSupportKHR,
         HS_vkGetPhysicalDeviceWin32PresentationSupportKHR,
@@ -55,27 +54,28 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Include,
         module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.PlatformWin32Khr,
         VK_KHR_WIN32_SURFACE_SPEC_VERSION,
         pattern VK_KHR_WIN32_SURFACE_SPEC_VERSION,
         VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
         pattern VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Include
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.PlatformWin32Khr
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkCreateWin32SurfaceKHR :: CString
 

@@ -8,23 +8,21 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Attachment
-       (VkAttachmentDescription(..), VkAttachmentReference(..),
-        VkAttachmentSampleLocationsEXT(..))
+       (VkAttachmentDescription, VkAttachmentDescription', -- ' closing tick for hsc2hs
+        VkAttachmentReference, VkAttachmentReference', -- ' closing tick for hsc2hs
+        VkAttachmentSampleLocationsEXT, VkAttachmentSampleLocationsEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                            (Storable (..))
-import           GHC.Base                                    (Addr##, ByteArray##,
-                                                              byteArrayContents##,
-                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Attachment       (VkAttachmentDescriptionFlags,
-                                                              VkAttachmentLoadOp,
-                                                              VkAttachmentStoreOp)
-import           Graphics.Vulkan.Types.Enum.Format           (VkFormat)
-import           Graphics.Vulkan.Types.Enum.Image            (VkImageLayout)
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
-import           Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
-import           System.IO.Unsafe                            (unsafeDupablePerformIO)
+import Foreign.Storable                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Attachment       (VkAttachmentDescriptionFlags,
+                                                    VkAttachmentLoadOp,
+                                                    VkAttachmentStoreOp)
+import Graphics.Vulkan.Types.Enum.Format           (VkFormat)
+import Graphics.Vulkan.Types.Enum.Image            (VkImageLayout)
+import Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
+import Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
+import System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAttachmentDescription {
 --   >     VkAttachmentDescriptionFlags flags;
@@ -39,18 +37,18 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   > } VkAttachmentDescription;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentDescription VkAttachmentDescription registry at www.khronos.org>
-data VkAttachmentDescription = VkAttachmentDescription## Addr##
-                                                        ByteArray##
+type VkAttachmentDescription =
+     VulkanStruct VkAttachmentDescription' -- ' closing tick for hsc2hs
+
+data VkAttachmentDescription' -- ' closing tick for hsc2hs
 
 instance Eq VkAttachmentDescription where
-        (VkAttachmentDescription## a _) == x@(VkAttachmentDescription## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAttachmentDescription where
-        (VkAttachmentDescription## a _) `compare`
-          x@(VkAttachmentDescription## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -67,18 +65,6 @@ instance Storable VkAttachmentDescription where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAttachmentDescription where
-        unsafeAddr (VkAttachmentDescription## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAttachmentDescription## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAttachmentDescription## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAttachmentDescription where
         type StructFields VkAttachmentDescription =
@@ -421,18 +407,17 @@ instance Show VkAttachmentDescription where
 --   > } VkAttachmentReference;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentReference VkAttachmentReference registry at www.khronos.org>
-data VkAttachmentReference = VkAttachmentReference## Addr##
-                                                    ByteArray##
+type VkAttachmentReference = VulkanStruct VkAttachmentReference' -- ' closing tick for hsc2hs
+
+data VkAttachmentReference' -- ' closing tick for hsc2hs
 
 instance Eq VkAttachmentReference where
-        (VkAttachmentReference## a _) == x@(VkAttachmentReference## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAttachmentReference where
-        (VkAttachmentReference## a _) `compare`
-          x@(VkAttachmentReference## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -449,18 +434,6 @@ instance Storable VkAttachmentReference where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAttachmentReference where
-        unsafeAddr (VkAttachmentReference## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAttachmentReference## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAttachmentReference## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAttachmentReference where
         type StructFields VkAttachmentReference = '["attachment", "layout"] -- ' closing tick for hsc2hs
@@ -546,19 +519,18 @@ instance Show VkAttachmentReference where
 --   > } VkAttachmentSampleLocationsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentSampleLocationsEXT VkAttachmentSampleLocationsEXT registry at www.khronos.org>
-data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## Addr##
-                                                                      ByteArray##
+type VkAttachmentSampleLocationsEXT =
+     VulkanStruct VkAttachmentSampleLocationsEXT' -- ' closing tick for hsc2hs
+
+data VkAttachmentSampleLocationsEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkAttachmentSampleLocationsEXT where
-        (VkAttachmentSampleLocationsEXT## a _) ==
-          x@(VkAttachmentSampleLocationsEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkAttachmentSampleLocationsEXT where
-        (VkAttachmentSampleLocationsEXT## a _) `compare`
-          x@(VkAttachmentSampleLocationsEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -576,20 +548,6 @@ instance Storable VkAttachmentSampleLocationsEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkAttachmentSampleLocationsEXT where
-        unsafeAddr (VkAttachmentSampleLocationsEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkAttachmentSampleLocationsEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkAttachmentSampleLocationsEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAttachmentSampleLocationsEXT where
         type StructFields VkAttachmentSampleLocationsEXT =

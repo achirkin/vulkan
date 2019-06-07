@@ -8,27 +8,24 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Import
-       (VkImportFenceFdInfoKHR(..), VkImportMemoryFdInfoKHR(..),
-        VkImportMemoryHostPointerInfoEXT(..),
-        VkImportSemaphoreFdInfoKHR(..))
+       (VkImportFenceFdInfoKHR, VkImportFenceFdInfoKHR', -- ' closing tick for hsc2hs
+        VkImportMemoryFdInfoKHR, VkImportMemoryFdInfoKHR', -- ' closing tick for hsc2hs
+        VkImportMemoryHostPointerInfoEXT,
+        VkImportMemoryHostPointerInfoEXT', VkImportSemaphoreFdInfoKHR, -- ' closing tick for hsc2hs
+        VkImportSemaphoreFdInfoKHR') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                               (Storable (..))
-import           GHC.Base                                       (Addr##,
-                                                                 ByteArray##,
-                                                                 byteArrayContents##,
-                                                                 plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                                 VkExternalMemoryHandleTypeFlagBits,
-                                                                 VkExternalSemaphoreHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                  (VkFence,
-                                                                 VkSemaphore)
-import           Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
-import           System.IO.Unsafe                               (unsafeDupablePerformIO)
+import Foreign.Storable                               (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
+                                                       VkExternalMemoryHandleTypeFlagBits,
+                                                       VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
+import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
+import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
+import Graphics.Vulkan.Types.Handles                  (VkFence, VkSemaphore)
+import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
+import System.IO.Unsafe                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportFenceFdInfoKHR {
 --   >     VkStructureType sType;
@@ -40,18 +37,17 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   > } VkImportFenceFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportFenceFdInfoKHR VkImportFenceFdInfoKHR registry at www.khronos.org>
-data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## Addr##
-                                                      ByteArray##
+type VkImportFenceFdInfoKHR = VulkanStruct VkImportFenceFdInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportFenceFdInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportFenceFdInfoKHR where
-        (VkImportFenceFdInfoKHR## a _) == x@(VkImportFenceFdInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportFenceFdInfoKHR where
-        (VkImportFenceFdInfoKHR## a _) `compare`
-          x@(VkImportFenceFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -68,18 +64,6 @@ instance Storable VkImportFenceFdInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportFenceFdInfoKHR where
-        unsafeAddr (VkImportFenceFdInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportFenceFdInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportFenceFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportFenceFdInfoKHR where
         type StructFields VkImportFenceFdInfoKHR =
@@ -305,18 +289,18 @@ instance Show VkImportFenceFdInfoKHR where
 --   > } VkImportMemoryFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryFdInfoKHR VkImportMemoryFdInfoKHR registry at www.khronos.org>
-data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR## Addr##
-                                                        ByteArray##
+type VkImportMemoryFdInfoKHR =
+     VulkanStruct VkImportMemoryFdInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportMemoryFdInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportMemoryFdInfoKHR where
-        (VkImportMemoryFdInfoKHR## a _) == x@(VkImportMemoryFdInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryFdInfoKHR where
-        (VkImportMemoryFdInfoKHR## a _) `compare`
-          x@(VkImportMemoryFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -333,18 +317,6 @@ instance Storable VkImportMemoryFdInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportMemoryFdInfoKHR where
-        unsafeAddr (VkImportMemoryFdInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportMemoryFdInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportMemoryFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryFdInfoKHR where
         type StructFields VkImportMemoryFdInfoKHR =
@@ -502,20 +474,18 @@ instance Show VkImportMemoryFdInfoKHR where
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryHostPointerInfoEXT VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
-data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## Addr##
-                                                                          ByteArray##
+type VkImportMemoryHostPointerInfoEXT =
+     VulkanStruct VkImportMemoryHostPointerInfoEXT' -- ' closing tick for hsc2hs
+
+data VkImportMemoryHostPointerInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkImportMemoryHostPointerInfoEXT where
-        (VkImportMemoryHostPointerInfoEXT## a _) ==
-          x@(VkImportMemoryHostPointerInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryHostPointerInfoEXT where
-        (VkImportMemoryHostPointerInfoEXT## a _) `compare`
-          x@(VkImportMemoryHostPointerInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -533,20 +503,6 @@ instance Storable VkImportMemoryHostPointerInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportMemoryHostPointerInfoEXT where
-        unsafeAddr (VkImportMemoryHostPointerInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportMemoryHostPointerInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportMemoryHostPointerInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryHostPointerInfoEXT where
         type StructFields VkImportMemoryHostPointerInfoEXT =
@@ -718,19 +674,18 @@ instance Show VkImportMemoryHostPointerInfoEXT where
 --   > } VkImportSemaphoreFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportSemaphoreFdInfoKHR VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
-data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## Addr##
-                                                              ByteArray##
+type VkImportSemaphoreFdInfoKHR =
+     VulkanStruct VkImportSemaphoreFdInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportSemaphoreFdInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportSemaphoreFdInfoKHR where
-        (VkImportSemaphoreFdInfoKHR## a _) ==
-          x@(VkImportSemaphoreFdInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportSemaphoreFdInfoKHR where
-        (VkImportSemaphoreFdInfoKHR## a _) `compare`
-          x@(VkImportSemaphoreFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -747,20 +702,6 @@ instance Storable VkImportSemaphoreFdInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportSemaphoreFdInfoKHR where
-        unsafeAddr (VkImportSemaphoreFdInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportSemaphoreFdInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportSemaphoreFdInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportSemaphoreFdInfoKHR where
         type StructFields VkImportSemaphoreFdInfoKHR =

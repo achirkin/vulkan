@@ -21,7 +21,10 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         module Graphics.Vulkan.Types.Enum.CullModeFlags,
         module Graphics.Vulkan.Types.Enum.FrontFace,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
+        VkPipelineRasterizationStateCreateInfo,
+        VkPipelineRasterizationStateCreateInfo',
+        VkPipelineRasterizationStateRasterizationOrderAMD,
+        VkPipelineRasterizationStateRasterizationOrderAMD',
         module Graphics.Vulkan.Types.Enum.PolygonMode,
         module Graphics.Vulkan.Types.Enum.RasterizationOrderAMD,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -32,16 +35,19 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         pattern VK_AMD_RASTERIZATION_ORDER_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD)
        where
-import           GHC.Ptr                                          (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.CullModeFlags
-import           Graphics.Vulkan.Types.Enum.FrontFace
-import           Graphics.Vulkan.Types.Enum.PolygonMode
-import           Graphics.Vulkan.Types.Enum.RasterizationOrderAMD
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Pipeline
+import GHC.Ptr                                          (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.CullModeFlags
+import Graphics.Vulkan.Types.Enum.FrontFace
+import Graphics.Vulkan.Types.Enum.PolygonMode
+import Graphics.Vulkan.Types.Enum.RasterizationOrderAMD
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Pipeline            (VkPipelineRasterizationStateCreateInfo,
+                                                         VkPipelineRasterizationStateCreateInfo',
+                                                         VkPipelineRasterizationStateRasterizationOrderAMD,
+                                                         VkPipelineRasterizationStateRasterizationOrderAMD')
 
 pattern VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION :: (Num a, Eq a) =>
         a

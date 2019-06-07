@@ -1,5 +1,5 @@
 name:                genvulkan
-version:             1.1.4.0
+version:             1.2.0.0
 synopsis:            Generate vulkan-api haskell bindings
 description:         Generate vulkan-api haskell bindings based on vk.xml
 homepage:            https://github.com/achirkin/genvulkan#readme

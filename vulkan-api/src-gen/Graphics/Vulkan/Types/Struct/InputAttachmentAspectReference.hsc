@@ -8,17 +8,15 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
-       (VkInputAttachmentAspectReference(..),
+       (VkInputAttachmentAspectReference,
+        VkInputAttachmentAspectReference', -- ' closing tick for hsc2hs
         VkInputAttachmentAspectReferenceKHR)
        where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Image (VkImageAspectFlags)
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Image (VkImageAspectFlags)
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkInputAttachmentAspectReference {
 --   >     uint32_t                        subpass;
@@ -27,20 +25,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkInputAttachmentAspectReference;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkInputAttachmentAspectReference VkInputAttachmentAspectReference registry at www.khronos.org>
-data VkInputAttachmentAspectReference = VkInputAttachmentAspectReference## Addr##
-                                                                          ByteArray##
+type VkInputAttachmentAspectReference =
+     VulkanStruct VkInputAttachmentAspectReference' -- ' closing tick for hsc2hs
+
+data VkInputAttachmentAspectReference' -- ' closing tick for hsc2hs
 
 instance Eq VkInputAttachmentAspectReference where
-        (VkInputAttachmentAspectReference## a _) ==
-          x@(VkInputAttachmentAspectReference## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkInputAttachmentAspectReference where
-        (VkInputAttachmentAspectReference## a _) `compare`
-          x@(VkInputAttachmentAspectReference## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -58,20 +54,6 @@ instance Storable VkInputAttachmentAspectReference where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkInputAttachmentAspectReference where
-        unsafeAddr (VkInputAttachmentAspectReference## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkInputAttachmentAspectReference## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkInputAttachmentAspectReference##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkInputAttachmentAspectReference where
         type StructFields VkInputAttachmentAspectReference =

@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_stencil_export
         VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME,
         pattern VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -8,35 +8,33 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Memory
-       (VkMemoryAllocateFlagsInfo(..), VkMemoryAllocateFlagsInfoKHR,
-        VkMemoryAllocateInfo(..), VkMemoryBarrier(..),
-        VkMemoryDedicatedAllocateInfo(..),
-        VkMemoryDedicatedAllocateInfoKHR,
-        VkMemoryDedicatedRequirements(..),
-        VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR(..),
-        VkMemoryGetFdInfoKHR(..), VkMemoryHeap(..),
-        VkMemoryHostPointerPropertiesEXT(..), VkMemoryRequirements(..),
-        VkMemoryRequirements2(..), VkMemoryRequirements2KHR,
-        VkMemoryType(..))
+       (VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfo', -- ' closing tick for hsc2hs
+        VkMemoryAllocateFlagsInfoKHR, VkMemoryAllocateInfo,
+        VkMemoryAllocateInfo', VkMemoryBarrier, VkMemoryBarrier',
+        VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfo', -- ' closing tick for hsc2hs
+        VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
+        VkMemoryDedicatedRequirements', VkMemoryDedicatedRequirementsKHR, -- ' closing tick for hsc2hs
+        VkMemoryFdPropertiesKHR, VkMemoryFdPropertiesKHR', -- ' closing tick for hsc2hs
+        VkMemoryGetFdInfoKHR, VkMemoryGetFdInfoKHR', VkMemoryHeap, -- ' closing tick for hsc2hs
+        VkMemoryHeap', VkMemoryHostPointerPropertiesEXT, -- ' closing tick for hsc2hs
+        VkMemoryHostPointerPropertiesEXT', VkMemoryRequirements, -- ' closing tick for hsc2hs
+        VkMemoryRequirements', VkMemoryRequirements2, -- ' closing tick for hsc2hs
+        VkMemoryRequirements2', VkMemoryRequirements2KHR, VkMemoryType, -- ' closing tick for hsc2hs
+        VkMemoryType') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkBool32,
-                                                           VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
-import           Graphics.Vulkan.Types.Enum.External      (VkExternalMemoryHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.Memory        (VkMemoryAllocateFlags,
-                                                           VkMemoryHeapFlags,
-                                                           VkMemoryPropertyFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Handles            (VkBuffer,
-                                                           VkDeviceMemory,
-                                                           VkImage)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkBool32, VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
+import Graphics.Vulkan.Types.Enum.External      (VkExternalMemoryHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Memory        (VkMemoryAllocateFlags,
+                                                 VkMemoryHeapFlags,
+                                                 VkMemoryPropertyFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
+                                                 VkImage)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryAllocateFlagsInfo {
 --   >     VkStructureType sType;
@@ -46,18 +44,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkMemoryAllocateFlagsInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateFlagsInfo VkMemoryAllocateFlagsInfo registry at www.khronos.org>
-data VkMemoryAllocateFlagsInfo = VkMemoryAllocateFlagsInfo## Addr##
-                                                            ByteArray##
+type VkMemoryAllocateFlagsInfo =
+     VulkanStruct VkMemoryAllocateFlagsInfo' -- ' closing tick for hsc2hs
+
+data VkMemoryAllocateFlagsInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryAllocateFlagsInfo where
-        (VkMemoryAllocateFlagsInfo## a _) ==
-          x@(VkMemoryAllocateFlagsInfo## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryAllocateFlagsInfo where
-        (VkMemoryAllocateFlagsInfo## a _) `compare`
-          x@(VkMemoryAllocateFlagsInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -74,19 +72,6 @@ instance Storable VkMemoryAllocateFlagsInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryAllocateFlagsInfo where
-        unsafeAddr (VkMemoryAllocateFlagsInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryAllocateFlagsInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryAllocateFlagsInfo## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryAllocateFlagsInfo where
         type StructFields VkMemoryAllocateFlagsInfo =
@@ -251,17 +236,17 @@ type VkMemoryAllocateFlagsInfoKHR = VkMemoryAllocateFlagsInfo
 --   > } VkMemoryAllocateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateInfo VkMemoryAllocateInfo registry at www.khronos.org>
-data VkMemoryAllocateInfo = VkMemoryAllocateInfo## Addr## ByteArray##
+type VkMemoryAllocateInfo = VulkanStruct VkMemoryAllocateInfo' -- ' closing tick for hsc2hs
+
+data VkMemoryAllocateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryAllocateInfo where
-        (VkMemoryAllocateInfo## a _) == x@(VkMemoryAllocateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryAllocateInfo where
-        (VkMemoryAllocateInfo## a _) `compare` x@(VkMemoryAllocateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -278,18 +263,6 @@ instance Storable VkMemoryAllocateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryAllocateInfo where
-        unsafeAddr (VkMemoryAllocateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryAllocateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryAllocateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryAllocateInfo where
         type StructFields VkMemoryAllocateInfo =
@@ -447,17 +420,17 @@ instance Show VkMemoryAllocateInfo where
 --   > } VkMemoryBarrier;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryBarrier VkMemoryBarrier registry at www.khronos.org>
-data VkMemoryBarrier = VkMemoryBarrier## Addr## ByteArray##
+type VkMemoryBarrier = VulkanStruct VkMemoryBarrier' -- ' closing tick for hsc2hs
+
+data VkMemoryBarrier' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryBarrier where
-        (VkMemoryBarrier## a _) == x@(VkMemoryBarrier## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryBarrier where
-        (VkMemoryBarrier## a _) `compare` x@(VkMemoryBarrier## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -474,18 +447,6 @@ instance Storable VkMemoryBarrier where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryBarrier where
-        unsafeAddr (VkMemoryBarrier## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryBarrier## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryBarrier## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryBarrier where
         type StructFields VkMemoryBarrier =
@@ -639,19 +600,18 @@ instance Show VkMemoryBarrier where
 --   > } VkMemoryDedicatedAllocateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryDedicatedAllocateInfo VkMemoryDedicatedAllocateInfo registry at www.khronos.org>
-data VkMemoryDedicatedAllocateInfo = VkMemoryDedicatedAllocateInfo## Addr##
-                                                                    ByteArray##
+type VkMemoryDedicatedAllocateInfo =
+     VulkanStruct VkMemoryDedicatedAllocateInfo' -- ' closing tick for hsc2hs
+
+data VkMemoryDedicatedAllocateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryDedicatedAllocateInfo where
-        (VkMemoryDedicatedAllocateInfo## a _) ==
-          x@(VkMemoryDedicatedAllocateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryDedicatedAllocateInfo where
-        (VkMemoryDedicatedAllocateInfo## a _) `compare`
-          x@(VkMemoryDedicatedAllocateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -669,20 +629,6 @@ instance Storable VkMemoryDedicatedAllocateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryDedicatedAllocateInfo where
-        unsafeAddr (VkMemoryDedicatedAllocateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryDedicatedAllocateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryDedicatedAllocateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryDedicatedAllocateInfo where
         type StructFields VkMemoryDedicatedAllocateInfo =
@@ -848,19 +794,18 @@ type VkMemoryDedicatedAllocateInfoKHR =
 --   > } VkMemoryDedicatedRequirements;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryDedicatedRequirements VkMemoryDedicatedRequirements registry at www.khronos.org>
-data VkMemoryDedicatedRequirements = VkMemoryDedicatedRequirements## Addr##
-                                                                    ByteArray##
+type VkMemoryDedicatedRequirements =
+     VulkanStruct VkMemoryDedicatedRequirements' -- ' closing tick for hsc2hs
+
+data VkMemoryDedicatedRequirements' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryDedicatedRequirements where
-        (VkMemoryDedicatedRequirements## a _) ==
-          x@(VkMemoryDedicatedRequirements## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryDedicatedRequirements where
-        (VkMemoryDedicatedRequirements## a _) `compare`
-          x@(VkMemoryDedicatedRequirements## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -878,20 +823,6 @@ instance Storable VkMemoryDedicatedRequirements where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryDedicatedRequirements where
-        unsafeAddr (VkMemoryDedicatedRequirements## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryDedicatedRequirements## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryDedicatedRequirements##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryDedicatedRequirements where
         type StructFields VkMemoryDedicatedRequirements =
@@ -1085,18 +1016,18 @@ type VkMemoryDedicatedRequirementsKHR =
 --   > } VkMemoryFdPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryFdPropertiesKHR VkMemoryFdPropertiesKHR registry at www.khronos.org>
-data VkMemoryFdPropertiesKHR = VkMemoryFdPropertiesKHR## Addr##
-                                                        ByteArray##
+type VkMemoryFdPropertiesKHR =
+     VulkanStruct VkMemoryFdPropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkMemoryFdPropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryFdPropertiesKHR where
-        (VkMemoryFdPropertiesKHR## a _) == x@(VkMemoryFdPropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryFdPropertiesKHR where
-        (VkMemoryFdPropertiesKHR## a _) `compare`
-          x@(VkMemoryFdPropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1113,18 +1044,6 @@ instance Storable VkMemoryFdPropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryFdPropertiesKHR where
-        unsafeAddr (VkMemoryFdPropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryFdPropertiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryFdPropertiesKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryFdPropertiesKHR where
         type StructFields VkMemoryFdPropertiesKHR =
@@ -1248,17 +1167,17 @@ instance Show VkMemoryFdPropertiesKHR where
 --   > } VkMemoryGetFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetFdInfoKHR VkMemoryGetFdInfoKHR registry at www.khronos.org>
-data VkMemoryGetFdInfoKHR = VkMemoryGetFdInfoKHR## Addr## ByteArray##
+type VkMemoryGetFdInfoKHR = VulkanStruct VkMemoryGetFdInfoKHR' -- ' closing tick for hsc2hs
+
+data VkMemoryGetFdInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryGetFdInfoKHR where
-        (VkMemoryGetFdInfoKHR## a _) == x@(VkMemoryGetFdInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryGetFdInfoKHR where
-        (VkMemoryGetFdInfoKHR## a _) `compare` x@(VkMemoryGetFdInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1275,18 +1194,6 @@ instance Storable VkMemoryGetFdInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryGetFdInfoKHR where
-        unsafeAddr (VkMemoryGetFdInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryGetFdInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryGetFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryGetFdInfoKHR where
         type StructFields VkMemoryGetFdInfoKHR =
@@ -1442,17 +1349,17 @@ instance Show VkMemoryGetFdInfoKHR where
 --   > } VkMemoryHeap;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryHeap VkMemoryHeap registry at www.khronos.org>
-data VkMemoryHeap = VkMemoryHeap## Addr## ByteArray##
+type VkMemoryHeap = VulkanStruct VkMemoryHeap' -- ' closing tick for hsc2hs
+
+data VkMemoryHeap' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryHeap where
-        (VkMemoryHeap## a _) == x@(VkMemoryHeap## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryHeap where
-        (VkMemoryHeap## a _) `compare` x@(VkMemoryHeap## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1469,18 +1376,6 @@ instance Storable VkMemoryHeap where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryHeap where
-        unsafeAddr (VkMemoryHeap## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryHeap## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryHeap## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryHeap where
         type StructFields VkMemoryHeap = '["size", "flags"] -- ' closing tick for hsc2hs
@@ -1563,20 +1458,18 @@ instance Show VkMemoryHeap where
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryHostPointerPropertiesEXT VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
-data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## Addr##
-                                                                          ByteArray##
+type VkMemoryHostPointerPropertiesEXT =
+     VulkanStruct VkMemoryHostPointerPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkMemoryHostPointerPropertiesEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryHostPointerPropertiesEXT where
-        (VkMemoryHostPointerPropertiesEXT## a _) ==
-          x@(VkMemoryHostPointerPropertiesEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryHostPointerPropertiesEXT where
-        (VkMemoryHostPointerPropertiesEXT## a _) `compare`
-          x@(VkMemoryHostPointerPropertiesEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1594,20 +1487,6 @@ instance Storable VkMemoryHostPointerPropertiesEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryHostPointerPropertiesEXT where
-        unsafeAddr (VkMemoryHostPointerPropertiesEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryHostPointerPropertiesEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryHostPointerPropertiesEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
         type StructFields VkMemoryHostPointerPropertiesEXT =
@@ -1741,17 +1620,17 @@ instance Show VkMemoryHostPointerPropertiesEXT where
 --   > } VkMemoryRequirements;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryRequirements VkMemoryRequirements registry at www.khronos.org>
-data VkMemoryRequirements = VkMemoryRequirements## Addr## ByteArray##
+type VkMemoryRequirements = VulkanStruct VkMemoryRequirements' -- ' closing tick for hsc2hs
+
+data VkMemoryRequirements' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryRequirements where
-        (VkMemoryRequirements## a _) == x@(VkMemoryRequirements## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryRequirements where
-        (VkMemoryRequirements## a _) `compare` x@(VkMemoryRequirements## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1768,18 +1647,6 @@ instance Storable VkMemoryRequirements where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryRequirements where
-        unsafeAddr (VkMemoryRequirements## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryRequirements## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryRequirements## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryRequirements where
         type StructFields VkMemoryRequirements =
@@ -1901,18 +1768,17 @@ instance Show VkMemoryRequirements where
 --   > } VkMemoryRequirements2;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryRequirements2 VkMemoryRequirements2 registry at www.khronos.org>
-data VkMemoryRequirements2 = VkMemoryRequirements2## Addr##
-                                                    ByteArray##
+type VkMemoryRequirements2 = VulkanStruct VkMemoryRequirements2' -- ' closing tick for hsc2hs
+
+data VkMemoryRequirements2' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryRequirements2 where
-        (VkMemoryRequirements2## a _) == x@(VkMemoryRequirements2## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryRequirements2 where
-        (VkMemoryRequirements2## a _) `compare`
-          x@(VkMemoryRequirements2## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1929,18 +1795,6 @@ instance Storable VkMemoryRequirements2 where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryRequirements2 where
-        unsafeAddr (VkMemoryRequirements2## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryRequirements2## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryRequirements2## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryRequirements2 where
         type StructFields VkMemoryRequirements2 =
@@ -2067,17 +1921,17 @@ type VkMemoryRequirements2KHR = VkMemoryRequirements2
 --   > } VkMemoryType;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryType VkMemoryType registry at www.khronos.org>
-data VkMemoryType = VkMemoryType## Addr## ByteArray##
+type VkMemoryType = VulkanStruct VkMemoryType' -- ' closing tick for hsc2hs
+
+data VkMemoryType' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryType where
-        (VkMemoryType## a _) == x@(VkMemoryType## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryType where
-        (VkMemoryType## a _) `compare` x@(VkMemoryType## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2094,18 +1948,6 @@ instance Storable VkMemoryType where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryType where
-        unsafeAddr (VkMemoryType## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryType## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryType## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryType where
         type StructFields VkMemoryType = '["propertyFlags", "heapIndex"] -- ' closing tick for hsc2hs

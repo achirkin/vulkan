@@ -8,38 +8,41 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Display
-       (VkDisplayEventInfoEXT(..), VkDisplayModeCreateInfoKHR(..),
-        VkDisplayModeParametersKHR(..), VkDisplayModeProperties2KHR(..),
-        VkDisplayModePropertiesKHR(..), VkDisplayPlaneCapabilities2KHR(..),
-        VkDisplayPlaneCapabilitiesKHR(..), VkDisplayPlaneInfo2KHR(..),
-        VkDisplayPlaneProperties2KHR(..), VkDisplayPlanePropertiesKHR(..),
-        VkDisplayPowerInfoEXT(..), VkDisplayPresentInfoKHR(..),
-        VkDisplayProperties2KHR(..), VkDisplayPropertiesKHR(..),
-        VkDisplaySurfaceCreateInfoKHR(..))
+       (VkDisplayEventInfoEXT, VkDisplayEventInfoEXT', -- ' closing tick for hsc2hs
+        VkDisplayModeCreateInfoKHR, VkDisplayModeCreateInfoKHR', -- ' closing tick for hsc2hs
+        VkDisplayModeParametersKHR, VkDisplayModeParametersKHR', -- ' closing tick for hsc2hs
+        VkDisplayModeProperties2KHR, VkDisplayModeProperties2KHR', -- ' closing tick for hsc2hs
+        VkDisplayModePropertiesKHR, VkDisplayModePropertiesKHR', -- ' closing tick for hsc2hs
+        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilities2KHR', -- ' closing tick for hsc2hs
+        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR', -- ' closing tick for hsc2hs
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneInfo2KHR', -- ' closing tick for hsc2hs
+        VkDisplayPlaneProperties2KHR, VkDisplayPlaneProperties2KHR', -- ' closing tick for hsc2hs
+        VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR', -- ' closing tick for hsc2hs
+        VkDisplayPowerInfoEXT, VkDisplayPowerInfoEXT', -- ' closing tick for hsc2hs
+        VkDisplayPresentInfoKHR, VkDisplayPresentInfoKHR', -- ' closing tick for hsc2hs
+        VkDisplayProperties2KHR, VkDisplayProperties2KHR', -- ' closing tick for hsc2hs
+        VkDisplayPropertiesKHR, VkDisplayPropertiesKHR', -- ' closing tick for hsc2hs
+        VkDisplaySurfaceCreateInfoKHR, VkDisplaySurfaceCreateInfoKHR') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import           Graphics.Vulkan.Types.Bitmasks           (VkDisplayModeCreateFlagsKHR,
-                                                           VkDisplaySurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.Display       (VkDisplayEventTypeEXT,
-                                                           VkDisplayPlaneAlphaFlagBitsKHR,
-                                                           VkDisplayPlaneAlphaFlagsKHR,
-                                                           VkDisplayPowerStateEXT)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.Surface       (VkSurfaceTransformFlagBitsKHR,
-                                                           VkSurfaceTransformFlagsKHR)
-import           Graphics.Vulkan.Types.Handles            (VkDisplayKHR,
-                                                           VkDisplayModeKHR)
-import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
-import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
-import           Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR)
-import           Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import Graphics.Vulkan.Types.Bitmasks           (VkDisplayModeCreateFlagsKHR,
+                                                 VkDisplaySurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.Display       (VkDisplayEventTypeEXT,
+                                                 VkDisplayPlaneAlphaFlagBitsKHR,
+                                                 VkDisplayPlaneAlphaFlagsKHR,
+                                                 VkDisplayPowerStateEXT)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Enum.Surface       (VkSurfaceTransformFlagBitsKHR,
+                                                 VkSurfaceTransformFlagsKHR)
+import Graphics.Vulkan.Types.Handles            (VkDisplayKHR, VkDisplayModeKHR)
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
+import Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayEventInfoEXT {
 --   >     VkStructureType sType;
@@ -48,18 +51,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkDisplayEventInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayEventInfoEXT VkDisplayEventInfoEXT registry at www.khronos.org>
-data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## Addr##
-                                                    ByteArray##
+type VkDisplayEventInfoEXT = VulkanStruct VkDisplayEventInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDisplayEventInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayEventInfoEXT where
-        (VkDisplayEventInfoEXT## a _) == x@(VkDisplayEventInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayEventInfoEXT where
-        (VkDisplayEventInfoEXT## a _) `compare`
-          x@(VkDisplayEventInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -76,18 +78,6 @@ instance Storable VkDisplayEventInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayEventInfoEXT where
-        unsafeAddr (VkDisplayEventInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayEventInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayEventInfoEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayEventInfoEXT where
         type StructFields VkDisplayEventInfoEXT =
@@ -211,19 +201,18 @@ instance Show VkDisplayEventInfoEXT where
 --   > } VkDisplayModeCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeCreateInfoKHR VkDisplayModeCreateInfoKHR registry at www.khronos.org>
-data VkDisplayModeCreateInfoKHR = VkDisplayModeCreateInfoKHR## Addr##
-                                                              ByteArray##
+type VkDisplayModeCreateInfoKHR =
+     VulkanStruct VkDisplayModeCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayModeCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayModeCreateInfoKHR where
-        (VkDisplayModeCreateInfoKHR## a _) ==
-          x@(VkDisplayModeCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayModeCreateInfoKHR where
-        (VkDisplayModeCreateInfoKHR## a _) `compare`
-          x@(VkDisplayModeCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -240,20 +229,6 @@ instance Storable VkDisplayModeCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayModeCreateInfoKHR where
-        unsafeAddr (VkDisplayModeCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayModeCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayModeCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayModeCreateInfoKHR where
         type StructFields VkDisplayModeCreateInfoKHR =
@@ -413,19 +388,18 @@ instance Show VkDisplayModeCreateInfoKHR where
 --   > } VkDisplayModeParametersKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeParametersKHR VkDisplayModeParametersKHR registry at www.khronos.org>
-data VkDisplayModeParametersKHR = VkDisplayModeParametersKHR## Addr##
-                                                              ByteArray##
+type VkDisplayModeParametersKHR =
+     VulkanStruct VkDisplayModeParametersKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayModeParametersKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayModeParametersKHR where
-        (VkDisplayModeParametersKHR## a _) ==
-          x@(VkDisplayModeParametersKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayModeParametersKHR where
-        (VkDisplayModeParametersKHR## a _) `compare`
-          x@(VkDisplayModeParametersKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -442,20 +416,6 @@ instance Storable VkDisplayModeParametersKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayModeParametersKHR where
-        unsafeAddr (VkDisplayModeParametersKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayModeParametersKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayModeParametersKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayModeParametersKHR where
         type StructFields VkDisplayModeParametersKHR =
@@ -548,19 +508,18 @@ instance Show VkDisplayModeParametersKHR where
 --   > } VkDisplayModeProperties2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeProperties2KHR VkDisplayModeProperties2KHR registry at www.khronos.org>
-data VkDisplayModeProperties2KHR = VkDisplayModeProperties2KHR## Addr##
-                                                                ByteArray##
+type VkDisplayModeProperties2KHR =
+     VulkanStruct VkDisplayModeProperties2KHR' -- ' closing tick for hsc2hs
+
+data VkDisplayModeProperties2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayModeProperties2KHR where
-        (VkDisplayModeProperties2KHR## a _) ==
-          x@(VkDisplayModeProperties2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayModeProperties2KHR where
-        (VkDisplayModeProperties2KHR## a _) `compare`
-          x@(VkDisplayModeProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -577,20 +536,6 @@ instance Storable VkDisplayModeProperties2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayModeProperties2KHR where
-        unsafeAddr (VkDisplayModeProperties2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayModeProperties2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayModeProperties2KHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayModeProperties2KHR where
         type StructFields VkDisplayModeProperties2KHR =
@@ -723,19 +668,18 @@ instance Show VkDisplayModeProperties2KHR where
 --   > } VkDisplayModePropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModePropertiesKHR VkDisplayModePropertiesKHR registry at www.khronos.org>
-data VkDisplayModePropertiesKHR = VkDisplayModePropertiesKHR## Addr##
-                                                              ByteArray##
+type VkDisplayModePropertiesKHR =
+     VulkanStruct VkDisplayModePropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayModePropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayModePropertiesKHR where
-        (VkDisplayModePropertiesKHR## a _) ==
-          x@(VkDisplayModePropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayModePropertiesKHR where
-        (VkDisplayModePropertiesKHR## a _) `compare`
-          x@(VkDisplayModePropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -752,20 +696,6 @@ instance Storable VkDisplayModePropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayModePropertiesKHR where
-        unsafeAddr (VkDisplayModePropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayModePropertiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayModePropertiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayModePropertiesKHR where
         type StructFields VkDisplayModePropertiesKHR =
@@ -857,19 +787,18 @@ instance Show VkDisplayModePropertiesKHR where
 --   > } VkDisplayPlaneCapabilities2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneCapabilities2KHR VkDisplayPlaneCapabilities2KHR registry at www.khronos.org>
-data VkDisplayPlaneCapabilities2KHR = VkDisplayPlaneCapabilities2KHR## Addr##
-                                                                      ByteArray##
+type VkDisplayPlaneCapabilities2KHR =
+     VulkanStruct VkDisplayPlaneCapabilities2KHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPlaneCapabilities2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPlaneCapabilities2KHR where
-        (VkDisplayPlaneCapabilities2KHR## a _) ==
-          x@(VkDisplayPlaneCapabilities2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPlaneCapabilities2KHR where
-        (VkDisplayPlaneCapabilities2KHR## a _) `compare`
-          x@(VkDisplayPlaneCapabilities2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -887,20 +816,6 @@ instance Storable VkDisplayPlaneCapabilities2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPlaneCapabilities2KHR where
-        unsafeAddr (VkDisplayPlaneCapabilities2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPlaneCapabilities2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPlaneCapabilities2KHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPlaneCapabilities2KHR where
         type StructFields VkDisplayPlaneCapabilities2KHR =
@@ -1034,19 +949,18 @@ instance Show VkDisplayPlaneCapabilities2KHR where
 --   > } VkDisplayPlaneCapabilitiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneCapabilitiesKHR VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
-data VkDisplayPlaneCapabilitiesKHR = VkDisplayPlaneCapabilitiesKHR## Addr##
-                                                                    ByteArray##
+type VkDisplayPlaneCapabilitiesKHR =
+     VulkanStruct VkDisplayPlaneCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPlaneCapabilitiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPlaneCapabilitiesKHR where
-        (VkDisplayPlaneCapabilitiesKHR## a _) ==
-          x@(VkDisplayPlaneCapabilitiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPlaneCapabilitiesKHR where
-        (VkDisplayPlaneCapabilitiesKHR## a _) `compare`
-          x@(VkDisplayPlaneCapabilitiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1064,20 +978,6 @@ instance Storable VkDisplayPlaneCapabilitiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPlaneCapabilitiesKHR where
-        unsafeAddr (VkDisplayPlaneCapabilitiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPlaneCapabilitiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPlaneCapabilitiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPlaneCapabilitiesKHR where
         type StructFields VkDisplayPlaneCapabilitiesKHR =
@@ -1443,18 +1343,17 @@ instance Show VkDisplayPlaneCapabilitiesKHR where
 --   > } VkDisplayPlaneInfo2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneInfo2KHR VkDisplayPlaneInfo2KHR registry at www.khronos.org>
-data VkDisplayPlaneInfo2KHR = VkDisplayPlaneInfo2KHR## Addr##
-                                                      ByteArray##
+type VkDisplayPlaneInfo2KHR = VulkanStruct VkDisplayPlaneInfo2KHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPlaneInfo2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPlaneInfo2KHR where
-        (VkDisplayPlaneInfo2KHR## a _) == x@(VkDisplayPlaneInfo2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPlaneInfo2KHR where
-        (VkDisplayPlaneInfo2KHR## a _) `compare`
-          x@(VkDisplayPlaneInfo2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1471,18 +1370,6 @@ instance Storable VkDisplayPlaneInfo2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPlaneInfo2KHR where
-        unsafeAddr (VkDisplayPlaneInfo2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPlaneInfo2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPlaneInfo2KHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPlaneInfo2KHR where
         type StructFields VkDisplayPlaneInfo2KHR =
@@ -1638,19 +1525,18 @@ instance Show VkDisplayPlaneInfo2KHR where
 --   > } VkDisplayPlaneProperties2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneProperties2KHR VkDisplayPlaneProperties2KHR registry at www.khronos.org>
-data VkDisplayPlaneProperties2KHR = VkDisplayPlaneProperties2KHR## Addr##
-                                                                  ByteArray##
+type VkDisplayPlaneProperties2KHR =
+     VulkanStruct VkDisplayPlaneProperties2KHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPlaneProperties2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPlaneProperties2KHR where
-        (VkDisplayPlaneProperties2KHR## a _) ==
-          x@(VkDisplayPlaneProperties2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPlaneProperties2KHR where
-        (VkDisplayPlaneProperties2KHR## a _) `compare`
-          x@(VkDisplayPlaneProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1668,20 +1554,6 @@ instance Storable VkDisplayPlaneProperties2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPlaneProperties2KHR where
-        unsafeAddr (VkDisplayPlaneProperties2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPlaneProperties2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPlaneProperties2KHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPlaneProperties2KHR where
         type StructFields VkDisplayPlaneProperties2KHR =
@@ -1816,19 +1688,18 @@ instance Show VkDisplayPlaneProperties2KHR where
 --   > } VkDisplayPlanePropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlanePropertiesKHR VkDisplayPlanePropertiesKHR registry at www.khronos.org>
-data VkDisplayPlanePropertiesKHR = VkDisplayPlanePropertiesKHR## Addr##
-                                                                ByteArray##
+type VkDisplayPlanePropertiesKHR =
+     VulkanStruct VkDisplayPlanePropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPlanePropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPlanePropertiesKHR where
-        (VkDisplayPlanePropertiesKHR## a _) ==
-          x@(VkDisplayPlanePropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPlanePropertiesKHR where
-        (VkDisplayPlanePropertiesKHR## a _) `compare`
-          x@(VkDisplayPlanePropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1845,20 +1716,6 @@ instance Storable VkDisplayPlanePropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPlanePropertiesKHR where
-        unsafeAddr (VkDisplayPlanePropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPlanePropertiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPlanePropertiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPlanePropertiesKHR where
         type StructFields VkDisplayPlanePropertiesKHR =
@@ -1953,18 +1810,17 @@ instance Show VkDisplayPlanePropertiesKHR where
 --   > } VkDisplayPowerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerInfoEXT VkDisplayPowerInfoEXT registry at www.khronos.org>
-data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## Addr##
-                                                    ByteArray##
+type VkDisplayPowerInfoEXT = VulkanStruct VkDisplayPowerInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDisplayPowerInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPowerInfoEXT where
-        (VkDisplayPowerInfoEXT## a _) == x@(VkDisplayPowerInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPowerInfoEXT where
-        (VkDisplayPowerInfoEXT## a _) `compare`
-          x@(VkDisplayPowerInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1981,18 +1837,6 @@ instance Storable VkDisplayPowerInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPowerInfoEXT where
-        unsafeAddr (VkDisplayPowerInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPowerInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPowerInfoEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPowerInfoEXT where
         type StructFields VkDisplayPowerInfoEXT =
@@ -2117,18 +1961,18 @@ instance Show VkDisplayPowerInfoEXT where
 --   > } VkDisplayPresentInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPresentInfoKHR VkDisplayPresentInfoKHR registry at www.khronos.org>
-data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## Addr##
-                                                        ByteArray##
+type VkDisplayPresentInfoKHR =
+     VulkanStruct VkDisplayPresentInfoKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPresentInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPresentInfoKHR where
-        (VkDisplayPresentInfoKHR## a _) == x@(VkDisplayPresentInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPresentInfoKHR where
-        (VkDisplayPresentInfoKHR## a _) `compare`
-          x@(VkDisplayPresentInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2145,18 +1989,6 @@ instance Storable VkDisplayPresentInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPresentInfoKHR where
-        unsafeAddr (VkDisplayPresentInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPresentInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPresentInfoKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPresentInfoKHR where
         type StructFields VkDisplayPresentInfoKHR =
@@ -2348,18 +2180,18 @@ instance Show VkDisplayPresentInfoKHR where
 --   > } VkDisplayProperties2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayProperties2KHR VkDisplayProperties2KHR registry at www.khronos.org>
-data VkDisplayProperties2KHR = VkDisplayProperties2KHR## Addr##
-                                                        ByteArray##
+type VkDisplayProperties2KHR =
+     VulkanStruct VkDisplayProperties2KHR' -- ' closing tick for hsc2hs
+
+data VkDisplayProperties2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayProperties2KHR where
-        (VkDisplayProperties2KHR## a _) == x@(VkDisplayProperties2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayProperties2KHR where
-        (VkDisplayProperties2KHR## a _) `compare`
-          x@(VkDisplayProperties2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2376,18 +2208,6 @@ instance Storable VkDisplayProperties2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayProperties2KHR where
-        unsafeAddr (VkDisplayProperties2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayProperties2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayProperties2KHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayProperties2KHR where
         type StructFields VkDisplayProperties2KHR =
@@ -2516,18 +2336,17 @@ instance Show VkDisplayProperties2KHR where
 --   > } VkDisplayPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPropertiesKHR VkDisplayPropertiesKHR registry at www.khronos.org>
-data VkDisplayPropertiesKHR = VkDisplayPropertiesKHR## Addr##
-                                                      ByteArray##
+type VkDisplayPropertiesKHR = VulkanStruct VkDisplayPropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkDisplayPropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplayPropertiesKHR where
-        (VkDisplayPropertiesKHR## a _) == x@(VkDisplayPropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPropertiesKHR where
-        (VkDisplayPropertiesKHR## a _) `compare`
-          x@(VkDisplayPropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2544,18 +2363,6 @@ instance Storable VkDisplayPropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplayPropertiesKHR where
-        unsafeAddr (VkDisplayPropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplayPropertiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplayPropertiesKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPropertiesKHR where
         type StructFields VkDisplayPropertiesKHR =
@@ -2843,19 +2650,18 @@ instance Show VkDisplayPropertiesKHR where
 --   > } VkDisplaySurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplaySurfaceCreateInfoKHR VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
-data VkDisplaySurfaceCreateInfoKHR = VkDisplaySurfaceCreateInfoKHR## Addr##
-                                                                    ByteArray##
+type VkDisplaySurfaceCreateInfoKHR =
+     VulkanStruct VkDisplaySurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkDisplaySurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkDisplaySurfaceCreateInfoKHR where
-        (VkDisplaySurfaceCreateInfoKHR## a _) ==
-          x@(VkDisplaySurfaceCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplaySurfaceCreateInfoKHR where
-        (VkDisplaySurfaceCreateInfoKHR## a _) `compare`
-          x@(VkDisplaySurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2873,20 +2679,6 @@ instance Storable VkDisplaySurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDisplaySurfaceCreateInfoKHR where
-        unsafeAddr (VkDisplaySurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDisplaySurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDisplaySurfaceCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplaySurfaceCreateInfoKHR where
         type StructFields VkDisplaySurfaceCreateInfoKHR =

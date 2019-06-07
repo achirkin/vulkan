@@ -22,18 +22,19 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         -- type: @device@
         --
         -- Extension number: @88@
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
-        module Graphics.Vulkan.Types.Struct.Rect,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.Viewport,
+        module Graphics.Vulkan.Types.BaseTypes, VkExtent2D, VkExtent2D',
+        VkOffset2D, VkOffset2D', module Graphics.Vulkan.Types.Bitmasks,
+        VkPipelineViewportStateCreateInfo,
+        VkPipelineViewportStateCreateInfo',
+        VkPipelineViewportWScalingStateCreateInfoNV,
+        VkPipelineViewportWScalingStateCreateInfoNV', VkRect2D, VkRect2D',
+        module Graphics.Vulkan.Types.Enum.StructureType, VkViewport,
+        VkViewport', VkViewportWScalingNV, VkViewportWScalingNV',
         -- > #include "vk_platform.h"
         VkCmdSetViewportWScalingNV, pattern VkCmdSetViewportWScalingNV,
         HS_vkCmdSetViewportWScalingNV, PFN_vkCmdSetViewportWScalingNV,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Viewport,
         VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
         pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
         VK_NV_CLIP_SPACE_W_SCALING_EXTENSION_NAME,
@@ -41,19 +42,22 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
         pattern VK_DYNAMIC_STATE_VIEWPORT_W_SCALING_NV)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.DynamicState  (VkDynamicState (..))
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
-import           Graphics.Vulkan.Types.Struct.Pipeline
-import           Graphics.Vulkan.Types.Struct.Rect
-import           Graphics.Vulkan.Types.Struct.Viewport
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.DynamicState  (VkDynamicState (..))
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D, VkExtent2D')
+import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D, VkOffset2D')
+import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineViewportStateCreateInfo,
+                                                 VkPipelineViewportStateCreateInfo',
+                                                 VkPipelineViewportWScalingStateCreateInfoNV,
+                                                 VkPipelineViewportWScalingStateCreateInfoNV')
+import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D, VkRect2D')
+import Graphics.Vulkan.Types.Struct.Viewport
 
 pattern VkCmdSetViewportWScalingNV :: CString
 

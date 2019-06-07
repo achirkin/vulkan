@@ -32,9 +32,17 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.External,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Import,
-        module Graphics.Vulkan.Types.Struct.Memory,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        VkImportMemoryHostPointerInfoEXT,
+        VkImportMemoryHostPointerInfoEXT', VkMemoryAllocateInfo,
+        VkMemoryAllocateInfo', VkMemoryHostPointerPropertiesEXT,
+        VkMemoryHostPointerPropertiesEXT',
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT',
+        VkPhysicalDeviceLimits, VkPhysicalDeviceLimits',
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties',
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2',
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties',
         module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.StructureType,
@@ -45,6 +53,7 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         PFN_vkGetMemoryHostPointerPropertiesEXT,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Memory,
         VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
         pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
         VK_EXT_EXTERNAL_MEMORY_HOST_EXTENSION_NAME,
@@ -55,20 +64,30 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT,
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT)
        where
-import           GHC.Ptr                                       (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.External
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Import
-import           Graphics.Vulkan.Types.Struct.Memory
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import GHC.Ptr                                       (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.External
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Import           (VkImportMemoryHostPointerInfoEXT,
+                                                      VkImportMemoryHostPointerInfoEXT')
+import Graphics.Vulkan.Types.Struct.Memory
+import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+                                                      VkPhysicalDeviceExternalMemoryHostPropertiesEXT',
+                                                      VkPhysicalDeviceLimits,
+                                                      VkPhysicalDeviceLimits',
+                                                      VkPhysicalDeviceProperties,
+                                                      VkPhysicalDeviceProperties',
+                                                      VkPhysicalDeviceProperties2,
+                                                      VkPhysicalDeviceProperties2',
+                                                      VkPhysicalDeviceSparseProperties,
+                                                      VkPhysicalDeviceSparseProperties')
 
 pattern VkGetMemoryHostPointerPropertiesEXT :: CString
 

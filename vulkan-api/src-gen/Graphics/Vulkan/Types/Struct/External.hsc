@@ -8,39 +8,41 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.External
-       (VkExternalBufferProperties(..), VkExternalBufferPropertiesKHR,
-        VkExternalFenceProperties(..), VkExternalFencePropertiesKHR,
-        VkExternalImageFormatProperties(..),
+       (VkExternalBufferProperties, VkExternalBufferProperties', -- ' closing tick for hsc2hs
+        VkExternalBufferPropertiesKHR, VkExternalFenceProperties,
+        VkExternalFenceProperties', VkExternalFencePropertiesKHR, -- ' closing tick for hsc2hs
+        VkExternalImageFormatProperties, VkExternalImageFormatProperties', -- ' closing tick for hsc2hs
         VkExternalImageFormatPropertiesKHR,
-        VkExternalImageFormatPropertiesNV(..),
-        VkExternalMemoryBufferCreateInfo(..),
+        VkExternalImageFormatPropertiesNV,
+        VkExternalImageFormatPropertiesNV', -- ' closing tick for hsc2hs
+        VkExternalMemoryBufferCreateInfo,
+        VkExternalMemoryBufferCreateInfo', -- ' closing tick for hsc2hs
         VkExternalMemoryBufferCreateInfoKHR,
-        VkExternalMemoryImageCreateInfo(..),
+        VkExternalMemoryImageCreateInfo, VkExternalMemoryImageCreateInfo', -- ' closing tick for hsc2hs
         VkExternalMemoryImageCreateInfoKHR,
-        VkExternalMemoryImageCreateInfoNV(..),
-        VkExternalMemoryProperties(..), VkExternalMemoryPropertiesKHR,
-        VkExternalSemaphoreProperties(..),
+        VkExternalMemoryImageCreateInfoNV,
+        VkExternalMemoryImageCreateInfoNV', VkExternalMemoryProperties, -- ' closing tick for hsc2hs
+        VkExternalMemoryProperties', VkExternalMemoryPropertiesKHR, -- ' closing tick for hsc2hs
+        VkExternalSemaphoreProperties, VkExternalSemaphoreProperties', -- ' closing tick for hsc2hs
         VkExternalSemaphorePropertiesKHR)
        where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.External      (VkExternalFenceFeatureFlags,
-                                                           VkExternalFenceHandleTypeFlags,
-                                                           VkExternalMemoryFeatureFlags,
-                                                           VkExternalMemoryFeatureFlagsNV,
-                                                           VkExternalMemoryHandleTypeFlags,
-                                                           VkExternalMemoryHandleTypeFlagsNV,
-                                                           VkExternalSemaphoreFeatureFlags,
-                                                           VkExternalSemaphoreHandleTypeFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
-import           Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo, VkImageFormatProperties,
-                                                           VkImageFormatProperties2)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.External      (VkExternalFenceFeatureFlags,
+                                                 VkExternalFenceHandleTypeFlags,
+                                                 VkExternalMemoryFeatureFlags,
+                                                 VkExternalMemoryFeatureFlagsNV,
+                                                 VkExternalMemoryHandleTypeFlags,
+                                                 VkExternalMemoryHandleTypeFlagsNV,
+                                                 VkExternalSemaphoreFeatureFlags,
+                                                 VkExternalSemaphoreHandleTypeFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
+import Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo,
+                                                 VkImageFormatProperties,
+                                                 VkImageFormatProperties2)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalBufferProperties {
 --   >     VkStructureType sType;
@@ -49,19 +51,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkExternalBufferProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalBufferProperties VkExternalBufferProperties registry at www.khronos.org>
-data VkExternalBufferProperties = VkExternalBufferProperties## Addr##
-                                                              ByteArray##
+type VkExternalBufferProperties =
+     VulkanStruct VkExternalBufferProperties' -- ' closing tick for hsc2hs
+
+data VkExternalBufferProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalBufferProperties where
-        (VkExternalBufferProperties## a _) ==
-          x@(VkExternalBufferProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalBufferProperties where
-        (VkExternalBufferProperties## a _) `compare`
-          x@(VkExternalBufferProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -78,20 +79,6 @@ instance Storable VkExternalBufferProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalBufferProperties where
-        unsafeAddr (VkExternalBufferProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalBufferProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalBufferProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalBufferProperties where
         type StructFields VkExternalBufferProperties =
@@ -231,18 +218,18 @@ type VkExternalBufferPropertiesKHR = VkExternalBufferProperties
 --   > } VkExternalFenceProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalFenceProperties VkExternalFenceProperties registry at www.khronos.org>
-data VkExternalFenceProperties = VkExternalFenceProperties## Addr##
-                                                            ByteArray##
+type VkExternalFenceProperties =
+     VulkanStruct VkExternalFenceProperties' -- ' closing tick for hsc2hs
+
+data VkExternalFenceProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalFenceProperties where
-        (VkExternalFenceProperties## a _) ==
-          x@(VkExternalFenceProperties## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalFenceProperties where
-        (VkExternalFenceProperties## a _) `compare`
-          x@(VkExternalFenceProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -259,19 +246,6 @@ instance Storable VkExternalFenceProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalFenceProperties where
-        unsafeAddr (VkExternalFenceProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalFenceProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalFenceProperties## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalFenceProperties where
         type StructFields VkExternalFenceProperties =
@@ -497,19 +471,18 @@ type VkExternalFencePropertiesKHR = VkExternalFenceProperties
 --   > } VkExternalImageFormatProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalImageFormatProperties VkExternalImageFormatProperties registry at www.khronos.org>
-data VkExternalImageFormatProperties = VkExternalImageFormatProperties## Addr##
-                                                                        ByteArray##
+type VkExternalImageFormatProperties =
+     VulkanStruct VkExternalImageFormatProperties' -- ' closing tick for hsc2hs
+
+data VkExternalImageFormatProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalImageFormatProperties where
-        (VkExternalImageFormatProperties## a _) ==
-          x@(VkExternalImageFormatProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalImageFormatProperties where
-        (VkExternalImageFormatProperties## a _) `compare`
-          x@(VkExternalImageFormatProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -527,20 +500,6 @@ instance Storable VkExternalImageFormatProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalImageFormatProperties where
-        unsafeAddr (VkExternalImageFormatProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalImageFormatProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalImageFormatProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalImageFormatProperties where
         type StructFields VkExternalImageFormatProperties =
@@ -684,20 +643,18 @@ type VkExternalImageFormatPropertiesKHR =
 --   > } VkExternalImageFormatPropertiesNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalImageFormatPropertiesNV VkExternalImageFormatPropertiesNV registry at www.khronos.org>
-data VkExternalImageFormatPropertiesNV = VkExternalImageFormatPropertiesNV## Addr##
-                                                                            ByteArray##
+type VkExternalImageFormatPropertiesNV =
+     VulkanStruct VkExternalImageFormatPropertiesNV' -- ' closing tick for hsc2hs
+
+data VkExternalImageFormatPropertiesNV' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalImageFormatPropertiesNV where
-        (VkExternalImageFormatPropertiesNV## a _) ==
-          x@(VkExternalImageFormatPropertiesNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalImageFormatPropertiesNV where
-        (VkExternalImageFormatPropertiesNV## a _) `compare`
-          x@(VkExternalImageFormatPropertiesNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -715,20 +672,6 @@ instance Storable VkExternalImageFormatPropertiesNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalImageFormatPropertiesNV where
-        unsafeAddr (VkExternalImageFormatPropertiesNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalImageFormatPropertiesNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalImageFormatPropertiesNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalImageFormatPropertiesNV where
         type StructFields VkExternalImageFormatPropertiesNV =
@@ -941,20 +884,18 @@ instance Show VkExternalImageFormatPropertiesNV where
 --   > } VkExternalMemoryBufferCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryBufferCreateInfo VkExternalMemoryBufferCreateInfo registry at www.khronos.org>
-data VkExternalMemoryBufferCreateInfo = VkExternalMemoryBufferCreateInfo## Addr##
-                                                                          ByteArray##
+type VkExternalMemoryBufferCreateInfo =
+     VulkanStruct VkExternalMemoryBufferCreateInfo' -- ' closing tick for hsc2hs
+
+data VkExternalMemoryBufferCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalMemoryBufferCreateInfo where
-        (VkExternalMemoryBufferCreateInfo## a _) ==
-          x@(VkExternalMemoryBufferCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryBufferCreateInfo where
-        (VkExternalMemoryBufferCreateInfo## a _) `compare`
-          x@(VkExternalMemoryBufferCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -972,20 +913,6 @@ instance Storable VkExternalMemoryBufferCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalMemoryBufferCreateInfo where
-        unsafeAddr (VkExternalMemoryBufferCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalMemoryBufferCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalMemoryBufferCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryBufferCreateInfo where
         type StructFields VkExternalMemoryBufferCreateInfo =
@@ -1120,19 +1047,18 @@ type VkExternalMemoryBufferCreateInfoKHR =
 --   > } VkExternalMemoryImageCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfo VkExternalMemoryImageCreateInfo registry at www.khronos.org>
-data VkExternalMemoryImageCreateInfo = VkExternalMemoryImageCreateInfo## Addr##
-                                                                        ByteArray##
+type VkExternalMemoryImageCreateInfo =
+     VulkanStruct VkExternalMemoryImageCreateInfo' -- ' closing tick for hsc2hs
+
+data VkExternalMemoryImageCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalMemoryImageCreateInfo where
-        (VkExternalMemoryImageCreateInfo## a _) ==
-          x@(VkExternalMemoryImageCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryImageCreateInfo where
-        (VkExternalMemoryImageCreateInfo## a _) `compare`
-          x@(VkExternalMemoryImageCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1150,20 +1076,6 @@ instance Storable VkExternalMemoryImageCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalMemoryImageCreateInfo where
-        unsafeAddr (VkExternalMemoryImageCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalMemoryImageCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalMemoryImageCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryImageCreateInfo where
         type StructFields VkExternalMemoryImageCreateInfo =
@@ -1296,20 +1208,18 @@ type VkExternalMemoryImageCreateInfoKHR =
 --   > } VkExternalMemoryImageCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfoNV VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
-data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV## Addr##
-                                                                            ByteArray##
+type VkExternalMemoryImageCreateInfoNV =
+     VulkanStruct VkExternalMemoryImageCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkExternalMemoryImageCreateInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalMemoryImageCreateInfoNV where
-        (VkExternalMemoryImageCreateInfoNV## a _) ==
-          x@(VkExternalMemoryImageCreateInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryImageCreateInfoNV where
-        (VkExternalMemoryImageCreateInfoNV## a _) `compare`
-          x@(VkExternalMemoryImageCreateInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1327,20 +1237,6 @@ instance Storable VkExternalMemoryImageCreateInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalMemoryImageCreateInfoNV where
-        unsafeAddr (VkExternalMemoryImageCreateInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalMemoryImageCreateInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalMemoryImageCreateInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryImageCreateInfoNV where
         type StructFields VkExternalMemoryImageCreateInfoNV =
@@ -1473,19 +1369,18 @@ instance Show VkExternalMemoryImageCreateInfoNV where
 --   > } VkExternalMemoryProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryProperties VkExternalMemoryProperties registry at www.khronos.org>
-data VkExternalMemoryProperties = VkExternalMemoryProperties## Addr##
-                                                              ByteArray##
+type VkExternalMemoryProperties =
+     VulkanStruct VkExternalMemoryProperties' -- ' closing tick for hsc2hs
+
+data VkExternalMemoryProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalMemoryProperties where
-        (VkExternalMemoryProperties## a _) ==
-          x@(VkExternalMemoryProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryProperties where
-        (VkExternalMemoryProperties## a _) `compare`
-          x@(VkExternalMemoryProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1502,20 +1397,6 @@ instance Storable VkExternalMemoryProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalMemoryProperties where
-        unsafeAddr (VkExternalMemoryProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalMemoryProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalMemoryProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryProperties where
         type StructFields VkExternalMemoryProperties =
@@ -1675,19 +1556,18 @@ type VkExternalMemoryPropertiesKHR = VkExternalMemoryProperties
 --   > } VkExternalSemaphoreProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalSemaphoreProperties VkExternalSemaphoreProperties registry at www.khronos.org>
-data VkExternalSemaphoreProperties = VkExternalSemaphoreProperties## Addr##
-                                                                    ByteArray##
+type VkExternalSemaphoreProperties =
+     VulkanStruct VkExternalSemaphoreProperties' -- ' closing tick for hsc2hs
+
+data VkExternalSemaphoreProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkExternalSemaphoreProperties where
-        (VkExternalSemaphoreProperties## a _) ==
-          x@(VkExternalSemaphoreProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalSemaphoreProperties where
-        (VkExternalSemaphoreProperties## a _) `compare`
-          x@(VkExternalSemaphoreProperties## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1705,20 +1585,6 @@ instance Storable VkExternalSemaphoreProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExternalSemaphoreProperties where
-        unsafeAddr (VkExternalSemaphoreProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExternalSemaphoreProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExternalSemaphoreProperties##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalSemaphoreProperties where
         type StructFields VkExternalSemaphoreProperties =

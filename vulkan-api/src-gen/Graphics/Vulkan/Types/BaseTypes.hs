@@ -6,12 +6,12 @@
 module Graphics.Vulkan.Types.BaseTypes
        (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..))
        where
-import           Data.Bits               (Bits, FiniteBits)
-import           Data.Coerce             (coerce)
-import           Data.Data               (Data)
-import           Foreign.Storable        (Storable)
-import           GHC.Generics            (Generic)
-import           Graphics.Vulkan.Marshal (Word32, Word64)
+import Data.Bits               (Bits, FiniteBits)
+import Data.Coerce             (coerce)
+import Data.Data               (Data)
+import Foreign.Storable        (Storable)
+import GHC.Generics            (Generic)
+import Graphics.Vulkan.Marshal (Word32, Word64)
 
 newtype VkBool32 = VkBool32 Word32
                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,

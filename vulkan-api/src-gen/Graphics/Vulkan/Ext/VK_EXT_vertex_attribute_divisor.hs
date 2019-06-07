@@ -24,14 +24,26 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.Format, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProperties2', VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties',
         module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT',
+        VkPipelineVertexInputDivisorStateCreateInfoEXT,
+        VkPipelineVertexInputDivisorStateCreateInfoEXT',
         module Graphics.Vulkan.Types.Bitmasks,
+        VkPipelineVertexInputStateCreateInfo,
+        VkPipelineVertexInputStateCreateInfo',
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.VertexInput,
+        VkVertexInputAttributeDescription,
+        VkVertexInputAttributeDescription',
+        VkVertexInputBindingDescription, VkVertexInputBindingDescription',
+        VkVertexInputBindingDivisorDescriptionEXT,
+        VkVertexInputBindingDivisorDescriptionEXT',
         module Graphics.Vulkan.Types.Enum.VertexInputRate,
         -- > #include "vk_platform.h"
         VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION,
@@ -41,18 +53,35 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
         pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT)
        where
-import           GHC.Ptr                                       (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.VertexInputRate
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.Pipeline
-import           Graphics.Vulkan.Types.Struct.VertexInput
+import GHC.Ptr                                       (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.VertexInputRate
+import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
+                                                      VkPhysicalDeviceLimits',
+                                                      VkPhysicalDeviceProperties,
+                                                      VkPhysicalDeviceProperties',
+                                                      VkPhysicalDeviceProperties2,
+                                                      VkPhysicalDeviceProperties2',
+                                                      VkPhysicalDeviceSparseProperties,
+                                                      VkPhysicalDeviceSparseProperties',
+                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT')
+import Graphics.Vulkan.Types.Struct.Pipeline         (VkPipelineVertexInputDivisorStateCreateInfoEXT,
+                                                      VkPipelineVertexInputDivisorStateCreateInfoEXT',
+                                                      VkPipelineVertexInputStateCreateInfo,
+                                                      VkPipelineVertexInputStateCreateInfo')
+import Graphics.Vulkan.Types.Struct.VertexInput      (VkVertexInputAttributeDescription,
+                                                      VkVertexInputAttributeDescription',
+                                                      VkVertexInputBindingDescription,
+                                                      VkVertexInputBindingDescription',
+                                                      VkVertexInputBindingDivisorDescriptionEXT,
+                                                      VkVertexInputBindingDivisorDescriptionEXT')
 
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION ::
         (Num a, Eq a) => a

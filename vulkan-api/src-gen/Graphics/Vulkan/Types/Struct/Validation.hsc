@@ -8,20 +8,17 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Validation
-       (VkValidationCacheCreateInfoEXT(..), VkValidationFlagsEXT(..))
+       (VkValidationCacheCreateInfoEXT, VkValidationCacheCreateInfoEXT', -- ' closing tick for hsc2hs
+        VkValidationFlagsEXT, VkValidationFlagsEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                (Storable (..))
-import           GHC.Base                                        (Addr##,
-                                                                  ByteArray##,
-                                                                  byteArrayContents##,
-                                                                  plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks                  (VkValidationCacheCreateFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.ValidationC          (VkValidationCheckEXT)
-import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
-import           System.IO.Unsafe                                (unsafeDupablePerformIO)
+import Foreign.Storable                                (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks                  (VkValidationCacheCreateFlagsEXT)
+import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import Graphics.Vulkan.Types.Enum.ValidationC          (VkValidationCheckEXT)
+import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkValidationCacheCreateInfoEXT {
 --   >     VkStructureType sType;
@@ -32,19 +29,18 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   > } VkValidationCacheCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationCacheCreateInfoEXT VkValidationCacheCreateInfoEXT registry at www.khronos.org>
-data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## Addr##
-                                                                      ByteArray##
+type VkValidationCacheCreateInfoEXT =
+     VulkanStruct VkValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkValidationCacheCreateInfoEXT where
-        (VkValidationCacheCreateInfoEXT## a _) ==
-          x@(VkValidationCacheCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkValidationCacheCreateInfoEXT where
-        (VkValidationCacheCreateInfoEXT## a _) `compare`
-          x@(VkValidationCacheCreateInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -62,20 +58,6 @@ instance Storable VkValidationCacheCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkValidationCacheCreateInfoEXT where
-        unsafeAddr (VkValidationCacheCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkValidationCacheCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkValidationCacheCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkValidationCacheCreateInfoEXT where
         type StructFields VkValidationCacheCreateInfoEXT =
@@ -279,17 +261,17 @@ instance Show VkValidationCacheCreateInfoEXT where
 --   > } VkValidationFlagsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationFlagsEXT VkValidationFlagsEXT registry at www.khronos.org>
-data VkValidationFlagsEXT = VkValidationFlagsEXT## Addr## ByteArray##
+type VkValidationFlagsEXT = VulkanStruct VkValidationFlagsEXT' -- ' closing tick for hsc2hs
+
+data VkValidationFlagsEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkValidationFlagsEXT where
-        (VkValidationFlagsEXT## a _) == x@(VkValidationFlagsEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkValidationFlagsEXT where
-        (VkValidationFlagsEXT## a _) `compare` x@(VkValidationFlagsEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -306,18 +288,6 @@ instance Storable VkValidationFlagsEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkValidationFlagsEXT where
-        unsafeAddr (VkValidationFlagsEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkValidationFlagsEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkValidationFlagsEXT## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkValidationFlagsEXT where
         type StructFields VkValidationFlagsEXT =

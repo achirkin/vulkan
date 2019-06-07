@@ -26,13 +26,20 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.BorderColor,
         module Graphics.Vulkan.Types.Enum.CompareOp,
-        module Graphics.Vulkan.Types.Enum.Filter,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        module Graphics.Vulkan.Types.Enum.Filter, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProperties2',
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSparseProperties',
         module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.Sampler,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Sampler,
+        module Graphics.Vulkan.Types.Bitmasks, VkSamplerCreateInfo,
+        VkSamplerCreateInfo', VkSamplerReductionModeCreateInfoEXT,
+        VkSamplerReductionModeCreateInfoEXT',
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
         VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION,
@@ -43,21 +50,33 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         pattern VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT)
        where
-import           GHC.Ptr                                       (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.BorderColor
-import           Graphics.Vulkan.Types.Enum.CompareOp
-import           Graphics.Vulkan.Types.Enum.Filter
-import           Graphics.Vulkan.Types.Enum.Format             (VkFormatFeatureBitmask (..),
-                                                                VkFormatFeatureFlagBits)
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.Sampler
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.Sampler
+import GHC.Ptr                                       (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.BorderColor
+import Graphics.Vulkan.Types.Enum.CompareOp
+import Graphics.Vulkan.Types.Enum.Filter
+import Graphics.Vulkan.Types.Enum.Format             (VkFormatFeatureBitmask (..),
+                                                      VkFormatFeatureFlagBits)
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.Sampler
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
+                                                      VkPhysicalDeviceLimits',
+                                                      VkPhysicalDeviceProperties,
+                                                      VkPhysicalDeviceProperties',
+                                                      VkPhysicalDeviceProperties2,
+                                                      VkPhysicalDeviceProperties2',
+                                                      VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+                                                      VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
+                                                      VkPhysicalDeviceSparseProperties,
+                                                      VkPhysicalDeviceSparseProperties')
+import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerCreateInfo,
+                                                      VkSamplerCreateInfo',
+                                                      VkSamplerReductionModeCreateInfoEXT,
+                                                      VkSamplerReductionModeCreateInfoEXT')
 
 pattern VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -30,10 +30,10 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
         pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VK_KHR_VARIABLE_POINTERS_SPEC_VERSION :: (Num a, Eq a) => a
 

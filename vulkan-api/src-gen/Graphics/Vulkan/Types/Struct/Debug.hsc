@@ -12,30 +12,22 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.Debug
-       (VkDebugMarkerMarkerInfoEXT(..),
-        VkDebugMarkerObjectNameInfoEXT(..),
-        VkDebugMarkerObjectTagInfoEXT(..),
-        VkDebugReportCallbackCreateInfoEXT(..),
-        VkDebugUtilsObjectTagInfoEXT(..))
+       (VkDebugMarkerMarkerInfoEXT, VkDebugMarkerMarkerInfoEXT', -- ' closing tick for hsc2hs
+        VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectNameInfoEXT', -- ' closing tick for hsc2hs
+        VkDebugMarkerObjectTagInfoEXT, VkDebugMarkerObjectTagInfoEXT', -- ' closing tick for hsc2hs
+        VkDebugReportCallbackCreateInfoEXT,
+        VkDebugReportCallbackCreateInfoEXT', VkDebugUtilsObjectTagInfoEXT, -- ' closing tick for hsc2hs
+        VkDebugUtilsObjectTagInfoEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                (Storable (..))
-import           GHC.Base                                        (Addr##,
-                                                                  ByteArray##,
-                                                                  Proxy##,
-                                                                  byteArrayContents##,
-                                                                  plusAddr##,
-                                                                  proxy##)
-import           GHC.TypeLits                                    (KnownNat,
-                                                                  natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Debug                (VkDebugReportFlagsEXT,
-                                                                  VkDebugReportObjectTypeEXT)
-import           Graphics.Vulkan.Types.Enum.Object               (VkObjectType)
-import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import           Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugReportCallbackEXT)
-import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
-import           System.IO.Unsafe                                (unsafeDupablePerformIO)
+import Foreign.Storable                                (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Debug                (VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT)
+import Graphics.Vulkan.Types.Enum.Object               (VkObjectType)
+import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugReportCallbackEXT)
+import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugMarkerMarkerInfoEXT {
 --   >     VkStructureType sType;
@@ -45,19 +37,18 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerMarkerInfoEXT VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
-data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## Addr##
-                                                              ByteArray##
+type VkDebugMarkerMarkerInfoEXT =
+     VulkanStruct VkDebugMarkerMarkerInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugMarkerMarkerInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugMarkerMarkerInfoEXT where
-        (VkDebugMarkerMarkerInfoEXT## a _) ==
-          x@(VkDebugMarkerMarkerInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerMarkerInfoEXT where
-        (VkDebugMarkerMarkerInfoEXT## a _) `compare`
-          x@(VkDebugMarkerMarkerInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -74,20 +65,6 @@ instance Storable VkDebugMarkerMarkerInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugMarkerMarkerInfoEXT where
-        unsafeAddr (VkDebugMarkerMarkerInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugMarkerMarkerInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugMarkerMarkerInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
         type StructFields VkDebugMarkerMarkerInfoEXT =
@@ -274,19 +251,18 @@ instance Show VkDebugMarkerMarkerInfoEXT where
 --   > } VkDebugMarkerObjectNameInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerObjectNameInfoEXT VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
-data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## Addr##
-                                                                      ByteArray##
+type VkDebugMarkerObjectNameInfoEXT =
+     VulkanStruct VkDebugMarkerObjectNameInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugMarkerObjectNameInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugMarkerObjectNameInfoEXT where
-        (VkDebugMarkerObjectNameInfoEXT## a _) ==
-          x@(VkDebugMarkerObjectNameInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerObjectNameInfoEXT where
-        (VkDebugMarkerObjectNameInfoEXT## a _) `compare`
-          x@(VkDebugMarkerObjectNameInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -304,20 +280,6 @@ instance Storable VkDebugMarkerObjectNameInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugMarkerObjectNameInfoEXT where
-        unsafeAddr (VkDebugMarkerObjectNameInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugMarkerObjectNameInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugMarkerObjectNameInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
         type StructFields VkDebugMarkerObjectNameInfoEXT =
@@ -522,19 +484,18 @@ instance Show VkDebugMarkerObjectNameInfoEXT where
 --   > } VkDebugMarkerObjectTagInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerObjectTagInfoEXT VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
-data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## Addr##
-                                                                    ByteArray##
+type VkDebugMarkerObjectTagInfoEXT =
+     VulkanStruct VkDebugMarkerObjectTagInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugMarkerObjectTagInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugMarkerObjectTagInfoEXT where
-        (VkDebugMarkerObjectTagInfoEXT## a _) ==
-          x@(VkDebugMarkerObjectTagInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerObjectTagInfoEXT where
-        (VkDebugMarkerObjectTagInfoEXT## a _) `compare`
-          x@(VkDebugMarkerObjectTagInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -552,20 +513,6 @@ instance Storable VkDebugMarkerObjectTagInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugMarkerObjectTagInfoEXT where
-        unsafeAddr (VkDebugMarkerObjectTagInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugMarkerObjectTagInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugMarkerObjectTagInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
         type StructFields VkDebugMarkerObjectTagInfoEXT =
@@ -836,20 +783,18 @@ instance Show VkDebugMarkerObjectTagInfoEXT where
 --   > } VkDebugReportCallbackCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportCallbackCreateInfoEXT VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
-data VkDebugReportCallbackCreateInfoEXT = VkDebugReportCallbackCreateInfoEXT## Addr##
-                                                                              ByteArray##
+type VkDebugReportCallbackCreateInfoEXT =
+     VulkanStruct VkDebugReportCallbackCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugReportCallbackCreateInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugReportCallbackCreateInfoEXT where
-        (VkDebugReportCallbackCreateInfoEXT## a _) ==
-          x@(VkDebugReportCallbackCreateInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugReportCallbackCreateInfoEXT where
-        (VkDebugReportCallbackCreateInfoEXT## a _) `compare`
-          x@(VkDebugReportCallbackCreateInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -867,20 +812,6 @@ instance Storable VkDebugReportCallbackCreateInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugReportCallbackCreateInfoEXT where
-        unsafeAddr (VkDebugReportCallbackCreateInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugReportCallbackCreateInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugReportCallbackCreateInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugReportCallbackCreateInfoEXT where
         type StructFields VkDebugReportCallbackCreateInfoEXT =
@@ -1095,19 +1026,18 @@ instance Show VkDebugReportCallbackCreateInfoEXT where
 --   > } VkDebugUtilsObjectTagInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsObjectTagInfoEXT VkDebugUtilsObjectTagInfoEXT registry at www.khronos.org>
-data VkDebugUtilsObjectTagInfoEXT = VkDebugUtilsObjectTagInfoEXT## Addr##
-                                                                  ByteArray##
+type VkDebugUtilsObjectTagInfoEXT =
+     VulkanStruct VkDebugUtilsObjectTagInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugUtilsObjectTagInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugUtilsObjectTagInfoEXT where
-        (VkDebugUtilsObjectTagInfoEXT## a _) ==
-          x@(VkDebugUtilsObjectTagInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugUtilsObjectTagInfoEXT where
-        (VkDebugUtilsObjectTagInfoEXT## a _) `compare`
-          x@(VkDebugUtilsObjectTagInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1125,20 +1055,6 @@ instance Storable VkDebugUtilsObjectTagInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugUtilsObjectTagInfoEXT where
-        unsafeAddr (VkDebugUtilsObjectTagInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugUtilsObjectTagInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugUtilsObjectTagInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugUtilsObjectTagInfoEXT where
         type StructFields VkDebugUtilsObjectTagInfoEXT =

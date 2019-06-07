@@ -33,12 +33,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
         pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR,
         pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR)
        where
-import           GHC.Ptr                                        (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                       (pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
-import           Graphics.Vulkan.Types.Struct.Export
+import GHC.Ptr                                        (Ptr (..))
+import Graphics.Vulkan.Core_1_1                       (pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Struct.Export
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION :: (Num a, Eq a) =>
         a

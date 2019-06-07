@@ -29,28 +29,26 @@ module Graphics.Vulkan.Marshal.Create
     , unsafeIOCreate
     ) where
 
-import           Data.Coerce
-import           Data.Kind                        (Constraint, Type)
-import           Data.Type.Bool                   (If, type (||))
-import           Data.Type.Equality               (type (==))
-import           Foreign.C.String                 (newCString)
-import           Foreign.C.Types                  (CChar)
-import           Foreign.Marshal.Alloc            (finalizerFree, free)
-import           Foreign.Marshal.Array            (newArray, pokeArray0)
-import           Foreign.Ptr                      (nullPtr, plusPtr)
-import           Foreign.Storable                 (Storable)
-import           GHC.Base                         (ByteArray#, IO (..),
-                                                   RealWorld, State#, Weak#,
-                                                   addCFinalizerToWeak#,
-                                                   mkWeak#, mkWeakNoFinalizer#,
-                                                   nullAddr#)
-import           GHC.Ptr                          (FunPtr (..), Ptr (..))
-import           GHC.TypeLits
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import Data.Coerce
+import Data.Kind             (Constraint, Type)
+import Data.Type.Bool        (If, type (||))
+import Data.Type.Equality    (type (==))
+import Foreign.C.String      (newCString)
+import Foreign.C.Types       (CChar)
+import Foreign.Marshal.Alloc (finalizerFree, free)
+import Foreign.Marshal.Array (newArray, pokeArray0)
+import Foreign.Ptr           (nullPtr, plusPtr)
+import Foreign.Storable      (Storable)
+import GHC.Base              (ByteArray#, IO (..), RealWorld, State#, Weak#,
+                              addCFinalizerToWeak#, mkWeak#, mkWeakNoFinalizer#,
+                              nullAddr#)
+import GHC.Ptr               (FunPtr (..), Ptr (..))
+import GHC.TypeLits
+import System.IO.Unsafe      (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes  (VkBool32)
 
 
 -- | Safely fill-in a new vulkan structure
@@ -104,9 +102,11 @@ instance Monad (CreateVkStruct x fs) where
 --     with a set of haskell and C finalizers.
 --   These finalizers make sure all `malloc`ed memory is released and
 --    no managed memory gets purged too early.
-createVk :: ( VulkanMarshal x, VulkanMarshalPrim x
-            , HandleRemFields x fs
-            ) => CreateVkStruct x fs () -> x
+createVk :: forall a fs b .
+            ( VulkanMarshal a
+            , HandleRemFields a fs
+            , a ~ VulkanStruct b
+            ) => CreateVkStruct a fs () -> a
 createVk a = unsafeDupablePerformIO $ do
     x <- mallocVkData
     withPtr x $ \xptr -> do

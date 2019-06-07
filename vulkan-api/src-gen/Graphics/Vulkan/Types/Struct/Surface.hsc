@@ -8,27 +8,25 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Surface
-       (VkSurfaceCapabilities2EXT(..), VkSurfaceCapabilities2KHR(..),
-        VkSurfaceCapabilitiesKHR(..), VkSurfaceFormat2KHR(..),
-        VkSurfaceFormatKHR(..))
+       (VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2EXT', -- ' closing tick for hsc2hs
+        VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR', -- ' closing tick for hsc2hs
+        VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR', -- ' closing tick for hsc2hs
+        VkSurfaceFormat2KHR, VkSurfaceFormat2KHR', VkSurfaceFormatKHR, -- ' closing tick for hsc2hs
+        VkSurfaceFormatKHR') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                  (Storable (..))
-import           GHC.Base                                          (Addr##,
-                                                                    ByteArray##,
-                                                                    byteArrayContents##,
-                                                                    plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Color                  (VkColorSpaceKHR)
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR (VkCompositeAlphaFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.Format                 (VkFormat)
-import           Graphics.Vulkan.Types.Enum.Image                  (VkImageUsageFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType          (VkStructureType)
-import           Graphics.Vulkan.Types.Enum.Surface                (VkSurfaceCounterFlagsEXT,
-                                                                    VkSurfaceTransformFlagBitsKHR,
-                                                                    VkSurfaceTransformFlagsKHR)
-import           Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import Foreign.Storable                                  (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Color                  (VkColorSpaceKHR)
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR (VkCompositeAlphaFlagsKHR)
+import Graphics.Vulkan.Types.Enum.Format                 (VkFormat)
+import Graphics.Vulkan.Types.Enum.Image                  (VkImageUsageFlags)
+import Graphics.Vulkan.Types.Enum.StructureType          (VkStructureType)
+import Graphics.Vulkan.Types.Enum.Surface                (VkSurfaceCounterFlagsEXT,
+                                                          VkSurfaceTransformFlagBitsKHR,
+                                                          VkSurfaceTransformFlagsKHR)
+import Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSurfaceCapabilities2EXT {
 --   >     VkStructureType sType;
@@ -47,18 +45,18 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   > } VkSurfaceCapabilities2EXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilities2EXT VkSurfaceCapabilities2EXT registry at www.khronos.org>
-data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## Addr##
-                                                            ByteArray##
+type VkSurfaceCapabilities2EXT =
+     VulkanStruct VkSurfaceCapabilities2EXT' -- ' closing tick for hsc2hs
+
+data VkSurfaceCapabilities2EXT' -- ' closing tick for hsc2hs
 
 instance Eq VkSurfaceCapabilities2EXT where
-        (VkSurfaceCapabilities2EXT## a _) ==
-          x@(VkSurfaceCapabilities2EXT## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceCapabilities2EXT where
-        (VkSurfaceCapabilities2EXT## a _) `compare`
-          x@(VkSurfaceCapabilities2EXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -75,19 +73,6 @@ instance Storable VkSurfaceCapabilities2EXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSurfaceCapabilities2EXT where
-        unsafeAddr (VkSurfaceCapabilities2EXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSurfaceCapabilities2EXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSurfaceCapabilities2EXT## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2EXT where
         type StructFields VkSurfaceCapabilities2EXT =
@@ -639,18 +624,18 @@ instance Show VkSurfaceCapabilities2EXT where
 --   > } VkSurfaceCapabilities2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilities2KHR VkSurfaceCapabilities2KHR registry at www.khronos.org>
-data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## Addr##
-                                                            ByteArray##
+type VkSurfaceCapabilities2KHR =
+     VulkanStruct VkSurfaceCapabilities2KHR' -- ' closing tick for hsc2hs
+
+data VkSurfaceCapabilities2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSurfaceCapabilities2KHR where
-        (VkSurfaceCapabilities2KHR## a _) ==
-          x@(VkSurfaceCapabilities2KHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceCapabilities2KHR where
-        (VkSurfaceCapabilities2KHR## a _) `compare`
-          x@(VkSurfaceCapabilities2KHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -667,19 +652,6 @@ instance Storable VkSurfaceCapabilities2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSurfaceCapabilities2KHR where
-        unsafeAddr (VkSurfaceCapabilities2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSurfaceCapabilities2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSurfaceCapabilities2KHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2KHR where
         type StructFields VkSurfaceCapabilities2KHR =
@@ -813,18 +785,18 @@ instance Show VkSurfaceCapabilities2KHR where
 --   > } VkSurfaceCapabilitiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilitiesKHR VkSurfaceCapabilitiesKHR registry at www.khronos.org>
-data VkSurfaceCapabilitiesKHR = VkSurfaceCapabilitiesKHR## Addr##
-                                                          ByteArray##
+type VkSurfaceCapabilitiesKHR =
+     VulkanStruct VkSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+data VkSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSurfaceCapabilitiesKHR where
-        (VkSurfaceCapabilitiesKHR## a _) ==
-          x@(VkSurfaceCapabilitiesKHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceCapabilitiesKHR where
-        (VkSurfaceCapabilitiesKHR## a _) `compare`
-          x@(VkSurfaceCapabilitiesKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -841,19 +813,6 @@ instance Storable VkSurfaceCapabilitiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSurfaceCapabilitiesKHR where
-        unsafeAddr (VkSurfaceCapabilitiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSurfaceCapabilitiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSurfaceCapabilitiesKHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceCapabilitiesKHR where
         type StructFields VkSurfaceCapabilitiesKHR =
@@ -1270,17 +1229,17 @@ instance Show VkSurfaceCapabilitiesKHR where
 --   > } VkSurfaceFormat2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceFormat2KHR VkSurfaceFormat2KHR registry at www.khronos.org>
-data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## Addr## ByteArray##
+type VkSurfaceFormat2KHR = VulkanStruct VkSurfaceFormat2KHR' -- ' closing tick for hsc2hs
+
+data VkSurfaceFormat2KHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSurfaceFormat2KHR where
-        (VkSurfaceFormat2KHR## a _) == x@(VkSurfaceFormat2KHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceFormat2KHR where
-        (VkSurfaceFormat2KHR## a _) `compare` x@(VkSurfaceFormat2KHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1297,18 +1256,6 @@ instance Storable VkSurfaceFormat2KHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSurfaceFormat2KHR where
-        unsafeAddr (VkSurfaceFormat2KHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSurfaceFormat2KHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSurfaceFormat2KHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceFormat2KHR where
         type StructFields VkSurfaceFormat2KHR =
@@ -1430,17 +1377,17 @@ instance Show VkSurfaceFormat2KHR where
 --   > } VkSurfaceFormatKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceFormatKHR VkSurfaceFormatKHR registry at www.khronos.org>
-data VkSurfaceFormatKHR = VkSurfaceFormatKHR## Addr## ByteArray##
+type VkSurfaceFormatKHR = VulkanStruct VkSurfaceFormatKHR' -- ' closing tick for hsc2hs
+
+data VkSurfaceFormatKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSurfaceFormatKHR where
-        (VkSurfaceFormatKHR## a _) == x@(VkSurfaceFormatKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceFormatKHR where
-        (VkSurfaceFormatKHR## a _) `compare` x@(VkSurfaceFormatKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1457,18 +1404,6 @@ instance Storable VkSurfaceFormatKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSurfaceFormatKHR where
-        unsafeAddr (VkSurfaceFormatKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSurfaceFormatKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSurfaceFormatKHR## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceFormatKHR where
         type StructFields VkSurfaceFormatKHR = '["format", "colorSpace"] -- ' closing tick for hsc2hs

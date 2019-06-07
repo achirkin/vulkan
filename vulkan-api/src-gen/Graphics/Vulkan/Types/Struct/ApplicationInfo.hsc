@@ -8,15 +8,12 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ApplicationInfo
-       (VkApplicationInfo(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkApplicationInfo, VkApplicationInfo') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkApplicationInfo {
 --   >     VkStructureType sType;
@@ -29,17 +26,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkApplicationInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkApplicationInfo VkApplicationInfo registry at www.khronos.org>
-data VkApplicationInfo = VkApplicationInfo## Addr## ByteArray##
+type VkApplicationInfo = VulkanStruct VkApplicationInfo' -- ' closing tick for hsc2hs
+
+data VkApplicationInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkApplicationInfo where
-        (VkApplicationInfo## a _) == x@(VkApplicationInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkApplicationInfo where
-        (VkApplicationInfo## a _) `compare` x@(VkApplicationInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,18 +53,6 @@ instance Storable VkApplicationInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkApplicationInfo where
-        unsafeAddr (VkApplicationInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkApplicationInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkApplicationInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkApplicationInfo where
         type StructFields VkApplicationInfo =

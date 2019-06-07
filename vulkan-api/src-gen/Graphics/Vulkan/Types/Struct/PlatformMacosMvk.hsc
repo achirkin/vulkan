@@ -8,16 +8,13 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformMacosMvk
-       (VkMacOSSurfaceCreateInfoMVK(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkMacOSSurfaceCreateFlagsMVK)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkMacOSSurfaceCreateInfoMVK, VkMacOSSurfaceCreateInfoMVK') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkMacOSSurfaceCreateFlagsMVK)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMacOSSurfaceCreateInfoMVK {
 --   >     VkStructureType sType;
@@ -27,19 +24,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkMacOSSurfaceCreateInfoMVK;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMacOSSurfaceCreateInfoMVK VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
-data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## Addr##
-                                                                ByteArray##
+type VkMacOSSurfaceCreateInfoMVK =
+     VulkanStruct VkMacOSSurfaceCreateInfoMVK' -- ' closing tick for hsc2hs
+
+data VkMacOSSurfaceCreateInfoMVK' -- ' closing tick for hsc2hs
 
 instance Eq VkMacOSSurfaceCreateInfoMVK where
-        (VkMacOSSurfaceCreateInfoMVK## a _) ==
-          x@(VkMacOSSurfaceCreateInfoMVK## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMacOSSurfaceCreateInfoMVK where
-        (VkMacOSSurfaceCreateInfoMVK## a _) `compare`
-          x@(VkMacOSSurfaceCreateInfoMVK## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -56,20 +52,6 @@ instance Storable VkMacOSSurfaceCreateInfoMVK where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMacOSSurfaceCreateInfoMVK where
-        unsafeAddr (VkMacOSSurfaceCreateInfoMVK## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMacOSSurfaceCreateInfoMVK## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMacOSSurfaceCreateInfoMVK##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMacOSSurfaceCreateInfoMVK where
         type StructFields VkMacOSSurfaceCreateInfoMVK =

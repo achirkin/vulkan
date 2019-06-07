@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_AMD_negative_viewport_height
         VK_AMD_NEGATIVE_VIEWPORT_HEIGHT_EXTENSION_NAME,
         pattern VK_AMD_NEGATIVE_VIEWPORT_HEIGHT_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION ::
         (Num a, Eq a) => a

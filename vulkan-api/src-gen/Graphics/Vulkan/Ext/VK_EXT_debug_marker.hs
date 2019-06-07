@@ -27,8 +27,10 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         --
 
         -- ** Required extensions: 'VK_EXT_debug_report'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Struct.Debug,
+        module Graphics.Vulkan.Marshal, VkDebugMarkerMarkerInfoEXT,
+        VkDebugMarkerMarkerInfoEXT', VkDebugMarkerObjectNameInfoEXT,
+        VkDebugMarkerObjectNameInfoEXT', VkDebugMarkerObjectTagInfoEXT,
+        VkDebugMarkerObjectTagInfoEXT',
         module Graphics.Vulkan.Types.Enum.Debug,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -46,6 +48,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         PFN_vkCmdDebugMarkerInsertEXT,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.Debug,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         VK_EXT_DEBUG_MARKER_EXTENSION_NAME,
@@ -54,14 +57,14 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.Debug
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Debug
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import Graphics.Vulkan.Types.Enum.Debug
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Debug
 
 pattern VkDebugMarkerSetObjectTagEXT :: CString
 

@@ -8,18 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformMirKhr
-       (VkMirSurfaceCreateInfoKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkMirSurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Include            (MirConnection,
-                                                           MirSurface)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkMirSurfaceCreateInfoKHR, VkMirSurfaceCreateInfoKHR') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkMirSurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Include            (MirConnection, MirSurface)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMirSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;
@@ -30,18 +26,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkMirSurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMirSurfaceCreateInfoKHR VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
-data VkMirSurfaceCreateInfoKHR = VkMirSurfaceCreateInfoKHR## Addr##
-                                                            ByteArray##
+type VkMirSurfaceCreateInfoKHR =
+     VulkanStruct VkMirSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkMirSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkMirSurfaceCreateInfoKHR where
-        (VkMirSurfaceCreateInfoKHR## a _) ==
-          x@(VkMirSurfaceCreateInfoKHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMirSurfaceCreateInfoKHR where
-        (VkMirSurfaceCreateInfoKHR## a _) `compare`
-          x@(VkMirSurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -58,19 +54,6 @@ instance Storable VkMirSurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMirSurfaceCreateInfoKHR where
-        unsafeAddr (VkMirSurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMirSurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMirSurfaceCreateInfoKHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMirSurfaceCreateInfoKHR where
         type StructFields VkMirSurfaceCreateInfoKHR =

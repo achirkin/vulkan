@@ -11,7 +11,7 @@ module Write.Types.Struct
   ) where
 
 
-import           Control.Monad                        (when, forM_)
+import           Control.Monad                        (forM_, when)
 import           Data.Char                            (toUpper)
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
@@ -23,11 +23,11 @@ import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
-import           VkXml.CommonTypes
-import           VkXml.Sections.Types
+import VkXml.CommonTypes
+import VkXml.Sections.Types
 
-import           Write.ModuleWriter
-import           Write.Util.DeclaredNames
+import Write.ModuleWriter
+import Write.Util.DeclaredNames
 
 
 genStruct :: Monad m => VkType -> ModuleWriter m ()
@@ -49,16 +49,18 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
   if indeed
   then do
     writeImport tnameDeclared
+    writeImport tnamePrimeDeclared
     writeExport tnameDeclared
+    writeExport tnamePrimeDeclared
     return mempty
   else do
     writePragma "MagicHash"
 
     writeImport $ DIThing "Storable" DITAll
-    writeImport $ DIThing "Addr#" DITNo
-    writeImport $ DIThing "ByteArray#" DITNo
-    writeImport $ DIVar "plusAddr#"
-    writeImport $ DIVar "byteArrayContents#"
+    -- writeImport $ DIThing "Addr#" DITNo
+    -- writeImport $ DIThing "ByteArray#" DITNo
+    -- writeImport $ DIVar "plusAddr#"
+    -- writeImport $ DIVar "byteArrayContents#"
     -- writeImport $ DIThing "IO" DITAll
     -- writeImport $ DIThing "Int" DITAll
     -- writeImport $ DIThing "Ptr" DITAll
@@ -72,16 +74,16 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
       writeImport $ DIThing n DITNo
 
     let ds = parseDecls [text|
-          data $tnametxt = $tnametxt# Addr# ByteArray#
+          type $tnametxt = VulkanStruct $tnametxtPrime
+
+          data $tnametxtPrime
 
           instance Eq $tnametxt where
-            ($tnametxt# a _) == x@($tnametxt# b _)
-              = EQ == cmpBytes# (sizeOf x) a b
+            a == b = EQ == cmpBytes# (sizeOf a) (unsafeAddr a) (unsafeAddr b)
             {-# INLINE (==) #-}
 
           instance Ord $tnametxt where
-            ($tnametxt# a _) `compare` x@($tnametxt# b _)
-              = cmpBytes# (sizeOf x) a b
+            compare a b = cmpBytes# (sizeOf a) (unsafeAddr a) (unsafeAddr b)
             {-# INLINE compare #-}
 
           instance Storable $tnametxt where
@@ -93,15 +95,6 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
             {-# INLINE peek #-}
             poke = pokeVkData#
             {-# INLINE poke #-}
-
-          instance VulkanMarshalPrim $tnametxt where
-            unsafeAddr ($tnametxt# a _) = a
-            {-# INLINE unsafeAddr #-}
-            unsafeByteArray ($tnametxt# _ b) = b
-            {-# INLINE unsafeByteArray #-}
-            unsafeFromByteArrayOffset off b
-              = $tnametxt# (plusAddr# (byteArrayContents# b) off) b
-            {-# INLINE unsafeFromByteArrayOffset #-}
 
           instance VulkanMarshal $tnametxt where
             type StructFields  $tnametxt = $fieldNamesTxt
@@ -126,6 +119,7 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
     genStructShow (VkTypeName tnametxt) $ map snd sfimems
 
     writeExport tnameDeclared
+    writeExport tnamePrimeDeclared
   where
     returnedonlyTxt = T.pack . ('\'':) . show $ returnedonly attrs
     isUnionTxt = T.pack . ('\'':) . show $ category attrs == VkTypeCatUnion
@@ -133,7 +127,8 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
       = "'[" <> T.intercalate "," (unVkTypeName <$> structextends attrs) <> "]"
     fieldNamesTxt = T.pack . ('\'':) . show
                   $ map (\VkTypeMember{ name = VkMemberName n} -> n ) $ items tmems
-    tnameDeclared = DIThing tnametxt DITAll
+    tnameDeclared = DIThing tnametxt DITNo
+    tnamePrimeDeclared = DIThing tnametxtPrime DITNo
     -- totalSizeTxt = T.pack $ prettyPrint totalSize
     (_totalSize, sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
@@ -151,6 +146,7 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
               else id
     tname = toQName vkTName
     tnametxt = qNameTxt tname
+    tnametxtPrime = tnametxt <> "'"
     structNameTxt = unVkTypeName vkTName
     rezComment'' = appendComLine rezComment'
                  $ T.unlines . map ("> " <>) $ T.lines ccode
@@ -287,9 +283,9 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
       writeImport $ DIThing valueTypeTxt DITNo
       writeImport $ DIThing sfiRTypeTxt DITNo
       writeImport $ DIThing structTypeTxt DITAll
-      when (isJust sfiTyElemN) $ do
-        writeImport $ DIThing "Proxy#" DITNo
-        writeImport $ DIVar "proxy#"
+      -- when (isJust sfiTyElemN) $ do
+      --   writeImport $ DIThing "Proxy#" DITNo
+      --   writeImport $ DIVar "proxy#"
       case memberData of
             VkTypeData { name = Just (_, [VkTypeQArrLenEnum n]) }
               -> writeImport $ DIThing (unVkEnumName n) DITNo
@@ -352,8 +348,8 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
                 |]
 
       when (isJust sfiTyElemN) $ do
-        writeImport $ DIThing "KnownNat" DITEmpty
-        writeImport $ DIVar "natVal'"
+        -- writeImport $ DIThing "KnownNat" DITEmpty
+        -- writeImport $ DIVar "natVal'"
         writePragma "ScopedTypeVariables"
         writePragma "FlexibleContexts"
         writePragma "UndecidableInstances"

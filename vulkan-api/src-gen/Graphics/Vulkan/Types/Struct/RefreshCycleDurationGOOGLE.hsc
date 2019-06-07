@@ -8,33 +8,29 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.RefreshCycleDurationGOOGLE
-       (VkRefreshCycleDurationGOOGLE(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##,
-                                                   byteArrayContents##,
-                                                   plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkRefreshCycleDurationGOOGLE, VkRefreshCycleDurationGOOGLE') where -- ' closing tick for hsc2hs
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRefreshCycleDurationGOOGLE {
 --   >     uint64_t                         refreshDuration;
 --   > } VkRefreshCycleDurationGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRefreshCycleDurationGOOGLE VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
-data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## Addr##
-                                                                  ByteArray##
+type VkRefreshCycleDurationGOOGLE =
+     VulkanStruct VkRefreshCycleDurationGOOGLE' -- ' closing tick for hsc2hs
+
+data VkRefreshCycleDurationGOOGLE' -- ' closing tick for hsc2hs
 
 instance Eq VkRefreshCycleDurationGOOGLE where
-        (VkRefreshCycleDurationGOOGLE## a _) ==
-          x@(VkRefreshCycleDurationGOOGLE## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRefreshCycleDurationGOOGLE where
-        (VkRefreshCycleDurationGOOGLE## a _) `compare`
-          x@(VkRefreshCycleDurationGOOGLE## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -52,20 +48,6 @@ instance Storable VkRefreshCycleDurationGOOGLE where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRefreshCycleDurationGOOGLE where
-        unsafeAddr (VkRefreshCycleDurationGOOGLE## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRefreshCycleDurationGOOGLE## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRefreshCycleDurationGOOGLE##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
         type StructFields VkRefreshCycleDurationGOOGLE =

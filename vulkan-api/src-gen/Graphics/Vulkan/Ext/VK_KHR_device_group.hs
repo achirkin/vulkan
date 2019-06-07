@@ -67,6 +67,8 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO_KHR,
         pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
         -- ** Required extensions: 'VK_KHR_surface', 'VK_KHR_device_group_creation'.
+        VkDeviceGroupPresentCapabilitiesKHR,
+        VkDeviceGroupPresentCapabilitiesKHR',
         module Graphics.Vulkan.Types.Enum.Device,
         module Graphics.Vulkan.Types.Enum.StructureType,
         -- > #include "vk_platform.h"
@@ -81,21 +83,27 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         PFN_vkGetPhysicalDevicePresentRectanglesKHR,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_device_group_creation'.
-        module Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR,
+        VkAcquireNextImageInfoKHR, VkAcquireNextImageInfoKHR',
+        VkBindImageMemoryInfo, VkBindImageMemoryInfo',
+        VkBindImageMemorySwapchainInfoKHR,
+        VkBindImageMemorySwapchainInfoKHR',
         module Graphics.Vulkan.Types.Enum.Color,
         module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.Present,
+        VkDeviceGroupPresentInfoKHR, VkDeviceGroupPresentInfoKHR',
+        VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceGroupSwapchainCreateInfoKHR', VkExtent2D, VkExtent2D',
+        VkExtent3D, VkExtent3D', module Graphics.Vulkan.Types.Enum.Format,
+        module Graphics.Vulkan.Types.Enum.Image, VkImageCreateInfo,
+        VkImageCreateInfo', VkImageSwapchainCreateInfoKHR,
+        VkImageSwapchainCreateInfoKHR', VkPresentInfoKHR,
+        VkPresentInfoKHR',
         module Graphics.Vulkan.Types.Enum.PresentModeKHR,
         module Graphics.Vulkan.Types.Enum.Result,
         module Graphics.Vulkan.Types.Enum.SampleCountFlags,
         module Graphics.Vulkan.Types.Enum.SharingMode,
         module Graphics.Vulkan.Types.Enum.Surface,
         module Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.SwapchainC,
+        VkSwapchainCreateInfoKHR, VkSwapchainCreateInfoKHR',
         -- > #include "vk_platform.h"
         pattern VkAcquireNextImage2KHR, HS_vkAcquireNextImage2KHR,
         PFN_vkAcquireNextImage2KHR,
@@ -106,64 +114,73 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
         pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR)
        where
-import           GHC.Ptr                                              (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                             (pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
-                                                                       pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT,
-                                                                       pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
-                                                                       pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT,
-                                                                       pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
-                                                                       pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO)
-import           Graphics.Vulkan.Ext.VK_KHR_swapchain                 (HS_vkAcquireNextImage2KHR,
-                                                                       HS_vkGetDeviceGroupPresentCapabilitiesKHR,
-                                                                       HS_vkGetDeviceGroupSurfacePresentModesKHR,
-                                                                       HS_vkGetPhysicalDevicePresentRectanglesKHR,
-                                                                       PFN_vkAcquireNextImage2KHR,
-                                                                       PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
-                                                                       PFN_vkGetDeviceGroupSurfacePresentModesKHR,
-                                                                       PFN_vkGetPhysicalDevicePresentRectanglesKHR,
-                                                                       pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
-                                                                       pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR,
-                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
-                                                                       pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
-                                                                       pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
-                                                                       pattern VkAcquireNextImage2KHR,
-                                                                       pattern VkGetDeviceGroupPresentCapabilitiesKHR,
-                                                                       pattern VkGetDeviceGroupSurfacePresentModesKHR,
-                                                                       pattern VkGetPhysicalDevicePresentRectanglesKHR)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                         (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Color
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.Device
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Memory
-import           Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
-import           Graphics.Vulkan.Types.Enum.PresentModeKHR
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.SharingMode
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
-import           Graphics.Vulkan.Types.Struct.Bind
-import           Graphics.Vulkan.Types.Struct.Device
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.Memory
-import           Graphics.Vulkan.Types.Struct.Present
-import           Graphics.Vulkan.Types.Struct.SwapchainC
+import GHC.Ptr                                              (Ptr (..))
+import Graphics.Vulkan.Core_1_1                             (pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
+                                                             pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT,
+                                                             pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
+                                                             pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT,
+                                                             pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
+                                                             pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO)
+import Graphics.Vulkan.Ext.VK_KHR_swapchain                 (HS_vkAcquireNextImage2KHR,
+                                                             HS_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                             HS_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                             HS_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                             PFN_vkAcquireNextImage2KHR,
+                                                             PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                             PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                             PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                             pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
+                                                             pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR,
+                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
+                                                             pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
+                                                             pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
+                                                             pattern VkAcquireNextImage2KHR,
+                                                             pattern VkGetDeviceGroupPresentCapabilitiesKHR,
+                                                             pattern VkGetDeviceGroupSurfacePresentModesKHR,
+                                                             pattern VkGetPhysicalDevicePresentRectanglesKHR)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                         (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Color
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import Graphics.Vulkan.Types.Enum.Device
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Memory
+import Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
+import Graphics.Vulkan.Types.Enum.PresentModeKHR
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.SharingMode
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR (VkAcquireNextImageInfoKHR,
+                                                             VkAcquireNextImageInfoKHR')
+import Graphics.Vulkan.Types.Struct.Bind
+import Graphics.Vulkan.Types.Struct.Device
+import Graphics.Vulkan.Types.Struct.Extent                  (VkExtent2D,
+                                                             VkExtent2D',
+                                                             VkExtent3D,
+                                                             VkExtent3D')
+import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo,
+                                                             VkImageCreateInfo',
+                                                             VkImageSwapchainCreateInfoKHR,
+                                                             VkImageSwapchainCreateInfoKHR')
+import Graphics.Vulkan.Types.Struct.Memory
+import Graphics.Vulkan.Types.Struct.Present                 (VkPresentInfoKHR,
+                                                             VkPresentInfoKHR')
+import Graphics.Vulkan.Types.Struct.SwapchainC              (VkSwapchainCreateInfoKHR,
+                                                             VkSwapchainCreateInfoKHR')
 
 pattern VkGetDeviceGroupPeerMemoryFeaturesKHR :: CString
 

@@ -14,7 +14,7 @@ import qualified Control.Monad.ST                         as ST
 import           GHC.Generics                             (Generic)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create
-import           Graphics.Vulkan.Marshal.Create.DataFrame
+import           Graphics.Vulkan.Marshal.Create.DataFrame ()
 import           Numeric.DataFrame
 import qualified Numeric.DataFrame.ST                     as ST
 
@@ -42,9 +42,7 @@ vertIBD = createVk
 --
 -- However, we must make sure the created DataFrame is pinned!
 vertIADs :: Vector VkVertexInputAttributeDescription 2
-vertIADs
-  | Dict <- inferVkPrimBytes @VkVertexInputAttributeDescription
-  = ST.runST $ do
+vertIADs = ST.runST $ do
     mv <- ST.newPinnedDataFrame
     ST.writeDataFrame mv 0 . scalar $ createVk
         $  set @"location" 0

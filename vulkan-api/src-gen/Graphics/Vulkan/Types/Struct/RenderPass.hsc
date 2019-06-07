@@ -8,33 +8,32 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.RenderPass
-       (VkRenderPassBeginInfo(..), VkRenderPassCreateInfo(..),
-        VkRenderPassInputAttachmentAspectCreateInfo(..),
+       (VkRenderPassBeginInfo, VkRenderPassBeginInfo', -- ' closing tick for hsc2hs
+        VkRenderPassCreateInfo, VkRenderPassCreateInfo', -- ' closing tick for hsc2hs
+        VkRenderPassInputAttachmentAspectCreateInfo,
+        VkRenderPassInputAttachmentAspectCreateInfo', -- ' closing tick for hsc2hs
         VkRenderPassInputAttachmentAspectCreateInfoKHR,
-        VkRenderPassMultiviewCreateInfo(..),
+        VkRenderPassMultiviewCreateInfo, VkRenderPassMultiviewCreateInfo', -- ' closing tick for hsc2hs
         VkRenderPassMultiviewCreateInfoKHR,
-        VkRenderPassSampleLocationsBeginInfoEXT(..))
+        VkRenderPassSampleLocationsBeginInfoEXT,
+        VkRenderPassSampleLocationsBeginInfoEXT') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                                            (Storable (..))
-import           GHC.Base                                                    (Addr##,
-                                                                              ByteArray##,
-                                                                              byteArrayContents##,
-                                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks                              (VkRenderPassCreateFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                               (VkFramebuffer,
-                                                                              VkRenderPass)
-import           Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
-                                                                              VkAttachmentSampleLocationsEXT)
-import           Graphics.Vulkan.Types.Struct.Clear                          (VkClearValue)
-import           Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
-import           Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
-import           Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
-                                                                              VkSubpassDescription,
-                                                                              VkSubpassSampleLocationsEXT)
-import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import Foreign.Storable                                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks                              (VkRenderPassCreateFlags)
+import Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
+import Graphics.Vulkan.Types.Handles                               (VkFramebuffer,
+                                                                    VkRenderPass)
+import Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
+                                                                    VkAttachmentSampleLocationsEXT)
+import Graphics.Vulkan.Types.Struct.Clear                          (VkClearValue)
+import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
+import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
+import Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
+                                                                    VkSubpassDescription,
+                                                                    VkSubpassSampleLocationsEXT)
+import System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassBeginInfo {
 --   >     VkStructureType sType;
@@ -47,18 +46,17 @@ import           System.IO.Unsafe                                            (un
 --   > } VkRenderPassBeginInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassBeginInfo VkRenderPassBeginInfo registry at www.khronos.org>
-data VkRenderPassBeginInfo = VkRenderPassBeginInfo## Addr##
-                                                    ByteArray##
+type VkRenderPassBeginInfo = VulkanStruct VkRenderPassBeginInfo' -- ' closing tick for hsc2hs
+
+data VkRenderPassBeginInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkRenderPassBeginInfo where
-        (VkRenderPassBeginInfo## a _) == x@(VkRenderPassBeginInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassBeginInfo where
-        (VkRenderPassBeginInfo## a _) `compare`
-          x@(VkRenderPassBeginInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -75,18 +73,6 @@ instance Storable VkRenderPassBeginInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRenderPassBeginInfo where
-        unsafeAddr (VkRenderPassBeginInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRenderPassBeginInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRenderPassBeginInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassBeginInfo where
         type StructFields VkRenderPassBeginInfo =
@@ -357,18 +343,17 @@ instance Show VkRenderPassBeginInfo where
 --   > } VkRenderPassCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassCreateInfo VkRenderPassCreateInfo registry at www.khronos.org>
-data VkRenderPassCreateInfo = VkRenderPassCreateInfo## Addr##
-                                                      ByteArray##
+type VkRenderPassCreateInfo = VulkanStruct VkRenderPassCreateInfo' -- ' closing tick for hsc2hs
+
+data VkRenderPassCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkRenderPassCreateInfo where
-        (VkRenderPassCreateInfo## a _) == x@(VkRenderPassCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassCreateInfo where
-        (VkRenderPassCreateInfo## a _) `compare`
-          x@(VkRenderPassCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -385,18 +370,6 @@ instance Storable VkRenderPassCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRenderPassCreateInfo where
-        unsafeAddr (VkRenderPassCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRenderPassCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRenderPassCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassCreateInfo where
         type StructFields VkRenderPassCreateInfo =
@@ -737,20 +710,18 @@ instance Show VkRenderPassCreateInfo where
 --   > } VkRenderPassInputAttachmentAspectCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassInputAttachmentAspectCreateInfo VkRenderPassInputAttachmentAspectCreateInfo registry at www.khronos.org>
-data VkRenderPassInputAttachmentAspectCreateInfo = VkRenderPassInputAttachmentAspectCreateInfo## Addr##
-                                                                                                ByteArray##
+type VkRenderPassInputAttachmentAspectCreateInfo =
+     VulkanStruct VkRenderPassInputAttachmentAspectCreateInfo' -- ' closing tick for hsc2hs
+
+data VkRenderPassInputAttachmentAspectCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkRenderPassInputAttachmentAspectCreateInfo where
-        (VkRenderPassInputAttachmentAspectCreateInfo## a _) ==
-          x@(VkRenderPassInputAttachmentAspectCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassInputAttachmentAspectCreateInfo where
-        (VkRenderPassInputAttachmentAspectCreateInfo## a _) `compare`
-          x@(VkRenderPassInputAttachmentAspectCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -769,23 +740,6 @@ instance Storable VkRenderPassInputAttachmentAspectCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim
-           VkRenderPassInputAttachmentAspectCreateInfo
-         where
-        unsafeAddr (VkRenderPassInputAttachmentAspectCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRenderPassInputAttachmentAspectCreateInfo## _ b)
-          = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRenderPassInputAttachmentAspectCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassInputAttachmentAspectCreateInfo
          where
@@ -1003,19 +957,18 @@ type VkRenderPassInputAttachmentAspectCreateInfoKHR =
 --   > } VkRenderPassMultiviewCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassMultiviewCreateInfo VkRenderPassMultiviewCreateInfo registry at www.khronos.org>
-data VkRenderPassMultiviewCreateInfo = VkRenderPassMultiviewCreateInfo## Addr##
-                                                                        ByteArray##
+type VkRenderPassMultiviewCreateInfo =
+     VulkanStruct VkRenderPassMultiviewCreateInfo' -- ' closing tick for hsc2hs
+
+data VkRenderPassMultiviewCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkRenderPassMultiviewCreateInfo where
-        (VkRenderPassMultiviewCreateInfo## a _) ==
-          x@(VkRenderPassMultiviewCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassMultiviewCreateInfo where
-        (VkRenderPassMultiviewCreateInfo## a _) `compare`
-          x@(VkRenderPassMultiviewCreateInfo## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1033,20 +986,6 @@ instance Storable VkRenderPassMultiviewCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRenderPassMultiviewCreateInfo where
-        unsafeAddr (VkRenderPassMultiviewCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRenderPassMultiviewCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRenderPassMultiviewCreateInfo##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassMultiviewCreateInfo where
         type StructFields VkRenderPassMultiviewCreateInfo =
@@ -1396,20 +1335,18 @@ type VkRenderPassMultiviewCreateInfoKHR =
 --   > } VkRenderPassSampleLocationsBeginInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassSampleLocationsBeginInfoEXT VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
-data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## Addr##
-                                                                                        ByteArray##
+type VkRenderPassSampleLocationsBeginInfoEXT =
+     VulkanStruct VkRenderPassSampleLocationsBeginInfoEXT' -- ' closing tick for hsc2hs
+
+data VkRenderPassSampleLocationsBeginInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkRenderPassSampleLocationsBeginInfoEXT where
-        (VkRenderPassSampleLocationsBeginInfoEXT## a _) ==
-          x@(VkRenderPassSampleLocationsBeginInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassSampleLocationsBeginInfoEXT where
-        (VkRenderPassSampleLocationsBeginInfoEXT## a _) `compare`
-          x@(VkRenderPassSampleLocationsBeginInfoEXT## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1428,21 +1365,6 @@ instance Storable VkRenderPassSampleLocationsBeginInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        unsafeAddr (VkRenderPassSampleLocationsBeginInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkRenderPassSampleLocationsBeginInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkRenderPassSampleLocationsBeginInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
          where

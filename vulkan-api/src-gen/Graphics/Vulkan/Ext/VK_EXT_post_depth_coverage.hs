@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_post_depth_coverage
         VK_EXT_POST_DEPTH_COVERAGE_EXTENSION_NAME,
         pattern VK_EXT_POST_DEPTH_COVERAGE_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_EXT_POST_DEPTH_COVERAGE_SPEC_VERSION :: (Num a, Eq a) =>
         a

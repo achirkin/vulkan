@@ -8,16 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT
-       (VkDebugUtilsObjectNameInfoEXT(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.Object        (VkObjectType)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkDebugUtilsObjectNameInfoEXT, VkDebugUtilsObjectNameInfoEXT') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.Object        (VkObjectType)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugUtilsObjectNameInfoEXT {
 --   >     VkStructureType sType;
@@ -28,19 +26,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkDebugUtilsObjectNameInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsObjectNameInfoEXT VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
-data VkDebugUtilsObjectNameInfoEXT = VkDebugUtilsObjectNameInfoEXT## Addr##
-                                                                    ByteArray##
+type VkDebugUtilsObjectNameInfoEXT =
+     VulkanStruct VkDebugUtilsObjectNameInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDebugUtilsObjectNameInfoEXT' -- ' closing tick for hsc2hs
 
 instance Eq VkDebugUtilsObjectNameInfoEXT where
-        (VkDebugUtilsObjectNameInfoEXT## a _) ==
-          x@(VkDebugUtilsObjectNameInfoEXT## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugUtilsObjectNameInfoEXT where
-        (VkDebugUtilsObjectNameInfoEXT## a _) `compare`
-          x@(VkDebugUtilsObjectNameInfoEXT## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -58,20 +55,6 @@ instance Storable VkDebugUtilsObjectNameInfoEXT where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDebugUtilsObjectNameInfoEXT where
-        unsafeAddr (VkDebugUtilsObjectNameInfoEXT## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDebugUtilsObjectNameInfoEXT## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDebugUtilsObjectNameInfoEXT##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugUtilsObjectNameInfoEXT where
         type StructFields VkDebugUtilsObjectNameInfoEXT =

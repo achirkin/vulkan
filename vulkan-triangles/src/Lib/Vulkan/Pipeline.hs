@@ -34,9 +34,7 @@ createGraphicsPipeline :: KnownDim n
                        -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout
-  | Dict <- inferVkPrimBytes @VkVertexInputBindingDescription
-  , Dict <- inferVkPrimBytes @VkVertexInputAttributeDescription =
+    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO

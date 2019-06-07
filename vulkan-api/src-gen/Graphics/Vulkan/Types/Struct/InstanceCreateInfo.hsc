@@ -8,18 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.InstanceCreateInfo
-       (VkInstanceCreateInfo(..)) where
-import           Foreign.Storable                             (Storable (..))
-import           GHC.Base                                     (Addr##,
-                                                               ByteArray##,
-                                                               byteArrayContents##,
-                                                               plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks               (VkInstanceCreateFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType     (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.ApplicationInfo (VkApplicationInfo)
-import           System.IO.Unsafe                             (unsafeDupablePerformIO)
+       (VkInstanceCreateInfo, VkInstanceCreateInfo') where -- ' closing tick for hsc2hs
+import Foreign.Storable                             (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks               (VkInstanceCreateFlags)
+import Graphics.Vulkan.Types.Enum.StructureType     (VkStructureType)
+import Graphics.Vulkan.Types.Struct.ApplicationInfo (VkApplicationInfo)
+import System.IO.Unsafe                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkInstanceCreateInfo {
 --   >     VkStructureType sType;
@@ -33,17 +29,17 @@ import           System.IO.Unsafe                             (unsafeDupablePerf
 --   > } VkInstanceCreateInfo;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkInstanceCreateInfo VkInstanceCreateInfo registry at www.khronos.org>
-data VkInstanceCreateInfo = VkInstanceCreateInfo## Addr## ByteArray##
+type VkInstanceCreateInfo = VulkanStruct VkInstanceCreateInfo' -- ' closing tick for hsc2hs
+
+data VkInstanceCreateInfo' -- ' closing tick for hsc2hs
 
 instance Eq VkInstanceCreateInfo where
-        (VkInstanceCreateInfo## a _) == x@(VkInstanceCreateInfo## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkInstanceCreateInfo where
-        (VkInstanceCreateInfo## a _) `compare` x@(VkInstanceCreateInfo## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -60,18 +56,6 @@ instance Storable VkInstanceCreateInfo where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkInstanceCreateInfo where
-        unsafeAddr (VkInstanceCreateInfo## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkInstanceCreateInfo## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkInstanceCreateInfo## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkInstanceCreateInfo where
         type StructFields VkInstanceCreateInfo =

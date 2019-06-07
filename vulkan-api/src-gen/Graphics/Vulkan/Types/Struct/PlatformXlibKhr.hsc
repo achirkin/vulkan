@@ -8,17 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformXlibKhr
-       (VkXlibSurfaceCreateInfoKHR(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks           (VkXlibSurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Include            (Display, Window)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkXlibSurfaceCreateInfoKHR, VkXlibSurfaceCreateInfoKHR') where -- ' closing tick for hsc2hs
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks           (VkXlibSurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Include            (Display, Window)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkXlibSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;
@@ -29,19 +26,18 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkXlibSurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkXlibSurfaceCreateInfoKHR VkXlibSurfaceCreateInfoKHR registry at www.khronos.org>
-data VkXlibSurfaceCreateInfoKHR = VkXlibSurfaceCreateInfoKHR## Addr##
-                                                              ByteArray##
+type VkXlibSurfaceCreateInfoKHR =
+     VulkanStruct VkXlibSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkXlibSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkXlibSurfaceCreateInfoKHR where
-        (VkXlibSurfaceCreateInfoKHR## a _) ==
-          x@(VkXlibSurfaceCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkXlibSurfaceCreateInfoKHR where
-        (VkXlibSurfaceCreateInfoKHR## a _) `compare`
-          x@(VkXlibSurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -58,20 +54,6 @@ instance Storable VkXlibSurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkXlibSurfaceCreateInfoKHR where
-        unsafeAddr (VkXlibSurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkXlibSurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkXlibSurfaceCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkXlibSurfaceCreateInfoKHR where
         type StructFields VkXlibSurfaceCreateInfoKHR =

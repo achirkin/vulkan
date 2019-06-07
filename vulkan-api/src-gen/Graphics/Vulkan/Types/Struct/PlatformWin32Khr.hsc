@@ -8,50 +8,51 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformWin32Khr
-       (VkD3D12FenceSubmitInfoKHR(..),
-        VkExportFenceWin32HandleInfoKHR(..),
-        VkExportMemoryWin32HandleInfoKHR(..),
-        VkExportMemoryWin32HandleInfoNV(..),
-        VkExportSemaphoreWin32HandleInfoKHR(..),
-        VkFenceGetWin32HandleInfoKHR(..),
-        VkImportFenceWin32HandleInfoKHR(..),
-        VkImportMemoryWin32HandleInfoKHR(..),
-        VkImportMemoryWin32HandleInfoNV(..),
-        VkImportSemaphoreWin32HandleInfoKHR(..),
-        VkMemoryGetWin32HandleInfoKHR(..),
-        VkMemoryWin32HandlePropertiesKHR(..),
-        VkSemaphoreGetWin32HandleInfoKHR(..),
-        VkWin32KeyedMutexAcquireReleaseInfoKHR(..),
-        VkWin32KeyedMutexAcquireReleaseInfoNV(..),
-        VkWin32SurfaceCreateInfoKHR(..))
+       (VkD3D12FenceSubmitInfoKHR, VkD3D12FenceSubmitInfoKHR', -- ' closing tick for hsc2hs
+        VkExportFenceWin32HandleInfoKHR, VkExportFenceWin32HandleInfoKHR', -- ' closing tick for hsc2hs
+        VkExportMemoryWin32HandleInfoKHR,
+        VkExportMemoryWin32HandleInfoKHR', VkExportMemoryWin32HandleInfoNV, -- ' closing tick for hsc2hs
+        VkExportMemoryWin32HandleInfoNV', -- ' closing tick for hsc2hs
+        VkExportSemaphoreWin32HandleInfoKHR,
+        VkExportSemaphoreWin32HandleInfoKHR', VkFenceGetWin32HandleInfoKHR, -- ' closing tick for hsc2hs
+        VkFenceGetWin32HandleInfoKHR', VkImportFenceWin32HandleInfoKHR, -- ' closing tick for hsc2hs
+        VkImportFenceWin32HandleInfoKHR', VkImportMemoryWin32HandleInfoKHR, -- ' closing tick for hsc2hs
+        VkImportMemoryWin32HandleInfoKHR', VkImportMemoryWin32HandleInfoNV, -- ' closing tick for hsc2hs
+        VkImportMemoryWin32HandleInfoNV', -- ' closing tick for hsc2hs
+        VkImportSemaphoreWin32HandleInfoKHR,
+        VkImportSemaphoreWin32HandleInfoKHR', -- ' closing tick for hsc2hs
+        VkMemoryGetWin32HandleInfoKHR, VkMemoryGetWin32HandleInfoKHR', -- ' closing tick for hsc2hs
+        VkMemoryWin32HandlePropertiesKHR,
+        VkMemoryWin32HandlePropertiesKHR', -- ' closing tick for hsc2hs
+        VkSemaphoreGetWin32HandleInfoKHR,
+        VkSemaphoreGetWin32HandleInfoKHR', -- ' closing tick for hsc2hs
+        VkWin32KeyedMutexAcquireReleaseInfoKHR,
+        VkWin32KeyedMutexAcquireReleaseInfoKHR', -- ' closing tick for hsc2hs
+        VkWin32KeyedMutexAcquireReleaseInfoNV,
+        VkWin32KeyedMutexAcquireReleaseInfoNV', -- ' closing tick for hsc2hs
+        VkWin32SurfaceCreateInfoKHR, VkWin32SurfaceCreateInfoKHR') -- ' closing tick for hsc2hs
        where
-import           Foreign.Storable                               (Storable (..))
-import           GHC.Base                                       (Addr##,
-                                                                 ByteArray##,
-                                                                 byteArrayContents##,
-                                                                 plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks                 (VkWin32SurfaceCreateFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                                 VkExternalMemoryHandleTypeFlagBits,
-                                                                 VkExternalMemoryHandleTypeFlagsNV,
-                                                                 VkExternalSemaphoreHandleTypeFlagBits)
-import           Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import           Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                  (VkDeviceMemory,
-                                                                 VkFence,
-                                                                 VkSemaphore)
-import           Graphics.Vulkan.Types.Include                  (DWORD, HANDLE,
-                                                                 HINSTANCE,
-                                                                 HWND, LPCWSTR,
-                                                                 SECURITY_ATTRIBUTES)
-import           Graphics.Vulkan.Types.Struct.Fence             (VkFenceCreateInfo)
-import           Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
-import           Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
-import           Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
-import           System.IO.Unsafe                               (unsafeDupablePerformIO)
+import Foreign.Storable                               (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Bitmasks                 (VkWin32SurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
+                                                       VkExternalMemoryHandleTypeFlagBits,
+                                                       VkExternalMemoryHandleTypeFlagsNV,
+                                                       VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
+import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
+import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
+import Graphics.Vulkan.Types.Handles                  (VkDeviceMemory, VkFence,
+                                                       VkSemaphore)
+import Graphics.Vulkan.Types.Include                  (DWORD, HANDLE, HINSTANCE,
+                                                       HWND, LPCWSTR,
+                                                       SECURITY_ATTRIBUTES)
+import Graphics.Vulkan.Types.Struct.Fence             (VkFenceCreateInfo)
+import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
+import Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
+import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
+import System.IO.Unsafe                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkD3D12FenceSubmitInfoKHR {
 --   >     VkStructureType sType;
@@ -63,18 +64,18 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   > } VkD3D12FenceSubmitInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkD3D12FenceSubmitInfoKHR VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
-data VkD3D12FenceSubmitInfoKHR = VkD3D12FenceSubmitInfoKHR## Addr##
-                                                            ByteArray##
+type VkD3D12FenceSubmitInfoKHR =
+     VulkanStruct VkD3D12FenceSubmitInfoKHR' -- ' closing tick for hsc2hs
+
+data VkD3D12FenceSubmitInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkD3D12FenceSubmitInfoKHR where
-        (VkD3D12FenceSubmitInfoKHR## a _) ==
-          x@(VkD3D12FenceSubmitInfoKHR## b _) = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkD3D12FenceSubmitInfoKHR where
-        (VkD3D12FenceSubmitInfoKHR## a _) `compare`
-          x@(VkD3D12FenceSubmitInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -91,19 +92,6 @@ instance Storable VkD3D12FenceSubmitInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkD3D12FenceSubmitInfoKHR where
-        unsafeAddr (VkD3D12FenceSubmitInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkD3D12FenceSubmitInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkD3D12FenceSubmitInfoKHR## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkD3D12FenceSubmitInfoKHR where
         type StructFields VkD3D12FenceSubmitInfoKHR =
@@ -370,19 +358,18 @@ instance Show VkD3D12FenceSubmitInfoKHR where
 --   > } VkExportFenceWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportFenceWin32HandleInfoKHR VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
-data VkExportFenceWin32HandleInfoKHR = VkExportFenceWin32HandleInfoKHR## Addr##
-                                                                        ByteArray##
+type VkExportFenceWin32HandleInfoKHR =
+     VulkanStruct VkExportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkExportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkExportFenceWin32HandleInfoKHR where
-        (VkExportFenceWin32HandleInfoKHR## a _) ==
-          x@(VkExportFenceWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportFenceWin32HandleInfoKHR where
-        (VkExportFenceWin32HandleInfoKHR## a _) `compare`
-          x@(VkExportFenceWin32HandleInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -400,20 +387,6 @@ instance Storable VkExportFenceWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExportFenceWin32HandleInfoKHR where
-        unsafeAddr (VkExportFenceWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExportFenceWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExportFenceWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportFenceWin32HandleInfoKHR where
         type StructFields VkExportFenceWin32HandleInfoKHR =
@@ -616,20 +589,18 @@ instance Show VkExportFenceWin32HandleInfoKHR where
 --   > } VkExportMemoryWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoKHR VkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
-data VkExportMemoryWin32HandleInfoKHR = VkExportMemoryWin32HandleInfoKHR## Addr##
-                                                                          ByteArray##
+type VkExportMemoryWin32HandleInfoKHR =
+     VulkanStruct VkExportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkExportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkExportMemoryWin32HandleInfoKHR where
-        (VkExportMemoryWin32HandleInfoKHR## a _) ==
-          x@(VkExportMemoryWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportMemoryWin32HandleInfoKHR where
-        (VkExportMemoryWin32HandleInfoKHR## a _) `compare`
-          x@(VkExportMemoryWin32HandleInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -647,20 +618,6 @@ instance Storable VkExportMemoryWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExportMemoryWin32HandleInfoKHR where
-        unsafeAddr (VkExportMemoryWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExportMemoryWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExportMemoryWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportMemoryWin32HandleInfoKHR where
         type StructFields VkExportMemoryWin32HandleInfoKHR =
@@ -864,19 +821,18 @@ instance Show VkExportMemoryWin32HandleInfoKHR where
 --   > } VkExportMemoryWin32HandleInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoNV VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
-data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## Addr##
-                                                                        ByteArray##
+type VkExportMemoryWin32HandleInfoNV =
+     VulkanStruct VkExportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
+
+data VkExportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkExportMemoryWin32HandleInfoNV where
-        (VkExportMemoryWin32HandleInfoNV## a _) ==
-          x@(VkExportMemoryWin32HandleInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportMemoryWin32HandleInfoNV where
-        (VkExportMemoryWin32HandleInfoNV## a _) `compare`
-          x@(VkExportMemoryWin32HandleInfoNV## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -894,20 +850,6 @@ instance Storable VkExportMemoryWin32HandleInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExportMemoryWin32HandleInfoNV where
-        unsafeAddr (VkExportMemoryWin32HandleInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExportMemoryWin32HandleInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExportMemoryWin32HandleInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportMemoryWin32HandleInfoNV where
         type StructFields VkExportMemoryWin32HandleInfoNV =
@@ -1075,20 +1017,18 @@ instance Show VkExportMemoryWin32HandleInfoNV where
 --   > } VkExportSemaphoreWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportSemaphoreWin32HandleInfoKHR VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
-data VkExportSemaphoreWin32HandleInfoKHR = VkExportSemaphoreWin32HandleInfoKHR## Addr##
-                                                                                ByteArray##
+type VkExportSemaphoreWin32HandleInfoKHR =
+     VulkanStruct VkExportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkExportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkExportSemaphoreWin32HandleInfoKHR where
-        (VkExportSemaphoreWin32HandleInfoKHR## a _) ==
-          x@(VkExportSemaphoreWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportSemaphoreWin32HandleInfoKHR where
-        (VkExportSemaphoreWin32HandleInfoKHR## a _) `compare`
-          x@(VkExportSemaphoreWin32HandleInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1106,21 +1046,6 @@ instance Storable VkExportSemaphoreWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkExportSemaphoreWin32HandleInfoKHR
-         where
-        unsafeAddr (VkExportSemaphoreWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkExportSemaphoreWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkExportSemaphoreWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportSemaphoreWin32HandleInfoKHR where
         type StructFields VkExportSemaphoreWin32HandleInfoKHR =
@@ -1334,19 +1259,18 @@ instance Show VkExportSemaphoreWin32HandleInfoKHR where
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceGetWin32HandleInfoKHR VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
-data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## Addr##
-                                                                  ByteArray##
+type VkFenceGetWin32HandleInfoKHR =
+     VulkanStruct VkFenceGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkFenceGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkFenceGetWin32HandleInfoKHR where
-        (VkFenceGetWin32HandleInfoKHR## a _) ==
-          x@(VkFenceGetWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkFenceGetWin32HandleInfoKHR where
-        (VkFenceGetWin32HandleInfoKHR## a _) `compare`
-          x@(VkFenceGetWin32HandleInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1364,20 +1288,6 @@ instance Storable VkFenceGetWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkFenceGetWin32HandleInfoKHR where
-        unsafeAddr (VkFenceGetWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkFenceGetWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkFenceGetWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkFenceGetWin32HandleInfoKHR where
         type StructFields VkFenceGetWin32HandleInfoKHR =
@@ -1544,19 +1454,18 @@ instance Show VkFenceGetWin32HandleInfoKHR where
 --   > } VkImportFenceWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportFenceWin32HandleInfoKHR VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
-data VkImportFenceWin32HandleInfoKHR = VkImportFenceWin32HandleInfoKHR## Addr##
-                                                                        ByteArray##
+type VkImportFenceWin32HandleInfoKHR =
+     VulkanStruct VkImportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportFenceWin32HandleInfoKHR where
-        (VkImportFenceWin32HandleInfoKHR## a _) ==
-          x@(VkImportFenceWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportFenceWin32HandleInfoKHR where
-        (VkImportFenceWin32HandleInfoKHR## a _) `compare`
-          x@(VkImportFenceWin32HandleInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1574,20 +1483,6 @@ instance Storable VkImportFenceWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportFenceWin32HandleInfoKHR where
-        unsafeAddr (VkImportFenceWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportFenceWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportFenceWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportFenceWin32HandleInfoKHR where
         type StructFields VkImportFenceWin32HandleInfoKHR =
@@ -1859,20 +1754,18 @@ instance Show VkImportFenceWin32HandleInfoKHR where
 --   > } VkImportMemoryWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoKHR VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
-data VkImportMemoryWin32HandleInfoKHR = VkImportMemoryWin32HandleInfoKHR## Addr##
-                                                                          ByteArray##
+type VkImportMemoryWin32HandleInfoKHR =
+     VulkanStruct VkImportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportMemoryWin32HandleInfoKHR where
-        (VkImportMemoryWin32HandleInfoKHR## a _) ==
-          x@(VkImportMemoryWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryWin32HandleInfoKHR where
-        (VkImportMemoryWin32HandleInfoKHR## a _) `compare`
-          x@(VkImportMemoryWin32HandleInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -1890,20 +1783,6 @@ instance Storable VkImportMemoryWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportMemoryWin32HandleInfoKHR where
-        unsafeAddr (VkImportMemoryWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportMemoryWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportMemoryWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryWin32HandleInfoKHR where
         type StructFields VkImportMemoryWin32HandleInfoKHR =
@@ -2107,19 +1986,18 @@ instance Show VkImportMemoryWin32HandleInfoKHR where
 --   > } VkImportMemoryWin32HandleInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoNV VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
-data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## Addr##
-                                                                        ByteArray##
+type VkImportMemoryWin32HandleInfoNV =
+     VulkanStruct VkImportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
+
+data VkImportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkImportMemoryWin32HandleInfoNV where
-        (VkImportMemoryWin32HandleInfoNV## a _) ==
-          x@(VkImportMemoryWin32HandleInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryWin32HandleInfoNV where
-        (VkImportMemoryWin32HandleInfoNV## a _) `compare`
-          x@(VkImportMemoryWin32HandleInfoNV## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2137,20 +2015,6 @@ instance Storable VkImportMemoryWin32HandleInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportMemoryWin32HandleInfoNV where
-        unsafeAddr (VkImportMemoryWin32HandleInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportMemoryWin32HandleInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportMemoryWin32HandleInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryWin32HandleInfoNV where
         type StructFields VkImportMemoryWin32HandleInfoNV =
@@ -2318,20 +2182,18 @@ instance Show VkImportMemoryWin32HandleInfoNV where
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportSemaphoreWin32HandleInfoKHR VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
-data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## Addr##
-                                                                                ByteArray##
+type VkImportSemaphoreWin32HandleInfoKHR =
+     VulkanStruct VkImportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkImportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkImportSemaphoreWin32HandleInfoKHR where
-        (VkImportSemaphoreWin32HandleInfoKHR## a _) ==
-          x@(VkImportSemaphoreWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportSemaphoreWin32HandleInfoKHR where
-        (VkImportSemaphoreWin32HandleInfoKHR## a _) `compare`
-          x@(VkImportSemaphoreWin32HandleInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2349,21 +2211,6 @@ instance Storable VkImportSemaphoreWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImportSemaphoreWin32HandleInfoKHR
-         where
-        unsafeAddr (VkImportSemaphoreWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImportSemaphoreWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImportSemaphoreWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportSemaphoreWin32HandleInfoKHR where
         type StructFields VkImportSemaphoreWin32HandleInfoKHR =
@@ -2650,19 +2497,18 @@ instance Show VkImportSemaphoreWin32HandleInfoKHR where
 --   > } VkMemoryGetWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetWin32HandleInfoKHR VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
-data VkMemoryGetWin32HandleInfoKHR = VkMemoryGetWin32HandleInfoKHR## Addr##
-                                                                    ByteArray##
+type VkMemoryGetWin32HandleInfoKHR =
+     VulkanStruct VkMemoryGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkMemoryGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryGetWin32HandleInfoKHR where
-        (VkMemoryGetWin32HandleInfoKHR## a _) ==
-          x@(VkMemoryGetWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryGetWin32HandleInfoKHR where
-        (VkMemoryGetWin32HandleInfoKHR## a _) `compare`
-          x@(VkMemoryGetWin32HandleInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2680,20 +2526,6 @@ instance Storable VkMemoryGetWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryGetWin32HandleInfoKHR where
-        unsafeAddr (VkMemoryGetWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryGetWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryGetWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryGetWin32HandleInfoKHR where
         type StructFields VkMemoryGetWin32HandleInfoKHR =
@@ -2857,20 +2689,18 @@ instance Show VkMemoryGetWin32HandleInfoKHR where
 --   > } VkMemoryWin32HandlePropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryWin32HandlePropertiesKHR VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
-data VkMemoryWin32HandlePropertiesKHR = VkMemoryWin32HandlePropertiesKHR## Addr##
-                                                                          ByteArray##
+type VkMemoryWin32HandlePropertiesKHR =
+     VulkanStruct VkMemoryWin32HandlePropertiesKHR' -- ' closing tick for hsc2hs
+
+data VkMemoryWin32HandlePropertiesKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkMemoryWin32HandlePropertiesKHR where
-        (VkMemoryWin32HandlePropertiesKHR## a _) ==
-          x@(VkMemoryWin32HandlePropertiesKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryWin32HandlePropertiesKHR where
-        (VkMemoryWin32HandlePropertiesKHR## a _) `compare`
-          x@(VkMemoryWin32HandlePropertiesKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -2888,20 +2718,6 @@ instance Storable VkMemoryWin32HandlePropertiesKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryWin32HandlePropertiesKHR where
-        unsafeAddr (VkMemoryWin32HandlePropertiesKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryWin32HandlePropertiesKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryWin32HandlePropertiesKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryWin32HandlePropertiesKHR where
         type StructFields VkMemoryWin32HandlePropertiesKHR =
@@ -3036,20 +2852,18 @@ instance Show VkMemoryWin32HandlePropertiesKHR where
 --   > } VkSemaphoreGetWin32HandleInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSemaphoreGetWin32HandleInfoKHR VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
-data VkSemaphoreGetWin32HandleInfoKHR = VkSemaphoreGetWin32HandleInfoKHR## Addr##
-                                                                          ByteArray##
+type VkSemaphoreGetWin32HandleInfoKHR =
+     VulkanStruct VkSemaphoreGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
+
+data VkSemaphoreGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkSemaphoreGetWin32HandleInfoKHR where
-        (VkSemaphoreGetWin32HandleInfoKHR## a _) ==
-          x@(VkSemaphoreGetWin32HandleInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkSemaphoreGetWin32HandleInfoKHR where
-        (VkSemaphoreGetWin32HandleInfoKHR## a _) `compare`
-          x@(VkSemaphoreGetWin32HandleInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3067,20 +2881,6 @@ instance Storable VkSemaphoreGetWin32HandleInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkSemaphoreGetWin32HandleInfoKHR where
-        unsafeAddr (VkSemaphoreGetWin32HandleInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkSemaphoreGetWin32HandleInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkSemaphoreGetWin32HandleInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSemaphoreGetWin32HandleInfoKHR where
         type StructFields VkSemaphoreGetWin32HandleInfoKHR =
@@ -3254,20 +3054,18 @@ instance Show VkSemaphoreGetWin32HandleInfoKHR where
 --   > } VkWin32KeyedMutexAcquireReleaseInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoKHR VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
-data VkWin32KeyedMutexAcquireReleaseInfoKHR = VkWin32KeyedMutexAcquireReleaseInfoKHR## Addr##
-                                                                                      ByteArray##
+type VkWin32KeyedMutexAcquireReleaseInfoKHR =
+     VulkanStruct VkWin32KeyedMutexAcquireReleaseInfoKHR' -- ' closing tick for hsc2hs
+
+data VkWin32KeyedMutexAcquireReleaseInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) ==
-          x@(VkWin32KeyedMutexAcquireReleaseInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) `compare`
-          x@(VkWin32KeyedMutexAcquireReleaseInfoKHR## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3286,21 +3084,6 @@ instance Storable VkWin32KeyedMutexAcquireReleaseInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        unsafeAddr (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkWin32KeyedMutexAcquireReleaseInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkWin32KeyedMutexAcquireReleaseInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoKHR where
         type StructFields VkWin32KeyedMutexAcquireReleaseInfoKHR =
@@ -3733,20 +3516,18 @@ instance Show VkWin32KeyedMutexAcquireReleaseInfoKHR where
 --   > } VkWin32KeyedMutexAcquireReleaseInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoNV VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
-data VkWin32KeyedMutexAcquireReleaseInfoNV = VkWin32KeyedMutexAcquireReleaseInfoNV## Addr##
-                                                                                    ByteArray##
+type VkWin32KeyedMutexAcquireReleaseInfoNV =
+     VulkanStruct VkWin32KeyedMutexAcquireReleaseInfoNV' -- ' closing tick for hsc2hs
+
+data VkWin32KeyedMutexAcquireReleaseInfoNV' -- ' closing tick for hsc2hs
 
 instance Eq VkWin32KeyedMutexAcquireReleaseInfoNV where
-        (VkWin32KeyedMutexAcquireReleaseInfoNV## a _) ==
-          x@(VkWin32KeyedMutexAcquireReleaseInfoNV## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkWin32KeyedMutexAcquireReleaseInfoNV where
-        (VkWin32KeyedMutexAcquireReleaseInfoNV## a _) `compare`
-          x@(VkWin32KeyedMutexAcquireReleaseInfoNV## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -3765,21 +3546,6 @@ instance Storable VkWin32KeyedMutexAcquireReleaseInfoNV where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkWin32KeyedMutexAcquireReleaseInfoNV
-         where
-        unsafeAddr (VkWin32KeyedMutexAcquireReleaseInfoNV## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkWin32KeyedMutexAcquireReleaseInfoNV## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkWin32KeyedMutexAcquireReleaseInfoNV##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoNV where
         type StructFields VkWin32KeyedMutexAcquireReleaseInfoNV =
@@ -4201,19 +3967,18 @@ instance Show VkWin32KeyedMutexAcquireReleaseInfoNV where
 --   > } VkWin32SurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32SurfaceCreateInfoKHR VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
-data VkWin32SurfaceCreateInfoKHR = VkWin32SurfaceCreateInfoKHR## Addr##
-                                                                ByteArray##
+type VkWin32SurfaceCreateInfoKHR =
+     VulkanStruct VkWin32SurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
+
+data VkWin32SurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
 instance Eq VkWin32SurfaceCreateInfoKHR where
-        (VkWin32SurfaceCreateInfoKHR## a _) ==
-          x@(VkWin32SurfaceCreateInfoKHR## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkWin32SurfaceCreateInfoKHR where
-        (VkWin32SurfaceCreateInfoKHR## a _) `compare`
-          x@(VkWin32SurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -4230,20 +3995,6 @@ instance Storable VkWin32SurfaceCreateInfoKHR where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkWin32SurfaceCreateInfoKHR where
-        unsafeAddr (VkWin32SurfaceCreateInfoKHR## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkWin32SurfaceCreateInfoKHR## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkWin32SurfaceCreateInfoKHR##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWin32SurfaceCreateInfoKHR where
         type StructFields VkWin32SurfaceCreateInfoKHR =

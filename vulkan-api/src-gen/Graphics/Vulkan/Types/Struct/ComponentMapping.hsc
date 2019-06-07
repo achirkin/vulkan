@@ -8,15 +8,12 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ComponentMapping
-       (VkComponentMapping(..)) where
-import           Foreign.Storable                            (Storable (..))
-import           GHC.Base                                    (Addr##, ByteArray##,
-                                                              byteArrayContents##,
-                                                              plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.ComponentSwizzle (VkComponentSwizzle)
-import           System.IO.Unsafe                            (unsafeDupablePerformIO)
+       (VkComponentMapping, VkComponentMapping') where -- ' closing tick for hsc2hs
+import Foreign.Storable                            (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.ComponentSwizzle (VkComponentSwizzle)
+import System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkComponentMapping {
 --   >     VkComponentSwizzle r;
@@ -26,17 +23,17 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   > } VkComponentMapping;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkComponentMapping VkComponentMapping registry at www.khronos.org>
-data VkComponentMapping = VkComponentMapping## Addr## ByteArray##
+type VkComponentMapping = VulkanStruct VkComponentMapping' -- ' closing tick for hsc2hs
+
+data VkComponentMapping' -- ' closing tick for hsc2hs
 
 instance Eq VkComponentMapping where
-        (VkComponentMapping## a _) == x@(VkComponentMapping## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkComponentMapping where
-        (VkComponentMapping## a _) `compare` x@(VkComponentMapping## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -53,18 +50,6 @@ instance Storable VkComponentMapping where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkComponentMapping where
-        unsafeAddr (VkComponentMapping## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkComponentMapping## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkComponentMapping## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkComponentMapping where
         type StructFields VkComponentMapping = '["r", "g", "b", "a"] -- ' closing tick for hsc2hs

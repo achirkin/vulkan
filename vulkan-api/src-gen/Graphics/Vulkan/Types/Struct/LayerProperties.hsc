@@ -12,18 +12,15 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.LayerProperties
-       (VkLayerProperties(..)) where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Base                         (Addr##, ByteArray##, Proxy##,
-                                                   byteArrayContents##,
-                                                   plusAddr##, proxy##)
-import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Constants        (VK_MAX_DESCRIPTION_SIZE, pattern VK_MAX_DESCRIPTION_SIZE,
-                                                   VK_MAX_EXTENSION_NAME_SIZE,
-                                                   pattern VK_MAX_EXTENSION_NAME_SIZE)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+       (VkLayerProperties, VkLayerProperties') where -- ' closing tick for hsc2hs
+import Foreign.Storable                 (Storable (..))
+import Graphics.Vulkan.Constants        (VK_MAX_DESCRIPTION_SIZE,
+                                         pattern VK_MAX_DESCRIPTION_SIZE,
+                                         VK_MAX_EXTENSION_NAME_SIZE,
+                                         pattern VK_MAX_EXTENSION_NAME_SIZE)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkLayerProperties {
 --   >     char            layerName[VK_MAX_EXTENSION_NAME_SIZE];
@@ -33,17 +30,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkLayerProperties;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkLayerProperties VkLayerProperties registry at www.khronos.org>
-data VkLayerProperties = VkLayerProperties## Addr## ByteArray##
+type VkLayerProperties = VulkanStruct VkLayerProperties' -- ' closing tick for hsc2hs
+
+data VkLayerProperties' -- ' closing tick for hsc2hs
 
 instance Eq VkLayerProperties where
-        (VkLayerProperties## a _) == x@(VkLayerProperties## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkLayerProperties where
-        (VkLayerProperties## a _) `compare` x@(VkLayerProperties## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -60,18 +57,6 @@ instance Storable VkLayerProperties where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkLayerProperties where
-        unsafeAddr (VkLayerProperties## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkLayerProperties## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkLayerProperties## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkLayerProperties where
         type StructFields VkLayerProperties =

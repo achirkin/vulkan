@@ -8,15 +8,14 @@
 {-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Base
-       (VkBaseInStructure(..), VkBaseOutStructure(..)) where
-import           Foreign.Storable                         (Storable (..))
-import           GHC.Base                                 (Addr##, ByteArray##,
-                                                           byteArrayContents##,
-                                                           plusAddr##)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import           System.IO.Unsafe                         (unsafeDupablePerformIO)
+       (VkBaseInStructure, VkBaseInStructure', VkBaseOutStructure, -- ' closing tick for hsc2hs
+        VkBaseOutStructure') -- ' closing tick for hsc2hs
+       where
+import Foreign.Storable                         (Storable (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBaseInStructure {
 --   >     VkStructureType sType;
@@ -24,17 +23,17 @@ import           System.IO.Unsafe                         (unsafeDupablePerformI
 --   > } VkBaseInStructure;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBaseInStructure VkBaseInStructure registry at www.khronos.org>
-data VkBaseInStructure = VkBaseInStructure## Addr## ByteArray##
+type VkBaseInStructure = VulkanStruct VkBaseInStructure' -- ' closing tick for hsc2hs
+
+data VkBaseInStructure' -- ' closing tick for hsc2hs
 
 instance Eq VkBaseInStructure where
-        (VkBaseInStructure## a _) == x@(VkBaseInStructure## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBaseInStructure where
-        (VkBaseInStructure## a _) `compare` x@(VkBaseInStructure## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -51,18 +50,6 @@ instance Storable VkBaseInStructure where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBaseInStructure where
-        unsafeAddr (VkBaseInStructure## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBaseInStructure## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBaseInStructure## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBaseInStructure where
         type StructFields VkBaseInStructure = '["sType", "pNext"] -- ' closing tick for hsc2hs
@@ -147,17 +134,17 @@ instance Show VkBaseInStructure where
 --   > } VkBaseOutStructure;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBaseOutStructure VkBaseOutStructure registry at www.khronos.org>
-data VkBaseOutStructure = VkBaseOutStructure## Addr## ByteArray##
+type VkBaseOutStructure = VulkanStruct VkBaseOutStructure' -- ' closing tick for hsc2hs
+
+data VkBaseOutStructure' -- ' closing tick for hsc2hs
 
 instance Eq VkBaseOutStructure where
-        (VkBaseOutStructure## a _) == x@(VkBaseOutStructure## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
+        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE (==) #-}
 
 instance Ord VkBaseOutStructure where
-        (VkBaseOutStructure## a _) `compare` x@(VkBaseOutStructure## b _)
-          = cmpBytes## (sizeOf x) a b
+        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
 
         {-# INLINE compare #-}
 
@@ -174,18 +161,6 @@ instance Storable VkBaseOutStructure where
         poke = pokeVkData##
 
         {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBaseOutStructure where
-        unsafeAddr (VkBaseOutStructure## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBaseOutStructure## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBaseOutStructure## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBaseOutStructure where
         type StructFields VkBaseOutStructure = '["sType", "pNext"] -- ' closing tick for hsc2hs
