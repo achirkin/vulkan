@@ -11,19 +11,18 @@ module Lib.Vulkan.TransformationObject
   , transObjBufferInfo
   ) where
 
-import           Data.Bits                      ((.|.))
-import           Foreign.Ptr                    (castPtr)
-import           Foreign.Storable
-import           GHC.Generics                   (Generic)
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Marshal.Create
-import           Numeric.DataFrame
-import           Numeric.PrimBytes
+import Data.Bits                      ((.|.))
+import Foreign.Ptr                    (castPtr)
+import Foreign.Storable
+import GHC.Generics                   (Generic)
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Marshal.Create
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Buffer
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Buffer
 
 
 data TransformationObject = TransformationObject

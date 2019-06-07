@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE KindSignatures      #-}
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE Strict              #-}
@@ -6,27 +7,27 @@
 {-# LANGUAGE TypeApplications    #-}
 module Lib (runVulkanProgram) where
 
-import           Control.Exception                    (displayException)
-import           Control.Monad                        (forM_)
-import           Data.Maybe                           (fromJust)
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Numeric.DataFrame
-import           Numeric.Dimensions
+import Control.Exception                    (displayException)
+import Control.Monad                        (forM_)
+import Data.Maybe                           (fromJust)
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Ext.VK_KHR_swapchain
+import Numeric.DataFrame
+import Numeric.Dimensions
 
-import           Lib.GLFW
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Descriptor
-import           Lib.Vulkan.Device
-import           Lib.Vulkan.Drawing
-import           Lib.Vulkan.Pipeline
-import           Lib.Vulkan.Presentation
-import           Lib.Vulkan.Shader
-import           Lib.Vulkan.Shader.TH
-import           Lib.Vulkan.TransformationObject
-import           Lib.Vulkan.Vertex
-import           Lib.Vulkan.VertexBuffer
+import Lib.GLFW
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Descriptor
+import Lib.Vulkan.Device
+import Lib.Vulkan.Drawing
+import Lib.Vulkan.Pipeline
+import Lib.Vulkan.Presentation
+import Lib.Vulkan.Shader
+import Lib.Vulkan.Shader.TH
+import Lib.Vulkan.TransformationObject
+import Lib.Vulkan.Vertex
+import Lib.Vulkan.VertexBuffer
 
 
 -- | Interleaved array of vertices containing at least 3 entries.
@@ -42,7 +43,7 @@ import           Lib.Vulkan.VertexBuffer
 --         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
 --         in function signatures (such as, e.g. `KnownDim n`).
 vertices :: DataFrame Vertex '[XN 3]
-vertices = fromJust $ fromList (D @3)
+vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
     scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0)
   , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0)
@@ -55,12 +56,19 @@ vertices = fromJust $ fromList (D @3)
   ]
 
 indices :: DataFrame Word16 '[XN 3]
-indices = fromJust $ fromList (D @3)
+indices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   [ -- rectangle
     0, 1, 2, 2, 3, 0
     -- triangle
   , 4, 5, 6
   ]
+
+-- | Get number of points in a vector
+dfLen :: DataFrame t ((xns :: [XNat])) -> Word32
+dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
+  n :* _ -> fromIntegral $ dimVal n
+  U      -> 1
+
 
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
@@ -141,7 +149,7 @@ runVulkanProgram = runProgram checkStatus $ do
       cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
                                          renderPass pipelineLayout swInfo
                                          vertexBuffer
-                                         (fromIntegral $ dimSize1 indices, indexBuffer)
+                                         (dfLen indices, indexBuffer)
                                          framebuffers
                                          descriptorSets
 

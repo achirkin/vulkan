@@ -8,18 +8,17 @@ module Lib.Vulkan.VertexBuffer
   , createIndexBuffer
   ) where
 
-import           Data.Bits
-import           Foreign.Ptr                              (castPtr)
-import           Foreign.Storable                         (poke)
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Numeric.DataFrame
-import           Numeric.Dimensions
+import Data.Bits
+import Foreign.Ptr              (castPtr)
+import Foreign.Storable         (poke)
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Buffer
-import           Lib.Vulkan.Vertex
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Buffer
+import Lib.Vulkan.Vertex
 
 
 createVertexBuffer :: VkPhysicalDevice
@@ -31,7 +30,7 @@ createVertexBuffer :: VkPhysicalDevice
                    -> Program r VkBuffer
 createVertexBuffer pdev dev cmdPool cmdQueue (XFrame vertices) = do
 
-    let bSize = fromIntegral $ bSizeOf vertices
+    let bSize = bSizeOf vertices
 
     (_, vertexBuf) <-
       createBuffer pdev dev bSize
@@ -63,7 +62,7 @@ createIndexBuffer :: VkPhysicalDevice
                   -> Program r VkBuffer
 createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
 
-    let bSize = fromIntegral $ bSizeOf indices
+    let bSize = bSizeOf indices
 
     (_, vertexBuf) <-
       createBuffer pdev dev bSize
@@ -84,4 +83,3 @@ createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
     return vertexBuf
-

@@ -10,22 +10,21 @@ module Lib.Vulkan.Pipeline
   , createPipelineLayout
   ) where
 
-import           Data.Bits
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Graphics.Vulkan.Marshal.Create
-import           Graphics.Vulkan.Marshal.Create.DataFrame
-import           Numeric.DataFrame
-import           Numeric.Dimensions
+import Data.Bits
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Ext.VK_KHR_swapchain
+import Graphics.Vulkan.Marshal.Create
+import Graphics.Vulkan.Marshal.Create.DataFrame
+import Numeric.DataFrame
+import Numeric.Dimensions
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Presentation
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Presentation
 
 
-createGraphicsPipeline :: ( KnownDim (n :: k)
-                          , VulkanDataFrame VkVertexInputAttributeDescription '[n])
+createGraphicsPipeline :: KnownDim n
                        => VkDevice
                        -> SwapChainImgInfo
                        -> VkVertexInputBindingDescription
@@ -35,7 +34,9 @@ createGraphicsPipeline :: ( KnownDim (n :: k)
                        -> VkPipelineLayout
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
+    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout
+  | Dict <- inferVkPrimBytes @VkVertexInputBindingDescription
+  , Dict <- inferVkPrimBytes @VkVertexInputAttributeDescription =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
