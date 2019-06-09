@@ -2,4 +2,8 @@
 .vscode
 cabal-helper*
 out
-*/dist
+dist
+dist-newstyle
+.ghc*
+.cabal-sandbox
+cache
