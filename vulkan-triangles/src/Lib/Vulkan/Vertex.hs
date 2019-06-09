@@ -1,29 +1,32 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE DeriveGeneric    #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE PolyKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE Strict           #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE FlexibleContexts    #-}
+{-# LANGUAGE PolyKinds           #-}
+{-# LANGUAGE RecordWildCards     #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Strict              #-}
+{-# LANGUAGE TypeApplications    #-}
+{-# LANGUAGE TypeOperators       #-}
 module Lib.Vulkan.Vertex
   ( Vertex (..), vertIBD, vertIADs
-  , loadModel
+  , loadModel, atLeastThree, dfLen
   ) where
 
 
 import           Codec.Wavefront
 import qualified Control.Monad.ST                         as ST
+import           Data.Foldable                            (toList)
 import           Data.Maybe
 import qualified Data.Set                                 as Set
-import qualified Data.Vector                              as Vec
 import           GHC.Generics                             (Generic)
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Marshal.Create.DataFrame ()
 import           Numeric.DataFrame
 import qualified Numeric.DataFrame.ST                     as ST
+import           Numeric.Dimensions
 
-import           Lib.Program
+import Lib.Program
 
 
 -- | Preparing Vertex data to make an interleaved array.
@@ -33,10 +36,36 @@ data Vertex = Vertex
   , texCoord :: Vec2f
   } deriving (Eq, Ord, Show, Generic)
 
--- We need an instance of PrimBytes to fit Vertex into a DataFrame.
--- Luckily, Generics can do it for us.
+{-
+
+We need an instance of PrimBytes to fit Vertex into a DataFrame.
+Luckily, Generics can do it for us.
+
+This automatic instance tries to pack fields of your data type as dense as possible
+while respecting the alignment requirements.
+The result is something like a C-struct with the same fields (hopefully identical).
+
+When Vertex has an instance of PrimBytes, you can put it into DataFrames, but
+also you can do things with pointers:
+
+  * bSizeOf  -- size of the packed binary representation
+  * bAlignOf  -- alignment of the packed binary representation
+  * bFieldOffsetOf @"fieldName" -- offset of a field (e.g. "pos", "color")
+  * bPeek/bPoke and others -- write data to Ptr similar to Storable
+ -}
 instance PrimBytes Vertex
 
+-- | Check if the frame has enough elements.
+atLeastThree :: (All KnownXNatType ns, BoundedDims ns)
+             => DataFrame t (n ': ns) -> DataFrame t (XN 3 ': ns)
+atLeastThree = fromMaybe (error "Lib.Vulkan.Vertex.atLeastThree: not enough points")
+             . constrainDF
+
+-- | Get number of points in a vector
+dfLen :: DataFrame t ((xns :: [XNat])) -> Word32
+dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
+  n :* _ -> fromIntegral $ dimVal n
+  U      -> 1
 
 vertIBD :: VkVertexInputBindingDescription
 vertIBD = createVk
@@ -89,19 +118,43 @@ loadModel :: FilePath
 loadModel file = do
   logInfo "Loading model.."
   obj <- either throwVkMsg pure =<< Codec.Wavefront.fromFile file
-  logInfo "Processing geometry.."
-  let triangles = concatMap (faceToTriangles . elValue) (Vec.toList (objFaces obj))
-  let faceIndices = concatMap triangleToFaceIndices triangles
-  let allVertices = flip map faceIndices $ \fi ->
-        -- No idea why indices are off by one. Could be a bug in the wavefront library.
-        let Location x y z _ = objLocations obj Vec.! (faceLocIndex fi - 1)
-            TexCoord r s _ = objTexCoords obj Vec.! (fromJust (faceTexCoordIndex fi) - 1)
-        in scalar $ Vertex (vec3 x (-y) z) (vec3 1 1 1) (vec2 r (1 - s))
-  let vertSet = Set.fromList allVertices
-  let vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] . fromList $ Set.toList vertSet
-  let indices = fromJust . constrainDF @'[XN 3] @'[XN 0] . fromList
-              $ map (fromIntegral . flip Set.findIndex vertSet) allVertices
-  logInfo "Geometry done."
-  -- logInfo $ "allVertices length " ++ show (length allVertices)
-  -- logInfo $ "vertices length " ++ show (dimSize1 vertices)
-  return (vertices, indices)
+  obj `seq` logInfo "Processing geometry.."
+  let r = objVertices obj
+  r `seq` logInfo "Geometry done."
+  return r
+
+
+objVertices :: WavefrontOBJ -> (DataFrame Vertex '[XN 3], DataFrame Word32 '[XN 3])
+objVertices WavefrontOBJ {..}
+  | XFrame objLocs  <- fromList . map fromLoc  $ toList objLocations
+  , XFrame objTexCs <- fromList . map fromTexC $ toList objTexCoords
+    -- the two lines below let GHC know the value length of objLocs and objTexCs
+    -- at the type level; we need this for the mkVertex function below.
+  , D :* _ <- dims `inSpaceOf` objLocs
+  , D :* _ <- dims `inSpaceOf` objTexCs
+  , allVertices <- map (scalar . mkVertex objLocs objTexCs) faceIndices
+  , vertSet <- Set.fromList allVertices
+    = ( atLeastThree . fromList $ Set.toList vertSet
+      , atLeastThree . fromList
+          $ map (fromIntegral . flip Set.findIndex vertSet) allVertices
+      )
+  | otherwise = error "objVertices: impossible arguments"
+  where
+    triangles = concatMap (faceToTriangles . elValue) $ toList objFaces
+    faceIndices = concatMap triangleToFaceIndices triangles
+    fromLoc (Location x y z _) = vec3 x (-y) z
+    fromTexC (TexCoord r s _) = vec2 r (1 - s)
+    {- Note, we need to substract 1 from all indices, because Wavefron OBJ indices
+       are 1-based (rather than 0-based indices of vector or easytensor packages).
+
+       More info: http://www.martinreddy.net/gfx/3d/OBJ.spec
+       "Each of these types of vertices is numbered separately, starting with 1"
+     -}
+    mkVertex :: ( KnownDim n, KnownDim m)
+             => Matrix Float n 3 -> Matrix Float m 2
+             -> FaceIndex -> Vertex
+    mkVertex objLocs objTexCs FaceIndex {..} = Vertex
+      { pos      = objLocs ! fromIntegral (faceLocIndex - 1)
+      , color    = vec3 1 1 1
+      , texCoord = objTexCs ! fromIntegral (fromJust faceTexCoordIndex - 1)
+      }
