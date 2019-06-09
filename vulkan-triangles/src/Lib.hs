@@ -1,41 +1,37 @@
-{-# LANGUAGE DataKinds           #-}
-{-# LANGUAGE KindSignatures      #-}
-{-# LANGUAGE LambdaCase          #-}
-{-# LANGUAGE NamedFieldPuns      #-}
-{-# LANGUAGE RecordWildCards     #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE Strict              #-}
-{-# LANGUAGE TemplateHaskell     #-}
-{-# LANGUAGE TypeApplications    #-}
+{-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE LambdaCase       #-}
+{-# LANGUAGE NamedFieldPuns   #-}
+{-# LANGUAGE RecordWildCards  #-}
+{-# LANGUAGE Strict           #-}
+{-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE TypeApplications #-}
 module Lib
   ( runVulkanProgram
   , WhichDemo (..)
   ) where
 
-import           Control.Monad                        (forM_, when)
-import           Data.IORef
-import           Data.Maybe                           (fromJust)
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Numeric.DataFrame
-import           Numeric.Dimensions
-import           System.Directory                     (doesFileExist)
+import Control.Monad                        (forM_, when)
+import Data.IORef
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Ext.VK_KHR_swapchain
+import Numeric.DataFrame
+import System.Directory                     (doesFileExist)
 
-import           Lib.GLFW
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Command
-import           Lib.Vulkan.Descriptor
-import           Lib.Vulkan.Device
-import           Lib.Vulkan.Drawing
-import           Lib.Vulkan.Image
-import           Lib.Vulkan.Pipeline
-import           Lib.Vulkan.Presentation
-import           Lib.Vulkan.Shader
-import           Lib.Vulkan.Shader.TH
-import           Lib.Vulkan.TransformationObject
-import           Lib.Vulkan.Vertex
-import           Lib.Vulkan.VertexBuffer
+import Lib.GLFW
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Command
+import Lib.Vulkan.Descriptor
+import Lib.Vulkan.Device
+import Lib.Vulkan.Drawing
+import Lib.Vulkan.Image
+import Lib.Vulkan.Pipeline
+import Lib.Vulkan.Presentation
+import Lib.Vulkan.Shader
+import Lib.Vulkan.Shader.TH
+import Lib.Vulkan.TransformationObject
+import Lib.Vulkan.Vertex
+import Lib.Vulkan.VertexBuffer
 
 
 -- | Interleaved array of vertices containing at least 3 entries.
@@ -51,7 +47,7 @@ import           Lib.Vulkan.VertexBuffer
 --         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
 --         in function signatures (such as, e.g. `KnownDim n`).
 rectVertices :: DataFrame Vertex '[XN 3]
-rectVertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
+rectVertices = atLeastThree $ fromList
   [ -- rectangle
     --              coordinate                  color        texture coordinate
     scalar $ Vertex (vec3 (-0.5) (-0.5)   0.0 ) (vec3 1 0 0) (vec2 0 0)
@@ -73,7 +69,7 @@ rectVertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   ]
 
 rectIndices :: DataFrame Word32 '[XN 3]
-rectIndices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
+rectIndices = atLeastThree $ fromList
   [ -- rectangle
     0, 1, 2, 2, 3, 0
     -- rectangle
@@ -82,11 +78,6 @@ rectIndices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
   -- , 4, 5, 6
   ]
 
--- | Get number of points in a vector
-dfLen :: DataFrame t ((xns :: [XNat])) -> Word32
-dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
-  n :* _ -> fromIntegral $ dimVal n
-  U      -> 1
 
 data WhichDemo = Squares | Chalet
 
