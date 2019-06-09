@@ -242,15 +242,17 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
         -- part of dumb fps counter
         seconds <- getTime
-        liftIO $ do
-          cur <- readIORef currentSec
-          if floor seconds /= cur then do
-            count <- readIORef frameCount
-            when (cur /= 0) $ print count
+        cur <- liftIO $ readIORef currentSec
+        if floor seconds /= cur
+        then do
+          count <- liftIO $ readIORef frameCount
+          when (cur /= 0) $ logInfo $
+            "Running for " <> show cur <> "s; current fps: " <> show count
+          liftIO $ do
             writeIORef currentSec (floor seconds)
             writeIORef frameCount 0
-          else do
-            modifyIORef frameCount $ \c -> c + 1
+        else
+          liftIO $ modifyIORef' frameCount succ
 
         sizeChanged <- liftIO $ readIORef windowSizeChanged
         when sizeChanged $ logInfo "Have got a windowSizeCallback from GLFW"
