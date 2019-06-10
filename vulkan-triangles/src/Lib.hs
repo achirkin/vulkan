@@ -47,36 +47,37 @@ import Lib.Vulkan.VertexBuffer
 --         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
 --         in function signatures (such as, e.g. `KnownDim n`).
 rectVertices :: DataFrame Vertex '[XN 3]
-rectVertices = atLeastThree $ fromList
-  [ -- rectangle
-    --              coordinate                  color        texture coordinate
-    scalar $ Vertex (vec3 (-0.5) (-0.5)   0.0 ) (vec3 1 0 0) (vec2 0 0)
-  , scalar $ Vertex (vec3   0.4  (-0.5)   0.0 ) (vec3 0 1 0) (vec2 1 0)
-  , scalar $ Vertex (vec3   0.4    0.4    0.0 ) (vec3 0 0 1) (vec2 1 1)
-  , scalar $ Vertex (vec3 (-0.5)   0.4    0.0 ) (vec3 1 1 1) (vec2 0 1)
+rectVertices = XFrame $
+    square
+    `appendDF`
+    withPos (+ vec4 0 0 0.5 0) square
+    `appendDF`
+    withPos (\p -> p %* rotateX (pi/2) + vec4 0 0 (-0.5) 0) square
+  where
+    square :: Vector Vertex 4
+    square = fromFlatList (D4 :* U) (Vertex 0 0 0) -- default point for type safety
+      [  -- rectangle
+          --     coordinate                  color        texture coordinate
+        Vertex (vec3 (-0.5) (-0.5) 0) (vec3 1 0 0) (vec2 0 0)
+      , Vertex (vec3   0.4  (-0.5) 0) (vec3 0 1 0) (vec2 1 0)
+      , Vertex (vec3   0.4    0.4  0) (vec3 0 0 1) (vec2 1 1)
+      , Vertex (vec3 (-0.5)   0.4  0) (vec3 1 1 1) (vec2 0 1)
+      ]
+    withPos :: (Vec4f -> Vec4f) -> Vector Vertex 4 -> Vector Vertex 4
+    withPos f = ewmap (\(S v) -> S v { pos = fromHom . f . toHomPoint $ pos v })
 
-    -- rectangle
-    --              coordinate                  color        texture coordinate
-  , scalar $ Vertex (vec3 (-0.5) (-0.5) (-0.5)) (vec3 1 0 0) (vec2 0 0)
-  , scalar $ Vertex (vec3   0.4  (-0.5) (-0.5)) (vec3 0 1 0) (vec2 1 0)
-  , scalar $ Vertex (vec3   0.4    0.4  (-0.5)) (vec3 0 0 1) (vec2 1 1)
-  , scalar $ Vertex (vec3 (-0.5)   0.4  (-0.5)) (vec3 1 1 1) (vec2 0 1)
 
-    -- triangle
-  -- , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
-  -- , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
-  -- , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
-  ]
 
 rectIndices :: DataFrame Word32 '[XN 3]
-rectIndices = atLeastThree $ fromList
-  [ -- rectangle
-    0, 1, 2, 2, 3, 0
-    -- rectangle
-  , 4, 5, 6, 6, 7, 4
-    -- triangle
-  -- , 4, 5, 6
-  ]
+rectIndices = atLeastThree $ fromList $
+  oneRectIndices
+  ++
+  map (+4) oneRectIndices
+  ++
+  map (+8) oneRectIndices
+  where
+    -- indices for one rectangle
+    oneRectIndices = [0, 3, 2, 2, 1, 0]
 
 
 data WhichDemo = Squares | Chalet

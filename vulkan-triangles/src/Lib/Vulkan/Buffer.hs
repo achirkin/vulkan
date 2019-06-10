@@ -9,18 +9,18 @@ module Lib.Vulkan.Buffer
   , findMemoryType
   ) where
 
-import           Data.Bits
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Graphics.Vulkan.Marshal.Create
-import           Graphics.Vulkan.Marshal.Create.DataFrame
-import           Numeric.DataFrame
+import Data.Bits
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Graphics.Vulkan.Marshal.Create
+import Graphics.Vulkan.Marshal.Create.DataFrame
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Command
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Command
 
-
+-- | Create a generic @VkBuffer@ and allocate @VkDeviceMemory@ for it.
 createBuffer :: VkPhysicalDevice
              -> VkDevice
              -> VkDeviceSize
@@ -56,7 +56,7 @@ createBuffer pdev dev bSize bUsage bMemPropFlags = do
           &* set @"allocationSize" (getField @"size" memRequirements)
           &* set @"memoryTypeIndex" memIndex
 
-    vertexBufferMemory <- allocResource
+    bufferMemory <- allocResource
       (\vbm -> liftIO $ vkFreeMemory dev vbm VK_NULL) $
       withVkPtr allocInfo $ \aiPtr -> allocaPeek $
         runVk . vkAllocateMemory dev aiPtr VK_NULL
@@ -65,11 +65,12 @@ createBuffer pdev dev bSize bUsage bMemPropFlags = do
     freeBufLater
 
     -- associate memory with buffer
-    runVk $ vkBindBufferMemory dev buf vertexBufferMemory 0
+    runVk $ vkBindBufferMemory dev buf bufferMemory 0
 
-    return (vertexBufferMemory, buf)
+    return (bufferMemory, buf)
 
-
+-- | @copyBuffer dev pool queue src dest n@ copies @n@ bytes from @src@ buffer
+--   to @dest@ buffer.
 copyBuffer :: VkDevice
            -> VkCommandPool
            -> VkQueue
