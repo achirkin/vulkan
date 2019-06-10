@@ -142,7 +142,7 @@ objVertices WavefrontOBJ {..}
   where
     triangles = concatMap (faceToTriangles . elValue) $ toList objFaces
     faceIndices = concatMap triangleToFaceIndices triangles
-    fromLoc (Location x y z _) = vec3 x (-y) z
+    fromLoc (Location x y z _) = vec3 x y z
     fromTexC (TexCoord r s _) = vec2 r (1 - s)
     {- Note, we need to substract 1 from all indices, because Wavefron OBJ indices
        are 1-based (rather than 0-based indices of vector or easytensor packages).

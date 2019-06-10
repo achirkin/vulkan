@@ -8,16 +8,16 @@ module Lib.Vulkan.VertexBuffer
   , createIndexBuffer
   ) where
 
-import           Data.Bits
-import           Foreign.Ptr              (castPtr)
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Numeric.DataFrame
+import Data.Bits
+import Foreign.Ptr              (castPtr)
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Buffer
-import           Lib.Vulkan.Vertex
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Buffer
+import Lib.Vulkan.Vertex
 
 
 createVertexBuffer :: VkPhysicalDevice
