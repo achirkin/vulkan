@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -20,9 +18,7 @@ module Graphics.Vulkan.Types.Enum.Fence
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -32,7 +28,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkFenceCreateBitmask (a ::
                                 FlagType) = VkFenceCreateBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkFenceCreateFlags = VkFenceCreateBitmask FlagMask
 
@@ -51,16 +47,6 @@ pattern VkFenceCreateFlags n = VkFenceCreateBitmask n
 deriving instance Bits (VkFenceCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkFenceCreateBitmask FlagMask)
-
-deriving instance Integral (VkFenceCreateBitmask FlagMask)
-
-deriving instance Num (VkFenceCreateBitmask FlagMask)
-
-deriving instance Bounded (VkFenceCreateBitmask FlagMask)
-
-deriving instance Enum (VkFenceCreateBitmask FlagMask)
-
-deriving instance Real (VkFenceCreateBitmask FlagMask)
 
 instance Show (VkFenceCreateBitmask a) where
         showsPrec _ VK_FENCE_CREATE_SIGNALED_BIT
@@ -86,12 +72,11 @@ pattern VK_FENCE_CREATE_SIGNALED_BIT :: VkFenceCreateBitmask a
 pattern VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateBitmask 1
 
 newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
+                                     deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkFenceImportFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkFenceImportFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkFenceImportFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -99,7 +84,7 @@ instance Read VkFenceImportFlagBitsKHR where
 
 newtype VkFenceImportBitmask (a ::
                                 FlagType) = VkFenceImportBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkFenceImportFlags = VkFenceImportBitmask FlagMask
 
@@ -118,16 +103,6 @@ pattern VkFenceImportFlags n = VkFenceImportBitmask n
 deriving instance Bits (VkFenceImportBitmask FlagMask)
 
 deriving instance FiniteBits (VkFenceImportBitmask FlagMask)
-
-deriving instance Integral (VkFenceImportBitmask FlagMask)
-
-deriving instance Num (VkFenceImportBitmask FlagMask)
-
-deriving instance Bounded (VkFenceImportBitmask FlagMask)
-
-deriving instance Enum (VkFenceImportBitmask FlagMask)
-
-deriving instance Real (VkFenceImportBitmask FlagMask)
 
 instance Show (VkFenceImportBitmask a) where
         showsPrec _ VK_FENCE_IMPORT_TEMPORARY_BIT

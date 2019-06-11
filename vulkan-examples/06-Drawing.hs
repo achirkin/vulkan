@@ -111,7 +111,7 @@ withFramebuffers dev renderPass SwapChainImgInfo{..} imgviews action = do
       let fbci = createVk
             $  set @"sType" VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
             &* set @"pNext" VK_NULL
-            &* set @"flags" 0
+            &* set @"flags" VK_ZERO_FLAGS
             &* set @"renderPass" renderPass
             &* set @"attachmentCount" 1
             &* setListRef @"pAttachments" [imgView]
@@ -134,7 +134,7 @@ withCommandPool dev DevQueues{..} action = do
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"queueFamilyIndex" graphicsFamIdx
       ) $ \ciPtr ->
       throwingVK "vkCreateCommandPool failed!"
@@ -231,7 +231,7 @@ withSemaphore dev action = do
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
       ) $ \ciPtr -> throwingVK "vkCreateSemaphore failed!"
                       $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
     peek sPtr

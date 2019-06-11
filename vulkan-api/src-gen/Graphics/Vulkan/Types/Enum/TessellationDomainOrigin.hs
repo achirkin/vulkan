@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -13,9 +11,7 @@ module Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags)
@@ -27,8 +23,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkTessellationDomainOrigin VkTessellationDomainOrigin registry at www.khronos.org>
 newtype VkTessellationDomainOrigin = VkTessellationDomainOrigin Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
+                                       deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkTessellationDomainOrigin where
         showsPrec _ VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT
@@ -65,12 +60,11 @@ pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT =
         VkTessellationDomainOrigin 1
 
 newtype VkTessellationDomainOriginKHR = VkTessellationDomainOriginKHR VkFlags
-                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                    FiniteBits, Storable, Real, Data, Generic)
+                                          deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkTessellationDomainOriginKHR where
-        {-# INLINE show #-}
-        show (VkTessellationDomainOriginKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkTessellationDomainOriginKHR where
         {-# INLINE readsPrec #-}

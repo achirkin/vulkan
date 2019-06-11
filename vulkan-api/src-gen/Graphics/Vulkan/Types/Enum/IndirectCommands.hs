@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -30,9 +28,7 @@ module Graphics.Vulkan.Types.Enum.IndirectCommands
                                        VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -42,8 +38,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkIndirectCommandsLayoutUsageBitmaskNVX (a ::
                                                    FlagType) = VkIndirectCommandsLayoutUsageBitmaskNVX VkFlags
-                                                                 deriving (Eq, Ord, Storable, Data,
-                                                                           Generic)
+                                                                 deriving (Eq, Ord, Storable)
 
 type VkIndirectCommandsLayoutUsageFlagsNVX =
      VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask
@@ -68,21 +63,6 @@ deriving instance
 
 deriving instance
          FiniteBits (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
-
-deriving instance
-         Integral (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
-
-deriving instance
-         Num (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
-
-deriving instance
-         Bounded (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
-
-deriving instance
-         Enum (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
-
-deriving instance
-         Real (VkIndirectCommandsLayoutUsageBitmaskNVX FlagMask)
 
 instance Show (VkIndirectCommandsLayoutUsageBitmaskNVX a) where
         showsPrec _
@@ -156,8 +136,7 @@ pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndirectCommandsTokenTypeNVX VkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
 newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
-                                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                     Generic)
+                                           deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkIndirectCommandsTokenTypeNVX where
         showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX

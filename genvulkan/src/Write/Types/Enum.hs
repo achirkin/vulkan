@@ -46,8 +46,6 @@ genBitmaskPair tbm te
       Nothing -> error $ "genBitmaskPair: Could not find a corresponding enum for bits type "
                       ++ show te
       Just VkEnums {..}  -> do
-        writePragma "DeriveDataTypeable"
-        writePragma "DeriveGeneric"
         writePragma "DataKinds"
         writePragma "KindSignatures"
         writePragma "StandaloneDeriving"
@@ -56,8 +54,6 @@ genBitmaskPair tbm te
         writePragma "FlexibleInstances"
         writePragma "GeneralizedNewtypeDeriving"
         writeOptionsPragma (Just HADDOCK) "ignore-exports"
-        writeImport $ DIThing "Data" DITEmpty
-        writeImport $ DIThing "Generic" DITEmpty
         writeImport $ DIThing "Storable" DITEmpty
         writeImport $ DIThing "Bits" DITEmpty
         writeImport $ DIThing "FiniteBits" DITEmpty
@@ -70,7 +66,7 @@ genBitmaskPair tbm te
         mapM_ writeDecl $ parseDecls
           [text|
             newtype $baseNameTxt (a :: FlagType) = $baseNameTxt VkFlags
-              deriving ( Eq, Ord, Storable, Data, Generic)
+              deriving ( Eq, Ord, Storable)
 
             type $flagNameTxt = $baseNameTxt FlagMask
             type $bitsNameTxt = $baseNameTxt FlagBit
@@ -83,11 +79,6 @@ genBitmaskPair tbm te
 
             deriving instance Bits       ($baseNameTxt FlagMask)
             deriving instance FiniteBits ($baseNameTxt FlagMask)
-            deriving instance Integral   ($baseNameTxt FlagMask)
-            deriving instance Num        ($baseNameTxt FlagMask)
-            deriving instance Bounded    ($baseNameTxt FlagMask)
-            deriving instance Enum       ($baseNameTxt FlagMask)
-            deriving instance Real       ($baseNameTxt FlagMask)
 
           |]
 
@@ -171,11 +162,7 @@ genEnums VkEnums {..} = do
 
     mtname <- forM _vkEnumsTypeName $ \tname -> do
       writePragma "GeneralizedNewtypeDeriving"
-      writePragma "DeriveDataTypeable"
-      writePragma "DeriveGeneric"
       writeOptionsPragma (Just HADDOCK) "ignore-exports"
-      writeImport $ DIThing "Generic" DITEmpty
-      writeImport $ DIThing "Data" DITEmpty
       writeImport $ DIThing "Storable" DITEmpty
       regLink <- vkRegistryLink $ unVkTypeName tname
       let tinsts = T.intercalate ", " derives
@@ -211,7 +198,7 @@ genEnums VkEnums {..} = do
           [ diToImportSpec $ DIThing tnameTxt DITAll ] []
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
-              ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
+              ["Eq","Ord","Enum","Storable"]
     baseType = if _vkEnumsIsBits then "VkFlags" else "Int32"
 
     allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
@@ -283,6 +270,7 @@ genAlias VkTypeSimple
     { name = vkTName
     , attributes = VkTypeAttrs
         { comment = txt
+        , category = cat
         }
     , typeData = VkTypeData
        { reference = [(vkTRef, _)]
@@ -293,29 +281,31 @@ genAlias VkTypeSimple
 
 
     writePragma "GeneralizedNewtypeDeriving"
-    writePragma "DeriveDataTypeable"
-    writePragma "DeriveGeneric"
 
     writeImport $ DIVar "coerce"
-    writeImport $ DIThing "Generic" DITEmpty
-    writeImport $ DIThing "Data" DITEmpty
     writeImport $ DIThing "Bits" DITEmpty
     writeImport $ DIThing "FiniteBits" DITEmpty
     writeImport $ DIThing "Storable" DITEmpty
     writeImport $ DIThing treftxt DITNo
 
-    writeDecl . setComment rezComment $ parseDecl'
-      [text|
-        newtype $tnametxt = $tnametxt $treftxt
-          deriving ( Eq, Ord, Num, Bounded, Enum, Integral
-                   , Bits, FiniteBits, Storable, Real, Data, Generic)
-      |]
+    writeDecl . setComment rezComment $ parseDecl' $ 
+      case cat of
+        VkTypeCatBasetype ->
+          [text|
+            newtype $tnametxt = $tnametxt $treftxt
+              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Real, Bits, FiniteBits, Storable)
+          |]
+        _ -> 
+          [text|
+            newtype $tnametxt = $tnametxt $treftxt
+              deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+          |]
 
     mapM_ writeDecl $ parseDecls
       [text|
         instance Show $tnametxt where
-          {-# INLINE show #-}
-          show ($tnametxt x) = show x
+          {-# INLINE showsPrec #-}
+          showsPrec = coerce (showsPrec :: Int -> $treftxt -> ShowS)
 
         instance Read $tnametxt where
           {-# INLINE readsPrec #-}

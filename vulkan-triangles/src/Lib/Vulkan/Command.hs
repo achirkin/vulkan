@@ -28,7 +28,7 @@ createCommandPool dev DevQueues{..} =
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"queueFamilyIndex" graphicsFamIdx
       ) $ \ciPtr -> runVk $ vkCreateCommandPool dev ciPtr VK_NULL pPtr
 

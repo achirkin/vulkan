@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -30,9 +28,7 @@ module Graphics.Vulkan.Types.Enum.Buffer
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -42,7 +38,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkBufferCreateBitmask (a ::
                                  FlagType) = VkBufferCreateBitmask VkFlags
-                                               deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkBufferCreateFlags = VkBufferCreateBitmask FlagMask
 
@@ -61,16 +57,6 @@ pattern VkBufferCreateFlags n = VkBufferCreateBitmask n
 deriving instance Bits (VkBufferCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkBufferCreateBitmask FlagMask)
-
-deriving instance Integral (VkBufferCreateBitmask FlagMask)
-
-deriving instance Num (VkBufferCreateBitmask FlagMask)
-
-deriving instance Bounded (VkBufferCreateBitmask FlagMask)
-
-deriving instance Enum (VkBufferCreateBitmask FlagMask)
-
-deriving instance Real (VkBufferCreateBitmask FlagMask)
 
 instance Show (VkBufferCreateBitmask a) where
         showsPrec _ VK_BUFFER_CREATE_SPARSE_BINDING_BIT
@@ -127,7 +113,7 @@ pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT =
 
 newtype VkBufferUsageBitmask (a ::
                                 FlagType) = VkBufferUsageBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkBufferUsageFlags = VkBufferUsageBitmask FlagMask
 
@@ -146,16 +132,6 @@ pattern VkBufferUsageFlags n = VkBufferUsageBitmask n
 deriving instance Bits (VkBufferUsageBitmask FlagMask)
 
 deriving instance FiniteBits (VkBufferUsageBitmask FlagMask)
-
-deriving instance Integral (VkBufferUsageBitmask FlagMask)
-
-deriving instance Num (VkBufferUsageBitmask FlagMask)
-
-deriving instance Bounded (VkBufferUsageBitmask FlagMask)
-
-deriving instance Enum (VkBufferUsageBitmask FlagMask)
-
-deriving instance Real (VkBufferUsageBitmask FlagMask)
 
 instance Show (VkBufferUsageBitmask a) where
         showsPrec _ VK_BUFFER_USAGE_TRANSFER_SRC_BIT
@@ -282,12 +258,11 @@ pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT =
         VkBufferUsageBitmask 256
 
 newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
+                                       deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkBufferViewCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkBufferViewCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkBufferViewCreateFlagBits where
         {-# INLINE readsPrec #-}

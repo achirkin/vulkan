@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -84,9 +82,7 @@ module Graphics.Vulkan.Types.Enum.External
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -95,12 +91,11 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR VkFlags
-                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                        FiniteBits, Storable, Real, Data, Generic)
+                                              deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalFenceFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalFenceFeatureFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalFenceFeatureFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -108,7 +103,7 @@ instance Read VkExternalFenceFeatureFlagBitsKHR where
 
 newtype VkExternalFenceFeatureBitmask (a ::
                                          FlagType) = VkExternalFenceFeatureBitmask VkFlags
-                                                       deriving (Eq, Ord, Storable, Data, Generic)
+                                                       deriving (Eq, Ord, Storable)
 
 type VkExternalFenceFeatureFlags =
      VkExternalFenceFeatureBitmask FlagMask
@@ -132,16 +127,6 @@ deriving instance Bits (VkExternalFenceFeatureBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Integral (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalFenceFeatureBitmask FlagMask)
 
 instance Show (VkExternalFenceFeatureBitmask a) where
         showsPrec _ VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT
@@ -180,13 +165,12 @@ pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT =
         VkExternalFenceFeatureBitmask 2
 
 newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR VkFlags
-                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                           Bits, FiniteBits, Storable, Real, Data,
-                                                           Generic)
+                                                 deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                           Storable)
 
 instance Show VkExternalFenceHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalFenceHandleTypeFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalFenceHandleTypeFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -194,8 +178,7 @@ instance Read VkExternalFenceHandleTypeFlagBitsKHR where
 
 newtype VkExternalFenceHandleTypeBitmask (a ::
                                             FlagType) = VkExternalFenceHandleTypeBitmask VkFlags
-                                                          deriving (Eq, Ord, Storable, Data,
-                                                                    Generic)
+                                                          deriving (Eq, Ord, Storable)
 
 type VkExternalFenceHandleTypeFlags =
      VkExternalFenceHandleTypeBitmask FlagMask
@@ -219,18 +202,6 @@ deriving instance Bits (VkExternalFenceHandleTypeBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance
-         Integral (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Num (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Enum (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Real (VkExternalFenceHandleTypeBitmask FlagMask)
 
 instance Show (VkExternalFenceHandleTypeBitmask a) where
         showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT
@@ -291,13 +262,11 @@ pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT =
         VkExternalFenceHandleTypeBitmask 8
 
 newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR VkFlags
-                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                         Bits, FiniteBits, Storable, Real, Data,
-                                                         Generic)
+                                               deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalMemoryFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalMemoryFeatureFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalMemoryFeatureFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -305,7 +274,7 @@ instance Read VkExternalMemoryFeatureFlagBitsKHR where
 
 newtype VkExternalMemoryFeatureBitmask (a ::
                                           FlagType) = VkExternalMemoryFeatureBitmask VkFlags
-                                                        deriving (Eq, Ord, Storable, Data, Generic)
+                                                        deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryFeatureFlags =
      VkExternalMemoryFeatureBitmask FlagMask
@@ -329,17 +298,6 @@ deriving instance Bits (VkExternalMemoryFeatureBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance
-         Integral (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalMemoryFeatureBitmask FlagMask)
 
 instance Show (VkExternalMemoryFeatureBitmask a) where
         showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT
@@ -390,8 +348,7 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT =
 
 newtype VkExternalMemoryFeatureBitmaskNV (a ::
                                             FlagType) = VkExternalMemoryFeatureBitmaskNV VkFlags
-                                                          deriving (Eq, Ord, Storable, Data,
-                                                                    Generic)
+                                                          deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryFeatureFlagsNV =
      VkExternalMemoryFeatureBitmaskNV FlagMask
@@ -415,18 +372,6 @@ deriving instance Bits (VkExternalMemoryFeatureBitmaskNV FlagMask)
 
 deriving instance
          FiniteBits (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance
-         Integral (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Num (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Enum (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Real (VkExternalMemoryFeatureBitmaskNV FlagMask)
 
 instance Show (VkExternalMemoryFeatureBitmaskNV a) where
         showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV
@@ -476,13 +421,12 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV =
         VkExternalMemoryFeatureBitmaskNV 4
 
 newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
+                                                  deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                            Storable)
 
 instance Show VkExternalMemoryHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalMemoryHandleTypeFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalMemoryHandleTypeFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -490,8 +434,7 @@ instance Read VkExternalMemoryHandleTypeFlagBitsKHR where
 
 newtype VkExternalMemoryHandleTypeBitmask (a ::
                                              FlagType) = VkExternalMemoryHandleTypeBitmask VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                           deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryHandleTypeFlags =
      VkExternalMemoryHandleTypeBitmask FlagMask
@@ -515,18 +458,6 @@ deriving instance Bits (VkExternalMemoryHandleTypeBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance
-         Integral (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Num (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Enum (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Real (VkExternalMemoryHandleTypeBitmask FlagMask)
 
 instance Show (VkExternalMemoryHandleTypeBitmask a) where
         showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT
@@ -621,8 +552,7 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT =
 
 newtype VkExternalMemoryHandleTypeBitmaskNV (a ::
                                                FlagType) = VkExternalMemoryHandleTypeBitmaskNV VkFlags
-                                                             deriving (Eq, Ord, Storable, Data,
-                                                                       Generic)
+                                                             deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryHandleTypeFlagsNV =
      VkExternalMemoryHandleTypeBitmaskNV FlagMask
@@ -647,21 +577,6 @@ deriving instance
 
 deriving instance
          FiniteBits (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Integral (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Num (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Enum (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Real (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
 
 instance Show (VkExternalMemoryHandleTypeBitmaskNV a) where
         showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV
@@ -725,13 +640,12 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV =
         VkExternalMemoryHandleTypeBitmaskNV 8
 
 newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
+                                                  deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                            Storable)
 
 instance Show VkExternalSemaphoreFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalSemaphoreFeatureFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalSemaphoreFeatureFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -739,8 +653,7 @@ instance Read VkExternalSemaphoreFeatureFlagBitsKHR where
 
 newtype VkExternalSemaphoreFeatureBitmask (a ::
                                              FlagType) = VkExternalSemaphoreFeatureBitmask VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                           deriving (Eq, Ord, Storable)
 
 type VkExternalSemaphoreFeatureFlags =
      VkExternalSemaphoreFeatureBitmask FlagMask
@@ -764,18 +677,6 @@ deriving instance Bits (VkExternalSemaphoreFeatureBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance
-         Integral (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalSemaphoreFeatureBitmask FlagMask)
 
 instance Show (VkExternalSemaphoreFeatureBitmask a) where
         showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT
@@ -814,13 +715,12 @@ pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT =
         VkExternalSemaphoreFeatureBitmask 2
 
 newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
+                                                     deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                               Storable)
 
 instance Show VkExternalSemaphoreHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalSemaphoreHandleTypeFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalSemaphoreHandleTypeFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -828,8 +728,7 @@ instance Read VkExternalSemaphoreHandleTypeFlagBitsKHR where
 
 newtype VkExternalSemaphoreHandleTypeBitmask (a ::
                                                 FlagType) = VkExternalSemaphoreHandleTypeBitmask VkFlags
-                                                              deriving (Eq, Ord, Storable, Data,
-                                                                        Generic)
+                                                              deriving (Eq, Ord, Storable)
 
 type VkExternalSemaphoreHandleTypeFlags =
      VkExternalSemaphoreHandleTypeBitmask FlagMask
@@ -854,21 +753,6 @@ deriving instance
 
 deriving instance
          FiniteBits (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Integral (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Num (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Enum (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Real (VkExternalSemaphoreHandleTypeBitmask FlagMask)
 
 instance Show (VkExternalSemaphoreHandleTypeBitmask a) where
         showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT

@@ -48,7 +48,7 @@ withVulkanInstance action =
       writeField @"enabledExtensionCount"   iCreateInfoPtr 0
       writeField @"ppEnabledLayerNames"     iCreateInfoPtr VK_NULL_HANDLE
       writeField @"enabledLayerCount"       iCreateInfoPtr 0
-      writeField @"flags"                   iCreateInfoPtr 0
+      writeField @"flags"                   iCreateInfoPtr VK_ZERO_FLAGS
       writeField @"pNext"                   iCreateInfoPtr VK_NULL_HANDLE
       writeField @"sType"                   iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
 

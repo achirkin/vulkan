@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -16,9 +14,7 @@ module Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
                                       VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV,
                                       VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV))
        where
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
@@ -29,8 +25,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewportCoordinateSwizzleNV VkViewportCoordinateSwizzleNV registry at www.khronos.org>
 newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV Int32
-                                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                    Generic)
+                                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkViewportCoordinateSwizzleNV where
         showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV

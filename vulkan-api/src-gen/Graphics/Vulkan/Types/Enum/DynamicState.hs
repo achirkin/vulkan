@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -14,9 +12,7 @@ module Graphics.Vulkan.Types.Enum.DynamicState
                        VK_DYNAMIC_STATE_STENCIL_WRITE_MASK,
                        VK_DYNAMIC_STATE_STENCIL_REFERENCE))
        where
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
@@ -27,7 +23,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDynamicState VkDynamicState registry at www.khronos.org>
 newtype VkDynamicState = VkDynamicState Int32
-                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                           deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDynamicState where
         showsPrec _ VK_DYNAMIC_STATE_VIEWPORT

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -23,9 +21,7 @@ module Graphics.Vulkan.Types.Enum.Shader
         VkShaderStageFlags, VkShaderStageFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -37,7 +33,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderInfoTypeAMD VkShaderInfoTypeAMD registry at www.khronos.org>
 newtype VkShaderInfoTypeAMD = VkShaderInfoTypeAMD Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkShaderInfoTypeAMD where
         showsPrec _ VK_SHADER_INFO_TYPE_STATISTICS_AMD
@@ -79,7 +75,7 @@ pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD 2
 
 newtype VkShaderStageBitmask (a ::
                                 FlagType) = VkShaderStageBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkShaderStageFlags = VkShaderStageBitmask FlagMask
 
@@ -98,16 +94,6 @@ pattern VkShaderStageFlags n = VkShaderStageBitmask n
 deriving instance Bits (VkShaderStageBitmask FlagMask)
 
 deriving instance FiniteBits (VkShaderStageBitmask FlagMask)
-
-deriving instance Integral (VkShaderStageBitmask FlagMask)
-
-deriving instance Num (VkShaderStageBitmask FlagMask)
-
-deriving instance Bounded (VkShaderStageBitmask FlagMask)
-
-deriving instance Enum (VkShaderStageBitmask FlagMask)
-
-deriving instance Real (VkShaderStageBitmask FlagMask)
 
 instance Show (VkShaderStageBitmask a) where
         showsPrec _ VK_SHADER_STAGE_VERTEX_BIT

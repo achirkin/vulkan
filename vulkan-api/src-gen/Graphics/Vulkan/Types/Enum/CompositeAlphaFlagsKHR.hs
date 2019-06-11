@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -19,9 +17,7 @@ module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
         VkCompositeAlphaFlagsKHR, VkCompositeAlphaFlagBitsKHR)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -31,7 +27,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkCompositeAlphaBitmaskKHR (a ::
                                       FlagType) = VkCompositeAlphaBitmaskKHR VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkCompositeAlphaFlagsKHR = VkCompositeAlphaBitmaskKHR FlagMask
 
@@ -52,16 +48,6 @@ pattern VkCompositeAlphaFlagsKHR n = VkCompositeAlphaBitmaskKHR n
 deriving instance Bits (VkCompositeAlphaBitmaskKHR FlagMask)
 
 deriving instance FiniteBits (VkCompositeAlphaBitmaskKHR FlagMask)
-
-deriving instance Integral (VkCompositeAlphaBitmaskKHR FlagMask)
-
-deriving instance Num (VkCompositeAlphaBitmaskKHR FlagMask)
-
-deriving instance Bounded (VkCompositeAlphaBitmaskKHR FlagMask)
-
-deriving instance Enum (VkCompositeAlphaBitmaskKHR FlagMask)
-
-deriving instance Real (VkCompositeAlphaBitmaskKHR FlagMask)
 
 instance Show (VkCompositeAlphaBitmaskKHR a) where
         showsPrec _ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -24,9 +22,7 @@ module Graphics.Vulkan.Types.Enum.AccessFlags
         VkAccessFlags, VkAccessFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -35,7 +31,7 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkAccessBitmask (a :: FlagType) = VkAccessBitmask VkFlags
-                                            deriving (Eq, Ord, Storable, Data, Generic)
+                                            deriving (Eq, Ord, Storable)
 
 type VkAccessFlags = VkAccessBitmask FlagMask
 
@@ -52,16 +48,6 @@ pattern VkAccessFlags n = VkAccessBitmask n
 deriving instance Bits (VkAccessBitmask FlagMask)
 
 deriving instance FiniteBits (VkAccessBitmask FlagMask)
-
-deriving instance Integral (VkAccessBitmask FlagMask)
-
-deriving instance Num (VkAccessBitmask FlagMask)
-
-deriving instance Bounded (VkAccessBitmask FlagMask)
-
-deriving instance Enum (VkAccessBitmask FlagMask)
-
-deriving instance Real (VkAccessBitmask FlagMask)
 
 instance Show (VkAccessBitmask a) where
         showsPrec _ VK_ACCESS_INDIRECT_COMMAND_READ_BIT

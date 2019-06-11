@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -54,9 +52,7 @@ module Graphics.Vulkan.Types.Enum.Pipeline
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -68,7 +64,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineBindPoint VkPipelineBindPoint registry at www.khronos.org>
 newtype VkPipelineBindPoint = VkPipelineBindPoint Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkPipelineBindPoint where
         showsPrec _ VK_PIPELINE_BIND_POINT_GRAPHICS
@@ -101,12 +97,11 @@ pattern VK_PIPELINE_BIND_POINT_COMPUTE :: VkPipelineBindPoint
 pattern VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint 1
 
 newtype VkPipelineCacheCreateFlagBits = VkPipelineCacheCreateFlagBits VkFlags
-                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                    FiniteBits, Storable, Real, Data, Generic)
+                                          deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPipelineCacheCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineCacheCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineCacheCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -116,8 +111,7 @@ instance Read VkPipelineCacheCreateFlagBits where
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCacheHeaderVersion VkPipelineCacheHeaderVersion registry at www.khronos.org>
 newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion Int32
-                                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                   Generic)
+                                         deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkPipelineCacheHeaderVersion where
         showsPrec _ VK_PIPELINE_CACHE_HEADER_VERSION_ONE
@@ -144,13 +138,12 @@ pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE =
         VkPipelineCacheHeaderVersion 1
 
 newtype VkPipelineColorBlendStateCreateFlagBits = VkPipelineColorBlendStateCreateFlagBits VkFlags
-                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                              Bits, FiniteBits, Storable, Real,
-                                                              Data, Generic)
+                                                    deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                              Storable)
 
 instance Show VkPipelineColorBlendStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineColorBlendStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineColorBlendStateCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -158,7 +151,7 @@ instance Read VkPipelineColorBlendStateCreateFlagBits where
 
 newtype VkPipelineCreateBitmask (a ::
                                    FlagType) = VkPipelineCreateBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                                 deriving (Eq, Ord, Storable)
 
 type VkPipelineCreateFlags = VkPipelineCreateBitmask FlagMask
 
@@ -177,16 +170,6 @@ pattern VkPipelineCreateFlags n = VkPipelineCreateBitmask n
 deriving instance Bits (VkPipelineCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkPipelineCreateBitmask FlagMask)
-
-deriving instance Integral (VkPipelineCreateBitmask FlagMask)
-
-deriving instance Num (VkPipelineCreateBitmask FlagMask)
-
-deriving instance Bounded (VkPipelineCreateBitmask FlagMask)
-
-deriving instance Enum (VkPipelineCreateBitmask FlagMask)
-
-deriving instance Real (VkPipelineCreateBitmask FlagMask)
 
 instance Show (VkPipelineCreateBitmask a) where
         showsPrec _ VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT
@@ -236,90 +219,82 @@ pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT =
         VkPipelineCreateBitmask 4
 
 newtype VkPipelineDepthStencilStateCreateFlagBits = VkPipelineDepthStencilStateCreateFlagBits VkFlags
-                                                      deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                Integral, Bits, FiniteBits,
-                                                                Storable, Real, Data, Generic)
+                                                      deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                                Storable)
 
 instance Show VkPipelineDepthStencilStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineDepthStencilStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineDepthStencilStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineDynamicStateCreateFlagBits = VkPipelineDynamicStateCreateFlagBits VkFlags
-                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                           Bits, FiniteBits, Storable, Real, Data,
-                                                           Generic)
+                                                 deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                           Storable)
 
 instance Show VkPipelineDynamicStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineDynamicStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineDynamicStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineInputAssemblyStateCreateFlagBits = VkPipelineInputAssemblyStateCreateFlagBits VkFlags
-                                                       deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                 Integral, Bits, FiniteBits,
-                                                                 Storable, Real, Data, Generic)
+                                                       deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                                 Storable)
 
 instance Show VkPipelineInputAssemblyStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineInputAssemblyStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineInputAssemblyStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineLayoutCreateFlagBits = VkPipelineLayoutCreateFlagBits VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
+                                           deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPipelineLayoutCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineLayoutCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineLayoutCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineMultisampleStateCreateFlagBits = VkPipelineMultisampleStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
+                                                     deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                               Storable)
 
 instance Show VkPipelineMultisampleStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineMultisampleStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineMultisampleStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineRasterizationStateCreateFlagBits = VkPipelineRasterizationStateCreateFlagBits VkFlags
-                                                       deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                 Integral, Bits, FiniteBits,
-                                                                 Storable, Real, Data, Generic)
+                                                       deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                                 Storable)
 
 instance Show VkPipelineRasterizationStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineRasterizationStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineRasterizationStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineShaderStageCreateFlagBits = VkPipelineShaderStageCreateFlagBits VkFlags
-                                                deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                          Bits, FiniteBits, Storable, Real, Data,
-                                                          Generic)
+                                                deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPipelineShaderStageCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineShaderStageCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineShaderStageCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -327,7 +302,7 @@ instance Read VkPipelineShaderStageCreateFlagBits where
 
 newtype VkPipelineStageBitmask (a ::
                                   FlagType) = VkPipelineStageBitmask VkFlags
-                                                deriving (Eq, Ord, Storable, Data, Generic)
+                                                deriving (Eq, Ord, Storable)
 
 type VkPipelineStageFlags = VkPipelineStageBitmask FlagMask
 
@@ -346,16 +321,6 @@ pattern VkPipelineStageFlags n = VkPipelineStageBitmask n
 deriving instance Bits (VkPipelineStageBitmask FlagMask)
 
 deriving instance FiniteBits (VkPipelineStageBitmask FlagMask)
-
-deriving instance Integral (VkPipelineStageBitmask FlagMask)
-
-deriving instance Num (VkPipelineStageBitmask FlagMask)
-
-deriving instance Bounded (VkPipelineStageBitmask FlagMask)
-
-deriving instance Enum (VkPipelineStageBitmask FlagMask)
-
-deriving instance Real (VkPipelineStageBitmask FlagMask)
 
 instance Show (VkPipelineStageBitmask a) where
         showsPrec _ VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
@@ -589,39 +554,36 @@ pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT =
         VkPipelineStageBitmask 65536
 
 newtype VkPipelineTessellationStateCreateFlagBits = VkPipelineTessellationStateCreateFlagBits VkFlags
-                                                      deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                Integral, Bits, FiniteBits,
-                                                                Storable, Real, Data, Generic)
+                                                      deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                                Storable)
 
 instance Show VkPipelineTessellationStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineTessellationStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineTessellationStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineVertexInputStateCreateFlagBits = VkPipelineVertexInputStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
+                                                     deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                               Storable)
 
 instance Show VkPipelineVertexInputStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineVertexInputStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineVertexInputStateCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPipelineViewportStateCreateFlagBits = VkPipelineViewportStateCreateFlagBits VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
+                                                  deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                            Storable)
 
 instance Show VkPipelineViewportStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineViewportStateCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPipelineViewportStateCreateFlagBits where
         {-# INLINE readsPrec #-}

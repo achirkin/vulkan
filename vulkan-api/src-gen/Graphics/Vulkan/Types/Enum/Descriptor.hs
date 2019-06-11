@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -42,9 +40,7 @@ module Graphics.Vulkan.Types.Enum.Descriptor
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -54,7 +50,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDescriptorBindingBitmaskEXT (a ::
                                          FlagType) = VkDescriptorBindingBitmaskEXT VkFlags
-                                                       deriving (Eq, Ord, Storable, Data, Generic)
+                                                       deriving (Eq, Ord, Storable)
 
 type VkDescriptorBindingFlagsEXT =
      VkDescriptorBindingBitmaskEXT FlagMask
@@ -78,16 +74,6 @@ deriving instance Bits (VkDescriptorBindingBitmaskEXT FlagMask)
 
 deriving instance
          FiniteBits (VkDescriptorBindingBitmaskEXT FlagMask)
-
-deriving instance Integral (VkDescriptorBindingBitmaskEXT FlagMask)
-
-deriving instance Num (VkDescriptorBindingBitmaskEXT FlagMask)
-
-deriving instance Bounded (VkDescriptorBindingBitmaskEXT FlagMask)
-
-deriving instance Enum (VkDescriptorBindingBitmaskEXT FlagMask)
-
-deriving instance Real (VkDescriptorBindingBitmaskEXT FlagMask)
 
 instance Show (VkDescriptorBindingBitmaskEXT a) where
         showsPrec _ VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT
@@ -152,7 +138,7 @@ pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT =
 
 newtype VkDescriptorPoolCreateBitmask (a ::
                                          FlagType) = VkDescriptorPoolCreateBitmask VkFlags
-                                                       deriving (Eq, Ord, Storable, Data, Generic)
+                                                       deriving (Eq, Ord, Storable)
 
 type VkDescriptorPoolCreateFlags =
      VkDescriptorPoolCreateBitmask FlagMask
@@ -176,16 +162,6 @@ deriving instance Bits (VkDescriptorPoolCreateBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkDescriptorPoolCreateBitmask FlagMask)
-
-deriving instance Integral (VkDescriptorPoolCreateBitmask FlagMask)
-
-deriving instance Num (VkDescriptorPoolCreateBitmask FlagMask)
-
-deriving instance Bounded (VkDescriptorPoolCreateBitmask FlagMask)
-
-deriving instance Enum (VkDescriptorPoolCreateBitmask FlagMask)
-
-deriving instance Real (VkDescriptorPoolCreateBitmask FlagMask)
 
 instance Show (VkDescriptorPoolCreateBitmask a) where
         showsPrec _ VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT
@@ -216,8 +192,7 @@ pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT =
 
 newtype VkDescriptorSetLayoutCreateBitmask (a ::
                                               FlagType) = VkDescriptorSetLayoutCreateBitmask VkFlags
-                                                            deriving (Eq, Ord, Storable, Data,
-                                                                      Generic)
+                                                            deriving (Eq, Ord, Storable)
 
 type VkDescriptorSetLayoutCreateFlags =
      VkDescriptorSetLayoutCreateBitmask FlagMask
@@ -243,20 +218,6 @@ deriving instance
 deriving instance
          FiniteBits (VkDescriptorSetLayoutCreateBitmask FlagMask)
 
-deriving instance
-         Integral (VkDescriptorSetLayoutCreateBitmask FlagMask)
-
-deriving instance Num (VkDescriptorSetLayoutCreateBitmask FlagMask)
-
-deriving instance
-         Bounded (VkDescriptorSetLayoutCreateBitmask FlagMask)
-
-deriving instance
-         Enum (VkDescriptorSetLayoutCreateBitmask FlagMask)
-
-deriving instance
-         Real (VkDescriptorSetLayoutCreateBitmask FlagMask)
-
 instance Show (VkDescriptorSetLayoutCreateBitmask a) where
         showsPrec p (VkDescriptorSetLayoutCreateBitmask x)
           = showParen (p >= 11)
@@ -274,7 +235,7 @@ instance Read (VkDescriptorSetLayoutCreateBitmask a) where
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorType VkDescriptorType registry at www.khronos.org>
 newtype VkDescriptorType = VkDescriptorType Int32
-                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                             deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDescriptorType where
         showsPrec _ VK_DESCRIPTOR_TYPE_SAMPLER
@@ -389,8 +350,7 @@ pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType 10
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateType VkDescriptorUpdateTemplateType registry at www.khronos.org>
 newtype VkDescriptorUpdateTemplateType = VkDescriptorUpdateTemplateType Int32
-                                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                     Generic)
+                                           deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDescriptorUpdateTemplateType where
         showsPrec _ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET
@@ -418,12 +378,11 @@ pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET =
         VkDescriptorUpdateTemplateType 0
 
 newtype VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateTypeKHR VkFlags
-                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                        FiniteBits, Storable, Real, Data, Generic)
+                                              deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkDescriptorUpdateTemplateTypeKHR where
-        {-# INLINE show #-}
-        show (VkDescriptorUpdateTemplateTypeKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkDescriptorUpdateTemplateTypeKHR where
         {-# INLINE readsPrec #-}

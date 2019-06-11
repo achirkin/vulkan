@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -36,9 +34,7 @@ module Graphics.Vulkan.Types.Enum.Object
                      VK_OBJECT_TYPE_FRAMEBUFFER, VK_OBJECT_TYPE_COMMAND_POOL))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -50,7 +46,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectEntryTypeNVX VkObjectEntryTypeNVX registry at www.khronos.org>
 newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                 deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkObjectEntryTypeNVX where
         showsPrec _ VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX
@@ -116,7 +112,7 @@ pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX =
 
 newtype VkObjectEntryUsageBitmaskNVX (a ::
                                         FlagType) = VkObjectEntryUsageBitmaskNVX VkFlags
-                                                      deriving (Eq, Ord, Storable, Data, Generic)
+                                                      deriving (Eq, Ord, Storable)
 
 type VkObjectEntryUsageFlagsNVX =
      VkObjectEntryUsageBitmaskNVX FlagMask
@@ -140,16 +136,6 @@ deriving instance Bits (VkObjectEntryUsageBitmaskNVX FlagMask)
 
 deriving instance
          FiniteBits (VkObjectEntryUsageBitmaskNVX FlagMask)
-
-deriving instance Integral (VkObjectEntryUsageBitmaskNVX FlagMask)
-
-deriving instance Num (VkObjectEntryUsageBitmaskNVX FlagMask)
-
-deriving instance Bounded (VkObjectEntryUsageBitmaskNVX FlagMask)
-
-deriving instance Enum (VkObjectEntryUsageBitmaskNVX FlagMask)
-
-deriving instance Real (VkObjectEntryUsageBitmaskNVX FlagMask)
 
 instance Show (VkObjectEntryUsageBitmaskNVX a) where
         showsPrec _ VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX
@@ -194,7 +180,7 @@ pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectType VkObjectType registry at www.khronos.org>
 newtype VkObjectType = VkObjectType Int32
-                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                         deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkObjectType where
         showsPrec _ VK_OBJECT_TYPE_UNKNOWN
