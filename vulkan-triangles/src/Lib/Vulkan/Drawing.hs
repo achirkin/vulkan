@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds           #-}
-{-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE RecordWildCards     #-}
@@ -16,7 +15,7 @@ module Lib.Vulkan.Drawing
   , _MAX_FRAMES_IN_FLIGHT
   ) where
 
-import           Control.Monad                            (forM_)
+import           Control.Monad                            (forM_, replicateM)
 import           Data.IORef
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
@@ -122,15 +121,13 @@ createCommandBuffers
                 &* set @"extent" swapExtent
                 )
             &* setListCountAndRef @"clearValueCount" @"pClearValues"
-                [ ( createVk @VkClearValue
+                [ createVk @VkClearValue
                     $ setVk @"color"
                       $ setVec @"float32" (vec4 0 0 0.2 1)
-                  )
-                , ( createVk @VkClearValue
+                , createVk @VkClearValue
                     $ setVk @"depthStencil"
                       $  set @"depth" 1.0
                       &* set @"stencil" 0
-                  )
                 ]
 
       withVkPtr renderPassBeginInfo $ \rpibPtr ->
@@ -154,11 +151,11 @@ createCommandBuffers
 
 
 createFrameSemaphores :: VkDevice -> Program r (Ptr VkSemaphore)
-createFrameSemaphores dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createSemaphore dev))
+createFrameSemaphores dev = newArrayRes =<< replicateM _MAX_FRAMES_IN_FLIGHT (createSemaphore dev)
 
 
 createFrameFences :: VkDevice -> Program r (Ptr VkFence)
-createFrameFences dev = newArrayRes =<< (sequence $ replicate _MAX_FRAMES_IN_FLIGHT (createFence dev True))
+createFrameFences dev = newArrayRes =<< replicateM _MAX_FRAMES_IN_FLIGHT (createFence dev True)
 
 
 data RenderData
@@ -237,6 +234,5 @@ drawFrame RenderData {..} = do
     withVkPtr presentInfo $
       -- Can throw VK_ERROR_OUT_OF_DATE_KHR
       runVk . vkQueuePresentKHR presentQueue
-    isSuboptimal <- (== VK_SUBOPTIMAL_KHR) . currentStatus <$> get
-
-    return isSuboptimal
+    -- is suboptimal?
+    (== VK_SUBOPTIMAL_KHR) . currentStatus <$> get

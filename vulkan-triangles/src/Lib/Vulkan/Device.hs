@@ -133,9 +133,8 @@ getMaxUsableSampleCount pdev = do
         ]
       highestCount = head splitCounts
       -- need to convert from "VkSampleCountBitmask FlagMask" to "VkSampleCountBitmask FlagBit"
-      VkSampleCountBitmask rawFlags = highestCount
-      result = VkSampleCountBitmask rawFlags
-  return result
+      VkSampleCountFlags rawFlags = highestCount
+  return $ VkSampleCountFlagBits rawFlags
 
 
 

@@ -10,7 +10,7 @@ module Lib
   , WhichDemo (..)
   ) where
 
-import Control.Monad                        (forM_, when)
+import Control.Monad                        (forM_, when, unless)
 import Data.IORef
 import Graphics.Vulkan.Core_1_0
 import Graphics.Vulkan.Ext.VK_KHR_swapchain
@@ -129,7 +129,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
       Squares -> return (rectVertices, rectIndices)
       Chalet -> do
         modelExist <- liftIO $ doesFileExist "models/chalet.obj"
-        when (not modelExist) $
+        unless modelExist $
           throwVkMsg "Get models/chalet.obj and textures/chalet.jpg from the links in https://vulkan-tutorial.com/Loading_models"
         loadModel "models/chalet.obj"
 
@@ -152,7 +152,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     depthFormat <- findDepthFormat pdev
 
     let beforeSwapchainCreation :: Program r ()
-        beforeSwapchainCreation = do
+        beforeSwapchainCreation =
           -- wait as long as window has width=0 and height=0
           -- commented out because this only works in the main thread:
           -- glfwWaitMinimized window
@@ -164,7 +164,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
 
     -- The code below re-runs when the swapchain needs to be re-created
     loop $ do
-      logInfo $ "Creating new swapchain.."
+      logInfo "Creating new swapchain.."
       scsd <- querySwapchainSupport pdev vulkanSurface
       beforeSwapchainCreation
       swapInfo <- createSwapchain dev scsd queues vulkanSurface
@@ -180,7 +180,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
       forM_ (zip descriptorBufferInfos descriptorSets) $
         \(bufInfo, dSet) -> prepareDescriptorSet dev bufInfo descriptorTextureInfo dSet
 
-      transObjMemories <- newArrayRes $ transObjMems
+      transObjMemories <- newArrayRes transObjMems
 
       imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
       renderPass <- createRenderPass dev swapInfo depthFormat msaaSamples
@@ -231,7 +231,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
       currentSec <- liftIO $ newIORef @Int 0
 
       shouldExit <- glfwMainLoop window $ do
-        return () -- do some app logic
+        -- do some app logic here
 
         needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
           case ecode of

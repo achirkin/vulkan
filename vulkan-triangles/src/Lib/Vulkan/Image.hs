@@ -29,10 +29,10 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Buffer
-import           Lib.Vulkan.Command
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Buffer
+import Lib.Vulkan.Command
 
 
 
@@ -44,13 +44,12 @@ createTextureImageView :: VkPhysicalDevice
                        -> Program r (VkImageView, Word32)
 createTextureImageView pdev dev cmdPool cmdQueue path = do
   Image { imageWidth, imageHeight, imageData }
-    <- (liftIO $ readImage path) >>= \case
+    <- liftIO (readImage path) >>= \case
       Left err -> throwVkMsg err
       Right dynImg -> pure $ convertRGBA8 dynImg
   let (imageDataForeignPtr, imageDataLen) = Vec.unsafeToForeignPtr0 imageData
       bufSize :: VkDeviceSize = fromIntegral imageDataLen
-      log2 (x::Float) = log x / log 2
-      mipLevels = (floor . log2 . fromIntegral $ max imageWidth imageHeight) + 1
+      mipLevels = (floor . logBase (2 :: Float) . fromIntegral $ max imageWidth imageHeight) + 1
 
   -- we don't need to access the VkDeviceMemory of the image, copyBufferToImage works with the VkImage
   (_, image) <- createImage pdev dev
@@ -87,7 +86,7 @@ createTextureImageView pdev dev cmdPool cmdQueue path = do
 
   return (imageView, mipLevels)
 
-
+-- https://vulkan-tutorial.com/Generating_Mipmaps
 generateMipmaps :: VkPhysicalDevice
                 -> VkImage
                 -> VkFormat
@@ -233,7 +232,7 @@ createTextureSampler dev mipLevels = do
         &* set @"minLod" 0
         &* set @"maxLod" (fromIntegral mipLevels)
 
-  allocResource (liftIO . (flip (vkDestroySampler dev) VK_NULL)) $
+  allocResource (liftIO . flip (vkDestroySampler dev) VK_NULL) $
     withVkPtr samplerCreateInfo $ \sciPtr ->
       allocaPeek $ runVk . vkCreateSampler dev sciPtr VK_NULL
 
@@ -273,7 +272,7 @@ createImageView dev image format aspectFlags mipLevels = do
           &* set @"components" cmapping
           &* set @"subresourceRange" srrange
 
-    allocResource (liftIO . (flip (vkDestroyImageView dev) VK_NULL)) $
+    allocResource (liftIO . flip (vkDestroyImageView dev) VK_NULL) $
       withVkPtr imgvCreateInfo $ \imgvciPtr ->
          allocaPeek $ runVk . vkCreateImageView dev imgvciPtr VK_NULL
 
