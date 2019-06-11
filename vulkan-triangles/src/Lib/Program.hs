@@ -265,7 +265,7 @@ runVk :: HasCallStack => IO VkResult -> Program r ()
 runVk action = do
   r <- liftIO action
   state $ \s -> ((), s { currentStatus = r })
-  when (r < 0) . throwError . VulkanException (Just r)
+  when (r < VK_SUCCESS) . throwError . VulkanException (Just r)
     $ "Vulkan command returned an error VkResult\n"
     ++ prettyCallStack callStack
 {-# INLINE runVk #-}

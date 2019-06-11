@@ -120,7 +120,7 @@ createSwapchain dev scsd queues surf = do
   let swCreateInfo = createVk @VkSwapchainCreateInfoKHR
         $  set @"sType" VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
         &* set @"pNext" VK_NULL_HANDLE
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"surface" surf
         &* set @"minImageCount" imageCount
         &* set @"imageFormat" (getField @"format" surfFmt)

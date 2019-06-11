@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -16,9 +14,7 @@ module Graphics.Vulkan.Types.Enum.CullModeFlags
         VkCullModeFlags, VkCullModeFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -28,7 +24,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkCullModeBitmask (a ::
                              FlagType) = VkCullModeBitmask VkFlags
-                                           deriving (Eq, Ord, Storable, Data, Generic)
+                                           deriving (Eq, Ord, Storable)
 
 type VkCullModeFlags = VkCullModeBitmask FlagMask
 
@@ -45,16 +41,6 @@ pattern VkCullModeFlags n = VkCullModeBitmask n
 deriving instance Bits (VkCullModeBitmask FlagMask)
 
 deriving instance FiniteBits (VkCullModeBitmask FlagMask)
-
-deriving instance Integral (VkCullModeBitmask FlagMask)
-
-deriving instance Num (VkCullModeBitmask FlagMask)
-
-deriving instance Bounded (VkCullModeBitmask FlagMask)
-
-deriving instance Enum (VkCullModeBitmask FlagMask)
-
-deriving instance Real (VkCullModeBitmask FlagMask)
 
 instance Show (VkCullModeBitmask a) where
         showsPrec _ VK_CULL_MODE_NONE = showString "VK_CULL_MODE_NONE"

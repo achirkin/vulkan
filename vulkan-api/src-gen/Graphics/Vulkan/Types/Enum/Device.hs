@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -28,9 +26,7 @@ module Graphics.Vulkan.Types.Enum.Device
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -39,12 +35,11 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDeviceCreateFlagBits = VkDeviceCreateFlagBits VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
+                                   deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkDeviceCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkDeviceCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkDeviceCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -54,7 +49,7 @@ instance Read VkDeviceCreateFlagBits where
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventTypeEXT VkDeviceEventTypeEXT registry at www.khronos.org>
 newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                 deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDeviceEventTypeEXT where
         showsPrec _ VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT
@@ -82,8 +77,7 @@ pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT =
 
 newtype VkDeviceGroupPresentModeBitmaskKHR (a ::
                                               FlagType) = VkDeviceGroupPresentModeBitmaskKHR VkFlags
-                                                            deriving (Eq, Ord, Storable, Data,
-                                                                      Generic)
+                                                            deriving (Eq, Ord, Storable)
 
 type VkDeviceGroupPresentModeFlagsKHR =
      VkDeviceGroupPresentModeBitmaskKHR FlagMask
@@ -108,20 +102,6 @@ deriving instance
 
 deriving instance
          FiniteBits (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Integral (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance Num (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Bounded (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Enum (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Real (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
 
 instance Show (VkDeviceGroupPresentModeBitmaskKHR a) where
         showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR
@@ -192,7 +172,7 @@ pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR =
 
 newtype VkDeviceQueueCreateBitmask (a ::
                                       FlagType) = VkDeviceQueueCreateBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkDeviceQueueCreateFlags = VkDeviceQueueCreateBitmask FlagMask
 
@@ -213,16 +193,6 @@ pattern VkDeviceQueueCreateFlags n = VkDeviceQueueCreateBitmask n
 deriving instance Bits (VkDeviceQueueCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Integral (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Num (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Bounded (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Enum (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Real (VkDeviceQueueCreateBitmask FlagMask)
 
 instance Show (VkDeviceQueueCreateBitmask a) where
         showsPrec p (VkDeviceQueueCreateBitmask x)

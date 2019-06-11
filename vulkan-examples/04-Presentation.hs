@@ -79,7 +79,7 @@ selectGraphicsFamily []
   = throwVKMsg "selectGraphicsFamily: not found!"
 selectGraphicsFamily (x@(_,qfp):xs)
   = if  getField @"queueCount" qfp > 0
-     && getField @"queueFlags" qfp .&. VK_QUEUE_GRAPHICS_BIT /= zeroBits
+     && getField @"queueFlags" qfp .&. VK_QUEUE_GRAPHICS_BIT /= VK_ZERO_FLAGS
     then pure x
     else selectGraphicsFamily xs
 
@@ -139,7 +139,7 @@ withGraphicsDevice pdev surf action
     writeField @"pNext"
       qcInfoPtr VK_NULL_HANDLE
     writeField @"flags"
-      qcInfoPtr 0
+      qcInfoPtr VK_ZERO_FLAGS
     writeField @"queueFamilyIndex"
       qcInfoPtr qFamIdx
     writeField @"queueCount"
@@ -159,7 +159,7 @@ withGraphicsDevice pdev surf action
     writeField @"pNext"
       devCreateInfoPtr VK_NULL_HANDLE
     writeField @"flags"
-      devCreateInfoPtr 0
+      devCreateInfoPtr VK_ZERO_FLAGS
     writeField @"pQueueCreateInfos"
       devCreateInfoPtr qcInfosPts
     writeField @"queueCreateInfoCount"
@@ -287,7 +287,7 @@ withSwapChain dev scsd queues surf action = do
     writeField @"pNext"
       swCreateInfoPtr VK_NULL_HANDLE
     writeField @"flags"
-      swCreateInfoPtr 0
+      swCreateInfoPtr VK_ZERO_FLAGS
     writeField @"surface"
       swCreateInfoPtr surf
     writeField @"minImageCount"
@@ -388,7 +388,7 @@ withImageViews dev SwapChainImgInfo {..} action = do
       writeField @"pNext"
         viewPtr VK_NULL_HANDLE
       writeField @"flags"
-        viewPtr 0
+        viewPtr VK_ZERO_FLAGS
       writeField @"image"
         viewPtr img
       writeField @"viewType"

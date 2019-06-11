@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -22,9 +20,7 @@ module Graphics.Vulkan.Types.Enum.Sparse
         VkSparseMemoryBindFlags, VkSparseMemoryBindFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -34,7 +30,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSparseImageFormatBitmask (a ::
                                       FlagType) = VkSparseImageFormatBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkSparseImageFormatFlags = VkSparseImageFormatBitmask FlagMask
 
@@ -55,16 +51,6 @@ pattern VkSparseImageFormatFlags n = VkSparseImageFormatBitmask n
 deriving instance Bits (VkSparseImageFormatBitmask FlagMask)
 
 deriving instance FiniteBits (VkSparseImageFormatBitmask FlagMask)
-
-deriving instance Integral (VkSparseImageFormatBitmask FlagMask)
-
-deriving instance Num (VkSparseImageFormatBitmask FlagMask)
-
-deriving instance Bounded (VkSparseImageFormatBitmask FlagMask)
-
-deriving instance Enum (VkSparseImageFormatBitmask FlagMask)
-
-deriving instance Real (VkSparseImageFormatBitmask FlagMask)
 
 instance Show (VkSparseImageFormatBitmask a) where
         showsPrec _ VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT
@@ -121,7 +107,7 @@ pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT =
 
 newtype VkSparseMemoryBindBitmask (a ::
                                      FlagType) = VkSparseMemoryBindBitmask VkFlags
-                                                   deriving (Eq, Ord, Storable, Data, Generic)
+                                                   deriving (Eq, Ord, Storable)
 
 type VkSparseMemoryBindFlags = VkSparseMemoryBindBitmask FlagMask
 
@@ -140,16 +126,6 @@ pattern VkSparseMemoryBindFlags n = VkSparseMemoryBindBitmask n
 deriving instance Bits (VkSparseMemoryBindBitmask FlagMask)
 
 deriving instance FiniteBits (VkSparseMemoryBindBitmask FlagMask)
-
-deriving instance Integral (VkSparseMemoryBindBitmask FlagMask)
-
-deriving instance Num (VkSparseMemoryBindBitmask FlagMask)
-
-deriving instance Bounded (VkSparseMemoryBindBitmask FlagMask)
-
-deriving instance Enum (VkSparseMemoryBindBitmask FlagMask)
-
-deriving instance Real (VkSparseMemoryBindBitmask FlagMask)
 
 instance Show (VkSparseMemoryBindBitmask a) where
         showsPrec _ VK_SPARSE_MEMORY_BIND_METADATA_BIT

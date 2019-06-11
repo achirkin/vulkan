@@ -78,7 +78,7 @@ withVkShaderStageCI dev (codeSize, codePtr) stageBit action =
       writeField @"pNext"    smciPtr VK_NULL_HANDLE
       writeField @"codeSize" smciPtr codeSize
       writeField @"pCode"    smciPtr codePtr
-      writeField @"flags"    smciPtr 0
+      writeField @"flags"    smciPtr VK_ZERO_FLAGS
 
     shaderModule <- alloca $ \smPtr -> do
       throwingVK "vkCreateShaderModule failed!"
@@ -112,7 +112,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" viPtr
       VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
     writeField @"pNext" viPtr VK_NULL_HANDLE
-    writeField @"flags" viPtr 0
+    writeField @"flags" viPtr VK_ZERO_FLAGS
     writeField @"vertexBindingDescriptionCount" viPtr 0
     writeField @"pVertexBindingDescriptions"    viPtr VK_NULL_HANDLE
     writeField @"vertexBindingDescriptionCount" viPtr 0
@@ -125,7 +125,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" iaPtr
       VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
     writeField @"pNext" iaPtr VK_NULL_HANDLE
-    writeField @"flags" iaPtr 0
+    writeField @"flags" iaPtr VK_ZERO_FLAGS
     writeField @"topology" iaPtr VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     writeField @"primitiveRestartEnable" iaPtr VK_FALSE
 
@@ -148,7 +148,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" vpsPtr
       VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO
     writeField @"pNext" vpsPtr VK_NULL_HANDLE
-    writeField @"flags" vpsPtr 0
+    writeField @"flags" vpsPtr VK_ZERO_FLAGS
     writeField @"viewportCount" vpsPtr 1
     writeField @"pViewports"    vpsPtr (unsafePtr viewPort)
     writeField @"scissorCount"  vpsPtr 1
@@ -161,7 +161,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" rPtr
       VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO
     writeField @"pNext" rPtr VK_NULL_HANDLE
-    writeField @"flags" rPtr 0
+    writeField @"flags" rPtr VK_ZERO_FLAGS
     writeField @"depthClampEnable"
       rPtr VK_FALSE
     writeField @"rasterizerDiscardEnable"
@@ -190,7 +190,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" msPtr
       VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO
     writeField @"pNext" msPtr VK_NULL_HANDLE
-    writeField @"flags" msPtr 0
+    writeField @"flags" msPtr VK_ZERO_FLAGS
     writeField @"sampleShadingEnable"   msPtr VK_FALSE
     writeField @"rasterizationSamples"  msPtr VK_SAMPLE_COUNT_1_BIT
     writeField @"minSampleShading"      msPtr 1.0 -- Optional
@@ -229,7 +229,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
     writeField @"sType" cbPtr
       VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
     writeField @"pNext" cbPtr VK_NULL_HANDLE
-    writeField @"flags" cbPtr 0
+    writeField @"flags" cbPtr VK_ZERO_FLAGS
     writeField @"logicOpEnable"
       cbPtr VK_FALSE
     writeField @"logicOp"
@@ -256,7 +256,7 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
         writeField @"pNext"
           piPtr VK_NULL_HANDLE
         writeField @"flags"
-          piPtr 0
+          piPtr VK_ZERO_FLAGS
         writeField @"stageCount"
           piPtr (fromIntegral stageCount)
         writeField @"pStages"
@@ -322,7 +322,7 @@ withPipelineLayout dev action = do
     writeField @"sType" pliPtr
       VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
     writeField @"pNext" pliPtr VK_NULL_HANDLE
-    writeField @"flags" pliPtr 0
+    writeField @"flags" pliPtr VK_ZERO_FLAGS
     writeField @"setLayoutCount"         pliPtr 0 -- Optional
     writeField @"pSetLayouts"            pliPtr VK_NULL_HANDLE -- Optional
     writeField @"pushConstantRangeCount" pliPtr 0 -- Optional
@@ -348,7 +348,7 @@ withRenderPass dev SwapChainImgInfo{..} action = do
   -- attachment description
   colorAttachment <- newVkData @VkAttachmentDescription
                                $ \caPtr -> do
-    writeField @"flags"   caPtr 0
+    writeField @"flags"   caPtr VK_ZERO_FLAGS
     writeField @"format"  caPtr swImgFormat
     writeField @"samples" caPtr VK_SAMPLE_COUNT_1_BIT
     writeField @"loadOp"  caPtr VK_ATTACHMENT_LOAD_OP_CLEAR

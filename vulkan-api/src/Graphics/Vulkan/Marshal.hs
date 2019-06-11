@@ -28,6 +28,7 @@ module Graphics.Vulkan.Marshal
   , VulkanMarshal (..)
   , VulkanPtr (..)
   , VkPtr (..)
+  , pattern VK_ZERO_FLAGS
   , pattern VK_NULL_HANDLE, pattern VK_NULL
   , clearStorable, withPtr
     -- * Type-indexed access to struct members
@@ -48,6 +49,7 @@ module Graphics.Vulkan.Marshal
   , cmpCStrings, cmpCStringsN
   ) where
 
+import Data.Bits             (Bits (..))
 import Data.Data             (Data)
 import Data.Int              (Int16, Int32, Int64, Int8)
 import Data.Kind             (Constraint, Type)
@@ -79,6 +81,11 @@ type FlagMask = 'FlagMask
 -- | Vulkan single bit flag value.
 type FlagBit  = 'FlagBit
 
+-- | A synonym for `zeroBits`
+pattern VK_ZERO_FLAGS :: Bits a => a
+pattern VK_ZERO_FLAGS <- (popCount -> 0)
+  where
+    VK_ZERO_FLAGS = zeroBits
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.

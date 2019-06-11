@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -39,9 +37,7 @@ module Graphics.Vulkan.Types.Enum.Query
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -51,7 +47,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkQueryControlBitmask (a ::
                                  FlagType) = VkQueryControlBitmask VkFlags
-                                               deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkQueryControlFlags = VkQueryControlBitmask FlagMask
 
@@ -70,16 +66,6 @@ pattern VkQueryControlFlags n = VkQueryControlBitmask n
 deriving instance Bits (VkQueryControlBitmask FlagMask)
 
 deriving instance FiniteBits (VkQueryControlBitmask FlagMask)
-
-deriving instance Integral (VkQueryControlBitmask FlagMask)
-
-deriving instance Num (VkQueryControlBitmask FlagMask)
-
-deriving instance Bounded (VkQueryControlBitmask FlagMask)
-
-deriving instance Enum (VkQueryControlBitmask FlagMask)
-
-deriving instance Real (VkQueryControlBitmask FlagMask)
 
 instance Show (VkQueryControlBitmask a) where
         showsPrec _ VK_QUERY_CONTROL_PRECISE_BIT
@@ -108,7 +94,7 @@ pattern VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlBitmask 1
 
 newtype VkQueryPipelineStatisticBitmask (a ::
                                            FlagType) = VkQueryPipelineStatisticBitmask VkFlags
-                                                         deriving (Eq, Ord, Storable, Data, Generic)
+                                                         deriving (Eq, Ord, Storable)
 
 type VkQueryPipelineStatisticFlags =
      VkQueryPipelineStatisticBitmask FlagMask
@@ -132,18 +118,6 @@ deriving instance Bits (VkQueryPipelineStatisticBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkQueryPipelineStatisticBitmask FlagMask)
-
-deriving instance
-         Integral (VkQueryPipelineStatisticBitmask FlagMask)
-
-deriving instance Num (VkQueryPipelineStatisticBitmask FlagMask)
-
-deriving instance
-         Bounded (VkQueryPipelineStatisticBitmask FlagMask)
-
-deriving instance Enum (VkQueryPipelineStatisticBitmask FlagMask)
-
-deriving instance Real (VkQueryPipelineStatisticBitmask FlagMask)
 
 instance Show (VkQueryPipelineStatisticBitmask a) where
         showsPrec _ VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT
@@ -322,12 +296,11 @@ pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
         = VkQueryPipelineStatisticBitmask 1024
 
 newtype VkQueryPoolCreateFlagBits = VkQueryPoolCreateFlagBits VkFlags
-                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                FiniteBits, Storable, Real, Data, Generic)
+                                      deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkQueryPoolCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkQueryPoolCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkQueryPoolCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -335,7 +308,7 @@ instance Read VkQueryPoolCreateFlagBits where
 
 newtype VkQueryResultBitmask (a ::
                                 FlagType) = VkQueryResultBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkQueryResultFlags = VkQueryResultBitmask FlagMask
 
@@ -354,16 +327,6 @@ pattern VkQueryResultFlags n = VkQueryResultBitmask n
 deriving instance Bits (VkQueryResultBitmask FlagMask)
 
 deriving instance FiniteBits (VkQueryResultBitmask FlagMask)
-
-deriving instance Integral (VkQueryResultBitmask FlagMask)
-
-deriving instance Num (VkQueryResultBitmask FlagMask)
-
-deriving instance Bounded (VkQueryResultBitmask FlagMask)
-
-deriving instance Enum (VkQueryResultBitmask FlagMask)
-
-deriving instance Real (VkQueryResultBitmask FlagMask)
 
 instance Show (VkQueryResultBitmask a) where
         showsPrec _ VK_QUERY_RESULT_64_BIT
@@ -426,7 +389,7 @@ pattern VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultBitmask 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueryType VkQueryType registry at www.khronos.org>
 newtype VkQueryType = VkQueryType Int32
-                        deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                        deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkQueryType where
         showsPrec _ VK_QUERY_TYPE_OCCLUSION

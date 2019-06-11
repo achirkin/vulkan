@@ -51,7 +51,7 @@ createFramebuffers dev renderPass SwapchainInfo{ swapExtent } swapImgViews depth
       let fbci = createVk @VkFramebufferCreateInfo
             $  set @"sType" VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
             &* set @"pNext" VK_NULL
-            &* set @"flags" 0
+            &* set @"flags" VK_ZERO_FLAGS
             &* set @"renderPass" renderPass
             &* setListCountAndRef @"attachmentCount" @"pAttachments" [colorImgView, depthImgView, swapImgView]
             &* set @"width" (getField @"width" swapExtent)

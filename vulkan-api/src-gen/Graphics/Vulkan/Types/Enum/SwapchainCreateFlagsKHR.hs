@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -15,9 +13,7 @@ module Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
         VkSwapchainCreateFlagsKHR, VkSwapchainCreateFlagBitsKHR)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -27,7 +23,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSwapchainCreateBitmaskKHR (a ::
                                        FlagType) = VkSwapchainCreateBitmaskKHR VkFlags
-                                                     deriving (Eq, Ord, Storable, Data, Generic)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkSwapchainCreateFlagsKHR =
      VkSwapchainCreateBitmaskKHR FlagMask
@@ -49,16 +45,6 @@ pattern VkSwapchainCreateFlagsKHR n = VkSwapchainCreateBitmaskKHR n
 deriving instance Bits (VkSwapchainCreateBitmaskKHR FlagMask)
 
 deriving instance FiniteBits (VkSwapchainCreateBitmaskKHR FlagMask)
-
-deriving instance Integral (VkSwapchainCreateBitmaskKHR FlagMask)
-
-deriving instance Num (VkSwapchainCreateBitmaskKHR FlagMask)
-
-deriving instance Bounded (VkSwapchainCreateBitmaskKHR FlagMask)
-
-deriving instance Enum (VkSwapchainCreateBitmaskKHR FlagMask)
-
-deriving instance Real (VkSwapchainCreateBitmaskKHR FlagMask)
 
 instance Show (VkSwapchainCreateBitmaskKHR a) where
         showsPrec p (VkSwapchainCreateBitmaskKHR x)

@@ -43,4 +43,4 @@ createVulkanShaderModule dev (codeSize, codePtr) =
       &* set @"pNext"    VK_NULL
       &* set @"codeSize" codeSize
       &* set @"pCode"    codePtr
-      &* set @"flags"    0
+      &* set @"flags"    VK_ZERO_FLAGS

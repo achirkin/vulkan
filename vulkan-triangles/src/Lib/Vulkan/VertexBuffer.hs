@@ -44,7 +44,7 @@ createVertexBuffer pdev dev cmdPool cmdQueue (XFrame vertices) = do
 
       -- copy data
       stagingDataPtr <- allocaPeek $
-        runVk . vkMapMemory dev stagingMem 0 bSize 0
+        runVk . vkMapMemory dev stagingMem 0 bSize VK_ZERO_FLAGS
       poke (castPtr stagingDataPtr) vertices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
@@ -76,7 +76,7 @@ createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
 
       -- copy data
       stagingDataPtr <- allocaPeek $
-        runVk . vkMapMemory dev stagingMem 0 bSize 0
+        runVk . vkMapMemory dev stagingMem 0 bSize VK_ZERO_FLAGS
       poke (castPtr stagingDataPtr) indices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize

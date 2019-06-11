@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -71,9 +69,7 @@ module Graphics.Vulkan.Types.Enum.Debug
         VkDebugUtilsMessageTypeFlagBitsEXT)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -83,7 +79,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDebugReportBitmaskEXT (a ::
                                    FlagType) = VkDebugReportBitmaskEXT VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                                 deriving (Eq, Ord, Storable)
 
 type VkDebugReportFlagsEXT = VkDebugReportBitmaskEXT FlagMask
 
@@ -102,16 +98,6 @@ pattern VkDebugReportFlagsEXT n = VkDebugReportBitmaskEXT n
 deriving instance Bits (VkDebugReportBitmaskEXT FlagMask)
 
 deriving instance FiniteBits (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Integral (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Num (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Bounded (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Enum (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Real (VkDebugReportBitmaskEXT FlagMask)
 
 instance Show (VkDebugReportBitmaskEXT a) where
         showsPrec _ VK_DEBUG_REPORT_INFORMATION_BIT_EXT
@@ -181,8 +167,7 @@ pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportBitmaskEXT 16
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportObjectTypeEXT VkDebugReportObjectTypeEXT registry at www.khronos.org>
 newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
+                                       deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDebugReportObjectTypeEXT where
         showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT
@@ -545,8 +530,7 @@ pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT =
 
 newtype VkDebugUtilsMessageSeverityBitmaskEXT (a ::
                                                  FlagType) = VkDebugUtilsMessageSeverityBitmaskEXT VkFlags
-                                                               deriving (Eq, Ord, Storable, Data,
-                                                                         Generic)
+                                                               deriving (Eq, Ord, Storable)
 
 type VkDebugUtilsMessageSeverityFlagsEXT =
      VkDebugUtilsMessageSeverityBitmaskEXT FlagMask
@@ -571,21 +555,6 @@ deriving instance
 
 deriving instance
          FiniteBits (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Integral (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Num (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Bounded (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Enum (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Real (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
 
 instance Show (VkDebugUtilsMessageSeverityBitmaskEXT a) where
         showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
@@ -648,8 +617,7 @@ pattern VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT =
 
 newtype VkDebugUtilsMessageTypeBitmaskEXT (a ::
                                              FlagType) = VkDebugUtilsMessageTypeBitmaskEXT VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                           deriving (Eq, Ord, Storable)
 
 type VkDebugUtilsMessageTypeFlagsEXT =
      VkDebugUtilsMessageTypeBitmaskEXT FlagMask
@@ -673,18 +641,6 @@ deriving instance Bits (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
 
 deriving instance
          FiniteBits (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance
-         Integral (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Num (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance
-         Bounded (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Enum (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Real (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
 
 instance Show (VkDebugUtilsMessageTypeBitmaskEXT a) where
         showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT

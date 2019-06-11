@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -25,9 +23,7 @@ module Graphics.Vulkan.Types.Enum.Blend
                           VK_BLEND_OVERLAP_UNCORRELATED_EXT, VK_BLEND_OVERLAP_DISJOINT_EXT,
                           VK_BLEND_OVERLAP_CONJOINT_EXT))
        where
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
@@ -38,7 +34,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendFactor VkBlendFactor registry at www.khronos.org>
 newtype VkBlendFactor = VkBlendFactor Int32
-                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkBlendFactor where
         showsPrec _ VK_BLEND_FACTOR_ZERO
@@ -201,7 +197,7 @@ pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor 18
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendOp VkBlendOp registry at www.khronos.org>
 newtype VkBlendOp = VkBlendOp Int32
-                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkBlendOp where
         showsPrec _ VK_BLEND_OP_ADD = showString "VK_BLEND_OP_ADD"
@@ -252,7 +248,7 @@ pattern VK_BLEND_OP_MAX = VkBlendOp 4
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendOverlapEXT VkBlendOverlapEXT registry at www.khronos.org>
 newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
-                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                              deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkBlendOverlapEXT where
         showsPrec _ VK_BLEND_OVERLAP_UNCORRELATED_EXT

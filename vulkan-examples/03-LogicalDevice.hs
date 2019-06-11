@@ -79,7 +79,7 @@ withGraphicsDevice pdev action
     writeField @"pNext"
       qcInfoPtr VK_NULL_HANDLE
     writeField @"flags"
-      qcInfoPtr 0
+      qcInfoPtr VK_ZERO_FLAGS
     writeField @"queueFamilyIndex"
       qcInfoPtr gFamIdx
     writeField @"queueCount"
@@ -97,7 +97,7 @@ withGraphicsDevice pdev action
     writeField @"pNext"
       devCreateInfoPtr VK_NULL_HANDLE
     writeField @"flags"
-      devCreateInfoPtr 0
+      devCreateInfoPtr VK_ZERO_FLAGS
     writeField @"pQueueCreateInfos"
       devCreateInfoPtr (unsafePtr qcInfo)
     writeField @"queueCreateInfoCount"

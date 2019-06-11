@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -19,9 +17,7 @@ module Graphics.Vulkan.Types.Enum.Color
                         VK_COLOR_SPACE_SRGB_NONLINEAR_KHR))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -31,7 +27,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkColorComponentBitmask (a ::
                                    FlagType) = VkColorComponentBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                                 deriving (Eq, Ord, Storable)
 
 type VkColorComponentFlags = VkColorComponentBitmask FlagMask
 
@@ -50,16 +46,6 @@ pattern VkColorComponentFlags n = VkColorComponentBitmask n
 deriving instance Bits (VkColorComponentBitmask FlagMask)
 
 deriving instance FiniteBits (VkColorComponentBitmask FlagMask)
-
-deriving instance Integral (VkColorComponentBitmask FlagMask)
-
-deriving instance Num (VkColorComponentBitmask FlagMask)
-
-deriving instance Bounded (VkColorComponentBitmask FlagMask)
-
-deriving instance Enum (VkColorComponentBitmask FlagMask)
-
-deriving instance Real (VkColorComponentBitmask FlagMask)
 
 instance Show (VkColorComponentBitmask a) where
         showsPrec _ VK_COLOR_COMPONENT_R_BIT
@@ -111,7 +97,7 @@ pattern VK_COLOR_COMPONENT_A_BIT = VkColorComponentBitmask 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkColorSpaceKHR VkColorSpaceKHR registry at www.khronos.org>
 newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
-                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                            deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkColorSpaceKHR where
         showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -24,9 +22,7 @@ module Graphics.Vulkan.Types.Enum.Display
                                VK_DISPLAY_POWER_STATE_ON_EXT))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -38,7 +34,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayEventTypeEXT VkDisplayEventTypeEXT registry at www.khronos.org>
 newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
-                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                  deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDisplayEventTypeEXT where
         showsPrec _ VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT
@@ -66,7 +62,7 @@ pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT =
 
 newtype VkDisplayPlaneAlphaBitmaskKHR (a ::
                                          FlagType) = VkDisplayPlaneAlphaBitmaskKHR VkFlags
-                                                       deriving (Eq, Ord, Storable, Data, Generic)
+                                                       deriving (Eq, Ord, Storable)
 
 type VkDisplayPlaneAlphaFlagsKHR =
      VkDisplayPlaneAlphaBitmaskKHR FlagMask
@@ -90,16 +86,6 @@ deriving instance Bits (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
 
 deriving instance
          FiniteBits (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
-
-deriving instance Integral (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
-
-deriving instance Num (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
-
-deriving instance Bounded (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
-
-deriving instance Enum (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
-
-deriving instance Real (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
 
 instance Show (VkDisplayPlaneAlphaBitmaskKHR a) where
         showsPrec _ VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR
@@ -164,7 +150,7 @@ pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerStateEXT VkDisplayPowerStateEXT registry at www.khronos.org>
 newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
-                                   deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                   deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDisplayPowerStateEXT where
         showsPrec _ VK_DISPLAY_POWER_STATE_OFF_EXT
