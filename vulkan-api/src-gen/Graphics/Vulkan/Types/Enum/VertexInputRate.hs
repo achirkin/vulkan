@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -9,9 +7,7 @@ module Graphics.Vulkan.Types.Enum.VertexInputRate
        (VkVertexInputRate(VkVertexInputRate, VK_VERTEX_INPUT_RATE_VERTEX,
                           VK_VERTEX_INPUT_RATE_INSTANCE))
        where
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
@@ -22,7 +18,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputRate VkVertexInputRate registry at www.khronos.org>
 newtype VkVertexInputRate = VkVertexInputRate Int32
-                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                              deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkVertexInputRate where
         showsPrec _ VK_VERTEX_INPUT_RATE_VERTEX

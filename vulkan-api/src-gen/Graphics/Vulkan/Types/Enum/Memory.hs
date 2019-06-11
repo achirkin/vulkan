@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -29,9 +27,7 @@ module Graphics.Vulkan.Types.Enum.Memory
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -40,12 +36,11 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBitsKHR VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
+                                        deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkMemoryAllocateFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkMemoryAllocateFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkMemoryAllocateFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -53,7 +48,7 @@ instance Read VkMemoryAllocateFlagBitsKHR where
 
 newtype VkMemoryAllocateBitmask (a ::
                                    FlagType) = VkMemoryAllocateBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                                 deriving (Eq, Ord, Storable)
 
 type VkMemoryAllocateFlags = VkMemoryAllocateBitmask FlagMask
 
@@ -72,16 +67,6 @@ pattern VkMemoryAllocateFlags n = VkMemoryAllocateBitmask n
 deriving instance Bits (VkMemoryAllocateBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Integral (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Num (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Enum (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Real (VkMemoryAllocateBitmask FlagMask)
 
 instance Show (VkMemoryAllocateBitmask a) where
         showsPrec _ VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT
@@ -112,7 +97,7 @@ pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT =
 
 newtype VkMemoryHeapBitmask (a ::
                                FlagType) = VkMemoryHeapBitmask VkFlags
-                                             deriving (Eq, Ord, Storable, Data, Generic)
+                                             deriving (Eq, Ord, Storable)
 
 type VkMemoryHeapFlags = VkMemoryHeapBitmask FlagMask
 
@@ -131,16 +116,6 @@ pattern VkMemoryHeapFlags n = VkMemoryHeapBitmask n
 deriving instance Bits (VkMemoryHeapBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Integral (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Num (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Enum (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Real (VkMemoryHeapBitmask FlagMask)
 
 instance Show (VkMemoryHeapBitmask a) where
         showsPrec _ VK_MEMORY_HEAP_DEVICE_LOCAL_BIT
@@ -169,7 +144,7 @@ pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapBitmask 1
 
 newtype VkMemoryPropertyBitmask (a ::
                                    FlagType) = VkMemoryPropertyBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                                 deriving (Eq, Ord, Storable)
 
 type VkMemoryPropertyFlags = VkMemoryPropertyBitmask FlagMask
 
@@ -188,16 +163,6 @@ pattern VkMemoryPropertyFlags n = VkMemoryPropertyBitmask n
 deriving instance Bits (VkMemoryPropertyBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Integral (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Num (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Enum (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Real (VkMemoryPropertyBitmask FlagMask)
 
 instance Show (VkMemoryPropertyBitmask a) where
         showsPrec _ VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT

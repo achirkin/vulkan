@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -21,9 +19,7 @@ module Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -32,12 +28,11 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBitsKHR VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
+                                           deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPeerMemoryFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkPeerMemoryFeatureFlagBitsKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPeerMemoryFeatureFlagBitsKHR where
         {-# INLINE readsPrec #-}
@@ -45,7 +40,7 @@ instance Read VkPeerMemoryFeatureFlagBitsKHR where
 
 newtype VkPeerMemoryFeatureBitmask (a ::
                                       FlagType) = VkPeerMemoryFeatureBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkPeerMemoryFeatureFlags = VkPeerMemoryFeatureBitmask FlagMask
 
@@ -66,16 +61,6 @@ pattern VkPeerMemoryFeatureFlags n = VkPeerMemoryFeatureBitmask n
 deriving instance Bits (VkPeerMemoryFeatureBitmask FlagMask)
 
 deriving instance FiniteBits (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Integral (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Num (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Enum (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Real (VkPeerMemoryFeatureBitmask FlagMask)
 
 instance Show (VkPeerMemoryFeatureBitmask a) where
         showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT

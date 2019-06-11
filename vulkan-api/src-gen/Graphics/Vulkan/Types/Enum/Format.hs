@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -125,9 +123,7 @@ module Graphics.Vulkan.Types.Enum.Format
         VkFormatFeatureFlags, VkFormatFeatureFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -142,7 +138,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormat VkFormat registry at www.khronos.org>
 newtype VkFormat = VkFormat Int32
-                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                     deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkFormat where
         showsPrec _ VK_FORMAT_UNDEFINED = showString "VK_FORMAT_UNDEFINED"
@@ -1513,7 +1509,7 @@ pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat 184
 
 newtype VkFormatFeatureBitmask (a ::
                                   FlagType) = VkFormatFeatureBitmask VkFlags
-                                                deriving (Eq, Ord, Storable, Data, Generic)
+                                                deriving (Eq, Ord, Storable)
 
 type VkFormatFeatureFlags = VkFormatFeatureBitmask FlagMask
 
@@ -1532,16 +1528,6 @@ pattern VkFormatFeatureFlags n = VkFormatFeatureBitmask n
 deriving instance Bits (VkFormatFeatureBitmask FlagMask)
 
 deriving instance FiniteBits (VkFormatFeatureBitmask FlagMask)
-
-deriving instance Integral (VkFormatFeatureBitmask FlagMask)
-
-deriving instance Num (VkFormatFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkFormatFeatureBitmask FlagMask)
-
-deriving instance Enum (VkFormatFeatureBitmask FlagMask)
-
-deriving instance Real (VkFormatFeatureBitmask FlagMask)
 
 instance Show (VkFormatFeatureBitmask a) where
         showsPrec _ VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT

@@ -57,7 +57,7 @@ rotation seconds =
 updateTransObj :: VkDevice -> VkExtent2D -> VkDeviceMemory -> Program r ()
 updateTransObj device extent uniBuf = do
       uboPtr <- allocaPeek $
-        runVk . vkMapMemory device uniBuf 0 (bSizeOf @TransformationObject undefined) 0
+        runVk . vkMapMemory device uniBuf 0 (bSizeOf @TransformationObject undefined) VK_ZERO_FLAGS
       seconds <- getTime
       let -- rotate the world and objects
           model = rotation seconds

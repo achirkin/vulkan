@@ -26,7 +26,7 @@ createSemaphore dev =
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
       ) $ \ciPtr -> runVk $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
 
 createFence :: VkDevice -> Bool -> Program r VkFence
@@ -37,6 +37,6 @@ createFence dev signaled =
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_FENCE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" (if signaled then VK_FENCE_CREATE_SIGNALED_BIT else 0)
+        &* set @"flags" (if signaled then VK_FENCE_CREATE_SIGNALED_BIT else VK_ZERO_FLAGS)
       ) $ \ciPtr -> runVk $ vkCreateFence dev ciPtr VK_NULL sPtr
 

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -17,9 +15,7 @@ module Graphics.Vulkan.Types.Enum.Subpass
         VkSubpassDescriptionFlags, VkSubpassDescriptionFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -31,7 +27,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassContents VkSubpassContents registry at www.khronos.org>
 newtype VkSubpassContents = VkSubpassContents Int32
-                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                              deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSubpassContents where
         showsPrec _ VK_SUBPASS_CONTENTS_INLINE
@@ -66,7 +62,7 @@ pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS =
 
 newtype VkSubpassDescriptionBitmask (a ::
                                        FlagType) = VkSubpassDescriptionBitmask VkFlags
-                                                     deriving (Eq, Ord, Storable, Data, Generic)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkSubpassDescriptionFlags =
      VkSubpassDescriptionBitmask FlagMask
@@ -88,16 +84,6 @@ pattern VkSubpassDescriptionFlags n = VkSubpassDescriptionBitmask n
 deriving instance Bits (VkSubpassDescriptionBitmask FlagMask)
 
 deriving instance FiniteBits (VkSubpassDescriptionBitmask FlagMask)
-
-deriving instance Integral (VkSubpassDescriptionBitmask FlagMask)
-
-deriving instance Num (VkSubpassDescriptionBitmask FlagMask)
-
-deriving instance Bounded (VkSubpassDescriptionBitmask FlagMask)
-
-deriving instance Enum (VkSubpassDescriptionBitmask FlagMask)
-
-deriving instance Real (VkSubpassDescriptionBitmask FlagMask)
 
 instance Show (VkSubpassDescriptionBitmask a) where
         showsPrec p (VkSubpassDescriptionBitmask x)

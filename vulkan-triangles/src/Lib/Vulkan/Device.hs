@@ -122,7 +122,7 @@ getMaxUsableSampleCount pdev = do
       colorSampleCounts = getField @"framebufferColorSampleCounts" limits
       depthSampleCounts = getField @"framebufferDepthSampleCounts" limits
       counts = min colorSampleCounts depthSampleCounts
-      splitCounts = filter ((/= 0) . (counts .&.))
+      splitCounts = filter ((/= VK_ZERO_FLAGS) . (counts .&.))
         [ VK_SAMPLE_COUNT_64_BIT
         , VK_SAMPLE_COUNT_32_BIT
         , VK_SAMPLE_COUNT_16_BIT
@@ -204,7 +204,7 @@ createGraphicsDevice pdev surf
                createVk @VkDeviceQueueCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"queueFamilyIndex" qFamIdx
         &* set @"queueCount" 1
         &* setListRef @"pQueuePriorities" [1.0]
@@ -215,7 +215,7 @@ createGraphicsDevice pdev surf
       devCreateInfo = createVk @VkDeviceCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* setListRef @"pQueueCreateInfos" (Map.elems qcInfoMap)
         &* set @"queueCreateInfoCount" (fromIntegral $ Map.size qcInfoMap)
         &* set @"enabledLayerCount" (fromIntegral $ length layers)

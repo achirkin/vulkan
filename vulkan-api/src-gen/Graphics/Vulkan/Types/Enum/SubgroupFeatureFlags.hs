@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -20,9 +18,7 @@ module Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags
         VkSubgroupFeatureFlags, VkSubgroupFeatureFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -32,7 +28,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSubgroupFeatureBitmask (a ::
                                     FlagType) = VkSubgroupFeatureBitmask VkFlags
-                                                  deriving (Eq, Ord, Storable, Data, Generic)
+                                                  deriving (Eq, Ord, Storable)
 
 type VkSubgroupFeatureFlags = VkSubgroupFeatureBitmask FlagMask
 
@@ -51,16 +47,6 @@ pattern VkSubgroupFeatureFlags n = VkSubgroupFeatureBitmask n
 deriving instance Bits (VkSubgroupFeatureBitmask FlagMask)
 
 deriving instance FiniteBits (VkSubgroupFeatureBitmask FlagMask)
-
-deriving instance Integral (VkSubgroupFeatureBitmask FlagMask)
-
-deriving instance Num (VkSubgroupFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkSubgroupFeatureBitmask FlagMask)
-
-deriving instance Enum (VkSubgroupFeatureBitmask FlagMask)
-
-deriving instance Real (VkSubgroupFeatureBitmask FlagMask)
 
 instance Show (VkSubgroupFeatureBitmask a) where
         showsPrec _ VK_SUBGROUP_FEATURE_BASIC_BIT

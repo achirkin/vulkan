@@ -53,7 +53,7 @@ createVulkanShaderModule dev (codeSize, codePtr) =
       &* set @"pNext"    VK_NULL
       &* set @"codeSize" codeSize
       &* set @"pCode"    codePtr
-      &* set @"flags"    0
+      &* set @"flags"    VK_ZERO_FLAGS
 
 destroyVulkanShaderModule :: VkDevice -> VkShaderModule -> IO ()
 destroyVulkanShaderModule dev = flip (vkDestroyShaderModule dev) VK_NULL
@@ -72,7 +72,7 @@ withGraphicsPipeline
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"vertexBindingDescriptionCount" 0
         &* set @"pVertexBindingDescriptions" VK_NULL
         &* set @"vertexAttributeDescriptionCount" 0
@@ -82,7 +82,7 @@ withGraphicsPipeline
       inputAssembly = createVk @VkPipelineInputAssemblyStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"topology" VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
         &* set @"primitiveRestartEnable" VK_FALSE
 
@@ -103,7 +103,7 @@ withGraphicsPipeline
         $ set @"sType"
           VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"viewportCount" 1
         &* setVkRef @"pViewports" viewPort
         &* set @"scissorCount" 1
@@ -113,7 +113,7 @@ withGraphicsPipeline
       rasterizer = createVk @VkPipelineRasterizationStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"depthClampEnable" VK_FALSE
         &* set @"rasterizerDiscardEnable" VK_FALSE
         &* set @"polygonMode" VK_POLYGON_MODE_FILL
@@ -129,7 +129,7 @@ withGraphicsPipeline
       multisampling = createVk @VkPipelineMultisampleStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"sampleShadingEnable" VK_FALSE
         &* set @"rasterizationSamples" VK_SAMPLE_COUNT_1_BIT
         &* set @"minSampleShading" 1.0 -- Optional
@@ -156,7 +156,7 @@ withGraphicsPipeline
       colorBlending = createVk @VkPipelineColorBlendStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"flags" 0
+        &* set @"flags" VK_ZERO_FLAGS
         &* set @"logicOpEnable" VK_FALSE
         &* set @"logicOp" VK_LOGIC_OP_COPY -- Optional
         &* set @"attachmentCount" 1
@@ -173,7 +173,7 @@ withGraphicsPipeline
         let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
               $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
               &* set @"pNext" VK_NULL
-              &* set @"flags" 0
+              &* set @"flags" VK_ZERO_FLAGS
               &* set @"stageCount" (fromIntegral stageCount)
               &* set @"pStages" stagesPtr
               &* setVkRef @"pVertexInputState" vertexInputInfo
@@ -218,7 +218,7 @@ withPipelineLayout dev action = do
     plCreateInfo = createVk @VkPipelineLayoutCreateInfo
       $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
       &* set @"pNext" VK_NULL
-      &* set @"flags" 0
+      &* set @"flags" VK_ZERO_FLAGS
       &* set @"setLayoutCount"         0       -- Optional
       &* set @"pSetLayouts"            VK_NULL -- Optional
       &* set @"pushConstantRangeCount" 0       -- Optional
@@ -230,7 +230,7 @@ withRenderPass :: VkDevice -> SwapChainImgInfo
 withRenderPass dev SwapChainImgInfo{..} action =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
-        $  set @"flags" 0
+        $  set @"flags" VK_ZERO_FLAGS
         &* set @"format" swImgFormat
         &* set @"samples" VK_SAMPLE_COUNT_1_BIT
         &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
@@ -257,7 +257,7 @@ withRenderPass dev SwapChainImgInfo{..} action =
         $  set @"srcSubpass" VK_SUBPASS_EXTERNAL
         &* set @"dstSubpass" 0
         &* set @"srcStageMask" VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
-        &* set @"srcAccessMask" 0
+        &* set @"srcAccessMask" VK_ZERO_FLAGS
         &* set @"dstStageMask" VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
         &* set @"dstAccessMask"
             (   VK_ACCESS_COLOR_ATTACHMENT_READ_BIT

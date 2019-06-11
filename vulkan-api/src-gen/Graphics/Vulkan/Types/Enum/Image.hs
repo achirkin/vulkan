@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -48,9 +46,7 @@ module Graphics.Vulkan.Types.Enum.Image
                         VK_IMAGE_VIEW_TYPE_2D_ARRAY, VK_IMAGE_VIEW_TYPE_CUBE_ARRAY))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -60,7 +56,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkImageAspectBitmask (a ::
                                 FlagType) = VkImageAspectBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkImageAspectFlags = VkImageAspectBitmask FlagMask
 
@@ -79,16 +75,6 @@ pattern VkImageAspectFlags n = VkImageAspectBitmask n
 deriving instance Bits (VkImageAspectBitmask FlagMask)
 
 deriving instance FiniteBits (VkImageAspectBitmask FlagMask)
-
-deriving instance Integral (VkImageAspectBitmask FlagMask)
-
-deriving instance Num (VkImageAspectBitmask FlagMask)
-
-deriving instance Bounded (VkImageAspectBitmask FlagMask)
-
-deriving instance Enum (VkImageAspectBitmask FlagMask)
-
-deriving instance Real (VkImageAspectBitmask FlagMask)
 
 instance Show (VkImageAspectBitmask a) where
         showsPrec _ VK_IMAGE_ASPECT_COLOR_BIT
@@ -139,7 +125,7 @@ pattern VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectBitmask 8
 
 newtype VkImageCreateBitmask (a ::
                                 FlagType) = VkImageCreateBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkImageCreateFlags = VkImageCreateBitmask FlagMask
 
@@ -158,16 +144,6 @@ pattern VkImageCreateFlags n = VkImageCreateBitmask n
 deriving instance Bits (VkImageCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkImageCreateBitmask FlagMask)
-
-deriving instance Integral (VkImageCreateBitmask FlagMask)
-
-deriving instance Num (VkImageCreateBitmask FlagMask)
-
-deriving instance Bounded (VkImageCreateBitmask FlagMask)
-
-deriving instance Enum (VkImageCreateBitmask FlagMask)
-
-deriving instance Real (VkImageCreateBitmask FlagMask)
 
 instance Show (VkImageCreateBitmask a) where
         showsPrec _ VK_IMAGE_CREATE_SPARSE_BINDING_BIT
@@ -249,7 +225,7 @@ pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageLayout VkImageLayout registry at www.khronos.org>
 newtype VkImageLayout = VkImageLayout Int32
-                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageLayout where
         showsPrec _ VK_IMAGE_LAYOUT_UNDEFINED
@@ -352,7 +328,7 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageTiling VkImageTiling registry at www.khronos.org>
 newtype VkImageTiling = VkImageTiling Int32
-                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageTiling where
         showsPrec _ VK_IMAGE_TILING_OPTIMAL
@@ -386,7 +362,7 @@ pattern VK_IMAGE_TILING_LINEAR = VkImageTiling 1
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageType VkImageType registry at www.khronos.org>
 newtype VkImageType = VkImageType Int32
-                        deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                        deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageType where
         showsPrec _ VK_IMAGE_TYPE_1D = showString "VK_IMAGE_TYPE_1D"
@@ -420,7 +396,7 @@ pattern VK_IMAGE_TYPE_3D = VkImageType 2
 
 newtype VkImageUsageBitmask (a ::
                                FlagType) = VkImageUsageBitmask VkFlags
-                                             deriving (Eq, Ord, Storable, Data, Generic)
+                                             deriving (Eq, Ord, Storable)
 
 type VkImageUsageFlags = VkImageUsageBitmask FlagMask
 
@@ -439,16 +415,6 @@ pattern VkImageUsageFlags n = VkImageUsageBitmask n
 deriving instance Bits (VkImageUsageBitmask FlagMask)
 
 deriving instance FiniteBits (VkImageUsageBitmask FlagMask)
-
-deriving instance Integral (VkImageUsageBitmask FlagMask)
-
-deriving instance Num (VkImageUsageBitmask FlagMask)
-
-deriving instance Bounded (VkImageUsageBitmask FlagMask)
-
-deriving instance Enum (VkImageUsageBitmask FlagMask)
-
-deriving instance Real (VkImageUsageBitmask FlagMask)
 
 instance Show (VkImageUsageBitmask a) where
         showsPrec _ VK_IMAGE_USAGE_TRANSFER_SRC_BIT
@@ -562,7 +528,7 @@ pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewType VkImageViewType registry at www.khronos.org>
 newtype VkImageViewType = VkImageViewType Int32
-                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                            deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageViewType where
         showsPrec _ VK_IMAGE_VIEW_TYPE_1D

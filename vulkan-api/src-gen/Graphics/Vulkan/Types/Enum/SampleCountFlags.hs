@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -18,9 +16,7 @@ module Graphics.Vulkan.Types.Enum.SampleCountFlags
         VkSampleCountFlags, VkSampleCountFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -30,7 +26,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSampleCountBitmask (a ::
                                 FlagType) = VkSampleCountBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                              deriving (Eq, Ord, Storable)
 
 type VkSampleCountFlags = VkSampleCountBitmask FlagMask
 
@@ -49,16 +45,6 @@ pattern VkSampleCountFlags n = VkSampleCountBitmask n
 deriving instance Bits (VkSampleCountBitmask FlagMask)
 
 deriving instance FiniteBits (VkSampleCountBitmask FlagMask)
-
-deriving instance Integral (VkSampleCountBitmask FlagMask)
-
-deriving instance Num (VkSampleCountBitmask FlagMask)
-
-deriving instance Bounded (VkSampleCountBitmask FlagMask)
-
-deriving instance Enum (VkSampleCountBitmask FlagMask)
-
-deriving instance Real (VkSampleCountBitmask FlagMask)
 
 instance Show (VkSampleCountBitmask a) where
         showsPrec _ VK_SAMPLE_COUNT_1_BIT

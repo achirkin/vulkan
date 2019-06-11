@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -21,9 +19,7 @@ module Graphics.Vulkan.Types.Enum.Attachment
                             VK_ATTACHMENT_STORE_OP_STORE, VK_ATTACHMENT_STORE_OP_DONT_CARE))
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -33,7 +29,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkAttachmentDescriptionBitmask (a ::
                                           FlagType) = VkAttachmentDescriptionBitmask VkFlags
-                                                        deriving (Eq, Ord, Storable, Data, Generic)
+                                                        deriving (Eq, Ord, Storable)
 
 type VkAttachmentDescriptionFlags =
      VkAttachmentDescriptionBitmask FlagMask
@@ -57,17 +53,6 @@ deriving instance Bits (VkAttachmentDescriptionBitmask FlagMask)
 
 deriving instance
          FiniteBits (VkAttachmentDescriptionBitmask FlagMask)
-
-deriving instance
-         Integral (VkAttachmentDescriptionBitmask FlagMask)
-
-deriving instance Num (VkAttachmentDescriptionBitmask FlagMask)
-
-deriving instance Bounded (VkAttachmentDescriptionBitmask FlagMask)
-
-deriving instance Enum (VkAttachmentDescriptionBitmask FlagMask)
-
-deriving instance Real (VkAttachmentDescriptionBitmask FlagMask)
 
 instance Show (VkAttachmentDescriptionBitmask a) where
         showsPrec _ VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT
@@ -100,7 +85,7 @@ pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentLoadOp VkAttachmentLoadOp registry at www.khronos.org>
 newtype VkAttachmentLoadOp = VkAttachmentLoadOp Int32
-                               deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                               deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkAttachmentLoadOp where
         showsPrec _ VK_ATTACHMENT_LOAD_OP_LOAD
@@ -142,7 +127,7 @@ pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp 2
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentStoreOp VkAttachmentStoreOp registry at www.khronos.org>
 newtype VkAttachmentStoreOp = VkAttachmentStoreOp Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkAttachmentStoreOp where
         showsPrec _ VK_ATTACHMENT_STORE_OP_STORE

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -34,9 +32,7 @@ module Graphics.Vulkan.Types.Enum.Command
         VkCommandPoolResetFlags, VkCommandPoolResetFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
@@ -48,7 +44,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferLevel VkCommandBufferLevel registry at www.khronos.org>
 newtype VkCommandBufferLevel = VkCommandBufferLevel Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                 deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkCommandBufferLevel where
         showsPrec _ VK_COMMAND_BUFFER_LEVEL_PRIMARY
@@ -82,7 +78,7 @@ pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel 1
 
 newtype VkCommandBufferResetBitmask (a ::
                                        FlagType) = VkCommandBufferResetBitmask VkFlags
-                                                     deriving (Eq, Ord, Storable, Data, Generic)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkCommandBufferResetFlags =
      VkCommandBufferResetBitmask FlagMask
@@ -104,16 +100,6 @@ pattern VkCommandBufferResetFlags n = VkCommandBufferResetBitmask n
 deriving instance Bits (VkCommandBufferResetBitmask FlagMask)
 
 deriving instance FiniteBits (VkCommandBufferResetBitmask FlagMask)
-
-deriving instance Integral (VkCommandBufferResetBitmask FlagMask)
-
-deriving instance Num (VkCommandBufferResetBitmask FlagMask)
-
-deriving instance Bounded (VkCommandBufferResetBitmask FlagMask)
-
-deriving instance Enum (VkCommandBufferResetBitmask FlagMask)
-
-deriving instance Real (VkCommandBufferResetBitmask FlagMask)
 
 instance Show (VkCommandBufferResetBitmask a) where
         showsPrec _ VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT
@@ -144,7 +130,7 @@ pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT =
 
 newtype VkCommandBufferUsageBitmask (a ::
                                        FlagType) = VkCommandBufferUsageBitmask VkFlags
-                                                     deriving (Eq, Ord, Storable, Data, Generic)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkCommandBufferUsageFlags =
      VkCommandBufferUsageBitmask FlagMask
@@ -166,16 +152,6 @@ pattern VkCommandBufferUsageFlags n = VkCommandBufferUsageBitmask n
 deriving instance Bits (VkCommandBufferUsageBitmask FlagMask)
 
 deriving instance FiniteBits (VkCommandBufferUsageBitmask FlagMask)
-
-deriving instance Integral (VkCommandBufferUsageBitmask FlagMask)
-
-deriving instance Num (VkCommandBufferUsageBitmask FlagMask)
-
-deriving instance Bounded (VkCommandBufferUsageBitmask FlagMask)
-
-deriving instance Enum (VkCommandBufferUsageBitmask FlagMask)
-
-deriving instance Real (VkCommandBufferUsageBitmask FlagMask)
 
 instance Show (VkCommandBufferUsageBitmask a) where
         showsPrec _ VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT
@@ -228,7 +204,7 @@ pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT =
 
 newtype VkCommandPoolCreateBitmask (a ::
                                       FlagType) = VkCommandPoolCreateBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkCommandPoolCreateFlags = VkCommandPoolCreateBitmask FlagMask
 
@@ -249,16 +225,6 @@ pattern VkCommandPoolCreateFlags n = VkCommandPoolCreateBitmask n
 deriving instance Bits (VkCommandPoolCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkCommandPoolCreateBitmask FlagMask)
-
-deriving instance Integral (VkCommandPoolCreateBitmask FlagMask)
-
-deriving instance Num (VkCommandPoolCreateBitmask FlagMask)
-
-deriving instance Bounded (VkCommandPoolCreateBitmask FlagMask)
-
-deriving instance Enum (VkCommandPoolCreateBitmask FlagMask)
-
-deriving instance Real (VkCommandPoolCreateBitmask FlagMask)
 
 instance Show (VkCommandPoolCreateBitmask a) where
         showsPrec _ VK_COMMAND_POOL_CREATE_TRANSIENT_BIT
@@ -302,7 +268,7 @@ pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT =
 
 newtype VkCommandPoolResetBitmask (a ::
                                      FlagType) = VkCommandPoolResetBitmask VkFlags
-                                                   deriving (Eq, Ord, Storable, Data, Generic)
+                                                   deriving (Eq, Ord, Storable)
 
 type VkCommandPoolResetFlags = VkCommandPoolResetBitmask FlagMask
 
@@ -321,16 +287,6 @@ pattern VkCommandPoolResetFlags n = VkCommandPoolResetBitmask n
 deriving instance Bits (VkCommandPoolResetBitmask FlagMask)
 
 deriving instance FiniteBits (VkCommandPoolResetBitmask FlagMask)
-
-deriving instance Integral (VkCommandPoolResetBitmask FlagMask)
-
-deriving instance Num (VkCommandPoolResetBitmask FlagMask)
-
-deriving instance Bounded (VkCommandPoolResetBitmask FlagMask)
-
-deriving instance Enum (VkCommandPoolResetBitmask FlagMask)
-
-deriving instance Real (VkCommandPoolResetBitmask FlagMask)
 
 instance Show (VkCommandPoolResetBitmask a) where
         showsPrec _ VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -32,9 +30,7 @@ module Graphics.Vulkan.Types.Enum.Sampler
        where
 import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
-import Data.Data                       (Data)
 import Foreign.Storable                (Storable)
-import GHC.Generics                    (Generic)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags)
@@ -46,7 +42,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerAddressMode VkSamplerAddressMode registry at www.khronos.org>
 newtype VkSamplerAddressMode = VkSamplerAddressMode Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                 deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSamplerAddressMode where
         showsPrec _ VK_SAMPLER_ADDRESS_MODE_REPEAT
@@ -101,12 +97,11 @@ pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER =
         VkSamplerAddressMode 3
 
 newtype VkSamplerCreateFlagBits = VkSamplerCreateFlagBits VkFlags
-                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                              FiniteBits, Storable, Real, Data, Generic)
+                                    deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkSamplerCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkSamplerCreateFlagBits x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkSamplerCreateFlagBits where
         {-# INLINE readsPrec #-}
@@ -116,7 +111,7 @@ instance Read VkSamplerCreateFlagBits where
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerMipmapMode VkSamplerMipmapMode registry at www.khronos.org>
 newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSamplerMipmapMode where
         showsPrec _ VK_SAMPLER_MIPMAP_MODE_NEAREST
@@ -154,8 +149,7 @@ pattern VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode 1
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerReductionModeEXT VkSamplerReductionModeEXT registry at www.khronos.org>
 newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
-                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                Generic)
+                                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSamplerReductionModeEXT where
         showsPrec _ VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT
@@ -205,8 +199,7 @@ pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrModelConversion VkSamplerYcbcrModelConversion registry at www.khronos.org>
 newtype VkSamplerYcbcrModelConversion = VkSamplerYcbcrModelConversion Int32
-                                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                    Generic)
+                                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSamplerYcbcrModelConversion where
         showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY
@@ -277,12 +270,11 @@ pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020 =
         VkSamplerYcbcrModelConversion 4
 
 newtype VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversionKHR VkFlags
-                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                       FiniteBits, Storable, Real, Data, Generic)
+                                             deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkSamplerYcbcrModelConversionKHR where
-        {-# INLINE show #-}
-        show (VkSamplerYcbcrModelConversionKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkSamplerYcbcrModelConversionKHR where
         {-# INLINE readsPrec #-}
@@ -292,7 +284,7 @@ instance Read VkSamplerYcbcrModelConversionKHR where
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrRange VkSamplerYcbcrRange registry at www.khronos.org>
 newtype VkSamplerYcbcrRange = VkSamplerYcbcrRange Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSamplerYcbcrRange where
         showsPrec _ VK_SAMPLER_YCBCR_RANGE_ITU_FULL
@@ -327,12 +319,11 @@ pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW :: VkSamplerYcbcrRange
 pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW = VkSamplerYcbcrRange 1
 
 newtype VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRangeKHR VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
+                                   deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkSamplerYcbcrRangeKHR where
-        {-# INLINE show #-}
-        show (VkSamplerYcbcrRangeKHR x) = show x
+        {-# INLINE showsPrec #-}
+        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkSamplerYcbcrRangeKHR where
         {-# INLINE readsPrec #-}
