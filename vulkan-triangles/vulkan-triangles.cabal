@@ -28,17 +28,20 @@ library
                         Lib.Program
                         Lib.Program.Foreign
                         Lib.Vulkan.Buffer
+                        Lib.Vulkan.Command
                         Lib.Vulkan.Descriptor
                         Lib.Vulkan.Device
                         Lib.Vulkan.Drawing
+                        Lib.Vulkan.Image
                         Lib.Vulkan.Instance
                         Lib.Vulkan.Pipeline
                         Lib.Vulkan.Presentation
                         Lib.Vulkan.Shader
                         Lib.Vulkan.Shader.TH
+                        Lib.Vulkan.Sync
+                        Lib.Vulkan.TransformationObject
                         Lib.Vulkan.Vertex
                         Lib.Vulkan.VertexBuffer
-                        Lib.Vulkan.TransformationObject
     build-depends:      base >= 4.11 && < 5
                       , vulkan-api >= 1.2.0.0
                       , GLFW-b >= 3.2.1
@@ -54,6 +57,9 @@ library
                       , easytensor-vulkan >=2 && < 3
                       , dimensions >=2 && < 3
                       , time
+                      , JuicyPixels
+                      , vector
+                      , wavefront
     default-language:   Haskell2010
     if flag(dev)
         cpp-options: -DDEVELOPMENT
@@ -64,7 +70,7 @@ library
 executable vulkan-triangles
     hs-source-dirs:      app
     main-is:             Main.hs
-    ghc-options:         -Wall
+    ghc-options:         -threaded
     build-depends:       base
                        , vulkan-triangles
     default-language:    Haskell2010

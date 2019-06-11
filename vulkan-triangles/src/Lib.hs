@@ -1,26 +1,30 @@
-{-# LANGUAGE DataKinds           #-}
-{-# LANGUAGE KindSignatures      #-}
-{-# LANGUAGE RecordWildCards     #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE Strict              #-}
-{-# LANGUAGE TemplateHaskell     #-}
-{-# LANGUAGE TypeApplications    #-}
-module Lib (runVulkanProgram) where
+{-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE LambdaCase       #-}
+{-# LANGUAGE NamedFieldPuns   #-}
+{-# LANGUAGE RecordWildCards  #-}
+{-# LANGUAGE Strict           #-}
+{-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE TypeApplications #-}
+module Lib
+  ( runVulkanProgram
+  , WhichDemo (..)
+  ) where
 
-import Control.Exception                    (displayException)
-import Control.Monad                        (forM_)
-import Data.Maybe                           (fromJust)
+import Control.Monad                        (forM_, when, unless)
+import Data.IORef
 import Graphics.Vulkan.Core_1_0
 import Graphics.Vulkan.Ext.VK_KHR_swapchain
 import Numeric.DataFrame
-import Numeric.Dimensions
+import System.Directory                     (doesFileExist)
 
 import Lib.GLFW
 import Lib.Program
 import Lib.Program.Foreign
+import Lib.Vulkan.Command
 import Lib.Vulkan.Descriptor
 import Lib.Vulkan.Device
 import Lib.Vulkan.Drawing
+import Lib.Vulkan.Image
 import Lib.Vulkan.Pipeline
 import Lib.Vulkan.Presentation
 import Lib.Vulkan.Shader
@@ -42,46 +46,56 @@ import Lib.Vulkan.VertexBuffer
 --   Note: in this program, `n >= 3` requirement is also forced in `Lib/Vulkan/VertexBuffer.hs`,
 --         where it is not strictly necessary but allows to avoid specifying DataFrame constraints
 --         in function signatures (such as, e.g. `KnownDim n`).
-vertices :: DataFrame Vertex '[XN 3]
-vertices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
-  [ -- rectangle
-    scalar $ Vertex (vec2 (-0.5) (-0.5)) (vec3 1 0 0)
-  , scalar $ Vertex (vec2   0.4  (-0.5)) (vec3 0 1 0)
-  , scalar $ Vertex (vec2   0.4    0.4 ) (vec3 0 0 1)
-  , scalar $ Vertex (vec2 (-0.5)   0.4 ) (vec3 1 1 1)
-    -- triangle
-  , scalar $ Vertex (vec2   0.9 (-0.4)) (vec3 0.2 0.5 0)
-  , scalar $ Vertex (vec2   0.5 (-0.4)) (vec3 0 1 1)
-  , scalar $ Vertex (vec2   0.7 (-0.8)) (vec3 1 0 0.4)
-  ]
-
-indices :: DataFrame Word16 '[XN 3]
-indices = fromJust . constrainDF @'[XN 3] @'[XN 0] $ fromList
-  [ -- rectangle
-    0, 1, 2, 2, 3, 0
-    -- triangle
-  , 4, 5, 6
-  ]
-
--- | Get number of points in a vector
-dfLen :: DataFrame t ((xns :: [XNat])) -> Word32
-dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
-  n :* _ -> fromIntegral $ dimVal n
-  U      -> 1
+rectVertices :: DataFrame Vertex '[XN 3]
+rectVertices = XFrame $
+    square
+    `appendDF`
+    withPos (+ vec4 0 0 0.5 0) square
+    `appendDF`
+    withPos (\p -> p %* rotateX (pi/2) + vec4 0 0 (-0.5) 0) square
+  where
+    square :: Vector Vertex 4
+    square = fromFlatList (D4 :* U) (Vertex 0 0 0) -- default point for type safety
+      [  -- rectangle
+          --     coordinate                  color        texture coordinate
+        Vertex (vec3 (-0.5) (-0.5) 0) (vec3 1 0 0) (vec2 0 0)
+      , Vertex (vec3   0.4  (-0.5) 0) (vec3 0 1 0) (vec2 1 0)
+      , Vertex (vec3   0.4    0.4  0) (vec3 0 0 1) (vec2 1 1)
+      , Vertex (vec3 (-0.5)   0.4  0) (vec3 1 1 1) (vec2 0 1)
+      ]
+    withPos :: (Vec4f -> Vec4f) -> Vector Vertex 4 -> Vector Vertex 4
+    withPos f = ewmap (\(S v) -> S v { pos = fromHom . f . toHomPoint $ pos v })
 
 
-runVulkanProgram :: IO ()
-runVulkanProgram = runProgram checkStatus $ do
 
-    window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW"
+rectIndices :: DataFrame Word32 '[XN 3]
+rectIndices = atLeastThree $ fromList $
+  oneRectIndices
+  ++
+  map (+4) oneRectIndices
+  ++
+  map (+8) oneRectIndices
+  where
+    -- indices for one rectangle
+    oneRectIndices = [0, 3, 2, 2, 1, 0]
 
-    vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
 
-    vulkanSurface <- createSurface vulkanInstance window
-    logInfo $ "Createad surface: " ++ show vulkanSurface
+data WhichDemo = Squares | Chalet
 
+runVulkanProgram :: WhichDemo -> IO ()
+runVulkanProgram demo = runProgram checkStatus $ do
+  windowSizeChanged <- liftIO $ newIORef False
+  window <- initGLFWWindow 800 600 "vulkan-triangles-GLFW" windowSizeChanged
+
+  vulkanInstance <- createGLFWVulkanInstance "vulkan-triangles-instance"
+
+  vulkanSurface <- createSurface vulkanInstance window
+  logInfo $ "Createad surface: " ++ show vulkanSurface
+
+  glfwWaitEventsMeanwhile $ do
     (_, pdev) <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
     logInfo $ "Selected physical device: " ++ show pdev
+    msaaSamples <- getMaxUsableSampleCount pdev
 
     (dev, queues) <- createGraphicsDevice pdev vulkanSurface
     logInfo $ "Createad device: " ++ show dev
@@ -100,13 +114,24 @@ runVulkanProgram = runProgram checkStatus $ do
     logInfo $ "Createad vertex shader module: " ++ show shaderVert
     logInfo $ "Createad fragment shader module: " ++ show shaderFrag
 
-    rendFinS <- createSemaphore dev
-    imAvailS <- createSemaphore dev
+    frameIndexRef <- liftIO $ newIORef 0
+    renderFinishedSems <- createFrameSemaphores dev
+    imageAvailableSems <- createFrameSemaphores dev
+    inFlightFences <- createFrameFences dev
+
     commandPool <- createCommandPool dev queues
     logInfo $ "Createad command pool: " ++ show commandPool
 
     -- we need this later, but don't want to realloc every swapchain recreation.
-    imgIPtr <- mallocRes
+    imgIndexPtr <- mallocRes
+
+    (vertices, indices) <- case demo of
+      Squares -> return (rectVertices, rectIndices)
+      Chalet -> do
+        modelExist <- liftIO $ doesFileExist "models/chalet.obj"
+        unless modelExist $
+          throwVkMsg "Get models/chalet.obj and textures/chalet.jpg from the links in https://vulkan-tutorial.com/Loading_models"
+        loadModel "models/chalet.obj"
 
     vertexBuffer <-
       createVertexBuffer pdev dev commandPool (graphicsQueue queues) vertices
@@ -115,87 +140,126 @@ runVulkanProgram = runProgram checkStatus $ do
       createIndexBuffer pdev dev commandPool (graphicsQueue queues) indices
 
     descriptorSetLayout <- createDescriptorSetLayout dev
+    pipelineLayout <- createPipelineLayout dev descriptorSetLayout
 
-    -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
-    --  (window resize event kind-of).
-    redoOnOutdate $ do
-      scsd <- querySwapChainSupport pdev vulkanSurface
-      swInfo <- createSwapChain dev scsd queues vulkanSurface
-      let swapChainLen = length (swImgs swInfo)
-      imgViews <- createImageViews dev swInfo
+    let texturePath = case demo of
+          Squares -> "textures/texture.jpg"
+          Chalet  -> "textures/chalet.jpg"
+    (textureView, mipLevels) <- createTextureImageView pdev dev commandPool (graphicsQueue queues) texturePath
+    textureSampler <- createTextureSampler dev mipLevels
+    descriptorTextureInfo <- textureImageInfo textureView textureSampler
 
-      transObjBuffers <- createTransObjBuffers pdev dev swapChainLen
-      descriptorBufferInfos <- mapM (transObjBufferInfo . snd) transObjBuffers
+    depthFormat <- findDepthFormat pdev
 
-      descriptorPool <- createDescriptorPool dev swapChainLen
-      descriptorSetLayouts <- newArrayRes $ replicate swapChainLen descriptorSetLayout
-      descriptorSets <- createDescriptorSets dev descriptorPool swapChainLen descriptorSetLayouts
+    let beforeSwapchainCreation :: Program r ()
+        beforeSwapchainCreation =
+          -- wait as long as window has width=0 and height=0
+          -- commented out because this only works in the main thread:
+          -- glfwWaitMinimized window
 
-      forM_ (zip descriptorBufferInfos descriptorSets) . uncurry $
-        prepareDescriptorSet dev
+          -- If a window size change did happen, it will be respected by (re-)creating
+          -- the swapchain below, no matter if it was signalled via exception or
+          -- the IORef, so reset the IORef now:
+          liftIO $ atomicWriteIORef windowSizeChanged False
 
-      renderPass <- createRenderPass dev swInfo
-      pipelineLayout <- createPipelineLayout dev descriptorSetLayout
+    -- The code below re-runs when the swapchain needs to be re-created
+    loop $ do
+      logInfo "Creating new swapchain.."
+      scsd <- querySwapchainSupport pdev vulkanSurface
+      beforeSwapchainCreation
+      swapInfo <- createSwapchain dev scsd queues vulkanSurface
+      let swapchainLen = length (swapImgs swapInfo)
+
+      (transObjMems, transObjBufs) <- unzip <$> createTransObjBuffers pdev dev swapchainLen
+      descriptorBufferInfos <- mapM transObjBufferInfo transObjBufs
+
+      descriptorPool <- createDescriptorPool dev swapchainLen
+      descriptorSetLayouts <- newArrayRes $ replicate swapchainLen descriptorSetLayout
+      descriptorSets <- createDescriptorSets dev descriptorPool swapchainLen descriptorSetLayouts
+
+      forM_ (zip descriptorBufferInfos descriptorSets) $
+        \(bufInfo, dSet) -> prepareDescriptorSet dev bufInfo descriptorTextureInfo dSet
+
+      transObjMemories <- newArrayRes transObjMems
+
+      imgViews <- mapM (\image -> createImageView dev image (swapImgFormat swapInfo) VK_IMAGE_ASPECT_COLOR_BIT 1) (swapImgs swapInfo)
+      renderPass <- createRenderPass dev swapInfo depthFormat msaaSamples
       graphicsPipeline
-        <- createGraphicsPipeline dev swInfo
+        <- createGraphicsPipeline dev swapInfo
                                   vertIBD vertIADs
                                   [shaderVert, shaderFrag]
                                   renderPass
                                   pipelineLayout
+                                  msaaSamples
 
+      colorAttImgView <- createColorAttImgView pdev dev commandPool (graphicsQueue queues)
+                          (swapImgFormat swapInfo) (swapExtent swapInfo) msaaSamples
+      depthAttImgView <- createDepthAttImgView pdev dev commandPool (graphicsQueue queues)
+                          (swapExtent swapInfo) msaaSamples
       framebuffers
-        <- createFramebuffers dev renderPass swInfo imgViews
-
+        <- createFramebuffers dev renderPass swapInfo imgViews depthAttImgView colorAttImgView
       cmdBuffersPtr <- createCommandBuffers dev graphicsPipeline commandPool
-                                         renderPass pipelineLayout swInfo
-                                         vertexBuffer
-                                         (dfLen indices, indexBuffer)
-                                         framebuffers
-                                         descriptorSets
-
-      transObjMemories <- newArrayRes $ map fst transObjBuffers
+                                        renderPass pipelineLayout swapInfo
+                                        vertexBuffer
+                                        (dfLen indices, indexBuffer)
+                                        framebuffers
+                                        descriptorSets
 
       let rdata = RenderData
-            { renderFinished = rendFinS
-            , imageAvailable = imAvailS
-            , device         = dev
-            , swapChainInfo  = swInfo
-            , deviceQueues   = queues
-            , imgIndexPtr    = imgIPtr
-            , commandBuffers = cmdBuffersPtr
-            , memories       = transObjMemories
-            , memoryMutator  = updateTransObj dev (swExtent swInfo)
+            { dev
+            , swapInfo
+            , queues
+            , imgIndexPtr
+            , frameIndexRef
+            , renderFinishedSems
+            , imageAvailableSems
+            , inFlightFences
+            , cmdBuffersPtr
+            , memories           = transObjMemories
+            , memoryMutator      = updateTransObj dev (swapExtent swapInfo)
             }
 
       logInfo $ "Createad image views: " ++ show imgViews
       logInfo $ "Createad renderpass: " ++ show renderPass
       logInfo $ "Createad pipeline: " ++ show graphicsPipeline
       logInfo $ "Createad framebuffers: " ++ show framebuffers
-      cmdBuffers <- peekArray swapChainLen cmdBuffersPtr
+      cmdBuffers <- peekArray swapchainLen cmdBuffersPtr
       logInfo $ "Createad command buffers: " ++ show cmdBuffers
 
-      glfwMainLoop window $ do
-        return () -- do some app logic
+      -- part of dumb fps counter
+      frameCount <- liftIO $ newIORef @Int 0
+      currentSec <- liftIO $ newIORef @Int 0
 
-        runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
+      shouldExit <- glfwMainLoop window $ do
+        -- do some app logic here
 
-        drawFrame rdata
+        needRecreation <- drawFrame rdata `catchError` ( \err@(VulkanException ecode _) ->
+          case ecode of
+            Just VK_ERROR_OUT_OF_DATE_KHR -> do
+              logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error"
+              return True
+            _ -> throwError err
+          )
 
-        runVk $ vkDeviceWaitIdle dev
+        -- part of dumb fps counter
+        seconds <- getTime
+        cur <- liftIO $ readIORef currentSec
+        if floor seconds /= cur
+        then do
+          count <- liftIO $ readIORef frameCount
+          when (cur /= 0) $ logInfo $
+            "Running for " <> show cur <> "s; current fps: " <> show count
+          liftIO $ do
+            writeIORef currentSec (floor seconds)
+            writeIORef frameCount 0
+        else
+          liftIO $ modifyIORef' frameCount succ
 
-checkStatus :: Either VulkanException () -> IO ()
-checkStatus (Right ()) = pure ()
-checkStatus (Left err) = putStrLn $ displayException err
-
--- | Run the whole sequence of commands one more time if a particular error happens.
---   Run that sequence locally, so that all acquired resources are released
---   before running it again.
-redoOnOutdate :: Program' a -> Program r a
-redoOnOutdate action =
-  locally action `catchError` ( \err@(VulkanException ecode _) ->
-    case ecode of
-      Just VK_ERROR_OUT_OF_DATE_KHR -> do
-        logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error, retrying..."
-        redoOnOutdate action
-      _ -> throwError err
-  )
+        sizeChanged <- liftIO $ readIORef windowSizeChanged
+        when sizeChanged $ logInfo "Have got a windowSizeCallback from GLFW"
+        return $ if needRecreation || sizeChanged then AbortLoop else ContinueLoop
+      -- after glfwMainLoop exits, we need to wait for the frame to finish before deallocating things
+      -- things are deallocated implicitly thanks to allocResource
+      runVk $ vkDeviceWaitIdle dev
+      return $ if shouldExit then AbortLoop else ContinueLoop
+  return ()
