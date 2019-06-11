@@ -62,7 +62,7 @@ atLeastThree = fromMaybe (error "Lib.Vulkan.Vertex.atLeastThree: not enough poin
              . constrainDF
 
 -- | Get number of points in a vector
-dfLen :: DataFrame t ((xns :: [XNat])) -> Word32
+dfLen :: DataFrame t (xns :: [XNat]) -> Word32
 dfLen (XFrame (_ :: DataFrame t ns)) = case dims @ns of
   n :* _ -> fromIntegral $ dimVal n
   U      -> 1

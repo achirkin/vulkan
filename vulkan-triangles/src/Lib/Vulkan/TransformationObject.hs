@@ -11,6 +11,7 @@ module Lib.Vulkan.TransformationObject
   , transObjBufferInfo
   ) where
 
+import Control.Monad                  (replicateM)
 import Data.Bits                      ((.|.))
 import Foreign.Ptr                    (castPtr)
 import GHC.Generics                   (Generic)
@@ -65,25 +66,32 @@ updateTransObj device extent uniBuf = do
   where
     -- how world is seen from camera (in camera coordinates)
     view = lookAt (vec3 0 0 1) (vec3 2 2 2) (vec3 0 0 0)
-    -- projection onto the screen
+    -- projection onto the screen ...
+    proj = proj' %* clip
+    -- ... which is a normal perspective projection matrix that maps the view space
+    --     onto the clip space cube {x: -1..1, y: -1..1, z: -1..1}
     proj' = perspective 0.1 20 (45/360*2*pi) aspectRatio
-    -- now, here is a problem:
-    --   vulkan screen coordinates differ from usual clipping coordinates
-    --   (x,y) now are (right, bottom) instead of (right, top).
-    -- one way to account for this is to negate "y" component of the projection matrix
-    proj = update i11 (negate $ proj' ! i11) proj'
+    -- ... and a {clip space -> screen space} matrix that converts points into
+    --     the vulkan screen space {x: -1..1, y: 1..-1, z: 0..1}
+    clip = DF4
+      (DF4 1   0   0   0)
+      (DF4 0 (-1)  0   0)
+      (DF4 0   0  0.5  0)
+      (DF4 0   0  0.5  1)
+
+    -- calculate aspect ratio for the
     width = getField @"width" extent
     height = getField @"height" extent
     aspectRatio = fromIntegral width / fromIntegral height
-    i11 = 1 :* 1 :* U :: Idxs '[4,4]
+
 
 createTransObjBuffers
   :: VkPhysicalDevice
   -> VkDevice
   -> Int
   -> Program r [(VkDeviceMemory, VkBuffer)]
-createTransObjBuffers pdev dev n = do
-      sequence $ replicate n $ createBuffer pdev dev (bSizeOf @TransformationObject undefined)
+createTransObjBuffers pdev dev n = replicateM n $
+    createBuffer pdev dev (bSizeOf @TransformationObject undefined)
          VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT
          ( VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT .|. VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )
 
