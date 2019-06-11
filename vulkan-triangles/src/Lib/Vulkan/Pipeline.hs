@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE NamedFieldPuns   #-}
 {-# LANGUAGE PolyKinds        #-}
-{-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan.Pipeline
@@ -26,15 +26,16 @@ import Lib.Vulkan.Presentation
 
 createGraphicsPipeline :: KnownDim n
                        => VkDevice
-                       -> SwapChainImgInfo
+                       -> SwapchainInfo
                        -> VkVertexInputBindingDescription
                        -> Vector VkVertexInputAttributeDescription n
                        -> [VkPipelineShaderStageCreateInfo]
                        -> VkRenderPass
                        -> VkPipelineLayout
+                       -> VkSampleCountFlagBits
                        -> Program r VkPipeline
 createGraphicsPipeline
-    dev SwapChainImgInfo{..} bindDesc attrDescs shaderDescs renderPass pipelineLayout =
+    dev SwapchainInfo{ swapExtent } bindDesc attrDescs shaderDescs renderPass pipelineLayout msaaSamples=
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -59,13 +60,13 @@ createGraphicsPipeline
       viewPort = createVk @VkViewport
         $  set @"x" 0
         &* set @"y" 0
-        &* set @"width" (fromIntegral $ getField @"width" swExtent)
-        &* set @"height" (fromIntegral $ getField @"height" swExtent)
+        &* set @"width" (fromIntegral $ getField @"width" swapExtent)
+        &* set @"height" (fromIntegral $ getField @"height" swapExtent)
         &* set @"minDepth" 0
         &* set @"maxDepth" 1
 
       scissor = createVk @VkRect2D
-        $  set   @"extent" swExtent
+        $  set   @"extent" swapExtent
         &* setVk @"offset" ( set @"x" 0 &* set @"y" 0 )
 
       viewPortState = createVk @VkPipelineViewportStateCreateInfo
@@ -100,7 +101,7 @@ createGraphicsPipeline
         &* set @"pNext" VK_NULL
         &* set @"flags" 0
         &* set @"sampleShadingEnable" VK_FALSE
-        &* set @"rasterizationSamples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"rasterizationSamples" msaaSamples
         &* set @"minSampleShading" 1.0 -- Optional
         &* set @"pSampleMask" VK_NULL -- Optional
         &* set @"alphaToCoverageEnable" VK_FALSE -- Optional
@@ -135,6 +136,35 @@ createGraphicsPipeline
         &* setAt @"blendConstants" @2 0.0 -- Optional
         &* setAt @"blendConstants" @3 0.0 -- Optional
 
+      depthStencilState = createVk @VkPipelineDepthStencilStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"depthTestEnable" VK_TRUE
+        &* set @"depthWriteEnable" VK_TRUE
+        &* set @"depthCompareOp" VK_COMPARE_OP_LESS
+        &* set @"depthBoundsTestEnable" VK_FALSE
+        &* set @"minDepthBounds" 0.0
+        &* set @"maxDepthBounds" 1.0
+        &* set @"stencilTestEnable" VK_FALSE
+        &* setVk @"front"
+            (  set @"failOp" VK_STENCIL_OP_KEEP
+            &* set @"passOp" VK_STENCIL_OP_KEEP
+            &* set @"depthFailOp" VK_STENCIL_OP_KEEP
+            &* set @"compareOp" VK_COMPARE_OP_NEVER
+            &* set @"compareMask" 0
+            &* set @"writeMask" 0
+            &* set @"reference" 0
+            )
+        &* setVk @"back"
+            (  set @"failOp" VK_STENCIL_OP_KEEP
+            &* set @"passOp" VK_STENCIL_OP_KEEP
+            &* set @"depthFailOp" VK_STENCIL_OP_KEEP
+            &* set @"compareOp" VK_COMPARE_OP_NEVER
+            &* set @"compareMask" 0
+            &* set @"writeMask" 0
+            &* set @"reference" 0
+            )
 
     -- finally, create pipeline!
   in do
@@ -150,7 +180,7 @@ createGraphicsPipeline
           &* setVkRef @"pViewportState" viewPortState
           &* setVkRef @"pRasterizationState" rasterizer
           &* setVkRef @"pMultisampleState" multisampling
-          &* set @"pDepthStencilState" VK_NULL
+          &* setVkRef @"pDepthStencilState" depthStencilState
           &* setVkRef @"pColorBlendState" colorBlending
           &* set @"pDynamicState" VK_NULL
           &* set @"layout" pipelineLayout
@@ -181,15 +211,40 @@ createPipelineLayout dev dsl = do
       runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
 
 
-createRenderPass :: VkDevice -> SwapChainImgInfo
+createRenderPass :: VkDevice
+                 -> SwapchainInfo
+                 -> VkFormat
+                 -> VkSampleCountFlagBits
                  -> Program r VkRenderPass
-createRenderPass dev SwapChainImgInfo{..} =
+createRenderPass dev SwapchainInfo{ swapImgFormat } depthFormat samples =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
-        &* set @"format" swImgFormat
-        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"format" swapImgFormat
+        &* set @"samples" samples
         &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
+        &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
+        &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+
+      depthAttachment = createVk @VkAttachmentDescription
+        $  set @"flags" 0
+        &* set @"format" depthFormat
+        &* set @"samples" samples
+        &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
+        &* set @"storeOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
+      colorAttachmentResolve = createVk @VkAttachmentDescription
+        $  set @"flags" 0
+        &* set @"format" swapImgFormat
+        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
         &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
         &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
         &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
@@ -201,10 +256,20 @@ createRenderPass dev SwapChainImgInfo{..} =
         $  set @"attachment" 0
         &* set @"layout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
 
+      depthAttachmentRef = createVk @VkAttachmentReference
+        $  set @"attachment" 1
+        &* set @"layout" VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
+      colorAttachmentResolveRef = createVk @VkAttachmentReference
+        $  set @"attachment" 2
+        &* set @"layout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+
       subpass = createVk @VkSubpassDescription
         $  set @"pipelineBindPoint" VK_PIPELINE_BIND_POINT_GRAPHICS
         &* set @"colorAttachmentCount" 1
         &* setVkRef @"pColorAttachments" colorAttachmentRef
+        &* setVkRef @"pDepthStencilAttachment" depthAttachmentRef
+        &* setVkRef @"pResolveAttachments" colorAttachmentResolveRef
         &* set @"pPreserveAttachments" VK_NULL
         &* set @"pInputAttachments" VK_NULL
 
@@ -223,8 +288,8 @@ createRenderPass dev SwapChainImgInfo{..} =
       rpCreateInfo = createVk @VkRenderPassCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
         &* set @"pNext" VK_NULL
-        &* set @"attachmentCount" 1
-        &* setVkRef @"pAttachments" colorAttachment
+        &* setListCountAndRef @"attachmentCount" @"pAttachments"
+            [colorAttachment, depthAttachment, colorAttachmentResolve]
         &* set @"subpassCount" 1
         &* setVkRef @"pSubpasses" subpass
         &* set @"dependencyCount" 1

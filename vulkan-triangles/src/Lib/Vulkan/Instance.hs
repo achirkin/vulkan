@@ -6,7 +6,7 @@ module Lib.Vulkan.Instance
     , defaultLayers
     ) where
 
-import           Foreign.C.String
+import           Foreign.C.String               (peekCString)
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create

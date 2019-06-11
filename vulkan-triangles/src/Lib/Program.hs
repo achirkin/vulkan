@@ -28,11 +28,17 @@ module Lib.Program
     , liftIOWith, withVkPtr
       -- * Other
     , getTime
+    , LoopControl (..)
+    , checkStatus
+    , occupyThreadAndFork
+    , loop
     ) where
 
 
-import           Control.Exception              (Exception)
-import qualified Control.Exception              as Exception
+import           Control.Concurrent
+import           Control.Exception              (Exception,
+                                                 displayException,
+                                                 throwTo)
 import           Control.Monad
 import           Control.Monad.Error.Class
 import           Control.Monad.IO.Class
@@ -46,6 +52,7 @@ import           Data.Tuple                     (swap)
 import           GHC.Stack
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Core_1_0
+import           System.Exit
 
 
 data ProgramState
@@ -338,3 +345,35 @@ getTime = do
         -- Float is not good enough even for millisecond-precision over more than a few hours.
         seconds :: Double = fromIntegral deltaSeconds + fromIntegral deltaNanoseconds / 1e9
     return seconds
+
+
+data LoopControl = ContinueLoop | AbortLoop deriving Eq
+
+
+checkStatus :: Either VulkanException () -> IO ()
+checkStatus (Right ()) = pure ()
+checkStatus (Left err) = do
+  putStrLn $ displayException err
+  exitFailure
+
+
+-- | For C functions that have to run in the main thread as long as the program runs.
+--
+--   Caveat: The separate thread is not a bound thread, in contrast to the main thread.
+--   Use `runInBoundThread` there if you need thread local state for C libs.
+occupyThreadAndFork :: Program r () -- ^ the program to run in the main thread
+                    -> Program' () -- ^ the program to run in a separate thread
+                    -> Program r ()
+occupyThreadAndFork mainProg deputyProg = Program $ \ref c -> do
+  mainThreadId <- myThreadId
+  threadRef <- newIORef =<< readIORef ref
+  _ <- Control.Concurrent.forkFinally (unProgram deputyProg threadRef pure >>= checkStatus) $ \case
+    Left exception -> throwTo mainThreadId exception
+    Right ()       -> throwTo mainThreadId ExitSuccess
+  unProgram mainProg ref c
+
+
+loop :: Program' LoopControl -> Program r ()
+loop action = do
+  status <- locally action
+  if status == ContinueLoop then loop action else return ()
