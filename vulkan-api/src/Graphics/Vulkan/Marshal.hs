@@ -22,6 +22,7 @@
 --   Instead, it is hand-written to provide common types and classes.
 module Graphics.Vulkan.Marshal
   ( FlagType (..), FlagMask, FlagBit
+  , bitToMask, maskToBits
   , VulkanMarshal (..)
   , newVkData, mallocVkData, mallocVkDataArray, unsafePtr
   , fromForeignPtr, toForeignPtr, toPlainForeignPtr, touchVkData
@@ -59,6 +60,7 @@ module Graphics.Vulkan.Marshal
   ) where
 
 import Data.Bits             (Bits (..))
+import Data.Coerce
 import Data.Int              (Int16, Int32, Int64, Int8)
 import Data.Void             (Void)
 import Data.Word             (Word16, Word32, Word64, Word8)
@@ -71,7 +73,6 @@ import Foreign.Marshal.Utils (fillBytes)
 import Foreign.Ptr           (FunPtr, nullPtr)
 import Foreign.Storable
 import GHC.Ptr               (Ptr (..))
-
 
 
 import Graphics.Vulkan.Marshal.Internal
@@ -90,6 +91,24 @@ pattern VK_ZERO_FLAGS :: Bits a => a
 pattern VK_ZERO_FLAGS <- (popCount -> 0)
   where
     VK_ZERO_FLAGS = zeroBits
+
+-- | Convert a single bit (@XxxBits@) to a bitmask (@XxxFlags@)
+bitToMask :: Coercible (x FlagBit) (x FlagMask) => x FlagBit -> x FlagMask
+bitToMask = coerce
+
+-- | List all set bits of a bitmask (@XxxFlags@) in the increasing order.
+maskToBits :: (Bits (x FlagMask), Coercible (x FlagBit) (x FlagMask))
+           => x FlagMask -> [x FlagBit]
+maskToBits x = go (popCount x) (bit 0)
+  where
+    zero = zeroBits
+    go 0 _ = []
+    go n i = let b = i .&. x
+                 i' = unsafeShiftL i 1
+             in if b == zero
+                then go n i'
+                else coerce b : go (n-1) i'
+
 
 -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
 -- Non-dispatchable handles are represented as `VkPtr`

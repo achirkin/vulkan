@@ -25,8 +25,8 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 import           Lib.Vulkan.Instance
 
-import           Lib.Program
-import           Lib.Program.Foreign
+import Lib.Program
+import Lib.Program.Foreign
 
 data SwapchainSupportDetails
   = SwapchainSupportDetails
@@ -131,10 +131,8 @@ getMaxUsableSampleCount pdev = do
         , VK_SAMPLE_COUNT_2_BIT
         , VK_SAMPLE_COUNT_1_BIT
         ]
-      highestCount = head splitCounts
-      -- need to convert from "VkSampleCountBitmask FlagMask" to "VkSampleCountBitmask FlagBit"
-      VkSampleCountFlags rawFlags = highestCount
-  return $ VkSampleCountFlagBits rawFlags
+      highestCount = head $ splitCounts >>= maskToBits
+  return highestCount
 
 
 
