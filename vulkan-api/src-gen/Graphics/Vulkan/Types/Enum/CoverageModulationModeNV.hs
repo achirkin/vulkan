@@ -21,37 +21,37 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCoverageModulationModeNV VkCoverageModulationModeNV registry at www.khronos.org>
 newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
-                                       deriving (Eq, Ord, Enum, Storable)
+                                     deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkCoverageModulationModeNV where
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_NONE_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_NONE_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGB_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_RGB_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_ALPHA_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_ALPHA_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGBA_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_RGBA_NV"
-        showsPrec p (VkCoverageModulationModeNV x)
-          = showParen (p >= 11)
-              (showString "VkCoverageModulationModeNV " . showsPrec 11 x)
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_NONE_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_NONE_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_RGB_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_RGB_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_ALPHA_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_ALPHA_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_RGBA_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_RGBA_NV"
+    showsPrec p (VkCoverageModulationModeNV x)
+      = showParen (p >= 11)
+          (showString "VkCoverageModulationModeNV " . showsPrec 11 x)
 
 instance Read VkCoverageModulationModeNV where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COVERAGE_MODULATION_MODE_NONE_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_NONE_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_RGB_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_RGB_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_ALPHA_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_ALPHA_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_RGBA_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_RGBA_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCoverageModulationModeNV") >>
-                      (VkCoverageModulationModeNV <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_COVERAGE_MODULATION_MODE_NONE_NV",
+               pure VK_COVERAGE_MODULATION_MODE_NONE_NV),
+              ("VK_COVERAGE_MODULATION_MODE_RGB_NV",
+               pure VK_COVERAGE_MODULATION_MODE_RGB_NV),
+              ("VK_COVERAGE_MODULATION_MODE_ALPHA_NV",
+               pure VK_COVERAGE_MODULATION_MODE_ALPHA_NV),
+              ("VK_COVERAGE_MODULATION_MODE_RGBA_NV",
+               pure VK_COVERAGE_MODULATION_MODE_RGBA_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkCoverageModulationModeNV") >>
+                  (VkCoverageModulationModeNV <$> step readPrec)))
 
 pattern VK_COVERAGE_MODULATION_MODE_NONE_NV ::
         VkCoverageModulationModeNV

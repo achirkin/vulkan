@@ -17,34 +17,69 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         -- type: @device@
         --
         -- Extension number: @149@
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.Blend,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Bitmasks, VkDeviceCreateInfo,
-        VkDeviceCreateInfo', module Graphics.Vulkan.Types.Enum.Device,
-        VkDeviceQueueCreateInfo, VkDeviceQueueCreateInfo',
-        module Graphics.Vulkan.Types.Enum.LogicOp,
+        module Graphics.Vulkan.Marshal, VkBlendFactor(..), VkBlendOp(..),
+        VkBlendOverlapEXT(..), VkBool32(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkDeviceCreateInfo,
+        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
+        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkDeviceQueueCreateInfo, VkLogicOp(..),
         VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
-        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
         VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
-        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
-        VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures',
-        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2',
-        VkPhysicalDeviceLimits, VkPhysicalDeviceLimits',
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties',
-        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures2,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceType(..),
         VkPipelineColorBlendAdvancedStateCreateInfoEXT,
-        VkPipelineColorBlendAdvancedStateCreateInfoEXT',
         VkPipelineColorBlendAttachmentState,
-        VkPipelineColorBlendAttachmentState',
-        VkPipelineColorBlendStateCreateInfo,
-        VkPipelineColorBlendStateCreateInfo',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPipelineColorBlendStateCreateInfo, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION,
         pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION,
@@ -91,8 +126,7 @@ import GHC.Ptr                                             (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..),
-                                                            VkAccessFlagBits)
+import Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..))
 import Graphics.Vulkan.Types.Enum.Blend
 import Graphics.Vulkan.Types.Enum.Color
 import Graphics.Vulkan.Types.Enum.Device
@@ -100,32 +134,18 @@ import Graphics.Vulkan.Types.Enum.LogicOp
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo,
-                                                            VkDeviceCreateInfo',
-                                                            VkDeviceQueueCreateInfo,
-                                                            VkDeviceQueueCreateInfo')
+import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo, VkDeviceQueueCreateInfo)
 import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
-                                                            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
                                                             VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
-                                                            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
                                                             VkPhysicalDeviceFeatures2,
-                                                            VkPhysicalDeviceFeatures2',
                                                             VkPhysicalDeviceLimits,
-                                                            VkPhysicalDeviceLimits',
                                                             VkPhysicalDeviceProperties,
-                                                            VkPhysicalDeviceProperties',
                                                             VkPhysicalDeviceProperties2,
-                                                            VkPhysicalDeviceProperties2',
-                                                            VkPhysicalDeviceSparseProperties,
-                                                            VkPhysicalDeviceSparseProperties')
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures,
-                                                            VkPhysicalDeviceFeatures')
+                                                            VkPhysicalDeviceSparseProperties)
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
 import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineColorBlendAdvancedStateCreateInfoEXT,
-                                                            VkPipelineColorBlendAdvancedStateCreateInfoEXT',
                                                             VkPipelineColorBlendAttachmentState,
-                                                            VkPipelineColorBlendAttachmentState',
-                                                            VkPipelineColorBlendStateCreateInfo,
-                                                            VkPipelineColorBlendStateCreateInfo')
+                                                            VkPipelineColorBlendStateCreateInfo)
 
 pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -138,8 +158,9 @@ pattern VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME :: CString
 
 pattern VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME <-
         (is_VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME -> True)
-  where VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME
-          = _VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME
+  where
+    VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME
+      = _VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME #-}
 

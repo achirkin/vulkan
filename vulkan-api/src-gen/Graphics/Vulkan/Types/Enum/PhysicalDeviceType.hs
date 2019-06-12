@@ -21,40 +21,40 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceType VkPhysicalDeviceType registry at www.khronos.org>
 newtype VkPhysicalDeviceType = VkPhysicalDeviceType Int32
-                                 deriving (Eq, Ord, Enum, Storable)
+                               deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkPhysicalDeviceType where
-        showsPrec _ VK_PHYSICAL_DEVICE_TYPE_OTHER
-          = showString "VK_PHYSICAL_DEVICE_TYPE_OTHER"
-        showsPrec _ VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
-          = showString "VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU"
-        showsPrec _ VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-          = showString "VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU"
-        showsPrec _ VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU
-          = showString "VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU"
-        showsPrec _ VK_PHYSICAL_DEVICE_TYPE_CPU
-          = showString "VK_PHYSICAL_DEVICE_TYPE_CPU"
-        showsPrec p (VkPhysicalDeviceType x)
-          = showParen (p >= 11)
-              (showString "VkPhysicalDeviceType " . showsPrec 11 x)
+    showsPrec _ VK_PHYSICAL_DEVICE_TYPE_OTHER
+      = showString "VK_PHYSICAL_DEVICE_TYPE_OTHER"
+    showsPrec _ VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
+      = showString "VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU"
+    showsPrec _ VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+      = showString "VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU"
+    showsPrec _ VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU
+      = showString "VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU"
+    showsPrec _ VK_PHYSICAL_DEVICE_TYPE_CPU
+      = showString "VK_PHYSICAL_DEVICE_TYPE_CPU"
+    showsPrec p (VkPhysicalDeviceType x)
+      = showParen (p >= 11)
+          (showString "VkPhysicalDeviceType " . showsPrec 11 x)
 
 instance Read VkPhysicalDeviceType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PHYSICAL_DEVICE_TYPE_OTHER",
-                   pure VK_PHYSICAL_DEVICE_TYPE_OTHER),
-                  ("VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU",
-                   pure VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU),
-                  ("VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU",
-                   pure VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU),
-                  ("VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU",
-                   pure VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU),
-                  ("VK_PHYSICAL_DEVICE_TYPE_CPU", pure VK_PHYSICAL_DEVICE_TYPE_CPU)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPhysicalDeviceType") >>
-                      (VkPhysicalDeviceType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_PHYSICAL_DEVICE_TYPE_OTHER",
+               pure VK_PHYSICAL_DEVICE_TYPE_OTHER),
+              ("VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU",
+               pure VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU),
+              ("VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU",
+               pure VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU),
+              ("VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU",
+               pure VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU),
+              ("VK_PHYSICAL_DEVICE_TYPE_CPU", pure VK_PHYSICAL_DEVICE_TYPE_CPU)]
+             +++
+             prec 10
+               (expectP (Ident "VkPhysicalDeviceType") >>
+                  (VkPhysicalDeviceType <$> step readPrec)))
 
 pattern VK_PHYSICAL_DEVICE_TYPE_OTHER :: VkPhysicalDeviceType
 

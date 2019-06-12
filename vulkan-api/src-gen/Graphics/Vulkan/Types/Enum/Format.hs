@@ -138,634 +138,634 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormat VkFormat registry at www.khronos.org>
 newtype VkFormat = VkFormat Int32
-                     deriving (Eq, Ord, Enum, Storable)
+                   deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkFormat where
-        showsPrec _ VK_FORMAT_UNDEFINED = showString "VK_FORMAT_UNDEFINED"
-        showsPrec _ VK_FORMAT_R4G4_UNORM_PACK8
-          = showString "VK_FORMAT_R4G4_UNORM_PACK8"
-        showsPrec _ VK_FORMAT_R4G4B4A4_UNORM_PACK16
-          = showString "VK_FORMAT_R4G4B4A4_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_B4G4R4A4_UNORM_PACK16
-          = showString "VK_FORMAT_B4G4R4A4_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_R5G6B5_UNORM_PACK16
-          = showString "VK_FORMAT_R5G6B5_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_B5G6R5_UNORM_PACK16
-          = showString "VK_FORMAT_B5G6R5_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_R5G5B5A1_UNORM_PACK16
-          = showString "VK_FORMAT_R5G5B5A1_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_B5G5R5A1_UNORM_PACK16
-          = showString "VK_FORMAT_B5G5R5A1_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_A1R5G5B5_UNORM_PACK16
-          = showString "VK_FORMAT_A1R5G5B5_UNORM_PACK16"
-        showsPrec _ VK_FORMAT_R8_UNORM = showString "VK_FORMAT_R8_UNORM"
-        showsPrec _ VK_FORMAT_R8_SNORM = showString "VK_FORMAT_R8_SNORM"
-        showsPrec _ VK_FORMAT_R8_USCALED
-          = showString "VK_FORMAT_R8_USCALED"
-        showsPrec _ VK_FORMAT_R8_SSCALED
-          = showString "VK_FORMAT_R8_SSCALED"
-        showsPrec _ VK_FORMAT_R8_UINT = showString "VK_FORMAT_R8_UINT"
-        showsPrec _ VK_FORMAT_R8_SINT = showString "VK_FORMAT_R8_SINT"
-        showsPrec _ VK_FORMAT_R8_SRGB = showString "VK_FORMAT_R8_SRGB"
-        showsPrec _ VK_FORMAT_R8G8_UNORM
-          = showString "VK_FORMAT_R8G8_UNORM"
-        showsPrec _ VK_FORMAT_R8G8_SNORM
-          = showString "VK_FORMAT_R8G8_SNORM"
-        showsPrec _ VK_FORMAT_R8G8_USCALED
-          = showString "VK_FORMAT_R8G8_USCALED"
-        showsPrec _ VK_FORMAT_R8G8_SSCALED
-          = showString "VK_FORMAT_R8G8_SSCALED"
-        showsPrec _ VK_FORMAT_R8G8_UINT = showString "VK_FORMAT_R8G8_UINT"
-        showsPrec _ VK_FORMAT_R8G8_SINT = showString "VK_FORMAT_R8G8_SINT"
-        showsPrec _ VK_FORMAT_R8G8_SRGB = showString "VK_FORMAT_R8G8_SRGB"
-        showsPrec _ VK_FORMAT_R8G8B8_UNORM
-          = showString "VK_FORMAT_R8G8B8_UNORM"
-        showsPrec _ VK_FORMAT_R8G8B8_SNORM
-          = showString "VK_FORMAT_R8G8B8_SNORM"
-        showsPrec _ VK_FORMAT_R8G8B8_USCALED
-          = showString "VK_FORMAT_R8G8B8_USCALED"
-        showsPrec _ VK_FORMAT_R8G8B8_SSCALED
-          = showString "VK_FORMAT_R8G8B8_SSCALED"
-        showsPrec _ VK_FORMAT_R8G8B8_UINT
-          = showString "VK_FORMAT_R8G8B8_UINT"
-        showsPrec _ VK_FORMAT_R8G8B8_SINT
-          = showString "VK_FORMAT_R8G8B8_SINT"
-        showsPrec _ VK_FORMAT_R8G8B8_SRGB
-          = showString "VK_FORMAT_R8G8B8_SRGB"
-        showsPrec _ VK_FORMAT_B8G8R8_UNORM
-          = showString "VK_FORMAT_B8G8R8_UNORM"
-        showsPrec _ VK_FORMAT_B8G8R8_SNORM
-          = showString "VK_FORMAT_B8G8R8_SNORM"
-        showsPrec _ VK_FORMAT_B8G8R8_USCALED
-          = showString "VK_FORMAT_B8G8R8_USCALED"
-        showsPrec _ VK_FORMAT_B8G8R8_SSCALED
-          = showString "VK_FORMAT_B8G8R8_SSCALED"
-        showsPrec _ VK_FORMAT_B8G8R8_UINT
-          = showString "VK_FORMAT_B8G8R8_UINT"
-        showsPrec _ VK_FORMAT_B8G8R8_SINT
-          = showString "VK_FORMAT_B8G8R8_SINT"
-        showsPrec _ VK_FORMAT_B8G8R8_SRGB
-          = showString "VK_FORMAT_B8G8R8_SRGB"
-        showsPrec _ VK_FORMAT_R8G8B8A8_UNORM
-          = showString "VK_FORMAT_R8G8B8A8_UNORM"
-        showsPrec _ VK_FORMAT_R8G8B8A8_SNORM
-          = showString "VK_FORMAT_R8G8B8A8_SNORM"
-        showsPrec _ VK_FORMAT_R8G8B8A8_USCALED
-          = showString "VK_FORMAT_R8G8B8A8_USCALED"
-        showsPrec _ VK_FORMAT_R8G8B8A8_SSCALED
-          = showString "VK_FORMAT_R8G8B8A8_SSCALED"
-        showsPrec _ VK_FORMAT_R8G8B8A8_UINT
-          = showString "VK_FORMAT_R8G8B8A8_UINT"
-        showsPrec _ VK_FORMAT_R8G8B8A8_SINT
-          = showString "VK_FORMAT_R8G8B8A8_SINT"
-        showsPrec _ VK_FORMAT_R8G8B8A8_SRGB
-          = showString "VK_FORMAT_R8G8B8A8_SRGB"
-        showsPrec _ VK_FORMAT_B8G8R8A8_UNORM
-          = showString "VK_FORMAT_B8G8R8A8_UNORM"
-        showsPrec _ VK_FORMAT_B8G8R8A8_SNORM
-          = showString "VK_FORMAT_B8G8R8A8_SNORM"
-        showsPrec _ VK_FORMAT_B8G8R8A8_USCALED
-          = showString "VK_FORMAT_B8G8R8A8_USCALED"
-        showsPrec _ VK_FORMAT_B8G8R8A8_SSCALED
-          = showString "VK_FORMAT_B8G8R8A8_SSCALED"
-        showsPrec _ VK_FORMAT_B8G8R8A8_UINT
-          = showString "VK_FORMAT_B8G8R8A8_UINT"
-        showsPrec _ VK_FORMAT_B8G8R8A8_SINT
-          = showString "VK_FORMAT_B8G8R8A8_SINT"
-        showsPrec _ VK_FORMAT_B8G8R8A8_SRGB
-          = showString "VK_FORMAT_B8G8R8A8_SRGB"
-        showsPrec _ VK_FORMAT_A8B8G8R8_UNORM_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_UNORM_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_SNORM_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_SNORM_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_USCALED_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_USCALED_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_SSCALED_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_SSCALED_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_UINT_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_UINT_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_SINT_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_SINT_PACK32"
-        showsPrec _ VK_FORMAT_A8B8G8R8_SRGB_PACK32
-          = showString "VK_FORMAT_A8B8G8R8_SRGB_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_UNORM_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_UNORM_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_SNORM_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_SNORM_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_USCALED_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_USCALED_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_SSCALED_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_SSCALED_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_UINT_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_UINT_PACK32"
-        showsPrec _ VK_FORMAT_A2R10G10B10_SINT_PACK32
-          = showString "VK_FORMAT_A2R10G10B10_SINT_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_UNORM_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_UNORM_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_SNORM_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_SNORM_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_USCALED_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_USCALED_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_SSCALED_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_SSCALED_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_UINT_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_UINT_PACK32"
-        showsPrec _ VK_FORMAT_A2B10G10R10_SINT_PACK32
-          = showString "VK_FORMAT_A2B10G10R10_SINT_PACK32"
-        showsPrec _ VK_FORMAT_R16_UNORM = showString "VK_FORMAT_R16_UNORM"
-        showsPrec _ VK_FORMAT_R16_SNORM = showString "VK_FORMAT_R16_SNORM"
-        showsPrec _ VK_FORMAT_R16_USCALED
-          = showString "VK_FORMAT_R16_USCALED"
-        showsPrec _ VK_FORMAT_R16_SSCALED
-          = showString "VK_FORMAT_R16_SSCALED"
-        showsPrec _ VK_FORMAT_R16_UINT = showString "VK_FORMAT_R16_UINT"
-        showsPrec _ VK_FORMAT_R16_SINT = showString "VK_FORMAT_R16_SINT"
-        showsPrec _ VK_FORMAT_R16_SFLOAT
-          = showString "VK_FORMAT_R16_SFLOAT"
-        showsPrec _ VK_FORMAT_R16G16_UNORM
-          = showString "VK_FORMAT_R16G16_UNORM"
-        showsPrec _ VK_FORMAT_R16G16_SNORM
-          = showString "VK_FORMAT_R16G16_SNORM"
-        showsPrec _ VK_FORMAT_R16G16_USCALED
-          = showString "VK_FORMAT_R16G16_USCALED"
-        showsPrec _ VK_FORMAT_R16G16_SSCALED
-          = showString "VK_FORMAT_R16G16_SSCALED"
-        showsPrec _ VK_FORMAT_R16G16_UINT
-          = showString "VK_FORMAT_R16G16_UINT"
-        showsPrec _ VK_FORMAT_R16G16_SINT
-          = showString "VK_FORMAT_R16G16_SINT"
-        showsPrec _ VK_FORMAT_R16G16_SFLOAT
-          = showString "VK_FORMAT_R16G16_SFLOAT"
-        showsPrec _ VK_FORMAT_R16G16B16_UNORM
-          = showString "VK_FORMAT_R16G16B16_UNORM"
-        showsPrec _ VK_FORMAT_R16G16B16_SNORM
-          = showString "VK_FORMAT_R16G16B16_SNORM"
-        showsPrec _ VK_FORMAT_R16G16B16_USCALED
-          = showString "VK_FORMAT_R16G16B16_USCALED"
-        showsPrec _ VK_FORMAT_R16G16B16_SSCALED
-          = showString "VK_FORMAT_R16G16B16_SSCALED"
-        showsPrec _ VK_FORMAT_R16G16B16_UINT
-          = showString "VK_FORMAT_R16G16B16_UINT"
-        showsPrec _ VK_FORMAT_R16G16B16_SINT
-          = showString "VK_FORMAT_R16G16B16_SINT"
-        showsPrec _ VK_FORMAT_R16G16B16_SFLOAT
-          = showString "VK_FORMAT_R16G16B16_SFLOAT"
-        showsPrec _ VK_FORMAT_R16G16B16A16_UNORM
-          = showString "VK_FORMAT_R16G16B16A16_UNORM"
-        showsPrec _ VK_FORMAT_R16G16B16A16_SNORM
-          = showString "VK_FORMAT_R16G16B16A16_SNORM"
-        showsPrec _ VK_FORMAT_R16G16B16A16_USCALED
-          = showString "VK_FORMAT_R16G16B16A16_USCALED"
-        showsPrec _ VK_FORMAT_R16G16B16A16_SSCALED
-          = showString "VK_FORMAT_R16G16B16A16_SSCALED"
-        showsPrec _ VK_FORMAT_R16G16B16A16_UINT
-          = showString "VK_FORMAT_R16G16B16A16_UINT"
-        showsPrec _ VK_FORMAT_R16G16B16A16_SINT
-          = showString "VK_FORMAT_R16G16B16A16_SINT"
-        showsPrec _ VK_FORMAT_R16G16B16A16_SFLOAT
-          = showString "VK_FORMAT_R16G16B16A16_SFLOAT"
-        showsPrec _ VK_FORMAT_R32_UINT = showString "VK_FORMAT_R32_UINT"
-        showsPrec _ VK_FORMAT_R32_SINT = showString "VK_FORMAT_R32_SINT"
-        showsPrec _ VK_FORMAT_R32_SFLOAT
-          = showString "VK_FORMAT_R32_SFLOAT"
-        showsPrec _ VK_FORMAT_R32G32_UINT
-          = showString "VK_FORMAT_R32G32_UINT"
-        showsPrec _ VK_FORMAT_R32G32_SINT
-          = showString "VK_FORMAT_R32G32_SINT"
-        showsPrec _ VK_FORMAT_R32G32_SFLOAT
-          = showString "VK_FORMAT_R32G32_SFLOAT"
-        showsPrec _ VK_FORMAT_R32G32B32_UINT
-          = showString "VK_FORMAT_R32G32B32_UINT"
-        showsPrec _ VK_FORMAT_R32G32B32_SINT
-          = showString "VK_FORMAT_R32G32B32_SINT"
-        showsPrec _ VK_FORMAT_R32G32B32_SFLOAT
-          = showString "VK_FORMAT_R32G32B32_SFLOAT"
-        showsPrec _ VK_FORMAT_R32G32B32A32_UINT
-          = showString "VK_FORMAT_R32G32B32A32_UINT"
-        showsPrec _ VK_FORMAT_R32G32B32A32_SINT
-          = showString "VK_FORMAT_R32G32B32A32_SINT"
-        showsPrec _ VK_FORMAT_R32G32B32A32_SFLOAT
-          = showString "VK_FORMAT_R32G32B32A32_SFLOAT"
-        showsPrec _ VK_FORMAT_R64_UINT = showString "VK_FORMAT_R64_UINT"
-        showsPrec _ VK_FORMAT_R64_SINT = showString "VK_FORMAT_R64_SINT"
-        showsPrec _ VK_FORMAT_R64_SFLOAT
-          = showString "VK_FORMAT_R64_SFLOAT"
-        showsPrec _ VK_FORMAT_R64G64_UINT
-          = showString "VK_FORMAT_R64G64_UINT"
-        showsPrec _ VK_FORMAT_R64G64_SINT
-          = showString "VK_FORMAT_R64G64_SINT"
-        showsPrec _ VK_FORMAT_R64G64_SFLOAT
-          = showString "VK_FORMAT_R64G64_SFLOAT"
-        showsPrec _ VK_FORMAT_R64G64B64_UINT
-          = showString "VK_FORMAT_R64G64B64_UINT"
-        showsPrec _ VK_FORMAT_R64G64B64_SINT
-          = showString "VK_FORMAT_R64G64B64_SINT"
-        showsPrec _ VK_FORMAT_R64G64B64_SFLOAT
-          = showString "VK_FORMAT_R64G64B64_SFLOAT"
-        showsPrec _ VK_FORMAT_R64G64B64A64_UINT
-          = showString "VK_FORMAT_R64G64B64A64_UINT"
-        showsPrec _ VK_FORMAT_R64G64B64A64_SINT
-          = showString "VK_FORMAT_R64G64B64A64_SINT"
-        showsPrec _ VK_FORMAT_R64G64B64A64_SFLOAT
-          = showString "VK_FORMAT_R64G64B64A64_SFLOAT"
-        showsPrec _ VK_FORMAT_B10G11R11_UFLOAT_PACK32
-          = showString "VK_FORMAT_B10G11R11_UFLOAT_PACK32"
-        showsPrec _ VK_FORMAT_E5B9G9R9_UFLOAT_PACK32
-          = showString "VK_FORMAT_E5B9G9R9_UFLOAT_PACK32"
-        showsPrec _ VK_FORMAT_D16_UNORM = showString "VK_FORMAT_D16_UNORM"
-        showsPrec _ VK_FORMAT_X8_D24_UNORM_PACK32
-          = showString "VK_FORMAT_X8_D24_UNORM_PACK32"
-        showsPrec _ VK_FORMAT_D32_SFLOAT
-          = showString "VK_FORMAT_D32_SFLOAT"
-        showsPrec _ VK_FORMAT_S8_UINT = showString "VK_FORMAT_S8_UINT"
-        showsPrec _ VK_FORMAT_D16_UNORM_S8_UINT
-          = showString "VK_FORMAT_D16_UNORM_S8_UINT"
-        showsPrec _ VK_FORMAT_D24_UNORM_S8_UINT
-          = showString "VK_FORMAT_D24_UNORM_S8_UINT"
-        showsPrec _ VK_FORMAT_D32_SFLOAT_S8_UINT
-          = showString "VK_FORMAT_D32_SFLOAT_S8_UINT"
-        showsPrec _ VK_FORMAT_BC1_RGB_UNORM_BLOCK
-          = showString "VK_FORMAT_BC1_RGB_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC1_RGB_SRGB_BLOCK
-          = showString "VK_FORMAT_BC1_RGB_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_BC1_RGBA_UNORM_BLOCK
-          = showString "VK_FORMAT_BC1_RGBA_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC1_RGBA_SRGB_BLOCK
-          = showString "VK_FORMAT_BC1_RGBA_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_BC2_UNORM_BLOCK
-          = showString "VK_FORMAT_BC2_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC2_SRGB_BLOCK
-          = showString "VK_FORMAT_BC2_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_BC3_UNORM_BLOCK
-          = showString "VK_FORMAT_BC3_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC3_SRGB_BLOCK
-          = showString "VK_FORMAT_BC3_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_BC4_UNORM_BLOCK
-          = showString "VK_FORMAT_BC4_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC4_SNORM_BLOCK
-          = showString "VK_FORMAT_BC4_SNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC5_UNORM_BLOCK
-          = showString "VK_FORMAT_BC5_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC5_SNORM_BLOCK
-          = showString "VK_FORMAT_BC5_SNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC6H_UFLOAT_BLOCK
-          = showString "VK_FORMAT_BC6H_UFLOAT_BLOCK"
-        showsPrec _ VK_FORMAT_BC6H_SFLOAT_BLOCK
-          = showString "VK_FORMAT_BC6H_SFLOAT_BLOCK"
-        showsPrec _ VK_FORMAT_BC7_UNORM_BLOCK
-          = showString "VK_FORMAT_BC7_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_BC7_SRGB_BLOCK
-          = showString "VK_FORMAT_BC7_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK
-          = showString "VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_EAC_R11_UNORM_BLOCK
-          = showString "VK_FORMAT_EAC_R11_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_EAC_R11_SNORM_BLOCK
-          = showString "VK_FORMAT_EAC_R11_SNORM_BLOCK"
-        showsPrec _ VK_FORMAT_EAC_R11G11_UNORM_BLOCK
-          = showString "VK_FORMAT_EAC_R11G11_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_EAC_R11G11_SNORM_BLOCK
-          = showString "VK_FORMAT_EAC_R11G11_SNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_4x4_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_4x4_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_4x4_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_4x4_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_5x4_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_5x4_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_5x4_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_5x4_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_5x5_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_5x5_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_5x5_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_5x5_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_6x5_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_6x5_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_6x5_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_6x5_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_6x6_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_6x6_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_6x6_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_6x6_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x5_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_8x5_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x5_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_8x5_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x6_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_8x6_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x6_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_8x6_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x8_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_8x8_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_8x8_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_8x8_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x5_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_10x5_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x5_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_10x5_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x6_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_10x6_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x6_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_10x6_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x8_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_10x8_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x8_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_10x8_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x10_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_10x10_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_10x10_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_10x10_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_12x10_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_12x10_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_12x10_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_12x10_SRGB_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_12x12_UNORM_BLOCK
-          = showString "VK_FORMAT_ASTC_12x12_UNORM_BLOCK"
-        showsPrec _ VK_FORMAT_ASTC_12x12_SRGB_BLOCK
-          = showString "VK_FORMAT_ASTC_12x12_SRGB_BLOCK"
-        showsPrec p (VkFormat x)
-          = showParen (p >= 11) (showString "VkFormat " . showsPrec 11 x)
+    showsPrec _ VK_FORMAT_UNDEFINED = showString "VK_FORMAT_UNDEFINED"
+    showsPrec _ VK_FORMAT_R4G4_UNORM_PACK8
+      = showString "VK_FORMAT_R4G4_UNORM_PACK8"
+    showsPrec _ VK_FORMAT_R4G4B4A4_UNORM_PACK16
+      = showString "VK_FORMAT_R4G4B4A4_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_B4G4R4A4_UNORM_PACK16
+      = showString "VK_FORMAT_B4G4R4A4_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_R5G6B5_UNORM_PACK16
+      = showString "VK_FORMAT_R5G6B5_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_B5G6R5_UNORM_PACK16
+      = showString "VK_FORMAT_B5G6R5_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_R5G5B5A1_UNORM_PACK16
+      = showString "VK_FORMAT_R5G5B5A1_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_B5G5R5A1_UNORM_PACK16
+      = showString "VK_FORMAT_B5G5R5A1_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_A1R5G5B5_UNORM_PACK16
+      = showString "VK_FORMAT_A1R5G5B5_UNORM_PACK16"
+    showsPrec _ VK_FORMAT_R8_UNORM = showString "VK_FORMAT_R8_UNORM"
+    showsPrec _ VK_FORMAT_R8_SNORM = showString "VK_FORMAT_R8_SNORM"
+    showsPrec _ VK_FORMAT_R8_USCALED
+      = showString "VK_FORMAT_R8_USCALED"
+    showsPrec _ VK_FORMAT_R8_SSCALED
+      = showString "VK_FORMAT_R8_SSCALED"
+    showsPrec _ VK_FORMAT_R8_UINT = showString "VK_FORMAT_R8_UINT"
+    showsPrec _ VK_FORMAT_R8_SINT = showString "VK_FORMAT_R8_SINT"
+    showsPrec _ VK_FORMAT_R8_SRGB = showString "VK_FORMAT_R8_SRGB"
+    showsPrec _ VK_FORMAT_R8G8_UNORM
+      = showString "VK_FORMAT_R8G8_UNORM"
+    showsPrec _ VK_FORMAT_R8G8_SNORM
+      = showString "VK_FORMAT_R8G8_SNORM"
+    showsPrec _ VK_FORMAT_R8G8_USCALED
+      = showString "VK_FORMAT_R8G8_USCALED"
+    showsPrec _ VK_FORMAT_R8G8_SSCALED
+      = showString "VK_FORMAT_R8G8_SSCALED"
+    showsPrec _ VK_FORMAT_R8G8_UINT = showString "VK_FORMAT_R8G8_UINT"
+    showsPrec _ VK_FORMAT_R8G8_SINT = showString "VK_FORMAT_R8G8_SINT"
+    showsPrec _ VK_FORMAT_R8G8_SRGB = showString "VK_FORMAT_R8G8_SRGB"
+    showsPrec _ VK_FORMAT_R8G8B8_UNORM
+      = showString "VK_FORMAT_R8G8B8_UNORM"
+    showsPrec _ VK_FORMAT_R8G8B8_SNORM
+      = showString "VK_FORMAT_R8G8B8_SNORM"
+    showsPrec _ VK_FORMAT_R8G8B8_USCALED
+      = showString "VK_FORMAT_R8G8B8_USCALED"
+    showsPrec _ VK_FORMAT_R8G8B8_SSCALED
+      = showString "VK_FORMAT_R8G8B8_SSCALED"
+    showsPrec _ VK_FORMAT_R8G8B8_UINT
+      = showString "VK_FORMAT_R8G8B8_UINT"
+    showsPrec _ VK_FORMAT_R8G8B8_SINT
+      = showString "VK_FORMAT_R8G8B8_SINT"
+    showsPrec _ VK_FORMAT_R8G8B8_SRGB
+      = showString "VK_FORMAT_R8G8B8_SRGB"
+    showsPrec _ VK_FORMAT_B8G8R8_UNORM
+      = showString "VK_FORMAT_B8G8R8_UNORM"
+    showsPrec _ VK_FORMAT_B8G8R8_SNORM
+      = showString "VK_FORMAT_B8G8R8_SNORM"
+    showsPrec _ VK_FORMAT_B8G8R8_USCALED
+      = showString "VK_FORMAT_B8G8R8_USCALED"
+    showsPrec _ VK_FORMAT_B8G8R8_SSCALED
+      = showString "VK_FORMAT_B8G8R8_SSCALED"
+    showsPrec _ VK_FORMAT_B8G8R8_UINT
+      = showString "VK_FORMAT_B8G8R8_UINT"
+    showsPrec _ VK_FORMAT_B8G8R8_SINT
+      = showString "VK_FORMAT_B8G8R8_SINT"
+    showsPrec _ VK_FORMAT_B8G8R8_SRGB
+      = showString "VK_FORMAT_B8G8R8_SRGB"
+    showsPrec _ VK_FORMAT_R8G8B8A8_UNORM
+      = showString "VK_FORMAT_R8G8B8A8_UNORM"
+    showsPrec _ VK_FORMAT_R8G8B8A8_SNORM
+      = showString "VK_FORMAT_R8G8B8A8_SNORM"
+    showsPrec _ VK_FORMAT_R8G8B8A8_USCALED
+      = showString "VK_FORMAT_R8G8B8A8_USCALED"
+    showsPrec _ VK_FORMAT_R8G8B8A8_SSCALED
+      = showString "VK_FORMAT_R8G8B8A8_SSCALED"
+    showsPrec _ VK_FORMAT_R8G8B8A8_UINT
+      = showString "VK_FORMAT_R8G8B8A8_UINT"
+    showsPrec _ VK_FORMAT_R8G8B8A8_SINT
+      = showString "VK_FORMAT_R8G8B8A8_SINT"
+    showsPrec _ VK_FORMAT_R8G8B8A8_SRGB
+      = showString "VK_FORMAT_R8G8B8A8_SRGB"
+    showsPrec _ VK_FORMAT_B8G8R8A8_UNORM
+      = showString "VK_FORMAT_B8G8R8A8_UNORM"
+    showsPrec _ VK_FORMAT_B8G8R8A8_SNORM
+      = showString "VK_FORMAT_B8G8R8A8_SNORM"
+    showsPrec _ VK_FORMAT_B8G8R8A8_USCALED
+      = showString "VK_FORMAT_B8G8R8A8_USCALED"
+    showsPrec _ VK_FORMAT_B8G8R8A8_SSCALED
+      = showString "VK_FORMAT_B8G8R8A8_SSCALED"
+    showsPrec _ VK_FORMAT_B8G8R8A8_UINT
+      = showString "VK_FORMAT_B8G8R8A8_UINT"
+    showsPrec _ VK_FORMAT_B8G8R8A8_SINT
+      = showString "VK_FORMAT_B8G8R8A8_SINT"
+    showsPrec _ VK_FORMAT_B8G8R8A8_SRGB
+      = showString "VK_FORMAT_B8G8R8A8_SRGB"
+    showsPrec _ VK_FORMAT_A8B8G8R8_UNORM_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_UNORM_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_SNORM_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_SNORM_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_USCALED_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_USCALED_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_SSCALED_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_SSCALED_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_UINT_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_UINT_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_SINT_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_SINT_PACK32"
+    showsPrec _ VK_FORMAT_A8B8G8R8_SRGB_PACK32
+      = showString "VK_FORMAT_A8B8G8R8_SRGB_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_UNORM_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_UNORM_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_SNORM_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_SNORM_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_USCALED_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_USCALED_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_SSCALED_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_SSCALED_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_UINT_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_UINT_PACK32"
+    showsPrec _ VK_FORMAT_A2R10G10B10_SINT_PACK32
+      = showString "VK_FORMAT_A2R10G10B10_SINT_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_UNORM_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_UNORM_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_SNORM_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_SNORM_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_USCALED_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_USCALED_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_SSCALED_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_SSCALED_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_UINT_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_UINT_PACK32"
+    showsPrec _ VK_FORMAT_A2B10G10R10_SINT_PACK32
+      = showString "VK_FORMAT_A2B10G10R10_SINT_PACK32"
+    showsPrec _ VK_FORMAT_R16_UNORM = showString "VK_FORMAT_R16_UNORM"
+    showsPrec _ VK_FORMAT_R16_SNORM = showString "VK_FORMAT_R16_SNORM"
+    showsPrec _ VK_FORMAT_R16_USCALED
+      = showString "VK_FORMAT_R16_USCALED"
+    showsPrec _ VK_FORMAT_R16_SSCALED
+      = showString "VK_FORMAT_R16_SSCALED"
+    showsPrec _ VK_FORMAT_R16_UINT = showString "VK_FORMAT_R16_UINT"
+    showsPrec _ VK_FORMAT_R16_SINT = showString "VK_FORMAT_R16_SINT"
+    showsPrec _ VK_FORMAT_R16_SFLOAT
+      = showString "VK_FORMAT_R16_SFLOAT"
+    showsPrec _ VK_FORMAT_R16G16_UNORM
+      = showString "VK_FORMAT_R16G16_UNORM"
+    showsPrec _ VK_FORMAT_R16G16_SNORM
+      = showString "VK_FORMAT_R16G16_SNORM"
+    showsPrec _ VK_FORMAT_R16G16_USCALED
+      = showString "VK_FORMAT_R16G16_USCALED"
+    showsPrec _ VK_FORMAT_R16G16_SSCALED
+      = showString "VK_FORMAT_R16G16_SSCALED"
+    showsPrec _ VK_FORMAT_R16G16_UINT
+      = showString "VK_FORMAT_R16G16_UINT"
+    showsPrec _ VK_FORMAT_R16G16_SINT
+      = showString "VK_FORMAT_R16G16_SINT"
+    showsPrec _ VK_FORMAT_R16G16_SFLOAT
+      = showString "VK_FORMAT_R16G16_SFLOAT"
+    showsPrec _ VK_FORMAT_R16G16B16_UNORM
+      = showString "VK_FORMAT_R16G16B16_UNORM"
+    showsPrec _ VK_FORMAT_R16G16B16_SNORM
+      = showString "VK_FORMAT_R16G16B16_SNORM"
+    showsPrec _ VK_FORMAT_R16G16B16_USCALED
+      = showString "VK_FORMAT_R16G16B16_USCALED"
+    showsPrec _ VK_FORMAT_R16G16B16_SSCALED
+      = showString "VK_FORMAT_R16G16B16_SSCALED"
+    showsPrec _ VK_FORMAT_R16G16B16_UINT
+      = showString "VK_FORMAT_R16G16B16_UINT"
+    showsPrec _ VK_FORMAT_R16G16B16_SINT
+      = showString "VK_FORMAT_R16G16B16_SINT"
+    showsPrec _ VK_FORMAT_R16G16B16_SFLOAT
+      = showString "VK_FORMAT_R16G16B16_SFLOAT"
+    showsPrec _ VK_FORMAT_R16G16B16A16_UNORM
+      = showString "VK_FORMAT_R16G16B16A16_UNORM"
+    showsPrec _ VK_FORMAT_R16G16B16A16_SNORM
+      = showString "VK_FORMAT_R16G16B16A16_SNORM"
+    showsPrec _ VK_FORMAT_R16G16B16A16_USCALED
+      = showString "VK_FORMAT_R16G16B16A16_USCALED"
+    showsPrec _ VK_FORMAT_R16G16B16A16_SSCALED
+      = showString "VK_FORMAT_R16G16B16A16_SSCALED"
+    showsPrec _ VK_FORMAT_R16G16B16A16_UINT
+      = showString "VK_FORMAT_R16G16B16A16_UINT"
+    showsPrec _ VK_FORMAT_R16G16B16A16_SINT
+      = showString "VK_FORMAT_R16G16B16A16_SINT"
+    showsPrec _ VK_FORMAT_R16G16B16A16_SFLOAT
+      = showString "VK_FORMAT_R16G16B16A16_SFLOAT"
+    showsPrec _ VK_FORMAT_R32_UINT = showString "VK_FORMAT_R32_UINT"
+    showsPrec _ VK_FORMAT_R32_SINT = showString "VK_FORMAT_R32_SINT"
+    showsPrec _ VK_FORMAT_R32_SFLOAT
+      = showString "VK_FORMAT_R32_SFLOAT"
+    showsPrec _ VK_FORMAT_R32G32_UINT
+      = showString "VK_FORMAT_R32G32_UINT"
+    showsPrec _ VK_FORMAT_R32G32_SINT
+      = showString "VK_FORMAT_R32G32_SINT"
+    showsPrec _ VK_FORMAT_R32G32_SFLOAT
+      = showString "VK_FORMAT_R32G32_SFLOAT"
+    showsPrec _ VK_FORMAT_R32G32B32_UINT
+      = showString "VK_FORMAT_R32G32B32_UINT"
+    showsPrec _ VK_FORMAT_R32G32B32_SINT
+      = showString "VK_FORMAT_R32G32B32_SINT"
+    showsPrec _ VK_FORMAT_R32G32B32_SFLOAT
+      = showString "VK_FORMAT_R32G32B32_SFLOAT"
+    showsPrec _ VK_FORMAT_R32G32B32A32_UINT
+      = showString "VK_FORMAT_R32G32B32A32_UINT"
+    showsPrec _ VK_FORMAT_R32G32B32A32_SINT
+      = showString "VK_FORMAT_R32G32B32A32_SINT"
+    showsPrec _ VK_FORMAT_R32G32B32A32_SFLOAT
+      = showString "VK_FORMAT_R32G32B32A32_SFLOAT"
+    showsPrec _ VK_FORMAT_R64_UINT = showString "VK_FORMAT_R64_UINT"
+    showsPrec _ VK_FORMAT_R64_SINT = showString "VK_FORMAT_R64_SINT"
+    showsPrec _ VK_FORMAT_R64_SFLOAT
+      = showString "VK_FORMAT_R64_SFLOAT"
+    showsPrec _ VK_FORMAT_R64G64_UINT
+      = showString "VK_FORMAT_R64G64_UINT"
+    showsPrec _ VK_FORMAT_R64G64_SINT
+      = showString "VK_FORMAT_R64G64_SINT"
+    showsPrec _ VK_FORMAT_R64G64_SFLOAT
+      = showString "VK_FORMAT_R64G64_SFLOAT"
+    showsPrec _ VK_FORMAT_R64G64B64_UINT
+      = showString "VK_FORMAT_R64G64B64_UINT"
+    showsPrec _ VK_FORMAT_R64G64B64_SINT
+      = showString "VK_FORMAT_R64G64B64_SINT"
+    showsPrec _ VK_FORMAT_R64G64B64_SFLOAT
+      = showString "VK_FORMAT_R64G64B64_SFLOAT"
+    showsPrec _ VK_FORMAT_R64G64B64A64_UINT
+      = showString "VK_FORMAT_R64G64B64A64_UINT"
+    showsPrec _ VK_FORMAT_R64G64B64A64_SINT
+      = showString "VK_FORMAT_R64G64B64A64_SINT"
+    showsPrec _ VK_FORMAT_R64G64B64A64_SFLOAT
+      = showString "VK_FORMAT_R64G64B64A64_SFLOAT"
+    showsPrec _ VK_FORMAT_B10G11R11_UFLOAT_PACK32
+      = showString "VK_FORMAT_B10G11R11_UFLOAT_PACK32"
+    showsPrec _ VK_FORMAT_E5B9G9R9_UFLOAT_PACK32
+      = showString "VK_FORMAT_E5B9G9R9_UFLOAT_PACK32"
+    showsPrec _ VK_FORMAT_D16_UNORM = showString "VK_FORMAT_D16_UNORM"
+    showsPrec _ VK_FORMAT_X8_D24_UNORM_PACK32
+      = showString "VK_FORMAT_X8_D24_UNORM_PACK32"
+    showsPrec _ VK_FORMAT_D32_SFLOAT
+      = showString "VK_FORMAT_D32_SFLOAT"
+    showsPrec _ VK_FORMAT_S8_UINT = showString "VK_FORMAT_S8_UINT"
+    showsPrec _ VK_FORMAT_D16_UNORM_S8_UINT
+      = showString "VK_FORMAT_D16_UNORM_S8_UINT"
+    showsPrec _ VK_FORMAT_D24_UNORM_S8_UINT
+      = showString "VK_FORMAT_D24_UNORM_S8_UINT"
+    showsPrec _ VK_FORMAT_D32_SFLOAT_S8_UINT
+      = showString "VK_FORMAT_D32_SFLOAT_S8_UINT"
+    showsPrec _ VK_FORMAT_BC1_RGB_UNORM_BLOCK
+      = showString "VK_FORMAT_BC1_RGB_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC1_RGB_SRGB_BLOCK
+      = showString "VK_FORMAT_BC1_RGB_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_BC1_RGBA_UNORM_BLOCK
+      = showString "VK_FORMAT_BC1_RGBA_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC1_RGBA_SRGB_BLOCK
+      = showString "VK_FORMAT_BC1_RGBA_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_BC2_UNORM_BLOCK
+      = showString "VK_FORMAT_BC2_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC2_SRGB_BLOCK
+      = showString "VK_FORMAT_BC2_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_BC3_UNORM_BLOCK
+      = showString "VK_FORMAT_BC3_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC3_SRGB_BLOCK
+      = showString "VK_FORMAT_BC3_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_BC4_UNORM_BLOCK
+      = showString "VK_FORMAT_BC4_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC4_SNORM_BLOCK
+      = showString "VK_FORMAT_BC4_SNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC5_UNORM_BLOCK
+      = showString "VK_FORMAT_BC5_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC5_SNORM_BLOCK
+      = showString "VK_FORMAT_BC5_SNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC6H_UFLOAT_BLOCK
+      = showString "VK_FORMAT_BC6H_UFLOAT_BLOCK"
+    showsPrec _ VK_FORMAT_BC6H_SFLOAT_BLOCK
+      = showString "VK_FORMAT_BC6H_SFLOAT_BLOCK"
+    showsPrec _ VK_FORMAT_BC7_UNORM_BLOCK
+      = showString "VK_FORMAT_BC7_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_BC7_SRGB_BLOCK
+      = showString "VK_FORMAT_BC7_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK
+      = showString "VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_EAC_R11_UNORM_BLOCK
+      = showString "VK_FORMAT_EAC_R11_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_EAC_R11_SNORM_BLOCK
+      = showString "VK_FORMAT_EAC_R11_SNORM_BLOCK"
+    showsPrec _ VK_FORMAT_EAC_R11G11_UNORM_BLOCK
+      = showString "VK_FORMAT_EAC_R11G11_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_EAC_R11G11_SNORM_BLOCK
+      = showString "VK_FORMAT_EAC_R11G11_SNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_4x4_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_4x4_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_4x4_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_4x4_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_5x4_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_5x4_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_5x4_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_5x4_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_5x5_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_5x5_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_5x5_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_5x5_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_6x5_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_6x5_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_6x5_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_6x5_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_6x6_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_6x6_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_6x6_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_6x6_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x5_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_8x5_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x5_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_8x5_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x6_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_8x6_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x6_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_8x6_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x8_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_8x8_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_8x8_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_8x8_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x5_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_10x5_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x5_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_10x5_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x6_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_10x6_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x6_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_10x6_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x8_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_10x8_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x8_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_10x8_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x10_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_10x10_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_10x10_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_10x10_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_12x10_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_12x10_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_12x10_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_12x10_SRGB_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_12x12_UNORM_BLOCK
+      = showString "VK_FORMAT_ASTC_12x12_UNORM_BLOCK"
+    showsPrec _ VK_FORMAT_ASTC_12x12_SRGB_BLOCK
+      = showString "VK_FORMAT_ASTC_12x12_SRGB_BLOCK"
+    showsPrec p (VkFormat x)
+      = showParen (p >= 11) (showString "VkFormat " . showsPrec 11 x)
 
 instance Read VkFormat where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FORMAT_UNDEFINED", pure VK_FORMAT_UNDEFINED),
-                  ("VK_FORMAT_R4G4_UNORM_PACK8", pure VK_FORMAT_R4G4_UNORM_PACK8),
-                  ("VK_FORMAT_R4G4B4A4_UNORM_PACK16",
-                   pure VK_FORMAT_R4G4B4A4_UNORM_PACK16),
-                  ("VK_FORMAT_B4G4R4A4_UNORM_PACK16",
-                   pure VK_FORMAT_B4G4R4A4_UNORM_PACK16),
-                  ("VK_FORMAT_R5G6B5_UNORM_PACK16",
-                   pure VK_FORMAT_R5G6B5_UNORM_PACK16),
-                  ("VK_FORMAT_B5G6R5_UNORM_PACK16",
-                   pure VK_FORMAT_B5G6R5_UNORM_PACK16),
-                  ("VK_FORMAT_R5G5B5A1_UNORM_PACK16",
-                   pure VK_FORMAT_R5G5B5A1_UNORM_PACK16),
-                  ("VK_FORMAT_B5G5R5A1_UNORM_PACK16",
-                   pure VK_FORMAT_B5G5R5A1_UNORM_PACK16),
-                  ("VK_FORMAT_A1R5G5B5_UNORM_PACK16",
-                   pure VK_FORMAT_A1R5G5B5_UNORM_PACK16),
-                  ("VK_FORMAT_R8_UNORM", pure VK_FORMAT_R8_UNORM),
-                  ("VK_FORMAT_R8_SNORM", pure VK_FORMAT_R8_SNORM),
-                  ("VK_FORMAT_R8_USCALED", pure VK_FORMAT_R8_USCALED),
-                  ("VK_FORMAT_R8_SSCALED", pure VK_FORMAT_R8_SSCALED),
-                  ("VK_FORMAT_R8_UINT", pure VK_FORMAT_R8_UINT),
-                  ("VK_FORMAT_R8_SINT", pure VK_FORMAT_R8_SINT),
-                  ("VK_FORMAT_R8_SRGB", pure VK_FORMAT_R8_SRGB),
-                  ("VK_FORMAT_R8G8_UNORM", pure VK_FORMAT_R8G8_UNORM),
-                  ("VK_FORMAT_R8G8_SNORM", pure VK_FORMAT_R8G8_SNORM),
-                  ("VK_FORMAT_R8G8_USCALED", pure VK_FORMAT_R8G8_USCALED),
-                  ("VK_FORMAT_R8G8_SSCALED", pure VK_FORMAT_R8G8_SSCALED),
-                  ("VK_FORMAT_R8G8_UINT", pure VK_FORMAT_R8G8_UINT),
-                  ("VK_FORMAT_R8G8_SINT", pure VK_FORMAT_R8G8_SINT),
-                  ("VK_FORMAT_R8G8_SRGB", pure VK_FORMAT_R8G8_SRGB),
-                  ("VK_FORMAT_R8G8B8_UNORM", pure VK_FORMAT_R8G8B8_UNORM),
-                  ("VK_FORMAT_R8G8B8_SNORM", pure VK_FORMAT_R8G8B8_SNORM),
-                  ("VK_FORMAT_R8G8B8_USCALED", pure VK_FORMAT_R8G8B8_USCALED),
-                  ("VK_FORMAT_R8G8B8_SSCALED", pure VK_FORMAT_R8G8B8_SSCALED),
-                  ("VK_FORMAT_R8G8B8_UINT", pure VK_FORMAT_R8G8B8_UINT),
-                  ("VK_FORMAT_R8G8B8_SINT", pure VK_FORMAT_R8G8B8_SINT),
-                  ("VK_FORMAT_R8G8B8_SRGB", pure VK_FORMAT_R8G8B8_SRGB),
-                  ("VK_FORMAT_B8G8R8_UNORM", pure VK_FORMAT_B8G8R8_UNORM),
-                  ("VK_FORMAT_B8G8R8_SNORM", pure VK_FORMAT_B8G8R8_SNORM),
-                  ("VK_FORMAT_B8G8R8_USCALED", pure VK_FORMAT_B8G8R8_USCALED),
-                  ("VK_FORMAT_B8G8R8_SSCALED", pure VK_FORMAT_B8G8R8_SSCALED),
-                  ("VK_FORMAT_B8G8R8_UINT", pure VK_FORMAT_B8G8R8_UINT),
-                  ("VK_FORMAT_B8G8R8_SINT", pure VK_FORMAT_B8G8R8_SINT),
-                  ("VK_FORMAT_B8G8R8_SRGB", pure VK_FORMAT_B8G8R8_SRGB),
-                  ("VK_FORMAT_R8G8B8A8_UNORM", pure VK_FORMAT_R8G8B8A8_UNORM),
-                  ("VK_FORMAT_R8G8B8A8_SNORM", pure VK_FORMAT_R8G8B8A8_SNORM),
-                  ("VK_FORMAT_R8G8B8A8_USCALED", pure VK_FORMAT_R8G8B8A8_USCALED),
-                  ("VK_FORMAT_R8G8B8A8_SSCALED", pure VK_FORMAT_R8G8B8A8_SSCALED),
-                  ("VK_FORMAT_R8G8B8A8_UINT", pure VK_FORMAT_R8G8B8A8_UINT),
-                  ("VK_FORMAT_R8G8B8A8_SINT", pure VK_FORMAT_R8G8B8A8_SINT),
-                  ("VK_FORMAT_R8G8B8A8_SRGB", pure VK_FORMAT_R8G8B8A8_SRGB),
-                  ("VK_FORMAT_B8G8R8A8_UNORM", pure VK_FORMAT_B8G8R8A8_UNORM),
-                  ("VK_FORMAT_B8G8R8A8_SNORM", pure VK_FORMAT_B8G8R8A8_SNORM),
-                  ("VK_FORMAT_B8G8R8A8_USCALED", pure VK_FORMAT_B8G8R8A8_USCALED),
-                  ("VK_FORMAT_B8G8R8A8_SSCALED", pure VK_FORMAT_B8G8R8A8_SSCALED),
-                  ("VK_FORMAT_B8G8R8A8_UINT", pure VK_FORMAT_B8G8R8A8_UINT),
-                  ("VK_FORMAT_B8G8R8A8_SINT", pure VK_FORMAT_B8G8R8A8_SINT),
-                  ("VK_FORMAT_B8G8R8A8_SRGB", pure VK_FORMAT_B8G8R8A8_SRGB),
-                  ("VK_FORMAT_A8B8G8R8_UNORM_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_UNORM_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_SNORM_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_SNORM_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_USCALED_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_USCALED_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_SSCALED_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_SSCALED_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_UINT_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_UINT_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_SINT_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_SINT_PACK32),
-                  ("VK_FORMAT_A8B8G8R8_SRGB_PACK32",
-                   pure VK_FORMAT_A8B8G8R8_SRGB_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_UNORM_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_UNORM_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_SNORM_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_SNORM_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_USCALED_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_USCALED_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_SSCALED_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_SSCALED_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_UINT_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_UINT_PACK32),
-                  ("VK_FORMAT_A2R10G10B10_SINT_PACK32",
-                   pure VK_FORMAT_A2R10G10B10_SINT_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_UNORM_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_UNORM_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_SNORM_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_SNORM_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_USCALED_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_USCALED_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_SSCALED_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_SSCALED_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_UINT_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_UINT_PACK32),
-                  ("VK_FORMAT_A2B10G10R10_SINT_PACK32",
-                   pure VK_FORMAT_A2B10G10R10_SINT_PACK32),
-                  ("VK_FORMAT_R16_UNORM", pure VK_FORMAT_R16_UNORM),
-                  ("VK_FORMAT_R16_SNORM", pure VK_FORMAT_R16_SNORM),
-                  ("VK_FORMAT_R16_USCALED", pure VK_FORMAT_R16_USCALED),
-                  ("VK_FORMAT_R16_SSCALED", pure VK_FORMAT_R16_SSCALED),
-                  ("VK_FORMAT_R16_UINT", pure VK_FORMAT_R16_UINT),
-                  ("VK_FORMAT_R16_SINT", pure VK_FORMAT_R16_SINT),
-                  ("VK_FORMAT_R16_SFLOAT", pure VK_FORMAT_R16_SFLOAT),
-                  ("VK_FORMAT_R16G16_UNORM", pure VK_FORMAT_R16G16_UNORM),
-                  ("VK_FORMAT_R16G16_SNORM", pure VK_FORMAT_R16G16_SNORM),
-                  ("VK_FORMAT_R16G16_USCALED", pure VK_FORMAT_R16G16_USCALED),
-                  ("VK_FORMAT_R16G16_SSCALED", pure VK_FORMAT_R16G16_SSCALED),
-                  ("VK_FORMAT_R16G16_UINT", pure VK_FORMAT_R16G16_UINT),
-                  ("VK_FORMAT_R16G16_SINT", pure VK_FORMAT_R16G16_SINT),
-                  ("VK_FORMAT_R16G16_SFLOAT", pure VK_FORMAT_R16G16_SFLOAT),
-                  ("VK_FORMAT_R16G16B16_UNORM", pure VK_FORMAT_R16G16B16_UNORM),
-                  ("VK_FORMAT_R16G16B16_SNORM", pure VK_FORMAT_R16G16B16_SNORM),
-                  ("VK_FORMAT_R16G16B16_USCALED", pure VK_FORMAT_R16G16B16_USCALED),
-                  ("VK_FORMAT_R16G16B16_SSCALED", pure VK_FORMAT_R16G16B16_SSCALED),
-                  ("VK_FORMAT_R16G16B16_UINT", pure VK_FORMAT_R16G16B16_UINT),
-                  ("VK_FORMAT_R16G16B16_SINT", pure VK_FORMAT_R16G16B16_SINT),
-                  ("VK_FORMAT_R16G16B16_SFLOAT", pure VK_FORMAT_R16G16B16_SFLOAT),
-                  ("VK_FORMAT_R16G16B16A16_UNORM",
-                   pure VK_FORMAT_R16G16B16A16_UNORM),
-                  ("VK_FORMAT_R16G16B16A16_SNORM",
-                   pure VK_FORMAT_R16G16B16A16_SNORM),
-                  ("VK_FORMAT_R16G16B16A16_USCALED",
-                   pure VK_FORMAT_R16G16B16A16_USCALED),
-                  ("VK_FORMAT_R16G16B16A16_SSCALED",
-                   pure VK_FORMAT_R16G16B16A16_SSCALED),
-                  ("VK_FORMAT_R16G16B16A16_UINT", pure VK_FORMAT_R16G16B16A16_UINT),
-                  ("VK_FORMAT_R16G16B16A16_SINT", pure VK_FORMAT_R16G16B16A16_SINT),
-                  ("VK_FORMAT_R16G16B16A16_SFLOAT",
-                   pure VK_FORMAT_R16G16B16A16_SFLOAT),
-                  ("VK_FORMAT_R32_UINT", pure VK_FORMAT_R32_UINT),
-                  ("VK_FORMAT_R32_SINT", pure VK_FORMAT_R32_SINT),
-                  ("VK_FORMAT_R32_SFLOAT", pure VK_FORMAT_R32_SFLOAT),
-                  ("VK_FORMAT_R32G32_UINT", pure VK_FORMAT_R32G32_UINT),
-                  ("VK_FORMAT_R32G32_SINT", pure VK_FORMAT_R32G32_SINT),
-                  ("VK_FORMAT_R32G32_SFLOAT", pure VK_FORMAT_R32G32_SFLOAT),
-                  ("VK_FORMAT_R32G32B32_UINT", pure VK_FORMAT_R32G32B32_UINT),
-                  ("VK_FORMAT_R32G32B32_SINT", pure VK_FORMAT_R32G32B32_SINT),
-                  ("VK_FORMAT_R32G32B32_SFLOAT", pure VK_FORMAT_R32G32B32_SFLOAT),
-                  ("VK_FORMAT_R32G32B32A32_UINT", pure VK_FORMAT_R32G32B32A32_UINT),
-                  ("VK_FORMAT_R32G32B32A32_SINT", pure VK_FORMAT_R32G32B32A32_SINT),
-                  ("VK_FORMAT_R32G32B32A32_SFLOAT",
-                   pure VK_FORMAT_R32G32B32A32_SFLOAT),
-                  ("VK_FORMAT_R64_UINT", pure VK_FORMAT_R64_UINT),
-                  ("VK_FORMAT_R64_SINT", pure VK_FORMAT_R64_SINT),
-                  ("VK_FORMAT_R64_SFLOAT", pure VK_FORMAT_R64_SFLOAT),
-                  ("VK_FORMAT_R64G64_UINT", pure VK_FORMAT_R64G64_UINT),
-                  ("VK_FORMAT_R64G64_SINT", pure VK_FORMAT_R64G64_SINT),
-                  ("VK_FORMAT_R64G64_SFLOAT", pure VK_FORMAT_R64G64_SFLOAT),
-                  ("VK_FORMAT_R64G64B64_UINT", pure VK_FORMAT_R64G64B64_UINT),
-                  ("VK_FORMAT_R64G64B64_SINT", pure VK_FORMAT_R64G64B64_SINT),
-                  ("VK_FORMAT_R64G64B64_SFLOAT", pure VK_FORMAT_R64G64B64_SFLOAT),
-                  ("VK_FORMAT_R64G64B64A64_UINT", pure VK_FORMAT_R64G64B64A64_UINT),
-                  ("VK_FORMAT_R64G64B64A64_SINT", pure VK_FORMAT_R64G64B64A64_SINT),
-                  ("VK_FORMAT_R64G64B64A64_SFLOAT",
-                   pure VK_FORMAT_R64G64B64A64_SFLOAT),
-                  ("VK_FORMAT_B10G11R11_UFLOAT_PACK32",
-                   pure VK_FORMAT_B10G11R11_UFLOAT_PACK32),
-                  ("VK_FORMAT_E5B9G9R9_UFLOAT_PACK32",
-                   pure VK_FORMAT_E5B9G9R9_UFLOAT_PACK32),
-                  ("VK_FORMAT_D16_UNORM", pure VK_FORMAT_D16_UNORM),
-                  ("VK_FORMAT_X8_D24_UNORM_PACK32",
-                   pure VK_FORMAT_X8_D24_UNORM_PACK32),
-                  ("VK_FORMAT_D32_SFLOAT", pure VK_FORMAT_D32_SFLOAT),
-                  ("VK_FORMAT_S8_UINT", pure VK_FORMAT_S8_UINT),
-                  ("VK_FORMAT_D16_UNORM_S8_UINT", pure VK_FORMAT_D16_UNORM_S8_UINT),
-                  ("VK_FORMAT_D24_UNORM_S8_UINT", pure VK_FORMAT_D24_UNORM_S8_UINT),
-                  ("VK_FORMAT_D32_SFLOAT_S8_UINT",
-                   pure VK_FORMAT_D32_SFLOAT_S8_UINT),
-                  ("VK_FORMAT_BC1_RGB_UNORM_BLOCK",
-                   pure VK_FORMAT_BC1_RGB_UNORM_BLOCK),
-                  ("VK_FORMAT_BC1_RGB_SRGB_BLOCK",
-                   pure VK_FORMAT_BC1_RGB_SRGB_BLOCK),
-                  ("VK_FORMAT_BC1_RGBA_UNORM_BLOCK",
-                   pure VK_FORMAT_BC1_RGBA_UNORM_BLOCK),
-                  ("VK_FORMAT_BC1_RGBA_SRGB_BLOCK",
-                   pure VK_FORMAT_BC1_RGBA_SRGB_BLOCK),
-                  ("VK_FORMAT_BC2_UNORM_BLOCK", pure VK_FORMAT_BC2_UNORM_BLOCK),
-                  ("VK_FORMAT_BC2_SRGB_BLOCK", pure VK_FORMAT_BC2_SRGB_BLOCK),
-                  ("VK_FORMAT_BC3_UNORM_BLOCK", pure VK_FORMAT_BC3_UNORM_BLOCK),
-                  ("VK_FORMAT_BC3_SRGB_BLOCK", pure VK_FORMAT_BC3_SRGB_BLOCK),
-                  ("VK_FORMAT_BC4_UNORM_BLOCK", pure VK_FORMAT_BC4_UNORM_BLOCK),
-                  ("VK_FORMAT_BC4_SNORM_BLOCK", pure VK_FORMAT_BC4_SNORM_BLOCK),
-                  ("VK_FORMAT_BC5_UNORM_BLOCK", pure VK_FORMAT_BC5_UNORM_BLOCK),
-                  ("VK_FORMAT_BC5_SNORM_BLOCK", pure VK_FORMAT_BC5_SNORM_BLOCK),
-                  ("VK_FORMAT_BC6H_UFLOAT_BLOCK", pure VK_FORMAT_BC6H_UFLOAT_BLOCK),
-                  ("VK_FORMAT_BC6H_SFLOAT_BLOCK", pure VK_FORMAT_BC6H_SFLOAT_BLOCK),
-                  ("VK_FORMAT_BC7_UNORM_BLOCK", pure VK_FORMAT_BC7_UNORM_BLOCK),
-                  ("VK_FORMAT_BC7_SRGB_BLOCK", pure VK_FORMAT_BC7_SRGB_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK),
-                  ("VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK",
-                   pure VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK),
-                  ("VK_FORMAT_EAC_R11_UNORM_BLOCK",
-                   pure VK_FORMAT_EAC_R11_UNORM_BLOCK),
-                  ("VK_FORMAT_EAC_R11_SNORM_BLOCK",
-                   pure VK_FORMAT_EAC_R11_SNORM_BLOCK),
-                  ("VK_FORMAT_EAC_R11G11_UNORM_BLOCK",
-                   pure VK_FORMAT_EAC_R11G11_UNORM_BLOCK),
-                  ("VK_FORMAT_EAC_R11G11_SNORM_BLOCK",
-                   pure VK_FORMAT_EAC_R11G11_SNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_4x4_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_4x4_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_4x4_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_4x4_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_5x4_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_5x4_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_5x4_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_5x4_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_5x5_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_5x5_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_5x5_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_5x5_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_6x5_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_6x5_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_6x5_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_6x5_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_6x6_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_6x6_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_6x6_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_6x6_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_8x5_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_8x5_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_8x5_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_8x5_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_8x6_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_8x6_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_8x6_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_8x6_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_8x8_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_8x8_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_8x8_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_8x8_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_10x5_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_10x5_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_10x5_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_10x5_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_10x6_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_10x6_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_10x6_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_10x6_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_10x8_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_10x8_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_10x8_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_10x8_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_10x10_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_10x10_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_10x10_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_10x10_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_12x10_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_12x10_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_12x10_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_12x10_SRGB_BLOCK),
-                  ("VK_FORMAT_ASTC_12x12_UNORM_BLOCK",
-                   pure VK_FORMAT_ASTC_12x12_UNORM_BLOCK),
-                  ("VK_FORMAT_ASTC_12x12_SRGB_BLOCK",
-                   pure VK_FORMAT_ASTC_12x12_SRGB_BLOCK)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFormat") >> (VkFormat <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_FORMAT_UNDEFINED", pure VK_FORMAT_UNDEFINED),
+              ("VK_FORMAT_R4G4_UNORM_PACK8", pure VK_FORMAT_R4G4_UNORM_PACK8),
+              ("VK_FORMAT_R4G4B4A4_UNORM_PACK16",
+               pure VK_FORMAT_R4G4B4A4_UNORM_PACK16),
+              ("VK_FORMAT_B4G4R4A4_UNORM_PACK16",
+               pure VK_FORMAT_B4G4R4A4_UNORM_PACK16),
+              ("VK_FORMAT_R5G6B5_UNORM_PACK16",
+               pure VK_FORMAT_R5G6B5_UNORM_PACK16),
+              ("VK_FORMAT_B5G6R5_UNORM_PACK16",
+               pure VK_FORMAT_B5G6R5_UNORM_PACK16),
+              ("VK_FORMAT_R5G5B5A1_UNORM_PACK16",
+               pure VK_FORMAT_R5G5B5A1_UNORM_PACK16),
+              ("VK_FORMAT_B5G5R5A1_UNORM_PACK16",
+               pure VK_FORMAT_B5G5R5A1_UNORM_PACK16),
+              ("VK_FORMAT_A1R5G5B5_UNORM_PACK16",
+               pure VK_FORMAT_A1R5G5B5_UNORM_PACK16),
+              ("VK_FORMAT_R8_UNORM", pure VK_FORMAT_R8_UNORM),
+              ("VK_FORMAT_R8_SNORM", pure VK_FORMAT_R8_SNORM),
+              ("VK_FORMAT_R8_USCALED", pure VK_FORMAT_R8_USCALED),
+              ("VK_FORMAT_R8_SSCALED", pure VK_FORMAT_R8_SSCALED),
+              ("VK_FORMAT_R8_UINT", pure VK_FORMAT_R8_UINT),
+              ("VK_FORMAT_R8_SINT", pure VK_FORMAT_R8_SINT),
+              ("VK_FORMAT_R8_SRGB", pure VK_FORMAT_R8_SRGB),
+              ("VK_FORMAT_R8G8_UNORM", pure VK_FORMAT_R8G8_UNORM),
+              ("VK_FORMAT_R8G8_SNORM", pure VK_FORMAT_R8G8_SNORM),
+              ("VK_FORMAT_R8G8_USCALED", pure VK_FORMAT_R8G8_USCALED),
+              ("VK_FORMAT_R8G8_SSCALED", pure VK_FORMAT_R8G8_SSCALED),
+              ("VK_FORMAT_R8G8_UINT", pure VK_FORMAT_R8G8_UINT),
+              ("VK_FORMAT_R8G8_SINT", pure VK_FORMAT_R8G8_SINT),
+              ("VK_FORMAT_R8G8_SRGB", pure VK_FORMAT_R8G8_SRGB),
+              ("VK_FORMAT_R8G8B8_UNORM", pure VK_FORMAT_R8G8B8_UNORM),
+              ("VK_FORMAT_R8G8B8_SNORM", pure VK_FORMAT_R8G8B8_SNORM),
+              ("VK_FORMAT_R8G8B8_USCALED", pure VK_FORMAT_R8G8B8_USCALED),
+              ("VK_FORMAT_R8G8B8_SSCALED", pure VK_FORMAT_R8G8B8_SSCALED),
+              ("VK_FORMAT_R8G8B8_UINT", pure VK_FORMAT_R8G8B8_UINT),
+              ("VK_FORMAT_R8G8B8_SINT", pure VK_FORMAT_R8G8B8_SINT),
+              ("VK_FORMAT_R8G8B8_SRGB", pure VK_FORMAT_R8G8B8_SRGB),
+              ("VK_FORMAT_B8G8R8_UNORM", pure VK_FORMAT_B8G8R8_UNORM),
+              ("VK_FORMAT_B8G8R8_SNORM", pure VK_FORMAT_B8G8R8_SNORM),
+              ("VK_FORMAT_B8G8R8_USCALED", pure VK_FORMAT_B8G8R8_USCALED),
+              ("VK_FORMAT_B8G8R8_SSCALED", pure VK_FORMAT_B8G8R8_SSCALED),
+              ("VK_FORMAT_B8G8R8_UINT", pure VK_FORMAT_B8G8R8_UINT),
+              ("VK_FORMAT_B8G8R8_SINT", pure VK_FORMAT_B8G8R8_SINT),
+              ("VK_FORMAT_B8G8R8_SRGB", pure VK_FORMAT_B8G8R8_SRGB),
+              ("VK_FORMAT_R8G8B8A8_UNORM", pure VK_FORMAT_R8G8B8A8_UNORM),
+              ("VK_FORMAT_R8G8B8A8_SNORM", pure VK_FORMAT_R8G8B8A8_SNORM),
+              ("VK_FORMAT_R8G8B8A8_USCALED", pure VK_FORMAT_R8G8B8A8_USCALED),
+              ("VK_FORMAT_R8G8B8A8_SSCALED", pure VK_FORMAT_R8G8B8A8_SSCALED),
+              ("VK_FORMAT_R8G8B8A8_UINT", pure VK_FORMAT_R8G8B8A8_UINT),
+              ("VK_FORMAT_R8G8B8A8_SINT", pure VK_FORMAT_R8G8B8A8_SINT),
+              ("VK_FORMAT_R8G8B8A8_SRGB", pure VK_FORMAT_R8G8B8A8_SRGB),
+              ("VK_FORMAT_B8G8R8A8_UNORM", pure VK_FORMAT_B8G8R8A8_UNORM),
+              ("VK_FORMAT_B8G8R8A8_SNORM", pure VK_FORMAT_B8G8R8A8_SNORM),
+              ("VK_FORMAT_B8G8R8A8_USCALED", pure VK_FORMAT_B8G8R8A8_USCALED),
+              ("VK_FORMAT_B8G8R8A8_SSCALED", pure VK_FORMAT_B8G8R8A8_SSCALED),
+              ("VK_FORMAT_B8G8R8A8_UINT", pure VK_FORMAT_B8G8R8A8_UINT),
+              ("VK_FORMAT_B8G8R8A8_SINT", pure VK_FORMAT_B8G8R8A8_SINT),
+              ("VK_FORMAT_B8G8R8A8_SRGB", pure VK_FORMAT_B8G8R8A8_SRGB),
+              ("VK_FORMAT_A8B8G8R8_UNORM_PACK32",
+               pure VK_FORMAT_A8B8G8R8_UNORM_PACK32),
+              ("VK_FORMAT_A8B8G8R8_SNORM_PACK32",
+               pure VK_FORMAT_A8B8G8R8_SNORM_PACK32),
+              ("VK_FORMAT_A8B8G8R8_USCALED_PACK32",
+               pure VK_FORMAT_A8B8G8R8_USCALED_PACK32),
+              ("VK_FORMAT_A8B8G8R8_SSCALED_PACK32",
+               pure VK_FORMAT_A8B8G8R8_SSCALED_PACK32),
+              ("VK_FORMAT_A8B8G8R8_UINT_PACK32",
+               pure VK_FORMAT_A8B8G8R8_UINT_PACK32),
+              ("VK_FORMAT_A8B8G8R8_SINT_PACK32",
+               pure VK_FORMAT_A8B8G8R8_SINT_PACK32),
+              ("VK_FORMAT_A8B8G8R8_SRGB_PACK32",
+               pure VK_FORMAT_A8B8G8R8_SRGB_PACK32),
+              ("VK_FORMAT_A2R10G10B10_UNORM_PACK32",
+               pure VK_FORMAT_A2R10G10B10_UNORM_PACK32),
+              ("VK_FORMAT_A2R10G10B10_SNORM_PACK32",
+               pure VK_FORMAT_A2R10G10B10_SNORM_PACK32),
+              ("VK_FORMAT_A2R10G10B10_USCALED_PACK32",
+               pure VK_FORMAT_A2R10G10B10_USCALED_PACK32),
+              ("VK_FORMAT_A2R10G10B10_SSCALED_PACK32",
+               pure VK_FORMAT_A2R10G10B10_SSCALED_PACK32),
+              ("VK_FORMAT_A2R10G10B10_UINT_PACK32",
+               pure VK_FORMAT_A2R10G10B10_UINT_PACK32),
+              ("VK_FORMAT_A2R10G10B10_SINT_PACK32",
+               pure VK_FORMAT_A2R10G10B10_SINT_PACK32),
+              ("VK_FORMAT_A2B10G10R10_UNORM_PACK32",
+               pure VK_FORMAT_A2B10G10R10_UNORM_PACK32),
+              ("VK_FORMAT_A2B10G10R10_SNORM_PACK32",
+               pure VK_FORMAT_A2B10G10R10_SNORM_PACK32),
+              ("VK_FORMAT_A2B10G10R10_USCALED_PACK32",
+               pure VK_FORMAT_A2B10G10R10_USCALED_PACK32),
+              ("VK_FORMAT_A2B10G10R10_SSCALED_PACK32",
+               pure VK_FORMAT_A2B10G10R10_SSCALED_PACK32),
+              ("VK_FORMAT_A2B10G10R10_UINT_PACK32",
+               pure VK_FORMAT_A2B10G10R10_UINT_PACK32),
+              ("VK_FORMAT_A2B10G10R10_SINT_PACK32",
+               pure VK_FORMAT_A2B10G10R10_SINT_PACK32),
+              ("VK_FORMAT_R16_UNORM", pure VK_FORMAT_R16_UNORM),
+              ("VK_FORMAT_R16_SNORM", pure VK_FORMAT_R16_SNORM),
+              ("VK_FORMAT_R16_USCALED", pure VK_FORMAT_R16_USCALED),
+              ("VK_FORMAT_R16_SSCALED", pure VK_FORMAT_R16_SSCALED),
+              ("VK_FORMAT_R16_UINT", pure VK_FORMAT_R16_UINT),
+              ("VK_FORMAT_R16_SINT", pure VK_FORMAT_R16_SINT),
+              ("VK_FORMAT_R16_SFLOAT", pure VK_FORMAT_R16_SFLOAT),
+              ("VK_FORMAT_R16G16_UNORM", pure VK_FORMAT_R16G16_UNORM),
+              ("VK_FORMAT_R16G16_SNORM", pure VK_FORMAT_R16G16_SNORM),
+              ("VK_FORMAT_R16G16_USCALED", pure VK_FORMAT_R16G16_USCALED),
+              ("VK_FORMAT_R16G16_SSCALED", pure VK_FORMAT_R16G16_SSCALED),
+              ("VK_FORMAT_R16G16_UINT", pure VK_FORMAT_R16G16_UINT),
+              ("VK_FORMAT_R16G16_SINT", pure VK_FORMAT_R16G16_SINT),
+              ("VK_FORMAT_R16G16_SFLOAT", pure VK_FORMAT_R16G16_SFLOAT),
+              ("VK_FORMAT_R16G16B16_UNORM", pure VK_FORMAT_R16G16B16_UNORM),
+              ("VK_FORMAT_R16G16B16_SNORM", pure VK_FORMAT_R16G16B16_SNORM),
+              ("VK_FORMAT_R16G16B16_USCALED", pure VK_FORMAT_R16G16B16_USCALED),
+              ("VK_FORMAT_R16G16B16_SSCALED", pure VK_FORMAT_R16G16B16_SSCALED),
+              ("VK_FORMAT_R16G16B16_UINT", pure VK_FORMAT_R16G16B16_UINT),
+              ("VK_FORMAT_R16G16B16_SINT", pure VK_FORMAT_R16G16B16_SINT),
+              ("VK_FORMAT_R16G16B16_SFLOAT", pure VK_FORMAT_R16G16B16_SFLOAT),
+              ("VK_FORMAT_R16G16B16A16_UNORM",
+               pure VK_FORMAT_R16G16B16A16_UNORM),
+              ("VK_FORMAT_R16G16B16A16_SNORM",
+               pure VK_FORMAT_R16G16B16A16_SNORM),
+              ("VK_FORMAT_R16G16B16A16_USCALED",
+               pure VK_FORMAT_R16G16B16A16_USCALED),
+              ("VK_FORMAT_R16G16B16A16_SSCALED",
+               pure VK_FORMAT_R16G16B16A16_SSCALED),
+              ("VK_FORMAT_R16G16B16A16_UINT", pure VK_FORMAT_R16G16B16A16_UINT),
+              ("VK_FORMAT_R16G16B16A16_SINT", pure VK_FORMAT_R16G16B16A16_SINT),
+              ("VK_FORMAT_R16G16B16A16_SFLOAT",
+               pure VK_FORMAT_R16G16B16A16_SFLOAT),
+              ("VK_FORMAT_R32_UINT", pure VK_FORMAT_R32_UINT),
+              ("VK_FORMAT_R32_SINT", pure VK_FORMAT_R32_SINT),
+              ("VK_FORMAT_R32_SFLOAT", pure VK_FORMAT_R32_SFLOAT),
+              ("VK_FORMAT_R32G32_UINT", pure VK_FORMAT_R32G32_UINT),
+              ("VK_FORMAT_R32G32_SINT", pure VK_FORMAT_R32G32_SINT),
+              ("VK_FORMAT_R32G32_SFLOAT", pure VK_FORMAT_R32G32_SFLOAT),
+              ("VK_FORMAT_R32G32B32_UINT", pure VK_FORMAT_R32G32B32_UINT),
+              ("VK_FORMAT_R32G32B32_SINT", pure VK_FORMAT_R32G32B32_SINT),
+              ("VK_FORMAT_R32G32B32_SFLOAT", pure VK_FORMAT_R32G32B32_SFLOAT),
+              ("VK_FORMAT_R32G32B32A32_UINT", pure VK_FORMAT_R32G32B32A32_UINT),
+              ("VK_FORMAT_R32G32B32A32_SINT", pure VK_FORMAT_R32G32B32A32_SINT),
+              ("VK_FORMAT_R32G32B32A32_SFLOAT",
+               pure VK_FORMAT_R32G32B32A32_SFLOAT),
+              ("VK_FORMAT_R64_UINT", pure VK_FORMAT_R64_UINT),
+              ("VK_FORMAT_R64_SINT", pure VK_FORMAT_R64_SINT),
+              ("VK_FORMAT_R64_SFLOAT", pure VK_FORMAT_R64_SFLOAT),
+              ("VK_FORMAT_R64G64_UINT", pure VK_FORMAT_R64G64_UINT),
+              ("VK_FORMAT_R64G64_SINT", pure VK_FORMAT_R64G64_SINT),
+              ("VK_FORMAT_R64G64_SFLOAT", pure VK_FORMAT_R64G64_SFLOAT),
+              ("VK_FORMAT_R64G64B64_UINT", pure VK_FORMAT_R64G64B64_UINT),
+              ("VK_FORMAT_R64G64B64_SINT", pure VK_FORMAT_R64G64B64_SINT),
+              ("VK_FORMAT_R64G64B64_SFLOAT", pure VK_FORMAT_R64G64B64_SFLOAT),
+              ("VK_FORMAT_R64G64B64A64_UINT", pure VK_FORMAT_R64G64B64A64_UINT),
+              ("VK_FORMAT_R64G64B64A64_SINT", pure VK_FORMAT_R64G64B64A64_SINT),
+              ("VK_FORMAT_R64G64B64A64_SFLOAT",
+               pure VK_FORMAT_R64G64B64A64_SFLOAT),
+              ("VK_FORMAT_B10G11R11_UFLOAT_PACK32",
+               pure VK_FORMAT_B10G11R11_UFLOAT_PACK32),
+              ("VK_FORMAT_E5B9G9R9_UFLOAT_PACK32",
+               pure VK_FORMAT_E5B9G9R9_UFLOAT_PACK32),
+              ("VK_FORMAT_D16_UNORM", pure VK_FORMAT_D16_UNORM),
+              ("VK_FORMAT_X8_D24_UNORM_PACK32",
+               pure VK_FORMAT_X8_D24_UNORM_PACK32),
+              ("VK_FORMAT_D32_SFLOAT", pure VK_FORMAT_D32_SFLOAT),
+              ("VK_FORMAT_S8_UINT", pure VK_FORMAT_S8_UINT),
+              ("VK_FORMAT_D16_UNORM_S8_UINT", pure VK_FORMAT_D16_UNORM_S8_UINT),
+              ("VK_FORMAT_D24_UNORM_S8_UINT", pure VK_FORMAT_D24_UNORM_S8_UINT),
+              ("VK_FORMAT_D32_SFLOAT_S8_UINT",
+               pure VK_FORMAT_D32_SFLOAT_S8_UINT),
+              ("VK_FORMAT_BC1_RGB_UNORM_BLOCK",
+               pure VK_FORMAT_BC1_RGB_UNORM_BLOCK),
+              ("VK_FORMAT_BC1_RGB_SRGB_BLOCK",
+               pure VK_FORMAT_BC1_RGB_SRGB_BLOCK),
+              ("VK_FORMAT_BC1_RGBA_UNORM_BLOCK",
+               pure VK_FORMAT_BC1_RGBA_UNORM_BLOCK),
+              ("VK_FORMAT_BC1_RGBA_SRGB_BLOCK",
+               pure VK_FORMAT_BC1_RGBA_SRGB_BLOCK),
+              ("VK_FORMAT_BC2_UNORM_BLOCK", pure VK_FORMAT_BC2_UNORM_BLOCK),
+              ("VK_FORMAT_BC2_SRGB_BLOCK", pure VK_FORMAT_BC2_SRGB_BLOCK),
+              ("VK_FORMAT_BC3_UNORM_BLOCK", pure VK_FORMAT_BC3_UNORM_BLOCK),
+              ("VK_FORMAT_BC3_SRGB_BLOCK", pure VK_FORMAT_BC3_SRGB_BLOCK),
+              ("VK_FORMAT_BC4_UNORM_BLOCK", pure VK_FORMAT_BC4_UNORM_BLOCK),
+              ("VK_FORMAT_BC4_SNORM_BLOCK", pure VK_FORMAT_BC4_SNORM_BLOCK),
+              ("VK_FORMAT_BC5_UNORM_BLOCK", pure VK_FORMAT_BC5_UNORM_BLOCK),
+              ("VK_FORMAT_BC5_SNORM_BLOCK", pure VK_FORMAT_BC5_SNORM_BLOCK),
+              ("VK_FORMAT_BC6H_UFLOAT_BLOCK", pure VK_FORMAT_BC6H_UFLOAT_BLOCK),
+              ("VK_FORMAT_BC6H_SFLOAT_BLOCK", pure VK_FORMAT_BC6H_SFLOAT_BLOCK),
+              ("VK_FORMAT_BC7_UNORM_BLOCK", pure VK_FORMAT_BC7_UNORM_BLOCK),
+              ("VK_FORMAT_BC7_SRGB_BLOCK", pure VK_FORMAT_BC7_SRGB_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK),
+              ("VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK",
+               pure VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK),
+              ("VK_FORMAT_EAC_R11_UNORM_BLOCK",
+               pure VK_FORMAT_EAC_R11_UNORM_BLOCK),
+              ("VK_FORMAT_EAC_R11_SNORM_BLOCK",
+               pure VK_FORMAT_EAC_R11_SNORM_BLOCK),
+              ("VK_FORMAT_EAC_R11G11_UNORM_BLOCK",
+               pure VK_FORMAT_EAC_R11G11_UNORM_BLOCK),
+              ("VK_FORMAT_EAC_R11G11_SNORM_BLOCK",
+               pure VK_FORMAT_EAC_R11G11_SNORM_BLOCK),
+              ("VK_FORMAT_ASTC_4x4_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_4x4_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_4x4_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_4x4_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_5x4_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_5x4_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_5x4_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_5x4_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_5x5_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_5x5_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_5x5_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_5x5_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_6x5_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_6x5_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_6x5_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_6x5_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_6x6_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_6x6_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_6x6_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_6x6_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_8x5_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_8x5_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_8x5_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_8x5_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_8x6_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_8x6_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_8x6_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_8x6_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_8x8_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_8x8_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_8x8_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_8x8_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_10x5_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_10x5_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_10x5_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_10x5_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_10x6_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_10x6_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_10x6_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_10x6_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_10x8_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_10x8_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_10x8_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_10x8_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_10x10_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_10x10_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_10x10_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_10x10_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_12x10_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_12x10_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_12x10_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_12x10_SRGB_BLOCK),
+              ("VK_FORMAT_ASTC_12x12_UNORM_BLOCK",
+               pure VK_FORMAT_ASTC_12x12_UNORM_BLOCK),
+              ("VK_FORMAT_ASTC_12x12_SRGB_BLOCK",
+               pure VK_FORMAT_ASTC_12x12_SRGB_BLOCK)]
+             +++
+             prec 10
+               (expectP (Ident "VkFormat") >> (VkFormat <$> step readPrec)))
 
 pattern VK_FORMAT_UNDEFINED :: VkFormat
 
@@ -1509,7 +1509,7 @@ pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat 184
 
 newtype VkFormatFeatureBitmask (a ::
                                   FlagType) = VkFormatFeatureBitmask VkFlags
-                                                deriving (Eq, Ord, Storable)
+                                              deriving (Eq, Ord, Storable)
 
 type VkFormatFeatureFlags = VkFormatFeatureBitmask FlagMask
 
@@ -1530,70 +1530,70 @@ deriving instance Bits (VkFormatFeatureBitmask FlagMask)
 deriving instance FiniteBits (VkFormatFeatureBitmask FlagMask)
 
 instance Show (VkFormatFeatureBitmask a) where
-        showsPrec _ VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT
-          = showString "VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT
-          = showString "VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT
-          = showString "VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT
-          = showString "VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT
-          = showString "VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT
-          = showString "VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT
-          = showString "VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT
-          = showString "VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT
-          = showString "VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
-          = showString "VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_BLIT_SRC_BIT
-          = showString "VK_FORMAT_FEATURE_BLIT_SRC_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_BLIT_DST_BIT
-          = showString "VK_FORMAT_FEATURE_BLIT_DST_BIT"
-        showsPrec _ VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT
-          = showString "VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT"
-        showsPrec p (VkFormatFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkFormatFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT
+      = showString "VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT
+      = showString "VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT
+      = showString "VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT
+      = showString "VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT
+      = showString "VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT
+      = showString "VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT
+      = showString "VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT
+      = showString "VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT
+      = showString "VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
+      = showString "VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_BLIT_SRC_BIT
+      = showString "VK_FORMAT_FEATURE_BLIT_SRC_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_BLIT_DST_BIT
+      = showString "VK_FORMAT_FEATURE_BLIT_DST_BIT"
+    showsPrec _ VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT
+      = showString "VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT"
+    showsPrec p (VkFormatFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkFormatFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkFormatFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT",
-                   pure VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT),
-                  ("VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT",
-                   pure VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT),
-                  ("VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT",
-                   pure VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT),
-                  ("VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT",
-                   pure VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT),
-                  ("VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT",
-                   pure VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT),
-                  ("VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT",
-                   pure VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT),
-                  ("VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT",
-                   pure VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT),
-                  ("VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT",
-                   pure VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT),
-                  ("VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT",
-                   pure VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT),
-                  ("VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT",
-                   pure VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT),
-                  ("VK_FORMAT_FEATURE_BLIT_SRC_BIT",
-                   pure VK_FORMAT_FEATURE_BLIT_SRC_BIT),
-                  ("VK_FORMAT_FEATURE_BLIT_DST_BIT",
-                   pure VK_FORMAT_FEATURE_BLIT_DST_BIT),
-                  ("VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT",
-                   pure VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFormatFeatureBitmask") >>
-                      (VkFormatFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT",
+               pure VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT),
+              ("VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT",
+               pure VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT),
+              ("VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT",
+               pure VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT),
+              ("VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT",
+               pure VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT),
+              ("VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT",
+               pure VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT),
+              ("VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT",
+               pure VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT),
+              ("VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT",
+               pure VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT),
+              ("VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT",
+               pure VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT),
+              ("VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT",
+               pure VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT),
+              ("VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT",
+               pure VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT),
+              ("VK_FORMAT_FEATURE_BLIT_SRC_BIT",
+               pure VK_FORMAT_FEATURE_BLIT_SRC_BIT),
+              ("VK_FORMAT_FEATURE_BLIT_DST_BIT",
+               pure VK_FORMAT_FEATURE_BLIT_DST_BIT),
+              ("VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT",
+               pure VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkFormatFeatureBitmask") >>
+                  (VkFormatFeatureBitmask <$> step readPrec)))
 
 -- | Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)
 --

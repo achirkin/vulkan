@@ -18,28 +18,28 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputRate VkVertexInputRate registry at www.khronos.org>
 newtype VkVertexInputRate = VkVertexInputRate Int32
-                              deriving (Eq, Ord, Enum, Storable)
+                            deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkVertexInputRate where
-        showsPrec _ VK_VERTEX_INPUT_RATE_VERTEX
-          = showString "VK_VERTEX_INPUT_RATE_VERTEX"
-        showsPrec _ VK_VERTEX_INPUT_RATE_INSTANCE
-          = showString "VK_VERTEX_INPUT_RATE_INSTANCE"
-        showsPrec p (VkVertexInputRate x)
-          = showParen (p >= 11)
-              (showString "VkVertexInputRate " . showsPrec 11 x)
+    showsPrec _ VK_VERTEX_INPUT_RATE_VERTEX
+      = showString "VK_VERTEX_INPUT_RATE_VERTEX"
+    showsPrec _ VK_VERTEX_INPUT_RATE_INSTANCE
+      = showString "VK_VERTEX_INPUT_RATE_INSTANCE"
+    showsPrec p (VkVertexInputRate x)
+      = showParen (p >= 11)
+          (showString "VkVertexInputRate " . showsPrec 11 x)
 
 instance Read VkVertexInputRate where
-        readPrec
-          = parens
-              (choose
-                 [("VK_VERTEX_INPUT_RATE_VERTEX", pure VK_VERTEX_INPUT_RATE_VERTEX),
-                  ("VK_VERTEX_INPUT_RATE_INSTANCE",
-                   pure VK_VERTEX_INPUT_RATE_INSTANCE)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkVertexInputRate") >>
-                      (VkVertexInputRate <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_VERTEX_INPUT_RATE_VERTEX", pure VK_VERTEX_INPUT_RATE_VERTEX),
+              ("VK_VERTEX_INPUT_RATE_INSTANCE",
+               pure VK_VERTEX_INPUT_RATE_INSTANCE)]
+             +++
+             prec 10
+               (expectP (Ident "VkVertexInputRate") >>
+                  (VkVertexInputRate <$> step readPrec)))
 
 pattern VK_VERTEX_INPUT_RATE_VERTEX :: VkVertexInputRate
 

@@ -11,21 +11,61 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
-       (-- * Vulkan extension: @VK_KHR_descriptor_update_template@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Markus Tavenrath @mtavenrath@
-        --
-        -- author: @KHR@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @86@
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Descriptor,
-        module Graphics.Vulkan.Types.Enum.Descriptor,
+       (VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
+        VkDescriptorUpdateTemplateCreateInfoKHR,
+        VkDescriptorUpdateTemplateEntryKHR,
+        VkDescriptorBindingBitmaskEXT(..),
+        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
+        VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
+        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorSetLayoutCreateBitmask(..),
+        VkDescriptorSetLayoutCreateFlagBits(),
+        VkDescriptorSetLayoutCreateFlags(),
+        VkDescriptorUpdateTemplateTypeKHR(..),
         VkCreateDescriptorUpdateTemplateKHR,
         pattern VkCreateDescriptorUpdateTemplateKHR,
         HS_vkCreateDescriptorUpdateTemplateKHR,
@@ -38,16 +78,77 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VkUpdateDescriptorSetWithTemplateKHR,
         HS_vkUpdateDescriptorSetWithTemplateKHR,
         PFN_vkUpdateDescriptorSetWithTemplateKHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Pipeline,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkInternalAllocationType(..),
+        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
+        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
+        VkPipelineCacheCreateFlagBits(..),
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        VkPipelineDynamicStateCreateFlagBits(..),
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        VkPipelineLayoutCreateFlagBits(..),
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(),
+        VkPipelineTessellationStateCreateFlagBits(..),
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        VkPipelineViewportStateCreateFlagBits(..), VkResult(..),
+        VkStructureType(..), VkSystemAllocationScope(..),
+        newVkAllocationFunction, newVkDebugReportCallbackEXT,
+        newVkDebugUtilsMessengerCallbackEXT, newVkFreeFunction,
+        newVkInternalAllocationNotification, newVkInternalFreeNotification,
+        newVkReallocationFunction, newVkVoidFunction,
+        unwrapVkAllocationFunction, unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkDescriptorBufferInfo,
+        VkDescriptorImageInfo, VkDescriptorPoolCreateInfo,
+        VkDescriptorPoolSize, VkDescriptorSetAllocateInfo,
+        VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
+        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorUpdateTemplateCreateInfo,
+        VkDescriptorUpdateTemplateEntry,
         VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION,
         pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION,
         VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME,
@@ -90,8 +191,9 @@ pattern VkCreateDescriptorUpdateTemplateKHR :: CString
 
 pattern VkCreateDescriptorUpdateTemplateKHR <-
         (is_VkCreateDescriptorUpdateTemplateKHR -> True)
-  where VkCreateDescriptorUpdateTemplateKHR
-          = _VkCreateDescriptorUpdateTemplateKHR
+  where
+    VkCreateDescriptorUpdateTemplateKHR
+      = _VkCreateDescriptorUpdateTemplateKHR
 
 {-# INLINE _VkCreateDescriptorUpdateTemplateKHR #-}
 
@@ -146,25 +248,26 @@ foreign import ccall safe "dynamic"
                  HS_vkCreateDescriptorUpdateTemplateKHR
 
 instance VulkanProc "vkCreateDescriptorUpdateTemplateKHR" where
-        type VkProcType "vkCreateDescriptorUpdateTemplateKHR" =
-             HS_vkCreateDescriptorUpdateTemplateKHR
-        vkProcSymbol = _VkCreateDescriptorUpdateTemplateKHR
+    type VkProcType "vkCreateDescriptorUpdateTemplateKHR" =
+         HS_vkCreateDescriptorUpdateTemplateKHR
+    vkProcSymbol = _VkCreateDescriptorUpdateTemplateKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCreateDescriptorUpdateTemplateKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCreateDescriptorUpdateTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDescriptorUpdateTemplateKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDescriptorUpdateTemplateKHR :: CString
 
 pattern VkDestroyDescriptorUpdateTemplateKHR <-
         (is_VkDestroyDescriptorUpdateTemplateKHR -> True)
-  where VkDestroyDescriptorUpdateTemplateKHR
-          = _VkDestroyDescriptorUpdateTemplateKHR
+  where
+    VkDestroyDescriptorUpdateTemplateKHR
+      = _VkDestroyDescriptorUpdateTemplateKHR
 
 {-# INLINE _VkDestroyDescriptorUpdateTemplateKHR #-}
 
@@ -211,26 +314,27 @@ foreign import ccall safe "dynamic"
                  HS_vkDestroyDescriptorUpdateTemplateKHR
 
 instance VulkanProc "vkDestroyDescriptorUpdateTemplateKHR" where
-        type VkProcType "vkDestroyDescriptorUpdateTemplateKHR" =
-             HS_vkDestroyDescriptorUpdateTemplateKHR
-        vkProcSymbol = _VkDestroyDescriptorUpdateTemplateKHR
+    type VkProcType "vkDestroyDescriptorUpdateTemplateKHR" =
+         HS_vkDestroyDescriptorUpdateTemplateKHR
+    vkProcSymbol = _VkDestroyDescriptorUpdateTemplateKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkDestroyDescriptorUpdateTemplateKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkDestroyDescriptorUpdateTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkDestroyDescriptorUpdateTemplateKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkDestroyDescriptorUpdateTemplateKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUpdateDescriptorSetWithTemplateKHR :: CString
 
 pattern VkUpdateDescriptorSetWithTemplateKHR <-
         (is_VkUpdateDescriptorSetWithTemplateKHR -> True)
-  where VkUpdateDescriptorSetWithTemplateKHR
-          = _VkUpdateDescriptorSetWithTemplateKHR
+  where
+    VkUpdateDescriptorSetWithTemplateKHR
+      = _VkUpdateDescriptorSetWithTemplateKHR
 
 {-# INLINE _VkUpdateDescriptorSetWithTemplateKHR #-}
 
@@ -279,19 +383,19 @@ foreign import ccall safe "dynamic"
                  HS_vkUpdateDescriptorSetWithTemplateKHR
 
 instance VulkanProc "vkUpdateDescriptorSetWithTemplateKHR" where
-        type VkProcType "vkUpdateDescriptorSetWithTemplateKHR" =
-             HS_vkUpdateDescriptorSetWithTemplateKHR
-        vkProcSymbol = _VkUpdateDescriptorSetWithTemplateKHR
+    type VkProcType "vkUpdateDescriptorSetWithTemplateKHR" =
+         HS_vkUpdateDescriptorSetWithTemplateKHR
+    vkProcSymbol = _VkUpdateDescriptorSetWithTemplateKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkUpdateDescriptorSetWithTemplateKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkUpdateDescriptorSetWithTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkUpdateDescriptorSetWithTemplateKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkUpdateDescriptorSetWithTemplateKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -304,8 +408,9 @@ pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME :: CString
 
 pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME <-
         (is_VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME -> True)
-  where VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME
-          = _VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME
+  where
+    VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME
+      = _VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME #-}
 

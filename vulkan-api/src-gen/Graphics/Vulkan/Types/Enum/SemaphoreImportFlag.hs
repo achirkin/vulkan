@@ -25,19 +25,19 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBitsKHR VkFlags
-                                         deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+                                       deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkSemaphoreImportFlagBitsKHR where
-        {-# INLINE showsPrec #-}
-        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkSemaphoreImportFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkSemaphoreImportBitmask (a ::
                                     FlagType) = VkSemaphoreImportBitmask VkFlags
-                                                  deriving (Eq, Ord, Storable)
+                                                deriving (Eq, Ord, Storable)
 
 type VkSemaphoreImportFlags = VkSemaphoreImportBitmask FlagMask
 
@@ -58,22 +58,22 @@ deriving instance Bits (VkSemaphoreImportBitmask FlagMask)
 deriving instance FiniteBits (VkSemaphoreImportBitmask FlagMask)
 
 instance Show (VkSemaphoreImportBitmask a) where
-        showsPrec _ VK_SEMAPHORE_IMPORT_TEMPORARY_BIT
-          = showString "VK_SEMAPHORE_IMPORT_TEMPORARY_BIT"
-        showsPrec p (VkSemaphoreImportBitmask x)
-          = showParen (p >= 11)
-              (showString "VkSemaphoreImportBitmask " . showsPrec 11 x)
+    showsPrec _ VK_SEMAPHORE_IMPORT_TEMPORARY_BIT
+      = showString "VK_SEMAPHORE_IMPORT_TEMPORARY_BIT"
+    showsPrec p (VkSemaphoreImportBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSemaphoreImportBitmask " . showsPrec 11 x)
 
 instance Read (VkSemaphoreImportBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SEMAPHORE_IMPORT_TEMPORARY_BIT",
-                   pure VK_SEMAPHORE_IMPORT_TEMPORARY_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSemaphoreImportBitmask") >>
-                      (VkSemaphoreImportBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SEMAPHORE_IMPORT_TEMPORARY_BIT",
+               pure VK_SEMAPHORE_IMPORT_TEMPORARY_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkSemaphoreImportBitmask") >>
+                  (VkSemaphoreImportBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT ::

@@ -5,27 +5,55 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
-       (-- * Vulkan extension: @VK_NV_framebuffer_mixed_samples@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Jeff Bolz @jeffbolznv@
-        --
-        -- author: @NV@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @153@
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.CoverageModulationModeNV,
-        module Graphics.Vulkan.Types.Bitmasks,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkCoverageModulationModeNV(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
         VkPipelineCoverageModulationStateCreateInfoNV,
-        VkPipelineCoverageModulationStateCreateInfoNV',
-        VkPipelineMultisampleStateCreateInfo,
-        VkPipelineMultisampleStateCreateInfo',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPipelineMultisampleStateCreateInfo, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION,
         pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION,
@@ -41,9 +69,7 @@ import Graphics.Vulkan.Types.Enum.CoverageModulationModeNV
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineCoverageModulationStateCreateInfoNV,
-                                                            VkPipelineCoverageModulationStateCreateInfoNV',
-                                                            VkPipelineMultisampleStateCreateInfo,
-                                                            VkPipelineMultisampleStateCreateInfo')
+                                                            VkPipelineMultisampleStateCreateInfo)
 
 pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -56,8 +82,9 @@ pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME :: CString
 
 pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME <-
         (is_VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME -> True)
-  where VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME
-          = _VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME
+  where
+    VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME
+      = _VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME
 
 {-# INLINE _VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME #-}
 

@@ -46,26 +46,70 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         VkQueuePresentKHR, pattern VkQueuePresentKHR, HS_vkQueuePresentKHR,
         PFN_vkQueuePresentKHR, vkQueuePresentKHR, vkQueuePresentKHRUnsafe,
         vkQueuePresentKHRSafe, module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.PresentModeKHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SharingMode,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.Surface,
-        module Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Present,
-        module Graphics.Vulkan.Types.Struct.SwapchainC,
-        VK_KHR_SWAPCHAIN_SPEC_VERSION,
+        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkInternalAllocationType(..), VkPresentModeKHR(..), VkResult(..),
+        VkSharingMode(..), VkStructureType(..),
+        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
+        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
+        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
+        VkSwapchainCreateFlagsKHR(), VkSystemAllocationScope(..),
+        newVkAllocationFunction, newVkDebugReportCallbackEXT,
+        newVkDebugUtilsMessengerCallbackEXT, newVkFreeFunction,
+        newVkInternalAllocationNotification, newVkInternalFreeNotification,
+        newVkReallocationFunction, newVkVoidFunction,
+        unwrapVkAllocationFunction, unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkExtent2D, VkExtent3D, VkPresentInfoKHR,
+        VkPresentRegionKHR, VkPresentRegionsKHR, VkPresentTimeGOOGLE,
+        VkPresentTimesInfoGOOGLE, VkSwapchainCounterCreateInfoEXT,
+        VkSwapchainCreateInfoKHR, VK_KHR_SWAPCHAIN_SPEC_VERSION,
         pattern VK_KHR_SWAPCHAIN_SPEC_VERSION,
         VK_KHR_SWAPCHAIN_EXTENSION_NAME,
         pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME,
@@ -75,20 +119,15 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_ERROR_OUT_OF_DATE_KHR,
         pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR, -- ** Required extensions: 'VK_KHR_surface'.
                                               VkAcquireNextImageInfoKHR,
-        VkAcquireNextImageInfoKHR', VkBindImageMemoryInfo,
-        VkBindImageMemoryInfo', VkBindImageMemorySwapchainInfoKHR,
-        VkBindImageMemorySwapchainInfoKHR',
-        VkDeviceGroupPresentCapabilitiesKHR,
-        VkDeviceGroupPresentCapabilitiesKHR', VkDeviceGroupPresentInfoKHR,
-        VkDeviceGroupPresentInfoKHR',
-        module Graphics.Vulkan.Types.Enum.Device,
-        VkDeviceGroupSwapchainCreateInfoKHR,
-        VkDeviceGroupSwapchainCreateInfoKHR', VkExtent2D, VkExtent2D',
-        VkExtent3D, VkExtent3D', VkImageCreateInfo, VkImageCreateInfo',
-        VkImageSwapchainCreateInfoKHR, VkImageSwapchainCreateInfoKHR',
-        VkPresentInfoKHR, VkPresentInfoKHR',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        VkSwapchainCreateInfoKHR, VkSwapchainCreateInfoKHR',
+        VkBindImageMemoryInfo, VkBindImageMemorySwapchainInfoKHR,
+        VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
+        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
+        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkDeviceGroupSwapchainCreateInfoKHR, VkImageCreateInfo,
+        VkImageSwapchainCreateInfoKHR, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(),
         -- > #include "vk_platform.h"
         VkGetDeviceGroupPresentCapabilitiesKHR,
         pattern VkGetDeviceGroupPresentCapabilitiesKHR,
@@ -114,11 +153,18 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         VkAcquireNextImage2KHR, pattern VkAcquireNextImage2KHR,
         HS_vkAcquireNextImage2KHR, PFN_vkAcquireNextImage2KHR,
         vkAcquireNextImage2KHR, vkAcquireNextImage2KHRUnsafe,
-        vkAcquireNextImage2KHRSafe,
-        module Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR,
-        module Graphics.Vulkan.Types.Struct.Device,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Struct.Rect,
+        vkAcquireNextImage2KHRSafe, VkDeviceCreateInfo,
+        VkDeviceEventInfoEXT, VkDeviceGeneratedCommandsFeaturesNVX,
+        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+        VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceGroupCommandBufferBeginInfo,
+        VkDeviceGroupCommandBufferBeginInfoKHR,
+        VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
+        VkDeviceGroupRenderPassBeginInfo,
+        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
+        VkDeviceGroupSubmitInfoKHR, VkDeviceQueueCreateInfo,
+        VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
+        VkOffset2D, VkOffset3D, VkRect2D, VkRectLayerKHR,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
         pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
@@ -152,15 +198,10 @@ import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
 import Graphics.Vulkan.Types.Struct.Bind                    (VkBindImageMemoryInfo,
-                                                             VkBindImageMemoryInfo',
-                                                             VkBindImageMemorySwapchainInfoKHR,
-                                                             VkBindImageMemorySwapchainInfoKHR')
+                                                             VkBindImageMemorySwapchainInfoKHR)
 import Graphics.Vulkan.Types.Struct.Device
 import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo,
-                                                             VkImageCreateInfo',
-                                                             VkImageSwapchainCreateInfoKHR,
-                                                             VkImageSwapchainCreateInfoKHR')
+import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
 import Graphics.Vulkan.Types.Struct.Offset
 import Graphics.Vulkan.Types.Struct.Present
 import Graphics.Vulkan.Types.Struct.Rect
@@ -170,7 +211,8 @@ import System.IO.Unsafe                                     (unsafeDupablePerfor
 pattern VkCreateSwapchainKHR :: CString
 
 pattern VkCreateSwapchainKHR <- (is_VkCreateSwapchainKHR -> True)
-  where VkCreateSwapchainKHR = _VkCreateSwapchainKHR
+  where
+    VkCreateSwapchainKHR = _VkCreateSwapchainKHR
 
 {-# INLINE _VkCreateSwapchainKHR #-}
 
@@ -379,21 +421,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateSwapchainKHRSafe
                :: PFN_vkCreateSwapchainKHR -> HS_vkCreateSwapchainKHR
 
 instance VulkanProc "vkCreateSwapchainKHR" where
-        type VkProcType "vkCreateSwapchainKHR" = HS_vkCreateSwapchainKHR
-        vkProcSymbol = _VkCreateSwapchainKHR
+    type VkProcType "vkCreateSwapchainKHR" = HS_vkCreateSwapchainKHR
+    vkProcSymbol = _VkCreateSwapchainKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateSwapchainKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateSwapchainKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateSwapchainKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateSwapchainKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySwapchainKHR :: CString
 
 pattern VkDestroySwapchainKHR <- (is_VkDestroySwapchainKHR -> True)
-  where VkDestroySwapchainKHR = _VkDestroySwapchainKHR
+  where
+    VkDestroySwapchainKHR = _VkDestroySwapchainKHR
 
 {-# INLINE _VkDestroySwapchainKHR #-}
 
@@ -564,22 +607,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroySwapchainKHRSafe
                :: PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
 
 instance VulkanProc "vkDestroySwapchainKHR" where
-        type VkProcType "vkDestroySwapchainKHR" = HS_vkDestroySwapchainKHR
-        vkProcSymbol = _VkDestroySwapchainKHR
+    type VkProcType "vkDestroySwapchainKHR" = HS_vkDestroySwapchainKHR
+    vkProcSymbol = _VkDestroySwapchainKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroySwapchainKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroySwapchainKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroySwapchainKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroySwapchainKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetSwapchainImagesKHR :: CString
 
 pattern VkGetSwapchainImagesKHR <-
         (is_VkGetSwapchainImagesKHR -> True)
-  where VkGetSwapchainImagesKHR = _VkGetSwapchainImagesKHR
+  where
+    VkGetSwapchainImagesKHR = _VkGetSwapchainImagesKHR
 
 {-# INLINE _VkGetSwapchainImagesKHR #-}
 
@@ -784,22 +828,23 @@ foreign import ccall safe "dynamic"
                PFN_vkGetSwapchainImagesKHR -> HS_vkGetSwapchainImagesKHR
 
 instance VulkanProc "vkGetSwapchainImagesKHR" where
-        type VkProcType "vkGetSwapchainImagesKHR" =
-             HS_vkGetSwapchainImagesKHR
-        vkProcSymbol = _VkGetSwapchainImagesKHR
+    type VkProcType "vkGetSwapchainImagesKHR" =
+         HS_vkGetSwapchainImagesKHR
+    vkProcSymbol = _VkGetSwapchainImagesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainImagesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainImagesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetSwapchainImagesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetSwapchainImagesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkAcquireNextImageKHR :: CString
 
 pattern VkAcquireNextImageKHR <- (is_VkAcquireNextImageKHR -> True)
-  where VkAcquireNextImageKHR = _VkAcquireNextImageKHR
+  where
+    VkAcquireNextImageKHR = _VkAcquireNextImageKHR
 
 {-# INLINE _VkAcquireNextImageKHR #-}
 
@@ -1028,21 +1073,22 @@ foreign import ccall safe "dynamic" unwrapVkAcquireNextImageKHRSafe
                :: PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
 
 instance VulkanProc "vkAcquireNextImageKHR" where
-        type VkProcType "vkAcquireNextImageKHR" = HS_vkAcquireNextImageKHR
-        vkProcSymbol = _VkAcquireNextImageKHR
+    type VkProcType "vkAcquireNextImageKHR" = HS_vkAcquireNextImageKHR
+    vkProcSymbol = _VkAcquireNextImageKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImageKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImageKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAcquireNextImageKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAcquireNextImageKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueuePresentKHR :: CString
 
 pattern VkQueuePresentKHR <- (is_VkQueuePresentKHR -> True)
-  where VkQueuePresentKHR = _VkQueuePresentKHR
+  where
+    VkQueuePresentKHR = _VkQueuePresentKHR
 
 {-# INLINE _VkQueuePresentKHR #-}
 
@@ -1215,16 +1261,16 @@ foreign import ccall safe "dynamic" unwrapVkQueuePresentKHRSafe ::
                PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
 
 instance VulkanProc "vkQueuePresentKHR" where
-        type VkProcType "vkQueuePresentKHR" = HS_vkQueuePresentKHR
-        vkProcSymbol = _VkQueuePresentKHR
+    type VkProcType "vkQueuePresentKHR" = HS_vkQueuePresentKHR
+    vkProcSymbol = _VkQueuePresentKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkQueuePresentKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkQueuePresentKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkQueuePresentKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkQueuePresentKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -1236,8 +1282,8 @@ pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME :: CString
 
 pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME <-
         (is_VK_KHR_SWAPCHAIN_EXTENSION_NAME -> True)
-  where VK_KHR_SWAPCHAIN_EXTENSION_NAME
-          = _VK_KHR_SWAPCHAIN_EXTENSION_NAME
+  where
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME = _VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_SWAPCHAIN_EXTENSION_NAME #-}
 
@@ -1284,8 +1330,9 @@ pattern VkGetDeviceGroupPresentCapabilitiesKHR :: CString
 
 pattern VkGetDeviceGroupPresentCapabilitiesKHR <-
         (is_VkGetDeviceGroupPresentCapabilitiesKHR -> True)
-  where VkGetDeviceGroupPresentCapabilitiesKHR
-          = _VkGetDeviceGroupPresentCapabilitiesKHR
+  where
+    VkGetDeviceGroupPresentCapabilitiesKHR
+      = _VkGetDeviceGroupPresentCapabilitiesKHR
 
 {-# INLINE _VkGetDeviceGroupPresentCapabilitiesKHR #-}
 
@@ -1477,26 +1524,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDeviceGroupPresentCapabilitiesKHR
 
 instance VulkanProc "vkGetDeviceGroupPresentCapabilitiesKHR" where
-        type VkProcType "vkGetDeviceGroupPresentCapabilitiesKHR" =
-             HS_vkGetDeviceGroupPresentCapabilitiesKHR
-        vkProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
+    type VkProcType "vkGetDeviceGroupPresentCapabilitiesKHR" =
+         HS_vkGetDeviceGroupPresentCapabilitiesKHR
+    vkProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDeviceGroupPresentCapabilitiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDeviceGroupPresentCapabilitiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetDeviceGroupPresentCapabilitiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetDeviceGroupPresentCapabilitiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDeviceGroupSurfacePresentModesKHR :: CString
 
 pattern VkGetDeviceGroupSurfacePresentModesKHR <-
         (is_VkGetDeviceGroupSurfacePresentModesKHR -> True)
-  where VkGetDeviceGroupSurfacePresentModesKHR
-          = _VkGetDeviceGroupSurfacePresentModesKHR
+  where
+    VkGetDeviceGroupSurfacePresentModesKHR
+      = _VkGetDeviceGroupSurfacePresentModesKHR
 
 {-# INLINE _VkGetDeviceGroupSurfacePresentModesKHR #-}
 
@@ -1703,26 +1751,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDeviceGroupSurfacePresentModesKHR
 
 instance VulkanProc "vkGetDeviceGroupSurfacePresentModesKHR" where
-        type VkProcType "vkGetDeviceGroupSurfacePresentModesKHR" =
-             HS_vkGetDeviceGroupSurfacePresentModesKHR
-        vkProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
+    type VkProcType "vkGetDeviceGroupSurfacePresentModesKHR" =
+         HS_vkGetDeviceGroupSurfacePresentModesKHR
+    vkProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDeviceGroupSurfacePresentModesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDeviceGroupSurfacePresentModesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetDeviceGroupSurfacePresentModesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetDeviceGroupSurfacePresentModesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDevicePresentRectanglesKHR :: CString
 
 pattern VkGetPhysicalDevicePresentRectanglesKHR <-
         (is_VkGetPhysicalDevicePresentRectanglesKHR -> True)
-  where VkGetPhysicalDevicePresentRectanglesKHR
-          = _VkGetPhysicalDevicePresentRectanglesKHR
+  where
+    VkGetPhysicalDevicePresentRectanglesKHR
+      = _VkGetPhysicalDevicePresentRectanglesKHR
 
 {-# INLINE _VkGetPhysicalDevicePresentRectanglesKHR #-}
 
@@ -1938,25 +1987,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDevicePresentRectanglesKHR
 
 instance VulkanProc "vkGetPhysicalDevicePresentRectanglesKHR" where
-        type VkProcType "vkGetPhysicalDevicePresentRectanglesKHR" =
-             HS_vkGetPhysicalDevicePresentRectanglesKHR
-        vkProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
+    type VkProcType "vkGetPhysicalDevicePresentRectanglesKHR" =
+         HS_vkGetPhysicalDevicePresentRectanglesKHR
+    vkProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDevicePresentRectanglesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDevicePresentRectanglesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDevicePresentRectanglesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDevicePresentRectanglesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkAcquireNextImage2KHR :: CString
 
 pattern VkAcquireNextImage2KHR <-
         (is_VkAcquireNextImage2KHR -> True)
-  where VkAcquireNextImage2KHR = _VkAcquireNextImage2KHR
+  where
+    VkAcquireNextImage2KHR = _VkAcquireNextImage2KHR
 
 {-# INLINE _VkAcquireNextImage2KHR #-}
 
@@ -2150,17 +2200,17 @@ foreign import ccall safe "dynamic"
                PFN_vkAcquireNextImage2KHR -> HS_vkAcquireNextImage2KHR
 
 instance VulkanProc "vkAcquireNextImage2KHR" where
-        type VkProcType "vkAcquireNextImage2KHR" =
-             HS_vkAcquireNextImage2KHR
-        vkProcSymbol = _VkAcquireNextImage2KHR
+    type VkProcType "vkAcquireNextImage2KHR" =
+         HS_vkAcquireNextImage2KHR
+    vkProcSymbol = _VkAcquireNextImage2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImage2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAcquireNextImage2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAcquireNextImage2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAcquireNextImage2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR ::
         VkStructureType

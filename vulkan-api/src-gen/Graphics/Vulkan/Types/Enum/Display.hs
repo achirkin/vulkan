@@ -34,25 +34,25 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayEventTypeEXT VkDisplayEventTypeEXT registry at www.khronos.org>
 newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
-                                  deriving (Eq, Ord, Enum, Storable)
+                                deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDisplayEventTypeEXT where
-        showsPrec _ VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT
-          = showString "VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT"
-        showsPrec p (VkDisplayEventTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDisplayEventTypeEXT " . showsPrec 11 x)
+    showsPrec _ VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT
+      = showString "VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT"
+    showsPrec p (VkDisplayEventTypeEXT x)
+      = showParen (p >= 11)
+          (showString "VkDisplayEventTypeEXT " . showsPrec 11 x)
 
 instance Read VkDisplayEventTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT",
-                   pure VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayEventTypeEXT") >>
-                      (VkDisplayEventTypeEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT",
+               pure VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDisplayEventTypeEXT") >>
+                  (VkDisplayEventTypeEXT <$> step readPrec)))
 
 pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT ::
         VkDisplayEventTypeEXT
@@ -62,7 +62,7 @@ pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT =
 
 newtype VkDisplayPlaneAlphaBitmaskKHR (a ::
                                          FlagType) = VkDisplayPlaneAlphaBitmaskKHR VkFlags
-                                                       deriving (Eq, Ord, Storable)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkDisplayPlaneAlphaFlagsKHR =
      VkDisplayPlaneAlphaBitmaskKHR FlagMask
@@ -88,35 +88,35 @@ deriving instance
          FiniteBits (VkDisplayPlaneAlphaBitmaskKHR FlagMask)
 
 instance Show (VkDisplayPlaneAlphaBitmaskKHR a) where
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR
-          = showString
-              "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR"
-        showsPrec p (VkDisplayPlaneAlphaBitmaskKHR x)
-          = showParen (p >= 11)
-              (showString "VkDisplayPlaneAlphaBitmaskKHR " . showsPrec 11 x)
+    showsPrec _ VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR
+      = showString "VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR"
+    showsPrec _ VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR
+      = showString "VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR"
+    showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR
+      = showString "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR"
+    showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR
+      = showString
+          "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR"
+    showsPrec p (VkDisplayPlaneAlphaBitmaskKHR x)
+      = showParen (p >= 11)
+          (showString "VkDisplayPlaneAlphaBitmaskKHR " . showsPrec 11 x)
 
 instance Read (VkDisplayPlaneAlphaBitmaskKHR a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayPlaneAlphaBitmaskKHR") >>
-                      (VkDisplayPlaneAlphaBitmaskKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR",
+               pure VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR),
+              ("VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR",
+               pure VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR),
+              ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR",
+               pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR),
+              ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR",
+               pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkDisplayPlaneAlphaBitmaskKHR") >>
+                  (VkDisplayPlaneAlphaBitmaskKHR <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR ::
@@ -150,33 +150,33 @@ pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerStateEXT VkDisplayPowerStateEXT registry at www.khronos.org>
 newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
-                                   deriving (Eq, Ord, Enum, Storable)
+                                 deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDisplayPowerStateEXT where
-        showsPrec _ VK_DISPLAY_POWER_STATE_OFF_EXT
-          = showString "VK_DISPLAY_POWER_STATE_OFF_EXT"
-        showsPrec _ VK_DISPLAY_POWER_STATE_SUSPEND_EXT
-          = showString "VK_DISPLAY_POWER_STATE_SUSPEND_EXT"
-        showsPrec _ VK_DISPLAY_POWER_STATE_ON_EXT
-          = showString "VK_DISPLAY_POWER_STATE_ON_EXT"
-        showsPrec p (VkDisplayPowerStateEXT x)
-          = showParen (p >= 11)
-              (showString "VkDisplayPowerStateEXT " . showsPrec 11 x)
+    showsPrec _ VK_DISPLAY_POWER_STATE_OFF_EXT
+      = showString "VK_DISPLAY_POWER_STATE_OFF_EXT"
+    showsPrec _ VK_DISPLAY_POWER_STATE_SUSPEND_EXT
+      = showString "VK_DISPLAY_POWER_STATE_SUSPEND_EXT"
+    showsPrec _ VK_DISPLAY_POWER_STATE_ON_EXT
+      = showString "VK_DISPLAY_POWER_STATE_ON_EXT"
+    showsPrec p (VkDisplayPowerStateEXT x)
+      = showParen (p >= 11)
+          (showString "VkDisplayPowerStateEXT " . showsPrec 11 x)
 
 instance Read VkDisplayPowerStateEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_POWER_STATE_OFF_EXT",
-                   pure VK_DISPLAY_POWER_STATE_OFF_EXT),
-                  ("VK_DISPLAY_POWER_STATE_SUSPEND_EXT",
-                   pure VK_DISPLAY_POWER_STATE_SUSPEND_EXT),
-                  ("VK_DISPLAY_POWER_STATE_ON_EXT",
-                   pure VK_DISPLAY_POWER_STATE_ON_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayPowerStateEXT") >>
-                      (VkDisplayPowerStateEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DISPLAY_POWER_STATE_OFF_EXT",
+               pure VK_DISPLAY_POWER_STATE_OFF_EXT),
+              ("VK_DISPLAY_POWER_STATE_SUSPEND_EXT",
+               pure VK_DISPLAY_POWER_STATE_SUSPEND_EXT),
+              ("VK_DISPLAY_POWER_STATE_ON_EXT",
+               pure VK_DISPLAY_POWER_STATE_ON_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDisplayPowerStateEXT") >>
+                  (VkDisplayPowerStateEXT <$> step readPrec)))
 
 pattern VK_DISPLAY_POWER_STATE_OFF_EXT :: VkDisplayPowerStateEXT
 

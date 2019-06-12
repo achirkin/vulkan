@@ -28,9 +28,32 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         pattern VkCmdDrawIndexedIndirectCountAMD,
         HS_vkCmdDrawIndexedIndirectCountAMD,
         PFN_vkCmdDrawIndexedIndirectCountAMD,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
@@ -46,7 +69,8 @@ pattern VkCmdDrawIndirectCountAMD :: CString
 
 pattern VkCmdDrawIndirectCountAMD <-
         (is_VkCmdDrawIndirectCountAMD -> True)
-  where VkCmdDrawIndirectCountAMD = _VkCmdDrawIndirectCountAMD
+  where
+    VkCmdDrawIndirectCountAMD = _VkCmdDrawIndirectCountAMD
 
 {-# INLINE _VkCmdDrawIndirectCountAMD #-}
 
@@ -103,24 +127,25 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDrawIndirectCountAMD -> HS_vkCmdDrawIndirectCountAMD
 
 instance VulkanProc "vkCmdDrawIndirectCountAMD" where
-        type VkProcType "vkCmdDrawIndirectCountAMD" =
-             HS_vkCmdDrawIndirectCountAMD
-        vkProcSymbol = _VkCmdDrawIndirectCountAMD
+    type VkProcType "vkCmdDrawIndirectCountAMD" =
+         HS_vkCmdDrawIndirectCountAMD
+    vkProcSymbol = _VkCmdDrawIndirectCountAMD
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectCountAMDUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectCountAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountAMDSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountAMDSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndexedIndirectCountAMD :: CString
 
 pattern VkCmdDrawIndexedIndirectCountAMD <-
         (is_VkCmdDrawIndexedIndirectCountAMD -> True)
-  where VkCmdDrawIndexedIndirectCountAMD
-          = _VkCmdDrawIndexedIndirectCountAMD
+  where
+    VkCmdDrawIndexedIndirectCountAMD
+      = _VkCmdDrawIndexedIndirectCountAMD
 
 {-# INLINE _VkCmdDrawIndexedIndirectCountAMD #-}
 
@@ -181,18 +206,18 @@ foreign import ccall safe "dynamic"
                  HS_vkCmdDrawIndexedIndirectCountAMD
 
 instance VulkanProc "vkCmdDrawIndexedIndirectCountAMD" where
-        type VkProcType "vkCmdDrawIndexedIndirectCountAMD" =
-             HS_vkCmdDrawIndexedIndirectCountAMD
-        vkProcSymbol = _VkCmdDrawIndexedIndirectCountAMD
+    type VkProcType "vkCmdDrawIndexedIndirectCountAMD" =
+         HS_vkCmdDrawIndexedIndirectCountAMD
+    vkProcSymbol = _VkCmdDrawIndexedIndirectCountAMD
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCmdDrawIndexedIndirectCountAMDUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCmdDrawIndexedIndirectCountAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountAMDSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountAMDSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -205,8 +230,9 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString
 
 pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME <-
         (is_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME -> True)
-  where VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
-          = _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
+  where
+    VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
+      = _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 
 {-# INLINE _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME #-}
 

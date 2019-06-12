@@ -23,11 +23,12 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         -- type: @instance@
         --
         -- Extension number: @60@
-        module Graphics.Vulkan.Types.Struct.FormatProperties,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
-        module Graphics.Vulkan.Types.Struct.QueueFamilyProperties,
-        module Graphics.Vulkan.Types.Struct.Sparse,
+        VkFormatProperties2KHR, VkImageFormatProperties2KHR,
+        VkPhysicalDeviceFeatures2KHR, VkPhysicalDeviceImageFormatInfo2KHR,
+        VkPhysicalDeviceMemoryProperties2KHR,
+        VkPhysicalDeviceProperties2KHR,
+        VkPhysicalDeviceSparseImageFormatInfo2KHR,
+        VkQueueFamilyProperties2KHR, VkSparseImageFormatProperties2KHR,
         VkGetPhysicalDeviceFeatures2KHR,
         pattern VkGetPhysicalDeviceFeatures2KHR,
         HS_vkGetPhysicalDeviceFeatures2KHR,
@@ -56,24 +57,186 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Enum.Device,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.Memory,
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.Queue,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.Sparse,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Device,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Memory,
-        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkMemoryAllocateBitmask(..), VkMemoryHeapBitmask(..),
+        VkMemoryPropertyBitmask(..), VkMemoryAllocateFlagBits(),
+        VkMemoryAllocateFlagBitsKHR(..), VkMemoryAllocateFlags(),
+        VkMemoryHeapFlagBits(), VkMemoryHeapFlags(),
+        VkMemoryPropertyFlagBits(), VkMemoryPropertyFlags(),
+        VkPhysicalDeviceType(..), VkQueueBitmask(..),
+        VkQueueGlobalPriorityEXT(..), VkQueueFlagBits(), VkQueueFlags(),
+        VkResult(..), VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkSparseImageFormatBitmask(..),
+        VkSparseMemoryBindBitmask(..), VkSparseImageFormatFlagBits(),
+        VkSparseImageFormatFlags(), VkSparseMemoryBindFlagBits(),
+        VkSparseMemoryBindFlags(), VkStructureType(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkDeviceCreateInfo, VkDeviceEventInfoEXT,
+        VkDeviceGeneratedCommandsFeaturesNVX,
+        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+        VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceGroupCommandBufferBeginInfo,
+        VkDeviceGroupCommandBufferBeginInfoKHR,
+        VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
+        VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
+        VkDeviceGroupRenderPassBeginInfo,
+        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
+        VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
+        VkDeviceQueueInfo2, VkExtent2D, VkExtent3D, VkFormatProperties,
+        VkFormatProperties2, VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
+        VkImageFormatProperties2, VkImageMemoryBarrier,
+        VkImageMemoryRequirementsInfo2, VkImageMemoryRequirementsInfo2KHR,
+        VkImagePlaneMemoryRequirementsInfo,
+        VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
+        VkImageSparseMemoryRequirementsInfo2,
+        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
+        VkImageSubresourceLayers, VkImageSubresourceRange,
+        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
+        VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
+        VkMemoryAllocateInfo, VkMemoryBarrier,
+        VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfoKHR,
+        VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirementsKHR,
+        VkMemoryFdPropertiesKHR, VkMemoryGetFdInfoKHR, VkMemoryHeap,
+        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
+        VkPhysicalDevice16BitStorageFeatures,
+        VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceExternalBufferInfo,
+        VkPhysicalDeviceExternalBufferInfoKHR,
+        VkPhysicalDeviceExternalFenceInfo,
+        VkPhysicalDeviceExternalFenceInfoKHR,
+        VkPhysicalDeviceExternalImageFormatInfo,
+        VkPhysicalDeviceExternalImageFormatInfoKHR,
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+        VkPhysicalDeviceExternalSemaphoreInfo,
+        VkPhysicalDeviceExternalSemaphoreInfoKHR,
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceGroupProperties,
+        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
+        VkPhysicalDeviceIDPropertiesKHR, VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceMaintenance3Properties,
+        VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceMemoryProperties2,
+        VkPhysicalDeviceMultiviewFeatures,
+        VkPhysicalDeviceMultiviewFeaturesKHR,
+        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
+        VkPhysicalDeviceMultiviewProperties,
+        VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePointClippingProperties,
+        VkPhysicalDevicePointClippingPropertiesKHR,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProtectedMemoryFeatures,
+        VkPhysicalDeviceProtectedMemoryProperties,
+        VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+        VkPhysicalDeviceSamplerYcbcrConversionFeatures,
+        VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceSparseImageFormatInfo2,
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceVariablePointerFeatures,
+        VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPhysicalDeviceFeatures, VkQueueFamilyProperties,
+        VkQueueFamilyProperties2, VkSparseBufferMemoryBindInfo,
+        VkSparseImageFormatProperties, VkSparseImageFormatProperties2,
+        VkSparseImageMemoryBind, VkSparseImageMemoryBindInfo,
+        VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements2,
+        VkSparseImageMemoryRequirements2KHR,
+        VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind,
         VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION,
         VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME,
@@ -127,8 +290,8 @@ pattern VkGetPhysicalDeviceFeatures2KHR :: CString
 
 pattern VkGetPhysicalDeviceFeatures2KHR <-
         (is_VkGetPhysicalDeviceFeatures2KHR -> True)
-  where VkGetPhysicalDeviceFeatures2KHR
-          = _VkGetPhysicalDeviceFeatures2KHR
+  where
+    VkGetPhysicalDeviceFeatures2KHR = _VkGetPhysicalDeviceFeatures2KHR
 
 {-# INLINE _VkGetPhysicalDeviceFeatures2KHR #-}
 
@@ -172,24 +335,25 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceFeatures2KHR
 
 instance VulkanProc "vkGetPhysicalDeviceFeatures2KHR" where
-        type VkProcType "vkGetPhysicalDeviceFeatures2KHR" =
-             HS_vkGetPhysicalDeviceFeatures2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceFeatures2KHR
+    type VkProcType "vkGetPhysicalDeviceFeatures2KHR" =
+         HS_vkGetPhysicalDeviceFeatures2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceFeatures2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceFeatures2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceFeatures2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeatures2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeatures2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceProperties2KHR <-
         (is_VkGetPhysicalDeviceProperties2KHR -> True)
-  where VkGetPhysicalDeviceProperties2KHR
-          = _VkGetPhysicalDeviceProperties2KHR
+  where
+    VkGetPhysicalDeviceProperties2KHR
+      = _VkGetPhysicalDeviceProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceProperties2KHR #-}
 
@@ -233,25 +397,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceProperties2KHR
 
 instance VulkanProc "vkGetPhysicalDeviceProperties2KHR" where
-        type VkProcType "vkGetPhysicalDeviceProperties2KHR" =
-             HS_vkGetPhysicalDeviceProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceProperties2KHR" =
+         HS_vkGetPhysicalDeviceProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceFormatProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceFormatProperties2KHR <-
         (is_VkGetPhysicalDeviceFormatProperties2KHR -> True)
-  where VkGetPhysicalDeviceFormatProperties2KHR
-          = _VkGetPhysicalDeviceFormatProperties2KHR
+  where
+    VkGetPhysicalDeviceFormatProperties2KHR
+      = _VkGetPhysicalDeviceFormatProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceFormatProperties2KHR #-}
 
@@ -297,26 +462,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceFormatProperties2KHR
 
 instance VulkanProc "vkGetPhysicalDeviceFormatProperties2KHR" where
-        type VkProcType "vkGetPhysicalDeviceFormatProperties2KHR" =
-             HS_vkGetPhysicalDeviceFormatProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceFormatProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceFormatProperties2KHR" =
+         HS_vkGetPhysicalDeviceFormatProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceFormatProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceFormatProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceFormatProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceFormatProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceFormatProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceImageFormatProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceImageFormatProperties2KHR <-
         (is_VkGetPhysicalDeviceImageFormatProperties2KHR -> True)
-  where VkGetPhysicalDeviceImageFormatProperties2KHR
-          = _VkGetPhysicalDeviceImageFormatProperties2KHR
+  where
+    VkGetPhysicalDeviceImageFormatProperties2KHR
+      = _VkGetPhysicalDeviceImageFormatProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceImageFormatProperties2KHR #-}
 
@@ -370,26 +536,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties2KHR"
          where
-        type VkProcType "vkGetPhysicalDeviceImageFormatProperties2KHR" =
-             HS_vkGetPhysicalDeviceImageFormatProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceImageFormatProperties2KHR" =
+         HS_vkGetPhysicalDeviceImageFormatProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceImageFormatProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceImageFormatProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceImageFormatProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceImageFormatProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties2KHR <-
         (is_VkGetPhysicalDeviceQueueFamilyProperties2KHR -> True)
-  where VkGetPhysicalDeviceQueueFamilyProperties2KHR
-          = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
+  where
+    VkGetPhysicalDeviceQueueFamilyProperties2KHR
+      = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceQueueFamilyProperties2KHR #-}
 
@@ -438,26 +605,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
          where
-        type VkProcType "vkGetPhysicalDeviceQueueFamilyProperties2KHR" =
-             HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceQueueFamilyProperties2KHR" =
+         HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMemoryProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceMemoryProperties2KHR <-
         (is_VkGetPhysicalDeviceMemoryProperties2KHR -> True)
-  where VkGetPhysicalDeviceMemoryProperties2KHR
-          = _VkGetPhysicalDeviceMemoryProperties2KHR
+  where
+    VkGetPhysicalDeviceMemoryProperties2KHR
+      = _VkGetPhysicalDeviceMemoryProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceMemoryProperties2KHR #-}
 
@@ -501,27 +669,28 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceMemoryProperties2KHR
 
 instance VulkanProc "vkGetPhysicalDeviceMemoryProperties2KHR" where
-        type VkProcType "vkGetPhysicalDeviceMemoryProperties2KHR" =
-             HS_vkGetPhysicalDeviceMemoryProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceMemoryProperties2KHR" =
+         HS_vkGetPhysicalDeviceMemoryProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceMemoryProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceMemoryProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceMemoryProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceMemoryProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR ::
         CString
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR <-
         (is_VkGetPhysicalDeviceSparseImageFormatProperties2KHR -> True)
-  where VkGetPhysicalDeviceSparseImageFormatProperties2KHR
-          = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
+  where
+    VkGetPhysicalDeviceSparseImageFormatProperties2KHR
+      = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceSparseImageFormatProperties2KHR #-}
 
@@ -576,20 +745,20 @@ foreign import ccall safe "dynamic"
 instance VulkanProc
            "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
          where
-        type VkProcType
-               "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
-             = HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
+    type VkProcType
+           "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
+         = HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -603,8 +772,9 @@ pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME ::
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME <-
         (is_VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME -> True)
-  where VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
-          = _VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
+  where
+    VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
+      = _VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
            #-}

@@ -89,7 +89,7 @@ genCabalFile unsafeFFIDefaultDef coreVersions eModules = T.unlines $
               build-depends:
                   base >= 4.9 && < 5
               default-language:    Haskell2010
-              ghc-options:         -Wall -fno-warn-duplicate-exports
+              ghc-options:         -Wall
               include-dirs:        include
               c-sources:           cbits/vulkan_loader.c
               if $anyNativeVersion

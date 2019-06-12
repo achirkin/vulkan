@@ -23,15 +23,44 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         -- type: @device@
         --
         -- Extension number: @158@
-        module Graphics.Vulkan.Types.Struct.Bind, VkBindBufferMemory2KHR,
-        pattern VkBindBufferMemory2KHR, HS_vkBindBufferMemory2KHR,
-        PFN_vkBindBufferMemory2KHR, VkBindImageMemory2KHR,
-        pattern VkBindImageMemory2KHR, HS_vkBindImageMemory2KHR,
-        PFN_vkBindImageMemory2KHR, module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Handles,
+        VkBindBufferMemoryInfoKHR, VkBindImageMemoryInfoKHR,
+        VkBindBufferMemory2KHR, pattern VkBindBufferMemory2KHR,
+        HS_vkBindBufferMemory2KHR, PFN_vkBindBufferMemory2KHR,
+        VkBindImageMemory2KHR, pattern VkBindImageMemory2KHR,
+        HS_vkBindImageMemory2KHR, PFN_vkBindImageMemory2KHR,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkResult(..), VkStructureType(..),
+        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
+        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkBindBufferMemoryDeviceGroupInfo,
+        VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo,
+        VkBindImageMemoryDeviceGroupInfo,
+        VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo,
+        VkBindImageMemorySwapchainInfoKHR, VkBindImagePlaneMemoryInfo,
+        VkBindImagePlaneMemoryInfoKHR, VkBindSparseInfo,
         VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         VK_KHR_BIND_MEMORY_2_EXTENSION_NAME,
@@ -56,7 +85,8 @@ pattern VkBindBufferMemory2KHR :: CString
 
 pattern VkBindBufferMemory2KHR <-
         (is_VkBindBufferMemory2KHR -> True)
-  where VkBindBufferMemory2KHR = _VkBindBufferMemory2KHR
+  where
+    VkBindBufferMemory2KHR = _VkBindBufferMemory2KHR
 
 {-# INLINE _VkBindBufferMemory2KHR #-}
 
@@ -101,22 +131,23 @@ foreign import ccall safe "dynamic"
                PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
 
 instance VulkanProc "vkBindBufferMemory2KHR" where
-        type VkProcType "vkBindBufferMemory2KHR" =
-             HS_vkBindBufferMemory2KHR
-        vkProcSymbol = _VkBindBufferMemory2KHR
+    type VkProcType "vkBindBufferMemory2KHR" =
+         HS_vkBindBufferMemory2KHR
+    vkProcSymbol = _VkBindBufferMemory2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemory2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemory2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkBindBufferMemory2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBindImageMemory2KHR :: CString
 
 pattern VkBindImageMemory2KHR <- (is_VkBindImageMemory2KHR -> True)
-  where VkBindImageMemory2KHR = _VkBindImageMemory2KHR
+  where
+    VkBindImageMemory2KHR = _VkBindImageMemory2KHR
 
 {-# INLINE _VkBindImageMemory2KHR #-}
 
@@ -160,16 +191,16 @@ foreign import ccall safe "dynamic" unwrapVkBindImageMemory2KHRSafe
                :: PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
 
 instance VulkanProc "vkBindImageMemory2KHR" where
-        type VkProcType "vkBindImageMemory2KHR" = HS_vkBindImageMemory2KHR
-        vkProcSymbol = _VkBindImageMemory2KHR
+    type VkProcType "vkBindImageMemory2KHR" = HS_vkBindImageMemory2KHR
+    vkProcSymbol = _VkBindImageMemory2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkBindImageMemory2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkBindImageMemory2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkBindImageMemory2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkBindImageMemory2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -181,8 +212,9 @@ pattern VK_KHR_BIND_MEMORY_2_EXTENSION_NAME :: CString
 
 pattern VK_KHR_BIND_MEMORY_2_EXTENSION_NAME <-
         (is_VK_KHR_BIND_MEMORY_2_EXTENSION_NAME -> True)
-  where VK_KHR_BIND_MEMORY_2_EXTENSION_NAME
-          = _VK_KHR_BIND_MEMORY_2_EXTENSION_NAME
+  where
+    VK_KHR_BIND_MEMORY_2_EXTENSION_NAME
+      = _VK_KHR_BIND_MEMORY_2_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_BIND_MEMORY_2_EXTENSION_NAME #-}
 

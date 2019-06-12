@@ -11,37 +11,65 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
-       (-- * Vulkan extension: @VK_NV_external_memory_win32@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @James Jones @cubanismo@
-        --
-        -- author: @NV@
-        --
-        -- type: @device@
-        --
-        -- platform: @win32@
-        --
-        -- Extension number: @58@
-        --
-        -- Required extensions: 'VK_NV_external_memory'.
-        --
-
-        -- ** Required extensions: 'VK_NV_external_memory'.
-        module Graphics.Vulkan.Types.BaseTypes,
-        VkExportMemoryWin32HandleInfoNV, VkExportMemoryWin32HandleInfoNV',
-        module Graphics.Vulkan.Types.Enum.External,
-        VkImportMemoryWin32HandleInfoNV, VkImportMemoryWin32HandleInfoNV',
-        VkMemoryAllocateInfo, VkMemoryAllocateInfo',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VkGetMemoryWin32HandleNV, pattern VkGetMemoryWin32HandleNV,
-        HS_vkGetMemoryWin32HandleNV, PFN_vkGetMemoryWin32HandleNV,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkExportMemoryWin32HandleInfoNV, VkExternalFenceFeatureBitmask(..),
+        VkExternalFenceHandleTypeBitmask(..),
+        VkExternalMemoryFeatureBitmask(..),
+        VkExternalMemoryFeatureBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmask(..),
+        VkExternalSemaphoreFeatureBitmask(..),
+        VkExternalSemaphoreHandleTypeBitmask(..),
+        VkExternalFenceFeatureFlagBits(),
+        VkExternalFenceFeatureFlagBitsKHR(..),
+        VkExternalFenceFeatureFlags(), VkExternalFenceHandleTypeFlagBits(),
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        VkExternalFenceHandleTypeFlags(),
+        VkExternalMemoryFeatureFlagBits(),
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        VkExternalMemoryFeatureFlagBitsNV(),
+        VkExternalMemoryFeatureFlags(), VkExternalMemoryFeatureFlagsNV(),
+        VkExternalMemoryHandleTypeFlagBits(),
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        VkExternalMemoryHandleTypeFlagBitsNV(),
+        VkExternalMemoryHandleTypeFlags(),
+        VkExternalMemoryHandleTypeFlagsNV(),
+        VkExternalSemaphoreFeatureFlagBits(),
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        VkExternalSemaphoreFeatureFlags(),
+        VkExternalSemaphoreHandleTypeFlagBits(),
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        VkExternalSemaphoreHandleTypeFlags(),
+        VkImportMemoryWin32HandleInfoNV, VkMemoryAllocateInfo,
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VkGetMemoryWin32HandleNV,
+        pattern VkGetMemoryWin32HandleNV, HS_vkGetMemoryWin32HandleNV,
+        PFN_vkGetMemoryWin32HandleNV, module Graphics.Vulkan.Marshal,
+        VkResult(..), VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,
         pattern VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,
         VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME,
@@ -58,18 +86,16 @@ import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Include                 (HANDLE)
-import Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo,
-                                                      VkMemoryAllocateInfo')
+import Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
 import Graphics.Vulkan.Types.Struct.PlatformWin32Khr (VkExportMemoryWin32HandleInfoNV,
-                                                      VkExportMemoryWin32HandleInfoNV',
-                                                      VkImportMemoryWin32HandleInfoNV,
-                                                      VkImportMemoryWin32HandleInfoNV')
+                                                      VkImportMemoryWin32HandleInfoNV)
 
 pattern VkGetMemoryWin32HandleNV :: CString
 
 pattern VkGetMemoryWin32HandleNV <-
         (is_VkGetMemoryWin32HandleNV -> True)
-  where VkGetMemoryWin32HandleNV = _VkGetMemoryWin32HandleNV
+  where
+    VkGetMemoryWin32HandleNV = _VkGetMemoryWin32HandleNV
 
 {-# INLINE _VkGetMemoryWin32HandleNV #-}
 
@@ -117,17 +143,17 @@ foreign import ccall safe "dynamic"
                PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
 
 instance VulkanProc "vkGetMemoryWin32HandleNV" where
-        type VkProcType "vkGetMemoryWin32HandleNV" =
-             HS_vkGetMemoryWin32HandleNV
-        vkProcSymbol = _VkGetMemoryWin32HandleNV
+    type VkProcType "vkGetMemoryWin32HandleNV" =
+         HS_vkGetMemoryWin32HandleNV
+    vkProcSymbol = _VkGetMemoryWin32HandleNV
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryWin32HandleNVUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetMemoryWin32HandleNVUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleNVSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetMemoryWin32HandleNVSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -140,8 +166,9 @@ pattern VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME :: CString
 
 pattern VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME <-
         (is_VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME -> True)
-  where VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME
-          = _VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME
+  where
+    VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME
+      = _VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME
 
 {-# INLINE _VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME #-}
 

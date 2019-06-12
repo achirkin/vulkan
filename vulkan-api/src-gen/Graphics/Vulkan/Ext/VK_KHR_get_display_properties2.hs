@@ -27,22 +27,19 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes, VkDisplayModeParametersKHR,
-        VkDisplayModeParametersKHR', VkDisplayModeProperties2KHR,
-        VkDisplayModeProperties2KHR', VkDisplayModePropertiesKHR,
-        VkDisplayModePropertiesKHR',
-        module Graphics.Vulkan.Types.Enum.Display,
-        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilities2KHR',
-        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR',
-        VkDisplayPlaneInfo2KHR, VkDisplayPlaneInfo2KHR',
-        VkDisplayPlaneProperties2KHR, VkDisplayPlaneProperties2KHR',
-        VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR',
-        VkDisplayProperties2KHR, VkDisplayProperties2KHR',
-        VkDisplayPropertiesKHR, VkDisplayPropertiesKHR', VkExtent2D,
-        VkExtent2D', VkOffset2D, VkOffset2D',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.Surface,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkDisplayModeParametersKHR,
+        VkDisplayModeProperties2KHR, VkDisplayModePropertiesKHR,
+        VkDisplayEventTypeEXT(..), VkDisplayPlaneAlphaBitmaskKHR(..),
+        VkDisplayPowerStateEXT(..), VkDisplayPlaneAlphaFlagBitsKHR(),
+        VkDisplayPlaneAlphaFlagsKHR(), VkDisplayPlaneCapabilities2KHR,
+        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneInfo2KHR,
+        VkDisplayPlaneProperties2KHR, VkDisplayPlanePropertiesKHR,
+        VkDisplayProperties2KHR, VkDisplayPropertiesKHR, VkExtent2D,
+        VkOffset2D, VkStructureType(..), VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(),
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceDisplayProperties2KHR,
         pattern VkGetPhysicalDeviceDisplayProperties2KHR,
@@ -59,12 +56,34 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         VkGetDisplayPlaneCapabilities2KHR,
         pattern VkGetDisplayPlaneCapabilities2KHR,
         HS_vkGetDisplayPlaneCapabilities2KHR,
-        PFN_vkGetDisplayPlaneCapabilities2KHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Display,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
+        PFN_vkGetDisplayPlaneCapabilities2KHR, VkResult(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkDisplayEventInfoEXT, VkDisplayModeCreateInfoKHR,
+        VkDisplayPowerInfoEXT, VkDisplayPresentInfoKHR,
+        VkDisplaySurfaceCreateInfoKHR, VkExtent3D, VkOffset3D,
         VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME,
@@ -92,8 +111,9 @@ pattern VkGetPhysicalDeviceDisplayProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceDisplayProperties2KHR <-
         (is_VkGetPhysicalDeviceDisplayProperties2KHR -> True)
-  where VkGetPhysicalDeviceDisplayProperties2KHR
-          = _VkGetPhysicalDeviceDisplayProperties2KHR
+  where
+    VkGetPhysicalDeviceDisplayProperties2KHR
+      = _VkGetPhysicalDeviceDisplayProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceDisplayProperties2KHR #-}
 
@@ -143,26 +163,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceDisplayProperties2KHR"
          where
-        type VkProcType "vkGetPhysicalDeviceDisplayProperties2KHR" =
-             HS_vkGetPhysicalDeviceDisplayProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceDisplayProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceDisplayProperties2KHR" =
+         HS_vkGetPhysicalDeviceDisplayProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceDisplayProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceDisplayProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceDisplayProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceDisplayProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceDisplayProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceDisplayPlaneProperties2KHR :: CString
 
 pattern VkGetPhysicalDeviceDisplayPlaneProperties2KHR <-
         (is_VkGetPhysicalDeviceDisplayPlaneProperties2KHR -> True)
-  where VkGetPhysicalDeviceDisplayPlaneProperties2KHR
-          = _VkGetPhysicalDeviceDisplayPlaneProperties2KHR
+  where
+    VkGetPhysicalDeviceDisplayPlaneProperties2KHR
+      = _VkGetPhysicalDeviceDisplayPlaneProperties2KHR
 
 {-# INLINE _VkGetPhysicalDeviceDisplayPlaneProperties2KHR #-}
 
@@ -213,26 +234,26 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceDisplayPlaneProperties2KHR"
          where
-        type VkProcType "vkGetPhysicalDeviceDisplayPlaneProperties2KHR" =
-             HS_vkGetPhysicalDeviceDisplayPlaneProperties2KHR
-        vkProcSymbol = _VkGetPhysicalDeviceDisplayPlaneProperties2KHR
+    type VkProcType "vkGetPhysicalDeviceDisplayPlaneProperties2KHR" =
+         HS_vkGetPhysicalDeviceDisplayPlaneProperties2KHR
+    vkProcSymbol = _VkGetPhysicalDeviceDisplayPlaneProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceDisplayPlaneProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceDisplayPlaneProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceDisplayPlaneProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceDisplayPlaneProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDisplayModeProperties2KHR :: CString
 
 pattern VkGetDisplayModeProperties2KHR <-
         (is_VkGetDisplayModeProperties2KHR -> True)
-  where VkGetDisplayModeProperties2KHR
-          = _VkGetDisplayModeProperties2KHR
+  where
+    VkGetDisplayModeProperties2KHR = _VkGetDisplayModeProperties2KHR
 
 {-# INLINE _VkGetDisplayModeProperties2KHR #-}
 
@@ -284,24 +305,25 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDisplayModeProperties2KHR
 
 instance VulkanProc "vkGetDisplayModeProperties2KHR" where
-        type VkProcType "vkGetDisplayModeProperties2KHR" =
-             HS_vkGetDisplayModeProperties2KHR
-        vkProcSymbol = _VkGetDisplayModeProperties2KHR
+    type VkProcType "vkGetDisplayModeProperties2KHR" =
+         HS_vkGetDisplayModeProperties2KHR
+    vkProcSymbol = _VkGetDisplayModeProperties2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetDisplayModeProperties2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetDisplayModeProperties2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDisplayModeProperties2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDisplayModeProperties2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDisplayPlaneCapabilities2KHR :: CString
 
 pattern VkGetDisplayPlaneCapabilities2KHR <-
         (is_VkGetDisplayPlaneCapabilities2KHR -> True)
-  where VkGetDisplayPlaneCapabilities2KHR
-          = _VkGetDisplayPlaneCapabilities2KHR
+  where
+    VkGetDisplayPlaneCapabilities2KHR
+      = _VkGetDisplayPlaneCapabilities2KHR
 
 {-# INLINE _VkGetDisplayPlaneCapabilities2KHR #-}
 
@@ -351,18 +373,18 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDisplayPlaneCapabilities2KHR
 
 instance VulkanProc "vkGetDisplayPlaneCapabilities2KHR" where
-        type VkProcType "vkGetDisplayPlaneCapabilities2KHR" =
-             HS_vkGetDisplayPlaneCapabilities2KHR
-        vkProcSymbol = _VkGetDisplayPlaneCapabilities2KHR
+    type VkProcType "vkGetDisplayPlaneCapabilities2KHR" =
+         HS_vkGetDisplayPlaneCapabilities2KHR
+    vkProcSymbol = _VkGetDisplayPlaneCapabilities2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDisplayPlaneCapabilities2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDisplayPlaneCapabilities2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDisplayPlaneCapabilities2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDisplayPlaneCapabilities2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -375,8 +397,9 @@ pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME :: CString
 
 pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME <-
         (is_VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME -> True)
-  where VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME
-          = _VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME
+  where
+    VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME
+      = _VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME #-}
 

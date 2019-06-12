@@ -28,18 +28,173 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Enum.External,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.External,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        VkExternalFenceFeatureBitmask(..),
+        VkExternalFenceHandleTypeBitmask(..),
+        VkExternalMemoryFeatureBitmask(..),
+        VkExternalMemoryFeatureBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmask(..),
+        VkExternalSemaphoreFeatureBitmask(..),
+        VkExternalSemaphoreHandleTypeBitmask(..),
+        VkExternalFenceFeatureFlagBits(),
+        VkExternalFenceFeatureFlagBitsKHR(..),
+        VkExternalFenceFeatureFlags(), VkExternalFenceHandleTypeFlagBits(),
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        VkExternalFenceHandleTypeFlags(),
+        VkExternalMemoryFeatureFlagBits(),
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        VkExternalMemoryFeatureFlagBitsNV(),
+        VkExternalMemoryFeatureFlags(), VkExternalMemoryFeatureFlagsNV(),
+        VkExternalMemoryHandleTypeFlagBits(),
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        VkExternalMemoryHandleTypeFlagBitsNV(),
+        VkExternalMemoryHandleTypeFlags(),
+        VkExternalMemoryHandleTypeFlagsNV(),
+        VkExternalSemaphoreFeatureFlagBits(),
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        VkExternalSemaphoreFeatureFlags(),
+        VkExternalSemaphoreHandleTypeFlagBits(),
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        VkExternalSemaphoreHandleTypeFlags(),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkExternalFencePropertiesKHR,
+        VkPhysicalDeviceExternalFenceInfoKHR,
+        VkPhysicalDeviceIDPropertiesKHR,
         VkGetPhysicalDeviceExternalFencePropertiesKHR,
         pattern VkGetPhysicalDeviceExternalFencePropertiesKHR,
         HS_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkStructureType(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkExternalBufferProperties, VkExternalBufferPropertiesKHR,
+        VkExternalFenceProperties, VkExternalImageFormatProperties,
+        VkExternalImageFormatPropertiesKHR,
+        VkExternalImageFormatPropertiesNV,
+        VkExternalMemoryBufferCreateInfo,
+        VkExternalMemoryBufferCreateInfoKHR,
+        VkExternalMemoryImageCreateInfo,
+        VkExternalMemoryImageCreateInfoKHR,
+        VkExternalMemoryImageCreateInfoNV, VkExternalMemoryProperties,
+        VkExternalMemoryPropertiesKHR, VkExternalSemaphoreProperties,
+        VkExternalSemaphorePropertiesKHR,
+        VkPhysicalDevice16BitStorageFeatures,
+        VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceExternalBufferInfo,
+        VkPhysicalDeviceExternalBufferInfoKHR,
+        VkPhysicalDeviceExternalFenceInfo,
+        VkPhysicalDeviceExternalImageFormatInfo,
+        VkPhysicalDeviceExternalImageFormatInfoKHR,
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+        VkPhysicalDeviceExternalSemaphoreInfo,
+        VkPhysicalDeviceExternalSemaphoreInfoKHR,
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2KHR,
+        VkPhysicalDeviceGroupProperties,
+        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
+        VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceImageFormatInfo2KHR, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceMaintenance3Properties,
+        VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceMemoryProperties2,
+        VkPhysicalDeviceMemoryProperties2KHR,
+        VkPhysicalDeviceMultiviewFeatures,
+        VkPhysicalDeviceMultiviewFeaturesKHR,
+        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
+        VkPhysicalDeviceMultiviewProperties,
+        VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePointClippingProperties,
+        VkPhysicalDevicePointClippingPropertiesKHR,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProperties2KHR,
+        VkPhysicalDeviceProtectedMemoryFeatures,
+        VkPhysicalDeviceProtectedMemoryProperties,
+        VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+        VkPhysicalDeviceSamplerYcbcrConversionFeatures,
+        VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceSparseImageFormatInfo2,
+        VkPhysicalDeviceSparseImageFormatInfo2KHR,
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceVariablePointerFeatures,
+        VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME,
@@ -72,8 +227,9 @@ pattern VkGetPhysicalDeviceExternalFencePropertiesKHR :: CString
 
 pattern VkGetPhysicalDeviceExternalFencePropertiesKHR <-
         (is_VkGetPhysicalDeviceExternalFencePropertiesKHR -> True)
-  where VkGetPhysicalDeviceExternalFencePropertiesKHR
-          = _VkGetPhysicalDeviceExternalFencePropertiesKHR
+  where
+    VkGetPhysicalDeviceExternalFencePropertiesKHR
+      = _VkGetPhysicalDeviceExternalFencePropertiesKHR
 
 {-# INLINE _VkGetPhysicalDeviceExternalFencePropertiesKHR #-}
 
@@ -123,19 +279,19 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceExternalFencePropertiesKHR"
          where
-        type VkProcType "vkGetPhysicalDeviceExternalFencePropertiesKHR" =
-             HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
-        vkProcSymbol = _VkGetPhysicalDeviceExternalFencePropertiesKHR
+    type VkProcType "vkGetPhysicalDeviceExternalFencePropertiesKHR" =
+         HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+    vkProcSymbol = _VkGetPhysicalDeviceExternalFencePropertiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -149,8 +305,9 @@ pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME ::
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME <-
         (is_VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME -> True)
-  where VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME
-          = _VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME
+  where
+    VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME
+      = _VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME #-}
 

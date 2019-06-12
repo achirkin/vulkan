@@ -27,20 +27,48 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_get_physical_device_properties2', 'VK_KHR_get_surface_capabilities2'.
-        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        VkExtent2D, VkExtent2D', module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Image,
-        VkSharedPresentSurfaceCapabilitiesKHR,
-        VkSharedPresentSurfaceCapabilitiesKHR',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR',
-        VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR',
-        module Graphics.Vulkan.Types.Enum.Surface, -- > #include "vk_platform.h"
-                                                   VkGetSwapchainStatusKHR,
-        pattern VkGetSwapchainStatusKHR, HS_vkGetSwapchainStatusKHR,
-        PFN_vkGetSwapchainStatusKHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkExtent2D, VkBool32(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkSharedPresentSurfaceCapabilitiesKHR, VkStructureType(..),
+        VkSurfaceCapabilities2KHR, VkSurfaceCapabilitiesKHR,
+        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
+        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
+        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        -- > #include "vk_platform.h"
+        VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
+        HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
+        VkResult(..), VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
         pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME,
@@ -61,20 +89,17 @@ import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Surface
 import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent2D,
-                                                                         VkExtent2D')
-import Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR (VkSharedPresentSurfaceCapabilitiesKHR,
-                                                                         VkSharedPresentSurfaceCapabilitiesKHR')
+import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR (VkSharedPresentSurfaceCapabilitiesKHR)
 import Graphics.Vulkan.Types.Struct.Surface                             (VkSurfaceCapabilities2KHR,
-                                                                         VkSurfaceCapabilities2KHR',
-                                                                         VkSurfaceCapabilitiesKHR,
-                                                                         VkSurfaceCapabilitiesKHR')
+                                                                         VkSurfaceCapabilitiesKHR)
 
 pattern VkGetSwapchainStatusKHR :: CString
 
 pattern VkGetSwapchainStatusKHR <-
         (is_VkGetSwapchainStatusKHR -> True)
-  where VkGetSwapchainStatusKHR = _VkGetSwapchainStatusKHR
+  where
+    VkGetSwapchainStatusKHR = _VkGetSwapchainStatusKHR
 
 {-# INLINE _VkGetSwapchainStatusKHR #-}
 
@@ -116,17 +141,17 @@ foreign import ccall safe "dynamic"
                PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
 
 instance VulkanProc "vkGetSwapchainStatusKHR" where
-        type VkProcType "vkGetSwapchainStatusKHR" =
-             HS_vkGetSwapchainStatusKHR
-        vkProcSymbol = _VkGetSwapchainStatusKHR
+    type VkProcType "vkGetSwapchainStatusKHR" =
+         HS_vkGetSwapchainStatusKHR
+    vkProcSymbol = _VkGetSwapchainStatusKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainStatusKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetSwapchainStatusKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetSwapchainStatusKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetSwapchainStatusKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -139,8 +164,9 @@ pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME :: CString
 
 pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME <-
         (is_VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME -> True)
-  where VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME
-          = _VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME
+  where
+    VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME
+      = _VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME #-}
 

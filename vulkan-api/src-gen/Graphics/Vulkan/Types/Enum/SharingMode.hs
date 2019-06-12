@@ -18,27 +18,27 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSharingMode VkSharingMode registry at www.khronos.org>
 newtype VkSharingMode = VkSharingMode Int32
-                          deriving (Eq, Ord, Enum, Storable)
+                        deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSharingMode where
-        showsPrec _ VK_SHARING_MODE_EXCLUSIVE
-          = showString "VK_SHARING_MODE_EXCLUSIVE"
-        showsPrec _ VK_SHARING_MODE_CONCURRENT
-          = showString "VK_SHARING_MODE_CONCURRENT"
-        showsPrec p (VkSharingMode x)
-          = showParen (p >= 11)
-              (showString "VkSharingMode " . showsPrec 11 x)
+    showsPrec _ VK_SHARING_MODE_EXCLUSIVE
+      = showString "VK_SHARING_MODE_EXCLUSIVE"
+    showsPrec _ VK_SHARING_MODE_CONCURRENT
+      = showString "VK_SHARING_MODE_CONCURRENT"
+    showsPrec p (VkSharingMode x)
+      = showParen (p >= 11)
+          (showString "VkSharingMode " . showsPrec 11 x)
 
 instance Read VkSharingMode where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SHARING_MODE_EXCLUSIVE", pure VK_SHARING_MODE_EXCLUSIVE),
-                  ("VK_SHARING_MODE_CONCURRENT", pure VK_SHARING_MODE_CONCURRENT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSharingMode") >>
-                      (VkSharingMode <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SHARING_MODE_EXCLUSIVE", pure VK_SHARING_MODE_EXCLUSIVE),
+              ("VK_SHARING_MODE_CONCURRENT", pure VK_SHARING_MODE_CONCURRENT)]
+             +++
+             prec 10
+               (expectP (Ident "VkSharingMode") >>
+                  (VkSharingMode <$> step readPrec)))
 
 pattern VK_SHARING_MODE_EXCLUSIVE :: VkSharingMode
 

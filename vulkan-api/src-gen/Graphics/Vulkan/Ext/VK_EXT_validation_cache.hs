@@ -23,15 +23,55 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         -- type: @device@
         --
         -- Extension number: @161@
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks, VkShaderModuleCreateInfo,
-        VkShaderModuleCreateInfo',
-        VkShaderModuleValidationCacheCreateInfoEXT,
-        VkShaderModuleValidationCacheCreateInfoEXT',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        VkValidationCacheCreateInfoEXT, VkValidationCacheCreateInfoEXT',
-        module Graphics.Vulkan.Types.Enum.ValidationC,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkShaderModuleCreateInfo,
+        VkShaderModuleValidationCacheCreateInfoEXT, VkStructureType(..),
+        VkValidationCacheCreateInfoEXT,
+        VkValidationCacheHeaderVersionEXT(..), VkValidationCheckEXT(..),
         -- > #include "vk_platform.h"
         VkCreateValidationCacheEXT, pattern VkCreateValidationCacheEXT,
         HS_vkCreateValidationCacheEXT, PFN_vkCreateValidationCacheEXT,
@@ -41,13 +81,50 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         HS_vkMergeValidationCachesEXT, PFN_vkMergeValidationCachesEXT,
         VkGetValidationCacheDataEXT, pattern VkGetValidationCacheDataEXT,
         HS_vkGetValidationCacheDataEXT, PFN_vkGetValidationCacheDataEXT,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.Validation,
+        VkInternalAllocationType(..), VkResult(..),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkValidationFlagsEXT,
         VK_EXT_VALIDATION_CACHE_SPEC_VERSION,
         pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION,
         VK_EXT_VALIDATION_CACHE_EXTENSION_NAME,
@@ -73,16 +150,15 @@ import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
 import Graphics.Vulkan.Types.Struct.Shader               (VkShaderModuleCreateInfo,
-                                                          VkShaderModuleCreateInfo',
-                                                          VkShaderModuleValidationCacheCreateInfoEXT,
-                                                          VkShaderModuleValidationCacheCreateInfoEXT')
+                                                          VkShaderModuleValidationCacheCreateInfoEXT)
 import Graphics.Vulkan.Types.Struct.Validation
 
 pattern VkCreateValidationCacheEXT :: CString
 
 pattern VkCreateValidationCacheEXT <-
         (is_VkCreateValidationCacheEXT -> True)
-  where VkCreateValidationCacheEXT = _VkCreateValidationCacheEXT
+  where
+    VkCreateValidationCacheEXT = _VkCreateValidationCacheEXT
 
 {-# INLINE _VkCreateValidationCacheEXT #-}
 
@@ -131,23 +207,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateValidationCacheEXT -> HS_vkCreateValidationCacheEXT
 
 instance VulkanProc "vkCreateValidationCacheEXT" where
-        type VkProcType "vkCreateValidationCacheEXT" =
-             HS_vkCreateValidationCacheEXT
-        vkProcSymbol = _VkCreateValidationCacheEXT
+    type VkProcType "vkCreateValidationCacheEXT" =
+         HS_vkCreateValidationCacheEXT
+    vkProcSymbol = _VkCreateValidationCacheEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateValidationCacheEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateValidationCacheEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateValidationCacheEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateValidationCacheEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyValidationCacheEXT :: CString
 
 pattern VkDestroyValidationCacheEXT <-
         (is_VkDestroyValidationCacheEXT -> True)
-  where VkDestroyValidationCacheEXT = _VkDestroyValidationCacheEXT
+  where
+    VkDestroyValidationCacheEXT = _VkDestroyValidationCacheEXT
 
 {-# INLINE _VkDestroyValidationCacheEXT #-}
 
@@ -189,23 +266,24 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyValidationCacheEXT -> HS_vkDestroyValidationCacheEXT
 
 instance VulkanProc "vkDestroyValidationCacheEXT" where
-        type VkProcType "vkDestroyValidationCacheEXT" =
-             HS_vkDestroyValidationCacheEXT
-        vkProcSymbol = _VkDestroyValidationCacheEXT
+    type VkProcType "vkDestroyValidationCacheEXT" =
+         HS_vkDestroyValidationCacheEXT
+    vkProcSymbol = _VkDestroyValidationCacheEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyValidationCacheEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyValidationCacheEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyValidationCacheEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyValidationCacheEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkMergeValidationCachesEXT :: CString
 
 pattern VkMergeValidationCachesEXT <-
         (is_VkMergeValidationCachesEXT -> True)
-  where VkMergeValidationCachesEXT = _VkMergeValidationCachesEXT
+  where
+    VkMergeValidationCachesEXT = _VkMergeValidationCachesEXT
 
 {-# INLINE _VkMergeValidationCachesEXT #-}
 
@@ -253,23 +331,24 @@ foreign import ccall safe "dynamic"
                PFN_vkMergeValidationCachesEXT -> HS_vkMergeValidationCachesEXT
 
 instance VulkanProc "vkMergeValidationCachesEXT" where
-        type VkProcType "vkMergeValidationCachesEXT" =
-             HS_vkMergeValidationCachesEXT
-        vkProcSymbol = _VkMergeValidationCachesEXT
+    type VkProcType "vkMergeValidationCachesEXT" =
+         HS_vkMergeValidationCachesEXT
+    vkProcSymbol = _VkMergeValidationCachesEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkMergeValidationCachesEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkMergeValidationCachesEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkMergeValidationCachesEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkMergeValidationCachesEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetValidationCacheDataEXT :: CString
 
 pattern VkGetValidationCacheDataEXT <-
         (is_VkGetValidationCacheDataEXT -> True)
-  where VkGetValidationCacheDataEXT = _VkGetValidationCacheDataEXT
+  where
+    VkGetValidationCacheDataEXT = _VkGetValidationCacheDataEXT
 
 {-# INLINE _VkGetValidationCacheDataEXT #-}
 
@@ -317,17 +396,17 @@ foreign import ccall safe "dynamic"
                PFN_vkGetValidationCacheDataEXT -> HS_vkGetValidationCacheDataEXT
 
 instance VulkanProc "vkGetValidationCacheDataEXT" where
-        type VkProcType "vkGetValidationCacheDataEXT" =
-             HS_vkGetValidationCacheDataEXT
-        vkProcSymbol = _VkGetValidationCacheDataEXT
+    type VkProcType "vkGetValidationCacheDataEXT" =
+         HS_vkGetValidationCacheDataEXT
+    vkProcSymbol = _VkGetValidationCacheDataEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetValidationCacheDataEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetValidationCacheDataEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetValidationCacheDataEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetValidationCacheDataEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -339,8 +418,9 @@ pattern VK_EXT_VALIDATION_CACHE_EXTENSION_NAME :: CString
 
 pattern VK_EXT_VALIDATION_CACHE_EXTENSION_NAME <-
         (is_VK_EXT_VALIDATION_CACHE_EXTENSION_NAME -> True)
-  where VK_EXT_VALIDATION_CACHE_EXTENSION_NAME
-          = _VK_EXT_VALIDATION_CACHE_EXTENSION_NAME
+  where
+    VK_EXT_VALIDATION_CACHE_EXTENSION_NAME
+      = _VK_EXT_VALIDATION_CACHE_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_VALIDATION_CACHE_EXTENSION_NAME #-}
 

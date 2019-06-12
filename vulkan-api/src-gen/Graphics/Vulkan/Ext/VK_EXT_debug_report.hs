@@ -24,16 +24,62 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         -- type: @instance@
         --
         -- Extension number: @12@
-        module Graphics.Vulkan.Marshal, VkApplicationInfo,
-        VkApplicationInfo', module Graphics.Vulkan.Types.BaseTypes,
-        VkDebugReportCallbackCreateInfoEXT,
-        VkDebugReportCallbackCreateInfoEXT',
-        module Graphics.Vulkan.Types.Enum.Debug,
-        module Graphics.Vulkan.Types.Bitmasks, VkInstanceCreateInfo,
-        VkInstanceCreateInfo',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VkCreateDebugReportCallbackEXT,
+        module Graphics.Vulkan.Marshal, VkApplicationInfo, VkBool32(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkDebugReportCallbackCreateInfoEXT, VkDebugReportBitmaskEXT(..),
+        VkDebugReportObjectTypeEXT(..),
+        VkDebugUtilsMessageSeverityBitmaskEXT(..),
+        VkDebugUtilsMessageTypeBitmaskEXT(..), VkDebugReportFlagBitsEXT(),
+        VkDebugReportFlagsEXT(), VkDebugUtilsMessageSeverityFlagBitsEXT(),
+        VkDebugUtilsMessageSeverityFlagsEXT(),
+        VkDebugUtilsMessageTypeFlagBitsEXT(),
+        VkDebugUtilsMessageTypeFlagsEXT(),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkInstanceCreateInfo,
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VkCreateDebugReportCallbackEXT,
         pattern VkCreateDebugReportCallbackEXT,
         HS_vkCreateDebugReportCallbackEXT,
         PFN_vkCreateDebugReportCallbackEXT,
@@ -42,17 +88,52 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         HS_vkDestroyDebugReportCallbackEXT,
         PFN_vkDestroyDebugReportCallbackEXT, VkDebugReportMessageEXT,
         pattern VkDebugReportMessageEXT, HS_vkDebugReportMessageEXT,
-        PFN_vkDebugReportMessageEXT,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.ApplicationInfo,
-        module Graphics.Vulkan.Types.Struct.Debug,
-        module Graphics.Vulkan.Types.Struct.InstanceCreateInfo,
-        VK_EXT_DEBUG_REPORT_SPEC_VERSION,
+        PFN_vkDebugReportMessageEXT, VkInternalAllocationType(..),
+        VkResult(..), VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkDebugMarkerMarkerInfoEXT,
+        VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectTagInfoEXT,
+        VkDebugUtilsObjectTagInfoEXT, VK_EXT_DEBUG_REPORT_SPEC_VERSION,
         pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION,
         VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
         pattern VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
@@ -86,8 +167,8 @@ pattern VkCreateDebugReportCallbackEXT :: CString
 
 pattern VkCreateDebugReportCallbackEXT <-
         (is_VkCreateDebugReportCallbackEXT -> True)
-  where VkCreateDebugReportCallbackEXT
-          = _VkCreateDebugReportCallbackEXT
+  where
+    VkCreateDebugReportCallbackEXT = _VkCreateDebugReportCallbackEXT
 
 {-# INLINE _VkCreateDebugReportCallbackEXT #-}
 
@@ -140,24 +221,24 @@ foreign import ccall safe "dynamic"
                  HS_vkCreateDebugReportCallbackEXT
 
 instance VulkanProc "vkCreateDebugReportCallbackEXT" where
-        type VkProcType "vkCreateDebugReportCallbackEXT" =
-             HS_vkCreateDebugReportCallbackEXT
-        vkProcSymbol = _VkCreateDebugReportCallbackEXT
+    type VkProcType "vkCreateDebugReportCallbackEXT" =
+         HS_vkCreateDebugReportCallbackEXT
+    vkProcSymbol = _VkCreateDebugReportCallbackEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDebugReportCallbackEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDebugReportCallbackEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDebugReportCallbackEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDebugReportCallbackEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDebugReportCallbackEXT :: CString
 
 pattern VkDestroyDebugReportCallbackEXT <-
         (is_VkDestroyDebugReportCallbackEXT -> True)
-  where VkDestroyDebugReportCallbackEXT
-          = _VkDestroyDebugReportCallbackEXT
+  where
+    VkDestroyDebugReportCallbackEXT = _VkDestroyDebugReportCallbackEXT
 
 {-# INLINE _VkDestroyDebugReportCallbackEXT #-}
 
@@ -202,23 +283,24 @@ foreign import ccall safe "dynamic"
                  HS_vkDestroyDebugReportCallbackEXT
 
 instance VulkanProc "vkDestroyDebugReportCallbackEXT" where
-        type VkProcType "vkDestroyDebugReportCallbackEXT" =
-             HS_vkDestroyDebugReportCallbackEXT
-        vkProcSymbol = _VkDestroyDebugReportCallbackEXT
+    type VkProcType "vkDestroyDebugReportCallbackEXT" =
+         HS_vkDestroyDebugReportCallbackEXT
+    vkProcSymbol = _VkDestroyDebugReportCallbackEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyDebugReportCallbackEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyDebugReportCallbackEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyDebugReportCallbackEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyDebugReportCallbackEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDebugReportMessageEXT :: CString
 
 pattern VkDebugReportMessageEXT <-
         (is_VkDebugReportMessageEXT -> True)
-  where VkDebugReportMessageEXT = _VkDebugReportMessageEXT
+  where
+    VkDebugReportMessageEXT = _VkDebugReportMessageEXT
 
 {-# INLINE _VkDebugReportMessageEXT #-}
 
@@ -271,17 +353,17 @@ foreign import ccall safe "dynamic"
                PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
 
 instance VulkanProc "vkDebugReportMessageEXT" where
-        type VkProcType "vkDebugReportMessageEXT" =
-             HS_vkDebugReportMessageEXT
-        vkProcSymbol = _VkDebugReportMessageEXT
+    type VkProcType "vkDebugReportMessageEXT" =
+         HS_vkDebugReportMessageEXT
+    vkProcSymbol = _VkDebugReportMessageEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDebugReportMessageEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDebugReportMessageEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDebugReportMessageEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDebugReportMessageEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -293,8 +375,9 @@ pattern VK_EXT_DEBUG_REPORT_EXTENSION_NAME :: CString
 
 pattern VK_EXT_DEBUG_REPORT_EXTENSION_NAME <-
         (is_VK_EXT_DEBUG_REPORT_EXTENSION_NAME -> True)
-  where VK_EXT_DEBUG_REPORT_EXTENSION_NAME
-          = _VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+  where
+    VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+      = _VK_EXT_DEBUG_REPORT_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_DEBUG_REPORT_EXTENSION_NAME #-}
 

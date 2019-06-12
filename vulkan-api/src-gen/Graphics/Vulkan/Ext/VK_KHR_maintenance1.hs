@@ -12,23 +12,78 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_maintenance1
-       (-- * Vulkan extension: @VK_KHR_maintenance1@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Piers Daniell @pdaniell-nv@
-        --
-        -- author: @KHR@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @70@
-        module Graphics.Vulkan.Types.Bitmasks, VkTrimCommandPoolKHR,
+       (VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkTrimCommandPoolKHR,
         pattern VkTrimCommandPoolKHR, HS_vkTrimCommandPoolKHR,
         PFN_vkTrimCommandPoolKHR, module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Handles,
+        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
+        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_MAINTENANCE1_SPEC_VERSION,
         pattern VK_KHR_MAINTENANCE1_SPEC_VERSION,
         VK_KHR_MAINTENANCE1_EXTENSION_NAME,
@@ -51,7 +106,8 @@ import Graphics.Vulkan.Types.Handles
 pattern VkTrimCommandPoolKHR :: CString
 
 pattern VkTrimCommandPoolKHR <- (is_VkTrimCommandPoolKHR -> True)
-  where VkTrimCommandPoolKHR = _VkTrimCommandPoolKHR
+  where
+    VkTrimCommandPoolKHR = _VkTrimCommandPoolKHR
 
 {-# INLINE _VkTrimCommandPoolKHR #-}
 
@@ -91,16 +147,16 @@ foreign import ccall safe "dynamic" unwrapVkTrimCommandPoolKHRSafe
                :: PFN_vkTrimCommandPoolKHR -> HS_vkTrimCommandPoolKHR
 
 instance VulkanProc "vkTrimCommandPoolKHR" where
-        type VkProcType "vkTrimCommandPoolKHR" = HS_vkTrimCommandPoolKHR
-        vkProcSymbol = _VkTrimCommandPoolKHR
+    type VkProcType "vkTrimCommandPoolKHR" = HS_vkTrimCommandPoolKHR
+    vkProcSymbol = _VkTrimCommandPoolKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkTrimCommandPoolKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkTrimCommandPoolKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkTrimCommandPoolKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_MAINTENANCE1_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -112,8 +168,9 @@ pattern VK_KHR_MAINTENANCE1_EXTENSION_NAME :: CString
 
 pattern VK_KHR_MAINTENANCE1_EXTENSION_NAME <-
         (is_VK_KHR_MAINTENANCE1_EXTENSION_NAME -> True)
-  where VK_KHR_MAINTENANCE1_EXTENSION_NAME
-          = _VK_KHR_MAINTENANCE1_EXTENSION_NAME
+  where
+    VK_KHR_MAINTENANCE1_EXTENSION_NAME
+      = _VK_KHR_MAINTENANCE1_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_MAINTENANCE1_EXTENSION_NAME #-}
 
