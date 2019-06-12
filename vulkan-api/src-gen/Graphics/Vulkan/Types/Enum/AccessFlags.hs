@@ -31,7 +31,7 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkAccessBitmask (a :: FlagType) = VkAccessBitmask VkFlags
-                                            deriving (Eq, Ord, Storable)
+                                          deriving (Eq, Ord, Storable)
 
 type VkAccessFlags = VkAccessBitmask FlagMask
 
@@ -50,77 +50,77 @@ deriving instance Bits (VkAccessBitmask FlagMask)
 deriving instance FiniteBits (VkAccessBitmask FlagMask)
 
 instance Show (VkAccessBitmask a) where
-        showsPrec _ VK_ACCESS_INDIRECT_COMMAND_READ_BIT
-          = showString "VK_ACCESS_INDIRECT_COMMAND_READ_BIT"
-        showsPrec _ VK_ACCESS_INDEX_READ_BIT
-          = showString "VK_ACCESS_INDEX_READ_BIT"
-        showsPrec _ VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT
-          = showString "VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT"
-        showsPrec _ VK_ACCESS_UNIFORM_READ_BIT
-          = showString "VK_ACCESS_UNIFORM_READ_BIT"
-        showsPrec _ VK_ACCESS_INPUT_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_INPUT_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_SHADER_READ_BIT
-          = showString "VK_ACCESS_SHADER_READ_BIT"
-        showsPrec _ VK_ACCESS_SHADER_WRITE_BIT
-          = showString "VK_ACCESS_SHADER_WRITE_BIT"
-        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_COLOR_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
-          = showString "VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT"
-        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
-          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT"
-        showsPrec _ VK_ACCESS_TRANSFER_READ_BIT
-          = showString "VK_ACCESS_TRANSFER_READ_BIT"
-        showsPrec _ VK_ACCESS_TRANSFER_WRITE_BIT
-          = showString "VK_ACCESS_TRANSFER_WRITE_BIT"
-        showsPrec _ VK_ACCESS_HOST_READ_BIT
-          = showString "VK_ACCESS_HOST_READ_BIT"
-        showsPrec _ VK_ACCESS_HOST_WRITE_BIT
-          = showString "VK_ACCESS_HOST_WRITE_BIT"
-        showsPrec _ VK_ACCESS_MEMORY_READ_BIT
-          = showString "VK_ACCESS_MEMORY_READ_BIT"
-        showsPrec _ VK_ACCESS_MEMORY_WRITE_BIT
-          = showString "VK_ACCESS_MEMORY_WRITE_BIT"
-        showsPrec p (VkAccessBitmask x)
-          = showParen (p >= 11)
-              (showString "VkAccessBitmask " . showsPrec 11 x)
+    showsPrec _ VK_ACCESS_INDIRECT_COMMAND_READ_BIT
+      = showString "VK_ACCESS_INDIRECT_COMMAND_READ_BIT"
+    showsPrec _ VK_ACCESS_INDEX_READ_BIT
+      = showString "VK_ACCESS_INDEX_READ_BIT"
+    showsPrec _ VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT
+      = showString "VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT"
+    showsPrec _ VK_ACCESS_UNIFORM_READ_BIT
+      = showString "VK_ACCESS_UNIFORM_READ_BIT"
+    showsPrec _ VK_ACCESS_INPUT_ATTACHMENT_READ_BIT
+      = showString "VK_ACCESS_INPUT_ATTACHMENT_READ_BIT"
+    showsPrec _ VK_ACCESS_SHADER_READ_BIT
+      = showString "VK_ACCESS_SHADER_READ_BIT"
+    showsPrec _ VK_ACCESS_SHADER_WRITE_BIT
+      = showString "VK_ACCESS_SHADER_WRITE_BIT"
+    showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
+      = showString "VK_ACCESS_COLOR_ATTACHMENT_READ_BIT"
+    showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+      = showString "VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT"
+    showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT
+      = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT"
+    showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
+      = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT"
+    showsPrec _ VK_ACCESS_TRANSFER_READ_BIT
+      = showString "VK_ACCESS_TRANSFER_READ_BIT"
+    showsPrec _ VK_ACCESS_TRANSFER_WRITE_BIT
+      = showString "VK_ACCESS_TRANSFER_WRITE_BIT"
+    showsPrec _ VK_ACCESS_HOST_READ_BIT
+      = showString "VK_ACCESS_HOST_READ_BIT"
+    showsPrec _ VK_ACCESS_HOST_WRITE_BIT
+      = showString "VK_ACCESS_HOST_WRITE_BIT"
+    showsPrec _ VK_ACCESS_MEMORY_READ_BIT
+      = showString "VK_ACCESS_MEMORY_READ_BIT"
+    showsPrec _ VK_ACCESS_MEMORY_WRITE_BIT
+      = showString "VK_ACCESS_MEMORY_WRITE_BIT"
+    showsPrec p (VkAccessBitmask x)
+      = showParen (p >= 11)
+          (showString "VkAccessBitmask " . showsPrec 11 x)
 
 instance Read (VkAccessBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_ACCESS_INDIRECT_COMMAND_READ_BIT",
-                   pure VK_ACCESS_INDIRECT_COMMAND_READ_BIT),
-                  ("VK_ACCESS_INDEX_READ_BIT", pure VK_ACCESS_INDEX_READ_BIT),
-                  ("VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT",
-                   pure VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT),
-                  ("VK_ACCESS_UNIFORM_READ_BIT", pure VK_ACCESS_UNIFORM_READ_BIT),
-                  ("VK_ACCESS_INPUT_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_INPUT_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_SHADER_READ_BIT", pure VK_ACCESS_SHADER_READ_BIT),
-                  ("VK_ACCESS_SHADER_WRITE_BIT", pure VK_ACCESS_SHADER_WRITE_BIT),
-                  ("VK_ACCESS_COLOR_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_COLOR_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT",
-                   pure VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT),
-                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT",
-                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT),
-                  ("VK_ACCESS_TRANSFER_READ_BIT", pure VK_ACCESS_TRANSFER_READ_BIT),
-                  ("VK_ACCESS_TRANSFER_WRITE_BIT",
-                   pure VK_ACCESS_TRANSFER_WRITE_BIT),
-                  ("VK_ACCESS_HOST_READ_BIT", pure VK_ACCESS_HOST_READ_BIT),
-                  ("VK_ACCESS_HOST_WRITE_BIT", pure VK_ACCESS_HOST_WRITE_BIT),
-                  ("VK_ACCESS_MEMORY_READ_BIT", pure VK_ACCESS_MEMORY_READ_BIT),
-                  ("VK_ACCESS_MEMORY_WRITE_BIT", pure VK_ACCESS_MEMORY_WRITE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkAccessBitmask") >>
-                      (VkAccessBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_ACCESS_INDIRECT_COMMAND_READ_BIT",
+               pure VK_ACCESS_INDIRECT_COMMAND_READ_BIT),
+              ("VK_ACCESS_INDEX_READ_BIT", pure VK_ACCESS_INDEX_READ_BIT),
+              ("VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT",
+               pure VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT),
+              ("VK_ACCESS_UNIFORM_READ_BIT", pure VK_ACCESS_UNIFORM_READ_BIT),
+              ("VK_ACCESS_INPUT_ATTACHMENT_READ_BIT",
+               pure VK_ACCESS_INPUT_ATTACHMENT_READ_BIT),
+              ("VK_ACCESS_SHADER_READ_BIT", pure VK_ACCESS_SHADER_READ_BIT),
+              ("VK_ACCESS_SHADER_WRITE_BIT", pure VK_ACCESS_SHADER_WRITE_BIT),
+              ("VK_ACCESS_COLOR_ATTACHMENT_READ_BIT",
+               pure VK_ACCESS_COLOR_ATTACHMENT_READ_BIT),
+              ("VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT",
+               pure VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT),
+              ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT",
+               pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT),
+              ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT",
+               pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT),
+              ("VK_ACCESS_TRANSFER_READ_BIT", pure VK_ACCESS_TRANSFER_READ_BIT),
+              ("VK_ACCESS_TRANSFER_WRITE_BIT",
+               pure VK_ACCESS_TRANSFER_WRITE_BIT),
+              ("VK_ACCESS_HOST_READ_BIT", pure VK_ACCESS_HOST_READ_BIT),
+              ("VK_ACCESS_HOST_WRITE_BIT", pure VK_ACCESS_HOST_WRITE_BIT),
+              ("VK_ACCESS_MEMORY_READ_BIT", pure VK_ACCESS_MEMORY_READ_BIT),
+              ("VK_ACCESS_MEMORY_WRITE_BIT", pure VK_ACCESS_MEMORY_WRITE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkAccessBitmask") >>
+                  (VkAccessBitmask <$> step readPrec)))
 
 -- | Controls coherency of indirect command reads
 --

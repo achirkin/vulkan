@@ -27,22 +27,70 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         --
 
         -- ** Required extensions: 'VK_KHR_external_semaphore'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.External,
-        module Graphics.Vulkan.Types.BaseTypes, VkImportSemaphoreFdInfoKHR,
-        VkImportSemaphoreFdInfoKHR', VkSemaphoreGetFdInfoKHR,
-        VkSemaphoreGetFdInfoKHR',
-        module Graphics.Vulkan.Types.Enum.SemaphoreImportFlag,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VkImportSemaphoreFdKHR, pattern VkImportSemaphoreFdKHR,
-        HS_vkImportSemaphoreFdKHR, PFN_vkImportSemaphoreFdKHR,
-        VkGetSemaphoreFdKHR, pattern VkGetSemaphoreFdKHR,
-        HS_vkGetSemaphoreFdKHR, PFN_vkGetSemaphoreFdKHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Import,
-        module Graphics.Vulkan.Types.Struct.Semaphore,
+        module Graphics.Vulkan.Marshal, VkExternalFenceFeatureBitmask(..),
+        VkExternalFenceHandleTypeBitmask(..),
+        VkExternalMemoryFeatureBitmask(..),
+        VkExternalMemoryFeatureBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmask(..),
+        VkExternalSemaphoreFeatureBitmask(..),
+        VkExternalSemaphoreHandleTypeBitmask(..),
+        VkExternalFenceFeatureFlagBits(),
+        VkExternalFenceFeatureFlagBitsKHR(..),
+        VkExternalFenceFeatureFlags(), VkExternalFenceHandleTypeFlagBits(),
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        VkExternalFenceHandleTypeFlags(),
+        VkExternalMemoryFeatureFlagBits(),
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        VkExternalMemoryFeatureFlagBitsNV(),
+        VkExternalMemoryFeatureFlags(), VkExternalMemoryFeatureFlagsNV(),
+        VkExternalMemoryHandleTypeFlagBits(),
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        VkExternalMemoryHandleTypeFlagBitsNV(),
+        VkExternalMemoryHandleTypeFlags(),
+        VkExternalMemoryHandleTypeFlagsNV(),
+        VkExternalSemaphoreFeatureFlagBits(),
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        VkExternalSemaphoreFeatureFlags(),
+        VkExternalSemaphoreHandleTypeFlagBits(),
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        VkExternalSemaphoreHandleTypeFlags(), VkBool32(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkImportSemaphoreFdInfoKHR, VkSemaphoreGetFdInfoKHR,
+        VkSemaphoreImportBitmask(..), VkSemaphoreImportFlagBits(),
+        VkSemaphoreImportFlagBitsKHR(..), VkSemaphoreImportFlags(),
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VkImportSemaphoreFdKHR,
+        pattern VkImportSemaphoreFdKHR, HS_vkImportSemaphoreFdKHR,
+        PFN_vkImportSemaphoreFdKHR, VkGetSemaphoreFdKHR,
+        pattern VkGetSemaphoreFdKHR, HS_vkGetSemaphoreFdKHR,
+        PFN_vkGetSemaphoreFdKHR, VkResult(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkImportFenceFdInfoKHR, VkImportMemoryFdInfoKHR,
+        VkImportMemoryHostPointerInfoEXT, VkSemaphoreCreateInfo,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME,
@@ -66,7 +114,8 @@ pattern VkImportSemaphoreFdKHR :: CString
 
 pattern VkImportSemaphoreFdKHR <-
         (is_VkImportSemaphoreFdKHR -> True)
-  where VkImportSemaphoreFdKHR = _VkImportSemaphoreFdKHR
+  where
+    VkImportSemaphoreFdKHR = _VkImportSemaphoreFdKHR
 
 {-# INLINE _VkImportSemaphoreFdKHR #-}
 
@@ -107,22 +156,23 @@ foreign import ccall safe "dynamic"
                PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
 
 instance VulkanProc "vkImportSemaphoreFdKHR" where
-        type VkProcType "vkImportSemaphoreFdKHR" =
-             HS_vkImportSemaphoreFdKHR
-        vkProcSymbol = _VkImportSemaphoreFdKHR
+    type VkProcType "vkImportSemaphoreFdKHR" =
+         HS_vkImportSemaphoreFdKHR
+    vkProcSymbol = _VkImportSemaphoreFdKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkImportSemaphoreFdKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkImportSemaphoreFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkImportSemaphoreFdKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkImportSemaphoreFdKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetSemaphoreFdKHR :: CString
 
 pattern VkGetSemaphoreFdKHR <- (is_VkGetSemaphoreFdKHR -> True)
-  where VkGetSemaphoreFdKHR = _VkGetSemaphoreFdKHR
+  where
+    VkGetSemaphoreFdKHR = _VkGetSemaphoreFdKHR
 
 {-# INLINE _VkGetSemaphoreFdKHR #-}
 
@@ -163,16 +213,16 @@ foreign import ccall safe "dynamic" unwrapVkGetSemaphoreFdKHRSafe
                :: PFN_vkGetSemaphoreFdKHR -> HS_vkGetSemaphoreFdKHR
 
 instance VulkanProc "vkGetSemaphoreFdKHR" where
-        type VkProcType "vkGetSemaphoreFdKHR" = HS_vkGetSemaphoreFdKHR
-        vkProcSymbol = _VkGetSemaphoreFdKHR
+    type VkProcType "vkGetSemaphoreFdKHR" = HS_vkGetSemaphoreFdKHR
+    vkProcSymbol = _VkGetSemaphoreFdKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetSemaphoreFdKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetSemaphoreFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetSemaphoreFdKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetSemaphoreFdKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -185,8 +235,9 @@ pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME :: CString
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME <-
         (is_VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME -> True)
-  where VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME
-          = _VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME
+  where
+    VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME
+      = _VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME #-}
 

@@ -18,25 +18,25 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIndexType VkIndexType registry at www.khronos.org>
 newtype VkIndexType = VkIndexType Int32
-                        deriving (Eq, Ord, Enum, Storable)
+                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkIndexType where
-        showsPrec _ VK_INDEX_TYPE_UINT16
-          = showString "VK_INDEX_TYPE_UINT16"
-        showsPrec _ VK_INDEX_TYPE_UINT32
-          = showString "VK_INDEX_TYPE_UINT32"
-        showsPrec p (VkIndexType x)
-          = showParen (p >= 11) (showString "VkIndexType " . showsPrec 11 x)
+    showsPrec _ VK_INDEX_TYPE_UINT16
+      = showString "VK_INDEX_TYPE_UINT16"
+    showsPrec _ VK_INDEX_TYPE_UINT32
+      = showString "VK_INDEX_TYPE_UINT32"
+    showsPrec p (VkIndexType x)
+      = showParen (p >= 11) (showString "VkIndexType " . showsPrec 11 x)
 
 instance Read VkIndexType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_INDEX_TYPE_UINT16", pure VK_INDEX_TYPE_UINT16),
-                  ("VK_INDEX_TYPE_UINT32", pure VK_INDEX_TYPE_UINT32)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkIndexType") >> (VkIndexType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_INDEX_TYPE_UINT16", pure VK_INDEX_TYPE_UINT16),
+              ("VK_INDEX_TYPE_UINT32", pure VK_INDEX_TYPE_UINT32)]
+             +++
+             prec 10
+               (expectP (Ident "VkIndexType") >> (VkIndexType <$> step readPrec)))
 
 pattern VK_INDEX_TYPE_UINT16 :: VkIndexType
 

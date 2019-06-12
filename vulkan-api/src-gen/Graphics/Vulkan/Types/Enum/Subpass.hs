@@ -27,28 +27,28 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassContents VkSubpassContents registry at www.khronos.org>
 newtype VkSubpassContents = VkSubpassContents Int32
-                              deriving (Eq, Ord, Enum, Storable)
+                            deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkSubpassContents where
-        showsPrec _ VK_SUBPASS_CONTENTS_INLINE
-          = showString "VK_SUBPASS_CONTENTS_INLINE"
-        showsPrec _ VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS
-          = showString "VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS"
-        showsPrec p (VkSubpassContents x)
-          = showParen (p >= 11)
-              (showString "VkSubpassContents " . showsPrec 11 x)
+    showsPrec _ VK_SUBPASS_CONTENTS_INLINE
+      = showString "VK_SUBPASS_CONTENTS_INLINE"
+    showsPrec _ VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS
+      = showString "VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS"
+    showsPrec p (VkSubpassContents x)
+      = showParen (p >= 11)
+          (showString "VkSubpassContents " . showsPrec 11 x)
 
 instance Read VkSubpassContents where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SUBPASS_CONTENTS_INLINE", pure VK_SUBPASS_CONTENTS_INLINE),
-                  ("VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS",
-                   pure VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSubpassContents") >>
-                      (VkSubpassContents <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SUBPASS_CONTENTS_INLINE", pure VK_SUBPASS_CONTENTS_INLINE),
+              ("VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS",
+               pure VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS)]
+             +++
+             prec 10
+               (expectP (Ident "VkSubpassContents") >>
+                  (VkSubpassContents <$> step readPrec)))
 
 pattern VK_SUBPASS_CONTENTS_INLINE :: VkSubpassContents
 
@@ -62,7 +62,7 @@ pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS =
 
 newtype VkSubpassDescriptionBitmask (a ::
                                        FlagType) = VkSubpassDescriptionBitmask VkFlags
-                                                     deriving (Eq, Ord, Storable)
+                                                   deriving (Eq, Ord, Storable)
 
 type VkSubpassDescriptionFlags =
      VkSubpassDescriptionBitmask FlagMask
@@ -86,14 +86,14 @@ deriving instance Bits (VkSubpassDescriptionBitmask FlagMask)
 deriving instance FiniteBits (VkSubpassDescriptionBitmask FlagMask)
 
 instance Show (VkSubpassDescriptionBitmask a) where
-        showsPrec p (VkSubpassDescriptionBitmask x)
-          = showParen (p >= 11)
-              (showString "VkSubpassDescriptionBitmask " . showsPrec 11 x)
+    showsPrec p (VkSubpassDescriptionBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSubpassDescriptionBitmask " . showsPrec 11 x)
 
 instance Read (VkSubpassDescriptionBitmask a) where
-        readPrec
-          = parens
-              (choose [] +++
-                 prec 10
-                   (expectP (Ident "VkSubpassDescriptionBitmask") >>
-                      (VkSubpassDescriptionBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkSubpassDescriptionBitmask") >>
+                  (VkSubpassDescriptionBitmask <$> step readPrec)))

@@ -6,10 +6,12 @@ module Write.Util.DeclaredNames
   ( DeclaredNames, baseDeclaredNames
   , DeclaredIdent (..), DIThingMembers (..)
   , diToImportSpec, diToExportSpec
+  , combineExportSpecs, importToExportSpec
   ) where
 
 
 import           Control.DeepSeq
+import           Data.List                    (unionBy)
 import qualified Data.Map                     as Map
 import           Data.Map.Strict              (Map)
 import           Data.Semigroup
@@ -77,6 +79,49 @@ diToExportSpec (DIThing n DITAll)
   = EThingWith () (EWildcard () 0)
     (UnQual () $ Ident () $ T.unpack n) []
 
+-- | Make a union of two export specs if it is possible,
+--   otherwise return nothing.
+combineExportSpecs :: ExportSpec a -> ExportSpec a -> Maybe (ExportSpec a)
+combineExportSpecs a@EVar {} b@EThingWith{} = combineExportSpecs b a
+combineExportSpecs a@EAbs {} b@EThingWith{} = combineExportSpecs b a
+combineExportSpecs (EVar l a) (EVar _ b)
+    | a `eq'` b = Just $ EVar l a
+combineExportSpecs (EAbs l n a) (EAbs _ m b)
+    | n `eq'` m && a `eq'` b = Just $ EAbs l n a
+combineExportSpecs (EThingWith l wcA nA csA) (EThingWith _ wcB nB csB)
+    | nA `eq'` nB = Just $ EThingWith l (combineWildCards wcA wcB) nA (unionBy eq' csA csB)
+combineExportSpecs a@(EThingWith _ _ _ csA) (EVar _ b)
+    | any (eq' (eVarName b)) csA = Just a
+  where
+    eVarName (Qual l _ n)  = VarName l n
+    eVarName (UnQual l n)  = VarName l n
+    eVarName (Special l _) = VarName l (Symbol l "invalid!")
+combineExportSpecs a@(EThingWith _ _ nA csA) (EAbs _ ns b)
+    | PatternNamespace _ <- ns
+    , any (eq' (eConName b)) csA = Just a
+    | nA `eq'` b                 = Just a
+  where
+    eConName (Qual l _ n)  = ConName l n
+    eConName (UnQual l n)  = ConName l n
+    eConName (Special l _) = ConName l (Symbol l "invalid!")
+combineExportSpecs a b
+    | a `eq'` b = Just a
+combineExportSpecs _ _ = Nothing
+
+eq' :: (Eq (c ()), Functor c) => c a -> c b -> Bool
+eq' a b = (() <$ a) == (() <$ b)
+
+combineWildCards :: EWildcard l -> EWildcard l -> EWildcard l
+combineWildCards (NoWildcard _) w                = w
+combineWildCards w (NoWildcard _)                = w
+combineWildCards (EWildcard l a) (EWildcard _ b) = EWildcard l (max a b)
+
+importToExportSpec :: ImportSpec () -> ExportSpec ()
+importToExportSpec (IVar l a) = EVar l (UnQual () a)
+importToExportSpec (IAbs l s a) = EAbs l s (UnQual () a)
+importToExportSpec (IThingAll l a) = EThingWith l (EWildcard () 0) (UnQual () a) []
+importToExportSpec (IThingWith l a cs) = EThingWith l (NoWildcard ()) (UnQual () a) cs
+
 
 baseDeclaredNames :: DeclaredNames
 baseDeclaredNames
@@ -90,6 +135,7 @@ baseDeclaredNames
    <> ida "Graphics.Vulkan.Marshal" "VkPtr"
    <> ipa "Graphics.Vulkan.Marshal" "VK_NULL_HANDLE"
    <> ipa "Graphics.Vulkan.Marshal" "VK_NULL"
+   <> ipa "Graphics.Vulkan.Marshal" "VK_ZERO_FLAGS"
    <> iva "Graphics.Vulkan.Marshal" "clearStorable"
    <> iva "Graphics.Vulkan.Marshal" "withPtr"
    <> ida "Graphics.Vulkan.Marshal" "HasField"
@@ -124,7 +170,6 @@ baseDeclaredNames
    <> iva "Graphics.Vulkan.Marshal" "readStringField"
    <> iva "Graphics.Vulkan.Marshal" "writeStringField"
    <> iva "Graphics.Vulkan.Marshal" "eqCStrings"
-   <> iva "Graphics.Vulkan.Marshal" "eqCStringsN"
    <> ida "Graphics.Vulkan.Marshal.Proc" "VulkanProc"
    <> ida "Foreign.C.Types" "CFloat"
    <> iva "Foreign.Ptr" "nullPtr"

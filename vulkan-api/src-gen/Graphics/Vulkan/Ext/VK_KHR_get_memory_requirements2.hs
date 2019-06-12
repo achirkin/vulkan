@@ -23,10 +23,10 @@ module Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
         -- type: @device@
         --
         -- Extension number: @147@
-        module Graphics.Vulkan.Types.Struct.Buffer,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.Memory,
-        module Graphics.Vulkan.Types.Struct.Sparse,
+        VkBufferMemoryRequirementsInfo2KHR,
+        VkImageMemoryRequirementsInfo2KHR,
+        VkImageSparseMemoryRequirementsInfo2KHR, VkMemoryRequirements2KHR,
+        VkSparseImageMemoryRequirements2KHR,
         VkGetImageMemoryRequirements2KHR,
         pattern VkGetImageMemoryRequirements2KHR,
         HS_vkGetImageMemoryRequirements2KHR,
@@ -39,13 +39,65 @@ module Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
         pattern VkGetImageSparseMemoryRequirements2KHR,
         HS_vkGetImageSparseMemoryRequirements2KHR,
         PFN_vkGetImageSparseMemoryRequirements2KHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.Sparse,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Extent,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkSparseImageFormatBitmask(..), VkSparseMemoryBindBitmask(..),
+        VkSparseImageFormatFlagBits(), VkSparseImageFormatFlags(),
+        VkSparseMemoryBindFlagBits(), VkSparseMemoryBindFlags(),
+        VkStructureType(..), VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkBufferCopy, VkBufferCreateInfo, VkBufferImageCopy,
+        VkBufferMemoryBarrier, VkBufferMemoryRequirementsInfo2,
+        VkBufferViewCreateInfo, VkExtent2D, VkExtent3D, VkImageBlit,
+        VkImageCopy, VkImageCreateInfo, VkImageFormatListCreateInfoKHR,
+        VkImageFormatProperties, VkImageFormatProperties2,
+        VkImageFormatProperties2KHR, VkImageMemoryBarrier,
+        VkImageMemoryRequirementsInfo2, VkImagePlaneMemoryRequirementsInfo,
+        VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
+        VkImageSparseMemoryRequirementsInfo2, VkImageSubresource,
+        VkImageSubresourceLayers, VkImageSubresourceRange,
+        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
+        VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
+        VkMemoryAllocateInfo, VkMemoryBarrier,
+        VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfoKHR,
+        VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirementsKHR,
+        VkMemoryFdPropertiesKHR, VkMemoryGetFdInfoKHR, VkMemoryHeap,
+        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryRequirements2, VkMemoryType, VkSparseBufferMemoryBindInfo,
+        VkSparseImageFormatProperties, VkSparseImageFormatProperties2,
+        VkSparseImageFormatProperties2KHR, VkSparseImageMemoryBind,
+        VkSparseImageMemoryBindInfo, VkSparseImageMemoryRequirements,
+        VkSparseImageMemoryRequirements2,
+        VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind,
         VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION,
         pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION,
         VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME,
@@ -79,8 +131,9 @@ pattern VkGetImageMemoryRequirements2KHR :: CString
 
 pattern VkGetImageMemoryRequirements2KHR <-
         (is_VkGetImageMemoryRequirements2KHR -> True)
-  where VkGetImageMemoryRequirements2KHR
-          = _VkGetImageMemoryRequirements2KHR
+  where
+    VkGetImageMemoryRequirements2KHR
+      = _VkGetImageMemoryRequirements2KHR
 
 {-# INLINE _VkGetImageMemoryRequirements2KHR #-}
 
@@ -128,25 +181,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetImageMemoryRequirements2KHR
 
 instance VulkanProc "vkGetImageMemoryRequirements2KHR" where
-        type VkProcType "vkGetImageMemoryRequirements2KHR" =
-             HS_vkGetImageMemoryRequirements2KHR
-        vkProcSymbol = _VkGetImageMemoryRequirements2KHR
+    type VkProcType "vkGetImageMemoryRequirements2KHR" =
+         HS_vkGetImageMemoryRequirements2KHR
+    vkProcSymbol = _VkGetImageMemoryRequirements2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetImageMemoryRequirements2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetImageMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirements2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetBufferMemoryRequirements2KHR :: CString
 
 pattern VkGetBufferMemoryRequirements2KHR <-
         (is_VkGetBufferMemoryRequirements2KHR -> True)
-  where VkGetBufferMemoryRequirements2KHR
-          = _VkGetBufferMemoryRequirements2KHR
+  where
+    VkGetBufferMemoryRequirements2KHR
+      = _VkGetBufferMemoryRequirements2KHR
 
 {-# INLINE _VkGetBufferMemoryRequirements2KHR #-}
 
@@ -194,25 +248,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetBufferMemoryRequirements2KHR
 
 instance VulkanProc "vkGetBufferMemoryRequirements2KHR" where
-        type VkProcType "vkGetBufferMemoryRequirements2KHR" =
-             HS_vkGetBufferMemoryRequirements2KHR
-        vkProcSymbol = _VkGetBufferMemoryRequirements2KHR
+    type VkProcType "vkGetBufferMemoryRequirements2KHR" =
+         HS_vkGetBufferMemoryRequirements2KHR
+    vkProcSymbol = _VkGetBufferMemoryRequirements2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetBufferMemoryRequirements2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetBufferMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirements2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageSparseMemoryRequirements2KHR :: CString
 
 pattern VkGetImageSparseMemoryRequirements2KHR <-
         (is_VkGetImageSparseMemoryRequirements2KHR -> True)
-  where VkGetImageSparseMemoryRequirements2KHR
-          = _VkGetImageSparseMemoryRequirements2KHR
+  where
+    VkGetImageSparseMemoryRequirements2KHR
+      = _VkGetImageSparseMemoryRequirements2KHR
 
 {-# INLINE _VkGetImageSparseMemoryRequirements2KHR #-}
 
@@ -262,19 +317,19 @@ foreign import ccall safe "dynamic"
                  HS_vkGetImageSparseMemoryRequirements2KHR
 
 instance VulkanProc "vkGetImageSparseMemoryRequirements2KHR" where
-        type VkProcType "vkGetImageSparseMemoryRequirements2KHR" =
-             HS_vkGetImageSparseMemoryRequirements2KHR
-        vkProcSymbol = _VkGetImageSparseMemoryRequirements2KHR
+    type VkProcType "vkGetImageSparseMemoryRequirements2KHR" =
+         HS_vkGetImageSparseMemoryRequirements2KHR
+    vkProcSymbol = _VkGetImageSparseMemoryRequirements2KHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetImageSparseMemoryRequirements2KHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetImageSparseMemoryRequirements2KHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetImageSparseMemoryRequirements2KHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetImageSparseMemoryRequirements2KHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -287,8 +342,9 @@ pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME :: CString
 
 pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME <-
         (is_VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME -> True)
-  where VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME
-          = _VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME
+  where
+    VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME
+      = _VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME #-}
 

@@ -22,29 +22,62 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Format, VkPhysicalDeviceLimits,
-        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2', VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkPhysicalDeviceLimits,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
         VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT',
         VkPipelineVertexInputDivisorStateCreateInfoEXT,
-        VkPipelineVertexInputDivisorStateCreateInfoEXT',
-        module Graphics.Vulkan.Types.Bitmasks,
-        VkPipelineVertexInputStateCreateInfo,
-        VkPipelineVertexInputStateCreateInfo',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        VkVertexInputAttributeDescription,
-        VkVertexInputAttributeDescription',
-        VkVertexInputBindingDescription, VkVertexInputBindingDescription',
-        VkVertexInputBindingDivisorDescriptionEXT,
-        VkVertexInputBindingDivisorDescriptionEXT',
-        module Graphics.Vulkan.Types.Enum.VertexInputRate,
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
+        VkPipelineVertexInputStateCreateInfo, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkStructureType(..),
+        VkVertexInputAttributeDescription, VkVertexInputBindingDescription,
+        VkVertexInputBindingDivisorDescriptionEXT, VkVertexInputRate(..),
         -- > #include "vk_platform.h"
         VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION,
         pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION,
@@ -63,25 +96,15 @@ import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.VertexInputRate
 import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
-                                                      VkPhysicalDeviceLimits',
                                                       VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties',
                                                       VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceProperties2',
                                                       VkPhysicalDeviceSparseProperties,
-                                                      VkPhysicalDeviceSparseProperties',
-                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT')
+                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT)
 import Graphics.Vulkan.Types.Struct.Pipeline         (VkPipelineVertexInputDivisorStateCreateInfoEXT,
-                                                      VkPipelineVertexInputDivisorStateCreateInfoEXT',
-                                                      VkPipelineVertexInputStateCreateInfo,
-                                                      VkPipelineVertexInputStateCreateInfo')
+                                                      VkPipelineVertexInputStateCreateInfo)
 import Graphics.Vulkan.Types.Struct.VertexInput      (VkVertexInputAttributeDescription,
-                                                      VkVertexInputAttributeDescription',
                                                       VkVertexInputBindingDescription,
-                                                      VkVertexInputBindingDescription',
-                                                      VkVertexInputBindingDivisorDescriptionEXT,
-                                                      VkVertexInputBindingDivisorDescriptionEXT')
+                                                      VkVertexInputBindingDivisorDescriptionEXT)
 
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -94,8 +117,9 @@ pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME :: CString
 
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME <-
         (is_VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME -> True)
-  where VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME
-          = _VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME
+  where
+    VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME
+      = _VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME #-}
 

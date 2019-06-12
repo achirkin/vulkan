@@ -12,10 +12,10 @@ module Write.Types.Enum
   , genBitmaskPair
   ) where
 
-import           Control.Lens
-import           Control.Monad
-import           Control.Monad.Reader.Class
-import           Data.Maybe
+import Control.Lens
+import Control.Monad
+import Control.Monad.Reader.Class
+import Data.Maybe
 -- import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import qualified Data.Map.Strict                      as Map
 import           Data.Semigroup
@@ -25,13 +25,13 @@ import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
-import           VkXml.CommonTypes
-import           VkXml.Sections
-import           VkXml.Sections.Enums
-import           VkXml.Sections.Types
+import VkXml.CommonTypes
+import VkXml.Sections
+import VkXml.Sections.Enums
+import VkXml.Sections.Types
 
-import           Write.ModuleWriter
-import           Write.Util.DeclaredNames
+import Write.ModuleWriter
+import Write.Util.DeclaredNames
 
 
 
@@ -288,14 +288,14 @@ genAlias VkTypeSimple
     writeImport $ DIThing "Storable" DITEmpty
     writeImport $ DIThing treftxt DITNo
 
-    writeDecl . setComment rezComment $ parseDecl' $ 
+    writeDecl . setComment rezComment $ parseDecl' $
       case cat of
         VkTypeCatBasetype ->
           [text|
             newtype $tnametxt = $tnametxt $treftxt
               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Real, Bits, FiniteBits, Storable)
           |]
-        _ -> 
+        _ ->
           [text|
             newtype $tnametxt = $tnametxt $treftxt
               deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
@@ -403,14 +403,15 @@ enumPattern vke@VkEnum {..} = do
       | Just (VkTypeName cname) <- _vkEnumTName
       , patval <- T.pack $ showParen (n < 0) (shows n) ""
         -> do
-          writeImport $ DIThing tnametxt DITAll
           mIsBits <- preview $ to (Map.lookup (Just $ VkTypeName tnametxt) . globEnums)
                                   ._Just.vkEnumsIsBits
           case mIsBits of
             Just True -> do
               let basenametxt = T.replace "FlagBits" "Bitmask" tnametxt
+              writeImport $ DIThing basenametxt DITAll
               Just <$> bitmaskPattern (basenametxt <> " a") basenametxt vke
             _ -> do
+              writeImport $ DIThing tnametxt DITAll
               writeDecl . setComment rezComment
                         $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
               writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]

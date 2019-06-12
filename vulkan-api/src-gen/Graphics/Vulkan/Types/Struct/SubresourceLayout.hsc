@@ -2,18 +2,14 @@
 
 {-# LANGUAGE DataKinds             #-}
 {-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
-{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SubresourceLayout
-       (VkSubresourceLayout, VkSubresourceLayout') where -- ' closing tick for hsc2hs
-import Foreign.Storable                 (Storable (..))
+       (VkSubresourceLayout) where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
-import System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubresourceLayout {
 --   >     VkDeviceSize           offset;
@@ -24,210 +20,40 @@ import System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSubresourceLayout;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubresourceLayout VkSubresourceLayout registry at www.khronos.org>
-type VkSubresourceLayout = VulkanStruct VkSubresourceLayout' -- ' closing tick for hsc2hs
+type VkSubresourceLayout = VkStruct VkSubresourceLayout' -- ' closing tick for hsc2hs
 
 data VkSubresourceLayout' -- ' closing tick for hsc2hs
 
-instance Eq VkSubresourceLayout where
-        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
-
-        {-# INLINE (==) #-}
-
-instance Ord VkSubresourceLayout where
-        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
-
-        {-# INLINE compare #-}
-
-instance Storable VkSubresourceLayout where
-        sizeOf ~_ = #{size VkSubresourceLayout}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkSubresourceLayout}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
 instance VulkanMarshal VkSubresourceLayout where
-        type StructFields VkSubresourceLayout =
-             '["offset", "size", "rowPitch", "arrayPitch", "depthPitch"] -- ' closing tick for hsc2hs
-        type CUnionType VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkSubresourceLayout = 'True -- ' closing tick for hsc2hs
-        type StructExtends VkSubresourceLayout = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasField "offset" VkSubresourceLayout
-         where
-        type FieldType "offset" VkSubresourceLayout = VkDeviceSize
-        type FieldOptional "offset" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "offset" VkSubresourceLayout =
-             #{offset VkSubresourceLayout, offset}
-        type FieldIsArray "offset" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkSubresourceLayout, offset}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "offset" VkSubresourceLayout where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, offset})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkSubresourceLayout, offset}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "offset" VkSubresourceLayout where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkSubresourceLayout, offset}
-
-instance {-# OVERLAPPING #-} HasField "size" VkSubresourceLayout
-         where
-        type FieldType "size" VkSubresourceLayout = VkDeviceSize
-        type FieldOptional "size" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "size" VkSubresourceLayout =
-             #{offset VkSubresourceLayout, size}
-        type FieldIsArray "size" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkSubresourceLayout, size}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "size" VkSubresourceLayout where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, size})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkSubresourceLayout, size}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "size" VkSubresourceLayout where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkSubresourceLayout, size}
-
-instance {-# OVERLAPPING #-}
-         HasField "rowPitch" VkSubresourceLayout where
-        type FieldType "rowPitch" VkSubresourceLayout = VkDeviceSize
-        type FieldOptional "rowPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "rowPitch" VkSubresourceLayout =
-             #{offset VkSubresourceLayout, rowPitch}
-        type FieldIsArray "rowPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkSubresourceLayout, rowPitch}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "rowPitch" VkSubresourceLayout where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, rowPitch})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkSubresourceLayout, rowPitch}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "rowPitch" VkSubresourceLayout where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkSubresourceLayout, rowPitch}
-
-instance {-# OVERLAPPING #-}
-         HasField "arrayPitch" VkSubresourceLayout where
-        type FieldType "arrayPitch" VkSubresourceLayout = VkDeviceSize
-        type FieldOptional "arrayPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "arrayPitch" VkSubresourceLayout =
-             #{offset VkSubresourceLayout, arrayPitch}
-        type FieldIsArray "arrayPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkSubresourceLayout, arrayPitch}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "arrayPitch" VkSubresourceLayout where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, arrayPitch})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkSubresourceLayout, arrayPitch}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "arrayPitch" VkSubresourceLayout where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkSubresourceLayout, arrayPitch}
-
-instance {-# OVERLAPPING #-}
-         HasField "depthPitch" VkSubresourceLayout where
-        type FieldType "depthPitch" VkSubresourceLayout = VkDeviceSize
-        type FieldOptional "depthPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "depthPitch" VkSubresourceLayout =
-             #{offset VkSubresourceLayout, depthPitch}
-        type FieldIsArray "depthPitch" VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkSubresourceLayout, depthPitch}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "depthPitch" VkSubresourceLayout where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, depthPitch})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkSubresourceLayout, depthPitch}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "depthPitch" VkSubresourceLayout where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkSubresourceLayout, depthPitch}
-
-instance Show VkSubresourceLayout where
-        showsPrec d x
-          = showString "VkSubresourceLayout {" .
-              showString "offset = " .
-                showsPrec d (getField @"offset" x) .
-                  showString ", " .
-                    showString "size = " .
-                      showsPrec d (getField @"size" x) .
-                        showString ", " .
-                          showString "rowPitch = " .
-                            showsPrec d (getField @"rowPitch" x) .
-                              showString ", " .
-                                showString "arrayPitch = " .
-                                  showsPrec d (getField @"arrayPitch" x) .
-                                    showString ", " .
-                                      showString "depthPitch = " .
-                                        showsPrec d (getField @"depthPitch" x) . showChar '}'
+    type StructRep VkSubresourceLayout =
+         'StructMeta "VkSubresourceLayout" VkSubresourceLayout  -- ' closing tick for hsc2hs
+                                                               #{size VkSubresourceLayout}
+           #{alignment VkSubresourceLayout}
+           '[('FieldMeta "offset" VkDeviceSize 'False  -- ' closing tick for hsc2hs
+                                                      #{offset VkSubresourceLayout, offset}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "size" VkDeviceSize 'False 
+                                                    #{offset VkSubresourceLayout, size}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "rowPitch" VkDeviceSize 'False 
+                                                        #{offset VkSubresourceLayout, rowPitch}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "arrayPitch" VkDeviceSize 'False 
+                                                          #{offset VkSubresourceLayout, arrayPitch}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "depthPitch" VkDeviceSize 'False 
+                                                          #{offset VkSubresourceLayout, depthPitch}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs

@@ -2,14 +2,11 @@
 
 {-# LANGUAGE DataKinds             #-}
 {-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
-{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.AllocationCallbacks
-       (VkAllocationCallbacks, VkAllocationCallbacks') where -- ' closing tick for hsc2hs
-import Foreign.Storable                   (Storable (..))
+       (VkAllocationCallbacks) where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
@@ -17,7 +14,6 @@ import Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
                                            PFN_vkInternalAllocationNotification,
                                            PFN_vkInternalFreeNotification,
                                            PFN_vkReallocationFunction)
-import System.IO.Unsafe                   (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAllocationCallbacks {
 --   >     void*           pUserData;
@@ -29,257 +25,47 @@ import System.IO.Unsafe                   (unsafeDupablePerformIO)
 --   > } VkAllocationCallbacks;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
-type VkAllocationCallbacks = VulkanStruct VkAllocationCallbacks' -- ' closing tick for hsc2hs
+type VkAllocationCallbacks = VkStruct VkAllocationCallbacks' -- ' closing tick for hsc2hs
 
 data VkAllocationCallbacks' -- ' closing tick for hsc2hs
 
-instance Eq VkAllocationCallbacks where
-        a == b = EQ == cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
-
-        {-# INLINE (==) #-}
-
-instance Ord VkAllocationCallbacks where
-        compare a b = cmpBytes## (sizeOf a) (unsafeAddr a) (unsafeAddr b)
-
-        {-# INLINE compare #-}
-
-instance Storable VkAllocationCallbacks where
-        sizeOf ~_ = #{size VkAllocationCallbacks}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkAllocationCallbacks}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
 instance VulkanMarshal VkAllocationCallbacks where
-        type StructFields VkAllocationCallbacks =
-             '["pUserData", "pfnAllocation", "pfnReallocation", "pfnFree", -- ' closing tick for hsc2hs
-               "pfnInternalAllocation", "pfnInternalFree"]
-        type CUnionType VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkAllocationCallbacks = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasField "pUserData" VkAllocationCallbacks where
-        type FieldType "pUserData" VkAllocationCallbacks = Ptr Void
-        type FieldOptional "pUserData" VkAllocationCallbacks = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "pUserData" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pUserData}
-        type FieldIsArray "pUserData" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkAllocationCallbacks, pUserData}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pUserData" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pUserData})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pUserData}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pUserData" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pUserData}
-
-instance {-# OVERLAPPING #-}
-         HasField "pfnAllocation" VkAllocationCallbacks where
-        type FieldType "pfnAllocation" VkAllocationCallbacks =
-             PFN_vkAllocationFunction
-        type FieldOptional "pfnAllocation" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pfnAllocation" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pfnAllocation}
-        type FieldIsArray "pfnAllocation" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkAllocationCallbacks, pfnAllocation}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pfnAllocation" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnAllocation})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pfnAllocation" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
-
-instance {-# OVERLAPPING #-}
-         HasField "pfnReallocation" VkAllocationCallbacks where
-        type FieldType "pfnReallocation" VkAllocationCallbacks =
-             PFN_vkReallocationFunction
-        type FieldOptional "pfnReallocation" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pfnReallocation" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pfnReallocation}
-        type FieldIsArray "pfnReallocation" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkAllocationCallbacks, pfnReallocation}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pfnReallocation" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnReallocation})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pfnReallocation" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
-
-instance {-# OVERLAPPING #-}
-         HasField "pfnFree" VkAllocationCallbacks where
-        type FieldType "pfnFree" VkAllocationCallbacks = PFN_vkFreeFunction
-        type FieldOptional "pfnFree" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pfnFree" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pfnFree}
-        type FieldIsArray "pfnFree" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkAllocationCallbacks, pfnFree}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pfnFree" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnFree})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnFree}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pfnFree" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnFree}
-
-instance {-# OVERLAPPING #-}
-         HasField "pfnInternalAllocation" VkAllocationCallbacks where
-        type FieldType "pfnInternalAllocation" VkAllocationCallbacks =
-             PFN_vkInternalAllocationNotification
-        type FieldOptional "pfnInternalAllocation" VkAllocationCallbacks =
-             'True -- ' closing tick for hsc2hs
-        type FieldOffset "pfnInternalAllocation" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pfnInternalAllocation}
-        type FieldIsArray "pfnInternalAllocation" VkAllocationCallbacks =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkAllocationCallbacks, pfnInternalAllocation}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pfnInternalAllocation" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalAllocation})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pfnInternalAllocation" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
-
-instance {-# OVERLAPPING #-}
-         HasField "pfnInternalFree" VkAllocationCallbacks where
-        type FieldType "pfnInternalFree" VkAllocationCallbacks =
-             PFN_vkInternalFreeNotification
-        type FieldOptional "pfnInternalFree" VkAllocationCallbacks = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "pfnInternalFree" VkAllocationCallbacks =
-             #{offset VkAllocationCallbacks, pfnInternalFree}
-        type FieldIsArray "pfnInternalFree" VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkAllocationCallbacks, pfnInternalFree}
-
-instance {-# OVERLAPPING #-}
-         CanReadField "pfnInternalFree" VkAllocationCallbacks where
-        {-# NOINLINE getField #-}
-        getField x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalFree})
-
-        {-# INLINE readField #-}
-        readField p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
-
-instance {-# OVERLAPPING #-}
-         CanWriteField "pfnInternalFree" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
-
-instance Show VkAllocationCallbacks where
-        showsPrec d x
-          = showString "VkAllocationCallbacks {" .
-              showString "pUserData = " .
-                showsPrec d (getField @"pUserData" x) .
-                  showString ", " .
-                    showString "pfnAllocation = " .
-                      showsPrec d (getField @"pfnAllocation" x) .
-                        showString ", " .
-                          showString "pfnReallocation = " .
-                            showsPrec d (getField @"pfnReallocation" x) .
-                              showString ", " .
-                                showString "pfnFree = " .
-                                  showsPrec d (getField @"pfnFree" x) .
-                                    showString ", " .
-                                      showString "pfnInternalAllocation = " .
-                                        showsPrec d (getField @"pfnInternalAllocation" x) .
-                                          showString ", " .
-                                            showString "pfnInternalFree = " .
-                                              showsPrec d (getField @"pfnInternalFree" x) .
-                                                showChar '}'
+    type StructRep VkAllocationCallbacks =
+         'StructMeta "VkAllocationCallbacks" VkAllocationCallbacks  -- ' closing tick for hsc2hs
+                                                                   #{size VkAllocationCallbacks}
+           #{alignment VkAllocationCallbacks}
+           '[('FieldMeta "pUserData" (Ptr Void) 'True  -- ' closing tick for hsc2hs
+                                                      #{offset VkAllocationCallbacks, pUserData}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pfnAllocation" PFN_vkAllocationFunction 'False
+                #{offset VkAllocationCallbacks, pfnAllocation}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pfnReallocation" PFN_vkReallocationFunction 'False
+                #{offset VkAllocationCallbacks, pfnReallocation}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pfnFree" PFN_vkFreeFunction 'False 
+                                                             #{offset VkAllocationCallbacks, pfnFree}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pfnInternalAllocation" -- ' closing tick for hsc2hs
+                PFN_vkInternalAllocationNotification
+                'True -- ' closing tick for hsc2hs
+                #{offset VkAllocationCallbacks, pfnInternalAllocation}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pfnInternalFree" PFN_vkInternalFreeNotification 'True
+                #{offset VkAllocationCallbacks, pfnInternalFree}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs

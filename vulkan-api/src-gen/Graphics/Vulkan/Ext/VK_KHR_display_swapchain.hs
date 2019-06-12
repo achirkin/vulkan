@@ -12,49 +12,75 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
-       (-- * Vulkan extension: @VK_KHR_display_swapchain@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @James Jones @cubanismo@
-        --
-        -- author: @KHR@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @4@
-        --
-        -- Required extensions: 'VK_KHR_swapchain', 'VK_KHR_display'.
-        --
-
-        -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_display'.
-        module Graphics.Vulkan.Types.BaseTypes, VkDisplayPresentInfoKHR,
-        VkDisplayPresentInfoKHR', VkExtent2D, VkExtent2D', VkOffset2D,
-        VkOffset2D', VkPresentInfoKHR, VkPresentInfoKHR', VkRect2D,
-        VkRect2D', module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkDisplayPresentInfoKHR, VkExtent2D, VkOffset2D, VkPresentInfoKHR,
+        VkRect2D, VkResult(..), VkStructureType(..),
         -- > #include "vk_platform.h"
         VkCreateSharedSwapchainsKHR, pattern VkCreateSharedSwapchainsKHR,
         HS_vkCreateSharedSwapchainsKHR, PFN_vkCreateSharedSwapchainsKHR,
         vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRUnsafe,
         vkCreateSharedSwapchainsKHRSafe, module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.PresentModeKHR,
-        module Graphics.Vulkan.Types.Enum.SharingMode,
-        module Graphics.Vulkan.Types.Enum.Surface,
-        module Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.SwapchainC,
-        VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
+        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkInternalAllocationType(..), VkPresentModeKHR(..),
+        VkSharingMode(..), VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(), VkSwapchainCreateBitmaskKHR(..),
+        VkSwapchainCreateFlagBitsKHR(), VkSwapchainCreateFlagsKHR(),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkExtent3D, VkSwapchainCounterCreateInfoEXT,
+        VkSwapchainCreateInfoKHR, VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
         pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
         VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME,
         pattern VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME,
@@ -80,14 +106,11 @@ import Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Display               (VkDisplayPresentInfoKHR,
-                                                           VkDisplayPresentInfoKHR')
+import Graphics.Vulkan.Types.Struct.Display               (VkDisplayPresentInfoKHR)
 import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Offset                (VkOffset2D,
-                                                           VkOffset2D')
-import Graphics.Vulkan.Types.Struct.Present               (VkPresentInfoKHR,
-                                                           VkPresentInfoKHR')
-import Graphics.Vulkan.Types.Struct.Rect                  (VkRect2D, VkRect2D')
+import Graphics.Vulkan.Types.Struct.Offset                (VkOffset2D)
+import Graphics.Vulkan.Types.Struct.Present               (VkPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Rect                  (VkRect2D)
 import Graphics.Vulkan.Types.Struct.SwapchainC
 import System.IO.Unsafe                                   (unsafeDupablePerformIO)
 
@@ -95,7 +118,8 @@ pattern VkCreateSharedSwapchainsKHR :: CString
 
 pattern VkCreateSharedSwapchainsKHR <-
         (is_VkCreateSharedSwapchainsKHR -> True)
-  where VkCreateSharedSwapchainsKHR = _VkCreateSharedSwapchainsKHR
+  where
+    VkCreateSharedSwapchainsKHR = _VkCreateSharedSwapchainsKHR
 
 {-# INLINE _VkCreateSharedSwapchainsKHR #-}
 
@@ -326,17 +350,17 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
 
 instance VulkanProc "vkCreateSharedSwapchainsKHR" where
-        type VkProcType "vkCreateSharedSwapchainsKHR" =
-             HS_vkCreateSharedSwapchainsKHR
-        vkProcSymbol = _VkCreateSharedSwapchainsKHR
+    type VkProcType "vkCreateSharedSwapchainsKHR" =
+         HS_vkCreateSharedSwapchainsKHR
+    vkProcSymbol = _VkCreateSharedSwapchainsKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateSharedSwapchainsKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateSharedSwapchainsKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateSharedSwapchainsKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateSharedSwapchainsKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -348,8 +372,9 @@ pattern VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME :: CString
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME <-
         (is_VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME -> True)
-  where VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME
-          = _VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME
+  where
+    VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME
+      = _VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME #-}
 

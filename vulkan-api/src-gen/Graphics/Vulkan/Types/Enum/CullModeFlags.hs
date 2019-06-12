@@ -24,7 +24,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkCullModeBitmask (a ::
                              FlagType) = VkCullModeBitmask VkFlags
-                                           deriving (Eq, Ord, Storable)
+                                         deriving (Eq, Ord, Storable)
 
 type VkCullModeFlags = VkCullModeBitmask FlagMask
 
@@ -43,29 +43,29 @@ deriving instance Bits (VkCullModeBitmask FlagMask)
 deriving instance FiniteBits (VkCullModeBitmask FlagMask)
 
 instance Show (VkCullModeBitmask a) where
-        showsPrec _ VK_CULL_MODE_NONE = showString "VK_CULL_MODE_NONE"
-        showsPrec _ VK_CULL_MODE_FRONT_BIT
-          = showString "VK_CULL_MODE_FRONT_BIT"
-        showsPrec _ VK_CULL_MODE_BACK_BIT
-          = showString "VK_CULL_MODE_BACK_BIT"
-        showsPrec _ VK_CULL_MODE_FRONT_AND_BACK
-          = showString "VK_CULL_MODE_FRONT_AND_BACK"
-        showsPrec p (VkCullModeBitmask x)
-          = showParen (p >= 11)
-              (showString "VkCullModeBitmask " . showsPrec 11 x)
+    showsPrec _ VK_CULL_MODE_NONE = showString "VK_CULL_MODE_NONE"
+    showsPrec _ VK_CULL_MODE_FRONT_BIT
+      = showString "VK_CULL_MODE_FRONT_BIT"
+    showsPrec _ VK_CULL_MODE_BACK_BIT
+      = showString "VK_CULL_MODE_BACK_BIT"
+    showsPrec _ VK_CULL_MODE_FRONT_AND_BACK
+      = showString "VK_CULL_MODE_FRONT_AND_BACK"
+    showsPrec p (VkCullModeBitmask x)
+      = showParen (p >= 11)
+          (showString "VkCullModeBitmask " . showsPrec 11 x)
 
 instance Read (VkCullModeBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_CULL_MODE_NONE", pure VK_CULL_MODE_NONE),
-                  ("VK_CULL_MODE_FRONT_BIT", pure VK_CULL_MODE_FRONT_BIT),
-                  ("VK_CULL_MODE_BACK_BIT", pure VK_CULL_MODE_BACK_BIT),
-                  ("VK_CULL_MODE_FRONT_AND_BACK", pure VK_CULL_MODE_FRONT_AND_BACK)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCullModeBitmask") >>
-                      (VkCullModeBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_CULL_MODE_NONE", pure VK_CULL_MODE_NONE),
+              ("VK_CULL_MODE_FRONT_BIT", pure VK_CULL_MODE_FRONT_BIT),
+              ("VK_CULL_MODE_BACK_BIT", pure VK_CULL_MODE_BACK_BIT),
+              ("VK_CULL_MODE_FRONT_AND_BACK", pure VK_CULL_MODE_FRONT_AND_BACK)]
+             +++
+             prec 10
+               (expectP (Ident "VkCullModeBitmask") >>
+                  (VkCullModeBitmask <$> step readPrec)))
 
 pattern VK_CULL_MODE_NONE :: VkCullModeBitmask a
 

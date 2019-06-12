@@ -47,7 +47,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkQueryControlBitmask (a ::
                                  FlagType) = VkQueryControlBitmask VkFlags
-                                               deriving (Eq, Ord, Storable)
+                                             deriving (Eq, Ord, Storable)
 
 type VkQueryControlFlags = VkQueryControlBitmask FlagMask
 
@@ -68,22 +68,22 @@ deriving instance Bits (VkQueryControlBitmask FlagMask)
 deriving instance FiniteBits (VkQueryControlBitmask FlagMask)
 
 instance Show (VkQueryControlBitmask a) where
-        showsPrec _ VK_QUERY_CONTROL_PRECISE_BIT
-          = showString "VK_QUERY_CONTROL_PRECISE_BIT"
-        showsPrec p (VkQueryControlBitmask x)
-          = showParen (p >= 11)
-              (showString "VkQueryControlBitmask " . showsPrec 11 x)
+    showsPrec _ VK_QUERY_CONTROL_PRECISE_BIT
+      = showString "VK_QUERY_CONTROL_PRECISE_BIT"
+    showsPrec p (VkQueryControlBitmask x)
+      = showParen (p >= 11)
+          (showString "VkQueryControlBitmask " . showsPrec 11 x)
 
 instance Read (VkQueryControlBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUERY_CONTROL_PRECISE_BIT",
-                   pure VK_QUERY_CONTROL_PRECISE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueryControlBitmask") >>
-                      (VkQueryControlBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUERY_CONTROL_PRECISE_BIT",
+               pure VK_QUERY_CONTROL_PRECISE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueryControlBitmask") >>
+                  (VkQueryControlBitmask <$> step readPrec)))
 
 -- | Require precise results to be collected by the query
 --
@@ -94,7 +94,7 @@ pattern VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlBitmask 1
 
 newtype VkQueryPipelineStatisticBitmask (a ::
                                            FlagType) = VkQueryPipelineStatisticBitmask VkFlags
-                                                         deriving (Eq, Ord, Storable)
+                                                       deriving (Eq, Ord, Storable)
 
 type VkQueryPipelineStatisticFlags =
      VkQueryPipelineStatisticBitmask FlagMask
@@ -120,81 +120,81 @@ deriving instance
          FiniteBits (VkQueryPipelineStatisticBitmask FlagMask)
 
 instance Show (VkQueryPipelineStatisticBitmask a) where
-        showsPrec _ VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT"
-        showsPrec _ VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT
-          = showString "VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT"
-        showsPrec _ VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT
-          = showString "VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT"
-        showsPrec _
-          VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
-          = showString
-              "VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT"
-        showsPrec p (VkQueryPipelineStatisticBitmask x)
-          = showParen (p >= 11)
-              (showString "VkQueryPipelineStatisticBitmask " . showsPrec 11 x)
+    showsPrec _ VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT"
+    showsPrec _ VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT
+      = showString "VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT"
+    showsPrec _ VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT
+      = showString "VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT"
+    showsPrec _
+      VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
+      = showString
+          "VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT"
+    showsPrec p (VkQueryPipelineStatisticBitmask x)
+      = showParen (p >= 11)
+          (showString "VkQueryPipelineStatisticBitmask " . showsPrec 11 x)
 
 instance Read (VkQueryPipelineStatisticBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT",
-                   pure
-                     VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT",
-                   pure
-                     VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT),
-                  ("VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT",
-                   pure VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueryPipelineStatisticBitmask") >>
-                      (VkQueryPipelineStatisticBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT",
+               pure
+                 VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT",
+               pure
+                 VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT),
+              ("VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT",
+               pure VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueryPipelineStatisticBitmask") >>
+                  (VkQueryPipelineStatisticBitmask <$> step readPrec)))
 
 -- | Optional
 --
@@ -296,19 +296,19 @@ pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
         = VkQueryPipelineStatisticBitmask 1024
 
 newtype VkQueryPoolCreateFlagBits = VkQueryPoolCreateFlagBits VkFlags
-                                      deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+                                    deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkQueryPoolCreateFlagBits where
-        {-# INLINE showsPrec #-}
-        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkQueryPoolCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkQueryResultBitmask (a ::
                                 FlagType) = VkQueryResultBitmask VkFlags
-                                              deriving (Eq, Ord, Storable)
+                                            deriving (Eq, Ord, Storable)
 
 type VkQueryResultFlags = VkQueryResultBitmask FlagMask
 
@@ -329,31 +329,31 @@ deriving instance Bits (VkQueryResultBitmask FlagMask)
 deriving instance FiniteBits (VkQueryResultBitmask FlagMask)
 
 instance Show (VkQueryResultBitmask a) where
-        showsPrec _ VK_QUERY_RESULT_64_BIT
-          = showString "VK_QUERY_RESULT_64_BIT"
-        showsPrec _ VK_QUERY_RESULT_WAIT_BIT
-          = showString "VK_QUERY_RESULT_WAIT_BIT"
-        showsPrec _ VK_QUERY_RESULT_WITH_AVAILABILITY_BIT
-          = showString "VK_QUERY_RESULT_WITH_AVAILABILITY_BIT"
-        showsPrec _ VK_QUERY_RESULT_PARTIAL_BIT
-          = showString "VK_QUERY_RESULT_PARTIAL_BIT"
-        showsPrec p (VkQueryResultBitmask x)
-          = showParen (p >= 11)
-              (showString "VkQueryResultBitmask " . showsPrec 11 x)
+    showsPrec _ VK_QUERY_RESULT_64_BIT
+      = showString "VK_QUERY_RESULT_64_BIT"
+    showsPrec _ VK_QUERY_RESULT_WAIT_BIT
+      = showString "VK_QUERY_RESULT_WAIT_BIT"
+    showsPrec _ VK_QUERY_RESULT_WITH_AVAILABILITY_BIT
+      = showString "VK_QUERY_RESULT_WITH_AVAILABILITY_BIT"
+    showsPrec _ VK_QUERY_RESULT_PARTIAL_BIT
+      = showString "VK_QUERY_RESULT_PARTIAL_BIT"
+    showsPrec p (VkQueryResultBitmask x)
+      = showParen (p >= 11)
+          (showString "VkQueryResultBitmask " . showsPrec 11 x)
 
 instance Read (VkQueryResultBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUERY_RESULT_64_BIT", pure VK_QUERY_RESULT_64_BIT),
-                  ("VK_QUERY_RESULT_WAIT_BIT", pure VK_QUERY_RESULT_WAIT_BIT),
-                  ("VK_QUERY_RESULT_WITH_AVAILABILITY_BIT",
-                   pure VK_QUERY_RESULT_WITH_AVAILABILITY_BIT),
-                  ("VK_QUERY_RESULT_PARTIAL_BIT", pure VK_QUERY_RESULT_PARTIAL_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueryResultBitmask") >>
-                      (VkQueryResultBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUERY_RESULT_64_BIT", pure VK_QUERY_RESULT_64_BIT),
+              ("VK_QUERY_RESULT_WAIT_BIT", pure VK_QUERY_RESULT_WAIT_BIT),
+              ("VK_QUERY_RESULT_WITH_AVAILABILITY_BIT",
+               pure VK_QUERY_RESULT_WITH_AVAILABILITY_BIT),
+              ("VK_QUERY_RESULT_PARTIAL_BIT", pure VK_QUERY_RESULT_PARTIAL_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueryResultBitmask") >>
+                  (VkQueryResultBitmask <$> step readPrec)))
 
 -- | Results of the queries are written to the destination buffer as 64-bit values
 --
@@ -389,29 +389,29 @@ pattern VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultBitmask 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueryType VkQueryType registry at www.khronos.org>
 newtype VkQueryType = VkQueryType Int32
-                        deriving (Eq, Ord, Enum, Storable)
+                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkQueryType where
-        showsPrec _ VK_QUERY_TYPE_OCCLUSION
-          = showString "VK_QUERY_TYPE_OCCLUSION"
-        showsPrec _ VK_QUERY_TYPE_PIPELINE_STATISTICS
-          = showString "VK_QUERY_TYPE_PIPELINE_STATISTICS"
-        showsPrec _ VK_QUERY_TYPE_TIMESTAMP
-          = showString "VK_QUERY_TYPE_TIMESTAMP"
-        showsPrec p (VkQueryType x)
-          = showParen (p >= 11) (showString "VkQueryType " . showsPrec 11 x)
+    showsPrec _ VK_QUERY_TYPE_OCCLUSION
+      = showString "VK_QUERY_TYPE_OCCLUSION"
+    showsPrec _ VK_QUERY_TYPE_PIPELINE_STATISTICS
+      = showString "VK_QUERY_TYPE_PIPELINE_STATISTICS"
+    showsPrec _ VK_QUERY_TYPE_TIMESTAMP
+      = showString "VK_QUERY_TYPE_TIMESTAMP"
+    showsPrec p (VkQueryType x)
+      = showParen (p >= 11) (showString "VkQueryType " . showsPrec 11 x)
 
 instance Read VkQueryType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUERY_TYPE_OCCLUSION", pure VK_QUERY_TYPE_OCCLUSION),
-                  ("VK_QUERY_TYPE_PIPELINE_STATISTICS",
-                   pure VK_QUERY_TYPE_PIPELINE_STATISTICS),
-                  ("VK_QUERY_TYPE_TIMESTAMP", pure VK_QUERY_TYPE_TIMESTAMP)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueryType") >> (VkQueryType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUERY_TYPE_OCCLUSION", pure VK_QUERY_TYPE_OCCLUSION),
+              ("VK_QUERY_TYPE_PIPELINE_STATISTICS",
+               pure VK_QUERY_TYPE_PIPELINE_STATISTICS),
+              ("VK_QUERY_TYPE_TIMESTAMP", pure VK_QUERY_TYPE_TIMESTAMP)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueryType") >> (VkQueryType <$> step readPrec)))
 
 pattern VK_QUERY_TYPE_OCCLUSION :: VkQueryType
 

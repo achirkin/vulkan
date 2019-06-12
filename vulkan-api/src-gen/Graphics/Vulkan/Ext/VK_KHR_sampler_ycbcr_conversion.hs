@@ -28,13 +28,16 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         --
 
         -- ** Required extensions: 'VK_KHR_maintenance1', 'VK_KHR_bind_memory2', 'VK_KHR_get_memory_requirements2', 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Struct.Bind,
-        module Graphics.Vulkan.Types.Enum.ChromaLocation,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
-        module Graphics.Vulkan.Types.Struct.Sampler,
-        module Graphics.Vulkan.Types.Enum.Sampler,
-        VkCreateSamplerYcbcrConversionKHR,
+        VkBindImagePlaneMemoryInfoKHR, VkChromaLocation(..),
+        VkChromaLocationKHR(..), VkImagePlaneMemoryRequirementsInfoKHR,
+        VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkSamplerYcbcrConversionCreateInfoKHR,
+        VkSamplerYcbcrConversionImageFormatPropertiesKHR,
+        VkSamplerYcbcrConversionInfoKHR, VkSamplerAddressMode(..),
+        VkSamplerMipmapMode(..), VkSamplerReductionModeEXT(..),
+        VkSamplerYcbcrModelConversion(..), VkSamplerYcbcrRange(..),
+        VkSamplerCreateFlagBits(..), VkSamplerYcbcrModelConversionKHR(..),
+        VkSamplerYcbcrRangeKHR(..), VkCreateSamplerYcbcrConversionKHR,
         pattern VkCreateSamplerYcbcrConversionKHR,
         HS_vkCreateSamplerYcbcrConversionKHR,
         PFN_vkCreateSamplerYcbcrConversionKHR,
@@ -42,19 +45,58 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VkDestroySamplerYcbcrConversionKHR,
         HS_vkDestroySamplerYcbcrConversionKHR,
         PFN_vkDestroySamplerYcbcrConversionKHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.ComponentSwizzle,
-        module Graphics.Vulkan.Types.Enum.Filter,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.ComponentMapping,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkComponentSwizzle(..),
+        VkFilter(..), VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkInternalAllocationType(..), VkResult(..), VkStructureType(..),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkComponentMapping, VkSamplerCreateInfo,
+        VkSamplerReductionModeCreateInfoEXT,
+        VkSamplerYcbcrConversionCreateInfo,
+        VkSamplerYcbcrConversionImageFormatProperties,
+        VkSamplerYcbcrConversionInfo,
         VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION,
         pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION,
         VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME,
@@ -193,18 +235,19 @@ import Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Bind
+import Graphics.Vulkan.Types.Struct.Bind                 (VkBindImagePlaneMemoryInfoKHR)
 import Graphics.Vulkan.Types.Struct.ComponentMapping
-import Graphics.Vulkan.Types.Struct.Image
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import Graphics.Vulkan.Types.Struct.Image                (VkImagePlaneMemoryRequirementsInfoKHR)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice       (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)
 import Graphics.Vulkan.Types.Struct.Sampler
 
 pattern VkCreateSamplerYcbcrConversionKHR :: CString
 
 pattern VkCreateSamplerYcbcrConversionKHR <-
         (is_VkCreateSamplerYcbcrConversionKHR -> True)
-  where VkCreateSamplerYcbcrConversionKHR
-          = _VkCreateSamplerYcbcrConversionKHR
+  where
+    VkCreateSamplerYcbcrConversionKHR
+      = _VkCreateSamplerYcbcrConversionKHR
 
 {-# INLINE _VkCreateSamplerYcbcrConversionKHR #-}
 
@@ -259,25 +302,26 @@ foreign import ccall safe "dynamic"
                  HS_vkCreateSamplerYcbcrConversionKHR
 
 instance VulkanProc "vkCreateSamplerYcbcrConversionKHR" where
-        type VkProcType "vkCreateSamplerYcbcrConversionKHR" =
-             HS_vkCreateSamplerYcbcrConversionKHR
-        vkProcSymbol = _VkCreateSamplerYcbcrConversionKHR
+    type VkProcType "vkCreateSamplerYcbcrConversionKHR" =
+         HS_vkCreateSamplerYcbcrConversionKHR
+    vkProcSymbol = _VkCreateSamplerYcbcrConversionKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCreateSamplerYcbcrConversionKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCreateSamplerYcbcrConversionKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateSamplerYcbcrConversionKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySamplerYcbcrConversionKHR :: CString
 
 pattern VkDestroySamplerYcbcrConversionKHR <-
         (is_VkDestroySamplerYcbcrConversionKHR -> True)
-  where VkDestroySamplerYcbcrConversionKHR
-          = _VkDestroySamplerYcbcrConversionKHR
+  where
+    VkDestroySamplerYcbcrConversionKHR
+      = _VkDestroySamplerYcbcrConversionKHR
 
 {-# INLINE _VkDestroySamplerYcbcrConversionKHR #-}
 
@@ -324,18 +368,18 @@ foreign import ccall safe "dynamic"
                  HS_vkDestroySamplerYcbcrConversionKHR
 
 instance VulkanProc "vkDestroySamplerYcbcrConversionKHR" where
-        type VkProcType "vkDestroySamplerYcbcrConversionKHR" =
-             HS_vkDestroySamplerYcbcrConversionKHR
-        vkProcSymbol = _VkDestroySamplerYcbcrConversionKHR
+    type VkProcType "vkDestroySamplerYcbcrConversionKHR" =
+         HS_vkDestroySamplerYcbcrConversionKHR
+    vkProcSymbol = _VkDestroySamplerYcbcrConversionKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkDestroySamplerYcbcrConversionKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkDestroySamplerYcbcrConversionKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroySamplerYcbcrConversionKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -348,8 +392,9 @@ pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME :: CString
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME <-
         (is_VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME -> True)
-  where VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME
-          = _VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME
+  where
+    VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME
+      = _VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME #-}
 

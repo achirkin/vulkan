@@ -5,34 +5,26 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
-       (-- * Vulkan extension: @VK_NV_dedicated_allocation@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Jeff Bolz @jeffbolznv@
-        --
-        -- author: @NV@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @27@
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Buffer, VkBufferCreateInfo,
-        VkBufferCreateInfo', VkDedicatedAllocationBufferCreateInfoNV,
-        VkDedicatedAllocationBufferCreateInfoNV',
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
+        VkBufferCreateFlagBits(), VkBufferCreateFlags(),
+        VkBufferUsageFlagBits(), VkBufferUsageFlags(),
+        VkBufferViewCreateFlagBits(..), VkBufferCreateInfo,
+        VkDedicatedAllocationBufferCreateInfoNV,
         VkDedicatedAllocationImageCreateInfoNV,
-        VkDedicatedAllocationImageCreateInfoNV',
-        VkDedicatedAllocationMemoryAllocateInfoNV,
-        VkDedicatedAllocationMemoryAllocateInfoNV', VkExtent3D,
-        VkExtent3D', module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image, VkImageCreateInfo,
-        VkImageCreateInfo', VkMemoryAllocateInfo, VkMemoryAllocateInfo',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.SharingMode,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
+        VkDedicatedAllocationMemoryAllocateInfoNV, VkExtent3D,
+        VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
+        VkMemoryAllocateInfo, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkSharingMode(..),
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
         pattern VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
         VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME,
         pattern VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME,
@@ -49,20 +41,13 @@ import Graphics.Vulkan.Types.Enum.Image
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Buffer              (VkBufferCreateInfo,
-                                                         VkBufferCreateInfo')
+import Graphics.Vulkan.Types.Struct.Buffer              (VkBufferCreateInfo)
 import Graphics.Vulkan.Types.Struct.DedicatedAllocation (VkDedicatedAllocationBufferCreateInfoNV,
-                                                         VkDedicatedAllocationBufferCreateInfoNV',
                                                          VkDedicatedAllocationImageCreateInfoNV,
-                                                         VkDedicatedAllocationImageCreateInfoNV',
-                                                         VkDedicatedAllocationMemoryAllocateInfoNV,
-                                                         VkDedicatedAllocationMemoryAllocateInfoNV')
-import Graphics.Vulkan.Types.Struct.Extent              (VkExtent3D,
-                                                         VkExtent3D')
-import Graphics.Vulkan.Types.Struct.Image               (VkImageCreateInfo,
-                                                         VkImageCreateInfo')
-import Graphics.Vulkan.Types.Struct.Memory              (VkMemoryAllocateInfo,
-                                                         VkMemoryAllocateInfo')
+                                                         VkDedicatedAllocationMemoryAllocateInfoNV)
+import Graphics.Vulkan.Types.Struct.Extent              (VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Image               (VkImageCreateInfo)
+import Graphics.Vulkan.Types.Struct.Memory              (VkMemoryAllocateInfo)
 
 pattern VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -75,8 +60,9 @@ pattern VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME :: CString
 
 pattern VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME <-
         (is_VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME -> True)
-  where VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME
-          = _VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME
+  where
+    VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME
+      = _VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME
 
 {-# INLINE _VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME #-}
 

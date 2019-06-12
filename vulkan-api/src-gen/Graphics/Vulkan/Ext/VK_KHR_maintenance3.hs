@@ -28,18 +28,59 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.Struct.Descriptor,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        VkDescriptorSetLayoutSupportKHR,
+        VkPhysicalDeviceMaintenance3PropertiesKHR,
         VkGetDescriptorSetLayoutSupportKHR,
         pattern VkGetDescriptorSetLayoutSupportKHR,
         HS_vkGetDescriptorSetLayoutSupportKHR,
         PFN_vkGetDescriptorSetLayoutSupportKHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Descriptor,
-        module Graphics.Vulkan.Types.Enum.Shader,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkDescriptorBindingBitmaskEXT(..),
+        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
+        VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
+        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorSetLayoutCreateBitmask(..),
+        VkDescriptorSetLayoutCreateFlagBits(),
+        VkDescriptorSetLayoutCreateFlags(),
+        VkDescriptorUpdateTemplateTypeKHR(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkStructureType(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkDescriptorBufferInfo, VkDescriptorImageInfo,
+        VkDescriptorPoolCreateInfo, VkDescriptorPoolSize,
+        VkDescriptorSetAllocateInfo, VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorUpdateTemplateCreateInfo,
+        VkDescriptorUpdateTemplateCreateInfoKHR,
+        VkDescriptorUpdateTemplateEntry,
+        VkDescriptorUpdateTemplateEntryKHR,
         VK_KHR_MAINTENANCE3_SPEC_VERSION,
         pattern VK_KHR_MAINTENANCE3_SPEC_VERSION,
         VK_KHR_MAINTENANCE3_EXTENSION_NAME,
@@ -58,14 +99,15 @@ import Graphics.Vulkan.Types.Enum.Shader
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.Descriptor
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDeviceMaintenance3PropertiesKHR)
 
 pattern VkGetDescriptorSetLayoutSupportKHR :: CString
 
 pattern VkGetDescriptorSetLayoutSupportKHR <-
         (is_VkGetDescriptorSetLayoutSupportKHR -> True)
-  where VkGetDescriptorSetLayoutSupportKHR
-          = _VkGetDescriptorSetLayoutSupportKHR
+  where
+    VkGetDescriptorSetLayoutSupportKHR
+      = _VkGetDescriptorSetLayoutSupportKHR
 
 {-# INLINE _VkGetDescriptorSetLayoutSupportKHR #-}
 
@@ -113,18 +155,18 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDescriptorSetLayoutSupportKHR
 
 instance VulkanProc "vkGetDescriptorSetLayoutSupportKHR" where
-        type VkProcType "vkGetDescriptorSetLayoutSupportKHR" =
-             HS_vkGetDescriptorSetLayoutSupportKHR
-        vkProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
+    type VkProcType "vkGetDescriptorSetLayoutSupportKHR" =
+         HS_vkGetDescriptorSetLayoutSupportKHR
+    vkProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDescriptorSetLayoutSupportKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDescriptorSetLayoutSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDescriptorSetLayoutSupportKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_MAINTENANCE3_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -136,8 +178,9 @@ pattern VK_KHR_MAINTENANCE3_EXTENSION_NAME :: CString
 
 pattern VK_KHR_MAINTENANCE3_EXTENSION_NAME <-
         (is_VK_KHR_MAINTENANCE3_EXTENSION_NAME -> True)
-  where VK_KHR_MAINTENANCE3_EXTENSION_NAME
-          = _VK_KHR_MAINTENANCE3_EXTENSION_NAME
+  where
+    VK_KHR_MAINTENANCE3_EXTENSION_NAME
+      = _VK_KHR_MAINTENANCE3_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_MAINTENANCE3_EXTENSION_NAME #-}
 

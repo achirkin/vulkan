@@ -23,9 +23,54 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence
         --
 
         -- ** Required extensions: 'VK_KHR_external_fence_capabilities'.
-        module Graphics.Vulkan.Types.Struct.Export,
-        module Graphics.Vulkan.Types.Enum.Fence,
-        module Graphics.Vulkan.Types.Bitmasks,
+        VkExportFenceCreateInfoKHR, VkFenceCreateBitmask(..),
+        VkFenceImportBitmask(..), VkFenceCreateFlagBits(),
+        VkFenceCreateFlags(), VkFenceImportFlagBits(),
+        VkFenceImportFlagBitsKHR(..), VkFenceImportFlags(),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
         VK_KHR_EXTERNAL_FENCE_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_SPEC_VERSION,
         VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME,
@@ -38,7 +83,7 @@ import Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_EXPORT_FEN
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.Fence
-import Graphics.Vulkan.Types.Struct.Export
+import Graphics.Vulkan.Types.Struct.Export (VkExportFenceCreateInfoKHR)
 
 pattern VK_KHR_EXTERNAL_FENCE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -50,8 +95,9 @@ pattern VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME :: CString
 
 pattern VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME <-
         (is_VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME -> True)
-  where VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME
-          = _VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME
+  where
+    VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME
+      = _VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME #-}
 

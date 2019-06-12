@@ -24,17 +24,17 @@ import           Path.IO
 import           System.IO                            (writeFile)
 import           Text.RE.TDFA.String
 
-import           VkXml.CommonTypes
-import           VkXml.Sections
-import           VkXml.Sections.Extensions
-import           VkXml.Sections.Feature
-import           Write.Cabal
-import           Write.Extension
-import           Write.Feature
-import           Write.ModuleWriter
-import           Write.Types
-import           Write.Types.Enum
-import           Write.Util.DeclaredNames
+import VkXml.CommonTypes
+import VkXml.Sections
+import VkXml.Sections.Extensions
+import VkXml.Sections.Feature
+import Write.Cabal
+import Write.Extension
+import Write.Feature
+import Write.ModuleWriter
+import Write.Types
+import Write.Types.Enum
+import Write.Util.DeclaredNames
 
 
 generateVkSource :: Path b Dir
@@ -187,8 +187,21 @@ writeModule outputDir mw = do
     repSym '.' = '/'
     repSym c   = c
     rez = uncurry exactPrint
-        . ppWithCommentsMode defaultMode
+        . ppWithCommentsMode myMode
         $ genModule mw
+    myMode = PPHsMode {
+        classIndent = 4,
+        doIndent = 2,
+        multiIfIndent = 2,
+        caseIndent = 2,
+        letIndent = 2,
+        whereIndent = 2,
+        onsideIndent = 2,
+        spacing = True,
+        layout = PPOffsideRule,
+        linePragmas = False
+      }
+
 
 
 
@@ -243,15 +256,36 @@ fixSourceHooks isHsc = (if isHsc then enableHSC else id)
     enableHSC
         = unlines
         . ("#include \"vulkan/vulkan.h\"":) . ("":)
-        . byThree (*=~/ [ed|HSC2HS___[[:space:]]+"##([^"]+)"///#$1|]) -- hsc2hs keywords
+        . byThree (*=~/ [ed|HSC2HS___[[:space:]]+"##([^"]+)"///#$1|]) -- " hsc2hs keywords
         . map ( (*=~/ [edBS|{-##///{-#|]) -- opening pragma
               . (*=~/ [edBS|##-}///#-}|]) -- closing pragma
               . (*=~/ [edBS|html##///html#|]) -- haddock spec links
               . (*=~/ [edBS|#///##|]) -- escape all # symobls except in cases described above
-              . (*=~/ [edBS|^([^']*'[^']*)$///$1 -- ' closing tick for hsc2hs|])
               )
-        . lines
+        . (>>= friendlyTicks) . lines
       where
+        -- put a closing tick after each line where odd number of ticks present (for hsc2hs)
+        friendlyTicks s
+          | '\'' `notElem` s
+            = [s]
+          | t <- T.pack s
+          , (t1, tr) <- T.breakOn "HSC2HS___" t
+          , spaces <- replicate (T.length t1) ' '
+            = [ T.unpack $
+                  if T.count "'" t1 `mod` 2 == 1
+                  then t1 <> " -- ' closing tick for hsc2hs"
+                  else t1
+              ]
+              <>
+              if T.null tr
+              then []
+              else if T.any ('\'' ==) tr
+                   then case T.breakOn "}\"" tr of
+                     (hsc2hst, rest) ->
+                       [ spaces <> T.unpack (hsc2hst <> "}\"") ]
+                      <> friendlyTicks (spaces <> drop 2 (T.unpack rest))
+                    else friendlyTicks (spaces <> T.unpack tr)
+
         byThree _ [] = []
         byThree f [x] = [f x]
         byThree f [x,y] = lines . f $ unlines [x,y]

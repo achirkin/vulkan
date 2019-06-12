@@ -12,33 +12,57 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
-       (-- * Vulkan extension: @VK_KHR_xcb_surface@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Jesse Hall @critsec,Ian Elliott @ianelliottus@
-        --
-        -- author: @KHR@
-        --
-        -- type: @instance@
-        --
-        -- platform: @xcb@
-        --
-        -- Extension number: @6@
-        --
-        -- Required extensions: 'VK_KHR_surface'.
-        --
-
-        -- ** Required extensions: 'VK_KHR_surface'.
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Bitmasks, VkXcbSurfaceCreateInfoKHR,
-        VkXcbSurfaceCreateInfoKHR', -- > #include "vk_platform.h"
-                                    VkCreateXcbSurfaceKHR,
-        pattern VkCreateXcbSurfaceKHR, HS_vkCreateXcbSurfaceKHR,
-        PFN_vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHR,
-        vkCreateXcbSurfaceKHRUnsafe, vkCreateXcbSurfaceKHRSafe,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkStructureType(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateInfoKHR,
+        -- > #include "vk_platform.h"
+        VkCreateXcbSurfaceKHR, pattern VkCreateXcbSurfaceKHR,
+        HS_vkCreateXcbSurfaceKHR, PFN_vkCreateXcbSurfaceKHR,
+        vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHRUnsafe,
+        vkCreateXcbSurfaceKHRSafe,
         VkGetPhysicalDeviceXcbPresentationSupportKHR,
         pattern VkGetPhysicalDeviceXcbPresentationSupportKHR,
         HS_vkGetPhysicalDeviceXcbPresentationSupportKHR,
@@ -46,16 +70,53 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
         vkGetPhysicalDeviceXcbPresentationSupportKHR,
         vkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe,
         vkGetPhysicalDeviceXcbPresentationSupportKHRSafe,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Include,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.PlatformXcbKhr,
-        VK_KHR_XCB_SURFACE_SPEC_VERSION,
+        module Graphics.Vulkan.Marshal, VkInternalAllocationType(..),
+        VkResult(..), VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR, MirConnection,
+        MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
+        WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT,
+        VkAllocationCallbacks, VK_KHR_XCB_SURFACE_SPEC_VERSION,
         pattern VK_KHR_XCB_SURFACE_SPEC_VERSION,
         VK_KHR_XCB_SURFACE_EXTENSION_NAME,
         pattern VK_KHR_XCB_SURFACE_EXTENSION_NAME,
@@ -80,7 +141,8 @@ import System.IO.Unsafe                                  (unsafeDupablePerformIO
 pattern VkCreateXcbSurfaceKHR :: CString
 
 pattern VkCreateXcbSurfaceKHR <- (is_VkCreateXcbSurfaceKHR -> True)
-  where VkCreateXcbSurfaceKHR = _VkCreateXcbSurfaceKHR
+  where
+    VkCreateXcbSurfaceKHR = _VkCreateXcbSurfaceKHR
 
 {-# INLINE _VkCreateXcbSurfaceKHR #-}
 
@@ -289,23 +351,24 @@ foreign import ccall safe "dynamic" unwrapVkCreateXcbSurfaceKHRSafe
                :: PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
 
 instance VulkanProc "vkCreateXcbSurfaceKHR" where
-        type VkProcType "vkCreateXcbSurfaceKHR" = HS_vkCreateXcbSurfaceKHR
-        vkProcSymbol = _VkCreateXcbSurfaceKHR
+    type VkProcType "vkCreateXcbSurfaceKHR" = HS_vkCreateXcbSurfaceKHR
+    vkProcSymbol = _VkCreateXcbSurfaceKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateXcbSurfaceKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateXcbSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateXcbSurfaceKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateXcbSurfaceKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceXcbPresentationSupportKHR :: CString
 
 pattern VkGetPhysicalDeviceXcbPresentationSupportKHR <-
         (is_VkGetPhysicalDeviceXcbPresentationSupportKHR -> True)
-  where VkGetPhysicalDeviceXcbPresentationSupportKHR
-          = _VkGetPhysicalDeviceXcbPresentationSupportKHR
+  where
+    VkGetPhysicalDeviceXcbPresentationSupportKHR
+      = _VkGetPhysicalDeviceXcbPresentationSupportKHR
 
 {-# INLINE _VkGetPhysicalDeviceXcbPresentationSupportKHR #-}
 
@@ -511,19 +574,19 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceXcbPresentationSupportKHR"
          where
-        type VkProcType "vkGetPhysicalDeviceXcbPresentationSupportKHR" =
-             HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
-        vkProcSymbol = _VkGetPhysicalDeviceXcbPresentationSupportKHR
+    type VkProcType "vkGetPhysicalDeviceXcbPresentationSupportKHR" =
+         HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
+    vkProcSymbol = _VkGetPhysicalDeviceXcbPresentationSupportKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_XCB_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -535,8 +598,9 @@ pattern VK_KHR_XCB_SURFACE_EXTENSION_NAME :: CString
 
 pattern VK_KHR_XCB_SURFACE_EXTENSION_NAME <-
         (is_VK_KHR_XCB_SURFACE_EXTENSION_NAME -> True)
-  where VK_KHR_XCB_SURFACE_EXTENSION_NAME
-          = _VK_KHR_XCB_SURFACE_EXTENSION_NAME
+  where
+    VK_KHR_XCB_SURFACE_EXTENSION_NAME
+      = _VK_KHR_XCB_SURFACE_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_XCB_SURFACE_EXTENSION_NAME #-}
 

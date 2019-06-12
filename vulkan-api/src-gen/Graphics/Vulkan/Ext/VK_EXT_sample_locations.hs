@@ -23,50 +23,115 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         -- type: @device@
         --
         -- Extension number: @144@
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.AccessFlags,
-        VkAttachmentSampleLocationsEXT, VkAttachmentSampleLocationsEXT',
-        module Graphics.Vulkan.Types.BaseTypes, VkClearColorValue,
-        VkClearColorValue', VkClearDepthStencilValue,
-        VkClearDepthStencilValue', VkClearValue, VkClearValue', VkExtent2D,
-        VkExtent2D', module Graphics.Vulkan.Types.Enum.Image,
-        VkImageMemoryBarrier, VkImageMemoryBarrier',
-        VkImageSubresourceRange, VkImageSubresourceRange',
-        VkMultisamplePropertiesEXT, VkMultisamplePropertiesEXT',
-        VkOffset2D, VkOffset2D', VkPhysicalDeviceLimits,
-        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2',
+        module Graphics.Vulkan.Marshal, VkAccessBitmask(..),
+        VkAccessFlagBits(), VkAccessFlags(),
+        VkAttachmentSampleLocationsEXT, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkClearColorValue,
+        VkClearDepthStencilValue, VkClearValue, VkExtent2D,
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageMemoryBarrier,
+        VkImageSubresourceRange, VkMultisamplePropertiesEXT, VkOffset2D,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2,
         VkPhysicalDeviceSampleLocationsPropertiesEXT,
-        VkPhysicalDeviceSampleLocationsPropertiesEXT',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Bitmasks,
+        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
         VkPipelineMultisampleStateCreateInfo,
-        VkPipelineMultisampleStateCreateInfo',
-        VkPipelineSampleLocationsStateCreateInfoEXT,
-        VkPipelineSampleLocationsStateCreateInfoEXT', VkRect2D, VkRect2D',
-        VkRenderPassBeginInfo, VkRenderPassBeginInfo',
-        VkRenderPassSampleLocationsBeginInfoEXT,
-        VkRenderPassSampleLocationsBeginInfoEXT',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        VkSampleLocationEXT, VkSampleLocationEXT',
-        VkSampleLocationsInfoEXT, VkSampleLocationsInfoEXT',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        VkSubpassSampleLocationsEXT, VkSubpassSampleLocationsEXT',
-        -- > #include "vk_platform.h"
-        VkCmdSetSampleLocationsEXT, pattern VkCmdSetSampleLocationsEXT,
-        HS_vkCmdSetSampleLocationsEXT, PFN_vkCmdSetSampleLocationsEXT,
+        VkPipelineSampleLocationsStateCreateInfoEXT, VkRect2D,
+        VkRenderPassBeginInfo, VkRenderPassSampleLocationsBeginInfoEXT,
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkSampleLocationEXT,
+        VkSampleLocationsInfoEXT, VkStructureType(..),
+        VkSubpassSampleLocationsEXT, -- > #include "vk_platform.h"
+                                     VkCmdSetSampleLocationsEXT,
+        pattern VkCmdSetSampleLocationsEXT, HS_vkCmdSetSampleLocationsEXT,
+        PFN_vkCmdSetSampleLocationsEXT,
         VkGetPhysicalDeviceMultisamplePropertiesEXT,
         pattern VkGetPhysicalDeviceMultisamplePropertiesEXT,
         HS_vkGetPhysicalDeviceMultisamplePropertiesEXT,
-        PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.MultisamplePropertiesEXT,
-        module Graphics.Vulkan.Types.Struct.SampleLocation,
+        PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT, VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkExtent3D, VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
+        VkImageFormatProperties2, VkImageFormatProperties2KHR,
+        VkImageMemoryRequirementsInfo2, VkImageMemoryRequirementsInfo2KHR,
+        VkImagePlaneMemoryRequirementsInfo,
+        VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
+        VkImageSparseMemoryRequirementsInfo2,
+        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
+        VkImageSubresourceLayers, VkImageSwapchainCreateInfoKHR,
+        VkImageViewCreateInfo, VkImageViewUsageCreateInfo,
+        VkImageViewUsageCreateInfoKHR,
         VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
         pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
         VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME,
@@ -91,48 +156,32 @@ import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Attachment               (VkAttachmentSampleLocationsEXT,
-                                                              VkAttachmentSampleLocationsEXT')
-import Graphics.Vulkan.Types.Struct.Clear                    (VkClearColorValue,
-                                                              VkClearColorValue',
-                                                              VkClearDepthStencilValue,
-                                                              VkClearDepthStencilValue',
-                                                              VkClearValue,
-                                                              VkClearValue')
+import Graphics.Vulkan.Types.Struct.Attachment               (VkAttachmentSampleLocationsEXT)
+import Graphics.Vulkan.Types.Struct.Clear                    (VkClearColorValue, VkClearDepthStencilValue,
+                                                              VkClearValue)
 import Graphics.Vulkan.Types.Struct.Extent
 import Graphics.Vulkan.Types.Struct.Image
 import Graphics.Vulkan.Types.Struct.MultisamplePropertiesEXT
-import Graphics.Vulkan.Types.Struct.Offset                   (VkOffset2D,
-                                                              VkOffset2D')
+import Graphics.Vulkan.Types.Struct.Offset                   (VkOffset2D)
 import Graphics.Vulkan.Types.Struct.PhysicalDevice           (VkPhysicalDeviceLimits,
-                                                              VkPhysicalDeviceLimits',
                                                               VkPhysicalDeviceProperties,
-                                                              VkPhysicalDeviceProperties',
                                                               VkPhysicalDeviceProperties2,
-                                                              VkPhysicalDeviceProperties2',
                                                               VkPhysicalDeviceSampleLocationsPropertiesEXT,
-                                                              VkPhysicalDeviceSampleLocationsPropertiesEXT',
-                                                              VkPhysicalDeviceSparseProperties,
-                                                              VkPhysicalDeviceSparseProperties')
+                                                              VkPhysicalDeviceSparseProperties)
 import Graphics.Vulkan.Types.Struct.Pipeline                 (VkPipelineMultisampleStateCreateInfo,
-                                                              VkPipelineMultisampleStateCreateInfo',
-                                                              VkPipelineSampleLocationsStateCreateInfoEXT,
-                                                              VkPipelineSampleLocationsStateCreateInfoEXT')
-import Graphics.Vulkan.Types.Struct.Rect                     (VkRect2D,
-                                                              VkRect2D')
+                                                              VkPipelineSampleLocationsStateCreateInfoEXT)
+import Graphics.Vulkan.Types.Struct.Rect                     (VkRect2D)
 import Graphics.Vulkan.Types.Struct.RenderPass               (VkRenderPassBeginInfo,
-                                                              VkRenderPassBeginInfo',
-                                                              VkRenderPassSampleLocationsBeginInfoEXT,
-                                                              VkRenderPassSampleLocationsBeginInfoEXT')
+                                                              VkRenderPassSampleLocationsBeginInfoEXT)
 import Graphics.Vulkan.Types.Struct.SampleLocation
-import Graphics.Vulkan.Types.Struct.Subpass                  (VkSubpassSampleLocationsEXT,
-                                                              VkSubpassSampleLocationsEXT')
+import Graphics.Vulkan.Types.Struct.Subpass                  (VkSubpassSampleLocationsEXT)
 
 pattern VkCmdSetSampleLocationsEXT :: CString
 
 pattern VkCmdSetSampleLocationsEXT <-
         (is_VkCmdSetSampleLocationsEXT -> True)
-  where VkCmdSetSampleLocationsEXT = _VkCmdSetSampleLocationsEXT
+  where
+    VkCmdSetSampleLocationsEXT = _VkCmdSetSampleLocationsEXT
 
 {-# INLINE _VkCmdSetSampleLocationsEXT #-}
 
@@ -174,24 +223,25 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
 
 instance VulkanProc "vkCmdSetSampleLocationsEXT" where
-        type VkProcType "vkCmdSetSampleLocationsEXT" =
-             HS_vkCmdSetSampleLocationsEXT
-        vkProcSymbol = _VkCmdSetSampleLocationsEXT
+    type VkProcType "vkCmdSetSampleLocationsEXT" =
+         HS_vkCmdSetSampleLocationsEXT
+    vkProcSymbol = _VkCmdSetSampleLocationsEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetSampleLocationsEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetSampleLocationsEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetSampleLocationsEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetSampleLocationsEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString
 
 pattern VkGetPhysicalDeviceMultisamplePropertiesEXT <-
         (is_VkGetPhysicalDeviceMultisamplePropertiesEXT -> True)
-  where VkGetPhysicalDeviceMultisamplePropertiesEXT
-          = _VkGetPhysicalDeviceMultisamplePropertiesEXT
+  where
+    VkGetPhysicalDeviceMultisamplePropertiesEXT
+      = _VkGetPhysicalDeviceMultisamplePropertiesEXT
 
 {-# INLINE _VkGetPhysicalDeviceMultisamplePropertiesEXT #-}
 
@@ -238,19 +288,19 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceMultisamplePropertiesEXT"
          where
-        type VkProcType "vkGetPhysicalDeviceMultisamplePropertiesEXT" =
-             HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
-        vkProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
+    type VkProcType "vkGetPhysicalDeviceMultisamplePropertiesEXT" =
+         HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+    vkProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -262,8 +312,9 @@ pattern VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME :: CString
 
 pattern VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME <-
         (is_VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME -> True)
-  where VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME
-          = _VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME
+  where
+    VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME
+      = _VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME #-}
 

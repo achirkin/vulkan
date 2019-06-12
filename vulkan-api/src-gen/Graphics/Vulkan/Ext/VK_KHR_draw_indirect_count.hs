@@ -28,9 +28,32 @@ module Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
         pattern VkCmdDrawIndexedIndirectCountKHR,
         HS_vkCmdDrawIndexedIndirectCountKHR,
         PFN_vkCmdDrawIndexedIndirectCountKHR,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
@@ -46,7 +69,8 @@ pattern VkCmdDrawIndirectCountKHR :: CString
 
 pattern VkCmdDrawIndirectCountKHR <-
         (is_VkCmdDrawIndirectCountKHR -> True)
-  where VkCmdDrawIndirectCountKHR = _VkCmdDrawIndirectCountKHR
+  where
+    VkCmdDrawIndirectCountKHR = _VkCmdDrawIndirectCountKHR
 
 {-# INLINE _VkCmdDrawIndirectCountKHR #-}
 
@@ -103,24 +127,25 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDrawIndirectCountKHR -> HS_vkCmdDrawIndirectCountKHR
 
 instance VulkanProc "vkCmdDrawIndirectCountKHR" where
-        type VkProcType "vkCmdDrawIndirectCountKHR" =
-             HS_vkCmdDrawIndirectCountKHR
-        vkProcSymbol = _VkCmdDrawIndirectCountKHR
+    type VkProcType "vkCmdDrawIndirectCountKHR" =
+         HS_vkCmdDrawIndirectCountKHR
+    vkProcSymbol = _VkCmdDrawIndirectCountKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectCountKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectCountKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectCountKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndexedIndirectCountKHR :: CString
 
 pattern VkCmdDrawIndexedIndirectCountKHR <-
         (is_VkCmdDrawIndexedIndirectCountKHR -> True)
-  where VkCmdDrawIndexedIndirectCountKHR
-          = _VkCmdDrawIndexedIndirectCountKHR
+  where
+    VkCmdDrawIndexedIndirectCountKHR
+      = _VkCmdDrawIndexedIndirectCountKHR
 
 {-# INLINE _VkCmdDrawIndexedIndirectCountKHR #-}
 
@@ -181,18 +206,18 @@ foreign import ccall safe "dynamic"
                  HS_vkCmdDrawIndexedIndirectCountKHR
 
 instance VulkanProc "vkCmdDrawIndexedIndirectCountKHR" where
-        type VkProcType "vkCmdDrawIndexedIndirectCountKHR" =
-             HS_vkCmdDrawIndexedIndirectCountKHR
-        vkProcSymbol = _VkCmdDrawIndexedIndirectCountKHR
+    type VkProcType "vkCmdDrawIndexedIndirectCountKHR" =
+         HS_vkCmdDrawIndexedIndirectCountKHR
+    vkProcSymbol = _VkCmdDrawIndexedIndirectCountKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCmdDrawIndexedIndirectCountKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCmdDrawIndexedIndirectCountKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectCountKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -205,8 +230,9 @@ pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString
 
 pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME <-
         (is_VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME -> True)
-  where VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
-          = _VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
+  where
+    VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
+      = _VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME #-}
 

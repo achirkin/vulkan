@@ -28,9 +28,32 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
 
         -- ** Required extensions: 'VK_KHR_display'.
         VkReleaseDisplayEXT, pattern VkReleaseDisplayEXT,
-        HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT, VkResult(..),
+        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
+        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
@@ -45,7 +68,8 @@ import Graphics.Vulkan.Types.Handles
 pattern VkReleaseDisplayEXT :: CString
 
 pattern VkReleaseDisplayEXT <- (is_VkReleaseDisplayEXT -> True)
-  where VkReleaseDisplayEXT = _VkReleaseDisplayEXT
+  where
+    VkReleaseDisplayEXT = _VkReleaseDisplayEXT
 
 {-# INLINE _VkReleaseDisplayEXT #-}
 
@@ -82,16 +106,16 @@ foreign import ccall safe "dynamic" unwrapVkReleaseDisplayEXTSafe
                :: PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
 
 instance VulkanProc "vkReleaseDisplayEXT" where
-        type VkProcType "vkReleaseDisplayEXT" = HS_vkReleaseDisplayEXT
-        vkProcSymbol = _VkReleaseDisplayEXT
+    type VkProcType "vkReleaseDisplayEXT" = HS_vkReleaseDisplayEXT
+    vkProcSymbol = _VkReleaseDisplayEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkReleaseDisplayEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkReleaseDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkReleaseDisplayEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkReleaseDisplayEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -104,8 +128,9 @@ pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME :: CString
 
 pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME <-
         (is_VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME -> True)
-  where VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME
-          = _VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME
+  where
+    VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME
+      = _VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME #-}
 

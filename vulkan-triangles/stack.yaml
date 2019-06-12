@@ -16,8 +16,8 @@ extra-deps:
   - GLFW-b-3.2.1.0
   - constraints-deriving-1.0.4.0
   - dimensions-2.0.0.0
-  - easytensor-2.0.0.0
-  - easytensor-vulkan-2.0.0.0
+  - easytensor-2.0.1.0
+  - easytensor-vulkan-2.0.1.0
   - wavefront-0.7.1.3
 
 packages:

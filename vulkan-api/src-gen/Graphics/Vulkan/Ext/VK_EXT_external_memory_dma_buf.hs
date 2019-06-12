@@ -30,8 +30,7 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
        where
 import GHC.Ptr                             (Ptr (..))
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Enum.External (VkExternalMemoryHandleTypeBitmask (..),
-                                            VkExternalMemoryHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.External (VkExternalMemoryHandleTypeBitmask (..))
 
 pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -44,8 +43,9 @@ pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME :: CString
 
 pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME <-
         (is_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME -> True)
-  where VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
-          = _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
+  where
+    VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
+      = _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME #-}
 

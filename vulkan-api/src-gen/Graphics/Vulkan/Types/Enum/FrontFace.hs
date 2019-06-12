@@ -18,26 +18,26 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFrontFace VkFrontFace registry at www.khronos.org>
 newtype VkFrontFace = VkFrontFace Int32
-                        deriving (Eq, Ord, Enum, Storable)
+                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkFrontFace where
-        showsPrec _ VK_FRONT_FACE_COUNTER_CLOCKWISE
-          = showString "VK_FRONT_FACE_COUNTER_CLOCKWISE"
-        showsPrec _ VK_FRONT_FACE_CLOCKWISE
-          = showString "VK_FRONT_FACE_CLOCKWISE"
-        showsPrec p (VkFrontFace x)
-          = showParen (p >= 11) (showString "VkFrontFace " . showsPrec 11 x)
+    showsPrec _ VK_FRONT_FACE_COUNTER_CLOCKWISE
+      = showString "VK_FRONT_FACE_COUNTER_CLOCKWISE"
+    showsPrec _ VK_FRONT_FACE_CLOCKWISE
+      = showString "VK_FRONT_FACE_CLOCKWISE"
+    showsPrec p (VkFrontFace x)
+      = showParen (p >= 11) (showString "VkFrontFace " . showsPrec 11 x)
 
 instance Read VkFrontFace where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FRONT_FACE_COUNTER_CLOCKWISE",
-                   pure VK_FRONT_FACE_COUNTER_CLOCKWISE),
-                  ("VK_FRONT_FACE_CLOCKWISE", pure VK_FRONT_FACE_CLOCKWISE)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFrontFace") >> (VkFrontFace <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_FRONT_FACE_COUNTER_CLOCKWISE",
+               pure VK_FRONT_FACE_COUNTER_CLOCKWISE),
+              ("VK_FRONT_FACE_CLOCKWISE", pure VK_FRONT_FACE_CLOCKWISE)]
+             +++
+             prec 10
+               (expectP (Ident "VkFrontFace") >> (VkFrontFace <$> step readPrec)))
 
 pattern VK_FRONT_FACE_COUNTER_CLOCKWISE :: VkFrontFace
 
