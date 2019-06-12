@@ -23,29 +23,29 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPointClippingBehavior VkPointClippingBehavior registry at www.khronos.org>
 newtype VkPointClippingBehavior = VkPointClippingBehavior Int32
-                                    deriving (Eq, Ord, Enum, Storable)
+                                  deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkPointClippingBehavior where
-        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES
-          = showString "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES"
-        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY
-          = showString "VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY"
-        showsPrec p (VkPointClippingBehavior x)
-          = showParen (p >= 11)
-              (showString "VkPointClippingBehavior " . showsPrec 11 x)
+    showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES
+      = showString "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES"
+    showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY
+      = showString "VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY"
+    showsPrec p (VkPointClippingBehavior x)
+      = showParen (p >= 11)
+          (showString "VkPointClippingBehavior " . showsPrec 11 x)
 
 instance Read VkPointClippingBehavior where
-        readPrec
-          = parens
-              (choose
-                 [("VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES",
-                   pure VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES),
-                  ("VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY",
-                   pure VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPointClippingBehavior") >>
-                      (VkPointClippingBehavior <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES",
+               pure VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES),
+              ("VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY",
+               pure VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY)]
+             +++
+             prec 10
+               (expectP (Ident "VkPointClippingBehavior") >>
+                  (VkPointClippingBehavior <$> step readPrec)))
 
 pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES ::
         VkPointClippingBehavior
@@ -60,12 +60,12 @@ pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY =
         VkPointClippingBehavior 1
 
 newtype VkPointClippingBehaviorKHR = VkPointClippingBehaviorKHR VkFlags
-                                       deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+                                     deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPointClippingBehaviorKHR where
-        {-# INLINE showsPrec #-}
-        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPointClippingBehaviorKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

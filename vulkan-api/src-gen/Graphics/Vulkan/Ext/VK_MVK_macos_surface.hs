@@ -10,41 +10,99 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_MVK_macos_surface
-       (-- * Vulkan extension: @VK_MVK_macos_surface@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Bill Hollings @billhollings@
-        --
-        -- author: @MVK@
-        --
-        -- type: @instance@
-        --
-        -- platform: @macos@
-        --
-        -- Extension number: @124@
-        --
-        -- Required extensions: 'VK_KHR_surface'.
-        --
-
-        -- ** Required extensions: 'VK_KHR_surface'.
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks, VkMacOSSurfaceCreateInfoMVK,
-        VkMacOSSurfaceCreateInfoMVK',
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VkCreateMacOSSurfaceMVK, pattern VkCreateMacOSSurfaceMVK,
-        HS_vkCreateMacOSSurfaceMVK, PFN_vkCreateMacOSSurfaceMVK,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.PlatformMacosMvk,
-        VK_MVK_MACOS_SURFACE_SPEC_VERSION,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkMacOSSurfaceCreateInfoMVK,
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VkCreateMacOSSurfaceMVK,
+        pattern VkCreateMacOSSurfaceMVK, HS_vkCreateMacOSSurfaceMVK,
+        PFN_vkCreateMacOSSurfaceMVK, module Graphics.Vulkan.Marshal,
+        VkInternalAllocationType(..), VkResult(..),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VK_MVK_MACOS_SURFACE_SPEC_VERSION,
         pattern VK_MVK_MACOS_SURFACE_SPEC_VERSION,
         VK_MVK_MACOS_SURFACE_EXTENSION_NAME,
         pattern VK_MVK_MACOS_SURFACE_EXTENSION_NAME,
@@ -68,7 +126,8 @@ pattern VkCreateMacOSSurfaceMVK :: CString
 
 pattern VkCreateMacOSSurfaceMVK <-
         (is_VkCreateMacOSSurfaceMVK -> True)
-  where VkCreateMacOSSurfaceMVK = _VkCreateMacOSSurfaceMVK
+  where
+    VkCreateMacOSSurfaceMVK = _VkCreateMacOSSurfaceMVK
 
 {-# INLINE _VkCreateMacOSSurfaceMVK #-}
 
@@ -116,17 +175,17 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
 
 instance VulkanProc "vkCreateMacOSSurfaceMVK" where
-        type VkProcType "vkCreateMacOSSurfaceMVK" =
-             HS_vkCreateMacOSSurfaceMVK
-        vkProcSymbol = _VkCreateMacOSSurfaceMVK
+    type VkProcType "vkCreateMacOSSurfaceMVK" =
+         HS_vkCreateMacOSSurfaceMVK
+    vkProcSymbol = _VkCreateMacOSSurfaceMVK
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateMacOSSurfaceMVKUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateMacOSSurfaceMVKUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateMacOSSurfaceMVKSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateMacOSSurfaceMVKSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_MVK_MACOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -138,8 +197,9 @@ pattern VK_MVK_MACOS_SURFACE_EXTENSION_NAME :: CString
 
 pattern VK_MVK_MACOS_SURFACE_EXTENSION_NAME <-
         (is_VK_MVK_MACOS_SURFACE_EXTENSION_NAME -> True)
-  where VK_MVK_MACOS_SURFACE_EXTENSION_NAME
-          = _VK_MVK_MACOS_SURFACE_EXTENSION_NAME
+  where
+    VK_MVK_MACOS_SURFACE_EXTENSION_NAME
+      = _VK_MVK_MACOS_SURFACE_EXTENSION_NAME
 
 {-# INLINE _VK_MVK_MACOS_SURFACE_EXTENSION_NAME #-}
 

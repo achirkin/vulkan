@@ -22,25 +22,63 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.BorderColor,
-        module Graphics.Vulkan.Types.Enum.CompareOp,
-        module Graphics.Vulkan.Types.Enum.Filter, VkPhysicalDeviceLimits,
-        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2',
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkBorderColor(..), VkCompareOp(..),
+        VkFilter(..), VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2,
         VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
-        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.Sampler,
-        module Graphics.Vulkan.Types.Bitmasks, VkSamplerCreateInfo,
-        VkSamplerCreateInfo', VkSamplerReductionModeCreateInfoEXT,
-        VkSamplerReductionModeCreateInfoEXT',
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkSamplerAddressMode(..),
+        VkSamplerMipmapMode(..), VkSamplerReductionModeEXT(..),
+        VkSamplerYcbcrModelConversion(..), VkSamplerYcbcrRange(..),
+        VkSamplerCreateFlagBits(..), VkSamplerYcbcrModelConversionKHR(..),
+        VkSamplerYcbcrRangeKHR(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkSamplerCreateInfo,
+        VkSamplerReductionModeCreateInfoEXT, VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION,
         pattern VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION,
@@ -57,26 +95,17 @@ import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.BorderColor
 import Graphics.Vulkan.Types.Enum.CompareOp
 import Graphics.Vulkan.Types.Enum.Filter
-import Graphics.Vulkan.Types.Enum.Format             (VkFormatFeatureBitmask (..),
-                                                      VkFormatFeatureFlagBits)
+import Graphics.Vulkan.Types.Enum.Format             (VkFormatFeatureBitmask (..))
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.Sampler
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
-                                                      VkPhysicalDeviceLimits',
                                                       VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties',
                                                       VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceProperties2',
                                                       VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
-                                                      VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
-                                                      VkPhysicalDeviceSparseProperties,
-                                                      VkPhysicalDeviceSparseProperties')
-import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerCreateInfo,
-                                                      VkSamplerCreateInfo',
-                                                      VkSamplerReductionModeCreateInfoEXT,
-                                                      VkSamplerReductionModeCreateInfoEXT')
+                                                      VkPhysicalDeviceSparseProperties)
+import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerCreateInfo, VkSamplerReductionModeCreateInfoEXT)
 
 pattern VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -89,8 +118,9 @@ pattern VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME :: CString
 
 pattern VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME <-
         (is_VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME -> True)
-  where VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME
-          = _VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME
+  where
+    VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME
+      = _VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME #-}
 

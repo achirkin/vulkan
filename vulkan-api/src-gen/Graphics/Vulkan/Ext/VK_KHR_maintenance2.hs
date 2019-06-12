@@ -18,13 +18,13 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance2
         -- type: @device@
         --
         -- Extension number: @118@
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
-        module Graphics.Vulkan.Types.Enum.PointClippingBehavior,
-        module Graphics.Vulkan.Types.Struct.RenderPass,
-        module Graphics.Vulkan.Types.Enum.TessellationDomainOrigin,
+        VkImageViewUsageCreateInfoKHR,
+        VkInputAttachmentAspectReferenceKHR,
+        VkPhysicalDevicePointClippingPropertiesKHR,
+        VkPipelineTessellationDomainOriginStateCreateInfoKHR,
+        VkPointClippingBehavior(..), VkPointClippingBehaviorKHR(..),
+        VkRenderPassInputAttachmentAspectCreateInfoKHR,
+        VkTessellationDomainOrigin(..), VkTessellationDomainOriginKHR(..),
         VK_KHR_MAINTENANCE2_SPEC_VERSION,
         pattern VK_KHR_MAINTENANCE2_SPEC_VERSION,
         VK_KHR_MAINTENANCE2_EXTENSION_NAME,
@@ -54,11 +54,11 @@ import Graphics.Vulkan.Core_1_1                                    (pattern VK_I
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.Enum.PointClippingBehavior
 import Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
-import Graphics.Vulkan.Types.Struct.Image
-import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
-import Graphics.Vulkan.Types.Struct.Pipeline
-import Graphics.Vulkan.Types.Struct.RenderPass
+import Graphics.Vulkan.Types.Struct.Image                          (VkImageViewUsageCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReferenceKHR)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice                 (VkPhysicalDevicePointClippingPropertiesKHR)
+import Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineTessellationDomainOriginStateCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.RenderPass                     (VkRenderPassInputAttachmentAspectCreateInfoKHR)
 
 pattern VK_KHR_MAINTENANCE2_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -70,8 +70,9 @@ pattern VK_KHR_MAINTENANCE2_EXTENSION_NAME :: CString
 
 pattern VK_KHR_MAINTENANCE2_EXTENSION_NAME <-
         (is_VK_KHR_MAINTENANCE2_EXTENSION_NAME -> True)
-  where VK_KHR_MAINTENANCE2_EXTENSION_NAME
-          = _VK_KHR_MAINTENANCE2_EXTENSION_NAME
+  where
+    VK_KHR_MAINTENANCE2_EXTENSION_NAME
+      = _VK_KHR_MAINTENANCE2_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_MAINTENANCE2_EXTENSION_NAME #-}
 

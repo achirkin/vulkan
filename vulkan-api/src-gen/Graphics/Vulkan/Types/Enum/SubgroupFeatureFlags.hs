@@ -28,7 +28,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSubgroupFeatureBitmask (a ::
                                     FlagType) = VkSubgroupFeatureBitmask VkFlags
-                                                  deriving (Eq, Ord, Storable)
+                                                deriving (Eq, Ord, Storable)
 
 type VkSubgroupFeatureFlags = VkSubgroupFeatureBitmask FlagMask
 
@@ -49,50 +49,50 @@ deriving instance Bits (VkSubgroupFeatureBitmask FlagMask)
 deriving instance FiniteBits (VkSubgroupFeatureBitmask FlagMask)
 
 instance Show (VkSubgroupFeatureBitmask a) where
-        showsPrec _ VK_SUBGROUP_FEATURE_BASIC_BIT
-          = showString "VK_SUBGROUP_FEATURE_BASIC_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_VOTE_BIT
-          = showString "VK_SUBGROUP_FEATURE_VOTE_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_ARITHMETIC_BIT
-          = showString "VK_SUBGROUP_FEATURE_ARITHMETIC_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_BALLOT_BIT
-          = showString "VK_SUBGROUP_FEATURE_BALLOT_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_SHUFFLE_BIT
-          = showString "VK_SUBGROUP_FEATURE_SHUFFLE_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT
-          = showString "VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_CLUSTERED_BIT
-          = showString "VK_SUBGROUP_FEATURE_CLUSTERED_BIT"
-        showsPrec _ VK_SUBGROUP_FEATURE_QUAD_BIT
-          = showString "VK_SUBGROUP_FEATURE_QUAD_BIT"
-        showsPrec p (VkSubgroupFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkSubgroupFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_SUBGROUP_FEATURE_BASIC_BIT
+      = showString "VK_SUBGROUP_FEATURE_BASIC_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_VOTE_BIT
+      = showString "VK_SUBGROUP_FEATURE_VOTE_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_ARITHMETIC_BIT
+      = showString "VK_SUBGROUP_FEATURE_ARITHMETIC_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_BALLOT_BIT
+      = showString "VK_SUBGROUP_FEATURE_BALLOT_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_SHUFFLE_BIT
+      = showString "VK_SUBGROUP_FEATURE_SHUFFLE_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT
+      = showString "VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_CLUSTERED_BIT
+      = showString "VK_SUBGROUP_FEATURE_CLUSTERED_BIT"
+    showsPrec _ VK_SUBGROUP_FEATURE_QUAD_BIT
+      = showString "VK_SUBGROUP_FEATURE_QUAD_BIT"
+    showsPrec p (VkSubgroupFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSubgroupFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkSubgroupFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SUBGROUP_FEATURE_BASIC_BIT",
-                   pure VK_SUBGROUP_FEATURE_BASIC_BIT),
-                  ("VK_SUBGROUP_FEATURE_VOTE_BIT",
-                   pure VK_SUBGROUP_FEATURE_VOTE_BIT),
-                  ("VK_SUBGROUP_FEATURE_ARITHMETIC_BIT",
-                   pure VK_SUBGROUP_FEATURE_ARITHMETIC_BIT),
-                  ("VK_SUBGROUP_FEATURE_BALLOT_BIT",
-                   pure VK_SUBGROUP_FEATURE_BALLOT_BIT),
-                  ("VK_SUBGROUP_FEATURE_SHUFFLE_BIT",
-                   pure VK_SUBGROUP_FEATURE_SHUFFLE_BIT),
-                  ("VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT",
-                   pure VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT),
-                  ("VK_SUBGROUP_FEATURE_CLUSTERED_BIT",
-                   pure VK_SUBGROUP_FEATURE_CLUSTERED_BIT),
-                  ("VK_SUBGROUP_FEATURE_QUAD_BIT",
-                   pure VK_SUBGROUP_FEATURE_QUAD_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSubgroupFeatureBitmask") >>
-                      (VkSubgroupFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SUBGROUP_FEATURE_BASIC_BIT",
+               pure VK_SUBGROUP_FEATURE_BASIC_BIT),
+              ("VK_SUBGROUP_FEATURE_VOTE_BIT",
+               pure VK_SUBGROUP_FEATURE_VOTE_BIT),
+              ("VK_SUBGROUP_FEATURE_ARITHMETIC_BIT",
+               pure VK_SUBGROUP_FEATURE_ARITHMETIC_BIT),
+              ("VK_SUBGROUP_FEATURE_BALLOT_BIT",
+               pure VK_SUBGROUP_FEATURE_BALLOT_BIT),
+              ("VK_SUBGROUP_FEATURE_SHUFFLE_BIT",
+               pure VK_SUBGROUP_FEATURE_SHUFFLE_BIT),
+              ("VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT",
+               pure VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT),
+              ("VK_SUBGROUP_FEATURE_CLUSTERED_BIT",
+               pure VK_SUBGROUP_FEATURE_CLUSTERED_BIT),
+              ("VK_SUBGROUP_FEATURE_QUAD_BIT",
+               pure VK_SUBGROUP_FEATURE_QUAD_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkSubgroupFeatureBitmask") >>
+                  (VkSubgroupFeatureBitmask <$> step readPrec)))
 
 -- | Basic subgroup operations
 --

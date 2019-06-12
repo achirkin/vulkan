@@ -22,18 +22,13 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes, VkPhysicalDeviceLimits,
-        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2',
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkPhysicalDeviceLimits,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
         VkPhysicalDeviceShaderCorePropertiesAMD,
-        VkPhysicalDeviceShaderCorePropertiesAMD',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION,
         pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION,
@@ -48,15 +43,10 @@ import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
-                                                      VkPhysicalDeviceLimits',
                                                       VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties',
                                                       VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceProperties2',
                                                       VkPhysicalDeviceShaderCorePropertiesAMD,
-                                                      VkPhysicalDeviceShaderCorePropertiesAMD',
-                                                      VkPhysicalDeviceSparseProperties,
-                                                      VkPhysicalDeviceSparseProperties')
+                                                      VkPhysicalDeviceSparseProperties)
 
 pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -69,8 +59,9 @@ pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME :: CString
 
 pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME <-
         (is_VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME -> True)
-  where VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME
-          = _VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME
+  where
+    VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME
+      = _VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME
 
 {-# INLINE _VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME #-}
 

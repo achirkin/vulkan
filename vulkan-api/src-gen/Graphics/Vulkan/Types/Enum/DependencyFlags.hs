@@ -23,7 +23,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDependencyBitmask (a ::
                                FlagType) = VkDependencyBitmask VkFlags
-                                             deriving (Eq, Ord, Storable)
+                                           deriving (Eq, Ord, Storable)
 
 type VkDependencyFlags = VkDependencyBitmask FlagMask
 
@@ -44,21 +44,21 @@ deriving instance Bits (VkDependencyBitmask FlagMask)
 deriving instance FiniteBits (VkDependencyBitmask FlagMask)
 
 instance Show (VkDependencyBitmask a) where
-        showsPrec _ VK_DEPENDENCY_BY_REGION_BIT
-          = showString "VK_DEPENDENCY_BY_REGION_BIT"
-        showsPrec p (VkDependencyBitmask x)
-          = showParen (p >= 11)
-              (showString "VkDependencyBitmask " . showsPrec 11 x)
+    showsPrec _ VK_DEPENDENCY_BY_REGION_BIT
+      = showString "VK_DEPENDENCY_BY_REGION_BIT"
+    showsPrec p (VkDependencyBitmask x)
+      = showParen (p >= 11)
+          (showString "VkDependencyBitmask " . showsPrec 11 x)
 
 instance Read (VkDependencyBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEPENDENCY_BY_REGION_BIT", pure VK_DEPENDENCY_BY_REGION_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDependencyBitmask") >>
-                      (VkDependencyBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEPENDENCY_BY_REGION_BIT", pure VK_DEPENDENCY_BY_REGION_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDependencyBitmask") >>
+                  (VkDependencyBitmask <$> step readPrec)))
 
 -- | Dependency is per pixel region
 --

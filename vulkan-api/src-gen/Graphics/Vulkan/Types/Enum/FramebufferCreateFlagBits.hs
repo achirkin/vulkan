@@ -9,12 +9,12 @@ import Foreign.Storable                (Storable)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags)
 
 newtype VkFramebufferCreateFlagBits = VkFramebufferCreateFlagBits VkFlags
-                                        deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+                                      deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkFramebufferCreateFlagBits where
-        {-# INLINE showsPrec #-}
-        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkFramebufferCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

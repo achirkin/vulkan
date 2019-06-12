@@ -23,29 +23,29 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkTessellationDomainOrigin VkTessellationDomainOrigin registry at www.khronos.org>
 newtype VkTessellationDomainOrigin = VkTessellationDomainOrigin Int32
-                                       deriving (Eq, Ord, Enum, Storable)
+                                     deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkTessellationDomainOrigin where
-        showsPrec _ VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT
-          = showString "VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT"
-        showsPrec _ VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT
-          = showString "VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT"
-        showsPrec p (VkTessellationDomainOrigin x)
-          = showParen (p >= 11)
-              (showString "VkTessellationDomainOrigin " . showsPrec 11 x)
+    showsPrec _ VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT
+      = showString "VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT"
+    showsPrec _ VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT
+      = showString "VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT"
+    showsPrec p (VkTessellationDomainOrigin x)
+      = showParen (p >= 11)
+          (showString "VkTessellationDomainOrigin " . showsPrec 11 x)
 
 instance Read VkTessellationDomainOrigin where
-        readPrec
-          = parens
-              (choose
-                 [("VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT",
-                   pure VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT),
-                  ("VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT",
-                   pure VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkTessellationDomainOrigin") >>
-                      (VkTessellationDomainOrigin <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT",
+               pure VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT),
+              ("VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT",
+               pure VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT)]
+             +++
+             prec 10
+               (expectP (Ident "VkTessellationDomainOrigin") >>
+                  (VkTessellationDomainOrigin <$> step readPrec)))
 
 pattern VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT ::
         VkTessellationDomainOrigin
@@ -60,12 +60,12 @@ pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT =
         VkTessellationDomainOrigin 1
 
 newtype VkTessellationDomainOriginKHR = VkTessellationDomainOriginKHR VkFlags
-                                          deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+                                        deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkTessellationDomainOriginKHR where
-        {-# INLINE showsPrec #-}
-        showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkTessellationDomainOriginKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

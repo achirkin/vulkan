@@ -27,73 +27,73 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkResult VkResult registry at www.khronos.org>
 newtype VkResult = VkResult Int32
-                     deriving (Eq, Ord, Enum, Storable)
+                   deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkResult where
-        showsPrec _ VK_SUCCESS = showString "VK_SUCCESS"
-        showsPrec _ VK_NOT_READY = showString "VK_NOT_READY"
-        showsPrec _ VK_TIMEOUT = showString "VK_TIMEOUT"
-        showsPrec _ VK_EVENT_SET = showString "VK_EVENT_SET"
-        showsPrec _ VK_EVENT_RESET = showString "VK_EVENT_RESET"
-        showsPrec _ VK_INCOMPLETE = showString "VK_INCOMPLETE"
-        showsPrec _ VK_ERROR_OUT_OF_HOST_MEMORY
-          = showString "VK_ERROR_OUT_OF_HOST_MEMORY"
-        showsPrec _ VK_ERROR_OUT_OF_DEVICE_MEMORY
-          = showString "VK_ERROR_OUT_OF_DEVICE_MEMORY"
-        showsPrec _ VK_ERROR_INITIALIZATION_FAILED
-          = showString "VK_ERROR_INITIALIZATION_FAILED"
-        showsPrec _ VK_ERROR_DEVICE_LOST
-          = showString "VK_ERROR_DEVICE_LOST"
-        showsPrec _ VK_ERROR_MEMORY_MAP_FAILED
-          = showString "VK_ERROR_MEMORY_MAP_FAILED"
-        showsPrec _ VK_ERROR_LAYER_NOT_PRESENT
-          = showString "VK_ERROR_LAYER_NOT_PRESENT"
-        showsPrec _ VK_ERROR_EXTENSION_NOT_PRESENT
-          = showString "VK_ERROR_EXTENSION_NOT_PRESENT"
-        showsPrec _ VK_ERROR_FEATURE_NOT_PRESENT
-          = showString "VK_ERROR_FEATURE_NOT_PRESENT"
-        showsPrec _ VK_ERROR_INCOMPATIBLE_DRIVER
-          = showString "VK_ERROR_INCOMPATIBLE_DRIVER"
-        showsPrec _ VK_ERROR_TOO_MANY_OBJECTS
-          = showString "VK_ERROR_TOO_MANY_OBJECTS"
-        showsPrec _ VK_ERROR_FORMAT_NOT_SUPPORTED
-          = showString "VK_ERROR_FORMAT_NOT_SUPPORTED"
-        showsPrec _ VK_ERROR_FRAGMENTED_POOL
-          = showString "VK_ERROR_FRAGMENTED_POOL"
-        showsPrec p (VkResult x)
-          = showParen (p >= 11) (showString "VkResult " . showsPrec 11 x)
+    showsPrec _ VK_SUCCESS = showString "VK_SUCCESS"
+    showsPrec _ VK_NOT_READY = showString "VK_NOT_READY"
+    showsPrec _ VK_TIMEOUT = showString "VK_TIMEOUT"
+    showsPrec _ VK_EVENT_SET = showString "VK_EVENT_SET"
+    showsPrec _ VK_EVENT_RESET = showString "VK_EVENT_RESET"
+    showsPrec _ VK_INCOMPLETE = showString "VK_INCOMPLETE"
+    showsPrec _ VK_ERROR_OUT_OF_HOST_MEMORY
+      = showString "VK_ERROR_OUT_OF_HOST_MEMORY"
+    showsPrec _ VK_ERROR_OUT_OF_DEVICE_MEMORY
+      = showString "VK_ERROR_OUT_OF_DEVICE_MEMORY"
+    showsPrec _ VK_ERROR_INITIALIZATION_FAILED
+      = showString "VK_ERROR_INITIALIZATION_FAILED"
+    showsPrec _ VK_ERROR_DEVICE_LOST
+      = showString "VK_ERROR_DEVICE_LOST"
+    showsPrec _ VK_ERROR_MEMORY_MAP_FAILED
+      = showString "VK_ERROR_MEMORY_MAP_FAILED"
+    showsPrec _ VK_ERROR_LAYER_NOT_PRESENT
+      = showString "VK_ERROR_LAYER_NOT_PRESENT"
+    showsPrec _ VK_ERROR_EXTENSION_NOT_PRESENT
+      = showString "VK_ERROR_EXTENSION_NOT_PRESENT"
+    showsPrec _ VK_ERROR_FEATURE_NOT_PRESENT
+      = showString "VK_ERROR_FEATURE_NOT_PRESENT"
+    showsPrec _ VK_ERROR_INCOMPATIBLE_DRIVER
+      = showString "VK_ERROR_INCOMPATIBLE_DRIVER"
+    showsPrec _ VK_ERROR_TOO_MANY_OBJECTS
+      = showString "VK_ERROR_TOO_MANY_OBJECTS"
+    showsPrec _ VK_ERROR_FORMAT_NOT_SUPPORTED
+      = showString "VK_ERROR_FORMAT_NOT_SUPPORTED"
+    showsPrec _ VK_ERROR_FRAGMENTED_POOL
+      = showString "VK_ERROR_FRAGMENTED_POOL"
+    showsPrec p (VkResult x)
+      = showParen (p >= 11) (showString "VkResult " . showsPrec 11 x)
 
 instance Read VkResult where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SUCCESS", pure VK_SUCCESS),
-                  ("VK_NOT_READY", pure VK_NOT_READY),
-                  ("VK_TIMEOUT", pure VK_TIMEOUT),
-                  ("VK_EVENT_SET", pure VK_EVENT_SET),
-                  ("VK_EVENT_RESET", pure VK_EVENT_RESET),
-                  ("VK_INCOMPLETE", pure VK_INCOMPLETE),
-                  ("VK_ERROR_OUT_OF_HOST_MEMORY", pure VK_ERROR_OUT_OF_HOST_MEMORY),
-                  ("VK_ERROR_OUT_OF_DEVICE_MEMORY",
-                   pure VK_ERROR_OUT_OF_DEVICE_MEMORY),
-                  ("VK_ERROR_INITIALIZATION_FAILED",
-                   pure VK_ERROR_INITIALIZATION_FAILED),
-                  ("VK_ERROR_DEVICE_LOST", pure VK_ERROR_DEVICE_LOST),
-                  ("VK_ERROR_MEMORY_MAP_FAILED", pure VK_ERROR_MEMORY_MAP_FAILED),
-                  ("VK_ERROR_LAYER_NOT_PRESENT", pure VK_ERROR_LAYER_NOT_PRESENT),
-                  ("VK_ERROR_EXTENSION_NOT_PRESENT",
-                   pure VK_ERROR_EXTENSION_NOT_PRESENT),
-                  ("VK_ERROR_FEATURE_NOT_PRESENT",
-                   pure VK_ERROR_FEATURE_NOT_PRESENT),
-                  ("VK_ERROR_INCOMPATIBLE_DRIVER",
-                   pure VK_ERROR_INCOMPATIBLE_DRIVER),
-                  ("VK_ERROR_TOO_MANY_OBJECTS", pure VK_ERROR_TOO_MANY_OBJECTS),
-                  ("VK_ERROR_FORMAT_NOT_SUPPORTED",
-                   pure VK_ERROR_FORMAT_NOT_SUPPORTED),
-                  ("VK_ERROR_FRAGMENTED_POOL", pure VK_ERROR_FRAGMENTED_POOL)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkResult") >> (VkResult <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SUCCESS", pure VK_SUCCESS),
+              ("VK_NOT_READY", pure VK_NOT_READY),
+              ("VK_TIMEOUT", pure VK_TIMEOUT),
+              ("VK_EVENT_SET", pure VK_EVENT_SET),
+              ("VK_EVENT_RESET", pure VK_EVENT_RESET),
+              ("VK_INCOMPLETE", pure VK_INCOMPLETE),
+              ("VK_ERROR_OUT_OF_HOST_MEMORY", pure VK_ERROR_OUT_OF_HOST_MEMORY),
+              ("VK_ERROR_OUT_OF_DEVICE_MEMORY",
+               pure VK_ERROR_OUT_OF_DEVICE_MEMORY),
+              ("VK_ERROR_INITIALIZATION_FAILED",
+               pure VK_ERROR_INITIALIZATION_FAILED),
+              ("VK_ERROR_DEVICE_LOST", pure VK_ERROR_DEVICE_LOST),
+              ("VK_ERROR_MEMORY_MAP_FAILED", pure VK_ERROR_MEMORY_MAP_FAILED),
+              ("VK_ERROR_LAYER_NOT_PRESENT", pure VK_ERROR_LAYER_NOT_PRESENT),
+              ("VK_ERROR_EXTENSION_NOT_PRESENT",
+               pure VK_ERROR_EXTENSION_NOT_PRESENT),
+              ("VK_ERROR_FEATURE_NOT_PRESENT",
+               pure VK_ERROR_FEATURE_NOT_PRESENT),
+              ("VK_ERROR_INCOMPATIBLE_DRIVER",
+               pure VK_ERROR_INCOMPATIBLE_DRIVER),
+              ("VK_ERROR_TOO_MANY_OBJECTS", pure VK_ERROR_TOO_MANY_OBJECTS),
+              ("VK_ERROR_FORMAT_NOT_SUPPORTED",
+               pure VK_ERROR_FORMAT_NOT_SUPPORTED),
+              ("VK_ERROR_FRAGMENTED_POOL", pure VK_ERROR_FRAGMENTED_POOL)]
+             +++
+             prec 10
+               (expectP (Ident "VkResult") >> (VkResult <$> step readPrec)))
 
 -- | Command completed successfully
 pattern VK_SUCCESS :: VkResult

@@ -56,7 +56,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkImageAspectBitmask (a ::
                                 FlagType) = VkImageAspectBitmask VkFlags
-                                              deriving (Eq, Ord, Storable)
+                                            deriving (Eq, Ord, Storable)
 
 type VkImageAspectFlags = VkImageAspectBitmask FlagMask
 
@@ -77,31 +77,31 @@ deriving instance Bits (VkImageAspectBitmask FlagMask)
 deriving instance FiniteBits (VkImageAspectBitmask FlagMask)
 
 instance Show (VkImageAspectBitmask a) where
-        showsPrec _ VK_IMAGE_ASPECT_COLOR_BIT
-          = showString "VK_IMAGE_ASPECT_COLOR_BIT"
-        showsPrec _ VK_IMAGE_ASPECT_DEPTH_BIT
-          = showString "VK_IMAGE_ASPECT_DEPTH_BIT"
-        showsPrec _ VK_IMAGE_ASPECT_STENCIL_BIT
-          = showString "VK_IMAGE_ASPECT_STENCIL_BIT"
-        showsPrec _ VK_IMAGE_ASPECT_METADATA_BIT
-          = showString "VK_IMAGE_ASPECT_METADATA_BIT"
-        showsPrec p (VkImageAspectBitmask x)
-          = showParen (p >= 11)
-              (showString "VkImageAspectBitmask " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_ASPECT_COLOR_BIT
+      = showString "VK_IMAGE_ASPECT_COLOR_BIT"
+    showsPrec _ VK_IMAGE_ASPECT_DEPTH_BIT
+      = showString "VK_IMAGE_ASPECT_DEPTH_BIT"
+    showsPrec _ VK_IMAGE_ASPECT_STENCIL_BIT
+      = showString "VK_IMAGE_ASPECT_STENCIL_BIT"
+    showsPrec _ VK_IMAGE_ASPECT_METADATA_BIT
+      = showString "VK_IMAGE_ASPECT_METADATA_BIT"
+    showsPrec p (VkImageAspectBitmask x)
+      = showParen (p >= 11)
+          (showString "VkImageAspectBitmask " . showsPrec 11 x)
 
 instance Read (VkImageAspectBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_ASPECT_COLOR_BIT", pure VK_IMAGE_ASPECT_COLOR_BIT),
-                  ("VK_IMAGE_ASPECT_DEPTH_BIT", pure VK_IMAGE_ASPECT_DEPTH_BIT),
-                  ("VK_IMAGE_ASPECT_STENCIL_BIT", pure VK_IMAGE_ASPECT_STENCIL_BIT),
-                  ("VK_IMAGE_ASPECT_METADATA_BIT",
-                   pure VK_IMAGE_ASPECT_METADATA_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageAspectBitmask") >>
-                      (VkImageAspectBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_ASPECT_COLOR_BIT", pure VK_IMAGE_ASPECT_COLOR_BIT),
+              ("VK_IMAGE_ASPECT_DEPTH_BIT", pure VK_IMAGE_ASPECT_DEPTH_BIT),
+              ("VK_IMAGE_ASPECT_STENCIL_BIT", pure VK_IMAGE_ASPECT_STENCIL_BIT),
+              ("VK_IMAGE_ASPECT_METADATA_BIT",
+               pure VK_IMAGE_ASPECT_METADATA_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageAspectBitmask") >>
+                  (VkImageAspectBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_IMAGE_ASPECT_COLOR_BIT :: VkImageAspectBitmask a
@@ -125,7 +125,7 @@ pattern VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectBitmask 8
 
 newtype VkImageCreateBitmask (a ::
                                 FlagType) = VkImageCreateBitmask VkFlags
-                                              deriving (Eq, Ord, Storable)
+                                            deriving (Eq, Ord, Storable)
 
 type VkImageCreateFlags = VkImageCreateBitmask FlagMask
 
@@ -146,38 +146,38 @@ deriving instance Bits (VkImageCreateBitmask FlagMask)
 deriving instance FiniteBits (VkImageCreateBitmask FlagMask)
 
 instance Show (VkImageCreateBitmask a) where
-        showsPrec _ VK_IMAGE_CREATE_SPARSE_BINDING_BIT
-          = showString "VK_IMAGE_CREATE_SPARSE_BINDING_BIT"
-        showsPrec _ VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT
-          = showString "VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT"
-        showsPrec _ VK_IMAGE_CREATE_SPARSE_ALIASED_BIT
-          = showString "VK_IMAGE_CREATE_SPARSE_ALIASED_BIT"
-        showsPrec _ VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT
-          = showString "VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT"
-        showsPrec _ VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT
-          = showString "VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT"
-        showsPrec p (VkImageCreateBitmask x)
-          = showParen (p >= 11)
-              (showString "VkImageCreateBitmask " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_CREATE_SPARSE_BINDING_BIT
+      = showString "VK_IMAGE_CREATE_SPARSE_BINDING_BIT"
+    showsPrec _ VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT
+      = showString "VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT"
+    showsPrec _ VK_IMAGE_CREATE_SPARSE_ALIASED_BIT
+      = showString "VK_IMAGE_CREATE_SPARSE_ALIASED_BIT"
+    showsPrec _ VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT
+      = showString "VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT"
+    showsPrec _ VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT
+      = showString "VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT"
+    showsPrec p (VkImageCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkImageCreateBitmask " . showsPrec 11 x)
 
 instance Read (VkImageCreateBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_CREATE_SPARSE_BINDING_BIT",
-                   pure VK_IMAGE_CREATE_SPARSE_BINDING_BIT),
-                  ("VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT",
-                   pure VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT),
-                  ("VK_IMAGE_CREATE_SPARSE_ALIASED_BIT",
-                   pure VK_IMAGE_CREATE_SPARSE_ALIASED_BIT),
-                  ("VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT",
-                   pure VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT),
-                  ("VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT",
-                   pure VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageCreateBitmask") >>
-                      (VkImageCreateBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_CREATE_SPARSE_BINDING_BIT",
+               pure VK_IMAGE_CREATE_SPARSE_BINDING_BIT),
+              ("VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT",
+               pure VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT),
+              ("VK_IMAGE_CREATE_SPARSE_ALIASED_BIT",
+               pure VK_IMAGE_CREATE_SPARSE_ALIASED_BIT),
+              ("VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT",
+               pure VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT),
+              ("VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT",
+               pure VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageCreateBitmask") >>
+                  (VkImageCreateBitmask <$> step readPrec)))
 
 -- | Image should support sparse backing
 --
@@ -225,55 +225,55 @@ pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageLayout VkImageLayout registry at www.khronos.org>
 newtype VkImageLayout = VkImageLayout Int32
-                          deriving (Eq, Ord, Enum, Storable)
+                        deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageLayout where
-        showsPrec _ VK_IMAGE_LAYOUT_UNDEFINED
-          = showString "VK_IMAGE_LAYOUT_UNDEFINED"
-        showsPrec _ VK_IMAGE_LAYOUT_GENERAL
-          = showString "VK_IMAGE_LAYOUT_GENERAL"
-        showsPrec _ VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
-          = showString "VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL"
-        showsPrec _ VK_IMAGE_LAYOUT_PREINITIALIZED
-          = showString "VK_IMAGE_LAYOUT_PREINITIALIZED"
-        showsPrec p (VkImageLayout x)
-          = showParen (p >= 11)
-              (showString "VkImageLayout " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_LAYOUT_UNDEFINED
+      = showString "VK_IMAGE_LAYOUT_UNDEFINED"
+    showsPrec _ VK_IMAGE_LAYOUT_GENERAL
+      = showString "VK_IMAGE_LAYOUT_GENERAL"
+    showsPrec _ VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+      = showString "VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL"
+    showsPrec _ VK_IMAGE_LAYOUT_PREINITIALIZED
+      = showString "VK_IMAGE_LAYOUT_PREINITIALIZED"
+    showsPrec p (VkImageLayout x)
+      = showParen (p >= 11)
+          (showString "VkImageLayout " . showsPrec 11 x)
 
 instance Read VkImageLayout where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_LAYOUT_UNDEFINED", pure VK_IMAGE_LAYOUT_UNDEFINED),
-                  ("VK_IMAGE_LAYOUT_GENERAL", pure VK_IMAGE_LAYOUT_GENERAL),
-                  ("VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL",
-                   pure VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL),
-                  ("VK_IMAGE_LAYOUT_PREINITIALIZED",
-                   pure VK_IMAGE_LAYOUT_PREINITIALIZED)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageLayout") >>
-                      (VkImageLayout <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_LAYOUT_UNDEFINED", pure VK_IMAGE_LAYOUT_UNDEFINED),
+              ("VK_IMAGE_LAYOUT_GENERAL", pure VK_IMAGE_LAYOUT_GENERAL),
+              ("VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL",
+               pure VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL),
+              ("VK_IMAGE_LAYOUT_PREINITIALIZED",
+               pure VK_IMAGE_LAYOUT_PREINITIALIZED)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageLayout") >>
+                  (VkImageLayout <$> step readPrec)))
 
 -- | Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)
 pattern VK_IMAGE_LAYOUT_UNDEFINED :: VkImageLayout
@@ -328,27 +328,27 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageTiling VkImageTiling registry at www.khronos.org>
 newtype VkImageTiling = VkImageTiling Int32
-                          deriving (Eq, Ord, Enum, Storable)
+                        deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageTiling where
-        showsPrec _ VK_IMAGE_TILING_OPTIMAL
-          = showString "VK_IMAGE_TILING_OPTIMAL"
-        showsPrec _ VK_IMAGE_TILING_LINEAR
-          = showString "VK_IMAGE_TILING_LINEAR"
-        showsPrec p (VkImageTiling x)
-          = showParen (p >= 11)
-              (showString "VkImageTiling " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_TILING_OPTIMAL
+      = showString "VK_IMAGE_TILING_OPTIMAL"
+    showsPrec _ VK_IMAGE_TILING_LINEAR
+      = showString "VK_IMAGE_TILING_LINEAR"
+    showsPrec p (VkImageTiling x)
+      = showParen (p >= 11)
+          (showString "VkImageTiling " . showsPrec 11 x)
 
 instance Read VkImageTiling where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_TILING_OPTIMAL", pure VK_IMAGE_TILING_OPTIMAL),
-                  ("VK_IMAGE_TILING_LINEAR", pure VK_IMAGE_TILING_LINEAR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageTiling") >>
-                      (VkImageTiling <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_TILING_OPTIMAL", pure VK_IMAGE_TILING_OPTIMAL),
+              ("VK_IMAGE_TILING_LINEAR", pure VK_IMAGE_TILING_LINEAR)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageTiling") >>
+                  (VkImageTiling <$> step readPrec)))
 
 pattern VK_IMAGE_TILING_OPTIMAL :: VkImageTiling
 
@@ -362,25 +362,25 @@ pattern VK_IMAGE_TILING_LINEAR = VkImageTiling 1
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageType VkImageType registry at www.khronos.org>
 newtype VkImageType = VkImageType Int32
-                        deriving (Eq, Ord, Enum, Storable)
+                      deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageType where
-        showsPrec _ VK_IMAGE_TYPE_1D = showString "VK_IMAGE_TYPE_1D"
-        showsPrec _ VK_IMAGE_TYPE_2D = showString "VK_IMAGE_TYPE_2D"
-        showsPrec _ VK_IMAGE_TYPE_3D = showString "VK_IMAGE_TYPE_3D"
-        showsPrec p (VkImageType x)
-          = showParen (p >= 11) (showString "VkImageType " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_TYPE_1D = showString "VK_IMAGE_TYPE_1D"
+    showsPrec _ VK_IMAGE_TYPE_2D = showString "VK_IMAGE_TYPE_2D"
+    showsPrec _ VK_IMAGE_TYPE_3D = showString "VK_IMAGE_TYPE_3D"
+    showsPrec p (VkImageType x)
+      = showParen (p >= 11) (showString "VkImageType " . showsPrec 11 x)
 
 instance Read VkImageType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_TYPE_1D", pure VK_IMAGE_TYPE_1D),
-                  ("VK_IMAGE_TYPE_2D", pure VK_IMAGE_TYPE_2D),
-                  ("VK_IMAGE_TYPE_3D", pure VK_IMAGE_TYPE_3D)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageType") >> (VkImageType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_TYPE_1D", pure VK_IMAGE_TYPE_1D),
+              ("VK_IMAGE_TYPE_2D", pure VK_IMAGE_TYPE_2D),
+              ("VK_IMAGE_TYPE_3D", pure VK_IMAGE_TYPE_3D)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageType") >> (VkImageType <$> step readPrec)))
 
 pattern VK_IMAGE_TYPE_1D :: VkImageType
 
@@ -396,7 +396,7 @@ pattern VK_IMAGE_TYPE_3D = VkImageType 2
 
 newtype VkImageUsageBitmask (a ::
                                FlagType) = VkImageUsageBitmask VkFlags
-                                             deriving (Eq, Ord, Storable)
+                                           deriving (Eq, Ord, Storable)
 
 type VkImageUsageFlags = VkImageUsageBitmask FlagMask
 
@@ -417,48 +417,48 @@ deriving instance Bits (VkImageUsageBitmask FlagMask)
 deriving instance FiniteBits (VkImageUsageBitmask FlagMask)
 
 instance Show (VkImageUsageBitmask a) where
-        showsPrec _ VK_IMAGE_USAGE_TRANSFER_SRC_BIT
-          = showString "VK_IMAGE_USAGE_TRANSFER_SRC_BIT"
-        showsPrec _ VK_IMAGE_USAGE_TRANSFER_DST_BIT
-          = showString "VK_IMAGE_USAGE_TRANSFER_DST_BIT"
-        showsPrec _ VK_IMAGE_USAGE_SAMPLED_BIT
-          = showString "VK_IMAGE_USAGE_SAMPLED_BIT"
-        showsPrec _ VK_IMAGE_USAGE_STORAGE_BIT
-          = showString "VK_IMAGE_USAGE_STORAGE_BIT"
-        showsPrec _ VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
-          = showString "VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT"
-        showsPrec _ VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT
-          = showString "VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT"
-        showsPrec _ VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT
-          = showString "VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT"
-        showsPrec _ VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
-          = showString "VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT"
-        showsPrec p (VkImageUsageBitmask x)
-          = showParen (p >= 11)
-              (showString "VkImageUsageBitmask " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_USAGE_TRANSFER_SRC_BIT
+      = showString "VK_IMAGE_USAGE_TRANSFER_SRC_BIT"
+    showsPrec _ VK_IMAGE_USAGE_TRANSFER_DST_BIT
+      = showString "VK_IMAGE_USAGE_TRANSFER_DST_BIT"
+    showsPrec _ VK_IMAGE_USAGE_SAMPLED_BIT
+      = showString "VK_IMAGE_USAGE_SAMPLED_BIT"
+    showsPrec _ VK_IMAGE_USAGE_STORAGE_BIT
+      = showString "VK_IMAGE_USAGE_STORAGE_BIT"
+    showsPrec _ VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+      = showString "VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT"
+    showsPrec _ VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT
+      = showString "VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT"
+    showsPrec _ VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT
+      = showString "VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT"
+    showsPrec _ VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+      = showString "VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT"
+    showsPrec p (VkImageUsageBitmask x)
+      = showParen (p >= 11)
+          (showString "VkImageUsageBitmask " . showsPrec 11 x)
 
 instance Read (VkImageUsageBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_USAGE_TRANSFER_SRC_BIT",
-                   pure VK_IMAGE_USAGE_TRANSFER_SRC_BIT),
-                  ("VK_IMAGE_USAGE_TRANSFER_DST_BIT",
-                   pure VK_IMAGE_USAGE_TRANSFER_DST_BIT),
-                  ("VK_IMAGE_USAGE_SAMPLED_BIT", pure VK_IMAGE_USAGE_SAMPLED_BIT),
-                  ("VK_IMAGE_USAGE_STORAGE_BIT", pure VK_IMAGE_USAGE_STORAGE_BIT),
-                  ("VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT",
-                   pure VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
-                  ("VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT",
-                   pure VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT),
-                  ("VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT",
-                   pure VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT),
-                  ("VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT",
-                   pure VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageUsageBitmask") >>
-                      (VkImageUsageBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_USAGE_TRANSFER_SRC_BIT",
+               pure VK_IMAGE_USAGE_TRANSFER_SRC_BIT),
+              ("VK_IMAGE_USAGE_TRANSFER_DST_BIT",
+               pure VK_IMAGE_USAGE_TRANSFER_DST_BIT),
+              ("VK_IMAGE_USAGE_SAMPLED_BIT", pure VK_IMAGE_USAGE_SAMPLED_BIT),
+              ("VK_IMAGE_USAGE_STORAGE_BIT", pure VK_IMAGE_USAGE_STORAGE_BIT),
+              ("VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT",
+               pure VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
+              ("VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT",
+               pure VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT),
+              ("VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT",
+               pure VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT),
+              ("VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT",
+               pure VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageUsageBitmask") >>
+                  (VkImageUsageBitmask <$> step readPrec)))
 
 -- | Can be used as a source of transfer operations
 --
@@ -528,43 +528,43 @@ pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewType VkImageViewType registry at www.khronos.org>
 newtype VkImageViewType = VkImageViewType Int32
-                            deriving (Eq, Ord, Enum, Storable)
+                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkImageViewType where
-        showsPrec _ VK_IMAGE_VIEW_TYPE_1D
-          = showString "VK_IMAGE_VIEW_TYPE_1D"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_2D
-          = showString "VK_IMAGE_VIEW_TYPE_2D"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_3D
-          = showString "VK_IMAGE_VIEW_TYPE_3D"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_CUBE
-          = showString "VK_IMAGE_VIEW_TYPE_CUBE"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_1D_ARRAY
-          = showString "VK_IMAGE_VIEW_TYPE_1D_ARRAY"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_2D_ARRAY
-          = showString "VK_IMAGE_VIEW_TYPE_2D_ARRAY"
-        showsPrec _ VK_IMAGE_VIEW_TYPE_CUBE_ARRAY
-          = showString "VK_IMAGE_VIEW_TYPE_CUBE_ARRAY"
-        showsPrec p (VkImageViewType x)
-          = showParen (p >= 11)
-              (showString "VkImageViewType " . showsPrec 11 x)
+    showsPrec _ VK_IMAGE_VIEW_TYPE_1D
+      = showString "VK_IMAGE_VIEW_TYPE_1D"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_2D
+      = showString "VK_IMAGE_VIEW_TYPE_2D"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_3D
+      = showString "VK_IMAGE_VIEW_TYPE_3D"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_CUBE
+      = showString "VK_IMAGE_VIEW_TYPE_CUBE"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_1D_ARRAY
+      = showString "VK_IMAGE_VIEW_TYPE_1D_ARRAY"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_2D_ARRAY
+      = showString "VK_IMAGE_VIEW_TYPE_2D_ARRAY"
+    showsPrec _ VK_IMAGE_VIEW_TYPE_CUBE_ARRAY
+      = showString "VK_IMAGE_VIEW_TYPE_CUBE_ARRAY"
+    showsPrec p (VkImageViewType x)
+      = showParen (p >= 11)
+          (showString "VkImageViewType " . showsPrec 11 x)
 
 instance Read VkImageViewType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_IMAGE_VIEW_TYPE_1D", pure VK_IMAGE_VIEW_TYPE_1D),
-                  ("VK_IMAGE_VIEW_TYPE_2D", pure VK_IMAGE_VIEW_TYPE_2D),
-                  ("VK_IMAGE_VIEW_TYPE_3D", pure VK_IMAGE_VIEW_TYPE_3D),
-                  ("VK_IMAGE_VIEW_TYPE_CUBE", pure VK_IMAGE_VIEW_TYPE_CUBE),
-                  ("VK_IMAGE_VIEW_TYPE_1D_ARRAY", pure VK_IMAGE_VIEW_TYPE_1D_ARRAY),
-                  ("VK_IMAGE_VIEW_TYPE_2D_ARRAY", pure VK_IMAGE_VIEW_TYPE_2D_ARRAY),
-                  ("VK_IMAGE_VIEW_TYPE_CUBE_ARRAY",
-                   pure VK_IMAGE_VIEW_TYPE_CUBE_ARRAY)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkImageViewType") >>
-                      (VkImageViewType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_IMAGE_VIEW_TYPE_1D", pure VK_IMAGE_VIEW_TYPE_1D),
+              ("VK_IMAGE_VIEW_TYPE_2D", pure VK_IMAGE_VIEW_TYPE_2D),
+              ("VK_IMAGE_VIEW_TYPE_3D", pure VK_IMAGE_VIEW_TYPE_3D),
+              ("VK_IMAGE_VIEW_TYPE_CUBE", pure VK_IMAGE_VIEW_TYPE_CUBE),
+              ("VK_IMAGE_VIEW_TYPE_1D_ARRAY", pure VK_IMAGE_VIEW_TYPE_1D_ARRAY),
+              ("VK_IMAGE_VIEW_TYPE_2D_ARRAY", pure VK_IMAGE_VIEW_TYPE_2D_ARRAY),
+              ("VK_IMAGE_VIEW_TYPE_CUBE_ARRAY",
+               pure VK_IMAGE_VIEW_TYPE_CUBE_ARRAY)]
+             +++
+             prec 10
+               (expectP (Ident "VkImageViewType") >>
+                  (VkImageViewType <$> step readPrec)))
 
 pattern VK_IMAGE_VIEW_TYPE_1D :: VkImageViewType
 

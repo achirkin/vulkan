@@ -46,41 +46,41 @@ import Text.Read.Lex                   (Lexeme (..))
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectEntryTypeNVX VkObjectEntryTypeNVX registry at www.khronos.org>
 newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
-                                 deriving (Eq, Ord, Enum, Storable)
+                               deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkObjectEntryTypeNVX where
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX"
-        showsPrec p (VkObjectEntryTypeNVX x)
-          = showParen (p >= 11)
-              (showString "VkObjectEntryTypeNVX " . showsPrec 11 x)
+    showsPrec _ VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX
+      = showString "VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX"
+    showsPrec _ VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX
+      = showString "VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX"
+    showsPrec _ VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX
+      = showString "VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX"
+    showsPrec _ VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX
+      = showString "VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX"
+    showsPrec _ VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX
+      = showString "VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX"
+    showsPrec p (VkObjectEntryTypeNVX x)
+      = showParen (p >= 11)
+          (showString "VkObjectEntryTypeNVX " . showsPrec 11 x)
 
 instance Read VkObjectEntryTypeNVX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectEntryTypeNVX") >>
-                      (VkObjectEntryTypeNVX <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX",
+               pure VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX),
+              ("VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX",
+               pure VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX),
+              ("VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX",
+               pure VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX),
+              ("VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX",
+               pure VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX),
+              ("VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX",
+               pure VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX)]
+             +++
+             prec 10
+               (expectP (Ident "VkObjectEntryTypeNVX") >>
+                  (VkObjectEntryTypeNVX <$> step readPrec)))
 
 pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX ::
         VkObjectEntryTypeNVX
@@ -112,7 +112,7 @@ pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX =
 
 newtype VkObjectEntryUsageBitmaskNVX (a ::
                                         FlagType) = VkObjectEntryUsageBitmaskNVX VkFlags
-                                                      deriving (Eq, Ord, Storable)
+                                                    deriving (Eq, Ord, Storable)
 
 type VkObjectEntryUsageFlagsNVX =
      VkObjectEntryUsageBitmaskNVX FlagMask
@@ -138,26 +138,26 @@ deriving instance
          FiniteBits (VkObjectEntryUsageBitmaskNVX FlagMask)
 
 instance Show (VkObjectEntryUsageBitmaskNVX a) where
-        showsPrec _ VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX
-          = showString "VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX
-          = showString "VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX"
-        showsPrec p (VkObjectEntryUsageBitmaskNVX x)
-          = showParen (p >= 11)
-              (showString "VkObjectEntryUsageBitmaskNVX " . showsPrec 11 x)
+    showsPrec _ VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX
+      = showString "VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX"
+    showsPrec _ VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX
+      = showString "VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX"
+    showsPrec p (VkObjectEntryUsageBitmaskNVX x)
+      = showParen (p >= 11)
+          (showString "VkObjectEntryUsageBitmaskNVX " . showsPrec 11 x)
 
 instance Read (VkObjectEntryUsageBitmaskNVX a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX",
-                   pure VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX),
-                  ("VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX",
-                   pure VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectEntryUsageBitmaskNVX") >>
-                      (VkObjectEntryUsageBitmaskNVX <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX",
+               pure VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX),
+              ("VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX",
+               pure VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX)]
+             +++
+             prec 10
+               (expectP (Ident "VkObjectEntryUsageBitmaskNVX") >>
+                  (VkObjectEntryUsageBitmaskNVX <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX ::
@@ -180,107 +180,107 @@ pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX =
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkObjectType VkObjectType registry at www.khronos.org>
 newtype VkObjectType = VkObjectType Int32
-                         deriving (Eq, Ord, Enum, Storable)
+                       deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkObjectType where
-        showsPrec _ VK_OBJECT_TYPE_UNKNOWN
-          = showString "VK_OBJECT_TYPE_UNKNOWN"
-        showsPrec _ VK_OBJECT_TYPE_INSTANCE
-          = showString "VK_OBJECT_TYPE_INSTANCE"
-        showsPrec _ VK_OBJECT_TYPE_PHYSICAL_DEVICE
-          = showString "VK_OBJECT_TYPE_PHYSICAL_DEVICE"
-        showsPrec _ VK_OBJECT_TYPE_DEVICE
-          = showString "VK_OBJECT_TYPE_DEVICE"
-        showsPrec _ VK_OBJECT_TYPE_QUEUE
-          = showString "VK_OBJECT_TYPE_QUEUE"
-        showsPrec _ VK_OBJECT_TYPE_SEMAPHORE
-          = showString "VK_OBJECT_TYPE_SEMAPHORE"
-        showsPrec _ VK_OBJECT_TYPE_COMMAND_BUFFER
-          = showString "VK_OBJECT_TYPE_COMMAND_BUFFER"
-        showsPrec _ VK_OBJECT_TYPE_FENCE
-          = showString "VK_OBJECT_TYPE_FENCE"
-        showsPrec _ VK_OBJECT_TYPE_DEVICE_MEMORY
-          = showString "VK_OBJECT_TYPE_DEVICE_MEMORY"
-        showsPrec _ VK_OBJECT_TYPE_BUFFER
-          = showString "VK_OBJECT_TYPE_BUFFER"
-        showsPrec _ VK_OBJECT_TYPE_IMAGE
-          = showString "VK_OBJECT_TYPE_IMAGE"
-        showsPrec _ VK_OBJECT_TYPE_EVENT
-          = showString "VK_OBJECT_TYPE_EVENT"
-        showsPrec _ VK_OBJECT_TYPE_QUERY_POOL
-          = showString "VK_OBJECT_TYPE_QUERY_POOL"
-        showsPrec _ VK_OBJECT_TYPE_BUFFER_VIEW
-          = showString "VK_OBJECT_TYPE_BUFFER_VIEW"
-        showsPrec _ VK_OBJECT_TYPE_IMAGE_VIEW
-          = showString "VK_OBJECT_TYPE_IMAGE_VIEW"
-        showsPrec _ VK_OBJECT_TYPE_SHADER_MODULE
-          = showString "VK_OBJECT_TYPE_SHADER_MODULE"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE_CACHE
-          = showString "VK_OBJECT_TYPE_PIPELINE_CACHE"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE_LAYOUT
-          = showString "VK_OBJECT_TYPE_PIPELINE_LAYOUT"
-        showsPrec _ VK_OBJECT_TYPE_RENDER_PASS
-          = showString "VK_OBJECT_TYPE_RENDER_PASS"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE
-          = showString "VK_OBJECT_TYPE_PIPELINE"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT"
-        showsPrec _ VK_OBJECT_TYPE_SAMPLER
-          = showString "VK_OBJECT_TYPE_SAMPLER"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_POOL
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_POOL"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET"
-        showsPrec _ VK_OBJECT_TYPE_FRAMEBUFFER
-          = showString "VK_OBJECT_TYPE_FRAMEBUFFER"
-        showsPrec _ VK_OBJECT_TYPE_COMMAND_POOL
-          = showString "VK_OBJECT_TYPE_COMMAND_POOL"
-        showsPrec p (VkObjectType x)
-          = showParen (p >= 11) (showString "VkObjectType " . showsPrec 11 x)
+    showsPrec _ VK_OBJECT_TYPE_UNKNOWN
+      = showString "VK_OBJECT_TYPE_UNKNOWN"
+    showsPrec _ VK_OBJECT_TYPE_INSTANCE
+      = showString "VK_OBJECT_TYPE_INSTANCE"
+    showsPrec _ VK_OBJECT_TYPE_PHYSICAL_DEVICE
+      = showString "VK_OBJECT_TYPE_PHYSICAL_DEVICE"
+    showsPrec _ VK_OBJECT_TYPE_DEVICE
+      = showString "VK_OBJECT_TYPE_DEVICE"
+    showsPrec _ VK_OBJECT_TYPE_QUEUE
+      = showString "VK_OBJECT_TYPE_QUEUE"
+    showsPrec _ VK_OBJECT_TYPE_SEMAPHORE
+      = showString "VK_OBJECT_TYPE_SEMAPHORE"
+    showsPrec _ VK_OBJECT_TYPE_COMMAND_BUFFER
+      = showString "VK_OBJECT_TYPE_COMMAND_BUFFER"
+    showsPrec _ VK_OBJECT_TYPE_FENCE
+      = showString "VK_OBJECT_TYPE_FENCE"
+    showsPrec _ VK_OBJECT_TYPE_DEVICE_MEMORY
+      = showString "VK_OBJECT_TYPE_DEVICE_MEMORY"
+    showsPrec _ VK_OBJECT_TYPE_BUFFER
+      = showString "VK_OBJECT_TYPE_BUFFER"
+    showsPrec _ VK_OBJECT_TYPE_IMAGE
+      = showString "VK_OBJECT_TYPE_IMAGE"
+    showsPrec _ VK_OBJECT_TYPE_EVENT
+      = showString "VK_OBJECT_TYPE_EVENT"
+    showsPrec _ VK_OBJECT_TYPE_QUERY_POOL
+      = showString "VK_OBJECT_TYPE_QUERY_POOL"
+    showsPrec _ VK_OBJECT_TYPE_BUFFER_VIEW
+      = showString "VK_OBJECT_TYPE_BUFFER_VIEW"
+    showsPrec _ VK_OBJECT_TYPE_IMAGE_VIEW
+      = showString "VK_OBJECT_TYPE_IMAGE_VIEW"
+    showsPrec _ VK_OBJECT_TYPE_SHADER_MODULE
+      = showString "VK_OBJECT_TYPE_SHADER_MODULE"
+    showsPrec _ VK_OBJECT_TYPE_PIPELINE_CACHE
+      = showString "VK_OBJECT_TYPE_PIPELINE_CACHE"
+    showsPrec _ VK_OBJECT_TYPE_PIPELINE_LAYOUT
+      = showString "VK_OBJECT_TYPE_PIPELINE_LAYOUT"
+    showsPrec _ VK_OBJECT_TYPE_RENDER_PASS
+      = showString "VK_OBJECT_TYPE_RENDER_PASS"
+    showsPrec _ VK_OBJECT_TYPE_PIPELINE
+      = showString "VK_OBJECT_TYPE_PIPELINE"
+    showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT
+      = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT"
+    showsPrec _ VK_OBJECT_TYPE_SAMPLER
+      = showString "VK_OBJECT_TYPE_SAMPLER"
+    showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_POOL
+      = showString "VK_OBJECT_TYPE_DESCRIPTOR_POOL"
+    showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET
+      = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET"
+    showsPrec _ VK_OBJECT_TYPE_FRAMEBUFFER
+      = showString "VK_OBJECT_TYPE_FRAMEBUFFER"
+    showsPrec _ VK_OBJECT_TYPE_COMMAND_POOL
+      = showString "VK_OBJECT_TYPE_COMMAND_POOL"
+    showsPrec p (VkObjectType x)
+      = showParen (p >= 11) (showString "VkObjectType " . showsPrec 11 x)
 
 instance Read VkObjectType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_TYPE_UNKNOWN", pure VK_OBJECT_TYPE_UNKNOWN),
-                  ("VK_OBJECT_TYPE_INSTANCE", pure VK_OBJECT_TYPE_INSTANCE),
-                  ("VK_OBJECT_TYPE_PHYSICAL_DEVICE",
-                   pure VK_OBJECT_TYPE_PHYSICAL_DEVICE),
-                  ("VK_OBJECT_TYPE_DEVICE", pure VK_OBJECT_TYPE_DEVICE),
-                  ("VK_OBJECT_TYPE_QUEUE", pure VK_OBJECT_TYPE_QUEUE),
-                  ("VK_OBJECT_TYPE_SEMAPHORE", pure VK_OBJECT_TYPE_SEMAPHORE),
-                  ("VK_OBJECT_TYPE_COMMAND_BUFFER",
-                   pure VK_OBJECT_TYPE_COMMAND_BUFFER),
-                  ("VK_OBJECT_TYPE_FENCE", pure VK_OBJECT_TYPE_FENCE),
-                  ("VK_OBJECT_TYPE_DEVICE_MEMORY",
-                   pure VK_OBJECT_TYPE_DEVICE_MEMORY),
-                  ("VK_OBJECT_TYPE_BUFFER", pure VK_OBJECT_TYPE_BUFFER),
-                  ("VK_OBJECT_TYPE_IMAGE", pure VK_OBJECT_TYPE_IMAGE),
-                  ("VK_OBJECT_TYPE_EVENT", pure VK_OBJECT_TYPE_EVENT),
-                  ("VK_OBJECT_TYPE_QUERY_POOL", pure VK_OBJECT_TYPE_QUERY_POOL),
-                  ("VK_OBJECT_TYPE_BUFFER_VIEW", pure VK_OBJECT_TYPE_BUFFER_VIEW),
-                  ("VK_OBJECT_TYPE_IMAGE_VIEW", pure VK_OBJECT_TYPE_IMAGE_VIEW),
-                  ("VK_OBJECT_TYPE_SHADER_MODULE",
-                   pure VK_OBJECT_TYPE_SHADER_MODULE),
-                  ("VK_OBJECT_TYPE_PIPELINE_CACHE",
-                   pure VK_OBJECT_TYPE_PIPELINE_CACHE),
-                  ("VK_OBJECT_TYPE_PIPELINE_LAYOUT",
-                   pure VK_OBJECT_TYPE_PIPELINE_LAYOUT),
-                  ("VK_OBJECT_TYPE_RENDER_PASS", pure VK_OBJECT_TYPE_RENDER_PASS),
-                  ("VK_OBJECT_TYPE_PIPELINE", pure VK_OBJECT_TYPE_PIPELINE),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT),
-                  ("VK_OBJECT_TYPE_SAMPLER", pure VK_OBJECT_TYPE_SAMPLER),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_POOL",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_POOL),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET),
-                  ("VK_OBJECT_TYPE_FRAMEBUFFER", pure VK_OBJECT_TYPE_FRAMEBUFFER),
-                  ("VK_OBJECT_TYPE_COMMAND_POOL", pure VK_OBJECT_TYPE_COMMAND_POOL)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectType") >>
-                      (VkObjectType <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_OBJECT_TYPE_UNKNOWN", pure VK_OBJECT_TYPE_UNKNOWN),
+              ("VK_OBJECT_TYPE_INSTANCE", pure VK_OBJECT_TYPE_INSTANCE),
+              ("VK_OBJECT_TYPE_PHYSICAL_DEVICE",
+               pure VK_OBJECT_TYPE_PHYSICAL_DEVICE),
+              ("VK_OBJECT_TYPE_DEVICE", pure VK_OBJECT_TYPE_DEVICE),
+              ("VK_OBJECT_TYPE_QUEUE", pure VK_OBJECT_TYPE_QUEUE),
+              ("VK_OBJECT_TYPE_SEMAPHORE", pure VK_OBJECT_TYPE_SEMAPHORE),
+              ("VK_OBJECT_TYPE_COMMAND_BUFFER",
+               pure VK_OBJECT_TYPE_COMMAND_BUFFER),
+              ("VK_OBJECT_TYPE_FENCE", pure VK_OBJECT_TYPE_FENCE),
+              ("VK_OBJECT_TYPE_DEVICE_MEMORY",
+               pure VK_OBJECT_TYPE_DEVICE_MEMORY),
+              ("VK_OBJECT_TYPE_BUFFER", pure VK_OBJECT_TYPE_BUFFER),
+              ("VK_OBJECT_TYPE_IMAGE", pure VK_OBJECT_TYPE_IMAGE),
+              ("VK_OBJECT_TYPE_EVENT", pure VK_OBJECT_TYPE_EVENT),
+              ("VK_OBJECT_TYPE_QUERY_POOL", pure VK_OBJECT_TYPE_QUERY_POOL),
+              ("VK_OBJECT_TYPE_BUFFER_VIEW", pure VK_OBJECT_TYPE_BUFFER_VIEW),
+              ("VK_OBJECT_TYPE_IMAGE_VIEW", pure VK_OBJECT_TYPE_IMAGE_VIEW),
+              ("VK_OBJECT_TYPE_SHADER_MODULE",
+               pure VK_OBJECT_TYPE_SHADER_MODULE),
+              ("VK_OBJECT_TYPE_PIPELINE_CACHE",
+               pure VK_OBJECT_TYPE_PIPELINE_CACHE),
+              ("VK_OBJECT_TYPE_PIPELINE_LAYOUT",
+               pure VK_OBJECT_TYPE_PIPELINE_LAYOUT),
+              ("VK_OBJECT_TYPE_RENDER_PASS", pure VK_OBJECT_TYPE_RENDER_PASS),
+              ("VK_OBJECT_TYPE_PIPELINE", pure VK_OBJECT_TYPE_PIPELINE),
+              ("VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT",
+               pure VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT),
+              ("VK_OBJECT_TYPE_SAMPLER", pure VK_OBJECT_TYPE_SAMPLER),
+              ("VK_OBJECT_TYPE_DESCRIPTOR_POOL",
+               pure VK_OBJECT_TYPE_DESCRIPTOR_POOL),
+              ("VK_OBJECT_TYPE_DESCRIPTOR_SET",
+               pure VK_OBJECT_TYPE_DESCRIPTOR_SET),
+              ("VK_OBJECT_TYPE_FRAMEBUFFER", pure VK_OBJECT_TYPE_FRAMEBUFFER),
+              ("VK_OBJECT_TYPE_COMMAND_POOL", pure VK_OBJECT_TYPE_COMMAND_POOL)]
+             +++
+             prec 10
+               (expectP (Ident "VkObjectType") >>
+                  (VkObjectType <$> step readPrec)))
 
 pattern VK_OBJECT_TYPE_UNKNOWN :: VkObjectType
 

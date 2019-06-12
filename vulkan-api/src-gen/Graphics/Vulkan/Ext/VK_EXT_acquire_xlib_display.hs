@@ -33,8 +33,31 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         HS_vkAcquireXlibDisplayEXT, PFN_vkAcquireXlibDisplayEXT,
         VkGetRandROutputDisplayEXT, pattern VkGetRandROutputDisplayEXT,
         HS_vkGetRandROutputDisplayEXT, PFN_vkGetRandROutputDisplayEXT,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        VkResult(..), VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
@@ -51,7 +74,8 @@ pattern VkAcquireXlibDisplayEXT :: CString
 
 pattern VkAcquireXlibDisplayEXT <-
         (is_VkAcquireXlibDisplayEXT -> True)
-  where VkAcquireXlibDisplayEXT = _VkAcquireXlibDisplayEXT
+  where
+    VkAcquireXlibDisplayEXT = _VkAcquireXlibDisplayEXT
 
 {-# INLINE _VkAcquireXlibDisplayEXT #-}
 
@@ -95,23 +119,24 @@ foreign import ccall safe "dynamic"
                PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
 
 instance VulkanProc "vkAcquireXlibDisplayEXT" where
-        type VkProcType "vkAcquireXlibDisplayEXT" =
-             HS_vkAcquireXlibDisplayEXT
-        vkProcSymbol = _VkAcquireXlibDisplayEXT
+    type VkProcType "vkAcquireXlibDisplayEXT" =
+         HS_vkAcquireXlibDisplayEXT
+    vkProcSymbol = _VkAcquireXlibDisplayEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAcquireXlibDisplayEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAcquireXlibDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAcquireXlibDisplayEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAcquireXlibDisplayEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetRandROutputDisplayEXT :: CString
 
 pattern VkGetRandROutputDisplayEXT <-
         (is_VkGetRandROutputDisplayEXT -> True)
-  where VkGetRandROutputDisplayEXT = _VkGetRandROutputDisplayEXT
+  where
+    VkGetRandROutputDisplayEXT = _VkGetRandROutputDisplayEXT
 
 {-# INLINE _VkGetRandROutputDisplayEXT #-}
 
@@ -156,17 +181,17 @@ foreign import ccall safe "dynamic"
                PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
 
 instance VulkanProc "vkGetRandROutputDisplayEXT" where
-        type VkProcType "vkGetRandROutputDisplayEXT" =
-             HS_vkGetRandROutputDisplayEXT
-        vkProcSymbol = _VkGetRandROutputDisplayEXT
+    type VkProcType "vkGetRandROutputDisplayEXT" =
+         HS_vkGetRandROutputDisplayEXT
+    vkProcSymbol = _VkGetRandROutputDisplayEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetRandROutputDisplayEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetRandROutputDisplayEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetRandROutputDisplayEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetRandROutputDisplayEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -179,8 +204,9 @@ pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME :: CString
 
 pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME <-
         (is_VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME -> True)
-  where VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME
-          = _VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME
+  where
+    VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME
+      = _VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME #-}
 

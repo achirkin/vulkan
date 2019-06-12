@@ -26,7 +26,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSampleCountBitmask (a ::
                                 FlagType) = VkSampleCountBitmask VkFlags
-                                              deriving (Eq, Ord, Storable)
+                                            deriving (Eq, Ord, Storable)
 
 type VkSampleCountFlags = VkSampleCountBitmask FlagMask
 
@@ -47,39 +47,39 @@ deriving instance Bits (VkSampleCountBitmask FlagMask)
 deriving instance FiniteBits (VkSampleCountBitmask FlagMask)
 
 instance Show (VkSampleCountBitmask a) where
-        showsPrec _ VK_SAMPLE_COUNT_1_BIT
-          = showString "VK_SAMPLE_COUNT_1_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_2_BIT
-          = showString "VK_SAMPLE_COUNT_2_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_4_BIT
-          = showString "VK_SAMPLE_COUNT_4_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_8_BIT
-          = showString "VK_SAMPLE_COUNT_8_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_16_BIT
-          = showString "VK_SAMPLE_COUNT_16_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_32_BIT
-          = showString "VK_SAMPLE_COUNT_32_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_64_BIT
-          = showString "VK_SAMPLE_COUNT_64_BIT"
-        showsPrec p (VkSampleCountBitmask x)
-          = showParen (p >= 11)
-              (showString "VkSampleCountBitmask " . showsPrec 11 x)
+    showsPrec _ VK_SAMPLE_COUNT_1_BIT
+      = showString "VK_SAMPLE_COUNT_1_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_2_BIT
+      = showString "VK_SAMPLE_COUNT_2_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_4_BIT
+      = showString "VK_SAMPLE_COUNT_4_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_8_BIT
+      = showString "VK_SAMPLE_COUNT_8_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_16_BIT
+      = showString "VK_SAMPLE_COUNT_16_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_32_BIT
+      = showString "VK_SAMPLE_COUNT_32_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_64_BIT
+      = showString "VK_SAMPLE_COUNT_64_BIT"
+    showsPrec p (VkSampleCountBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSampleCountBitmask " . showsPrec 11 x)
 
 instance Read (VkSampleCountBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
-                  ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
-                  ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
-                  ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
-                  ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
-                  ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
-                  ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSampleCountBitmask") >>
-                      (VkSampleCountBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
+              ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
+              ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
+              ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
+              ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
+              ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
+              ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkSampleCountBitmask") >>
+                  (VkSampleCountBitmask <$> step readPrec)))
 
 -- | Sample count 1 supported
 --

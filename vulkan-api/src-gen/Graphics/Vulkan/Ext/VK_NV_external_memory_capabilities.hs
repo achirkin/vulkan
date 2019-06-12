@@ -11,37 +11,98 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
-       (-- * Vulkan extension: @VK_NV_external_memory_capabilities@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @James Jones @cubanismo@
-        --
-        -- author: @NV@
-        --
-        -- type: @instance@
-        --
-        -- Extension number: @56@
-        module Graphics.Vulkan.Types.BaseTypes, VkExtent3D, VkExtent3D',
-        VkExternalImageFormatPropertiesNV,
-        VkExternalImageFormatPropertiesNV',
-        module Graphics.Vulkan.Types.Enum.External,
-        VkImageFormatProperties, VkImageFormatProperties',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkExtent3D, VkExternalImageFormatPropertiesNV,
+        VkExternalFenceFeatureBitmask(..),
+        VkExternalFenceHandleTypeBitmask(..),
+        VkExternalMemoryFeatureBitmask(..),
+        VkExternalMemoryFeatureBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmask(..),
+        VkExternalSemaphoreFeatureBitmask(..),
+        VkExternalSemaphoreHandleTypeBitmask(..),
+        VkExternalFenceFeatureFlagBits(),
+        VkExternalFenceFeatureFlagBitsKHR(..),
+        VkExternalFenceFeatureFlags(), VkExternalFenceHandleTypeFlagBits(),
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        VkExternalFenceHandleTypeFlags(),
+        VkExternalMemoryFeatureFlagBits(),
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        VkExternalMemoryFeatureFlagBitsNV(),
+        VkExternalMemoryFeatureFlags(), VkExternalMemoryFeatureFlagsNV(),
+        VkExternalMemoryHandleTypeFlagBits(),
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        VkExternalMemoryHandleTypeFlagBitsNV(),
+        VkExternalMemoryHandleTypeFlags(),
+        VkExternalMemoryHandleTypeFlagsNV(),
+        VkExternalSemaphoreFeatureFlagBits(),
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        VkExternalSemaphoreFeatureFlags(),
+        VkExternalSemaphoreHandleTypeFlagBits(),
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        VkExternalSemaphoreHandleTypeFlags(), VkImageFormatProperties,
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(),
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.External,
-        module Graphics.Vulkan.Types.Struct.Image,
+        module Graphics.Vulkan.Marshal, VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(), VkResult(..),
+        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
+        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkExtent2D, VkExternalBufferProperties,
+        VkExternalBufferPropertiesKHR, VkExternalFenceProperties,
+        VkExternalFencePropertiesKHR, VkExternalImageFormatProperties,
+        VkExternalImageFormatPropertiesKHR,
+        VkExternalMemoryBufferCreateInfo,
+        VkExternalMemoryBufferCreateInfoKHR,
+        VkExternalMemoryImageCreateInfo,
+        VkExternalMemoryImageCreateInfoKHR,
+        VkExternalMemoryImageCreateInfoNV, VkExternalMemoryProperties,
+        VkExternalMemoryPropertiesKHR, VkExternalSemaphoreProperties,
+        VkExternalSemaphorePropertiesKHR, VkImageBlit, VkImageCopy,
+        VkImageCreateInfo, VkImageFormatListCreateInfoKHR,
+        VkImageFormatProperties2, VkImageFormatProperties2KHR,
+        VkImageMemoryBarrier, VkImageMemoryRequirementsInfo2,
+        VkImageMemoryRequirementsInfo2KHR,
+        VkImagePlaneMemoryRequirementsInfo,
+        VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
+        VkImageSparseMemoryRequirementsInfo2,
+        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
+        VkImageSubresourceLayers, VkImageSubresourceRange,
+        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
         VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME,
@@ -66,8 +127,9 @@ pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
 
 pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV <-
         (is_VkGetPhysicalDeviceExternalImageFormatPropertiesNV -> True)
-  where VkGetPhysicalDeviceExternalImageFormatPropertiesNV
-          = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+  where
+    VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+      = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
 {-# INLINE _VkGetPhysicalDeviceExternalImageFormatPropertiesNV #-}
 
@@ -137,20 +199,20 @@ foreign import ccall safe "dynamic"
 instance VulkanProc
            "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
          where
-        type VkProcType
-               "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
-             = HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
-        vkProcSymbol = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+    type VkProcType
+           "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
+         = HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+    vkProcSymbol = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -164,8 +226,9 @@ pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME ::
 
 pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME <-
         (is_VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME -> True)
-  where VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME
-          = _VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME
+  where
+    VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME
+      = _VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME
 
 {-# INLINE _VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME #-}
 

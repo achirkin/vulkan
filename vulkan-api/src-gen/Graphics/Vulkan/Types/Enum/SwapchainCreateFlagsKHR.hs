@@ -23,7 +23,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSwapchainCreateBitmaskKHR (a ::
                                        FlagType) = VkSwapchainCreateBitmaskKHR VkFlags
-                                                     deriving (Eq, Ord, Storable)
+                                                   deriving (Eq, Ord, Storable)
 
 type VkSwapchainCreateFlagsKHR =
      VkSwapchainCreateBitmaskKHR FlagMask
@@ -47,14 +47,14 @@ deriving instance Bits (VkSwapchainCreateBitmaskKHR FlagMask)
 deriving instance FiniteBits (VkSwapchainCreateBitmaskKHR FlagMask)
 
 instance Show (VkSwapchainCreateBitmaskKHR a) where
-        showsPrec p (VkSwapchainCreateBitmaskKHR x)
-          = showParen (p >= 11)
-              (showString "VkSwapchainCreateBitmaskKHR " . showsPrec 11 x)
+    showsPrec p (VkSwapchainCreateBitmaskKHR x)
+      = showParen (p >= 11)
+          (showString "VkSwapchainCreateBitmaskKHR " . showsPrec 11 x)
 
 instance Read (VkSwapchainCreateBitmaskKHR a) where
-        readPrec
-          = parens
-              (choose [] +++
-                 prec 10
-                   (expectP (Ident "VkSwapchainCreateBitmaskKHR") >>
-                      (VkSwapchainCreateBitmaskKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkSwapchainCreateBitmaskKHR") >>
+                  (VkSwapchainCreateBitmaskKHR <$> step readPrec)))

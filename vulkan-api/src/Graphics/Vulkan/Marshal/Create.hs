@@ -102,10 +102,9 @@ instance Monad (CreateVkStruct x fs) where
 --     with a set of haskell and C finalizers.
 --   These finalizers make sure all `malloc`ed memory is released and
 --    no managed memory gets purged too early.
-createVk :: forall a fs b .
+createVk :: forall a fs .
             ( VulkanMarshal a
             , HandleRemFields a fs
-            , a ~ VulkanStruct b
             ) => CreateVkStruct a fs () -> a
 createVk a = unsafeDupablePerformIO $ do
     x <- mallocVkData
@@ -132,9 +131,7 @@ createVk a = unsafeDupablePerformIO $ do
 {-# NOINLINE createVk #-}
 
 -- | `writeField` wrapped into `CreateVkStruct` monad.
-set :: forall fname x
-     . ( CanWriteField fname x
-       )
+set :: forall fname x . CanWriteField fname x
     => FieldType fname x -> CreateVkStruct x '[fname] ()
 set v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeField @fname @x p v
 
@@ -307,7 +304,7 @@ class CUnionType x ~ isUnion
 type SetUnionMsg x =
    'Text "You have to set exactly one field for a union type " ':<>: 'ShowType x
    ':$$: 'Text "Note, this type has following fields: "
-         ':<>: 'ShowType (StructFields x)
+         ':<>: 'ShowType (StructFieldNames x)
 
 instance ( TypeError ( SetUnionMsg x )
          , CUnionType x ~ 'True
@@ -323,11 +320,11 @@ instance ( TypeError ( SetUnionMsg x )
   handleRemFields = pure ()
 
 
-instance ( SetOptionalFields x (Difference (StructFields x) fs)
+instance ( SetOptionalFields x (Difference (StructFieldNames x) fs)
          , CUnionType x ~ 'False
          ) => HandleRemainingFields x fs 'False where
   handleRemFields
-    = ( coerce :: CreateVkStruct x (Difference (StructFields x) fs) ()
+    = ( coerce :: CreateVkStruct x (Difference (StructFieldNames x) fs) ()
                -> CreateVkStruct x fs ()
       ) setOptionalFields
 

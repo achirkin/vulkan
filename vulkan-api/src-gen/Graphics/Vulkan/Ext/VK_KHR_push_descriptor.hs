@@ -27,27 +27,82 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes, VkPhysicalDeviceLimits,
-        VkPhysicalDeviceLimits', VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties', VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2',
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkPhysicalDeviceLimits,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
         VkPhysicalDevicePushDescriptorPropertiesKHR,
-        VkPhysicalDevicePushDescriptorPropertiesKHR',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VkCmdPushDescriptorSetKHR, pattern VkCmdPushDescriptorSetKHR,
         HS_vkCmdPushDescriptorSetKHR, PFN_vkCmdPushDescriptorSetKHR,
-        module Graphics.Vulkan.Types.Enum.Descriptor,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.Pipeline,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Descriptor,
-        module Graphics.Vulkan.Types.Struct.WriteDescriptorSet,
+        VkDescriptorBindingBitmaskEXT(..),
+        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
+        VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
+        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorSetLayoutCreateBitmask(..),
+        VkDescriptorSetLayoutCreateFlagBits(),
+        VkDescriptorSetLayoutCreateFlags(),
+        VkDescriptorUpdateTemplateTypeKHR(..), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
+        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
+        VkPipelineCacheCreateFlagBits(..),
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        VkPipelineDynamicStateCreateFlagBits(..),
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        VkPipelineLayoutCreateFlagBits(..),
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(),
+        VkPipelineTessellationStateCreateFlagBits(..),
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        VkPipelineViewportStateCreateFlagBits(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkDescriptorBufferInfo, VkDescriptorImageInfo,
+        VkDescriptorPoolCreateInfo, VkDescriptorPoolSize,
+        VkDescriptorSetAllocateInfo, VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
+        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorUpdateTemplateCreateInfo,
+        VkDescriptorUpdateTemplateCreateInfoKHR,
+        VkDescriptorUpdateTemplateEntry,
+        VkDescriptorUpdateTemplateEntryKHR, VkWriteDescriptorSet,
         VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION,
         pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION,
         VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME,
@@ -73,23 +128,18 @@ import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.Descriptor
-import Graphics.Vulkan.Types.Struct.PhysicalDevice     (VkPhysicalDeviceLimits,
-                                                        VkPhysicalDeviceLimits',
-                                                        VkPhysicalDeviceProperties,
-                                                        VkPhysicalDeviceProperties',
+import Graphics.Vulkan.Types.Struct.PhysicalDevice     (VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
                                                         VkPhysicalDeviceProperties2,
-                                                        VkPhysicalDeviceProperties2',
                                                         VkPhysicalDevicePushDescriptorPropertiesKHR,
-                                                        VkPhysicalDevicePushDescriptorPropertiesKHR',
-                                                        VkPhysicalDeviceSparseProperties,
-                                                        VkPhysicalDeviceSparseProperties')
+                                                        VkPhysicalDeviceSparseProperties)
 import Graphics.Vulkan.Types.Struct.WriteDescriptorSet
 
 pattern VkCmdPushDescriptorSetKHR :: CString
 
 pattern VkCmdPushDescriptorSetKHR <-
         (is_VkCmdPushDescriptorSetKHR -> True)
-  where VkCmdPushDescriptorSetKHR = _VkCmdPushDescriptorSetKHR
+  where
+    VkCmdPushDescriptorSetKHR = _VkCmdPushDescriptorSetKHR
 
 {-# INLINE _VkCmdPushDescriptorSetKHR #-}
 
@@ -142,17 +192,17 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
 
 instance VulkanProc "vkCmdPushDescriptorSetKHR" where
-        type VkProcType "vkCmdPushDescriptorSetKHR" =
-             HS_vkCmdPushDescriptorSetKHR
-        vkProcSymbol = _VkCmdPushDescriptorSetKHR
+    type VkProcType "vkCmdPushDescriptorSetKHR" =
+         HS_vkCmdPushDescriptorSetKHR
+    vkProcSymbol = _VkCmdPushDescriptorSetKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdPushDescriptorSetKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdPushDescriptorSetKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdPushDescriptorSetKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdPushDescriptorSetKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -164,8 +214,9 @@ pattern VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME :: CString
 
 pattern VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME <-
         (is_VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME -> True)
-  where VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
-          = _VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
+  where
+    VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
+      = _VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME #-}
 
@@ -201,8 +252,9 @@ pattern VkCmdPushDescriptorSetWithTemplateKHR :: CString
 
 pattern VkCmdPushDescriptorSetWithTemplateKHR <-
         (is_VkCmdPushDescriptorSetWithTemplateKHR -> True)
-  where VkCmdPushDescriptorSetWithTemplateKHR
-          = _VkCmdPushDescriptorSetWithTemplateKHR
+  where
+    VkCmdPushDescriptorSetWithTemplateKHR
+      = _VkCmdPushDescriptorSetWithTemplateKHR
 
 {-# INLINE _VkCmdPushDescriptorSetWithTemplateKHR #-}
 
@@ -256,19 +308,19 @@ foreign import ccall safe "dynamic"
                  HS_vkCmdPushDescriptorSetWithTemplateKHR
 
 instance VulkanProc "vkCmdPushDescriptorSetWithTemplateKHR" where
-        type VkProcType "vkCmdPushDescriptorSetWithTemplateKHR" =
-             HS_vkCmdPushDescriptorSetWithTemplateKHR
-        vkProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
+    type VkProcType "vkCmdPushDescriptorSetWithTemplateKHR" =
+         HS_vkCmdPushDescriptorSetWithTemplateKHR
+    vkProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCmdPushDescriptorSetWithTemplateKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCmdPushDescriptorSetWithTemplateKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkCmdPushDescriptorSetWithTemplateKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkCmdPushDescriptorSetWithTemplateKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 -- | Create descriptor update template for pushed descriptor updates
 pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::

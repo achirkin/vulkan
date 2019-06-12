@@ -23,17 +23,17 @@ import qualified Data.Set                         as Set
 import qualified Data.Text                        as T
 import           Language.Haskell.Exts.Syntax
 
-import           VkXml.CommonTypes
-import           VkXml.Sections
-import           VkXml.Sections.Commands          as Cs
-import           VkXml.Sections.Types             as Ts
+import VkXml.CommonTypes
+import VkXml.Sections
+import VkXml.Sections.Commands as Cs
+import VkXml.Sections.Types    as Ts
 -- import           VkXml.Sections.Enums as Es
-import           VkXml.Sections.Feature
+import VkXml.Sections.Feature
 
-import           Write.Commands
-import           Write.ModuleWriter
-import           Write.Types
-import           Write.Types.Enum
+import Write.Commands
+import Write.ModuleWriter
+import Write.Types
+import Write.Types.Enum
 -- import           Write.Util.DeclaredNames
 
 -- | The protect definition this function returns does not turn off the feature

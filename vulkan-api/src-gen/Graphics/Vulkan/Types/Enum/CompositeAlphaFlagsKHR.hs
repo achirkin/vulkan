@@ -27,7 +27,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkCompositeAlphaBitmaskKHR (a ::
                                       FlagType) = VkCompositeAlphaBitmaskKHR VkFlags
-                                                    deriving (Eq, Ord, Storable)
+                                                  deriving (Eq, Ord, Storable)
 
 type VkCompositeAlphaFlagsKHR = VkCompositeAlphaBitmaskKHR FlagMask
 
@@ -50,34 +50,34 @@ deriving instance Bits (VkCompositeAlphaBitmaskKHR FlagMask)
 deriving instance FiniteBits (VkCompositeAlphaBitmaskKHR FlagMask)
 
 instance Show (VkCompositeAlphaBitmaskKHR a) where
-        showsPrec _ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR"
-        showsPrec p (VkCompositeAlphaBitmaskKHR x)
-          = showParen (p >= 11)
-              (showString "VkCompositeAlphaBitmaskKHR " . showsPrec 11 x)
+    showsPrec _ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
+      = showString "VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR"
+    showsPrec _ VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
+      = showString "VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR"
+    showsPrec _ VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
+      = showString "VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR"
+    showsPrec _ VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
+      = showString "VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR"
+    showsPrec p (VkCompositeAlphaBitmaskKHR x)
+      = showParen (p >= 11)
+          (showString "VkCompositeAlphaBitmaskKHR " . showsPrec 11 x)
 
 instance Read (VkCompositeAlphaBitmaskKHR a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCompositeAlphaBitmaskKHR") >>
-                      (VkCompositeAlphaBitmaskKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR",
+               pure VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
+              ("VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR",
+               pure VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR),
+              ("VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR",
+               pure VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR),
+              ("VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR",
+               pure VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkCompositeAlphaBitmaskKHR") >>
+                  (VkCompositeAlphaBitmaskKHR <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR ::

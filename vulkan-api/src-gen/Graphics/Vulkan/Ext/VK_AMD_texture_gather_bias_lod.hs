@@ -5,30 +5,11 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
-       (-- * Vulkan extension: @VK_AMD_texture_gather_bias_lod@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Rex Xu @amdrexu@
-        --
-        -- author: @AMD@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @42@
-        --
-        -- Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        --
-
-        -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Types.BaseTypes, VkExtent3D, VkExtent3D',
-        VkImageFormatProperties, VkImageFormatProperties',
-        VkImageFormatProperties2, VkImageFormatProperties2',
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkExtent3D, VkImageFormatProperties, VkImageFormatProperties2,
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkStructureType(..),
         VkTextureLODGatherFormatPropertiesAMD,
-        VkTextureLODGatherFormatPropertiesAMD',
         -- > #include "vk_platform.h"
         VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION,
         pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION,
@@ -41,14 +22,10 @@ import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent3D,
-                                                                         VkExtent3D')
+import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent3D)
 import Graphics.Vulkan.Types.Struct.Image                               (VkImageFormatProperties,
-                                                                         VkImageFormatProperties',
-                                                                         VkImageFormatProperties2,
-                                                                         VkImageFormatProperties2')
-import Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD (VkTextureLODGatherFormatPropertiesAMD,
-                                                                         VkTextureLODGatherFormatPropertiesAMD')
+                                                                         VkImageFormatProperties2)
+import Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD (VkTextureLODGatherFormatPropertiesAMD)
 
 pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -61,8 +38,9 @@ pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME :: CString
 
 pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME <-
         (is_VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME -> True)
-  where VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME
-          = _VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME
+  where
+    VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME
+      = _VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME
 
 {-# INLINE _VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME #-}
 

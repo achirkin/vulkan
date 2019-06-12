@@ -28,22 +28,72 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         --
 
         -- ** Required extensions: 'VK_KHR_external_memory'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.External,
-        VkImportMemoryFdInfoKHR, VkImportMemoryFdInfoKHR',
-        VkMemoryAllocateInfo, VkMemoryAllocateInfo',
-        VkMemoryFdPropertiesKHR, VkMemoryFdPropertiesKHR',
-        VkMemoryGetFdInfoKHR, VkMemoryGetFdInfoKHR',
-        module Graphics.Vulkan.Types.Enum.StructureType, -- > #include "vk_platform.h"
-                                                         VkGetMemoryFdKHR,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkExternalFenceFeatureBitmask(..),
+        VkExternalFenceHandleTypeBitmask(..),
+        VkExternalMemoryFeatureBitmask(..),
+        VkExternalMemoryFeatureBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmaskNV(..),
+        VkExternalMemoryHandleTypeBitmask(..),
+        VkExternalSemaphoreFeatureBitmask(..),
+        VkExternalSemaphoreHandleTypeBitmask(..),
+        VkExternalFenceFeatureFlagBits(),
+        VkExternalFenceFeatureFlagBitsKHR(..),
+        VkExternalFenceFeatureFlags(), VkExternalFenceHandleTypeFlagBits(),
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        VkExternalFenceHandleTypeFlags(),
+        VkExternalMemoryFeatureFlagBits(),
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        VkExternalMemoryFeatureFlagBitsNV(),
+        VkExternalMemoryFeatureFlags(), VkExternalMemoryFeatureFlagsNV(),
+        VkExternalMemoryHandleTypeFlagBits(),
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        VkExternalMemoryHandleTypeFlagBitsNV(),
+        VkExternalMemoryHandleTypeFlags(),
+        VkExternalMemoryHandleTypeFlagsNV(),
+        VkExternalSemaphoreFeatureFlagBits(),
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        VkExternalSemaphoreFeatureFlags(),
+        VkExternalSemaphoreHandleTypeFlagBits(),
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        VkExternalSemaphoreHandleTypeFlags(), VkImportMemoryFdInfoKHR,
+        VkMemoryAllocateInfo, VkMemoryFdPropertiesKHR,
+        VkMemoryGetFdInfoKHR, VkStructureType(..), -- > #include "vk_platform.h"
+                                                   VkGetMemoryFdKHR,
         pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
         PFN_vkGetMemoryFdKHR, VkGetMemoryFdPropertiesKHR,
         pattern VkGetMemoryFdPropertiesKHR, HS_vkGetMemoryFdPropertiesKHR,
-        PFN_vkGetMemoryFdPropertiesKHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.Memory,
+        PFN_vkGetMemoryFdPropertiesKHR, VkResult(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
+        VkMemoryBarrier, VkMemoryDedicatedAllocateInfo,
+        VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
+        VkMemoryDedicatedRequirementsKHR, VkMemoryHeap,
+        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
         VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
         VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME,
@@ -60,14 +110,14 @@ import Graphics.Vulkan.Types.Enum.External
 import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Import      (VkImportMemoryFdInfoKHR,
-                                                 VkImportMemoryFdInfoKHR')
+import Graphics.Vulkan.Types.Struct.Import      (VkImportMemoryFdInfoKHR)
 import Graphics.Vulkan.Types.Struct.Memory
 
 pattern VkGetMemoryFdKHR :: CString
 
 pattern VkGetMemoryFdKHR <- (is_VkGetMemoryFdKHR -> True)
-  where VkGetMemoryFdKHR = _VkGetMemoryFdKHR
+  where
+    VkGetMemoryFdKHR = _VkGetMemoryFdKHR
 
 {-# INLINE _VkGetMemoryFdKHR #-}
 
@@ -107,22 +157,23 @@ foreign import ccall safe "dynamic" unwrapVkGetMemoryFdKHRSafe ::
                PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
 
 instance VulkanProc "vkGetMemoryFdKHR" where
-        type VkProcType "vkGetMemoryFdKHR" = HS_vkGetMemoryFdKHR
-        vkProcSymbol = _VkGetMemoryFdKHR
+    type VkProcType "vkGetMemoryFdKHR" = HS_vkGetMemoryFdKHR
+    vkProcSymbol = _VkGetMemoryFdKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetMemoryFdKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetMemoryFdKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetMemoryFdPropertiesKHR :: CString
 
 pattern VkGetMemoryFdPropertiesKHR <-
         (is_VkGetMemoryFdPropertiesKHR -> True)
-  where VkGetMemoryFdPropertiesKHR = _VkGetMemoryFdPropertiesKHR
+  where
+    VkGetMemoryFdPropertiesKHR = _VkGetMemoryFdPropertiesKHR
 
 {-# INLINE _VkGetMemoryFdPropertiesKHR #-}
 
@@ -170,17 +221,17 @@ foreign import ccall safe "dynamic"
                PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
 
 instance VulkanProc "vkGetMemoryFdPropertiesKHR" where
-        type VkProcType "vkGetMemoryFdPropertiesKHR" =
-             HS_vkGetMemoryFdPropertiesKHR
-        vkProcSymbol = _VkGetMemoryFdPropertiesKHR
+    type VkProcType "vkGetMemoryFdPropertiesKHR" =
+         HS_vkGetMemoryFdPropertiesKHR
+    vkProcSymbol = _VkGetMemoryFdPropertiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdPropertiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetMemoryFdPropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetMemoryFdPropertiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetMemoryFdPropertiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -193,8 +244,9 @@ pattern VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME :: CString
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME <-
         (is_VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME -> True)
-  where VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME
-          = _VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME
+  where
+    VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME
+      = _VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME #-}
 

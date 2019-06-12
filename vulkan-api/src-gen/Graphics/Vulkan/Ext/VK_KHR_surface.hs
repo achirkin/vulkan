@@ -56,22 +56,68 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         vkGetPhysicalDeviceSurfacePresentModesKHR,
         vkGetPhysicalDeviceSurfacePresentModesKHRUnsafe,
         vkGetPhysicalDeviceSurfacePresentModesKHRSafe,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.PresentModeKHR,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.Surface,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Surface,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkColorComponentBitmask(..),
+        VkColorSpaceKHR(..), VkColorComponentFlagBits(),
+        VkColorComponentFlags(), VkCompositeAlphaBitmaskKHR(..),
+        VkCompositeAlphaFlagBitsKHR(), VkCompositeAlphaFlagsKHR(),
+        VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkInternalAllocationType(..), VkPresentModeKHR(..), VkResult(..),
+        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
+        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
+        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkExtent2D, VkExtent3D,
+        VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2KHR,
+        VkSurfaceCapabilitiesKHR, VkSurfaceFormat2KHR, VkSurfaceFormatKHR,
         VK_KHR_SURFACE_SPEC_VERSION, pattern VK_KHR_SURFACE_SPEC_VERSION,
         VK_KHR_SURFACE_EXTENSION_NAME,
         pattern VK_KHR_SURFACE_EXTENSION_NAME,
@@ -104,7 +150,8 @@ import System.IO.Unsafe                                  (unsafeDupablePerformIO
 pattern VkDestroySurfaceKHR :: CString
 
 pattern VkDestroySurfaceKHR <- (is_VkDestroySurfaceKHR -> True)
-  where VkDestroySurfaceKHR = _VkDestroySurfaceKHR
+  where
+    VkDestroySurfaceKHR = _VkDestroySurfaceKHR
 
 {-# INLINE _VkDestroySurfaceKHR #-}
 
@@ -274,23 +321,24 @@ foreign import ccall safe "dynamic" unwrapVkDestroySurfaceKHRSafe
                :: PFN_vkDestroySurfaceKHR -> HS_vkDestroySurfaceKHR
 
 instance VulkanProc "vkDestroySurfaceKHR" where
-        type VkProcType "vkDestroySurfaceKHR" = HS_vkDestroySurfaceKHR
-        vkProcSymbol = _VkDestroySurfaceKHR
+    type VkProcType "vkDestroySurfaceKHR" = HS_vkDestroySurfaceKHR
+    vkProcSymbol = _VkDestroySurfaceKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroySurfaceKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroySurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroySurfaceKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroySurfaceKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSurfaceSupportKHR :: CString
 
 pattern VkGetPhysicalDeviceSurfaceSupportKHR <-
         (is_VkGetPhysicalDeviceSurfaceSupportKHR -> True)
-  where VkGetPhysicalDeviceSurfaceSupportKHR
-          = _VkGetPhysicalDeviceSurfaceSupportKHR
+  where
+    VkGetPhysicalDeviceSurfaceSupportKHR
+      = _VkGetPhysicalDeviceSurfaceSupportKHR
 
 {-# INLINE _VkGetPhysicalDeviceSurfaceSupportKHR #-}
 
@@ -503,26 +551,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceSurfaceSupportKHR
 
 instance VulkanProc "vkGetPhysicalDeviceSurfaceSupportKHR" where
-        type VkProcType "vkGetPhysicalDeviceSurfaceSupportKHR" =
-             HS_vkGetPhysicalDeviceSurfaceSupportKHR
-        vkProcSymbol = _VkGetPhysicalDeviceSurfaceSupportKHR
+    type VkProcType "vkGetPhysicalDeviceSurfaceSupportKHR" =
+         HS_vkGetPhysicalDeviceSurfaceSupportKHR
+    vkProcSymbol = _VkGetPhysicalDeviceSurfaceSupportKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSurfaceSupportKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSurfaceSupportKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSurfaceSupportKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSurfaceSupportKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSurfaceCapabilitiesKHR :: CString
 
 pattern VkGetPhysicalDeviceSurfaceCapabilitiesKHR <-
         (is_VkGetPhysicalDeviceSurfaceCapabilitiesKHR -> True)
-  where VkGetPhysicalDeviceSurfaceCapabilitiesKHR
-          = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
+  where
+    VkGetPhysicalDeviceSurfaceCapabilitiesKHR
+      = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
 {-# INLINE _VkGetPhysicalDeviceSurfaceCapabilitiesKHR #-}
 
@@ -731,26 +780,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
          where
-        type VkProcType "vkGetPhysicalDeviceSurfaceCapabilitiesKHR" =
-             HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
-        vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
+    type VkProcType "vkGetPhysicalDeviceSurfaceCapabilitiesKHR" =
+         HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+    vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSurfaceFormatsKHR :: CString
 
 pattern VkGetPhysicalDeviceSurfaceFormatsKHR <-
         (is_VkGetPhysicalDeviceSurfaceFormatsKHR -> True)
-  where VkGetPhysicalDeviceSurfaceFormatsKHR
-          = _VkGetPhysicalDeviceSurfaceFormatsKHR
+  where
+    VkGetPhysicalDeviceSurfaceFormatsKHR
+      = _VkGetPhysicalDeviceSurfaceFormatsKHR
 
 {-# INLINE _VkGetPhysicalDeviceSurfaceFormatsKHR #-}
 
@@ -966,26 +1016,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceSurfaceFormatsKHR
 
 instance VulkanProc "vkGetPhysicalDeviceSurfaceFormatsKHR" where
-        type VkProcType "vkGetPhysicalDeviceSurfaceFormatsKHR" =
-             HS_vkGetPhysicalDeviceSurfaceFormatsKHR
-        vkProcSymbol = _VkGetPhysicalDeviceSurfaceFormatsKHR
+    type VkProcType "vkGetPhysicalDeviceSurfaceFormatsKHR" =
+         HS_vkGetPhysicalDeviceSurfaceFormatsKHR
+    vkProcSymbol = _VkGetPhysicalDeviceSurfaceFormatsKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSurfaceFormatsKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSurfaceFormatsKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSurfaceFormatsKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSurfaceFormatsKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSurfacePresentModesKHR :: CString
 
 pattern VkGetPhysicalDeviceSurfacePresentModesKHR <-
         (is_VkGetPhysicalDeviceSurfacePresentModesKHR -> True)
-  where VkGetPhysicalDeviceSurfacePresentModesKHR
-          = _VkGetPhysicalDeviceSurfacePresentModesKHR
+  where
+    VkGetPhysicalDeviceSurfacePresentModesKHR
+      = _VkGetPhysicalDeviceSurfacePresentModesKHR
 
 {-# INLINE _VkGetPhysicalDeviceSurfacePresentModesKHR #-}
 
@@ -1205,19 +1256,19 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceSurfacePresentModesKHR"
          where
-        type VkProcType "vkGetPhysicalDeviceSurfacePresentModesKHR" =
-             HS_vkGetPhysicalDeviceSurfacePresentModesKHR
-        vkProcSymbol = _VkGetPhysicalDeviceSurfacePresentModesKHR
+    type VkProcType "vkGetPhysicalDeviceSurfacePresentModesKHR" =
+         HS_vkGetPhysicalDeviceSurfacePresentModesKHR
+    vkProcSymbol = _VkGetPhysicalDeviceSurfacePresentModesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSurfacePresentModesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSurfacePresentModesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSurfacePresentModesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSurfacePresentModesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -1229,8 +1280,8 @@ pattern VK_KHR_SURFACE_EXTENSION_NAME :: CString
 
 pattern VK_KHR_SURFACE_EXTENSION_NAME <-
         (is_VK_KHR_SURFACE_EXTENSION_NAME -> True)
-  where VK_KHR_SURFACE_EXTENSION_NAME
-          = _VK_KHR_SURFACE_EXTENSION_NAME
+  where
+    VK_KHR_SURFACE_EXTENSION_NAME = _VK_KHR_SURFACE_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_SURFACE_EXTENSION_NAME #-}
 

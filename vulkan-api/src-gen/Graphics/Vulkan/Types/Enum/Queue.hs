@@ -28,7 +28,7 @@ import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkQueueBitmask (a :: FlagType) = VkQueueBitmask VkFlags
-                                           deriving (Eq, Ord, Storable)
+                                         deriving (Eq, Ord, Storable)
 
 type VkQueueFlags = VkQueueBitmask FlagMask
 
@@ -47,30 +47,30 @@ deriving instance Bits (VkQueueBitmask FlagMask)
 deriving instance FiniteBits (VkQueueBitmask FlagMask)
 
 instance Show (VkQueueBitmask a) where
-        showsPrec _ VK_QUEUE_GRAPHICS_BIT
-          = showString "VK_QUEUE_GRAPHICS_BIT"
-        showsPrec _ VK_QUEUE_COMPUTE_BIT
-          = showString "VK_QUEUE_COMPUTE_BIT"
-        showsPrec _ VK_QUEUE_TRANSFER_BIT
-          = showString "VK_QUEUE_TRANSFER_BIT"
-        showsPrec _ VK_QUEUE_SPARSE_BINDING_BIT
-          = showString "VK_QUEUE_SPARSE_BINDING_BIT"
-        showsPrec p (VkQueueBitmask x)
-          = showParen (p >= 11)
-              (showString "VkQueueBitmask " . showsPrec 11 x)
+    showsPrec _ VK_QUEUE_GRAPHICS_BIT
+      = showString "VK_QUEUE_GRAPHICS_BIT"
+    showsPrec _ VK_QUEUE_COMPUTE_BIT
+      = showString "VK_QUEUE_COMPUTE_BIT"
+    showsPrec _ VK_QUEUE_TRANSFER_BIT
+      = showString "VK_QUEUE_TRANSFER_BIT"
+    showsPrec _ VK_QUEUE_SPARSE_BINDING_BIT
+      = showString "VK_QUEUE_SPARSE_BINDING_BIT"
+    showsPrec p (VkQueueBitmask x)
+      = showParen (p >= 11)
+          (showString "VkQueueBitmask " . showsPrec 11 x)
 
 instance Read (VkQueueBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUEUE_GRAPHICS_BIT", pure VK_QUEUE_GRAPHICS_BIT),
-                  ("VK_QUEUE_COMPUTE_BIT", pure VK_QUEUE_COMPUTE_BIT),
-                  ("VK_QUEUE_TRANSFER_BIT", pure VK_QUEUE_TRANSFER_BIT),
-                  ("VK_QUEUE_SPARSE_BINDING_BIT", pure VK_QUEUE_SPARSE_BINDING_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueueBitmask") >>
-                      (VkQueueBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUEUE_GRAPHICS_BIT", pure VK_QUEUE_GRAPHICS_BIT),
+              ("VK_QUEUE_COMPUTE_BIT", pure VK_QUEUE_COMPUTE_BIT),
+              ("VK_QUEUE_TRANSFER_BIT", pure VK_QUEUE_TRANSFER_BIT),
+              ("VK_QUEUE_SPARSE_BINDING_BIT", pure VK_QUEUE_SPARSE_BINDING_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueueBitmask") >>
+                  (VkQueueBitmask <$> step readPrec)))
 
 -- | Queue supports graphics operations
 --
@@ -104,37 +104,37 @@ pattern VK_QUEUE_SPARSE_BINDING_BIT = VkQueueBitmask 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueueGlobalPriorityEXT VkQueueGlobalPriorityEXT registry at www.khronos.org>
 newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
-                                     deriving (Eq, Ord, Enum, Storable)
+                                   deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkQueueGlobalPriorityEXT where
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT"
-        showsPrec p (VkQueueGlobalPriorityEXT x)
-          = showParen (p >= 11)
-              (showString "VkQueueGlobalPriorityEXT " . showsPrec 11 x)
+    showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT
+      = showString "VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT"
+    showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT
+      = showString "VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT"
+    showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT
+      = showString "VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT"
+    showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT
+      = showString "VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT"
+    showsPrec p (VkQueueGlobalPriorityEXT x)
+      = showParen (p >= 11)
+          (showString "VkQueueGlobalPriorityEXT " . showsPrec 11 x)
 
 instance Read VkQueueGlobalPriorityEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueueGlobalPriorityEXT") >>
-                      (VkQueueGlobalPriorityEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT",
+               pure VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT),
+              ("VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT",
+               pure VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT),
+              ("VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT",
+               pure VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT),
+              ("VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT",
+               pure VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueueGlobalPriorityEXT") >>
+                  (VkQueueGlobalPriorityEXT <$> step readPrec)))
 
 pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT ::
         VkQueueGlobalPriorityEXT

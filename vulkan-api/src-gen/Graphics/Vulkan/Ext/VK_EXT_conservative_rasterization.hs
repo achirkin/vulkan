@@ -22,27 +22,62 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT,
-        module Graphics.Vulkan.Types.Enum.CullModeFlags,
-        module Graphics.Vulkan.Types.Enum.FrontFace,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..),
+        VkConservativeRasterizationModeEXT(..), VkCullModeBitmask(..),
+        VkCullModeFlagBits(), VkCullModeFlags(), VkFrontFace(..),
         VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
-        VkPhysicalDeviceConservativeRasterizationPropertiesEXT',
-        VkPhysicalDeviceLimits, VkPhysicalDeviceLimits',
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties',
-        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2',
-        VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceSparseProperties',
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Bitmasks,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceType(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
         VkPipelineRasterizationConservativeStateCreateInfoEXT,
-        VkPipelineRasterizationConservativeStateCreateInfoEXT',
-        VkPipelineRasterizationStateCreateInfo,
-        VkPipelineRasterizationStateCreateInfo',
-        module Graphics.Vulkan.Types.Enum.PolygonMode,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkPipelineRasterizationStateCreateInfo, VkPolygonMode(..),
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION,
         pattern VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION,
@@ -63,19 +98,12 @@ import Graphics.Vulkan.Types.Enum.PolygonMode
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Struct.PhysicalDevice                 (VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
-                                                                    VkPhysicalDeviceConservativeRasterizationPropertiesEXT',
                                                                     VkPhysicalDeviceLimits,
-                                                                    VkPhysicalDeviceLimits',
                                                                     VkPhysicalDeviceProperties,
-                                                                    VkPhysicalDeviceProperties',
                                                                     VkPhysicalDeviceProperties2,
-                                                                    VkPhysicalDeviceProperties2',
-                                                                    VkPhysicalDeviceSparseProperties,
-                                                                    VkPhysicalDeviceSparseProperties')
+                                                                    VkPhysicalDeviceSparseProperties)
 import Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineRasterizationConservativeStateCreateInfoEXT,
-                                                                    VkPipelineRasterizationConservativeStateCreateInfoEXT',
-                                                                    VkPipelineRasterizationStateCreateInfo,
-                                                                    VkPipelineRasterizationStateCreateInfo')
+                                                                    VkPipelineRasterizationStateCreateInfo)
 
 pattern VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -88,8 +116,9 @@ pattern VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME :: CString
 
 pattern VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME <-
         (is_VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME -> True)
-  where VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
-          = _VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
+  where
+    VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
+      = _VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME #-}
 
