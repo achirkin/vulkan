@@ -32,12 +32,12 @@ module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR)
        where
-import GHC.Ptr                             (Ptr (..))
-import Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO,
-                                            pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Struct.Memory (VkMemoryDedicatedAllocateInfoKHR,
-                                            VkMemoryDedicatedRequirementsKHR)
+import           GHC.Ptr                             (Ptr (..))
+import           Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO,
+                                                      pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Struct.Memory (VkMemoryDedicatedAllocateInfoKHR,
+                                                      VkMemoryDedicatedRequirementsKHR)
 
 pattern VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION ::
         (Num a, Eq a) => a

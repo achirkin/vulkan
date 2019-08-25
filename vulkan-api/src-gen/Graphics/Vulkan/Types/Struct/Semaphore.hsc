@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Semaphore
        (VkSemaphoreCreateInfo, VkSemaphoreGetFdInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkSemaphoreCreateFlags)
-import Graphics.Vulkan.Types.Enum.External      (VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkSemaphore)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkSemaphoreCreateFlags)
+import           Graphics.Vulkan.Types.Enum.External      (VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkSemaphore)
 
 -- | > typedef struct VkSemaphoreCreateInfo {
 --   >     VkStructureType sType;

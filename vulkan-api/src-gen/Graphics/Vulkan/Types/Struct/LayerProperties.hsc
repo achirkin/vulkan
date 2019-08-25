@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.LayerProperties
        (VkLayerProperties) where
-import Graphics.Vulkan.Constants        (VK_MAX_DESCRIPTION_SIZE,
-                                         VK_MAX_EXTENSION_NAME_SIZE)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Constants        (VK_MAX_DESCRIPTION_SIZE,
+                                                   VK_MAX_EXTENSION_NAME_SIZE)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkLayerProperties {
 --   >     char            layerName[VK_MAX_EXTENSION_NAME_SIZE];

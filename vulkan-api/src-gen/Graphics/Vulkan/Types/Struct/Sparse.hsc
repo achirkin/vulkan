@@ -13,18 +13,19 @@ module Graphics.Vulkan.Types.Struct.Sparse
         VkSparseImageMemoryRequirements2KHR,
         VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlags)
-import Graphics.Vulkan.Types.Enum.Sparse        (VkSparseImageFormatFlags,
-                                                 VkSparseMemoryBindFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
-                                                 VkImage)
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
-import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlags)
+import           Graphics.Vulkan.Types.Enum.Sparse        (VkSparseImageFormatFlags,
+                                                           VkSparseMemoryBindFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer,
+                                                           VkDeviceMemory,
+                                                           VkImage)
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
+import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
 
 -- | > typedef struct VkSparseBufferMemoryBindInfo {
 --   >     VkBuffer buffer;

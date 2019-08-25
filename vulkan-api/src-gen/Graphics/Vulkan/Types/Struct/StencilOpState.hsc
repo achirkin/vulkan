@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.StencilOpState
        (VkStencilOpState) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.CompareOp (VkCompareOp)
-import Graphics.Vulkan.Types.Enum.Stencil   (VkStencilOp)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.CompareOp (VkCompareOp)
+import           Graphics.Vulkan.Types.Enum.Stencil   (VkStencilOp)
 
 -- | > typedef struct VkStencilOpState {
 --   >     VkStencilOp            failOp;

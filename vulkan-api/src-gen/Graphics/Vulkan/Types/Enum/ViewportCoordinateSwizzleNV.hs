@@ -14,12 +14,12 @@ module Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
                                       VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV,
                                       VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV))
        where
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (Int32)
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (Int32)
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

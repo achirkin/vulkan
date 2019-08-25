@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformXlibKhr
        (VkXlibSurfaceCreateInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkXlibSurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Include            (Display, Window)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkXlibSurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Include            (Display, Window)
 
 -- | > typedef struct VkXlibSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;

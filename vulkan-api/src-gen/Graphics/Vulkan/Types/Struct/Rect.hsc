@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Rect (VkRect2D, VkRectLayerKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Struct.Extent (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Offset (VkOffset2D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Struct.Extent (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Offset (VkOffset2D)
 
 -- | > typedef struct VkRect2D {
 --   >     VkOffset2D     offset;

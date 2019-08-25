@@ -60,39 +60,39 @@ module Graphics.Vulkan.Types.Struct.PhysicalDevice
         VkPhysicalDeviceVariablePointerFeaturesKHR,
         VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT)
        where
-import Graphics.Vulkan.Constants                           (VK_LUID_SIZE, VK_MAX_DEVICE_GROUP_SIZE,
-                                                            VK_MAX_MEMORY_HEAPS,
-                                                            VK_MAX_MEMORY_TYPES,
-                                                            VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
-                                                            VK_UUID_SIZE)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes                     (VkBool32,
-                                                            VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.Buffer                   (VkBufferCreateFlags,
-                                                            VkBufferUsageFlags)
-import Graphics.Vulkan.Types.Enum.External                 (VkExternalFenceHandleTypeFlagBits,
-                                                            VkExternalMemoryHandleTypeFlagBits,
-                                                            VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Format                   (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image                    (VkImageCreateFlags,
-                                                            VkImageTiling,
-                                                            VkImageType,
-                                                            VkImageUsageFlags)
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType       (VkPhysicalDeviceType)
-import Graphics.Vulkan.Types.Enum.PointClippingBehavior    (VkPointClippingBehavior)
-import Graphics.Vulkan.Types.Enum.SampleCountFlags         (VkSampleCountFlagBits,
-                                                            VkSampleCountFlags)
-import Graphics.Vulkan.Types.Enum.Shader                   (VkShaderStageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
-import Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags     (VkSubgroupFeatureFlags)
-import Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice,
-                                                            VkSurfaceKHR)
-import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo)
-import Graphics.Vulkan.Types.Struct.Extent                 (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Memory                 (VkMemoryHeap,
-                                                            VkMemoryType)
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import           Graphics.Vulkan.Constants                           (VK_LUID_SIZE,
+                                                                      VK_MAX_DEVICE_GROUP_SIZE,
+                                                                      VK_MAX_MEMORY_HEAPS,
+                                                                      VK_MAX_MEMORY_TYPES,
+                                                                      VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
+                                                                      VK_UUID_SIZE)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes                     (VkBool32, VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.Buffer                   (VkBufferCreateFlags,
+                                                                      VkBufferUsageFlags)
+import           Graphics.Vulkan.Types.Enum.External                 (VkExternalFenceHandleTypeFlagBits,
+                                                                      VkExternalMemoryHandleTypeFlagBits,
+                                                                      VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.Format                   (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Image                    (VkImageCreateFlags,
+                                                                      VkImageTiling,
+                                                                      VkImageType,
+                                                                      VkImageUsageFlags)
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType       (VkPhysicalDeviceType)
+import           Graphics.Vulkan.Types.Enum.PointClippingBehavior    (VkPointClippingBehavior)
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags         (VkSampleCountFlagBits,
+                                                                      VkSampleCountFlags)
+import           Graphics.Vulkan.Types.Enum.Shader                   (VkShaderStageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags     (VkSubgroupFeatureFlags)
+import           Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice,
+                                                                      VkSurfaceKHR)
+import           Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Extent                 (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Memory                 (VkMemoryHeap,
+                                                                      VkMemoryType)
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
 
 -- | > typedef struct VkPhysicalDevice16BitStorageFeatures {
 --   >     VkStructureType sType;

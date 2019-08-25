@@ -134,24 +134,24 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT,
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT)
        where
-import GHC.Ptr                                           (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Debug                  (VkDebugReportObjectTypeEXT (..))
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Enum.ValidationC
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Shader               (VkShaderModuleCreateInfo,
-                                                          VkShaderModuleValidationCacheCreateInfoEXT)
-import Graphics.Vulkan.Types.Struct.Validation
+import           GHC.Ptr                                           (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.Debug                  (VkDebugReportObjectTypeEXT (..))
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.ValidationC
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Shader               (VkShaderModuleCreateInfo,
+                                                                    VkShaderModuleValidationCacheCreateInfoEXT)
+import           Graphics.Vulkan.Types.Struct.Validation
 
 pattern VkCreateValidationCacheEXT :: CString
 

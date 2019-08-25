@@ -19,28 +19,29 @@ module Graphics.Vulkan.Types.Struct.Image
         VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
         VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
-import Graphics.Vulkan.Types.Bitmasks                (VkImageViewCreateFlags)
-import Graphics.Vulkan.Types.Enum.AccessFlags        (VkAccessFlags)
-import Graphics.Vulkan.Types.Enum.Format             (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image              (VkImageAspectFlagBits,
-                                                      VkImageAspectFlags,
-                                                      VkImageCreateFlags,
-                                                      VkImageLayout,
-                                                      VkImageTiling,
-                                                      VkImageType,
-                                                      VkImageUsageFlags,
-                                                      VkImageViewType)
-import Graphics.Vulkan.Types.Enum.SampleCountFlags   (VkSampleCountFlagBits,
-                                                      VkSampleCountFlags)
-import Graphics.Vulkan.Types.Enum.SharingMode        (VkSharingMode)
-import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import Graphics.Vulkan.Types.Handles                 (VkImage, VkSwapchainKHR)
-import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import Graphics.Vulkan.Types.Struct.Extent           (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Offset           (VkOffset3D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
+import           Graphics.Vulkan.Types.Bitmasks                (VkImageViewCreateFlags)
+import           Graphics.Vulkan.Types.Enum.AccessFlags        (VkAccessFlags)
+import           Graphics.Vulkan.Types.Enum.Format             (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Image              (VkImageAspectFlagBits,
+                                                                VkImageAspectFlags,
+                                                                VkImageCreateFlags,
+                                                                VkImageLayout,
+                                                                VkImageTiling,
+                                                                VkImageType,
+                                                                VkImageUsageFlags,
+                                                                VkImageViewType)
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags   (VkSampleCountFlagBits,
+                                                                VkSampleCountFlags)
+import           Graphics.Vulkan.Types.Enum.SharingMode        (VkSharingMode)
+import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                 (VkImage,
+                                                                VkSwapchainKHR)
+import           Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
+import           Graphics.Vulkan.Types.Struct.Extent           (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Offset           (VkOffset3D)
 
 -- | > typedef struct VkImageBlit {
 --   >     VkImageSubresourceLayers srcSubresource;

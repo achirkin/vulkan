@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SampleLocation
        (VkSampleLocationEXT, VkSampleLocationsInfoEXT) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
-import Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Extent         (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
+import           Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Extent         (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
 
 -- | > typedef struct VkSampleLocationEXT {
 --   >     float                            x;

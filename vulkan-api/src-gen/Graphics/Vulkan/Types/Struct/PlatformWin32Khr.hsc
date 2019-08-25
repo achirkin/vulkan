@@ -16,25 +16,27 @@ module Graphics.Vulkan.Types.Struct.PlatformWin32Khr
         VkWin32KeyedMutexAcquireReleaseInfoKHR,
         VkWin32KeyedMutexAcquireReleaseInfoNV, VkWin32SurfaceCreateInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                 (VkWin32SurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagsNV,
-                                                       VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import Graphics.Vulkan.Types.Handles                  (VkDeviceMemory, VkFence,
-                                                       VkSemaphore)
-import Graphics.Vulkan.Types.Include                  (DWORD, HANDLE, HINSTANCE,
-                                                       HWND, LPCWSTR,
-                                                       SECURITY_ATTRIBUTES)
-import Graphics.Vulkan.Types.Struct.Fence             (VkFenceCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
-import Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
-import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks                 (VkWin32SurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
+                                                                 VkExternalMemoryHandleTypeFlagBits,
+                                                                 VkExternalMemoryHandleTypeFlagsNV,
+                                                                 VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
+import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                  (VkDeviceMemory,
+                                                                 VkFence,
+                                                                 VkSemaphore)
+import           Graphics.Vulkan.Types.Include                  (DWORD, HANDLE,
+                                                                 HINSTANCE,
+                                                                 HWND, LPCWSTR,
+                                                                 SECURITY_ATTRIBUTES)
+import           Graphics.Vulkan.Types.Struct.Fence             (VkFenceCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
+import           Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
 
 -- | > typedef struct VkD3D12FenceSubmitInfoKHR {
 --   >     VkStructureType sType;

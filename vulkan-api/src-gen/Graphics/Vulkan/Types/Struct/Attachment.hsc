@@ -9,15 +9,15 @@ module Graphics.Vulkan.Types.Struct.Attachment
        (VkAttachmentDescription, VkAttachmentReference,
         VkAttachmentSampleLocationsEXT)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Attachment       (VkAttachmentDescriptionFlags,
-                                                    VkAttachmentLoadOp,
-                                                    VkAttachmentStoreOp)
-import Graphics.Vulkan.Types.Enum.Format           (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image            (VkImageLayout)
-import Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
-import Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Attachment       (VkAttachmentDescriptionFlags,
+                                                              VkAttachmentLoadOp,
+                                                              VkAttachmentStoreOp)
+import           Graphics.Vulkan.Types.Enum.Format           (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Image            (VkImageLayout)
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
+import           Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
 
 -- | > typedef struct VkAttachmentDescription {
 --   >     VkAttachmentDescriptionFlags flags;

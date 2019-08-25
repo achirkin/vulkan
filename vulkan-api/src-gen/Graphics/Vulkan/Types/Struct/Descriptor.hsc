@@ -19,23 +19,26 @@ module Graphics.Vulkan.Types.Struct.Descriptor
         VkDescriptorUpdateTemplateEntry,
         VkDescriptorUpdateTemplateEntryKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32, VkDeviceSize)
-import Graphics.Vulkan.Types.Bitmasks           (VkDescriptorUpdateTemplateCreateFlags)
-import Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlagsEXT,
-                                                 VkDescriptorPoolCreateFlags,
-                                                 VkDescriptorSetLayoutCreateFlags,
-                                                 VkDescriptorType,
-                                                 VkDescriptorUpdateTemplateType)
-import Graphics.Vulkan.Types.Enum.Image         (VkImageLayout)
-import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineBindPoint)
-import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDescriptorPool,
-                                                 VkDescriptorSetLayout,
-                                                 VkImageView, VkPipelineLayout,
-                                                 VkSampler)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32,
+                                                           VkDeviceSize)
+import           Graphics.Vulkan.Types.Bitmasks           (VkDescriptorUpdateTemplateCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlagsEXT,
+                                                           VkDescriptorPoolCreateFlags,
+                                                           VkDescriptorSetLayoutCreateFlags,
+                                                           VkDescriptorType,
+                                                           VkDescriptorUpdateTemplateType)
+import           Graphics.Vulkan.Types.Enum.Image         (VkImageLayout)
+import           Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineBindPoint)
+import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer,
+                                                           VkDescriptorPool,
+                                                           VkDescriptorSetLayout,
+                                                           VkImageView,
+                                                           VkPipelineLayout,
+                                                           VkSampler)
 
 -- | > typedef struct VkDescriptorBufferInfo {
 --   >     VkBuffer               buffer;

@@ -711,96 +711,96 @@ module Graphics.Vulkan.Core_1_1
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES)
        where
-import GHC.Ptr                                                     (Ptr (..))
-import Graphics.Vulkan.Constants                                   (pattern VK_LUID_SIZE,
-                                                                    pattern VK_MAX_DEVICE_GROUP_SIZE,
-                                                                    pattern VK_QUEUE_FAMILY_EXTERNAL)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.AccessFlags
-import Graphics.Vulkan.Types.Enum.Attachment
-import Graphics.Vulkan.Types.Enum.BorderColor
-import Graphics.Vulkan.Types.Enum.Buffer
-import Graphics.Vulkan.Types.Enum.ChromaLocation
-import Graphics.Vulkan.Types.Enum.Command
-import Graphics.Vulkan.Types.Enum.CompareOp
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
-import Graphics.Vulkan.Types.Enum.DependencyFlags
-import Graphics.Vulkan.Types.Enum.Descriptor
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.External
-import Graphics.Vulkan.Types.Enum.Fence
-import Graphics.Vulkan.Types.Enum.Filter
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Memory
-import Graphics.Vulkan.Types.Enum.Object                           (VkObjectType (..))
-import Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.Pipeline
-import Graphics.Vulkan.Types.Enum.PointClippingBehavior
-import Graphics.Vulkan.Types.Enum.Query
-import Graphics.Vulkan.Types.Enum.Queue
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.Sampler
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.Sparse
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags
-import Graphics.Vulkan.Types.Enum.Subpass
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
-                                                                    VkAttachmentReference)
-import Graphics.Vulkan.Types.Struct.Bind
-import Graphics.Vulkan.Types.Struct.Buffer
-import Graphics.Vulkan.Types.Struct.Clear                          (VkClearColorValue,
-                                                                    VkClearDepthStencilValue,
-                                                                    VkClearValue)
-import Graphics.Vulkan.Types.Struct.Command                        (VkCommandBufferBeginInfo,
-                                                                    VkCommandBufferInheritanceInfo)
-import Graphics.Vulkan.Types.Struct.ComponentMapping
-import Graphics.Vulkan.Types.Struct.Descriptor
-import Graphics.Vulkan.Types.Struct.Device
-import Graphics.Vulkan.Types.Struct.Export                         (VkExportFenceCreateInfo,
-                                                                    VkExportMemoryAllocateInfo,
-                                                                    VkExportSemaphoreCreateInfo)
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.External
-import Graphics.Vulkan.Types.Struct.Fence                          (VkFenceCreateInfo)
-import Graphics.Vulkan.Types.Struct.FormatProperties
-import Graphics.Vulkan.Types.Struct.Image
-import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
-import Graphics.Vulkan.Types.Struct.Memory
-import Graphics.Vulkan.Types.Struct.Offset                         (VkOffset2D,
-                                                                    VkOffset3D)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-import Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineTessellationDomainOriginStateCreateInfo,
-                                                                    VkPipelineTessellationStateCreateInfo)
-import Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo            (VkProtectedSubmitInfo)
-import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
-import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
-import Graphics.Vulkan.Types.Struct.RenderPass                     (VkRenderPassBeginInfo,
-                                                                    VkRenderPassCreateInfo,
-                                                                    VkRenderPassInputAttachmentAspectCreateInfo,
-                                                                    VkRenderPassMultiviewCreateInfo)
-import Graphics.Vulkan.Types.Struct.Sampler
-import Graphics.Vulkan.Types.Struct.Semaphore                      (VkSemaphoreCreateInfo)
-import Graphics.Vulkan.Types.Struct.Sparse
-import Graphics.Vulkan.Types.Struct.SubmitInfo                     (VkSubmitInfo)
-import Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
-                                                                    VkSubpassDescription)
-import System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import           GHC.Ptr                                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                                   (pattern VK_LUID_SIZE,
+                                                                              pattern VK_MAX_DEVICE_GROUP_SIZE,
+                                                                              pattern VK_QUEUE_FAMILY_EXTERNAL)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.AccessFlags
+import           Graphics.Vulkan.Types.Enum.Attachment
+import           Graphics.Vulkan.Types.Enum.BorderColor
+import           Graphics.Vulkan.Types.Enum.Buffer
+import           Graphics.Vulkan.Types.Enum.ChromaLocation
+import           Graphics.Vulkan.Types.Enum.Command
+import           Graphics.Vulkan.Types.Enum.CompareOp
+import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import           Graphics.Vulkan.Types.Enum.DependencyFlags
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Enum.Filter
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Memory
+import           Graphics.Vulkan.Types.Enum.Object                           (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.PointClippingBehavior
+import           Graphics.Vulkan.Types.Enum.Query
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Sampler
+import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.Sparse
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags
+import           Graphics.Vulkan.Types.Enum.Subpass
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.TessellationDomainOrigin
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
+                                                                              VkAttachmentReference)
+import           Graphics.Vulkan.Types.Struct.Bind
+import           Graphics.Vulkan.Types.Struct.Buffer
+import           Graphics.Vulkan.Types.Struct.Clear                          (VkClearColorValue,
+                                                                              VkClearDepthStencilValue,
+                                                                              VkClearValue)
+import           Graphics.Vulkan.Types.Struct.Command                        (VkCommandBufferBeginInfo,
+                                                                              VkCommandBufferInheritanceInfo)
+import           Graphics.Vulkan.Types.Struct.ComponentMapping
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.Export                         (VkExportFenceCreateInfo,
+                                                                              VkExportMemoryAllocateInfo,
+                                                                              VkExportSemaphoreCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.External
+import           Graphics.Vulkan.Types.Struct.Fence                          (VkFenceCreateInfo)
+import           Graphics.Vulkan.Types.Struct.FormatProperties
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
+import           Graphics.Vulkan.Types.Struct.Memory
+import           Graphics.Vulkan.Types.Struct.Offset                         (VkOffset2D,
+                                                                              VkOffset3D)
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineTessellationDomainOriginStateCreateInfo,
+                                                                              VkPipelineTessellationStateCreateInfo)
+import           Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo            (VkProtectedSubmitInfo)
+import           Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import           Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.RenderPass                     (VkRenderPassBeginInfo,
+                                                                              VkRenderPassCreateInfo,
+                                                                              VkRenderPassInputAttachmentAspectCreateInfo,
+                                                                              VkRenderPassMultiviewCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Sampler
+import           Graphics.Vulkan.Types.Struct.Semaphore                      (VkSemaphoreCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Sparse
+import           Graphics.Vulkan.Types.Struct.SubmitInfo                     (VkSubmitInfo)
+import           Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
+                                                                              VkSubpassDescription)
+import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 pattern VkEnumerateInstanceVersion :: CString
 

@@ -7,8 +7,8 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.RefreshCycleDurationGOOGLE
        (VkRefreshCycleDurationGOOGLE) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkRefreshCycleDurationGOOGLE {
 --   >     uint64_t                         refreshDuration;

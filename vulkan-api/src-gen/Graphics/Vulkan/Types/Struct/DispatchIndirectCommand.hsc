@@ -7,8 +7,8 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DispatchIndirectCommand
        (VkDispatchIndirectCommand) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkDispatchIndirectCommand {
 --   >     uint32_t               x;

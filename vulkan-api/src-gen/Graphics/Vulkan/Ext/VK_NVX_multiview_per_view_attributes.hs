@@ -38,17 +38,18 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX,
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX)
        where
-import GHC.Ptr                                       (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.Subpass            (VkSubpassDescriptionBitmask (..))
-import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits, VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
-                                                      VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceSparseProperties)
+import           GHC.Ptr                                       (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Subpass            (VkSubpassDescriptionBitmask (..))
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
+                                                                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
+                                                                VkPhysicalDeviceProperties,
+                                                                VkPhysicalDeviceProperties2,
+                                                                VkPhysicalDeviceSparseProperties)
 
 pattern VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION ::
         (Num a, Eq a) => a

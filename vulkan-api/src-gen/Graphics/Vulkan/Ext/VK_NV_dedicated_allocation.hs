@@ -32,22 +32,22 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV)
        where
-import GHC.Ptr                                          (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Buffer
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Buffer              (VkBufferCreateInfo)
-import Graphics.Vulkan.Types.Struct.DedicatedAllocation (VkDedicatedAllocationBufferCreateInfoNV,
-                                                         VkDedicatedAllocationImageCreateInfoNV,
-                                                         VkDedicatedAllocationMemoryAllocateInfoNV)
-import Graphics.Vulkan.Types.Struct.Extent              (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image               (VkImageCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory              (VkMemoryAllocateInfo)
+import           GHC.Ptr                                          (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Buffer
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Buffer              (VkBufferCreateInfo)
+import           Graphics.Vulkan.Types.Struct.DedicatedAllocation (VkDedicatedAllocationBufferCreateInfoNV,
+                                                                   VkDedicatedAllocationImageCreateInfoNV,
+                                                                   VkDedicatedAllocationMemoryAllocateInfoNV)
+import           Graphics.Vulkan.Types.Struct.Extent              (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Image               (VkImageCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Memory              (VkMemoryAllocateInfo)
 
 pattern VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION :: (Num a, Eq a) =>
         a

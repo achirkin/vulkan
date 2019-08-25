@@ -877,113 +877,113 @@ module Graphics.Vulkan.Core_1_0
         VkObjectEntryUsageBitmaskNVX(..), VkObjectType(..),
         VkObjectEntryUsageFlagBitsNVX(), VkObjectEntryUsageFlagsNVX())
        where
-import GHC.Ptr                                                (Ptr (..))
-import Graphics.Vulkan.Constants                              (pattern VK_ATTACHMENT_UNUSED,
-                                                               pattern VK_FALSE,
-                                                               pattern VK_LOD_CLAMP_NONE,
-                                                               pattern VK_QUEUE_FAMILY_IGNORED,
-                                                               pattern VK_REMAINING_ARRAY_LAYERS,
-                                                               pattern VK_REMAINING_MIP_LEVELS,
-                                                               pattern VK_SUBPASS_EXTERNAL,
-                                                               pattern VK_TRUE,
-                                                               pattern VK_WHOLE_SIZE)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.AccessFlags
-import Graphics.Vulkan.Types.Enum.Attachment
-import Graphics.Vulkan.Types.Enum.Blend
-import Graphics.Vulkan.Types.Enum.BorderColor
-import Graphics.Vulkan.Types.Enum.Buffer
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.Command
-import Graphics.Vulkan.Types.Enum.CompareOp
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
-import Graphics.Vulkan.Types.Enum.CullModeFlags
-import Graphics.Vulkan.Types.Enum.DependencyFlags
-import Graphics.Vulkan.Types.Enum.Descriptor
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.DynamicState
-import Graphics.Vulkan.Types.Enum.Fence
-import Graphics.Vulkan.Types.Enum.Filter
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.FrontFace
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.IndexType
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.LogicOp
-import Graphics.Vulkan.Types.Enum.Memory
-import Graphics.Vulkan.Types.Enum.Object
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.Pipeline
-import Graphics.Vulkan.Types.Enum.PolygonMode
-import Graphics.Vulkan.Types.Enum.PrimitiveTopology
-import Graphics.Vulkan.Types.Enum.Query
-import Graphics.Vulkan.Types.Enum.Queue
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.Sampler
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.Sparse
-import Graphics.Vulkan.Types.Enum.Stencil
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.Subpass
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Enum.VertexInputRate
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.ApplicationInfo
-import Graphics.Vulkan.Types.Struct.Attachment
-import Graphics.Vulkan.Types.Struct.Base                      (VkBaseInStructure,
-                                                               VkBaseOutStructure)
-import Graphics.Vulkan.Types.Struct.Bind
-import Graphics.Vulkan.Types.Struct.Buffer
-import Graphics.Vulkan.Types.Struct.Clear
-import Graphics.Vulkan.Types.Struct.Command
-import Graphics.Vulkan.Types.Struct.ComponentMapping
-import Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
-import Graphics.Vulkan.Types.Struct.CopyDescriptorSet
-import Graphics.Vulkan.Types.Struct.Descriptor
-import Graphics.Vulkan.Types.Struct.Device
-import Graphics.Vulkan.Types.Struct.DispatchIndirectCommand   (VkDispatchIndirectCommand)
-import Graphics.Vulkan.Types.Struct.DrawInd                   (VkDrawIndexedIndirectCommand,
-                                                               VkDrawIndirectCommand)
-import Graphics.Vulkan.Types.Struct.EventCreateInfo
-import Graphics.Vulkan.Types.Struct.ExtensionProperties
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Fence
-import Graphics.Vulkan.Types.Struct.FormatProperties
-import Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
-import Graphics.Vulkan.Types.Struct.Image
-import Graphics.Vulkan.Types.Struct.InstanceCreateInfo
-import Graphics.Vulkan.Types.Struct.LayerProperties
-import Graphics.Vulkan.Types.Struct.MappedMemoryRange
-import Graphics.Vulkan.Types.Struct.Memory
-import Graphics.Vulkan.Types.Struct.Offset
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-import Graphics.Vulkan.Types.Struct.Pipeline
-import Graphics.Vulkan.Types.Struct.PushConstantRange
-import Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
-import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
-import Graphics.Vulkan.Types.Struct.Rect
-import Graphics.Vulkan.Types.Struct.RenderPass
-import Graphics.Vulkan.Types.Struct.Sampler
-import Graphics.Vulkan.Types.Struct.Semaphore
-import Graphics.Vulkan.Types.Struct.Shader
-import Graphics.Vulkan.Types.Struct.Sparse
-import Graphics.Vulkan.Types.Struct.Specialization
-import Graphics.Vulkan.Types.Struct.StencilOpState
-import Graphics.Vulkan.Types.Struct.SubmitInfo
-import Graphics.Vulkan.Types.Struct.Subpass
-import Graphics.Vulkan.Types.Struct.SubresourceLayout
-import Graphics.Vulkan.Types.Struct.VertexInput
-import Graphics.Vulkan.Types.Struct.Viewport
-import Graphics.Vulkan.Types.Struct.WriteDescriptorSet
-import System.IO.Unsafe                                       (unsafeDupablePerformIO)
+import           GHC.Ptr                                                (Ptr (..))
+import           Graphics.Vulkan.Constants                              (pattern VK_ATTACHMENT_UNUSED,
+                                                                         pattern VK_FALSE,
+                                                                         pattern VK_LOD_CLAMP_NONE,
+                                                                         pattern VK_QUEUE_FAMILY_IGNORED,
+                                                                         pattern VK_REMAINING_ARRAY_LAYERS,
+                                                                         pattern VK_REMAINING_MIP_LEVELS,
+                                                                         pattern VK_SUBPASS_EXTERNAL,
+                                                                         pattern VK_TRUE,
+                                                                         pattern VK_WHOLE_SIZE)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.AccessFlags
+import           Graphics.Vulkan.Types.Enum.Attachment
+import           Graphics.Vulkan.Types.Enum.Blend
+import           Graphics.Vulkan.Types.Enum.BorderColor
+import           Graphics.Vulkan.Types.Enum.Buffer
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.Command
+import           Graphics.Vulkan.Types.Enum.CompareOp
+import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import           Graphics.Vulkan.Types.Enum.CullModeFlags
+import           Graphics.Vulkan.Types.Enum.DependencyFlags
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.DynamicState
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Enum.Filter
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.FrontFace
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.IndexType
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.LogicOp
+import           Graphics.Vulkan.Types.Enum.Memory
+import           Graphics.Vulkan.Types.Enum.Object
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.PolygonMode
+import           Graphics.Vulkan.Types.Enum.PrimitiveTopology
+import           Graphics.Vulkan.Types.Enum.Query
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Sampler
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.Sparse
+import           Graphics.Vulkan.Types.Enum.Stencil
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Subpass
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.VertexInputRate
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.ApplicationInfo
+import           Graphics.Vulkan.Types.Struct.Attachment
+import           Graphics.Vulkan.Types.Struct.Base                      (VkBaseInStructure,
+                                                                         VkBaseOutStructure)
+import           Graphics.Vulkan.Types.Struct.Bind
+import           Graphics.Vulkan.Types.Struct.Buffer
+import           Graphics.Vulkan.Types.Struct.Clear
+import           Graphics.Vulkan.Types.Struct.Command
+import           Graphics.Vulkan.Types.Struct.ComponentMapping
+import           Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
+import           Graphics.Vulkan.Types.Struct.CopyDescriptorSet
+import           Graphics.Vulkan.Types.Struct.Descriptor
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.DispatchIndirectCommand   (VkDispatchIndirectCommand)
+import           Graphics.Vulkan.Types.Struct.DrawInd                   (VkDrawIndexedIndirectCommand,
+                                                                         VkDrawIndirectCommand)
+import           Graphics.Vulkan.Types.Struct.EventCreateInfo
+import           Graphics.Vulkan.Types.Struct.ExtensionProperties
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Fence
+import           Graphics.Vulkan.Types.Struct.FormatProperties
+import           Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo
+import           Graphics.Vulkan.Types.Struct.LayerProperties
+import           Graphics.Vulkan.Types.Struct.MappedMemoryRange
+import           Graphics.Vulkan.Types.Struct.Memory
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.Pipeline
+import           Graphics.Vulkan.Types.Struct.PushConstantRange
+import           Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
+import           Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import           Graphics.Vulkan.Types.Struct.Rect
+import           Graphics.Vulkan.Types.Struct.RenderPass
+import           Graphics.Vulkan.Types.Struct.Sampler
+import           Graphics.Vulkan.Types.Struct.Semaphore
+import           Graphics.Vulkan.Types.Struct.Shader
+import           Graphics.Vulkan.Types.Struct.Sparse
+import           Graphics.Vulkan.Types.Struct.Specialization
+import           Graphics.Vulkan.Types.Struct.StencilOpState
+import           Graphics.Vulkan.Types.Struct.SubmitInfo
+import           Graphics.Vulkan.Types.Struct.Subpass
+import           Graphics.Vulkan.Types.Struct.SubresourceLayout
+import           Graphics.Vulkan.Types.Struct.VertexInput
+import           Graphics.Vulkan.Types.Struct.Viewport
+import           Graphics.Vulkan.Types.Struct.WriteDescriptorSet
+import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 pattern VkCreateInstance :: CString
 

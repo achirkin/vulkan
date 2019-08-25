@@ -174,39 +174,40 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
         pattern VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR)
        where
-import GHC.Ptr                                              (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                    (VkObjectType (..))
-import Graphics.Vulkan.Types.Enum.PresentModeKHR
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Bind                    (VkBindImageMemoryInfo,
-                                                             VkBindImageMemorySwapchainInfoKHR)
-import Graphics.Vulkan.Types.Struct.Device
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
-import Graphics.Vulkan.Types.Struct.Offset
-import Graphics.Vulkan.Types.Struct.Present
-import Graphics.Vulkan.Types.Struct.Rect
-import Graphics.Vulkan.Types.Struct.SwapchainC
-import System.IO.Unsafe                                     (unsafeDupablePerformIO)
+import           GHC.Ptr                                              (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object                    (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.PresentModeKHR
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
+import           Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Bind                    (VkBindImageMemoryInfo,
+                                                                       VkBindImageMemorySwapchainInfoKHR)
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo,
+                                                                       VkImageSwapchainCreateInfoKHR)
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.Present
+import           Graphics.Vulkan.Types.Struct.Rect
+import           Graphics.Vulkan.Types.Struct.SwapchainC
+import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 pattern VkCreateSwapchainKHR :: CString
 

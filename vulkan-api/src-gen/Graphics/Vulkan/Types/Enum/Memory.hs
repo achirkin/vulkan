@@ -25,15 +25,15 @@ module Graphics.Vulkan.Types.Enum.Memory
                                 VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT),
         VkMemoryPropertyFlags, VkMemoryPropertyFlagBits)
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Data.Coerce                     (coerce)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Data.Coerce                     (coerce)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBitsKHR VkFlags
                                       deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)

@@ -10,14 +10,14 @@ module Graphics.Vulkan.Types.Struct.DedicatedAllocation
         VkDedicatedAllocationImageCreateInfoNV,
         VkDedicatedAllocationMemoryAllocateInfoNV)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkImage)
-import Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer, VkImage)
+import           Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
 
 -- | > typedef struct VkDedicatedAllocationBufferCreateInfoNV {
 --   >     VkStructureType sType;

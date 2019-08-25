@@ -34,15 +34,15 @@ module Graphics.Vulkan.Ext.VK_KHR_multiview
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES_KHR,
         pattern VK_DEPENDENCY_VIEW_LOCAL_BIT_KHR)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Core_1_1                    (pattern VK_DEPENDENCY_VIEW_LOCAL_BIT,
-                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
-                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
-                                                    pattern VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDeviceMultiviewFeaturesKHR,
-                                                    VkPhysicalDeviceMultiviewPropertiesKHR)
-import Graphics.Vulkan.Types.Struct.RenderPass     (VkRenderPassMultiviewCreateInfoKHR)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_DEPENDENCY_VIEW_LOCAL_BIT,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
+                                                              pattern VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDeviceMultiviewFeaturesKHR,
+                                                              VkPhysicalDeviceMultiviewPropertiesKHR)
+import           Graphics.Vulkan.Types.Struct.RenderPass     (VkRenderPassMultiviewCreateInfoKHR)
 
 pattern VK_KHR_MULTIVIEW_SPEC_VERSION :: (Num a, Eq a) => a
 

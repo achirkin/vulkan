@@ -7,22 +7,22 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SwapchainC
        (VkSwapchainCounterCreateInfoEXT, VkSwapchainCreateInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes                    (VkBool32)
-import Graphics.Vulkan.Types.Enum.Color                   (VkColorSpaceKHR)
-import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR  (VkCompositeAlphaFlagBitsKHR)
-import Graphics.Vulkan.Types.Enum.Format                  (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image                   (VkImageUsageFlags)
-import Graphics.Vulkan.Types.Enum.PresentModeKHR          (VkPresentModeKHR)
-import Graphics.Vulkan.Types.Enum.SharingMode             (VkSharingMode)
-import Graphics.Vulkan.Types.Enum.StructureType           (VkStructureType)
-import Graphics.Vulkan.Types.Enum.Surface                 (VkSurfaceCounterFlagsEXT,
-                                                           VkSurfaceTransformFlagBitsKHR)
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR (VkSwapchainCreateFlagsKHR)
-import Graphics.Vulkan.Types.Handles                      (VkSurfaceKHR,
-                                                           VkSwapchainKHR)
-import Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes                    (VkBool32)
+import           Graphics.Vulkan.Types.Enum.Color                   (VkColorSpaceKHR)
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR  (VkCompositeAlphaFlagBitsKHR)
+import           Graphics.Vulkan.Types.Enum.Format                  (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Image                   (VkImageUsageFlags)
+import           Graphics.Vulkan.Types.Enum.PresentModeKHR          (VkPresentModeKHR)
+import           Graphics.Vulkan.Types.Enum.SharingMode             (VkSharingMode)
+import           Graphics.Vulkan.Types.Enum.StructureType           (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.Surface                 (VkSurfaceCounterFlagsEXT,
+                                                                     VkSurfaceTransformFlagBitsKHR)
+import           Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR (VkSwapchainCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Handles                      (VkSurfaceKHR,
+                                                                     VkSwapchainKHR)
+import           Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
 
 -- | > typedef struct VkSwapchainCounterCreateInfoEXT {
 --   >     VkStructureType sType;

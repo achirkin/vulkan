@@ -145,23 +145,23 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT,
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT)
        where
-import GHC.Ptr                                           (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Debug
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.ApplicationInfo
-import Graphics.Vulkan.Types.Struct.Debug
-import Graphics.Vulkan.Types.Struct.InstanceCreateInfo
+import           GHC.Ptr                                           (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.Debug
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.ApplicationInfo
+import           Graphics.Vulkan.Types.Struct.Debug
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo
 
 pattern VkCreateDebugReportCallbackEXT :: CString
 

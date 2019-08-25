@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.MappedMemoryRange
        (VkMappedMemoryRange) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkDeviceMemory)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkDeviceMemory)
 
 -- | > typedef struct VkMappedMemoryRange {
 --   >     VkStructureType sType;

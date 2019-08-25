@@ -94,18 +94,18 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         pattern VK_STRUCTURE_TYPE_DISPLAY_PLANE_INFO_2_KHR,
         pattern VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Display
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Display
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Offset
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Display
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Display
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Offset
 
 pattern VkGetPhysicalDeviceDisplayProperties2KHR :: CString
 

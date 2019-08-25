@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
        (VkPhysicalDeviceFeatures) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
 
 -- | > typedef struct VkPhysicalDeviceFeatures {
 --   >     VkBool32               robustBufferAccess;

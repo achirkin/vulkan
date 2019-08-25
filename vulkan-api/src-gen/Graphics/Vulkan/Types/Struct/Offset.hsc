@@ -7,8 +7,8 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Offset (VkOffset2D, VkOffset3D)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkOffset2D {
 --   >     int32_t        x;

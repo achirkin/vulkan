@@ -7,11 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformMirKhr
        (VkMirSurfaceCreateInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkMirSurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Include            (MirConnection, MirSurface)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkMirSurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Include            (MirConnection,
+                                                           MirSurface)
 
 -- | > typedef struct VkMirSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;

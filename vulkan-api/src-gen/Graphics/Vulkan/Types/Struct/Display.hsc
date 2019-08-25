@@ -15,23 +15,24 @@ module Graphics.Vulkan.Types.Struct.Display
         VkDisplayProperties2KHR, VkDisplayPropertiesKHR,
         VkDisplaySurfaceCreateInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import Graphics.Vulkan.Types.Bitmasks           (VkDisplayModeCreateFlagsKHR,
-                                                 VkDisplaySurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.Display       (VkDisplayEventTypeEXT,
-                                                 VkDisplayPlaneAlphaFlagBitsKHR,
-                                                 VkDisplayPlaneAlphaFlagsKHR,
-                                                 VkDisplayPowerStateEXT)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Enum.Surface       (VkSurfaceTransformFlagBitsKHR,
-                                                 VkSurfaceTransformFlagsKHR)
-import Graphics.Vulkan.Types.Handles            (VkDisplayKHR, VkDisplayModeKHR)
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR)
-import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import           Graphics.Vulkan.Types.Bitmasks           (VkDisplayModeCreateFlagsKHR,
+                                                           VkDisplaySurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.Display       (VkDisplayEventTypeEXT,
+                                                           VkDisplayPlaneAlphaFlagBitsKHR,
+                                                           VkDisplayPlaneAlphaFlagsKHR,
+                                                           VkDisplayPowerStateEXT)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.Surface       (VkSurfaceTransformFlagBitsKHR,
+                                                           VkSurfaceTransformFlagsKHR)
+import           Graphics.Vulkan.Types.Handles            (VkDisplayKHR,
+                                                           VkDisplayModeKHR)
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
+import           Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR)
+import           Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
 
 -- | > typedef struct VkDisplayEventInfoEXT {
 --   >     VkStructureType sType;

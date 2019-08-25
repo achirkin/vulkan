@@ -113,18 +113,18 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR)
        where
-import GHC.Ptr                                       (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.External
-import Graphics.Vulkan.Types.Enum.Fence
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Include
-import Graphics.Vulkan.Types.Struct.Fence            (VkFenceCreateInfo)
-import Graphics.Vulkan.Types.Struct.PlatformWin32Khr
+import           GHC.Ptr                                       (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Include
+import           Graphics.Vulkan.Types.Struct.Fence            (VkFenceCreateInfo)
+import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr
 
 pattern VkImportFenceWin32HandleKHR :: CString
 

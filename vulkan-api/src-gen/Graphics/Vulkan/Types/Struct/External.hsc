@@ -19,21 +19,20 @@ module Graphics.Vulkan.Types.Struct.External
         VkExternalMemoryPropertiesKHR, VkExternalSemaphoreProperties,
         VkExternalSemaphorePropertiesKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.External      (VkExternalFenceFeatureFlags,
-                                                 VkExternalFenceHandleTypeFlags,
-                                                 VkExternalMemoryFeatureFlags,
-                                                 VkExternalMemoryFeatureFlagsNV,
-                                                 VkExternalMemoryHandleTypeFlags,
-                                                 VkExternalMemoryHandleTypeFlagsNV,
-                                                 VkExternalSemaphoreFeatureFlags,
-                                                 VkExternalSemaphoreHandleTypeFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo,
-                                                 VkImageFormatProperties,
-                                                 VkImageFormatProperties2)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.External      (VkExternalFenceFeatureFlags,
+                                                           VkExternalFenceHandleTypeFlags,
+                                                           VkExternalMemoryFeatureFlags,
+                                                           VkExternalMemoryFeatureFlagsNV,
+                                                           VkExternalMemoryHandleTypeFlags,
+                                                           VkExternalMemoryHandleTypeFlagsNV,
+                                                           VkExternalSemaphoreFeatureFlags,
+                                                           VkExternalSemaphoreHandleTypeFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Buffer      (VkBufferCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo, VkImageFormatProperties,
+                                                           VkImageFormatProperties2)
 
 -- | > typedef struct VkExternalBufferProperties {
 --   >     VkStructureType sType;

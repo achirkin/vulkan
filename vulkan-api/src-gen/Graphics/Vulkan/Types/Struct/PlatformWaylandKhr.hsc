@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformWaylandKhr
        (VkWaylandSurfaceCreateInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkWaylandSurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Include            (WlDisplay, WlSurface)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkWaylandSurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Include            (WlDisplay, WlSurface)
 
 -- | > typedef struct VkWaylandSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;

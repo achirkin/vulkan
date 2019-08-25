@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo
        (VkProtectedSubmitInfo) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.SubmitInfo  (VkSubmitInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.SubmitInfo  (VkSubmitInfo)
 
 -- | > typedef struct VkProtectedSubmitInfo {
 --   >     VkStructureType sType;

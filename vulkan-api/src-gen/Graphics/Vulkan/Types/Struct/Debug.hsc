@@ -10,13 +10,14 @@ module Graphics.Vulkan.Types.Struct.Debug
         VkDebugMarkerObjectTagInfoEXT, VkDebugReportCallbackCreateInfoEXT,
         VkDebugUtilsObjectTagInfoEXT)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Debug                (VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT)
-import Graphics.Vulkan.Types.Enum.Object               (VkObjectType)
-import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugReportCallbackEXT)
-import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Debug                (VkDebugReportFlagsEXT,
+                                                                  VkDebugReportObjectTypeEXT)
+import           Graphics.Vulkan.Types.Enum.Object               (VkObjectType)
+import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import           Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugReportCallbackEXT)
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 
 -- | > typedef struct VkDebugMarkerMarkerInfoEXT {
 --   >     VkStructureType sType;

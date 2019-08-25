@@ -118,32 +118,32 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         pattern VK_STRUCTURE_TYPE_DISPLAY_EVENT_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_SWAPCHAIN_COUNTER_CREATE_INFO_EXT)
        where
-import GHC.Ptr                                            (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                       (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.Display
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.PresentModeKHR
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Device
-import Graphics.Vulkan.Types.Struct.Display
-import Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.SwapchainC            (VkSwapchainCounterCreateInfoEXT,
-                                                           VkSwapchainCreateInfoKHR)
+import           GHC.Ptr                                            (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                       (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Display
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.PresentModeKHR
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.Surface
+import           Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.Display
+import           Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.SwapchainC            (VkSwapchainCounterCreateInfoEXT,
+                                                                     VkSwapchainCreateInfoKHR)
 
 pattern VkDisplayPowerControlEXT :: CString
 

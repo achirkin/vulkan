@@ -86,24 +86,24 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT)
        where
-import GHC.Ptr                                                     (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT
-import Graphics.Vulkan.Types.Enum.CullModeFlags
-import Graphics.Vulkan.Types.Enum.FrontFace
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.PolygonMode
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.PhysicalDevice                 (VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
-                                                                    VkPhysicalDeviceLimits,
-                                                                    VkPhysicalDeviceProperties,
-                                                                    VkPhysicalDeviceProperties2,
-                                                                    VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineRasterizationConservativeStateCreateInfoEXT,
-                                                                    VkPipelineRasterizationStateCreateInfo)
+import           GHC.Ptr                                                     (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT
+import           Graphics.Vulkan.Types.Enum.CullModeFlags
+import           Graphics.Vulkan.Types.Enum.FrontFace
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.PolygonMode
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice                 (VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+                                                                              VkPhysicalDeviceLimits,
+                                                                              VkPhysicalDeviceProperties,
+                                                                              VkPhysicalDeviceProperties2,
+                                                                              VkPhysicalDeviceSparseProperties)
+import           Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineRasterizationConservativeStateCreateInfoEXT,
+                                                                              VkPipelineRasterizationStateCreateInfo)
 
 pattern VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION ::
         (Num a, Eq a) => a

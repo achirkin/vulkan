@@ -10,20 +10,20 @@ module Graphics.Vulkan.Types.Struct.Buffer
         VkBufferMemoryBarrier, VkBufferMemoryRequirementsInfo2,
         VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import Graphics.Vulkan.Types.Bitmasks           (VkBufferViewCreateFlags)
-import Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
-import Graphics.Vulkan.Types.Enum.Buffer        (VkBufferCreateFlags,
-                                                 VkBufferUsageFlags)
-import Graphics.Vulkan.Types.Enum.Format        (VkFormat)
-import Graphics.Vulkan.Types.Enum.SharingMode   (VkSharingMode)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer)
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresourceLayers)
-import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import           Graphics.Vulkan.Types.Bitmasks           (VkBufferViewCreateFlags)
+import           Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
+import           Graphics.Vulkan.Types.Enum.Buffer        (VkBufferCreateFlags,
+                                                           VkBufferUsageFlags)
+import           Graphics.Vulkan.Types.Enum.Format        (VkFormat)
+import           Graphics.Vulkan.Types.Enum.SharingMode   (VkSharingMode)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer)
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Image       (VkImageSubresourceLayers)
+import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
 
 -- | > typedef struct VkBufferCopy {
 --   >     VkDeviceSize           srcOffset;

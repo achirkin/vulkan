@@ -16,15 +16,15 @@ module Graphics.Vulkan.Types.Enum.Fence
                              VkFenceImportFlagBits, VK_FENCE_IMPORT_TEMPORARY_BIT),
         VkFenceImportFlags, VkFenceImportFlagBits)
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Data.Coerce                     (coerce)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Data.Coerce                     (coerce)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkFenceCreateBitmask (a ::
                                 FlagType) = VkFenceCreateBitmask VkFlags

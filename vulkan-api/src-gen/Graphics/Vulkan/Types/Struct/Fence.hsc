@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Fence
        (VkFenceCreateInfo, VkFenceGetFdInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.External      (VkExternalFenceHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Fence         (VkFenceCreateFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkFence)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.External      (VkExternalFenceHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.Fence         (VkFenceCreateFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkFence)
 
 -- | > typedef struct VkFenceCreateInfo {
 --   >     VkStructureType sType;

@@ -9,9 +9,9 @@ module Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference
        (VkInputAttachmentAspectReference,
         VkInputAttachmentAspectReferenceKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Image (VkImageAspectFlags)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Image (VkImageAspectFlags)
 
 -- | > typedef struct VkInputAttachmentAspectReference {
 --   >     uint32_t                        subpass;

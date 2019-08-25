@@ -35,16 +35,16 @@ module Graphics.Vulkan.Ext.VK_KHR_image_format_list
         pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO_KHR)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Extent         (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image          (VkImageCreateInfo, VkImageFormatListCreateInfoKHR)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Extent         (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Image          (VkImageCreateInfo, VkImageFormatListCreateInfoKHR)
 
 pattern VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION :: (Num a, Eq a) => a
 

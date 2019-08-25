@@ -9,15 +9,15 @@ module Graphics.Vulkan.Types.Struct.Subpass
        (VkSubpassDependency, VkSubpassDescription,
         VkSubpassSampleLocationsEXT)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.AccessFlags      (VkAccessFlags)
-import Graphics.Vulkan.Types.Enum.DependencyFlags  (VkDependencyFlags)
-import Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint,
-                                                    VkPipelineStageFlags)
-import Graphics.Vulkan.Types.Enum.Subpass          (VkSubpassDescriptionFlags)
-import Graphics.Vulkan.Types.Struct.Attachment     (VkAttachmentReference)
-import Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.AccessFlags      (VkAccessFlags)
+import           Graphics.Vulkan.Types.Enum.DependencyFlags  (VkDependencyFlags)
+import           Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint,
+                                                              VkPipelineStageFlags)
+import           Graphics.Vulkan.Types.Enum.Subpass          (VkSubpassDescriptionFlags)
+import           Graphics.Vulkan.Types.Struct.Attachment     (VkAttachmentReference)
+import           Graphics.Vulkan.Types.Struct.SampleLocation (VkSampleLocationsInfoEXT)
 
 -- | > typedef struct VkSubpassDependency {
 --   >     uint32_t               srcSubpass;

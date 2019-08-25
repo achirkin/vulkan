@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PushConstantRange
        (VkPushConstantRange) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Shader (VkShaderStageFlags)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Shader (VkShaderStageFlags)
 
 -- | > typedef struct VkPushConstantRange {
 --   >     VkShaderStageFlags     stageFlags;

@@ -157,56 +157,57 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         pattern VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
         pattern VK_DYNAMIC_STATE_DISCARD_RECTANGLE_EXT)
        where
-import GHC.Ptr                                            (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                       (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Blend
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.CompareOp
-import Graphics.Vulkan.Types.Enum.CullModeFlags
-import Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT
-import Graphics.Vulkan.Types.Enum.DynamicState
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.FrontFace
-import Graphics.Vulkan.Types.Enum.LogicOp
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.Pipeline
-import Graphics.Vulkan.Types.Enum.PolygonMode
-import Graphics.Vulkan.Types.Enum.PrimitiveTopology
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.Stencil
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.VertexInputRate
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Offset
-import Graphics.Vulkan.Types.Struct.PhysicalDevice        (VkPhysicalDeviceDiscardRectanglePropertiesEXT,
-                                                           VkPhysicalDeviceLimits,
-                                                           VkPhysicalDeviceProperties,
-                                                           VkPhysicalDeviceProperties2,
-                                                           VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.Pipeline              (VkGraphicsPipelineCreateInfo,
-                                                           VkPipelineColorBlendAttachmentState,
-                                                           VkPipelineColorBlendStateCreateInfo,
-                                                           VkPipelineDepthStencilStateCreateInfo,
-                                                           VkPipelineDiscardRectangleStateCreateInfoEXT,
-                                                           VkPipelineDynamicStateCreateInfo,
-                                                           VkPipelineInputAssemblyStateCreateInfo,
-                                                           VkPipelineMultisampleStateCreateInfo,
-                                                           VkPipelineRasterizationStateCreateInfo,
-                                                           VkPipelineShaderStageCreateInfo,
-                                                           VkPipelineTessellationStateCreateInfo,
-                                                           VkPipelineVertexInputStateCreateInfo,
-                                                           VkPipelineViewportStateCreateInfo)
-import Graphics.Vulkan.Types.Struct.Rect
-import Graphics.Vulkan.Types.Struct.Specialization        (VkSpecializationInfo, VkSpecializationMapEntry)
-import Graphics.Vulkan.Types.Struct.StencilOpState        (VkStencilOpState)
-import Graphics.Vulkan.Types.Struct.VertexInput           (VkVertexInputAttributeDescription,
-                                                           VkVertexInputBindingDescription)
-import Graphics.Vulkan.Types.Struct.Viewport              (VkViewport)
+import           GHC.Ptr                                            (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                       (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.Blend
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.CompareOp
+import           Graphics.Vulkan.Types.Enum.CullModeFlags
+import           Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT
+import           Graphics.Vulkan.Types.Enum.DynamicState
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.FrontFace
+import           Graphics.Vulkan.Types.Enum.LogicOp
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.PolygonMode
+import           Graphics.Vulkan.Types.Enum.PrimitiveTopology
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.Stencil
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.VertexInputRate
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Offset
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice        (VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+                                                                     VkPhysicalDeviceLimits,
+                                                                     VkPhysicalDeviceProperties,
+                                                                     VkPhysicalDeviceProperties2,
+                                                                     VkPhysicalDeviceSparseProperties)
+import           Graphics.Vulkan.Types.Struct.Pipeline              (VkGraphicsPipelineCreateInfo,
+                                                                     VkPipelineColorBlendAttachmentState,
+                                                                     VkPipelineColorBlendStateCreateInfo,
+                                                                     VkPipelineDepthStencilStateCreateInfo,
+                                                                     VkPipelineDiscardRectangleStateCreateInfoEXT,
+                                                                     VkPipelineDynamicStateCreateInfo,
+                                                                     VkPipelineInputAssemblyStateCreateInfo,
+                                                                     VkPipelineMultisampleStateCreateInfo,
+                                                                     VkPipelineRasterizationStateCreateInfo,
+                                                                     VkPipelineShaderStageCreateInfo,
+                                                                     VkPipelineTessellationStateCreateInfo,
+                                                                     VkPipelineVertexInputStateCreateInfo,
+                                                                     VkPipelineViewportStateCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Rect
+import           Graphics.Vulkan.Types.Struct.Specialization        (VkSpecializationInfo,
+                                                                     VkSpecializationMapEntry)
+import           Graphics.Vulkan.Types.Struct.StencilOpState        (VkStencilOpState)
+import           Graphics.Vulkan.Types.Struct.VertexInput           (VkVertexInputAttributeDescription,
+                                                                     VkVertexInputBindingDescription)
+import           Graphics.Vulkan.Types.Struct.Viewport              (VkViewport)
 
 pattern VkCmdSetDiscardRectangleEXT :: CString
 

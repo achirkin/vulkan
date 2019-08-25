@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
        (VkAcquireNextImageInfoKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkFence, VkSemaphore,
-                                                 VkSwapchainKHR)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkFence, VkSemaphore,
+                                                           VkSwapchainKHR)
 
 -- | > typedef struct VkAcquireNextImageInfoKHR {
 --   >     VkStructureType sType;

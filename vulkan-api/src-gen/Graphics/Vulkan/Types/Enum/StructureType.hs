@@ -55,12 +55,12 @@ module Graphics.Vulkan.Types.Enum.StructureType
                         VK_STRUCTURE_TYPE_LOADER_INSTANCE_CREATE_INFO,
                         VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO))
        where
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (Int32)
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (Int32)
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 -- | Structure type enumerant
 --

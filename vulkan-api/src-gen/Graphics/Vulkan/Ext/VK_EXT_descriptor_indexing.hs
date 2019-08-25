@@ -109,33 +109,34 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT,
         pattern VK_ERROR_FRAGMENTATION_EXT)
        where
-import GHC.Ptr                                             (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Descriptor
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.Result                   (VkResult (..))
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Descriptor             (VkDescriptorSetAllocateInfo,
-                                                            VkDescriptorSetLayoutBinding,
-                                                            VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-                                                            VkDescriptorSetLayoutCreateInfo,
-                                                            VkDescriptorSetLayoutSupport,
-                                                            VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
-                                                            VkDescriptorSetVariableDescriptorCountLayoutSupportEXT)
-import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo, VkDeviceQueueCreateInfo)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
-                                                            VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
-                                                            VkPhysicalDeviceFeatures2,
-                                                            VkPhysicalDeviceLimits,
-                                                            VkPhysicalDeviceProperties,
-                                                            VkPhysicalDeviceProperties2,
-                                                            VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import           GHC.Ptr                                             (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.Descriptor
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.Result                   (VkResult (..))
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Descriptor             (VkDescriptorSetAllocateInfo,
+                                                                      VkDescriptorSetLayoutBinding,
+                                                                      VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+                                                                      VkDescriptorSetLayoutCreateInfo,
+                                                                      VkDescriptorSetLayoutSupport,
+                                                                      VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+                                                                      VkDescriptorSetVariableDescriptorCountLayoutSupportEXT)
+import           Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo,
+                                                                      VkDeviceQueueCreateInfo)
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+                                                                      VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+                                                                      VkPhysicalDeviceFeatures2,
+                                                                      VkPhysicalDeviceLimits,
+                                                                      VkPhysicalDeviceProperties,
+                                                                      VkPhysicalDeviceProperties2,
+                                                                      VkPhysicalDeviceSparseProperties)
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
 
 pattern VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION :: (Num a, Eq a) =>
         a

@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ExtensionProperties
        (VkExtensionProperties) where
-import Graphics.Vulkan.Constants        (VK_MAX_EXTENSION_NAME_SIZE)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Constants        (VK_MAX_EXTENSION_NAME_SIZE)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkExtensionProperties {
 --   >     char            extensionName[VK_MAX_EXTENSION_NAME_SIZE];

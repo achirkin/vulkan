@@ -13,20 +13,20 @@ module Graphics.Vulkan.Types.Struct.RenderPass
         VkRenderPassMultiviewCreateInfoKHR,
         VkRenderPassSampleLocationsBeginInfoEXT)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                              (VkRenderPassCreateFlags)
-import Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
-import Graphics.Vulkan.Types.Handles                               (VkFramebuffer,
-                                                                    VkRenderPass)
-import Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
-                                                                    VkAttachmentSampleLocationsEXT)
-import Graphics.Vulkan.Types.Struct.Clear                          (VkClearValue)
-import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
-import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
-import Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
-                                                                    VkSubpassDescription,
-                                                                    VkSubpassSampleLocationsEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks                              (VkRenderPassCreateFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                               (VkFramebuffer,
+                                                                              VkRenderPass)
+import           Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
+                                                                              VkAttachmentSampleLocationsEXT)
+import           Graphics.Vulkan.Types.Struct.Clear                          (VkClearValue)
+import           Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
+import           Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
+                                                                              VkSubpassDescription,
+                                                                              VkSubpassSampleLocationsEXT)
 
 -- | > typedef struct VkRenderPassBeginInfo {
 --   >     VkStructureType sType;

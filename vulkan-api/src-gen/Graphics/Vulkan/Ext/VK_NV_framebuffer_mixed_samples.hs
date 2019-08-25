@@ -61,15 +61,15 @@ module Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
         pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV)
        where
-import GHC.Ptr                                             (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.CoverageModulationModeNV
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineCoverageModulationStateCreateInfoNV,
-                                                            VkPipelineMultisampleStateCreateInfo)
+import           GHC.Ptr                                             (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.CoverageModulationModeNV
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineCoverageModulationStateCreateInfoNV,
+                                                                      VkPipelineMultisampleStateCreateInfo)
 
 pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION ::
         (Num a, Eq a) => a

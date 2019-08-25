@@ -13,25 +13,25 @@ module Graphics.Vulkan.Types.Struct.Sampler
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
         VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkBool32)
-import Graphics.Vulkan.Types.Bitmasks                (VkSamplerCreateFlags)
-import Graphics.Vulkan.Types.Enum.BorderColor        (VkBorderColor)
-import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
-import Graphics.Vulkan.Types.Enum.CompareOp          (VkCompareOp)
-import Graphics.Vulkan.Types.Enum.Filter             (VkFilter)
-import Graphics.Vulkan.Types.Enum.Format             (VkFormat)
-import Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerAddressMode,
-                                                      VkSamplerMipmapMode,
-                                                      VkSamplerReductionModeEXT,
-                                                      VkSamplerYcbcrModelConversion,
-                                                      VkSamplerYcbcrRange)
-import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import Graphics.Vulkan.Types.Handles                 (VkSamplerYcbcrConversion)
-import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
-                                                      VkImageViewCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes               (VkBool32)
+import           Graphics.Vulkan.Types.Bitmasks                (VkSamplerCreateFlags)
+import           Graphics.Vulkan.Types.Enum.BorderColor        (VkBorderColor)
+import           Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
+import           Graphics.Vulkan.Types.Enum.CompareOp          (VkCompareOp)
+import           Graphics.Vulkan.Types.Enum.Filter             (VkFilter)
+import           Graphics.Vulkan.Types.Enum.Format             (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerAddressMode,
+                                                                VkSamplerMipmapMode,
+                                                                VkSamplerReductionModeEXT,
+                                                                VkSamplerYcbcrModelConversion,
+                                                                VkSamplerYcbcrRange)
+import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                 (VkSamplerYcbcrConversion)
+import           Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
+import           Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
+                                                                VkImageViewCreateInfo)
 
 -- | > typedef struct VkSamplerCreateInfo {
 --   >     VkStructureType sType;

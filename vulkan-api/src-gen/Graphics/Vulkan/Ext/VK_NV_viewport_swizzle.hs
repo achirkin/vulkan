@@ -72,18 +72,19 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV)
        where
-import GHC.Ptr                                                (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
-import Graphics.Vulkan.Types.Struct.Extent                    (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Offset                    (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.Pipeline                  (VkPipelineViewportStateCreateInfo,
-                                                               VkPipelineViewportSwizzleStateCreateInfoNV)
-import Graphics.Vulkan.Types.Struct.Rect                      (VkRect2D)
-import Graphics.Vulkan.Types.Struct.Viewport                  (VkViewport, VkViewportSwizzleNV)
+import           GHC.Ptr                                                (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
+import           Graphics.Vulkan.Types.Struct.Extent                    (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Offset                    (VkOffset2D)
+import           Graphics.Vulkan.Types.Struct.Pipeline                  (VkPipelineViewportStateCreateInfo,
+                                                                         VkPipelineViewportSwizzleStateCreateInfoNV)
+import           Graphics.Vulkan.Types.Struct.Rect                      (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.Viewport                  (VkViewport,
+                                                                         VkViewportSwizzleNV)
 
 pattern VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION :: (Num a, Eq a) => a
 

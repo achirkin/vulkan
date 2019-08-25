@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SharedPresentSurfaceCapabilitiesKHR
        (VkSharedPresentSurfaceCapabilitiesKHR) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Image         (VkImageUsageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Surface     (VkSurfaceCapabilities2KHR)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Image         (VkImageUsageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Surface     (VkSurfaceCapabilities2KHR)
 
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
 --   >     VkStructureType sType;

@@ -9,17 +9,17 @@ module Graphics.Vulkan.Types.Struct.Surface
        (VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2KHR,
         VkSurfaceCapabilitiesKHR, VkSurfaceFormat2KHR, VkSurfaceFormatKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Color                  (VkColorSpaceKHR)
-import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR (VkCompositeAlphaFlagsKHR)
-import Graphics.Vulkan.Types.Enum.Format                 (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image                  (VkImageUsageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType          (VkStructureType)
-import Graphics.Vulkan.Types.Enum.Surface                (VkSurfaceCounterFlagsEXT,
-                                                          VkSurfaceTransformFlagBitsKHR,
-                                                          VkSurfaceTransformFlagsKHR)
-import Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Color                  (VkColorSpaceKHR)
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR (VkCompositeAlphaFlagsKHR)
+import           Graphics.Vulkan.Types.Enum.Format                 (VkFormat)
+import           Graphics.Vulkan.Types.Enum.Image                  (VkImageUsageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType          (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.Surface                (VkSurfaceCounterFlagsEXT,
+                                                                    VkSurfaceTransformFlagBitsKHR,
+                                                                    VkSurfaceTransformFlagsKHR)
+import           Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
 
 -- | > typedef struct VkSurfaceCapabilities2EXT {
 --   >     VkStructureType sType;

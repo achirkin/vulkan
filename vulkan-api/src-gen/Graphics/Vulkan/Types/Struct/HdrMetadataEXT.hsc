@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.HdrMetadataEXT
        (VkHdrMetadataEXT) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.XYColorEXT  (VkXYColorEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.XYColorEXT  (VkXYColorEXT)
 
 -- | > typedef struct VkHdrMetadataEXT {
 --   >     VkStructureType sType;

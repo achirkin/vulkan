@@ -126,26 +126,26 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         pattern VK_OBJECT_TYPE_SURFACE_KHR)
        where
-import GHC.Ptr                                           (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
-import Graphics.Vulkan.Types.Enum.PresentModeKHR
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Surface
-import System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import           GHC.Ptr                                           (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import           Graphics.Vulkan.Types.Enum.PresentModeKHR
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.Surface
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Surface
+import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkDestroySurfaceKHR :: CString
 

@@ -122,30 +122,31 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         pattern VK_BLEND_OP_GREEN_EXT, pattern VK_BLEND_OP_BLUE_EXT,
         pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT)
        where
-import GHC.Ptr                                             (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..))
-import Graphics.Vulkan.Types.Enum.Blend
-import Graphics.Vulkan.Types.Enum.Color
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.LogicOp
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo, VkDeviceQueueCreateInfo)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
-                                                            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
-                                                            VkPhysicalDeviceFeatures2,
-                                                            VkPhysicalDeviceLimits,
-                                                            VkPhysicalDeviceProperties,
-                                                            VkPhysicalDeviceProperties2,
-                                                            VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
-import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineColorBlendAdvancedStateCreateInfoEXT,
-                                                            VkPipelineColorBlendAttachmentState,
-                                                            VkPipelineColorBlendStateCreateInfo)
+import           GHC.Ptr                                             (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.AccessFlags              (VkAccessBitmask (..))
+import           Graphics.Vulkan.Types.Enum.Blend
+import           Graphics.Vulkan.Types.Enum.Color
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.LogicOp
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo,
+                                                                      VkDeviceQueueCreateInfo)
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+                                                                      VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+                                                                      VkPhysicalDeviceFeatures2,
+                                                                      VkPhysicalDeviceLimits,
+                                                                      VkPhysicalDeviceProperties,
+                                                                      VkPhysicalDeviceProperties2,
+                                                                      VkPhysicalDeviceSparseProperties)
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import           Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineColorBlendAdvancedStateCreateInfoEXT,
+                                                                      VkPipelineColorBlendAttachmentState,
+                                                                      VkPipelineColorBlendStateCreateInfo)
 
 pattern VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION ::
         (Num a, Eq a) => a

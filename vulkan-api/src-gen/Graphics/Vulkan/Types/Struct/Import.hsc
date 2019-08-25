@@ -9,16 +9,17 @@ module Graphics.Vulkan.Types.Struct.Import
        (VkImportFenceFdInfoKHR, VkImportMemoryFdInfoKHR,
         VkImportMemoryHostPointerInfoEXT, VkImportSemaphoreFdInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagBits,
-                                                       VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import Graphics.Vulkan.Types.Handles                  (VkFence, VkSemaphore)
-import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
+                                                                 VkExternalMemoryHandleTypeFlagBits,
+                                                                 VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
+import           Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                  (VkFence,
+                                                                 VkSemaphore)
+import           Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
 
 -- | > typedef struct VkImportFenceFdInfoKHR {
 --   >     VkStructureType sType;

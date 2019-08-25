@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Viewport
        (VkViewport, VkViewportSwizzleNV, VkViewportWScalingNV) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
 
 -- | > typedef struct VkViewport {
 --   >     float          x;

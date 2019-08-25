@@ -18,14 +18,15 @@ module Graphics.Vulkan.Types.Enum.Attachment
         VkAttachmentStoreOp(VkAttachmentStoreOp,
                             VK_ATTACHMENT_STORE_OP_STORE, VK_ATTACHMENT_STORE_OP_DONT_CARE))
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType,
+                                                  Int32)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkAttachmentDescriptionBitmask (a ::
                                           FlagType) = VkAttachmentDescriptionBitmask VkFlags

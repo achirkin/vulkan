@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD
        (VkTextureLODGatherFormatPropertiesAMD) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageFormatProperties2)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Image       (VkImageFormatProperties2)
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;

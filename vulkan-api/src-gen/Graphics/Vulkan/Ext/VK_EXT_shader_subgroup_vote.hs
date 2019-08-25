@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
         VK_EXT_SHADER_SUBGROUP_VOTE_EXTENSION_NAME,
         pattern VK_EXT_SHADER_SUBGROUP_VOTE_EXTENSION_NAME)
        where
-import GHC.Ptr                 (Ptr (..))
-import Graphics.Vulkan.Marshal
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION ::
         (Num a, Eq a) => a

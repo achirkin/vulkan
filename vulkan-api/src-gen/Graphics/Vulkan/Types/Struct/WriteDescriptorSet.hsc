@@ -7,13 +7,14 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.WriteDescriptorSet
        (VkWriteDescriptorSet) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorType)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBufferView, VkDescriptorSet)
-import Graphics.Vulkan.Types.Struct.Descriptor  (VkDescriptorBufferInfo,
-                                                 VkDescriptorImageInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorType)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBufferView,
+                                                           VkDescriptorSet)
+import           Graphics.Vulkan.Types.Struct.Descriptor  (VkDescriptorBufferInfo,
+                                                           VkDescriptorImageInfo)
 
 -- | > typedef struct VkWriteDescriptorSet {
 --   >     VkStructureType sType;

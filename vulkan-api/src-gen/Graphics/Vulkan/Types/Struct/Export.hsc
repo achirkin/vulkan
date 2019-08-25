@@ -11,16 +11,16 @@ module Graphics.Vulkan.Types.Struct.Export
         VkExportMemoryAllocateInfoNV, VkExportSemaphoreCreateInfo,
         VkExportSemaphoreCreateInfoKHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.External      (VkExternalFenceHandleTypeFlags,
-                                                 VkExternalMemoryHandleTypeFlags,
-                                                 VkExternalMemoryHandleTypeFlagsNV,
-                                                 VkExternalSemaphoreHandleTypeFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Fence       (VkFenceCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
-import Graphics.Vulkan.Types.Struct.Semaphore   (VkSemaphoreCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.External      (VkExternalFenceHandleTypeFlags,
+                                                           VkExternalMemoryHandleTypeFlags,
+                                                           VkExternalMemoryHandleTypeFlagsNV,
+                                                           VkExternalSemaphoreHandleTypeFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Fence       (VkFenceCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Types.Struct.Semaphore   (VkSemaphoreCreateInfo)
 
 -- | > typedef struct VkExportFenceCreateInfo {
 --   >     VkStructureType sType;

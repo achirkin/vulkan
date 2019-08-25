@@ -25,14 +25,14 @@ module Graphics.Vulkan.Types.Enum.Surface
                                      VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR),
         VkSurfaceTransformFlagsKHR, VkSurfaceTransformFlagBitsKHR)
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSurfaceCounterBitmaskEXT (a ::
                                       FlagType) = VkSurfaceCounterBitmaskEXT VkFlags

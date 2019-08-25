@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.SubresourceLayout
        (VkSubresourceLayout) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
 
 -- | > typedef struct VkSubresourceLayout {
 --   >     VkDeviceSize           offset;

@@ -53,20 +53,20 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_NV)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.External
-import Graphics.Vulkan.Types.Enum.Format
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.SharingMode
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Export         (VkExportMemoryAllocateInfoNV)
-import Graphics.Vulkan.Types.Struct.Extent         (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.External       (VkExternalMemoryImageCreateInfoNV)
-import Graphics.Vulkan.Types.Struct.Image          (VkImageCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory         (VkMemoryAllocateInfo)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Format
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.SharingMode
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Export         (VkExportMemoryAllocateInfoNV)
+import           Graphics.Vulkan.Types.Struct.Extent         (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.External       (VkExternalMemoryImageCreateInfoNV)
+import           Graphics.Vulkan.Types.Struct.Image          (VkImageCreateInfo)
+import           Graphics.Vulkan.Types.Struct.Memory         (VkMemoryAllocateInfo)
 
 pattern VK_NV_EXTERNAL_MEMORY_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -9,12 +9,13 @@ module Graphics.Vulkan.Types.Struct.Present
        (VkPresentInfoKHR, VkPresentRegionKHR, VkPresentRegionsKHR,
         VkPresentTimeGOOGLE, VkPresentTimesInfoGOOGLE)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Result        (VkResult)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkSemaphore, VkSwapchainKHR)
-import Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Result        (VkResult)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkSemaphore,
+                                                           VkSwapchainKHR)
+import           Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
 
 -- | > typedef struct VkPresentInfoKHR {
 --   >     VkStructureType sType;

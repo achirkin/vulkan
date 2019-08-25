@@ -59,11 +59,11 @@ module Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
         VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import GHC.Ptr                         (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc    (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Handles
+import           GHC.Ptr                         (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc    (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Handles
 
 pattern VkCmdDrawIndirectCountKHR :: CString
 

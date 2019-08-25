@@ -23,9 +23,9 @@ module Graphics.Vulkan.Ext.VK_NV_glsl_shader
         pattern VK_NV_GLSL_SHADER_EXTENSION_NAME,
         pattern VK_ERROR_INVALID_SHADER_NV)
        where
-import GHC.Ptr                           (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Enum.Result (VkResult (..))
+import           GHC.Ptr                           (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Enum.Result (VkResult (..))
 
 pattern VK_NV_GLSL_SHADER_SPEC_VERSION :: (Num a, Eq a) => a
 

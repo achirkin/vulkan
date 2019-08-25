@@ -139,27 +139,27 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX,
         pattern VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX)
        where
-import GHC.Ptr                                           (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..))
-import Graphics.Vulkan.Types.Enum.IndexType
-import Graphics.Vulkan.Types.Enum.IndirectCommands
-import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object
-import Graphics.Vulkan.Types.Enum.Pipeline
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Cmd
-import Graphics.Vulkan.Types.Struct.Device
-import Graphics.Vulkan.Types.Struct.IndirectCommands
-import Graphics.Vulkan.Types.Struct.ObjectTable
+import           GHC.Ptr                                           (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..))
+import           Graphics.Vulkan.Types.Enum.IndexType
+import           Graphics.Vulkan.Types.Enum.IndirectCommands
+import           Graphics.Vulkan.Types.Enum.InternalAllocationType
+import           Graphics.Vulkan.Types.Enum.Object
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.Shader
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.Cmd
+import           Graphics.Vulkan.Types.Struct.Device
+import           Graphics.Vulkan.Types.Struct.IndirectCommands
+import           Graphics.Vulkan.Types.Struct.ObjectTable
 
 pattern VkCmdProcessCommandsNVX :: CString
 

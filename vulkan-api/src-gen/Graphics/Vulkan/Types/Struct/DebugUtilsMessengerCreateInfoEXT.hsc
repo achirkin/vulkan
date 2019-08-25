@@ -7,14 +7,14 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCreateInfoEXT
        (VkDebugUtilsMessengerCreateInfoEXT) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                  (VkDebugUtilsMessengerCreateFlagsEXT)
-import Graphics.Vulkan.Types.Enum.Debug                (VkDebugUtilsMessageSeverityFlagsEXT,
-                                                        VkDebugUtilsMessageTypeFlagsEXT)
-import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugUtilsMessengerCallbackEXT)
-import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks                  (VkDebugUtilsMessengerCreateFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.Debug                (VkDebugUtilsMessageSeverityFlagsEXT,
+                                                                  VkDebugUtilsMessageTypeFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import           Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugUtilsMessengerCallbackEXT)
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 
 -- | > typedef struct VkDebugUtilsMessengerCreateInfoEXT {
 --   >     VkStructureType sType;

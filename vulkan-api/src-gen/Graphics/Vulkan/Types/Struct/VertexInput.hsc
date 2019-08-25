@@ -10,10 +10,10 @@ module Graphics.Vulkan.Types.Struct.VertexInput
         VkVertexInputBindingDescription,
         VkVertexInputBindingDivisorDescriptionEXT)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Format          (VkFormat)
-import Graphics.Vulkan.Types.Enum.VertexInputRate (VkVertexInputRate)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Format          (VkFormat)
+import           Graphics.Vulkan.Types.Enum.VertexInputRate (VkVertexInputRate)
 
 -- | > typedef struct VkVertexInputAttributeDescription {
 --   >     uint32_t               location;

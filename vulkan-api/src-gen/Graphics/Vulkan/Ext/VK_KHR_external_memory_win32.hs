@@ -92,17 +92,17 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         pattern VK_STRUCTURE_TYPE_MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_WIN32_HANDLE_INFO_KHR)
        where
-import GHC.Ptr                                       (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.External
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Include                 (HANDLE)
-import Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
-import Graphics.Vulkan.Types.Struct.PlatformWin32Khr
+import           GHC.Ptr                                       (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Include                 (HANDLE)
+import           Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr
 
 pattern VkGetMemoryWin32HandleKHR :: CString
 

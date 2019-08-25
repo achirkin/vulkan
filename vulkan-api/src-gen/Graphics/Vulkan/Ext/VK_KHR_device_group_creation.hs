@@ -117,19 +117,19 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         pattern VK_MAX_DEVICE_GROUP_SIZE_KHR,
         pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Constants                   (pattern VK_MAX_DEVICE_GROUP_SIZE_KHR)
-import Graphics.Vulkan.Core_1_1                    (pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
-                                                    pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
-                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Device         (VkDeviceGroupDeviceCreateInfoKHR)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Constants                   (pattern VK_MAX_DEVICE_GROUP_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
+                                                              pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
+                                                              pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Device         (VkDeviceGroupDeviceCreateInfoKHR)
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice
 
 pattern VkEnumeratePhysicalDeviceGroupsKHR :: CString
 

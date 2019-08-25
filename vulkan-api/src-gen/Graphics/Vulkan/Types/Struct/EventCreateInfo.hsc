@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.EventCreateInfo
        (VkEventCreateInfo) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkEventCreateFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkEventCreateFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 
 -- | > typedef struct VkEventCreateInfo {
 --   >     VkStructureType sType;

@@ -12,24 +12,23 @@ module Graphics.Vulkan.Types.Struct.PlatformAndroidKhr
         VkExternalFormatANDROID, VkImportAndroidHardwareBufferInfoANDROID,
         VkMemoryGetAndroidHardwareBufferInfoANDROID)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
-import Graphics.Vulkan.Types.Bitmasks                (VkAndroidSurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Defines                 (AHardwareBuffer,
-                                                      ANativeWindow)
-import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
-import Graphics.Vulkan.Types.Enum.Format             (VkFormat,
-                                                      VkFormatFeatureFlags)
-import Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerYcbcrModelConversion,
-                                                      VkSamplerYcbcrRange)
-import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import Graphics.Vulkan.Types.Handles                 (VkDeviceMemory)
-import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import Graphics.Vulkan.Types.Struct.Image            (VkImageCreateInfo,
-                                                      VkImageFormatProperties2)
-import Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
-import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerYcbcrConversionCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
+import           Graphics.Vulkan.Types.Bitmasks                (VkAndroidSurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Defines                 (AHardwareBuffer,
+                                                                ANativeWindow)
+import           Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
+import           Graphics.Vulkan.Types.Enum.Format             (VkFormat, VkFormatFeatureFlags)
+import           Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerYcbcrModelConversion,
+                                                                VkSamplerYcbcrRange)
+import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                 (VkDeviceMemory)
+import           Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
+import           Graphics.Vulkan.Types.Struct.Image            (VkImageCreateInfo,
+                                                                VkImageFormatProperties2)
+import           Graphics.Vulkan.Types.Struct.Memory           (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerYcbcrConversionCreateInfo)
 
 -- | > typedef struct VkAndroidHardwareBufferFormatPropertiesANDROID {
 --   >     VkStructureType sType;

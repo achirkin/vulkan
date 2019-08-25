@@ -11,15 +11,16 @@ module Graphics.Vulkan.Types.Struct.ObjectTable
         VkObjectTablePipelineEntryNVX, VkObjectTablePushConstantEntryNVX,
         VkObjectTableVertexBufferEntryNVX)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.IndexType     (VkIndexType)
-import Graphics.Vulkan.Types.Enum.Object        (VkObjectEntryTypeNVX,
-                                                 VkObjectEntryUsageFlagsNVX)
-import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDescriptorSet,
-                                                 VkPipeline, VkPipelineLayout)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.IndexType     (VkIndexType)
+import           Graphics.Vulkan.Types.Enum.Object        (VkObjectEntryTypeNVX, VkObjectEntryUsageFlagsNVX)
+import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer,
+                                                           VkDescriptorSet,
+                                                           VkPipeline,
+                                                           VkPipelineLayout)
 
 -- | > typedef struct VkObjectTableCreateInfoNVX {
 --   >     VkStructureType sType;

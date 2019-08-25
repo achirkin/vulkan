@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
         VK_EXT_SHADER_VIEWPORT_INDEX_LAYER_EXTENSION_NAME,
         pattern VK_EXT_SHADER_VIEWPORT_INDEX_LAYER_EXTENSION_NAME)
        where
-import GHC.Ptr                 (Ptr (..))
-import Graphics.Vulkan.Marshal
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION ::
         (Num a, Eq a) => a

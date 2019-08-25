@@ -30,10 +30,10 @@ module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
         pattern VK_KHR_16BIT_STORAGE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDevice16BitStorageFeaturesKHR)
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDevice16BitStorageFeaturesKHR)
 
 pattern VK_KHR_16BIT_STORAGE_SPEC_VERSION :: (Num a, Eq a) => a
 

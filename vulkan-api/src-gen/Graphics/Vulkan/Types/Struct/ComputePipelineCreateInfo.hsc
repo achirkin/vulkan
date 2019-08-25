@@ -7,12 +7,13 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
        (VkComputePipelineCreateInfo) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineCreateFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkPipeline, VkPipelineLayout)
-import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineCreateFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkPipeline,
+                                                           VkPipelineLayout)
+import           Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo)
 
 -- | > typedef struct VkComputePipelineCreateInfo {
 --   >     VkStructureType sType;

@@ -18,14 +18,15 @@ module Graphics.Vulkan.Types.Enum.Queue
                                  VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT,
                                  VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT))
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType,
+                                                  Int32)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkQueueBitmask (a :: FlagType) = VkQueueBitmask VkFlags
                                          deriving (Eq, Ord, Storable)

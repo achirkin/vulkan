@@ -9,11 +9,11 @@ module Graphics.Vulkan.Types.Struct.QueueFamilyProperties
        (VkQueueFamilyProperties, VkQueueFamilyProperties2,
         VkQueueFamilyProperties2KHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Queue         (VkQueueFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Queue         (VkQueueFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
 
 -- | > typedef struct VkQueueFamilyProperties {
 --   >     VkQueueFlags           queueFlags;

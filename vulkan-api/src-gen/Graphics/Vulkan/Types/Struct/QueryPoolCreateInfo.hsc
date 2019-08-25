@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
        (VkQueryPoolCreateInfo) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkQueryPoolCreateFlags)
-import Graphics.Vulkan.Types.Enum.Query         (VkQueryPipelineStatisticFlags,
-                                                 VkQueryType)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkQueryPoolCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Query         (VkQueryPipelineStatisticFlags,
+                                                           VkQueryType)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 
 -- | > typedef struct VkQueryPoolCreateInfo {
 --   >     VkStructureType sType;

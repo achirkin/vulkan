@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Validation
        (VkValidationCacheCreateInfoEXT, VkValidationFlagsEXT) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                  (VkValidationCacheCreateFlagsEXT)
-import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import Graphics.Vulkan.Types.Enum.ValidationC          (VkValidationCheckEXT)
-import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks                  (VkValidationCacheCreateFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.ValidationC          (VkValidationCheckEXT)
+import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 
 -- | > typedef struct VkValidationCacheCreateInfoEXT {
 --   >     VkStructureType sType;

@@ -7,10 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PlatformIosMvk
        (VkIOSSurfaceCreateInfoMVK) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkIOSSurfaceCreateFlagsMVK)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkIOSSurfaceCreateFlagsMVK)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 
 -- | > typedef struct VkIOSSurfaceCreateInfoMVK {
 --   >     VkStructureType sType;

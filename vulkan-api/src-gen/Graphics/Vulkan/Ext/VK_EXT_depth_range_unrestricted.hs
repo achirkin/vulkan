@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_depth_range_unrestricted
         VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME,
         pattern VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME)
        where
-import GHC.Ptr                 (Ptr (..))
-import Graphics.Vulkan.Marshal
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION ::
         (Num a, Eq a) => a

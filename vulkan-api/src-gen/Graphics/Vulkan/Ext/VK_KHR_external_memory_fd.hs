@@ -102,16 +102,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         pattern VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.External
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Import      (VkImportMemoryFdInfoKHR)
-import Graphics.Vulkan.Types.Struct.Memory
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.External
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Import      (VkImportMemoryFdInfoKHR)
+import           Graphics.Vulkan.Types.Struct.Memory
 
 pattern VkGetMemoryFdKHR :: CString
 

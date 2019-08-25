@@ -30,13 +30,13 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV)
        where
-import GHC.Ptr                                       (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Pipeline
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.PlatformWin32Khr (VkWin32KeyedMutexAcquireReleaseInfoNV)
-import Graphics.Vulkan.Types.Struct.SubmitInfo       (VkSubmitInfo)
+import           GHC.Ptr                                       (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Pipeline
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.PlatformWin32Khr (VkWin32KeyedMutexAcquireReleaseInfoNV)
+import           Graphics.Vulkan.Types.Struct.SubmitInfo       (VkSubmitInfo)
 
 pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION :: (Num a, Eq a) => a
 

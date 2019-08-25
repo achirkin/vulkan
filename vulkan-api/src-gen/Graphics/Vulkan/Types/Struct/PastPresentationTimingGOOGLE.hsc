@@ -7,8 +7,8 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.PastPresentationTimingGOOGLE
        (VkPastPresentationTimingGOOGLE) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkPastPresentationTimingGOOGLE {
 --   >     uint32_t                         presentID;

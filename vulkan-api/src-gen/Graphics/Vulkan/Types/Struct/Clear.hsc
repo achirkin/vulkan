@@ -9,10 +9,10 @@ module Graphics.Vulkan.Types.Struct.Clear
        (VkClearAttachment, VkClearColorValue, VkClearDepthStencilValue,
         VkClearRect, VkClearValue)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Image  (VkImageAspectFlags)
-import Graphics.Vulkan.Types.Struct.Rect (VkRect2D)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Image  (VkImageAspectFlags)
+import           Graphics.Vulkan.Types.Struct.Rect (VkRect2D)
 
 -- | > typedef struct VkClearAttachment {
 --   >     VkImageAspectFlags     aspectMask;

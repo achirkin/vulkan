@@ -82,14 +82,14 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import Graphics.Vulkan.Types.Enum.Debug
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Debug
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.Debug
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Debug
 
 pattern VkDebugMarkerSetObjectTagEXT :: CString
 

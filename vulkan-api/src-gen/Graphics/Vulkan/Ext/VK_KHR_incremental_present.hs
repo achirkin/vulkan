@@ -31,16 +31,16 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR,
-                                                 VkPresentRegionKHR,
-                                                 VkPresentRegionsKHR)
-import Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
+import           Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR,
+                                                           VkPresentRegionKHR,
+                                                           VkPresentRegionsKHR)
+import           Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
 
 pattern VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION :: (Num a, Eq a) =>
         a

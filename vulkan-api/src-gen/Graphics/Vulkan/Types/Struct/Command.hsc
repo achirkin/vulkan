@@ -9,17 +9,16 @@ module Graphics.Vulkan.Types.Struct.Command
        (VkCommandBufferAllocateInfo, VkCommandBufferBeginInfo,
         VkCommandBufferInheritanceInfo, VkCommandPoolCreateInfo)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32)
-import Graphics.Vulkan.Types.Enum.Command       (VkCommandBufferLevel,
-                                                 VkCommandBufferUsageFlags,
-                                                 VkCommandPoolCreateFlags)
-import Graphics.Vulkan.Types.Enum.Query         (VkQueryControlFlags,
-                                                 VkQueryPipelineStatisticFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkCommandPool, VkFramebuffer,
-                                                 VkRenderPass)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32)
+import           Graphics.Vulkan.Types.Enum.Command       (VkCommandBufferLevel, VkCommandBufferUsageFlags,
+                                                           VkCommandPoolCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Query         (VkQueryControlFlags, VkQueryPipelineStatisticFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkCommandPool,
+                                                           VkFramebuffer,
+                                                           VkRenderPass)
 
 -- | > typedef struct VkCommandBufferAllocateInfo {
 --   >     VkStructureType sType;

@@ -7,12 +7,12 @@ module Graphics.Vulkan.Types.Enum.VertexInputRate
        (VkVertexInputRate(VkVertexInputRate, VK_VERTEX_INPUT_RATE_VERTEX,
                           VK_VERTEX_INPUT_RATE_INSTANCE))
        where
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (Int32)
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (Int32)
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

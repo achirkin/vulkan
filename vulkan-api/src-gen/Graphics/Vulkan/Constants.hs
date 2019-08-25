@@ -24,7 +24,7 @@ module Graphics.Vulkan.Constants
         pattern VK_MAX_DEVICE_GROUP_SIZE,
         pattern VK_MAX_DEVICE_GROUP_SIZE_KHR)
        where
-import Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal
 
 pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE :: (Num a, Eq a) => a
 

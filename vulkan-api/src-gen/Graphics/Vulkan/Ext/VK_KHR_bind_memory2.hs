@@ -69,17 +69,17 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR,
         pattern VK_IMAGE_CREATE_ALIAS_BIT_KHR)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Core_1_1                 (pattern VK_IMAGE_CREATE_ALIAS_BIT,
-                                                 pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
-                                                 pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Bind
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                 (pattern VK_IMAGE_CREATE_ALIAS_BIT,
+                                                           pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
+                                                           pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Result
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Bind
 
 pattern VkBindBufferMemory2KHR :: CString
 

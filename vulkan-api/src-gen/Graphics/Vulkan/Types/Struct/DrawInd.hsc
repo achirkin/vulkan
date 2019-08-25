@@ -7,8 +7,8 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DrawInd
        (VkDrawIndexedIndirectCommand, VkDrawIndirectCommand) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkDrawIndexedIndirectCommand {
 --   >     uint32_t               indexCount;

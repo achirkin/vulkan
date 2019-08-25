@@ -8,10 +8,10 @@
 module Graphics.Vulkan.Types.Struct.FormatProperties
        (VkFormatProperties, VkFormatProperties2, VkFormatProperties2KHR)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Format        (VkFormatFeatureFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.Format        (VkFormatFeatureFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 
 -- | > typedef struct VkFormatProperties {
 --   >     VkFormatFeatureFlags   linearTilingFeatures;

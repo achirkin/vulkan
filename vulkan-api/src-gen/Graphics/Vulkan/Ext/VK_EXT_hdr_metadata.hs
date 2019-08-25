@@ -61,13 +61,13 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         pattern VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_HDR_METADATA_EXT)
        where
-import GHC.Ptr                                     (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.HdrMetadataEXT
-import Graphics.Vulkan.Types.Struct.XYColorEXT
+import           GHC.Ptr                                     (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.HdrMetadataEXT
+import           Graphics.Vulkan.Types.Struct.XYColorEXT
 
 pattern VkSetHdrMetadataEXT :: CString
 

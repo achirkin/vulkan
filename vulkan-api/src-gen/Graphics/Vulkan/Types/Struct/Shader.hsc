@@ -10,12 +10,12 @@ module Graphics.Vulkan.Types.Struct.Shader
         VkShaderModuleValidationCacheCreateInfoEXT,
         VkShaderResourceUsageAMD, VkShaderStatisticsInfoAMD)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkShaderModuleCreateFlags)
-import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks           (VkShaderModuleCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
 
 -- | > typedef struct VkShaderModuleCreateInfo {
 --   >     VkStructureType sType;

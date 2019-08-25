@@ -7,13 +7,13 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.AllocationCallbacks
        (VkAllocationCallbacks) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
-                                           PFN_vkFreeFunction,
-                                           PFN_vkInternalAllocationNotification,
-                                           PFN_vkInternalFreeNotification,
-                                           PFN_vkReallocationFunction)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
+                                                     PFN_vkFreeFunction,
+                                                     PFN_vkInternalAllocationNotification,
+                                                     PFN_vkInternalFreeNotification,
+                                                     PFN_vkReallocationFunction)
 
 -- | > typedef struct VkAllocationCallbacks {
 --   >     void*           pUserData;

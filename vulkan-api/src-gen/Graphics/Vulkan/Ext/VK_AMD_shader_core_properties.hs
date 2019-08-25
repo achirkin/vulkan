@@ -36,17 +36,17 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
         pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD)
        where
-import GHC.Ptr                                       (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
-                                                      VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceShaderCorePropertiesAMD,
-                                                      VkPhysicalDeviceSparseProperties)
+import           GHC.Ptr                                       (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
+                                                                VkPhysicalDeviceProperties,
+                                                                VkPhysicalDeviceProperties2,
+                                                                VkPhysicalDeviceShaderCorePropertiesAMD,
+                                                                VkPhysicalDeviceSparseProperties)
 
 pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION ::
         (Num a, Eq a) => a

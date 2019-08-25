@@ -7,9 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.ComponentMapping
        (VkComponentMapping) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle (VkComponentSwizzle)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Enum.ComponentSwizzle (VkComponentSwizzle)
 
 -- | > typedef struct VkComponentMapping {
 --   >     VkComponentSwizzle r;

@@ -78,12 +78,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO_KHR,
         pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR)
        where
-import GHC.Ptr                             (Ptr (..))
-import Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Fence
-import Graphics.Vulkan.Types.Struct.Export (VkExportFenceCreateInfoKHR)
+import           GHC.Ptr                             (Ptr (..))
+import           Graphics.Vulkan.Core_1_1            (pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.Fence
+import           Graphics.Vulkan.Types.Struct.Export (VkExportFenceCreateInfoKHR)
 
 pattern VK_KHR_EXTERNAL_FENCE_SPEC_VERSION :: (Num a, Eq a) => a
 

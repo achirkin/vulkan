@@ -93,20 +93,20 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
         pattern VK_DYNAMIC_STATE_VIEWPORT_W_SCALING_NV)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.DynamicState  (VkDynamicState (..))
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineViewportStateCreateInfo,
-                                                 VkPipelineViewportWScalingStateCreateInfoNV)
-import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
-import Graphics.Vulkan.Types.Struct.Viewport
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.DynamicState  (VkDynamicState (..))
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
+import           Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineViewportStateCreateInfo,
+                                                           VkPipelineViewportWScalingStateCreateInfoNV)
+import           Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.Viewport
 
 pattern VkCmdSetViewportWScalingNV :: CString
 

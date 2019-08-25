@@ -8,13 +8,15 @@
 module Graphics.Vulkan.Types.Struct.Cmd
        (VkCmdProcessCommandsInfoNVX, VkCmdReserveSpaceForCommandsInfoNVX)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import Graphics.Vulkan.Types.Handles                 (VkBuffer, VkCommandBuffer, VkIndirectCommandsLayoutNVX,
-                                                      VkObjectTableNVX)
-import Graphics.Vulkan.Types.Struct.IndirectCommands (VkIndirectCommandsTokenNVX)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                 (VkBuffer,
+                                                                VkCommandBuffer,
+                                                                VkIndirectCommandsLayoutNVX,
+                                                                VkObjectTableNVX)
+import           Graphics.Vulkan.Types.Struct.IndirectCommands (VkIndirectCommandsTokenNVX)
 
 -- | > typedef struct VkCmdProcessCommandsInfoNVX {
 --   >     VkStructureType sType;

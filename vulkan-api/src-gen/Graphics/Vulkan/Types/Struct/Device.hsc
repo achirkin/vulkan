@@ -20,26 +20,26 @@ module Graphics.Vulkan.Types.Struct.Device
         VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
         VkDeviceQueueInfo2)
        where
-import Graphics.Vulkan.Constants                           (VK_MAX_DEVICE_GROUP_SIZE)
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes                     (VkBool32)
-import Graphics.Vulkan.Types.Bitmasks                      (VkDeviceCreateFlags)
-import Graphics.Vulkan.Types.Enum.Device                   (VkDeviceEventTypeEXT,
-                                                            VkDeviceGroupPresentModeFlagBitsKHR,
-                                                            VkDeviceGroupPresentModeFlagsKHR,
-                                                            VkDeviceQueueCreateFlags)
-import Graphics.Vulkan.Types.Enum.Queue                    (VkQueueGlobalPriorityEXT)
-import Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
-import Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice)
-import Graphics.Vulkan.Types.Struct.Bind                   (VkBindSparseInfo)
-import Graphics.Vulkan.Types.Struct.Command                (VkCommandBufferBeginInfo)
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
-import Graphics.Vulkan.Types.Struct.Present                (VkPresentInfoKHR)
-import Graphics.Vulkan.Types.Struct.Rect                   (VkRect2D)
-import Graphics.Vulkan.Types.Struct.RenderPass             (VkRenderPassBeginInfo)
-import Graphics.Vulkan.Types.Struct.SubmitInfo             (VkSubmitInfo)
-import Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInfoKHR)
+import           Graphics.Vulkan.Constants                           (VK_MAX_DEVICE_GROUP_SIZE)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes                     (VkBool32)
+import           Graphics.Vulkan.Types.Bitmasks                      (VkDeviceCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Device                   (VkDeviceEventTypeEXT,
+                                                                      VkDeviceGroupPresentModeFlagBitsKHR,
+                                                                      VkDeviceGroupPresentModeFlagsKHR,
+                                                                      VkDeviceQueueCreateFlags)
+import           Graphics.Vulkan.Types.Enum.Queue                    (VkQueueGlobalPriorityEXT)
+import           Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice)
+import           Graphics.Vulkan.Types.Struct.Bind                   (VkBindSparseInfo)
+import           Graphics.Vulkan.Types.Struct.Command                (VkCommandBufferBeginInfo)
+import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import           Graphics.Vulkan.Types.Struct.Present                (VkPresentInfoKHR)
+import           Graphics.Vulkan.Types.Struct.Rect                   (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.RenderPass             (VkRenderPassBeginInfo)
+import           Graphics.Vulkan.Types.Struct.SubmitInfo             (VkSubmitInfo)
+import           Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInfoKHR)
 
 -- | > typedef struct VkDeviceCreateInfo {
 --   >     VkStructureType sType;

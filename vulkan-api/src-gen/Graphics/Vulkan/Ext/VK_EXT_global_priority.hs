@@ -33,14 +33,15 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
         pattern VK_ERROR_NOT_PERMITTED_EXT)
        where
-import GHC.Ptr                                  (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.Queue
-import Graphics.Vulkan.Types.Enum.Result        (VkResult (..))
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Device      (VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT)
+import           GHC.Ptr                                  (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.Device
+import           Graphics.Vulkan.Types.Enum.Queue
+import           Graphics.Vulkan.Types.Enum.Result        (VkResult (..))
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Device      (VkDeviceQueueCreateInfo,
+                                                           VkDeviceQueueGlobalPriorityCreateInfoEXT)
 
 pattern VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION :: (Num a, Eq a) => a
 

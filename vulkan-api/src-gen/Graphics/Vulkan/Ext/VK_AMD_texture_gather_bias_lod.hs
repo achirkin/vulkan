@@ -17,15 +17,19 @@ module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
         pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD)
        where
-import GHC.Ptr                                                          (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Extent                              (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image                               (VkImageFormatProperties,
-                                                                         VkImageFormatProperties2)
-import Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD (VkTextureLODGatherFormatPropertiesAMD)
+import           GHC.Ptr
+                                                                                   (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Struct.Extent
+                                                                                   (VkExtent3D)
+import           Graphics.Vulkan.Types.Struct.Image
+                                                                                   (VkImageFormatProperties,
+                                                                                   VkImageFormatProperties2)
+import           Graphics.Vulkan.Types.Struct.TextureLODGatherFormatPropertiesAMD
+                                                                                   (VkTextureLODGatherFormatPropertiesAMD)
 
 pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION ::
         (Num a, Eq a) => a

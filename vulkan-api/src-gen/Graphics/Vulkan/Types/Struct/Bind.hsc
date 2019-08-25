@@ -14,18 +14,19 @@ module Graphics.Vulkan.Types.Struct.Bind
         VkBindImagePlaneMemoryInfo, VkBindImagePlaneMemoryInfoKHR,
         VkBindSparseInfo)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlagBits)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
-                                                 VkImage, VkSemaphore,
-                                                 VkSwapchainKHR)
-import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
-import Graphics.Vulkan.Types.Struct.Sparse      (VkSparseBufferMemoryBindInfo,
-                                                 VkSparseImageMemoryBindInfo,
-                                                 VkSparseImageOpaqueMemoryBindInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.Image         (VkImageAspectFlagBits)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer,
+                                                           VkDeviceMemory,
+                                                           VkImage, VkSemaphore,
+                                                           VkSwapchainKHR)
+import           Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.Sparse      (VkSparseBufferMemoryBindInfo,
+                                                           VkSparseImageMemoryBindInfo,
+                                                           VkSparseImageOpaqueMemoryBindInfo)
 
 -- | > typedef struct VkBindBufferMemoryDeviceGroupInfo {
 --   >     VkStructureType sType;

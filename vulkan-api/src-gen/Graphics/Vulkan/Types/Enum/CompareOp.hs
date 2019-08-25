@@ -9,12 +9,12 @@ module Graphics.Vulkan.Types.Enum.CompareOp
                     VK_COMPARE_OP_GREATER, VK_COMPARE_OP_NOT_EQUAL,
                     VK_COMPARE_OP_GREATER_OR_EQUAL, VK_COMPARE_OP_ALWAYS))
        where
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (Int32)
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (Int32)
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --

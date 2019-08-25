@@ -19,14 +19,14 @@ module Graphics.Vulkan.Types.Enum.Sparse
                                   VK_SPARSE_MEMORY_BIND_METADATA_BIT),
         VkSparseMemoryBindFlags, VkSparseMemoryBindFlagBits)
        where
-import Data.Bits                       (Bits, FiniteBits)
-import Foreign.Storable                (Storable)
-import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import Text.Read                       (Read (..), parens)
-import Text.Read.Lex                   (Lexeme (..))
+import           Data.Bits                       (Bits, FiniteBits)
+import           Foreign.Storable                (Storable)
+import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import           Text.Read                       (Read (..), parens)
+import           Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSparseImageFormatBitmask (a ::
                                       FlagType) = VkSparseImageFormatBitmask VkFlags

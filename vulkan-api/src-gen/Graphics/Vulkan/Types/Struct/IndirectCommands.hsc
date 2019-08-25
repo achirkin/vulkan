@@ -9,14 +9,14 @@ module Graphics.Vulkan.Types.Struct.IndirectCommands
        (VkIndirectCommandsLayoutCreateInfoNVX,
         VkIndirectCommandsLayoutTokenNVX, VkIndirectCommandsTokenNVX)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes             (VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.IndirectCommands (VkIndirectCommandsLayoutUsageFlagsNVX,
-                                                    VkIndirectCommandsTokenTypeNVX)
-import Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint)
-import Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
-import Graphics.Vulkan.Types.Handles               (VkBuffer)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes             (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.IndirectCommands (VkIndirectCommandsLayoutUsageFlagsNVX,
+                                                              VkIndirectCommandsTokenTypeNVX)
+import           Graphics.Vulkan.Types.Enum.Pipeline         (VkPipelineBindPoint)
+import           Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles               (VkBuffer)
 
 -- | > typedef struct VkIndirectCommandsLayoutCreateInfoNVX {
 --   >     VkStructureType sType;

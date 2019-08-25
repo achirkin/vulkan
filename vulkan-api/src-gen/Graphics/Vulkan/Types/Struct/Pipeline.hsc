@@ -31,62 +31,63 @@ module Graphics.Vulkan.Types.Struct.Pipeline
         VkPipelineViewportSwizzleStateCreateInfoNV,
         VkPipelineViewportWScalingStateCreateInfoNV)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes                             (VkBool32,
-                                                                    VkSampleMask)
-import Graphics.Vulkan.Types.Bitmasks                              (VkPipelineCacheCreateFlags,
-                                                                    VkPipelineColorBlendStateCreateFlags,
-                                                                    VkPipelineCoverageModulationStateCreateFlagsNV,
-                                                                    VkPipelineCoverageToColorStateCreateFlagsNV,
-                                                                    VkPipelineDepthStencilStateCreateFlags,
-                                                                    VkPipelineDiscardRectangleStateCreateFlagsEXT,
-                                                                    VkPipelineDynamicStateCreateFlags,
-                                                                    VkPipelineInputAssemblyStateCreateFlags,
-                                                                    VkPipelineLayoutCreateFlags,
-                                                                    VkPipelineMultisampleStateCreateFlags,
-                                                                    VkPipelineRasterizationConservativeStateCreateFlagsEXT,
-                                                                    VkPipelineRasterizationStateCreateFlags,
-                                                                    VkPipelineShaderStageCreateFlags,
-                                                                    VkPipelineTessellationStateCreateFlags,
-                                                                    VkPipelineVertexInputStateCreateFlags,
-                                                                    VkPipelineViewportStateCreateFlags,
-                                                                    VkPipelineViewportSwizzleStateCreateFlagsNV)
-import Graphics.Vulkan.Types.Enum.Blend                            (VkBlendFactor,
-                                                                    VkBlendOp,
-                                                                    VkBlendOverlapEXT)
-import Graphics.Vulkan.Types.Enum.Color                            (VkColorComponentFlags)
-import Graphics.Vulkan.Types.Enum.CompareOp                        (VkCompareOp)
-import Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT (VkConservativeRasterizationModeEXT)
-import Graphics.Vulkan.Types.Enum.CoverageModulationModeNV         (VkCoverageModulationModeNV)
-import Graphics.Vulkan.Types.Enum.CullModeFlags                    (VkCullModeFlags)
-import Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT          (VkDiscardRectangleModeEXT)
-import Graphics.Vulkan.Types.Enum.DynamicState                     (VkDynamicState)
-import Graphics.Vulkan.Types.Enum.FrontFace                        (VkFrontFace)
-import Graphics.Vulkan.Types.Enum.LogicOp                          (VkLogicOp)
-import Graphics.Vulkan.Types.Enum.Pipeline                         (VkPipelineCreateFlags)
-import Graphics.Vulkan.Types.Enum.PolygonMode                      (VkPolygonMode)
-import Graphics.Vulkan.Types.Enum.PrimitiveTopology                (VkPrimitiveTopology)
-import Graphics.Vulkan.Types.Enum.RasterizationOrderAMD            (VkRasterizationOrderAMD)
-import Graphics.Vulkan.Types.Enum.SampleCountFlags                 (VkSampleCountFlagBits)
-import Graphics.Vulkan.Types.Enum.Shader                           (VkShaderStageFlagBits)
-import Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
-import Graphics.Vulkan.Types.Enum.TessellationDomainOrigin         (VkTessellationDomainOrigin)
-import Graphics.Vulkan.Types.Handles                               (VkDescriptorSetLayout,
-                                                                    VkPipeline,
-                                                                    VkPipelineLayout,
-                                                                    VkRenderPass,
-                                                                    VkShaderModule)
-import Graphics.Vulkan.Types.Struct.PushConstantRange              (VkPushConstantRange)
-import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
-import Graphics.Vulkan.Types.Struct.SampleLocation                 (VkSampleLocationsInfoEXT)
-import Graphics.Vulkan.Types.Struct.Specialization                 (VkSpecializationInfo)
-import Graphics.Vulkan.Types.Struct.StencilOpState                 (VkStencilOpState)
-import Graphics.Vulkan.Types.Struct.VertexInput                    (VkVertexInputAttributeDescription,
-                                                                    VkVertexInputBindingDescription,
-                                                                    VkVertexInputBindingDivisorDescriptionEXT)
-import Graphics.Vulkan.Types.Struct.Viewport                       (VkViewport, VkViewportSwizzleNV,
-                                                                    VkViewportWScalingNV)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32,
+                                                                              VkSampleMask)
+import           Graphics.Vulkan.Types.Bitmasks                              (VkPipelineCacheCreateFlags,
+                                                                              VkPipelineColorBlendStateCreateFlags,
+                                                                              VkPipelineCoverageModulationStateCreateFlagsNV,
+                                                                              VkPipelineCoverageToColorStateCreateFlagsNV,
+                                                                              VkPipelineDepthStencilStateCreateFlags,
+                                                                              VkPipelineDiscardRectangleStateCreateFlagsEXT,
+                                                                              VkPipelineDynamicStateCreateFlags,
+                                                                              VkPipelineInputAssemblyStateCreateFlags,
+                                                                              VkPipelineLayoutCreateFlags,
+                                                                              VkPipelineMultisampleStateCreateFlags,
+                                                                              VkPipelineRasterizationConservativeStateCreateFlagsEXT,
+                                                                              VkPipelineRasterizationStateCreateFlags,
+                                                                              VkPipelineShaderStageCreateFlags,
+                                                                              VkPipelineTessellationStateCreateFlags,
+                                                                              VkPipelineVertexInputStateCreateFlags,
+                                                                              VkPipelineViewportStateCreateFlags,
+                                                                              VkPipelineViewportSwizzleStateCreateFlagsNV)
+import           Graphics.Vulkan.Types.Enum.Blend                            (VkBlendFactor,
+                                                                              VkBlendOp,
+                                                                              VkBlendOverlapEXT)
+import           Graphics.Vulkan.Types.Enum.Color                            (VkColorComponentFlags)
+import           Graphics.Vulkan.Types.Enum.CompareOp                        (VkCompareOp)
+import           Graphics.Vulkan.Types.Enum.ConservativeRasterizationModeEXT (VkConservativeRasterizationModeEXT)
+import           Graphics.Vulkan.Types.Enum.CoverageModulationModeNV         (VkCoverageModulationModeNV)
+import           Graphics.Vulkan.Types.Enum.CullModeFlags                    (VkCullModeFlags)
+import           Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT          (VkDiscardRectangleModeEXT)
+import           Graphics.Vulkan.Types.Enum.DynamicState                     (VkDynamicState)
+import           Graphics.Vulkan.Types.Enum.FrontFace                        (VkFrontFace)
+import           Graphics.Vulkan.Types.Enum.LogicOp                          (VkLogicOp)
+import           Graphics.Vulkan.Types.Enum.Pipeline                         (VkPipelineCreateFlags)
+import           Graphics.Vulkan.Types.Enum.PolygonMode                      (VkPolygonMode)
+import           Graphics.Vulkan.Types.Enum.PrimitiveTopology                (VkPrimitiveTopology)
+import           Graphics.Vulkan.Types.Enum.RasterizationOrderAMD            (VkRasterizationOrderAMD)
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags                 (VkSampleCountFlagBits)
+import           Graphics.Vulkan.Types.Enum.Shader                           (VkShaderStageFlagBits)
+import           Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Enum.TessellationDomainOrigin         (VkTessellationDomainOrigin)
+import           Graphics.Vulkan.Types.Handles                               (VkDescriptorSetLayout,
+                                                                              VkPipeline,
+                                                                              VkPipelineLayout,
+                                                                              VkRenderPass,
+                                                                              VkShaderModule)
+import           Graphics.Vulkan.Types.Struct.PushConstantRange              (VkPushConstantRange)
+import           Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.SampleLocation                 (VkSampleLocationsInfoEXT)
+import           Graphics.Vulkan.Types.Struct.Specialization                 (VkSpecializationInfo)
+import           Graphics.Vulkan.Types.Struct.StencilOpState                 (VkStencilOpState)
+import           Graphics.Vulkan.Types.Struct.VertexInput                    (VkVertexInputAttributeDescription,
+                                                                              VkVertexInputBindingDescription,
+                                                                              VkVertexInputBindingDivisorDescriptionEXT)
+import           Graphics.Vulkan.Types.Struct.Viewport                       (VkViewport,
+                                                                              VkViewportSwizzleNV,
+                                                                              VkViewportWScalingNV)
 
 -- | > typedef struct VkGraphicsPipelineCreateInfo {
 --   >     VkStructureType sType;

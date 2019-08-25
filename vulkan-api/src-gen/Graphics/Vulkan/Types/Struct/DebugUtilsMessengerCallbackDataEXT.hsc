@@ -7,12 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.DebugUtilsMessengerCallbackDataEXT
        (VkDebugUtilsMessengerCallbackDataEXT) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                           (VkDebugUtilsMessengerCallbackDataFlagsEXT)
-import Graphics.Vulkan.Types.Enum.StructureType                 (VkStructureType)
-import Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT          (VkDebugUtilsLabelEXT)
-import Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT (VkDebugUtilsObjectNameInfoEXT)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks                           (VkDebugUtilsMessengerCallbackDataFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.StructureType                 (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.DebugUtilsLabelEXT          (VkDebugUtilsLabelEXT)
+import           Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT (VkDebugUtilsObjectNameInfoEXT)
 
 -- | > typedef struct VkDebugUtilsMessengerCallbackDataEXT {
 --   >     VkStructureType sType;

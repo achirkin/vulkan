@@ -7,11 +7,11 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.InstanceCreateInfo
        (VkInstanceCreateInfo) where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks               (VkInstanceCreateFlags)
-import Graphics.Vulkan.Types.Enum.StructureType     (VkStructureType)
-import Graphics.Vulkan.Types.Struct.ApplicationInfo (VkApplicationInfo)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.Bitmasks               (VkInstanceCreateFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType     (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.ApplicationInfo (VkApplicationInfo)
 
 -- | > typedef struct VkInstanceCreateInfo {
 --   >     VkStructureType sType;

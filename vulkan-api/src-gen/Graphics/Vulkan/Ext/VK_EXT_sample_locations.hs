@@ -144,37 +144,38 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         pattern VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT,
         pattern VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT)
        where
-import GHC.Ptr                                               (Ptr (..))
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
-import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.AccessFlags
-import Graphics.Vulkan.Types.Enum.DynamicState               (VkDynamicState (..))
-import Graphics.Vulkan.Types.Enum.Image
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.Attachment               (VkAttachmentSampleLocationsEXT)
-import Graphics.Vulkan.Types.Struct.Clear                    (VkClearColorValue, VkClearDepthStencilValue,
-                                                              VkClearValue)
-import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Image
-import Graphics.Vulkan.Types.Struct.MultisamplePropertiesEXT
-import Graphics.Vulkan.Types.Struct.Offset                   (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice           (VkPhysicalDeviceLimits,
-                                                              VkPhysicalDeviceProperties,
-                                                              VkPhysicalDeviceProperties2,
-                                                              VkPhysicalDeviceSampleLocationsPropertiesEXT,
-                                                              VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.Pipeline                 (VkPipelineMultisampleStateCreateInfo,
-                                                              VkPipelineSampleLocationsStateCreateInfoEXT)
-import Graphics.Vulkan.Types.Struct.Rect                     (VkRect2D)
-import Graphics.Vulkan.Types.Struct.RenderPass               (VkRenderPassBeginInfo,
-                                                              VkRenderPassSampleLocationsBeginInfoEXT)
-import Graphics.Vulkan.Types.Struct.SampleLocation
-import Graphics.Vulkan.Types.Struct.Subpass                  (VkSubpassSampleLocationsEXT)
+import           GHC.Ptr                                               (Ptr (..))
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.AccessFlags
+import           Graphics.Vulkan.Types.Enum.DynamicState               (VkDynamicState (..))
+import           Graphics.Vulkan.Types.Enum.Image
+import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.SampleCountFlags
+import           Graphics.Vulkan.Types.Enum.StructureType
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.Attachment               (VkAttachmentSampleLocationsEXT)
+import           Graphics.Vulkan.Types.Struct.Clear                    (VkClearColorValue,
+                                                                        VkClearDepthStencilValue,
+                                                                        VkClearValue)
+import           Graphics.Vulkan.Types.Struct.Extent
+import           Graphics.Vulkan.Types.Struct.Image
+import           Graphics.Vulkan.Types.Struct.MultisamplePropertiesEXT
+import           Graphics.Vulkan.Types.Struct.Offset                   (VkOffset2D)
+import           Graphics.Vulkan.Types.Struct.PhysicalDevice           (VkPhysicalDeviceLimits,
+                                                                        VkPhysicalDeviceProperties,
+                                                                        VkPhysicalDeviceProperties2,
+                                                                        VkPhysicalDeviceSampleLocationsPropertiesEXT,
+                                                                        VkPhysicalDeviceSparseProperties)
+import           Graphics.Vulkan.Types.Struct.Pipeline                 (VkPipelineMultisampleStateCreateInfo,
+                                                                        VkPipelineSampleLocationsStateCreateInfoEXT)
+import           Graphics.Vulkan.Types.Struct.Rect                     (VkRect2D)
+import           Graphics.Vulkan.Types.Struct.RenderPass               (VkRenderPassBeginInfo,
+                                                                        VkRenderPassSampleLocationsBeginInfoEXT)
+import           Graphics.Vulkan.Types.Struct.SampleLocation
+import           Graphics.Vulkan.Types.Struct.Subpass                  (VkSubpassSampleLocationsEXT)
 
 pattern VkCmdSetSampleLocationsEXT :: CString
 

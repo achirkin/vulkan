@@ -28,7 +28,7 @@ module Graphics.Vulkan.Types.Handles
         VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
         VkValidationCacheEXT, VkValidationCacheEXT_T())
        where
-import Graphics.Vulkan.Marshal (Ptr, VkPtr)
+import           Graphics.Vulkan.Marshal (Ptr, VkPtr)
 
 type VkBuffer = VkPtr VkBuffer_T
 

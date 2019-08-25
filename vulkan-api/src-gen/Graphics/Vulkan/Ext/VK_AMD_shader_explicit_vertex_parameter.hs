@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_explicit_vertex_parameter
         VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_EXTENSION_NAME,
         pattern VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_EXTENSION_NAME)
        where
-import GHC.Ptr                 (Ptr (..))
-import Graphics.Vulkan.Marshal
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -14,17 +14,19 @@ module Graphics.Vulkan.Types.Struct.Memory
         VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
         VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType)
        where
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkBool32, VkDeviceSize)
-import Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
-import Graphics.Vulkan.Types.Enum.External      (VkExternalMemoryHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Memory        (VkMemoryAllocateFlags,
-                                                 VkMemoryHeapFlags,
-                                                 VkMemoryPropertyFlags)
-import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
-import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
-                                                 VkImage)
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes          (VkBool32,
+                                                           VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
+import           Graphics.Vulkan.Types.Enum.External      (VkExternalMemoryHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.Memory        (VkMemoryAllocateFlags,
+                                                           VkMemoryHeapFlags,
+                                                           VkMemoryPropertyFlags)
+import           Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import           Graphics.Vulkan.Types.Handles            (VkBuffer,
+                                                           VkDeviceMemory,
+                                                           VkImage)
 
 -- | > typedef struct VkMemoryAllocateFlagsInfo {
 --   >     VkStructureType sType;
