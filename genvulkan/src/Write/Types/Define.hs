@@ -152,6 +152,10 @@ genDefine t@VkTypeSimple
       "data " <> tnameTxt
     writeExport $ DIThing tnameTxt DITEmpty
 
+  -- Not sure what to do with this so ignoring it for now
+  | matched (c ?=~ [reMS|#ifdef __OBJC__|])
+  = return ()
+
   | otherwise = error
                 $ "Write.Types.Define.genDefine: unknown define!\n"
                <> "Please, add a new guard to the function. Data: "
