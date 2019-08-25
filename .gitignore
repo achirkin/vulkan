@@ -7,3 +7,4 @@ dist-newstyle
 .ghc*
 .cabal-sandbox
 cache
+stack.yaml.lock
