@@ -40,7 +40,6 @@ import           VkXml.Sections.Extensions
 import           VkXml.Sections.Feature
 import           VkXml.Sections.Tags
 import           VkXml.Sections.Types
-import           VkXml.Sections.VendorIds
 import           VkXml.Sections.Platforms
 
 
@@ -48,17 +47,12 @@ import           VkXml.Sections.Platforms
 parseVkXml :: VkXmlParser m => Sink Event m VkXml
 parseVkXml = fmap fixVkXml . execStateC
     (VkXmlPartial mempty mempty mempty mempty
-                  mempty mempty mempty mempty)
+                  mempty mempty mempty)
       $ tagIgnoreAttrs "registry" parseAll
   where
     parseAll = do
       mr <- choose
         [ ignoreTreeContent "comment"
-        , parseVendorIds >>= \case
-            Nothing -> pure Nothing
-            Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpVendorIds = gpVendorIds v |> x
-                }
         , parsePlatforms >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
@@ -107,8 +101,7 @@ parseVkXml = fmap fixVkXml . execStateC
 --   The data type is foldable and traversable functor
 data VkXml
   = VkXml
-  { globVendorIds  :: VendorIds
-  , globPlatforms  :: VkPlatforms
+  { globPlatforms  :: VkPlatforms
   , globTags       :: VkTags
   , globTypes      :: Map VkTypeName VkType
   , globEnums      :: Map (Maybe VkTypeName) VkEnums
@@ -119,8 +112,7 @@ data VkXml
 
 data VkXmlPartial
   = VkXmlPartial
-  { gpVendorIds  :: Seq VendorIds
-  , gpPlatforms  :: Seq VkPlatforms
+  { gpPlatforms  :: Seq VkPlatforms
   , gpTags       :: Seq VkTags
   , gpTypes      :: Seq VkTypes
   , gpEnums      :: Seq VkEnums
@@ -133,8 +125,7 @@ data VkXmlPartial
 fixVkXml :: VkXmlPartial
          -> VkXml
 fixVkXml VkXmlPartial
-  { gpVendorIds  = Seq.Empty Seq.:|> pVendorIds
-  , gpPlatforms  = Seq.Empty Seq.:|> pPlatforms
+  { gpPlatforms  = Seq.Empty Seq.:|> pPlatforms
   , gpTags       = Seq.Empty Seq.:|> pTags
   , gpTypes      = Seq.Empty Seq.:|> pTypes
   , gpEnums      = pEnums
@@ -142,8 +133,7 @@ fixVkXml VkXmlPartial
   , gpFeature    = pFeatures
   , gpExtensions = Seq.Empty Seq.:|> pExtensions
   } = VkXml
-  { globVendorIds  = pVendorIds
-  , globPlatforms  = pPlatforms
+  { globPlatforms  = pPlatforms
   , globTags       = pTags
   , globTypes      = pTypes
   , globEnums      = Map.fromList

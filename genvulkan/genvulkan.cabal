@@ -22,7 +22,6 @@ library
                        VkXml.Sections.Enums
                        VkXml.Sections.Commands
                        VkXml.Sections.Feature
-                       VkXml.Sections.VendorIds
                        VkXml.Sections.Tags
                        VkXml.Sections.Extensions
                        VkXml.Sections.Platforms
