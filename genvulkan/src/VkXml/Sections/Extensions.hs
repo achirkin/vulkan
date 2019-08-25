@@ -32,24 +32,27 @@ type VkExtensions = Map VkExtensionName VkExtension
 
 data VkExtension
   = VkExtension
-  { extAttributes :: VkExtAttrs
-  , extRequires   :: [VkRequire]
+  { extAttributes   :: VkExtAttrs
+  , extRequires     :: [VkRequire]
   } deriving Show
 
 data VkExtAttrs
   = VkExtAttrs
-  { extName      :: VkExtensionName
-  , extSupported :: Text
-  , extContact   :: Maybe Text
-  , extAuthor    :: Maybe VkTagName
-  , extType      :: Maybe Text
-  , extNumber    :: Int
-  , extReqExts   :: [VkExtensionName]
-  , extReqCore   :: Maybe Text -- TODO: add a proper version handling
-  , extProtect   :: Maybe ProtectDef
-  , extPlatform  :: Maybe VkPlatformName
+  { extName         :: VkExtensionName
+  , extSupported    :: Text
+  , extContact      :: Maybe Text
+  , extAuthor       :: Maybe VkTagName
+  , extType         :: Maybe Text
+  , extNumber       :: Int
+  , extReqExts      :: [VkExtensionName]
+  , extReqCore      :: Maybe Text -- TODO: add a proper version handling
+  , extProtect      :: Maybe ProtectDef
+  , extPlatform     :: Maybe VkPlatformName
     -- ^ seems to be used in a similar way as extProtect
-  , extComment   :: Maybe Text
+  , extComment      :: Maybe Text
+  , extDeprecatedBy :: Maybe Text
+  , extObsoletedBy  :: Maybe Text
+  , extPromotedTo   :: Maybe Text
   } deriving Show
 
 
@@ -76,18 +79,21 @@ parseVkExtension =
 
 parseVkExtAttrs :: ReaderT ParseLoc AttrParser VkExtAttrs
 parseVkExtAttrs = do
-  extName      <- forceAttr "name" >>= toHaskellExt
-  extSupported <- forceAttr "supported"
-  extContact   <- lift $ attr "contact"
-  extAuthor    <- lift $ fmap VkTagName <$> attr "author"
-  extType      <- lift $ attr "type"
-  extProtect   <- lift (attr "protect") >>= mapM toProtectDef
-  extPlatform  <- lift $ fmap VkPlatformName <$> attr "platform"
-  extReqExts   <- commaSeparated <$> lift (attr "requires")
-                  >>= mapM toHaskellExt
-  extReqCore   <- lift (attr "requiresCore")
-  eextNumber   <- decOrHex <$> forceAttr "number"
-  extComment   <- lift $ attr "comment"
+  extName         <- forceAttr "name" >>= toHaskellExt
+  extSupported    <- forceAttr "supported"
+  extContact      <- lift $ attr "contact"
+  extAuthor       <- lift $ fmap VkTagName <$> attr "author"
+  extType         <- lift $ attr "type"
+  extProtect      <- lift (attr "protect") >>= mapM toProtectDef
+  extPlatform     <- lift $ fmap VkPlatformName <$> attr "platform"
+  extReqExts      <- commaSeparated <$> lift (attr "requires")
+                     >>= mapM toHaskellExt
+  extReqCore      <- lift (attr "requiresCore")
+  eextNumber      <- decOrHex <$> forceAttr "number"
+  extComment      <- lift $ attr "comment"
+  extDeprecatedBy <- lift $ attr "deprecatedby"
+  extObsoletedBy  <- lift $ attr "obsoletedby"
+  extPromotedTo   <- lift $ attr "promotedto"
   case eextNumber of
     Left err -> parseFailed $ "Could not parse extension.number: " ++ err
     Right (extNumber,_) ->  pure VkExtAttrs {..}
