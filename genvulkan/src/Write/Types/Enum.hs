@@ -347,6 +347,20 @@ bitmaskPattern tnameTxt constrTxt
   where
     patVal = T.pack $ show n
     rezComment = preComment $ T.unpack comm
+bitmaskPattern _ _
+  VkEnum
+  { _vkEnumName = VkEnumName patnameTxt
+  , _vkEnumComment = comm
+  , _vkEnumValue = VkEnumAlias (VkEnumName aliasname)
+  } = do
+    writeOptionsPragma (Just GHC) "-fno-warn-missing-pattern-synonym-signatures"
+    writeImport $ DIPat aliasname
+    writeDecl . setComment rezComment
+              $ parseDecl' [text|pattern $patnameTxt = $aliasname|]
+    writeExport $ DIPat patnameTxt
+    return patnameTxt
+  where
+    rezComment = preComment $ T.unpack comm
 bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
