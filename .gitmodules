@@ -1,3 +1,6 @@
 [submodule "vulkan-docs"]
 	path = vulkan-docs
 	url = https://github.com/KhronosGroup/Vulkan-Docs
+[submodule "vulkan-headers"]
+	path = vulkan-headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers

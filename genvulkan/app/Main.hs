@@ -6,7 +6,7 @@ import Path.IO
 
 main :: IO ()
 main = do
-  inVkHFolder <- resolveDir' "../vulkan-docs/include/vulkan"
+  inVkHFolder <- resolveDir' "../vulkan-headers/include/vulkan"
   outVkHFolder <- resolveDir' "../vulkan-api/include/vulkan"
   removeDirRecur outVkHFolder
   createDir outVkHFolder
