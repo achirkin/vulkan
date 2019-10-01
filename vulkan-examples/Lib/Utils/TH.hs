@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 module Lib.Utils.TH
     ( compileGLSL
@@ -77,9 +78,12 @@ compileGLSL fpath = do
           (++ replicate (contentSize - hasRead) 0) <$> peekArray hasRead ptr
 
 
-
-    return $ TupE [ LitE . IntegerL . fromIntegral $ length contents
-                  , AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
+    return $ TupE
+#if MIN_VERSION_template_haskell(2,16,0)
+           $ map Just
+#endif
+           [ LitE . IntegerL . fromIntegral $ length contents
+           , AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
 
 
 reportGlslMsgs :: String -> Q ()
