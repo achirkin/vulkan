@@ -183,7 +183,7 @@ class VulkanFields (ms :: [FieldMeta]) where
                     -> a -> a
 
 instance VulkanFields '[] where
-    withField = error "VulkanFields.withField: unreachable code (no such field guarded by type family)."
+    withField _ _ _ = error "VulkanFields.withField: unreachable code (no such field guarded by type family)."
     enumerateFields _ = id
 
 instance (VulkanField m, VulkanFields ms) => VulkanFields (m ': ms) where
@@ -198,7 +198,7 @@ instance (VulkanField m, VulkanFields ms) => VulkanFields (m ': ms) where
         proofms :: Proxy# fname -> Proxy# errMsg
                 -> (GetFieldMeta errMsg fname ms :~: GetFieldMeta errMsg fname (m : ms))
         proofms _ = unsafeCoerce Refl
-    enumerateFields k = k (proxy# @_ @m) . enumerateFields @ms k
+    enumerateFields k = k (proxy# :: Proxy# m) . enumerateFields @ms k
 
 
 class VulkanFields (SFields m)
