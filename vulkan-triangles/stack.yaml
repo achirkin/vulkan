@@ -1,4 +1,4 @@
-resolver: lts-12.26
+resolver: lts-14.15
 
 ghc-options:
   vulkan-api:    -O2
@@ -12,8 +12,6 @@ flags:
     useUnsafeFFIDefault: true
 
 extra-deps:
-  - bindings-GLFW-3.2.1.1
-  - GLFW-b-3.2.1.0
   - constraints-deriving-1.0.4.0
   - dimensions-2.0.0.0
   - easytensor-2.0.1.0

@@ -1,8 +1,6 @@
-resolver: lts-12.26
+resolver: lts-14.15
 
 extra-deps:
-  - bindings-GLFW-3.2.1.1
-  - GLFW-b-3.2.1.0
   - ../vulkan-api
 
 packages:
