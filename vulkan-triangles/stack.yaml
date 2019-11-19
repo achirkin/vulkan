@@ -19,8 +19,7 @@ extra-deps:
   - easytensor-2.0.1.0
   - easytensor-vulkan-2.0.1.0
   - wavefront-0.7.1.3
+  - ../vulkan-api
 
 packages:
   - .
-  - location: ../vulkan-api
-    extra-dep: true
