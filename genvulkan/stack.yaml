@@ -25,3 +25,7 @@ packages:
   - .
 
 allow-newer: true
+
+nix:
+  enable: false
+  packages: [zlib]

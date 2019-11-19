@@ -21,3 +21,7 @@ extra-deps:
 
 packages:
   - .
+
+nix:
+  enable: false
+  packages: [zlib, vulkan-loader, libGL, xorg.libX11, xorg.libXinerama,  xorg.libXcursor, xorg.libXrandr, xorg.libXi, mesa, xorg.libXxf86vm, glslang]
