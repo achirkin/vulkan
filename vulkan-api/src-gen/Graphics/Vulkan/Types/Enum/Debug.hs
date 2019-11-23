@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -70,21 +68,18 @@ module Graphics.Vulkan.Types.Enum.Debug
         VkDebugUtilsMessageTypeFlagsEXT,
         VkDebugUtilsMessageTypeFlagBitsEXT)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType,
-                                                  Int32)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDebugReportBitmaskEXT (a ::
                                    FlagType) = VkDebugReportBitmaskEXT VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkDebugReportFlagsEXT = VkDebugReportBitmaskEXT FlagMask
 
@@ -104,49 +99,39 @@ deriving instance Bits (VkDebugReportBitmaskEXT FlagMask)
 
 deriving instance FiniteBits (VkDebugReportBitmaskEXT FlagMask)
 
-deriving instance Integral (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Num (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Bounded (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Enum (VkDebugReportBitmaskEXT FlagMask)
-
-deriving instance Real (VkDebugReportBitmaskEXT FlagMask)
-
 instance Show (VkDebugReportBitmaskEXT a) where
-        showsPrec _ VK_DEBUG_REPORT_INFORMATION_BIT_EXT
-          = showString "VK_DEBUG_REPORT_INFORMATION_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_WARNING_BIT_EXT
-          = showString "VK_DEBUG_REPORT_WARNING_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT
-          = showString "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_ERROR_BIT_EXT
-          = showString "VK_DEBUG_REPORT_ERROR_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_DEBUG_BIT_EXT
-          = showString "VK_DEBUG_REPORT_DEBUG_BIT_EXT"
-        showsPrec p (VkDebugReportBitmaskEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugReportBitmaskEXT " . showsPrec 11 x)
+    showsPrec _ VK_DEBUG_REPORT_INFORMATION_BIT_EXT
+      = showString "VK_DEBUG_REPORT_INFORMATION_BIT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_WARNING_BIT_EXT
+      = showString "VK_DEBUG_REPORT_WARNING_BIT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT
+      = showString "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_ERROR_BIT_EXT
+      = showString "VK_DEBUG_REPORT_ERROR_BIT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_DEBUG_BIT_EXT
+      = showString "VK_DEBUG_REPORT_DEBUG_BIT_EXT"
+    showsPrec p (VkDebugReportBitmaskEXT x)
+      = showParen (p >= 11)
+          (showString "VkDebugReportBitmaskEXT " . showsPrec 11 x)
 
 instance Read (VkDebugReportBitmaskEXT a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_REPORT_INFORMATION_BIT_EXT",
-                   pure VK_DEBUG_REPORT_INFORMATION_BIT_EXT),
-                  ("VK_DEBUG_REPORT_WARNING_BIT_EXT",
-                   pure VK_DEBUG_REPORT_WARNING_BIT_EXT),
-                  ("VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT",
-                   pure VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT),
-                  ("VK_DEBUG_REPORT_ERROR_BIT_EXT",
-                   pure VK_DEBUG_REPORT_ERROR_BIT_EXT),
-                  ("VK_DEBUG_REPORT_DEBUG_BIT_EXT",
-                   pure VK_DEBUG_REPORT_DEBUG_BIT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugReportBitmaskEXT") >>
-                      (VkDebugReportBitmaskEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEBUG_REPORT_INFORMATION_BIT_EXT",
+               pure VK_DEBUG_REPORT_INFORMATION_BIT_EXT),
+              ("VK_DEBUG_REPORT_WARNING_BIT_EXT",
+               pure VK_DEBUG_REPORT_WARNING_BIT_EXT),
+              ("VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT",
+               pure VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT),
+              ("VK_DEBUG_REPORT_ERROR_BIT_EXT",
+               pure VK_DEBUG_REPORT_ERROR_BIT_EXT),
+              ("VK_DEBUG_REPORT_DEBUG_BIT_EXT",
+               pure VK_DEBUG_REPORT_DEBUG_BIT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDebugReportBitmaskEXT") >>
+                  (VkDebugReportBitmaskEXT <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT ::
@@ -182,163 +167,162 @@ pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportBitmaskEXT 16
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportObjectTypeEXT VkDebugReportObjectTypeEXT registry at www.khronos.org>
 newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
+                                     deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDebugReportObjectTypeEXT where
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT"
-        showsPrec _
-          VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT"
-        showsPrec _
-          VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT"
-        showsPrec p (VkDebugReportObjectTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugReportObjectTypeEXT " . showsPrec 11 x)
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT
+      = showString
+          "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT"
+    showsPrec _
+      VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
+      = showString
+          "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT"
+    showsPrec _
+      VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
+      = showString
+          "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT"
+    showsPrec p (VkDebugReportObjectTypeEXT x)
+      = showParen (p >= 11)
+          (showString "VkDebugReportObjectTypeEXT " . showsPrec 11 x)
 
 instance Read VkDebugReportObjectTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugReportObjectTypeEXT") >>
-                      (VkDebugReportObjectTypeEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDebugReportObjectTypeEXT") >>
+                  (VkDebugReportObjectTypeEXT <$> step readPrec)))
 
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT ::
         VkDebugReportObjectTypeEXT
@@ -546,8 +530,7 @@ pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT =
 
 newtype VkDebugUtilsMessageSeverityBitmaskEXT (a ::
                                                  FlagType) = VkDebugUtilsMessageSeverityBitmaskEXT VkFlags
-                                                               deriving (Eq, Ord, Storable, Data,
-                                                                         Generic)
+                                                             deriving (Eq, Ord, Storable)
 
 type VkDebugUtilsMessageSeverityFlagsEXT =
      VkDebugUtilsMessageSeverityBitmaskEXT FlagMask
@@ -573,51 +556,36 @@ deriving instance
 deriving instance
          FiniteBits (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
 
-deriving instance
-         Integral (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Num (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Bounded (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Enum (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
-deriving instance
-         Real (VkDebugUtilsMessageSeverityBitmaskEXT FlagMask)
-
 instance Show (VkDebugUtilsMessageSeverityBitmaskEXT a) where
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT"
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT"
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT"
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT"
-        showsPrec p (VkDebugUtilsMessageSeverityBitmaskEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugUtilsMessageSeverityBitmaskEXT " .
-                 showsPrec 11 x)
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT"
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT"
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT"
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT"
+    showsPrec p (VkDebugUtilsMessageSeverityBitmaskEXT x)
+      = showParen (p >= 11)
+          (showString "VkDebugUtilsMessageSeverityBitmaskEXT " .
+             showsPrec 11 x)
 
 instance Read (VkDebugUtilsMessageSeverityBitmaskEXT a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT),
-                  ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT),
-                  ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT),
-                  ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugUtilsMessageSeverityBitmaskEXT") >>
-                      (VkDebugUtilsMessageSeverityBitmaskEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT),
+              ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT),
+              ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT),
+              ("VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDebugUtilsMessageSeverityBitmaskEXT") >>
+                  (VkDebugUtilsMessageSeverityBitmaskEXT <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT ::
@@ -649,8 +617,7 @@ pattern VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT =
 
 newtype VkDebugUtilsMessageTypeBitmaskEXT (a ::
                                              FlagType) = VkDebugUtilsMessageTypeBitmaskEXT VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                         deriving (Eq, Ord, Storable)
 
 type VkDebugUtilsMessageTypeFlagsEXT =
      VkDebugUtilsMessageTypeBitmaskEXT FlagMask
@@ -675,43 +642,31 @@ deriving instance Bits (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
 deriving instance
          FiniteBits (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
 
-deriving instance
-         Integral (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Num (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance
-         Bounded (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Enum (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
-deriving instance Real (VkDebugUtilsMessageTypeBitmaskEXT FlagMask)
-
 instance Show (VkDebugUtilsMessageTypeBitmaskEXT a) where
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT"
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT"
-        showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
-          = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT"
-        showsPrec p (VkDebugUtilsMessageTypeBitmaskEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugUtilsMessageTypeBitmaskEXT " . showsPrec 11 x)
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT"
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT"
+    showsPrec _ VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
+      = showString "VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT"
+    showsPrec p (VkDebugUtilsMessageTypeBitmaskEXT x)
+      = showParen (p >= 11)
+          (showString "VkDebugUtilsMessageTypeBitmaskEXT " . showsPrec 11 x)
 
 instance Read (VkDebugUtilsMessageTypeBitmaskEXT a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT),
-                  ("VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT),
-                  ("VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT",
-                   pure VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugUtilsMessageTypeBitmaskEXT") >>
-                      (VkDebugUtilsMessageTypeBitmaskEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT),
+              ("VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT),
+              ("VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT",
+               pure VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDebugUtilsMessageTypeBitmaskEXT") >>
+                  (VkDebugUtilsMessageTypeBitmaskEXT <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT ::

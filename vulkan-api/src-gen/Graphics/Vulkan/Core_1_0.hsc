@@ -34,7 +34,22 @@ module Graphics.Vulkan.Core_1_0
         --
 
         -- ** API constants
-        module Graphics.Vulkan.Types.Enum.Pipeline,
+        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
+        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
+        VkPipelineCacheCreateFlagBits(..),
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        VkPipelineDynamicStateCreateFlagBits(..),
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        VkPipelineLayoutCreateFlagBits(..),
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(),
+        VkPipelineTessellationStateCreateFlagBits(..),
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        VkPipelineViewportStateCreateFlagBits(..),
         pattern VK_LOD_CLAMP_NONE, pattern VK_REMAINING_MIP_LEVELS,
         pattern VK_REMAINING_ARRAY_LAYERS, pattern VK_WHOLE_SIZE,
         pattern VK_ATTACHMENT_UNUSED, pattern VK_TRUE, pattern VK_FALSE,
@@ -94,40 +109,211 @@ module Graphics.Vulkan.Core_1_0
         HS_vkGetDeviceProcAddr, PFN_vkGetDeviceProcAddr,
         vkGetDeviceProcAddr, vkGetDeviceProcAddrUnsafe,
         vkGetDeviceProcAddrSafe, module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Memory,
-        module Graphics.Vulkan.Types.Enum.PhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.Queue,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        module Graphics.Vulkan.Types.Struct.ApplicationInfo,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.FormatProperties,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Struct.InstanceCreateInfo,
-        module Graphics.Vulkan.Types.Struct.Memory,
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
-        module Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.QueueFamilyProperties,
+        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkInternalAllocationType(..), VkMemoryAllocateBitmask(..),
+        VkMemoryHeapBitmask(..), VkMemoryPropertyBitmask(..),
+        VkMemoryAllocateFlagBits(), VkMemoryAllocateFlagBitsKHR(..),
+        VkMemoryAllocateFlags(), VkMemoryHeapFlagBits(),
+        VkMemoryHeapFlags(), VkMemoryPropertyFlagBits(),
+        VkMemoryPropertyFlags(), VkPhysicalDeviceType(..),
+        VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
+        VkQueueFlagBits(), VkQueueFlags(), VkResult(..),
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkStructureType(..),
+        VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkApplicationInfo, VkExtent2D, VkExtent3D,
+        VkFormatProperties, VkFormatProperties2, VkFormatProperties2KHR,
+        VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
+        VkImageFormatProperties2, VkImageFormatProperties2KHR,
+        VkImageMemoryBarrier, VkImageMemoryRequirementsInfo2,
+        VkImageMemoryRequirementsInfo2KHR,
+        VkImagePlaneMemoryRequirementsInfo,
+        VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
+        VkImageSparseMemoryRequirementsInfo2,
+        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
+        VkImageSubresourceLayers, VkImageSubresourceRange,
+        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
+        VkInstanceCreateInfo, VkMemoryAllocateFlagsInfo,
+        VkMemoryAllocateFlagsInfoKHR, VkMemoryAllocateInfo,
+        VkMemoryBarrier, VkMemoryDedicatedAllocateInfo,
+        VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
+        VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR,
+        VkMemoryGetFdInfoKHR, VkMemoryHeap,
+        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
+        VkPhysicalDevice16BitStorageFeatures,
+        VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
+        VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceExternalBufferInfo,
+        VkPhysicalDeviceExternalBufferInfoKHR,
+        VkPhysicalDeviceExternalFenceInfo,
+        VkPhysicalDeviceExternalFenceInfoKHR,
+        VkPhysicalDeviceExternalImageFormatInfo,
+        VkPhysicalDeviceExternalImageFormatInfoKHR,
+        VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
+        VkPhysicalDeviceExternalSemaphoreInfo,
+        VkPhysicalDeviceExternalSemaphoreInfoKHR,
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2KHR,
+        VkPhysicalDeviceGroupProperties,
+        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
+        VkPhysicalDeviceIDPropertiesKHR, VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceImageFormatInfo2KHR, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceMaintenance3Properties,
+        VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceMemoryProperties2,
+        VkPhysicalDeviceMemoryProperties2KHR,
+        VkPhysicalDeviceMultiviewFeatures,
+        VkPhysicalDeviceMultiviewFeaturesKHR,
+        VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
+        VkPhysicalDeviceMultiviewProperties,
+        VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePointClippingProperties,
+        VkPhysicalDevicePointClippingPropertiesKHR,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        VkPhysicalDeviceProperties2KHR,
+        VkPhysicalDeviceProtectedMemoryFeatures,
+        VkPhysicalDeviceProtectedMemoryProperties,
+        VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
+        VkPhysicalDeviceSamplerYcbcrConversionFeatures,
+        VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceSparseImageFormatInfo2,
+        VkPhysicalDeviceSparseImageFormatInfo2KHR,
+        VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceVariablePointerFeatures,
+        VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPhysicalDeviceFeatures, VkQueueFamilyProperties,
+        VkQueueFamilyProperties2, VkQueueFamilyProperties2KHR,
         -- ** Device commands
         VkCreateDevice, pattern VkCreateDevice, HS_vkCreateDevice,
         PFN_vkCreateDevice, vkCreateDevice, vkCreateDeviceUnsafe,
         vkCreateDeviceSafe, VkDestroyDevice, pattern VkDestroyDevice,
         HS_vkDestroyDevice, PFN_vkDestroyDevice, vkDestroyDevice,
         vkDestroyDeviceUnsafe, vkDestroyDeviceSafe,
-        module Graphics.Vulkan.Types.Enum.Device,
-        module Graphics.Vulkan.Types.Struct.Device,
-        -- ** Extension discovery commands
-        VkEnumerateInstanceExtensionProperties,
+        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
+        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkDeviceCreateInfo, VkDeviceEventInfoEXT,
+        VkDeviceGeneratedCommandsFeaturesNVX,
+        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+        VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceGroupCommandBufferBeginInfo,
+        VkDeviceGroupCommandBufferBeginInfoKHR,
+        VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
+        VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
+        VkDeviceGroupRenderPassBeginInfo,
+        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
+        VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
+        VkDeviceQueueInfo2, -- ** Extension discovery commands
+                            VkEnumerateInstanceExtensionProperties,
         pattern VkEnumerateInstanceExtensionProperties,
         HS_vkEnumerateInstanceExtensionProperties,
         PFN_vkEnumerateInstanceExtensionProperties,
@@ -140,8 +326,7 @@ module Graphics.Vulkan.Core_1_0
         PFN_vkEnumerateDeviceExtensionProperties,
         vkEnumerateDeviceExtensionProperties,
         vkEnumerateDeviceExtensionPropertiesUnsafe,
-        vkEnumerateDeviceExtensionPropertiesSafe,
-        module Graphics.Vulkan.Types.Struct.ExtensionProperties,
+        vkEnumerateDeviceExtensionPropertiesSafe, VkExtensionProperties,
         -- ** Layer discovery commands
         VkEnumerateInstanceLayerProperties,
         pattern VkEnumerateInstanceLayerProperties,
@@ -156,8 +341,7 @@ module Graphics.Vulkan.Core_1_0
         PFN_vkEnumerateDeviceLayerProperties,
         vkEnumerateDeviceLayerProperties,
         vkEnumerateDeviceLayerPropertiesUnsafe,
-        vkEnumerateDeviceLayerPropertiesSafe,
-        module Graphics.Vulkan.Types.Struct.LayerProperties,
+        vkEnumerateDeviceLayerPropertiesSafe, VkLayerProperties,
         -- ** queue commands
         VkGetDeviceQueue, pattern VkGetDeviceQueue, HS_vkGetDeviceQueue,
         PFN_vkGetDeviceQueue, vkGetDeviceQueue, vkGetDeviceQueueUnsafe,
@@ -168,9 +352,8 @@ module Graphics.Vulkan.Core_1_0
         vkQueueWaitIdle, vkQueueWaitIdleUnsafe, vkQueueWaitIdleSafe,
         VkDeviceWaitIdle, pattern VkDeviceWaitIdle, HS_vkDeviceWaitIdle,
         PFN_vkDeviceWaitIdle, vkDeviceWaitIdle, vkDeviceWaitIdleUnsafe,
-        vkDeviceWaitIdleSafe,
-        module Graphics.Vulkan.Types.Struct.SubmitInfo, -- ** Memory commands
-                                                        VkAllocateMemory,
+        vkDeviceWaitIdleSafe, VkSubmitInfo, -- ** Memory commands
+                                            VkAllocateMemory,
         pattern VkAllocateMemory, HS_vkAllocateMemory,
         PFN_vkAllocateMemory, vkAllocateMemory, vkAllocateMemoryUnsafe,
         vkAllocateMemorySafe, VkFreeMemory, pattern VkFreeMemory,
@@ -192,8 +375,7 @@ module Graphics.Vulkan.Core_1_0
         pattern VkGetDeviceMemoryCommitment,
         HS_vkGetDeviceMemoryCommitment, PFN_vkGetDeviceMemoryCommitment,
         vkGetDeviceMemoryCommitment, vkGetDeviceMemoryCommitmentUnsafe,
-        vkGetDeviceMemoryCommitmentSafe,
-        module Graphics.Vulkan.Types.Struct.MappedMemoryRange,
+        vkGetDeviceMemoryCommitmentSafe, VkMappedMemoryRange,
         -- ** Memory management API commands
         VkBindBufferMemory, pattern VkBindBufferMemory,
         HS_vkBindBufferMemory, PFN_vkBindBufferMemory, vkBindBufferMemory,
@@ -227,34 +409,48 @@ module Graphics.Vulkan.Core_1_0
         vkGetPhysicalDeviceSparseImageFormatPropertiesSafe,
         VkQueueBindSparse, pattern VkQueueBindSparse, HS_vkQueueBindSparse,
         PFN_vkQueueBindSparse, vkQueueBindSparse, vkQueueBindSparseUnsafe,
-        vkQueueBindSparseSafe, module Graphics.Vulkan.Types.Enum.Sparse,
-        module Graphics.Vulkan.Types.Struct.Bind,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Struct.Sparse, -- ** Fence commands
-                                                    VkCreateFence,
-        pattern VkCreateFence, HS_vkCreateFence, PFN_vkCreateFence,
-        vkCreateFence, vkCreateFenceUnsafe, vkCreateFenceSafe,
-        VkDestroyFence, pattern VkDestroyFence, HS_vkDestroyFence,
-        PFN_vkDestroyFence, vkDestroyFence, vkDestroyFenceUnsafe,
-        vkDestroyFenceSafe, VkResetFences, pattern VkResetFences,
-        HS_vkResetFences, PFN_vkResetFences, vkResetFences,
-        vkResetFencesUnsafe, vkResetFencesSafe, VkGetFenceStatus,
-        pattern VkGetFenceStatus, HS_vkGetFenceStatus,
+        vkQueueBindSparseSafe, VkSparseImageFormatBitmask(..),
+        VkSparseMemoryBindBitmask(..), VkSparseImageFormatFlagBits(),
+        VkSparseImageFormatFlags(), VkSparseMemoryBindFlagBits(),
+        VkSparseMemoryBindFlags(), VkBindBufferMemoryDeviceGroupInfo,
+        VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo,
+        VkBindBufferMemoryInfoKHR, VkBindImageMemoryDeviceGroupInfo,
+        VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo,
+        VkBindImageMemoryInfoKHR, VkBindImageMemorySwapchainInfoKHR,
+        VkBindImagePlaneMemoryInfo, VkBindImagePlaneMemoryInfoKHR,
+        VkBindSparseInfo, VkOffset2D, VkOffset3D,
+        VkSparseBufferMemoryBindInfo, VkSparseImageFormatProperties,
+        VkSparseImageFormatProperties2, VkSparseImageFormatProperties2KHR,
+        VkSparseImageMemoryBind, VkSparseImageMemoryBindInfo,
+        VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements2,
+        VkSparseImageMemoryRequirements2KHR,
+        VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind,
+        -- ** Fence commands
+        VkCreateFence, pattern VkCreateFence, HS_vkCreateFence,
+        PFN_vkCreateFence, vkCreateFence, vkCreateFenceUnsafe,
+        vkCreateFenceSafe, VkDestroyFence, pattern VkDestroyFence,
+        HS_vkDestroyFence, PFN_vkDestroyFence, vkDestroyFence,
+        vkDestroyFenceUnsafe, vkDestroyFenceSafe, VkResetFences,
+        pattern VkResetFences, HS_vkResetFences, PFN_vkResetFences,
+        vkResetFences, vkResetFencesUnsafe, vkResetFencesSafe,
+        VkGetFenceStatus, pattern VkGetFenceStatus, HS_vkGetFenceStatus,
         PFN_vkGetFenceStatus, vkGetFenceStatus, vkGetFenceStatusUnsafe,
         vkGetFenceStatusSafe, VkWaitForFences, pattern VkWaitForFences,
         HS_vkWaitForFences, PFN_vkWaitForFences, vkWaitForFences,
         vkWaitForFencesUnsafe, vkWaitForFencesSafe,
-        module Graphics.Vulkan.Types.Enum.Fence,
-        module Graphics.Vulkan.Types.Struct.Fence, -- ** Queue semaphore commands
-                                                   VkCreateSemaphore,
-        pattern VkCreateSemaphore, HS_vkCreateSemaphore,
+        VkFenceCreateBitmask(..), VkFenceImportBitmask(..),
+        VkFenceCreateFlagBits(), VkFenceCreateFlags(),
+        VkFenceImportFlagBits(), VkFenceImportFlagBitsKHR(..),
+        VkFenceImportFlags(), VkFenceCreateInfo, VkFenceGetFdInfoKHR,
+        -- ** Queue semaphore commands
+        VkCreateSemaphore, pattern VkCreateSemaphore, HS_vkCreateSemaphore,
         PFN_vkCreateSemaphore, vkCreateSemaphore, vkCreateSemaphoreUnsafe,
         vkCreateSemaphoreSafe, VkDestroySemaphore,
         pattern VkDestroySemaphore, HS_vkDestroySemaphore,
         PFN_vkDestroySemaphore, vkDestroySemaphore,
         vkDestroySemaphoreUnsafe, vkDestroySemaphoreSafe,
-        module Graphics.Vulkan.Types.Struct.Semaphore, -- ** Event commands
-                                                       VkCreateEvent,
+        VkSemaphoreCreateInfo, VkSemaphoreGetFdInfoKHR, -- ** Event commands
+                                                        VkCreateEvent,
         pattern VkCreateEvent, HS_vkCreateEvent, PFN_vkCreateEvent,
         vkCreateEvent, vkCreateEventUnsafe, vkCreateEventSafe,
         VkDestroyEvent, pattern VkDestroyEvent, HS_vkDestroyEvent,
@@ -266,31 +462,38 @@ module Graphics.Vulkan.Core_1_0
         vkSetEventUnsafe, vkSetEventSafe, VkResetEvent,
         pattern VkResetEvent, HS_vkResetEvent, PFN_vkResetEvent,
         vkResetEvent, vkResetEventUnsafe, vkResetEventSafe,
-        module Graphics.Vulkan.Types.Struct.EventCreateInfo,
-        -- ** Query commands
-        VkCreateQueryPool, pattern VkCreateQueryPool, HS_vkCreateQueryPool,
-        PFN_vkCreateQueryPool, vkCreateQueryPool, vkCreateQueryPoolUnsafe,
-        vkCreateQueryPoolSafe, VkDestroyQueryPool,
+        VkEventCreateInfo, -- ** Query commands
+                           VkCreateQueryPool, pattern VkCreateQueryPool,
+        HS_vkCreateQueryPool, PFN_vkCreateQueryPool, vkCreateQueryPool,
+        vkCreateQueryPoolUnsafe, vkCreateQueryPoolSafe, VkDestroyQueryPool,
         pattern VkDestroyQueryPool, HS_vkDestroyQueryPool,
         PFN_vkDestroyQueryPool, vkDestroyQueryPool,
         vkDestroyQueryPoolUnsafe, vkDestroyQueryPoolSafe,
         VkGetQueryPoolResults, pattern VkGetQueryPoolResults,
         HS_vkGetQueryPoolResults, PFN_vkGetQueryPoolResults,
         vkGetQueryPoolResults, vkGetQueryPoolResultsUnsafe,
-        vkGetQueryPoolResultsSafe, module Graphics.Vulkan.Types.Enum.Query,
-        module Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo,
-        -- ** Buffer commands
-        VkCreateBuffer, pattern VkCreateBuffer, HS_vkCreateBuffer,
-        PFN_vkCreateBuffer, vkCreateBuffer, vkCreateBufferUnsafe,
-        vkCreateBufferSafe, VkDestroyBuffer, pattern VkDestroyBuffer,
-        HS_vkDestroyBuffer, PFN_vkDestroyBuffer, vkDestroyBuffer,
-        vkDestroyBufferUnsafe, vkDestroyBufferSafe,
-        module Graphics.Vulkan.Types.Enum.Buffer,
-        module Graphics.Vulkan.Types.Enum.SharingMode,
-        module Graphics.Vulkan.Types.Struct.Buffer, -- ** Buffer view commands
-                                                    VkCreateBufferView,
-        pattern VkCreateBufferView, HS_vkCreateBufferView,
-        PFN_vkCreateBufferView, vkCreateBufferView,
+        vkGetQueryPoolResultsSafe, VkQueryControlBitmask(..),
+        VkQueryPipelineStatisticBitmask(..), VkQueryResultBitmask(..),
+        VkQueryType(..), VkQueryControlFlagBits(), VkQueryControlFlags(),
+        VkQueryPipelineStatisticFlagBits(),
+        VkQueryPipelineStatisticFlags(), VkQueryPoolCreateFlagBits(..),
+        VkQueryResultFlagBits(), VkQueryResultFlags(),
+        VkQueryPoolCreateInfo, -- ** Buffer commands
+                               VkCreateBuffer, pattern VkCreateBuffer,
+        HS_vkCreateBuffer, PFN_vkCreateBuffer, vkCreateBuffer,
+        vkCreateBufferUnsafe, vkCreateBufferSafe, VkDestroyBuffer,
+        pattern VkDestroyBuffer, HS_vkDestroyBuffer, PFN_vkDestroyBuffer,
+        vkDestroyBuffer, vkDestroyBufferUnsafe, vkDestroyBufferSafe,
+        VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
+        VkBufferCreateFlagBits(), VkBufferCreateFlags(),
+        VkBufferUsageFlagBits(), VkBufferUsageFlags(),
+        VkBufferViewCreateFlagBits(..), VkSharingMode(..), VkBufferCopy,
+        VkBufferCreateInfo, VkBufferImageCopy, VkBufferMemoryBarrier,
+        VkBufferMemoryRequirementsInfo2,
+        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo,
+        -- ** Buffer view commands
+        VkCreateBufferView, pattern VkCreateBufferView,
+        HS_vkCreateBufferView, PFN_vkCreateBufferView, vkCreateBufferView,
         vkCreateBufferViewUnsafe, vkCreateBufferViewSafe,
         VkDestroyBufferView, pattern VkDestroyBufferView,
         HS_vkDestroyBufferView, PFN_vkDestroyBufferView,
@@ -304,8 +507,7 @@ module Graphics.Vulkan.Core_1_0
         VkGetImageSubresourceLayout, pattern VkGetImageSubresourceLayout,
         HS_vkGetImageSubresourceLayout, PFN_vkGetImageSubresourceLayout,
         vkGetImageSubresourceLayout, vkGetImageSubresourceLayoutUnsafe,
-        vkGetImageSubresourceLayoutSafe,
-        module Graphics.Vulkan.Types.Struct.SubresourceLayout,
+        vkGetImageSubresourceLayoutSafe, VkSubresourceLayout,
         -- ** Image view commands
         VkCreateImageView, pattern VkCreateImageView, HS_vkCreateImageView,
         PFN_vkCreateImageView, vkCreateImageView, vkCreateImageViewUnsafe,
@@ -313,33 +515,56 @@ module Graphics.Vulkan.Core_1_0
         pattern VkDestroyImageView, HS_vkDestroyImageView,
         PFN_vkDestroyImageView, vkDestroyImageView,
         vkDestroyImageViewUnsafe, vkDestroyImageViewSafe,
-        module Graphics.Vulkan.Types.Enum.ComponentSwizzle,
-        module Graphics.Vulkan.Types.Struct.ComponentMapping,
-        -- ** Shader commands
-        VkCreateShaderModule, pattern VkCreateShaderModule,
-        HS_vkCreateShaderModule, PFN_vkCreateShaderModule,
-        vkCreateShaderModule, vkCreateShaderModuleUnsafe,
-        vkCreateShaderModuleSafe, VkDestroyShaderModule,
-        pattern VkDestroyShaderModule, HS_vkDestroyShaderModule,
-        PFN_vkDestroyShaderModule, vkDestroyShaderModule,
-        vkDestroyShaderModuleUnsafe, vkDestroyShaderModuleSafe,
-        module Graphics.Vulkan.Types.Struct.Shader, -- ** Pipeline Cache commands
-                                                    VkCreatePipelineCache,
-        pattern VkCreatePipelineCache, HS_vkCreatePipelineCache,
-        PFN_vkCreatePipelineCache, vkCreatePipelineCache,
-        vkCreatePipelineCacheUnsafe, vkCreatePipelineCacheSafe,
-        VkDestroyPipelineCache, pattern VkDestroyPipelineCache,
-        HS_vkDestroyPipelineCache, PFN_vkDestroyPipelineCache,
-        vkDestroyPipelineCache, vkDestroyPipelineCacheUnsafe,
-        vkDestroyPipelineCacheSafe, VkGetPipelineCacheData,
-        pattern VkGetPipelineCacheData, HS_vkGetPipelineCacheData,
-        PFN_vkGetPipelineCacheData, vkGetPipelineCacheData,
-        vkGetPipelineCacheDataUnsafe, vkGetPipelineCacheDataSafe,
-        VkMergePipelineCaches, pattern VkMergePipelineCaches,
-        HS_vkMergePipelineCaches, PFN_vkMergePipelineCaches,
-        vkMergePipelineCaches, vkMergePipelineCachesUnsafe,
-        vkMergePipelineCachesSafe,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
+        VkComponentSwizzle(..), VkComponentMapping, -- ** Shader commands
+                                                    VkCreateShaderModule,
+        pattern VkCreateShaderModule, HS_vkCreateShaderModule,
+        PFN_vkCreateShaderModule, vkCreateShaderModule,
+        vkCreateShaderModuleUnsafe, vkCreateShaderModuleSafe,
+        VkDestroyShaderModule, pattern VkDestroyShaderModule,
+        HS_vkDestroyShaderModule, PFN_vkDestroyShaderModule,
+        vkDestroyShaderModule, vkDestroyShaderModuleUnsafe,
+        vkDestroyShaderModuleSafe, VkShaderModuleCreateInfo,
+        VkShaderModuleValidationCacheCreateInfoEXT,
+        VkShaderResourceUsageAMD, VkShaderStatisticsInfoAMD,
+        -- ** Pipeline Cache commands
+        VkCreatePipelineCache, pattern VkCreatePipelineCache,
+        HS_vkCreatePipelineCache, PFN_vkCreatePipelineCache,
+        vkCreatePipelineCache, vkCreatePipelineCacheUnsafe,
+        vkCreatePipelineCacheSafe, VkDestroyPipelineCache,
+        pattern VkDestroyPipelineCache, HS_vkDestroyPipelineCache,
+        PFN_vkDestroyPipelineCache, vkDestroyPipelineCache,
+        vkDestroyPipelineCacheUnsafe, vkDestroyPipelineCacheSafe,
+        VkGetPipelineCacheData, pattern VkGetPipelineCacheData,
+        HS_vkGetPipelineCacheData, PFN_vkGetPipelineCacheData,
+        vkGetPipelineCacheData, vkGetPipelineCacheDataUnsafe,
+        vkGetPipelineCacheDataSafe, VkMergePipelineCaches,
+        pattern VkMergePipelineCaches, HS_vkMergePipelineCaches,
+        PFN_vkMergePipelineCaches, vkMergePipelineCaches,
+        vkMergePipelineCachesUnsafe, vkMergePipelineCachesSafe,
+        VkGraphicsPipelineCreateInfo, VkPipelineCacheCreateInfo,
+        VkPipelineColorBlendAdvancedStateCreateInfoEXT,
+        VkPipelineColorBlendAttachmentState,
+        VkPipelineColorBlendStateCreateInfo,
+        VkPipelineCoverageModulationStateCreateInfoNV,
+        VkPipelineCoverageToColorStateCreateInfoNV,
+        VkPipelineDepthStencilStateCreateInfo,
+        VkPipelineDiscardRectangleStateCreateInfoEXT,
+        VkPipelineDynamicStateCreateInfo,
+        VkPipelineInputAssemblyStateCreateInfo, VkPipelineLayoutCreateInfo,
+        VkPipelineMultisampleStateCreateInfo,
+        VkPipelineRasterizationConservativeStateCreateInfoEXT,
+        VkPipelineRasterizationStateCreateInfo,
+        VkPipelineRasterizationStateRasterizationOrderAMD,
+        VkPipelineSampleLocationsStateCreateInfoEXT,
+        VkPipelineShaderStageCreateInfo,
+        VkPipelineTessellationDomainOriginStateCreateInfo,
+        VkPipelineTessellationDomainOriginStateCreateInfoKHR,
+        VkPipelineTessellationStateCreateInfo,
+        VkPipelineVertexInputDivisorStateCreateInfoEXT,
+        VkPipelineVertexInputStateCreateInfo,
+        VkPipelineViewportStateCreateInfo,
+        VkPipelineViewportSwizzleStateCreateInfoNV,
+        VkPipelineViewportWScalingStateCreateInfoNV,
         -- ** Pipeline commands
         VkCreateGraphicsPipelines, pattern VkCreateGraphicsPipelines,
         HS_vkCreateGraphicsPipelines, PFN_vkCreateGraphicsPipelines,
@@ -350,43 +575,46 @@ module Graphics.Vulkan.Core_1_0
         vkCreateComputePipelinesUnsafe, vkCreateComputePipelinesSafe,
         VkDestroyPipeline, pattern VkDestroyPipeline, HS_vkDestroyPipeline,
         PFN_vkDestroyPipeline, vkDestroyPipeline, vkDestroyPipelineUnsafe,
-        vkDestroyPipelineSafe, module Graphics.Vulkan.Types.Enum.Blend,
-        module Graphics.Vulkan.Types.Enum.Color,
-        module Graphics.Vulkan.Types.Enum.CompareOp,
-        module Graphics.Vulkan.Types.Enum.CullModeFlags,
-        module Graphics.Vulkan.Types.Enum.DynamicState,
-        module Graphics.Vulkan.Types.Enum.FrontFace,
-        module Graphics.Vulkan.Types.Enum.LogicOp,
-        module Graphics.Vulkan.Types.Enum.PolygonMode,
-        module Graphics.Vulkan.Types.Enum.PrimitiveTopology,
-        module Graphics.Vulkan.Types.Enum.Shader,
-        module Graphics.Vulkan.Types.Enum.Stencil,
-        module Graphics.Vulkan.Types.Enum.VertexInputRate,
-        module Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo,
-        module Graphics.Vulkan.Types.Struct.Rect,
-        module Graphics.Vulkan.Types.Struct.Specialization,
-        module Graphics.Vulkan.Types.Struct.StencilOpState,
-        module Graphics.Vulkan.Types.Struct.VertexInput,
-        module Graphics.Vulkan.Types.Struct.Viewport,
-        -- ** Pipeline layout commands
-        VkCreatePipelineLayout, pattern VkCreatePipelineLayout,
-        HS_vkCreatePipelineLayout, PFN_vkCreatePipelineLayout,
-        vkCreatePipelineLayout, vkCreatePipelineLayoutUnsafe,
-        vkCreatePipelineLayoutSafe, VkDestroyPipelineLayout,
-        pattern VkDestroyPipelineLayout, HS_vkDestroyPipelineLayout,
-        PFN_vkDestroyPipelineLayout, vkDestroyPipelineLayout,
-        vkDestroyPipelineLayoutUnsafe, vkDestroyPipelineLayoutSafe,
-        module Graphics.Vulkan.Types.Struct.PushConstantRange,
-        -- ** Sampler commands
-        VkCreateSampler, pattern VkCreateSampler, HS_vkCreateSampler,
-        PFN_vkCreateSampler, vkCreateSampler, vkCreateSamplerUnsafe,
-        vkCreateSamplerSafe, VkDestroySampler, pattern VkDestroySampler,
-        HS_vkDestroySampler, PFN_vkDestroySampler, vkDestroySampler,
-        vkDestroySamplerUnsafe, vkDestroySamplerSafe,
-        module Graphics.Vulkan.Types.Enum.BorderColor,
-        module Graphics.Vulkan.Types.Enum.Filter,
-        module Graphics.Vulkan.Types.Enum.Sampler,
-        module Graphics.Vulkan.Types.Struct.Sampler,
+        vkDestroyPipelineSafe, VkBlendFactor(..), VkBlendOp(..),
+        VkBlendOverlapEXT(..), VkColorComponentBitmask(..),
+        VkColorSpaceKHR(..), VkColorComponentFlagBits(),
+        VkColorComponentFlags(), VkCompareOp(..), VkCullModeBitmask(..),
+        VkCullModeFlagBits(), VkCullModeFlags(), VkDynamicState(..),
+        VkFrontFace(..), VkLogicOp(..), VkPolygonMode(..),
+        VkPrimitiveTopology(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkStencilFaceBitmask(..), VkStencilOp(..),
+        VkStencilFaceFlagBits(), VkStencilFaceFlags(),
+        VkVertexInputRate(..), VkComputePipelineCreateInfo, VkRect2D,
+        VkRectLayerKHR, VkSpecializationInfo, VkSpecializationMapEntry,
+        VkStencilOpState, VkVertexInputAttributeDescription,
+        VkVertexInputBindingDescription,
+        VkVertexInputBindingDivisorDescriptionEXT, VkViewport,
+        VkViewportSwizzleNV, VkViewportWScalingNV, -- ** Pipeline layout commands
+                                                   VkCreatePipelineLayout,
+        pattern VkCreatePipelineLayout, HS_vkCreatePipelineLayout,
+        PFN_vkCreatePipelineLayout, vkCreatePipelineLayout,
+        vkCreatePipelineLayoutUnsafe, vkCreatePipelineLayoutSafe,
+        VkDestroyPipelineLayout, pattern VkDestroyPipelineLayout,
+        HS_vkDestroyPipelineLayout, PFN_vkDestroyPipelineLayout,
+        vkDestroyPipelineLayout, vkDestroyPipelineLayoutUnsafe,
+        vkDestroyPipelineLayoutSafe, VkPushConstantRange, -- ** Sampler commands
+                                                          VkCreateSampler,
+        pattern VkCreateSampler, HS_vkCreateSampler, PFN_vkCreateSampler,
+        vkCreateSampler, vkCreateSamplerUnsafe, vkCreateSamplerSafe,
+        VkDestroySampler, pattern VkDestroySampler, HS_vkDestroySampler,
+        PFN_vkDestroySampler, vkDestroySampler, vkDestroySamplerUnsafe,
+        vkDestroySamplerSafe, VkBorderColor(..), VkFilter(..),
+        VkSamplerAddressMode(..), VkSamplerMipmapMode(..),
+        VkSamplerReductionModeEXT(..), VkSamplerYcbcrModelConversion(..),
+        VkSamplerYcbcrRange(..), VkSamplerCreateFlagBits(..),
+        VkSamplerYcbcrModelConversionKHR(..), VkSamplerYcbcrRangeKHR(..),
+        VkSamplerCreateInfo, VkSamplerReductionModeCreateInfoEXT,
+        VkSamplerYcbcrConversionCreateInfo,
+        VkSamplerYcbcrConversionCreateInfoKHR,
+        VkSamplerYcbcrConversionImageFormatProperties,
+        VkSamplerYcbcrConversionImageFormatPropertiesKHR,
+        VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfoKHR,
         -- ** Descriptor set commands
         VkCreateDescriptorSetLayout, pattern VkCreateDescriptorSetLayout,
         HS_vkCreateDescriptorSetLayout, PFN_vkCreateDescriptorSetLayout,
@@ -416,11 +644,27 @@ module Graphics.Vulkan.Core_1_0
         VkUpdateDescriptorSets, pattern VkUpdateDescriptorSets,
         HS_vkUpdateDescriptorSets, PFN_vkUpdateDescriptorSets,
         vkUpdateDescriptorSets, vkUpdateDescriptorSetsUnsafe,
-        vkUpdateDescriptorSetsSafe,
-        module Graphics.Vulkan.Types.Enum.Descriptor,
-        module Graphics.Vulkan.Types.Struct.CopyDescriptorSet,
-        module Graphics.Vulkan.Types.Struct.Descriptor,
-        module Graphics.Vulkan.Types.Struct.WriteDescriptorSet,
+        vkUpdateDescriptorSetsSafe, VkDescriptorBindingBitmaskEXT(..),
+        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
+        VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
+        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorSetLayoutCreateBitmask(..),
+        VkDescriptorSetLayoutCreateFlagBits(),
+        VkDescriptorSetLayoutCreateFlags(),
+        VkDescriptorUpdateTemplateTypeKHR(..), VkCopyDescriptorSet,
+        VkDescriptorBufferInfo, VkDescriptorImageInfo,
+        VkDescriptorPoolCreateInfo, VkDescriptorPoolSize,
+        VkDescriptorSetAllocateInfo, VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
+        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorUpdateTemplateCreateInfo,
+        VkDescriptorUpdateTemplateCreateInfoKHR,
+        VkDescriptorUpdateTemplateEntry,
+        VkDescriptorUpdateTemplateEntryKHR, VkWriteDescriptorSet,
         -- ** Pass commands
         VkCreateFramebuffer, pattern VkCreateFramebuffer,
         HS_vkCreateFramebuffer, PFN_vkCreateFramebuffer,
@@ -439,41 +683,55 @@ module Graphics.Vulkan.Core_1_0
         pattern VkGetRenderAreaGranularity, HS_vkGetRenderAreaGranularity,
         PFN_vkGetRenderAreaGranularity, vkGetRenderAreaGranularity,
         vkGetRenderAreaGranularityUnsafe, vkGetRenderAreaGranularitySafe,
-        module Graphics.Vulkan.Types.Enum.AccessFlags,
-        module Graphics.Vulkan.Types.Enum.Attachment,
-        module Graphics.Vulkan.Types.Enum.DependencyFlags,
-        module Graphics.Vulkan.Types.Enum.Subpass,
-        module Graphics.Vulkan.Types.Struct.Attachment,
-        module Graphics.Vulkan.Types.Struct.FramebufferCreateInfo,
-        module Graphics.Vulkan.Types.Struct.RenderPass,
-        module Graphics.Vulkan.Types.Struct.Subpass, -- ** Command pool commands
-                                                     VkCreateCommandPool,
-        pattern VkCreateCommandPool, HS_vkCreateCommandPool,
-        PFN_vkCreateCommandPool, vkCreateCommandPool,
-        vkCreateCommandPoolUnsafe, vkCreateCommandPoolSafe,
-        VkDestroyCommandPool, pattern VkDestroyCommandPool,
-        HS_vkDestroyCommandPool, PFN_vkDestroyCommandPool,
-        vkDestroyCommandPool, vkDestroyCommandPoolUnsafe,
-        vkDestroyCommandPoolSafe, VkResetCommandPool,
-        pattern VkResetCommandPool, HS_vkResetCommandPool,
-        PFN_vkResetCommandPool, vkResetCommandPool,
+        VkAccessBitmask(..), VkAccessFlagBits(), VkAccessFlags(),
+        VkAttachmentDescriptionBitmask(..), VkAttachmentLoadOp(..),
+        VkAttachmentStoreOp(..), VkAttachmentDescriptionFlagBits(),
+        VkAttachmentDescriptionFlags(), VkDependencyBitmask(..),
+        VkDependencyFlagBits(), VkDependencyFlags(), VkSubpassContents(..),
+        VkSubpassDescriptionBitmask(..), VkSubpassDescriptionFlagBits(),
+        VkSubpassDescriptionFlags(), VkAttachmentDescription,
+        VkAttachmentReference, VkAttachmentSampleLocationsEXT,
+        VkFramebufferCreateInfo, VkRenderPassBeginInfo,
+        VkRenderPassCreateInfo,
+        VkRenderPassInputAttachmentAspectCreateInfo,
+        VkRenderPassInputAttachmentAspectCreateInfoKHR,
+        VkRenderPassMultiviewCreateInfo,
+        VkRenderPassMultiviewCreateInfoKHR,
+        VkRenderPassSampleLocationsBeginInfoEXT, VkSubpassDependency,
+        VkSubpassDescription, VkSubpassSampleLocationsEXT,
+        -- ** Command pool commands
+        VkCreateCommandPool, pattern VkCreateCommandPool,
+        HS_vkCreateCommandPool, PFN_vkCreateCommandPool,
+        vkCreateCommandPool, vkCreateCommandPoolUnsafe,
+        vkCreateCommandPoolSafe, VkDestroyCommandPool,
+        pattern VkDestroyCommandPool, HS_vkDestroyCommandPool,
+        PFN_vkDestroyCommandPool, vkDestroyCommandPool,
+        vkDestroyCommandPoolUnsafe, vkDestroyCommandPoolSafe,
+        VkResetCommandPool, pattern VkResetCommandPool,
+        HS_vkResetCommandPool, PFN_vkResetCommandPool, vkResetCommandPool,
         vkResetCommandPoolUnsafe, vkResetCommandPoolSafe,
-        module Graphics.Vulkan.Types.Enum.Command,
-        module Graphics.Vulkan.Types.Struct.Command,
-        -- ** Command buffer commands
-        VkAllocateCommandBuffers, pattern VkAllocateCommandBuffers,
-        HS_vkAllocateCommandBuffers, PFN_vkAllocateCommandBuffers,
-        vkAllocateCommandBuffers, vkAllocateCommandBuffersUnsafe,
-        vkAllocateCommandBuffersSafe, VkFreeCommandBuffers,
-        pattern VkFreeCommandBuffers, HS_vkFreeCommandBuffers,
-        PFN_vkFreeCommandBuffers, vkFreeCommandBuffers,
-        vkFreeCommandBuffersUnsafe, vkFreeCommandBuffersSafe,
-        VkBeginCommandBuffer, pattern VkBeginCommandBuffer,
-        HS_vkBeginCommandBuffer, PFN_vkBeginCommandBuffer,
-        vkBeginCommandBuffer, vkBeginCommandBufferUnsafe,
-        vkBeginCommandBufferSafe, VkEndCommandBuffer,
-        pattern VkEndCommandBuffer, HS_vkEndCommandBuffer,
-        PFN_vkEndCommandBuffer, vkEndCommandBuffer,
+        VkCommandBufferLevel(..), VkCommandBufferResetBitmask(..),
+        VkCommandBufferUsageBitmask(..), VkCommandPoolCreateBitmask(..),
+        VkCommandPoolResetBitmask(..), VkCommandBufferResetFlagBits(),
+        VkCommandBufferResetFlags(), VkCommandBufferUsageFlagBits(),
+        VkCommandBufferUsageFlags(), VkCommandPoolCreateFlagBits(),
+        VkCommandPoolCreateFlags(), VkCommandPoolResetFlagBits(),
+        VkCommandPoolResetFlags(), VkCommandBufferAllocateInfo,
+        VkCommandBufferBeginInfo, VkCommandBufferInheritanceInfo,
+        VkCommandPoolCreateInfo, -- ** Command buffer commands
+                                 VkAllocateCommandBuffers,
+        pattern VkAllocateCommandBuffers, HS_vkAllocateCommandBuffers,
+        PFN_vkAllocateCommandBuffers, vkAllocateCommandBuffers,
+        vkAllocateCommandBuffersUnsafe, vkAllocateCommandBuffersSafe,
+        VkFreeCommandBuffers, pattern VkFreeCommandBuffers,
+        HS_vkFreeCommandBuffers, PFN_vkFreeCommandBuffers,
+        vkFreeCommandBuffers, vkFreeCommandBuffersUnsafe,
+        vkFreeCommandBuffersSafe, VkBeginCommandBuffer,
+        pattern VkBeginCommandBuffer, HS_vkBeginCommandBuffer,
+        PFN_vkBeginCommandBuffer, vkBeginCommandBuffer,
+        vkBeginCommandBufferUnsafe, vkBeginCommandBufferSafe,
+        VkEndCommandBuffer, pattern VkEndCommandBuffer,
+        HS_vkEndCommandBuffer, PFN_vkEndCommandBuffer, vkEndCommandBuffer,
         vkEndCommandBufferUnsafe, vkEndCommandBufferSafe,
         VkResetCommandBuffer, pattern VkResetCommandBuffer,
         HS_vkResetCommandBuffer, PFN_vkResetCommandBuffer,
@@ -610,125 +868,128 @@ module Graphics.Vulkan.Core_1_0
         VkCmdExecuteCommands, pattern VkCmdExecuteCommands,
         HS_vkCmdExecuteCommands, PFN_vkCmdExecuteCommands,
         vkCmdExecuteCommands, vkCmdExecuteCommandsUnsafe,
-        vkCmdExecuteCommandsSafe,
-        module Graphics.Vulkan.Types.Enum.IndexType,
-        module Graphics.Vulkan.Types.Struct.Clear,
-        -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
-        module Graphics.Vulkan.Types.Struct.Base,
-        module Graphics.Vulkan.Types.Struct.DispatchIndirectCommand,
-        module Graphics.Vulkan.Types.Struct.DrawInd,
-        module Graphics.Vulkan.Types.Enum.Object)
+        vkCmdExecuteCommandsSafe, VkIndexType(..), VkClearAttachment,
+        VkClearColorValue, VkClearDepthStencilValue, VkClearRect,
+        VkClearValue, -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
+                      VkBaseInStructure, VkBaseOutStructure,
+        VkDispatchIndirectCommand, VkDrawIndexedIndirectCommand,
+        VkDrawIndirectCommand, VkObjectEntryTypeNVX(..),
+        VkObjectEntryUsageBitmaskNVX(..), VkObjectType(..),
+        VkObjectEntryUsageFlagBitsNVX(), VkObjectEntryUsageFlagsNVX())
        where
-import           GHC.Ptr                                                (Ptr (..))
-import           Graphics.Vulkan.Constants                              (pattern VK_ATTACHMENT_UNUSED,
-                                                                         pattern VK_FALSE,
-                                                                         pattern VK_LOD_CLAMP_NONE,
-                                                                         pattern VK_QUEUE_FAMILY_IGNORED,
-                                                                         pattern VK_REMAINING_ARRAY_LAYERS,
-                                                                         pattern VK_REMAINING_MIP_LEVELS,
-                                                                         pattern VK_SUBPASS_EXTERNAL,
-                                                                         pattern VK_TRUE,
-                                                                         pattern VK_WHOLE_SIZE)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.AccessFlags
-import           Graphics.Vulkan.Types.Enum.Attachment
-import           Graphics.Vulkan.Types.Enum.Blend
-import           Graphics.Vulkan.Types.Enum.BorderColor
-import           Graphics.Vulkan.Types.Enum.Buffer
-import           Graphics.Vulkan.Types.Enum.Color
-import           Graphics.Vulkan.Types.Enum.Command
-import           Graphics.Vulkan.Types.Enum.CompareOp
-import           Graphics.Vulkan.Types.Enum.ComponentSwizzle
-import           Graphics.Vulkan.Types.Enum.CullModeFlags
-import           Graphics.Vulkan.Types.Enum.DependencyFlags
-import           Graphics.Vulkan.Types.Enum.Descriptor
-import           Graphics.Vulkan.Types.Enum.Device
-import           Graphics.Vulkan.Types.Enum.DynamicState
-import           Graphics.Vulkan.Types.Enum.Fence
-import           Graphics.Vulkan.Types.Enum.Filter
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.FrontFace
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.IndexType
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.LogicOp
-import           Graphics.Vulkan.Types.Enum.Memory
-import           Graphics.Vulkan.Types.Enum.Object
-import           Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.PolygonMode
-import           Graphics.Vulkan.Types.Enum.PrimitiveTopology
-import           Graphics.Vulkan.Types.Enum.Query
-import           Graphics.Vulkan.Types.Enum.Queue
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.Sampler
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Enum.SharingMode
-import           Graphics.Vulkan.Types.Enum.Sparse
-import           Graphics.Vulkan.Types.Enum.Stencil
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Subpass
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Enum.VertexInputRate
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.ApplicationInfo
-import           Graphics.Vulkan.Types.Struct.Attachment
-import           Graphics.Vulkan.Types.Struct.Base
-import           Graphics.Vulkan.Types.Struct.Bind
-import           Graphics.Vulkan.Types.Struct.Buffer
-import           Graphics.Vulkan.Types.Struct.Clear
-import           Graphics.Vulkan.Types.Struct.Command
-import           Graphics.Vulkan.Types.Struct.ComponentMapping
-import           Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
-import           Graphics.Vulkan.Types.Struct.CopyDescriptorSet
-import           Graphics.Vulkan.Types.Struct.Descriptor
-import           Graphics.Vulkan.Types.Struct.Device
-import           Graphics.Vulkan.Types.Struct.DispatchIndirectCommand
-import           Graphics.Vulkan.Types.Struct.DrawInd
-import           Graphics.Vulkan.Types.Struct.EventCreateInfo
-import           Graphics.Vulkan.Types.Struct.ExtensionProperties
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Fence
-import           Graphics.Vulkan.Types.Struct.FormatProperties
-import           Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
-import           Graphics.Vulkan.Types.Struct.Image
-import           Graphics.Vulkan.Types.Struct.InstanceCreateInfo
-import           Graphics.Vulkan.Types.Struct.LayerProperties
-import           Graphics.Vulkan.Types.Struct.MappedMemoryRange
-import           Graphics.Vulkan.Types.Struct.Memory
-import           Graphics.Vulkan.Types.Struct.Offset
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
-import           Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.Pipeline
-import           Graphics.Vulkan.Types.Struct.PushConstantRange
-import           Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
-import           Graphics.Vulkan.Types.Struct.QueueFamilyProperties
-import           Graphics.Vulkan.Types.Struct.Rect
-import           Graphics.Vulkan.Types.Struct.RenderPass
-import           Graphics.Vulkan.Types.Struct.Sampler
-import           Graphics.Vulkan.Types.Struct.Semaphore
-import           Graphics.Vulkan.Types.Struct.Shader
-import           Graphics.Vulkan.Types.Struct.Sparse
-import           Graphics.Vulkan.Types.Struct.Specialization
-import           Graphics.Vulkan.Types.Struct.StencilOpState
-import           Graphics.Vulkan.Types.Struct.SubmitInfo
-import           Graphics.Vulkan.Types.Struct.Subpass
-import           Graphics.Vulkan.Types.Struct.SubresourceLayout
-import           Graphics.Vulkan.Types.Struct.VertexInput
-import           Graphics.Vulkan.Types.Struct.Viewport
-import           Graphics.Vulkan.Types.Struct.WriteDescriptorSet
-import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
+import GHC.Ptr                                                (Ptr (..))
+import Graphics.Vulkan.Constants                              (pattern VK_ATTACHMENT_UNUSED,
+                                                               pattern VK_FALSE,
+                                                               pattern VK_LOD_CLAMP_NONE,
+                                                               pattern VK_QUEUE_FAMILY_IGNORED,
+                                                               pattern VK_REMAINING_ARRAY_LAYERS,
+                                                               pattern VK_REMAINING_MIP_LEVELS,
+                                                               pattern VK_SUBPASS_EXTERNAL,
+                                                               pattern VK_TRUE,
+                                                               pattern VK_WHOLE_SIZE)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.AccessFlags
+import Graphics.Vulkan.Types.Enum.Attachment
+import Graphics.Vulkan.Types.Enum.Blend
+import Graphics.Vulkan.Types.Enum.BorderColor
+import Graphics.Vulkan.Types.Enum.Buffer
+import Graphics.Vulkan.Types.Enum.Color
+import Graphics.Vulkan.Types.Enum.Command
+import Graphics.Vulkan.Types.Enum.CompareOp
+import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.CullModeFlags
+import Graphics.Vulkan.Types.Enum.DependencyFlags
+import Graphics.Vulkan.Types.Enum.Descriptor
+import Graphics.Vulkan.Types.Enum.Device
+import Graphics.Vulkan.Types.Enum.DynamicState
+import Graphics.Vulkan.Types.Enum.Fence
+import Graphics.Vulkan.Types.Enum.Filter
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.FrontFace
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.IndexType
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.LogicOp
+import Graphics.Vulkan.Types.Enum.Memory
+import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.PolygonMode
+import Graphics.Vulkan.Types.Enum.PrimitiveTopology
+import Graphics.Vulkan.Types.Enum.Query
+import Graphics.Vulkan.Types.Enum.Queue
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.Sampler
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Enum.SharingMode
+import Graphics.Vulkan.Types.Enum.Sparse
+import Graphics.Vulkan.Types.Enum.Stencil
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Subpass
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Enum.VertexInputRate
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.ApplicationInfo
+import Graphics.Vulkan.Types.Struct.Attachment
+import Graphics.Vulkan.Types.Struct.Base                      (VkBaseInStructure,
+                                                               VkBaseOutStructure)
+import Graphics.Vulkan.Types.Struct.Bind
+import Graphics.Vulkan.Types.Struct.Buffer
+import Graphics.Vulkan.Types.Struct.Clear
+import Graphics.Vulkan.Types.Struct.Command
+import Graphics.Vulkan.Types.Struct.ComponentMapping
+import Graphics.Vulkan.Types.Struct.ComputePipelineCreateInfo
+import Graphics.Vulkan.Types.Struct.CopyDescriptorSet
+import Graphics.Vulkan.Types.Struct.Descriptor
+import Graphics.Vulkan.Types.Struct.Device
+import Graphics.Vulkan.Types.Struct.DispatchIndirectCommand   (VkDispatchIndirectCommand)
+import Graphics.Vulkan.Types.Struct.DrawInd                   (VkDrawIndexedIndirectCommand,
+                                                               VkDrawIndirectCommand)
+import Graphics.Vulkan.Types.Struct.EventCreateInfo
+import Graphics.Vulkan.Types.Struct.ExtensionProperties
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Fence
+import Graphics.Vulkan.Types.Struct.FormatProperties
+import Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
+import Graphics.Vulkan.Types.Struct.Image
+import Graphics.Vulkan.Types.Struct.InstanceCreateInfo
+import Graphics.Vulkan.Types.Struct.LayerProperties
+import Graphics.Vulkan.Types.Struct.MappedMemoryRange
+import Graphics.Vulkan.Types.Struct.Memory
+import Graphics.Vulkan.Types.Struct.Offset
+import Graphics.Vulkan.Types.Struct.PhysicalDevice
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
+import Graphics.Vulkan.Types.Struct.Pipeline
+import Graphics.Vulkan.Types.Struct.PushConstantRange
+import Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
+import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import Graphics.Vulkan.Types.Struct.Rect
+import Graphics.Vulkan.Types.Struct.RenderPass
+import Graphics.Vulkan.Types.Struct.Sampler
+import Graphics.Vulkan.Types.Struct.Semaphore
+import Graphics.Vulkan.Types.Struct.Shader
+import Graphics.Vulkan.Types.Struct.Sparse
+import Graphics.Vulkan.Types.Struct.Specialization
+import Graphics.Vulkan.Types.Struct.StencilOpState
+import Graphics.Vulkan.Types.Struct.SubmitInfo
+import Graphics.Vulkan.Types.Struct.Subpass
+import Graphics.Vulkan.Types.Struct.SubresourceLayout
+import Graphics.Vulkan.Types.Struct.VertexInput
+import Graphics.Vulkan.Types.Struct.Viewport
+import Graphics.Vulkan.Types.Struct.WriteDescriptorSet
+import System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 pattern VkCreateInstance :: CString
 
 pattern VkCreateInstance <- (is_VkCreateInstance -> True)
-  where VkCreateInstance = _VkCreateInstance
+  where
+    VkCreateInstance = _VkCreateInstance
 
 {-# INLINE _VkCreateInstance #-}
 
@@ -919,21 +1180,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateInstanceSafe ::
                PFN_vkCreateInstance -> HS_vkCreateInstance
 
 instance VulkanProc "vkCreateInstance" where
-        type VkProcType "vkCreateInstance" = HS_vkCreateInstance
-        vkProcSymbol = _VkCreateInstance
+    type VkProcType "vkCreateInstance" = HS_vkCreateInstance
+    vkProcSymbol = _VkCreateInstance
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateInstanceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateInstanceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateInstanceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateInstanceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyInstance :: CString
 
 pattern VkDestroyInstance <- (is_VkDestroyInstance -> True)
-  where VkDestroyInstance = _VkDestroyInstance
+  where
+    VkDestroyInstance = _VkDestroyInstance
 
 {-# INLINE _VkDestroyInstance #-}
 
@@ -1091,22 +1353,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroyInstanceSafe ::
                PFN_vkDestroyInstance -> HS_vkDestroyInstance
 
 instance VulkanProc "vkDestroyInstance" where
-        type VkProcType "vkDestroyInstance" = HS_vkDestroyInstance
-        vkProcSymbol = _VkDestroyInstance
+    type VkProcType "vkDestroyInstance" = HS_vkDestroyInstance
+    vkProcSymbol = _VkDestroyInstance
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyInstanceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyInstanceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyInstanceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyInstanceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEnumeratePhysicalDevices :: CString
 
 pattern VkEnumeratePhysicalDevices <-
         (is_VkEnumeratePhysicalDevices -> True)
-  where VkEnumeratePhysicalDevices = _VkEnumeratePhysicalDevices
+  where
+    VkEnumeratePhysicalDevices = _VkEnumeratePhysicalDevices
 
 {-# INLINE _VkEnumeratePhysicalDevices #-}
 
@@ -1297,23 +1560,24 @@ foreign import ccall safe "dynamic"
                PFN_vkEnumeratePhysicalDevices -> HS_vkEnumeratePhysicalDevices
 
 instance VulkanProc "vkEnumeratePhysicalDevices" where
-        type VkProcType "vkEnumeratePhysicalDevices" =
-             HS_vkEnumeratePhysicalDevices
-        vkProcSymbol = _VkEnumeratePhysicalDevices
+    type VkProcType "vkEnumeratePhysicalDevices" =
+         HS_vkEnumeratePhysicalDevices
+    vkProcSymbol = _VkEnumeratePhysicalDevices
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkEnumeratePhysicalDevicesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkEnumeratePhysicalDevicesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDevicesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkEnumeratePhysicalDevicesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceFeatures :: CString
 
 pattern VkGetPhysicalDeviceFeatures <-
         (is_VkGetPhysicalDeviceFeatures -> True)
-  where VkGetPhysicalDeviceFeatures = _VkGetPhysicalDeviceFeatures
+  where
+    VkGetPhysicalDeviceFeatures = _VkGetPhysicalDeviceFeatures
 
 {-# INLINE _VkGetPhysicalDeviceFeatures #-}
 
@@ -1479,24 +1743,25 @@ foreign import ccall safe "dynamic"
                PFN_vkGetPhysicalDeviceFeatures -> HS_vkGetPhysicalDeviceFeatures
 
 instance VulkanProc "vkGetPhysicalDeviceFeatures" where
-        type VkProcType "vkGetPhysicalDeviceFeatures" =
-             HS_vkGetPhysicalDeviceFeatures
-        vkProcSymbol = _VkGetPhysicalDeviceFeatures
+    type VkProcType "vkGetPhysicalDeviceFeatures" =
+         HS_vkGetPhysicalDeviceFeatures
+    vkProcSymbol = _VkGetPhysicalDeviceFeatures
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceFeaturesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDeviceFeaturesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeaturesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFeaturesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceFormatProperties :: CString
 
 pattern VkGetPhysicalDeviceFormatProperties <-
         (is_VkGetPhysicalDeviceFormatProperties -> True)
-  where VkGetPhysicalDeviceFormatProperties
-          = _VkGetPhysicalDeviceFormatProperties
+  where
+    VkGetPhysicalDeviceFormatProperties
+      = _VkGetPhysicalDeviceFormatProperties
 
 {-# INLINE _VkGetPhysicalDeviceFormatProperties #-}
 
@@ -1679,25 +1944,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceFormatProperties
 
 instance VulkanProc "vkGetPhysicalDeviceFormatProperties" where
-        type VkProcType "vkGetPhysicalDeviceFormatProperties" =
-             HS_vkGetPhysicalDeviceFormatProperties
-        vkProcSymbol = _VkGetPhysicalDeviceFormatProperties
+    type VkProcType "vkGetPhysicalDeviceFormatProperties" =
+         HS_vkGetPhysicalDeviceFormatProperties
+    vkProcSymbol = _VkGetPhysicalDeviceFormatProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceFormatPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceFormatPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFormatPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceFormatPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceImageFormatProperties :: CString
 
 pattern VkGetPhysicalDeviceImageFormatProperties <-
         (is_VkGetPhysicalDeviceImageFormatProperties -> True)
-  where VkGetPhysicalDeviceImageFormatProperties
-          = _VkGetPhysicalDeviceImageFormatProperties
+  where
+    VkGetPhysicalDeviceImageFormatProperties
+      = _VkGetPhysicalDeviceImageFormatProperties
 
 {-# INLINE _VkGetPhysicalDeviceImageFormatProperties #-}
 
@@ -1971,26 +2237,26 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties"
          where
-        type VkProcType "vkGetPhysicalDeviceImageFormatProperties" =
-             HS_vkGetPhysicalDeviceImageFormatProperties
-        vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties
+    type VkProcType "vkGetPhysicalDeviceImageFormatProperties" =
+         HS_vkGetPhysicalDeviceImageFormatProperties
+    vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceImageFormatPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceImageFormatPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceImageFormatPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceImageFormatPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceProperties :: CString
 
 pattern VkGetPhysicalDeviceProperties <-
         (is_VkGetPhysicalDeviceProperties -> True)
-  where VkGetPhysicalDeviceProperties
-          = _VkGetPhysicalDeviceProperties
+  where
+    VkGetPhysicalDeviceProperties = _VkGetPhysicalDeviceProperties
 
 {-# INLINE _VkGetPhysicalDeviceProperties #-}
 
@@ -2159,24 +2425,25 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceProperties
 
 instance VulkanProc "vkGetPhysicalDeviceProperties" where
-        type VkProcType "vkGetPhysicalDeviceProperties" =
-             HS_vkGetPhysicalDeviceProperties
-        vkProcSymbol = _VkGetPhysicalDeviceProperties
+    type VkProcType "vkGetPhysicalDeviceProperties" =
+         HS_vkGetPhysicalDeviceProperties
+    vkProcSymbol = _VkGetPhysicalDeviceProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDevicePropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetPhysicalDevicePropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDevicePropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDevicePropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties :: CString
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties <-
         (is_VkGetPhysicalDeviceQueueFamilyProperties -> True)
-  where VkGetPhysicalDeviceQueueFamilyProperties
-          = _VkGetPhysicalDeviceQueueFamilyProperties
+  where
+    VkGetPhysicalDeviceQueueFamilyProperties
+      = _VkGetPhysicalDeviceQueueFamilyProperties
 
 {-# INLINE _VkGetPhysicalDeviceQueueFamilyProperties #-}
 
@@ -2366,26 +2633,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties"
          where
-        type VkProcType "vkGetPhysicalDeviceQueueFamilyProperties" =
-             HS_vkGetPhysicalDeviceQueueFamilyProperties
-        vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties
+    type VkProcType "vkGetPhysicalDeviceQueueFamilyProperties" =
+         HS_vkGetPhysicalDeviceQueueFamilyProperties
+    vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceQueueFamilyPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceQueueFamilyPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceQueueFamilyPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceQueueFamilyPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceMemoryProperties :: CString
 
 pattern VkGetPhysicalDeviceMemoryProperties <-
         (is_VkGetPhysicalDeviceMemoryProperties -> True)
-  where VkGetPhysicalDeviceMemoryProperties
-          = _VkGetPhysicalDeviceMemoryProperties
+  where
+    VkGetPhysicalDeviceMemoryProperties
+      = _VkGetPhysicalDeviceMemoryProperties
 
 {-# INLINE _VkGetPhysicalDeviceMemoryProperties #-}
 
@@ -2559,23 +2827,24 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceMemoryProperties
 
 instance VulkanProc "vkGetPhysicalDeviceMemoryProperties" where
-        type VkProcType "vkGetPhysicalDeviceMemoryProperties" =
-             HS_vkGetPhysicalDeviceMemoryProperties
-        vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties
+    type VkProcType "vkGetPhysicalDeviceMemoryProperties" =
+         HS_vkGetPhysicalDeviceMemoryProperties
+    vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceMemoryPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceMemoryPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceMemoryPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPhysicalDeviceMemoryPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetInstanceProcAddr :: CString
 
 pattern VkGetInstanceProcAddr <- (is_VkGetInstanceProcAddr -> True)
-  where VkGetInstanceProcAddr = _VkGetInstanceProcAddr
+  where
+    VkGetInstanceProcAddr = _VkGetInstanceProcAddr
 
 {-# INLINE _VkGetInstanceProcAddr #-}
 
@@ -2736,21 +3005,22 @@ foreign import ccall safe "dynamic" unwrapVkGetInstanceProcAddrSafe
                :: PFN_vkGetInstanceProcAddr -> HS_vkGetInstanceProcAddr
 
 instance VulkanProc "vkGetInstanceProcAddr" where
-        type VkProcType "vkGetInstanceProcAddr" = HS_vkGetInstanceProcAddr
-        vkProcSymbol = _VkGetInstanceProcAddr
+    type VkProcType "vkGetInstanceProcAddr" = HS_vkGetInstanceProcAddr
+    vkProcSymbol = _VkGetInstanceProcAddr
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetInstanceProcAddrUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetInstanceProcAddrUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetInstanceProcAddrSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetInstanceProcAddrSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDeviceProcAddr :: CString
 
 pattern VkGetDeviceProcAddr <- (is_VkGetDeviceProcAddr -> True)
-  where VkGetDeviceProcAddr = _VkGetDeviceProcAddr
+  where
+    VkGetDeviceProcAddr = _VkGetDeviceProcAddr
 
 {-# INLINE _VkGetDeviceProcAddr #-}
 
@@ -2909,21 +3179,22 @@ foreign import ccall safe "dynamic" unwrapVkGetDeviceProcAddrSafe
                :: PFN_vkGetDeviceProcAddr -> HS_vkGetDeviceProcAddr
 
 instance VulkanProc "vkGetDeviceProcAddr" where
-        type VkProcType "vkGetDeviceProcAddr" = HS_vkGetDeviceProcAddr
-        vkProcSymbol = _VkGetDeviceProcAddr
+    type VkProcType "vkGetDeviceProcAddr" = HS_vkGetDeviceProcAddr
+    vkProcSymbol = _VkGetDeviceProcAddr
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetDeviceProcAddrUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetDeviceProcAddrUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDeviceProcAddrSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDeviceProcAddrSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDevice :: CString
 
 pattern VkCreateDevice <- (is_VkCreateDevice -> True)
-  where VkCreateDevice = _VkCreateDevice
+  where
+    VkCreateDevice = _VkCreateDevice
 
 {-# INLINE _VkCreateDevice #-}
 
@@ -3129,21 +3400,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateDeviceSafe ::
                PFN_vkCreateDevice -> HS_vkCreateDevice
 
 instance VulkanProc "vkCreateDevice" where
-        type VkProcType "vkCreateDevice" = HS_vkCreateDevice
-        vkProcSymbol = _VkCreateDevice
+    type VkProcType "vkCreateDevice" = HS_vkCreateDevice
+    vkProcSymbol = _VkCreateDevice
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDeviceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDeviceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDeviceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDeviceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDevice :: CString
 
 pattern VkDestroyDevice <- (is_VkDestroyDevice -> True)
-  where VkDestroyDevice = _VkDestroyDevice
+  where
+    VkDestroyDevice = _VkDestroyDevice
 
 {-# INLINE _VkDestroyDevice #-}
 
@@ -3299,23 +3571,24 @@ foreign import ccall safe "dynamic" unwrapVkDestroyDeviceSafe ::
                PFN_vkDestroyDevice -> HS_vkDestroyDevice
 
 instance VulkanProc "vkDestroyDevice" where
-        type VkProcType "vkDestroyDevice" = HS_vkDestroyDevice
-        vkProcSymbol = _VkDestroyDevice
+    type VkProcType "vkDestroyDevice" = HS_vkDestroyDevice
+    vkProcSymbol = _VkDestroyDevice
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyDeviceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyDeviceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyDeviceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyDeviceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEnumerateInstanceExtensionProperties :: CString
 
 pattern VkEnumerateInstanceExtensionProperties <-
         (is_VkEnumerateInstanceExtensionProperties -> True)
-  where VkEnumerateInstanceExtensionProperties
-          = _VkEnumerateInstanceExtensionProperties
+  where
+    VkEnumerateInstanceExtensionProperties
+      = _VkEnumerateInstanceExtensionProperties
 
 {-# INLINE _VkEnumerateInstanceExtensionProperties #-}
 
@@ -3517,26 +3790,27 @@ foreign import ccall safe "dynamic"
                  HS_vkEnumerateInstanceExtensionProperties
 
 instance VulkanProc "vkEnumerateInstanceExtensionProperties" where
-        type VkProcType "vkEnumerateInstanceExtensionProperties" =
-             HS_vkEnumerateInstanceExtensionProperties
-        vkProcSymbol = _VkEnumerateInstanceExtensionProperties
+    type VkProcType "vkEnumerateInstanceExtensionProperties" =
+         HS_vkEnumerateInstanceExtensionProperties
+    vkProcSymbol = _VkEnumerateInstanceExtensionProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkEnumerateInstanceExtensionPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkEnumerateInstanceExtensionPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkEnumerateInstanceExtensionPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkEnumerateInstanceExtensionPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEnumerateDeviceExtensionProperties :: CString
 
 pattern VkEnumerateDeviceExtensionProperties <-
         (is_VkEnumerateDeviceExtensionProperties -> True)
-  where VkEnumerateDeviceExtensionProperties
-          = _VkEnumerateDeviceExtensionProperties
+  where
+    VkEnumerateDeviceExtensionProperties
+      = _VkEnumerateDeviceExtensionProperties
 
 {-# INLINE _VkEnumerateDeviceExtensionProperties #-}
 
@@ -3753,26 +4027,27 @@ foreign import ccall safe "dynamic"
                  HS_vkEnumerateDeviceExtensionProperties
 
 instance VulkanProc "vkEnumerateDeviceExtensionProperties" where
-        type VkProcType "vkEnumerateDeviceExtensionProperties" =
-             HS_vkEnumerateDeviceExtensionProperties
-        vkProcSymbol = _VkEnumerateDeviceExtensionProperties
+    type VkProcType "vkEnumerateDeviceExtensionProperties" =
+         HS_vkEnumerateDeviceExtensionProperties
+    vkProcSymbol = _VkEnumerateDeviceExtensionProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkEnumerateDeviceExtensionPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkEnumerateDeviceExtensionPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkEnumerateDeviceExtensionPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkEnumerateDeviceExtensionPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEnumerateInstanceLayerProperties :: CString
 
 pattern VkEnumerateInstanceLayerProperties <-
         (is_VkEnumerateInstanceLayerProperties -> True)
-  where VkEnumerateInstanceLayerProperties
-          = _VkEnumerateInstanceLayerProperties
+  where
+    VkEnumerateInstanceLayerProperties
+      = _VkEnumerateInstanceLayerProperties
 
 {-# INLINE _VkEnumerateInstanceLayerProperties #-}
 
@@ -3959,25 +4234,26 @@ foreign import ccall safe "dynamic"
                  HS_vkEnumerateInstanceLayerProperties
 
 instance VulkanProc "vkEnumerateInstanceLayerProperties" where
-        type VkProcType "vkEnumerateInstanceLayerProperties" =
-             HS_vkEnumerateInstanceLayerProperties
-        vkProcSymbol = _VkEnumerateInstanceLayerProperties
+    type VkProcType "vkEnumerateInstanceLayerProperties" =
+         HS_vkEnumerateInstanceLayerProperties
+    vkProcSymbol = _VkEnumerateInstanceLayerProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkEnumerateInstanceLayerPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkEnumerateInstanceLayerPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkEnumerateInstanceLayerPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkEnumerateInstanceLayerPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEnumerateDeviceLayerProperties :: CString
 
 pattern VkEnumerateDeviceLayerProperties <-
         (is_VkEnumerateDeviceLayerProperties -> True)
-  where VkEnumerateDeviceLayerProperties
-          = _VkEnumerateDeviceLayerProperties
+  where
+    VkEnumerateDeviceLayerProperties
+      = _VkEnumerateDeviceLayerProperties
 
 {-# INLINE _VkEnumerateDeviceLayerProperties #-}
 
@@ -4180,23 +4456,24 @@ foreign import ccall safe "dynamic"
                  HS_vkEnumerateDeviceLayerProperties
 
 instance VulkanProc "vkEnumerateDeviceLayerProperties" where
-        type VkProcType "vkEnumerateDeviceLayerProperties" =
-             HS_vkEnumerateDeviceLayerProperties
-        vkProcSymbol = _VkEnumerateDeviceLayerProperties
+    type VkProcType "vkEnumerateDeviceLayerProperties" =
+         HS_vkEnumerateDeviceLayerProperties
+    vkProcSymbol = _VkEnumerateDeviceLayerProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkEnumerateDeviceLayerPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkEnumerateDeviceLayerPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkEnumerateDeviceLayerPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkEnumerateDeviceLayerPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDeviceQueue :: CString
 
 pattern VkGetDeviceQueue <- (is_VkGetDeviceQueue -> True)
-  where VkGetDeviceQueue = _VkGetDeviceQueue
+  where
+    VkGetDeviceQueue = _VkGetDeviceQueue
 
 {-# INLINE _VkGetDeviceQueue #-}
 
@@ -4374,21 +4651,22 @@ foreign import ccall safe "dynamic" unwrapVkGetDeviceQueueSafe ::
                PFN_vkGetDeviceQueue -> HS_vkGetDeviceQueue
 
 instance VulkanProc "vkGetDeviceQueue" where
-        type VkProcType "vkGetDeviceQueue" = HS_vkGetDeviceQueue
-        vkProcSymbol = _VkGetDeviceQueue
+    type VkProcType "vkGetDeviceQueue" = HS_vkGetDeviceQueue
+    vkProcSymbol = _VkGetDeviceQueue
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetDeviceQueueUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetDeviceQueueUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDeviceQueueSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDeviceQueueSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueSubmit :: CString
 
 pattern VkQueueSubmit <- (is_VkQueueSubmit -> True)
-  where VkQueueSubmit = _VkQueueSubmit
+  where
+    VkQueueSubmit = _VkQueueSubmit
 
 {-# INLINE _VkQueueSubmit #-}
 
@@ -4581,21 +4859,22 @@ foreign import ccall safe "dynamic" unwrapVkQueueSubmitSafe ::
                PFN_vkQueueSubmit -> HS_vkQueueSubmit
 
 instance VulkanProc "vkQueueSubmit" where
-        type VkProcType "vkQueueSubmit" = HS_vkQueueSubmit
-        vkProcSymbol = _VkQueueSubmit
+    type VkProcType "vkQueueSubmit" = HS_vkQueueSubmit
+    vkProcSymbol = _VkQueueSubmit
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkQueueSubmitUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkQueueSubmitUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkQueueSubmitSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkQueueSubmitSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueWaitIdle :: CString
 
 pattern VkQueueWaitIdle <- (is_VkQueueWaitIdle -> True)
-  where VkQueueWaitIdle = _VkQueueWaitIdle
+  where
+    VkQueueWaitIdle = _VkQueueWaitIdle
 
 {-# INLINE _VkQueueWaitIdle #-}
 
@@ -4754,21 +5033,22 @@ foreign import ccall safe "dynamic" unwrapVkQueueWaitIdleSafe ::
                PFN_vkQueueWaitIdle -> HS_vkQueueWaitIdle
 
 instance VulkanProc "vkQueueWaitIdle" where
-        type VkProcType "vkQueueWaitIdle" = HS_vkQueueWaitIdle
-        vkProcSymbol = _VkQueueWaitIdle
+    type VkProcType "vkQueueWaitIdle" = HS_vkQueueWaitIdle
+    vkProcSymbol = _VkQueueWaitIdle
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkQueueWaitIdleUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkQueueWaitIdleUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkQueueWaitIdleSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkQueueWaitIdleSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDeviceWaitIdle :: CString
 
 pattern VkDeviceWaitIdle <- (is_VkDeviceWaitIdle -> True)
-  where VkDeviceWaitIdle = _VkDeviceWaitIdle
+  where
+    VkDeviceWaitIdle = _VkDeviceWaitIdle
 
 {-# INLINE _VkDeviceWaitIdle #-}
 
@@ -4927,21 +5207,22 @@ foreign import ccall safe "dynamic" unwrapVkDeviceWaitIdleSafe ::
                PFN_vkDeviceWaitIdle -> HS_vkDeviceWaitIdle
 
 instance VulkanProc "vkDeviceWaitIdle" where
-        type VkProcType "vkDeviceWaitIdle" = HS_vkDeviceWaitIdle
-        vkProcSymbol = _VkDeviceWaitIdle
+    type VkProcType "vkDeviceWaitIdle" = HS_vkDeviceWaitIdle
+    vkProcSymbol = _VkDeviceWaitIdle
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDeviceWaitIdleUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDeviceWaitIdleUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDeviceWaitIdleSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDeviceWaitIdleSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkAllocateMemory :: CString
 
 pattern VkAllocateMemory <- (is_VkAllocateMemory -> True)
-  where VkAllocateMemory = _VkAllocateMemory
+  where
+    VkAllocateMemory = _VkAllocateMemory
 
 {-# INLINE _VkAllocateMemory #-}
 
@@ -5148,21 +5429,22 @@ foreign import ccall safe "dynamic" unwrapVkAllocateMemorySafe ::
                PFN_vkAllocateMemory -> HS_vkAllocateMemory
 
 instance VulkanProc "vkAllocateMemory" where
-        type VkProcType "vkAllocateMemory" = HS_vkAllocateMemory
-        vkProcSymbol = _VkAllocateMemory
+    type VkProcType "vkAllocateMemory" = HS_vkAllocateMemory
+    vkProcSymbol = _VkAllocateMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAllocateMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAllocateMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAllocateMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAllocateMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkFreeMemory :: CString
 
 pattern VkFreeMemory <- (is_VkFreeMemory -> True)
-  where VkFreeMemory = _VkFreeMemory
+  where
+    VkFreeMemory = _VkFreeMemory
 
 {-# INLINE _VkFreeMemory #-}
 
@@ -5329,21 +5611,22 @@ foreign import ccall safe "dynamic" unwrapVkFreeMemorySafe ::
                PFN_vkFreeMemory -> HS_vkFreeMemory
 
 instance VulkanProc "vkFreeMemory" where
-        type VkProcType "vkFreeMemory" = HS_vkFreeMemory
-        vkProcSymbol = _VkFreeMemory
+    type VkProcType "vkFreeMemory" = HS_vkFreeMemory
+    vkProcSymbol = _VkFreeMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkFreeMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkFreeMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkFreeMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkFreeMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkMapMemory :: CString
 
 pattern VkMapMemory <- (is_VkMapMemory -> True)
-  where VkMapMemory = _VkMapMemory
+  where
+    VkMapMemory = _VkMapMemory
 
 {-# INLINE _VkMapMemory #-}
 
@@ -5574,21 +5857,22 @@ foreign import ccall safe "dynamic" unwrapVkMapMemorySafe ::
                PFN_vkMapMemory -> HS_vkMapMemory
 
 instance VulkanProc "vkMapMemory" where
-        type VkProcType "vkMapMemory" = HS_vkMapMemory
-        vkProcSymbol = _VkMapMemory
+    type VkProcType "vkMapMemory" = HS_vkMapMemory
+    vkProcSymbol = _VkMapMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkMapMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkMapMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkMapMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkMapMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUnmapMemory :: CString
 
 pattern VkUnmapMemory <- (is_VkUnmapMemory -> True)
-  where VkUnmapMemory = _VkUnmapMemory
+  where
+    VkUnmapMemory = _VkUnmapMemory
 
 {-# INLINE _VkUnmapMemory #-}
 
@@ -5741,22 +6025,23 @@ foreign import ccall safe "dynamic" unwrapVkUnmapMemorySafe ::
                PFN_vkUnmapMemory -> HS_vkUnmapMemory
 
 instance VulkanProc "vkUnmapMemory" where
-        type VkProcType "vkUnmapMemory" = HS_vkUnmapMemory
-        vkProcSymbol = _VkUnmapMemory
+    type VkProcType "vkUnmapMemory" = HS_vkUnmapMemory
+    vkProcSymbol = _VkUnmapMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkUnmapMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkUnmapMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkUnmapMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkUnmapMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkFlushMappedMemoryRanges :: CString
 
 pattern VkFlushMappedMemoryRanges <-
         (is_VkFlushMappedMemoryRanges -> True)
-  where VkFlushMappedMemoryRanges = _VkFlushMappedMemoryRanges
+  where
+    VkFlushMappedMemoryRanges = _VkFlushMappedMemoryRanges
 
 {-# INLINE _VkFlushMappedMemoryRanges #-}
 
@@ -5946,24 +6231,24 @@ foreign import ccall safe "dynamic"
                PFN_vkFlushMappedMemoryRanges -> HS_vkFlushMappedMemoryRanges
 
 instance VulkanProc "vkFlushMappedMemoryRanges" where
-        type VkProcType "vkFlushMappedMemoryRanges" =
-             HS_vkFlushMappedMemoryRanges
-        vkProcSymbol = _VkFlushMappedMemoryRanges
+    type VkProcType "vkFlushMappedMemoryRanges" =
+         HS_vkFlushMappedMemoryRanges
+    vkProcSymbol = _VkFlushMappedMemoryRanges
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkFlushMappedMemoryRangesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkFlushMappedMemoryRangesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkFlushMappedMemoryRangesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkFlushMappedMemoryRangesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkInvalidateMappedMemoryRanges :: CString
 
 pattern VkInvalidateMappedMemoryRanges <-
         (is_VkInvalidateMappedMemoryRanges -> True)
-  where VkInvalidateMappedMemoryRanges
-          = _VkInvalidateMappedMemoryRanges
+  where
+    VkInvalidateMappedMemoryRanges = _VkInvalidateMappedMemoryRanges
 
 {-# INLINE _VkInvalidateMappedMemoryRanges #-}
 
@@ -6159,23 +6444,24 @@ foreign import ccall safe "dynamic"
                  HS_vkInvalidateMappedMemoryRanges
 
 instance VulkanProc "vkInvalidateMappedMemoryRanges" where
-        type VkProcType "vkInvalidateMappedMemoryRanges" =
-             HS_vkInvalidateMappedMemoryRanges
-        vkProcSymbol = _VkInvalidateMappedMemoryRanges
+    type VkProcType "vkInvalidateMappedMemoryRanges" =
+         HS_vkInvalidateMappedMemoryRanges
+    vkProcSymbol = _VkInvalidateMappedMemoryRanges
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkInvalidateMappedMemoryRangesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkInvalidateMappedMemoryRangesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkInvalidateMappedMemoryRangesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkInvalidateMappedMemoryRangesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDeviceMemoryCommitment :: CString
 
 pattern VkGetDeviceMemoryCommitment <-
         (is_VkGetDeviceMemoryCommitment -> True)
-  where VkGetDeviceMemoryCommitment = _VkGetDeviceMemoryCommitment
+  where
+    VkGetDeviceMemoryCommitment = _VkGetDeviceMemoryCommitment
 
 {-# INLINE _VkGetDeviceMemoryCommitment #-}
 
@@ -6351,22 +6637,23 @@ foreign import ccall safe "dynamic"
                PFN_vkGetDeviceMemoryCommitment -> HS_vkGetDeviceMemoryCommitment
 
 instance VulkanProc "vkGetDeviceMemoryCommitment" where
-        type VkProcType "vkGetDeviceMemoryCommitment" =
-             HS_vkGetDeviceMemoryCommitment
-        vkProcSymbol = _VkGetDeviceMemoryCommitment
+    type VkProcType "vkGetDeviceMemoryCommitment" =
+         HS_vkGetDeviceMemoryCommitment
+    vkProcSymbol = _VkGetDeviceMemoryCommitment
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetDeviceMemoryCommitmentUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetDeviceMemoryCommitmentUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDeviceMemoryCommitmentSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDeviceMemoryCommitmentSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBindBufferMemory :: CString
 
 pattern VkBindBufferMemory <- (is_VkBindBufferMemory -> True)
-  where VkBindBufferMemory = _VkBindBufferMemory
+  where
+    VkBindBufferMemory = _VkBindBufferMemory
 
 {-# INLINE _VkBindBufferMemory #-}
 
@@ -6568,21 +6855,22 @@ foreign import ccall safe "dynamic" unwrapVkBindBufferMemorySafe ::
                PFN_vkBindBufferMemory -> HS_vkBindBufferMemory
 
 instance VulkanProc "vkBindBufferMemory" where
-        type VkProcType "vkBindBufferMemory" = HS_vkBindBufferMemory
-        vkProcSymbol = _VkBindBufferMemory
+    type VkProcType "vkBindBufferMemory" = HS_vkBindBufferMemory
+    vkProcSymbol = _VkBindBufferMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkBindBufferMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkBindBufferMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkBindBufferMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBindImageMemory :: CString
 
 pattern VkBindImageMemory <- (is_VkBindImageMemory -> True)
-  where VkBindImageMemory = _VkBindImageMemory
+  where
+    VkBindImageMemory = _VkBindImageMemory
 
 {-# INLINE _VkBindImageMemory #-}
 
@@ -6783,23 +7071,23 @@ foreign import ccall safe "dynamic" unwrapVkBindImageMemorySafe ::
                PFN_vkBindImageMemory -> HS_vkBindImageMemory
 
 instance VulkanProc "vkBindImageMemory" where
-        type VkProcType "vkBindImageMemory" = HS_vkBindImageMemory
-        vkProcSymbol = _VkBindImageMemory
+    type VkProcType "vkBindImageMemory" = HS_vkBindImageMemory
+    vkProcSymbol = _VkBindImageMemory
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkBindImageMemoryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkBindImageMemoryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkBindImageMemorySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkBindImageMemorySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetBufferMemoryRequirements :: CString
 
 pattern VkGetBufferMemoryRequirements <-
         (is_VkGetBufferMemoryRequirements -> True)
-  where VkGetBufferMemoryRequirements
-          = _VkGetBufferMemoryRequirements
+  where
+    VkGetBufferMemoryRequirements = _VkGetBufferMemoryRequirements
 
 {-# INLINE _VkGetBufferMemoryRequirements #-}
 
@@ -6978,23 +7266,24 @@ foreign import ccall safe "dynamic"
                  HS_vkGetBufferMemoryRequirements
 
 instance VulkanProc "vkGetBufferMemoryRequirements" where
-        type VkProcType "vkGetBufferMemoryRequirements" =
-             HS_vkGetBufferMemoryRequirements
-        vkProcSymbol = _VkGetBufferMemoryRequirements
+    type VkProcType "vkGetBufferMemoryRequirements" =
+         HS_vkGetBufferMemoryRequirements
+    vkProcSymbol = _VkGetBufferMemoryRequirements
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetBufferMemoryRequirementsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetBufferMemoryRequirementsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirementsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetBufferMemoryRequirementsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageMemoryRequirements :: CString
 
 pattern VkGetImageMemoryRequirements <-
         (is_VkGetImageMemoryRequirements -> True)
-  where VkGetImageMemoryRequirements = _VkGetImageMemoryRequirements
+  where
+    VkGetImageMemoryRequirements = _VkGetImageMemoryRequirements
 
 {-# INLINE _VkGetImageMemoryRequirements #-}
 
@@ -7170,24 +7459,25 @@ foreign import ccall safe "dynamic"
                PFN_vkGetImageMemoryRequirements -> HS_vkGetImageMemoryRequirements
 
 instance VulkanProc "vkGetImageMemoryRequirements" where
-        type VkProcType "vkGetImageMemoryRequirements" =
-             HS_vkGetImageMemoryRequirements
-        vkProcSymbol = _VkGetImageMemoryRequirements
+    type VkProcType "vkGetImageMemoryRequirements" =
+         HS_vkGetImageMemoryRequirements
+    vkProcSymbol = _VkGetImageMemoryRequirements
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetImageMemoryRequirementsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetImageMemoryRequirementsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirementsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetImageMemoryRequirementsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageSparseMemoryRequirements :: CString
 
 pattern VkGetImageSparseMemoryRequirements <-
         (is_VkGetImageSparseMemoryRequirements -> True)
-  where VkGetImageSparseMemoryRequirements
-          = _VkGetImageSparseMemoryRequirements
+  where
+    VkGetImageSparseMemoryRequirements
+      = _VkGetImageSparseMemoryRequirements
 
 {-# INLINE _VkGetImageSparseMemoryRequirements #-}
 
@@ -7392,25 +7682,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetImageSparseMemoryRequirements
 
 instance VulkanProc "vkGetImageSparseMemoryRequirements" where
-        type VkProcType "vkGetImageSparseMemoryRequirements" =
-             HS_vkGetImageSparseMemoryRequirements
-        vkProcSymbol = _VkGetImageSparseMemoryRequirements
+    type VkProcType "vkGetImageSparseMemoryRequirements" =
+         HS_vkGetImageSparseMemoryRequirements
+    vkProcSymbol = _VkGetImageSparseMemoryRequirements
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetImageSparseMemoryRequirementsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetImageSparseMemoryRequirementsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetImageSparseMemoryRequirementsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetImageSparseMemoryRequirementsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties :: CString
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties <-
         (is_VkGetPhysicalDeviceSparseImageFormatProperties -> True)
-  where VkGetPhysicalDeviceSparseImageFormatProperties
-          = _VkGetPhysicalDeviceSparseImageFormatProperties
+  where
+    VkGetPhysicalDeviceSparseImageFormatProperties
+      = _VkGetPhysicalDeviceSparseImageFormatProperties
 
 {-# INLINE _VkGetPhysicalDeviceSparseImageFormatProperties #-}
 
@@ -7688,24 +7979,25 @@ foreign import ccall safe "dynamic"
 instance VulkanProc
            "vkGetPhysicalDeviceSparseImageFormatProperties"
          where
-        type VkProcType "vkGetPhysicalDeviceSparseImageFormatProperties" =
-             HS_vkGetPhysicalDeviceSparseImageFormatProperties
-        vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties
+    type VkProcType "vkGetPhysicalDeviceSparseImageFormatProperties" =
+         HS_vkGetPhysicalDeviceSparseImageFormatProperties
+    vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSparseImageFormatPropertiesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSparseImageFormatPropertiesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSparseImageFormatPropertiesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSparseImageFormatPropertiesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkQueueBindSparse :: CString
 
 pattern VkQueueBindSparse <- (is_VkQueueBindSparse -> True)
-  where VkQueueBindSparse = _VkQueueBindSparse
+  where
+    VkQueueBindSparse = _VkQueueBindSparse
 
 {-# INLINE _VkQueueBindSparse #-}
 
@@ -7908,21 +8200,22 @@ foreign import ccall safe "dynamic" unwrapVkQueueBindSparseSafe ::
                PFN_vkQueueBindSparse -> HS_vkQueueBindSparse
 
 instance VulkanProc "vkQueueBindSparse" where
-        type VkProcType "vkQueueBindSparse" = HS_vkQueueBindSparse
-        vkProcSymbol = _VkQueueBindSparse
+    type VkProcType "vkQueueBindSparse" = HS_vkQueueBindSparse
+    vkProcSymbol = _VkQueueBindSparse
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkQueueBindSparseUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkQueueBindSparseUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkQueueBindSparseSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkQueueBindSparseSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateFence :: CString
 
 pattern VkCreateFence <- (is_VkCreateFence -> True)
-  where VkCreateFence = _VkCreateFence
+  where
+    VkCreateFence = _VkCreateFence
 
 {-# INLINE _VkCreateFence #-}
 
@@ -8127,21 +8420,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateFenceSafe ::
                PFN_vkCreateFence -> HS_vkCreateFence
 
 instance VulkanProc "vkCreateFence" where
-        type VkProcType "vkCreateFence" = HS_vkCreateFence
-        vkProcSymbol = _VkCreateFence
+    type VkProcType "vkCreateFence" = HS_vkCreateFence
+    vkProcSymbol = _VkCreateFence
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateFenceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateFenceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateFenceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateFenceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyFence :: CString
 
 pattern VkDestroyFence <- (is_VkDestroyFence -> True)
-  where VkDestroyFence = _VkDestroyFence
+  where
+    VkDestroyFence = _VkDestroyFence
 
 {-# INLINE _VkDestroyFence #-}
 
@@ -8308,21 +8602,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyFenceSafe ::
                PFN_vkDestroyFence -> HS_vkDestroyFence
 
 instance VulkanProc "vkDestroyFence" where
-        type VkProcType "vkDestroyFence" = HS_vkDestroyFence
-        vkProcSymbol = _VkDestroyFence
+    type VkProcType "vkDestroyFence" = HS_vkDestroyFence
+    vkProcSymbol = _VkDestroyFence
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyFenceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyFenceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyFenceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyFenceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkResetFences :: CString
 
 pattern VkResetFences <- (is_VkResetFences -> True)
-  where VkResetFences = _VkResetFences
+  where
+    VkResetFences = _VkResetFences
 
 {-# INLINE _VkResetFences #-}
 
@@ -8504,21 +8799,22 @@ foreign import ccall safe "dynamic" unwrapVkResetFencesSafe ::
                PFN_vkResetFences -> HS_vkResetFences
 
 instance VulkanProc "vkResetFences" where
-        type VkProcType "vkResetFences" = HS_vkResetFences
-        vkProcSymbol = _VkResetFences
+    type VkProcType "vkResetFences" = HS_vkResetFences
+    vkProcSymbol = _VkResetFences
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkResetFencesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkResetFencesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkResetFencesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkResetFencesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetFenceStatus :: CString
 
 pattern VkGetFenceStatus <- (is_VkGetFenceStatus -> True)
-  where VkGetFenceStatus = _VkGetFenceStatus
+  where
+    VkGetFenceStatus = _VkGetFenceStatus
 
 {-# INLINE _VkGetFenceStatus #-}
 
@@ -8687,21 +8983,22 @@ foreign import ccall safe "dynamic" unwrapVkGetFenceStatusSafe ::
                PFN_vkGetFenceStatus -> HS_vkGetFenceStatus
 
 instance VulkanProc "vkGetFenceStatus" where
-        type VkProcType "vkGetFenceStatus" = HS_vkGetFenceStatus
-        vkProcSymbol = _VkGetFenceStatus
+    type VkProcType "vkGetFenceStatus" = HS_vkGetFenceStatus
+    vkProcSymbol = _VkGetFenceStatus
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetFenceStatusUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetFenceStatusUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetFenceStatusSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetFenceStatusSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkWaitForFences :: CString
 
 pattern VkWaitForFences <- (is_VkWaitForFences -> True)
-  where VkWaitForFences = _VkWaitForFences
+  where
+    VkWaitForFences = _VkWaitForFences
 
 {-# INLINE _VkWaitForFences #-}
 
@@ -8911,21 +9208,22 @@ foreign import ccall safe "dynamic" unwrapVkWaitForFencesSafe ::
                PFN_vkWaitForFences -> HS_vkWaitForFences
 
 instance VulkanProc "vkWaitForFences" where
-        type VkProcType "vkWaitForFences" = HS_vkWaitForFences
-        vkProcSymbol = _VkWaitForFences
+    type VkProcType "vkWaitForFences" = HS_vkWaitForFences
+    vkProcSymbol = _VkWaitForFences
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkWaitForFencesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkWaitForFencesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkWaitForFencesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkWaitForFencesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateSemaphore :: CString
 
 pattern VkCreateSemaphore <- (is_VkCreateSemaphore -> True)
-  where VkCreateSemaphore = _VkCreateSemaphore
+  where
+    VkCreateSemaphore = _VkCreateSemaphore
 
 {-# INLINE _VkCreateSemaphore #-}
 
@@ -9132,21 +9430,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateSemaphoreSafe ::
                PFN_vkCreateSemaphore -> HS_vkCreateSemaphore
 
 instance VulkanProc "vkCreateSemaphore" where
-        type VkProcType "vkCreateSemaphore" = HS_vkCreateSemaphore
-        vkProcSymbol = _VkCreateSemaphore
+    type VkProcType "vkCreateSemaphore" = HS_vkCreateSemaphore
+    vkProcSymbol = _VkCreateSemaphore
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateSemaphoreUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateSemaphoreUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateSemaphoreSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateSemaphoreSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySemaphore :: CString
 
 pattern VkDestroySemaphore <- (is_VkDestroySemaphore -> True)
-  where VkDestroySemaphore = _VkDestroySemaphore
+  where
+    VkDestroySemaphore = _VkDestroySemaphore
 
 {-# INLINE _VkDestroySemaphore #-}
 
@@ -9316,21 +9615,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroySemaphoreSafe ::
                PFN_vkDestroySemaphore -> HS_vkDestroySemaphore
 
 instance VulkanProc "vkDestroySemaphore" where
-        type VkProcType "vkDestroySemaphore" = HS_vkDestroySemaphore
-        vkProcSymbol = _VkDestroySemaphore
+    type VkProcType "vkDestroySemaphore" = HS_vkDestroySemaphore
+    vkProcSymbol = _VkDestroySemaphore
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroySemaphoreUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroySemaphoreUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroySemaphoreSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroySemaphoreSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateEvent :: CString
 
 pattern VkCreateEvent <- (is_VkCreateEvent -> True)
-  where VkCreateEvent = _VkCreateEvent
+  where
+    VkCreateEvent = _VkCreateEvent
 
 {-# INLINE _VkCreateEvent #-}
 
@@ -9535,21 +9835,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateEventSafe ::
                PFN_vkCreateEvent -> HS_vkCreateEvent
 
 instance VulkanProc "vkCreateEvent" where
-        type VkProcType "vkCreateEvent" = HS_vkCreateEvent
-        vkProcSymbol = _VkCreateEvent
+    type VkProcType "vkCreateEvent" = HS_vkCreateEvent
+    vkProcSymbol = _VkCreateEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyEvent :: CString
 
 pattern VkDestroyEvent <- (is_VkDestroyEvent -> True)
-  where VkDestroyEvent = _VkDestroyEvent
+  where
+    VkDestroyEvent = _VkDestroyEvent
 
 {-# INLINE _VkDestroyEvent #-}
 
@@ -9716,21 +10017,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyEventSafe ::
                PFN_vkDestroyEvent -> HS_vkDestroyEvent
 
 instance VulkanProc "vkDestroyEvent" where
-        type VkProcType "vkDestroyEvent" = HS_vkDestroyEvent
-        vkProcSymbol = _VkDestroyEvent
+    type VkProcType "vkDestroyEvent" = HS_vkDestroyEvent
+    vkProcSymbol = _VkDestroyEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetEventStatus :: CString
 
 pattern VkGetEventStatus <- (is_VkGetEventStatus -> True)
-  where VkGetEventStatus = _VkGetEventStatus
+  where
+    VkGetEventStatus = _VkGetEventStatus
 
 {-# INLINE _VkGetEventStatus #-}
 
@@ -9899,21 +10201,22 @@ foreign import ccall safe "dynamic" unwrapVkGetEventStatusSafe ::
                PFN_vkGetEventStatus -> HS_vkGetEventStatus
 
 instance VulkanProc "vkGetEventStatus" where
-        type VkProcType "vkGetEventStatus" = HS_vkGetEventStatus
-        vkProcSymbol = _VkGetEventStatus
+    type VkProcType "vkGetEventStatus" = HS_vkGetEventStatus
+    vkProcSymbol = _VkGetEventStatus
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetEventStatusUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetEventStatusUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetEventStatusSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetEventStatusSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkSetEvent :: CString
 
 pattern VkSetEvent <- (is_VkSetEvent -> True)
-  where VkSetEvent = _VkSetEvent
+  where
+    VkSetEvent = _VkSetEvent
 
 {-# INLINE _VkSetEvent #-}
 
@@ -10081,21 +10384,22 @@ foreign import ccall safe "dynamic" unwrapVkSetEventSafe ::
                PFN_vkSetEvent -> HS_vkSetEvent
 
 instance VulkanProc "vkSetEvent" where
-        type VkProcType "vkSetEvent" = HS_vkSetEvent
-        vkProcSymbol = _VkSetEvent
+    type VkProcType "vkSetEvent" = HS_vkSetEvent
+    vkProcSymbol = _VkSetEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkSetEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkSetEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkSetEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkSetEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkResetEvent :: CString
 
 pattern VkResetEvent <- (is_VkResetEvent -> True)
-  where VkResetEvent = _VkResetEvent
+  where
+    VkResetEvent = _VkResetEvent
 
 {-# INLINE _VkResetEvent #-}
 
@@ -10264,21 +10568,22 @@ foreign import ccall safe "dynamic" unwrapVkResetEventSafe ::
                PFN_vkResetEvent -> HS_vkResetEvent
 
 instance VulkanProc "vkResetEvent" where
-        type VkProcType "vkResetEvent" = HS_vkResetEvent
-        vkProcSymbol = _VkResetEvent
+    type VkProcType "vkResetEvent" = HS_vkResetEvent
+    vkProcSymbol = _VkResetEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkResetEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkResetEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkResetEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkResetEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateQueryPool :: CString
 
 pattern VkCreateQueryPool <- (is_VkCreateQueryPool -> True)
-  where VkCreateQueryPool = _VkCreateQueryPool
+  where
+    VkCreateQueryPool = _VkCreateQueryPool
 
 {-# INLINE _VkCreateQueryPool #-}
 
@@ -10485,21 +10790,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateQueryPoolSafe ::
                PFN_vkCreateQueryPool -> HS_vkCreateQueryPool
 
 instance VulkanProc "vkCreateQueryPool" where
-        type VkProcType "vkCreateQueryPool" = HS_vkCreateQueryPool
-        vkProcSymbol = _VkCreateQueryPool
+    type VkProcType "vkCreateQueryPool" = HS_vkCreateQueryPool
+    vkProcSymbol = _VkCreateQueryPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateQueryPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateQueryPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateQueryPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateQueryPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyQueryPool :: CString
 
 pattern VkDestroyQueryPool <- (is_VkDestroyQueryPool -> True)
-  where VkDestroyQueryPool = _VkDestroyQueryPool
+  where
+    VkDestroyQueryPool = _VkDestroyQueryPool
 
 {-# INLINE _VkDestroyQueryPool #-}
 
@@ -10669,21 +10975,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyQueryPoolSafe ::
                PFN_vkDestroyQueryPool -> HS_vkDestroyQueryPool
 
 instance VulkanProc "vkDestroyQueryPool" where
-        type VkProcType "vkDestroyQueryPool" = HS_vkDestroyQueryPool
-        vkProcSymbol = _VkDestroyQueryPool
+    type VkProcType "vkDestroyQueryPool" = HS_vkDestroyQueryPool
+    vkProcSymbol = _VkDestroyQueryPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyQueryPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyQueryPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyQueryPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyQueryPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetQueryPoolResults :: CString
 
 pattern VkGetQueryPoolResults <- (is_VkGetQueryPoolResults -> True)
-  where VkGetQueryPoolResults = _VkGetQueryPoolResults
+  where
+    VkGetQueryPoolResults = _VkGetQueryPoolResults
 
 {-# INLINE _VkGetQueryPoolResults #-}
 
@@ -10950,21 +11257,22 @@ foreign import ccall safe "dynamic" unwrapVkGetQueryPoolResultsSafe
                :: PFN_vkGetQueryPoolResults -> HS_vkGetQueryPoolResults
 
 instance VulkanProc "vkGetQueryPoolResults" where
-        type VkProcType "vkGetQueryPoolResults" = HS_vkGetQueryPoolResults
-        vkProcSymbol = _VkGetQueryPoolResults
+    type VkProcType "vkGetQueryPoolResults" = HS_vkGetQueryPoolResults
+    vkProcSymbol = _VkGetQueryPoolResults
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetQueryPoolResultsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetQueryPoolResultsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetQueryPoolResultsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetQueryPoolResultsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateBuffer :: CString
 
 pattern VkCreateBuffer <- (is_VkCreateBuffer -> True)
-  where VkCreateBuffer = _VkCreateBuffer
+  where
+    VkCreateBuffer = _VkCreateBuffer
 
 {-# INLINE _VkCreateBuffer #-}
 
@@ -11170,21 +11478,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateBufferSafe ::
                PFN_vkCreateBuffer -> HS_vkCreateBuffer
 
 instance VulkanProc "vkCreateBuffer" where
-        type VkProcType "vkCreateBuffer" = HS_vkCreateBuffer
-        vkProcSymbol = _VkCreateBuffer
+    type VkProcType "vkCreateBuffer" = HS_vkCreateBuffer
+    vkProcSymbol = _VkCreateBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyBuffer :: CString
 
 pattern VkDestroyBuffer <- (is_VkDestroyBuffer -> True)
-  where VkDestroyBuffer = _VkDestroyBuffer
+  where
+    VkDestroyBuffer = _VkDestroyBuffer
 
 {-# INLINE _VkDestroyBuffer #-}
 
@@ -11351,21 +11660,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyBufferSafe ::
                PFN_vkDestroyBuffer -> HS_vkDestroyBuffer
 
 instance VulkanProc "vkDestroyBuffer" where
-        type VkProcType "vkDestroyBuffer" = HS_vkDestroyBuffer
-        vkProcSymbol = _VkDestroyBuffer
+    type VkProcType "vkDestroyBuffer" = HS_vkDestroyBuffer
+    vkProcSymbol = _VkDestroyBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateBufferView :: CString
 
 pattern VkCreateBufferView <- (is_VkCreateBufferView -> True)
-  where VkCreateBufferView = _VkCreateBufferView
+  where
+    VkCreateBufferView = _VkCreateBufferView
 
 {-# INLINE _VkCreateBufferView #-}
 
@@ -11573,21 +11883,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateBufferViewSafe ::
                PFN_vkCreateBufferView -> HS_vkCreateBufferView
 
 instance VulkanProc "vkCreateBufferView" where
-        type VkProcType "vkCreateBufferView" = HS_vkCreateBufferView
-        vkProcSymbol = _VkCreateBufferView
+    type VkProcType "vkCreateBufferView" = HS_vkCreateBufferView
+    vkProcSymbol = _VkCreateBufferView
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateBufferViewUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateBufferViewUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateBufferViewSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateBufferViewSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyBufferView :: CString
 
 pattern VkDestroyBufferView <- (is_VkDestroyBufferView -> True)
-  where VkDestroyBufferView = _VkDestroyBufferView
+  where
+    VkDestroyBufferView = _VkDestroyBufferView
 
 {-# INLINE _VkDestroyBufferView #-}
 
@@ -11757,21 +12068,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyBufferViewSafe
                :: PFN_vkDestroyBufferView -> HS_vkDestroyBufferView
 
 instance VulkanProc "vkDestroyBufferView" where
-        type VkProcType "vkDestroyBufferView" = HS_vkDestroyBufferView
-        vkProcSymbol = _VkDestroyBufferView
+    type VkProcType "vkDestroyBufferView" = HS_vkDestroyBufferView
+    vkProcSymbol = _VkDestroyBufferView
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyBufferViewUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyBufferViewUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyBufferViewSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyBufferViewSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateImage :: CString
 
 pattern VkCreateImage <- (is_VkCreateImage -> True)
-  where VkCreateImage = _VkCreateImage
+  where
+    VkCreateImage = _VkCreateImage
 
 {-# INLINE _VkCreateImage #-}
 
@@ -11976,21 +12288,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateImageSafe ::
                PFN_vkCreateImage -> HS_vkCreateImage
 
 instance VulkanProc "vkCreateImage" where
-        type VkProcType "vkCreateImage" = HS_vkCreateImage
-        vkProcSymbol = _VkCreateImage
+    type VkProcType "vkCreateImage" = HS_vkCreateImage
+    vkProcSymbol = _VkCreateImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyImage :: CString
 
 pattern VkDestroyImage <- (is_VkDestroyImage -> True)
-  where VkDestroyImage = _VkDestroyImage
+  where
+    VkDestroyImage = _VkDestroyImage
 
 {-# INLINE _VkDestroyImage #-}
 
@@ -12157,22 +12470,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroyImageSafe ::
                PFN_vkDestroyImage -> HS_vkDestroyImage
 
 instance VulkanProc "vkDestroyImage" where
-        type VkProcType "vkDestroyImage" = HS_vkDestroyImage
-        vkProcSymbol = _VkDestroyImage
+    type VkProcType "vkDestroyImage" = HS_vkDestroyImage
+    vkProcSymbol = _VkDestroyImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetImageSubresourceLayout :: CString
 
 pattern VkGetImageSubresourceLayout <-
         (is_VkGetImageSubresourceLayout -> True)
-  where VkGetImageSubresourceLayout = _VkGetImageSubresourceLayout
+  where
+    VkGetImageSubresourceLayout = _VkGetImageSubresourceLayout
 
 {-# INLINE _VkGetImageSubresourceLayout #-}
 
@@ -12370,22 +12684,23 @@ foreign import ccall safe "dynamic"
                PFN_vkGetImageSubresourceLayout -> HS_vkGetImageSubresourceLayout
 
 instance VulkanProc "vkGetImageSubresourceLayout" where
-        type VkProcType "vkGetImageSubresourceLayout" =
-             HS_vkGetImageSubresourceLayout
-        vkProcSymbol = _VkGetImageSubresourceLayout
+    type VkProcType "vkGetImageSubresourceLayout" =
+         HS_vkGetImageSubresourceLayout
+    vkProcSymbol = _VkGetImageSubresourceLayout
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetImageSubresourceLayoutUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetImageSubresourceLayoutUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetImageSubresourceLayoutSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetImageSubresourceLayoutSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateImageView :: CString
 
 pattern VkCreateImageView <- (is_VkCreateImageView -> True)
-  where VkCreateImageView = _VkCreateImageView
+  where
+    VkCreateImageView = _VkCreateImageView
 
 {-# INLINE _VkCreateImageView #-}
 
@@ -12592,21 +12907,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateImageViewSafe ::
                PFN_vkCreateImageView -> HS_vkCreateImageView
 
 instance VulkanProc "vkCreateImageView" where
-        type VkProcType "vkCreateImageView" = HS_vkCreateImageView
-        vkProcSymbol = _VkCreateImageView
+    type VkProcType "vkCreateImageView" = HS_vkCreateImageView
+    vkProcSymbol = _VkCreateImageView
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateImageViewUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateImageViewUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateImageViewSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateImageViewSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyImageView :: CString
 
 pattern VkDestroyImageView <- (is_VkDestroyImageView -> True)
-  where VkDestroyImageView = _VkDestroyImageView
+  where
+    VkDestroyImageView = _VkDestroyImageView
 
 {-# INLINE _VkDestroyImageView #-}
 
@@ -12776,21 +13092,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyImageViewSafe ::
                PFN_vkDestroyImageView -> HS_vkDestroyImageView
 
 instance VulkanProc "vkDestroyImageView" where
-        type VkProcType "vkDestroyImageView" = HS_vkDestroyImageView
-        vkProcSymbol = _VkDestroyImageView
+    type VkProcType "vkDestroyImageView" = HS_vkDestroyImageView
+    vkProcSymbol = _VkDestroyImageView
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyImageViewUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyImageViewUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyImageViewSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyImageViewSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateShaderModule :: CString
 
 pattern VkCreateShaderModule <- (is_VkCreateShaderModule -> True)
-  where VkCreateShaderModule = _VkCreateShaderModule
+  where
+    VkCreateShaderModule = _VkCreateShaderModule
 
 {-# INLINE _VkCreateShaderModule #-}
 
@@ -12999,21 +13316,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateShaderModuleSafe
                :: PFN_vkCreateShaderModule -> HS_vkCreateShaderModule
 
 instance VulkanProc "vkCreateShaderModule" where
-        type VkProcType "vkCreateShaderModule" = HS_vkCreateShaderModule
-        vkProcSymbol = _VkCreateShaderModule
+    type VkProcType "vkCreateShaderModule" = HS_vkCreateShaderModule
+    vkProcSymbol = _VkCreateShaderModule
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateShaderModuleUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateShaderModuleUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateShaderModuleSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateShaderModuleSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyShaderModule :: CString
 
 pattern VkDestroyShaderModule <- (is_VkDestroyShaderModule -> True)
-  where VkDestroyShaderModule = _VkDestroyShaderModule
+  where
+    VkDestroyShaderModule = _VkDestroyShaderModule
 
 {-# INLINE _VkDestroyShaderModule #-}
 
@@ -13184,21 +13502,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyShaderModuleSafe
                :: PFN_vkDestroyShaderModule -> HS_vkDestroyShaderModule
 
 instance VulkanProc "vkDestroyShaderModule" where
-        type VkProcType "vkDestroyShaderModule" = HS_vkDestroyShaderModule
-        vkProcSymbol = _VkDestroyShaderModule
+    type VkProcType "vkDestroyShaderModule" = HS_vkDestroyShaderModule
+    vkProcSymbol = _VkDestroyShaderModule
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyShaderModuleUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyShaderModuleUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyShaderModuleSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyShaderModuleSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreatePipelineCache :: CString
 
 pattern VkCreatePipelineCache <- (is_VkCreatePipelineCache -> True)
-  where VkCreatePipelineCache = _VkCreatePipelineCache
+  where
+    VkCreatePipelineCache = _VkCreatePipelineCache
 
 {-# INLINE _VkCreatePipelineCache #-}
 
@@ -13407,22 +13726,23 @@ foreign import ccall safe "dynamic" unwrapVkCreatePipelineCacheSafe
                :: PFN_vkCreatePipelineCache -> HS_vkCreatePipelineCache
 
 instance VulkanProc "vkCreatePipelineCache" where
-        type VkProcType "vkCreatePipelineCache" = HS_vkCreatePipelineCache
-        vkProcSymbol = _VkCreatePipelineCache
+    type VkProcType "vkCreatePipelineCache" = HS_vkCreatePipelineCache
+    vkProcSymbol = _VkCreatePipelineCache
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreatePipelineCacheUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreatePipelineCacheUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreatePipelineCacheSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreatePipelineCacheSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyPipelineCache :: CString
 
 pattern VkDestroyPipelineCache <-
         (is_VkDestroyPipelineCache -> True)
-  where VkDestroyPipelineCache = _VkDestroyPipelineCache
+  where
+    VkDestroyPipelineCache = _VkDestroyPipelineCache
 
 {-# INLINE _VkDestroyPipelineCache #-}
 
@@ -13594,23 +13914,24 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyPipelineCache -> HS_vkDestroyPipelineCache
 
 instance VulkanProc "vkDestroyPipelineCache" where
-        type VkProcType "vkDestroyPipelineCache" =
-             HS_vkDestroyPipelineCache
-        vkProcSymbol = _VkDestroyPipelineCache
+    type VkProcType "vkDestroyPipelineCache" =
+         HS_vkDestroyPipelineCache
+    vkProcSymbol = _VkDestroyPipelineCache
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineCacheUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineCacheUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyPipelineCacheSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyPipelineCacheSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPipelineCacheData :: CString
 
 pattern VkGetPipelineCacheData <-
         (is_VkGetPipelineCacheData -> True)
-  where VkGetPipelineCacheData = _VkGetPipelineCacheData
+  where
+    VkGetPipelineCacheData = _VkGetPipelineCacheData
 
 {-# INLINE _VkGetPipelineCacheData #-}
 
@@ -13808,22 +14129,23 @@ foreign import ccall safe "dynamic"
                PFN_vkGetPipelineCacheData -> HS_vkGetPipelineCacheData
 
 instance VulkanProc "vkGetPipelineCacheData" where
-        type VkProcType "vkGetPipelineCacheData" =
-             HS_vkGetPipelineCacheData
-        vkProcSymbol = _VkGetPipelineCacheData
+    type VkProcType "vkGetPipelineCacheData" =
+         HS_vkGetPipelineCacheData
+    vkProcSymbol = _VkGetPipelineCacheData
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetPipelineCacheDataUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetPipelineCacheDataUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetPipelineCacheDataSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetPipelineCacheDataSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkMergePipelineCaches :: CString
 
 pattern VkMergePipelineCaches <- (is_VkMergePipelineCaches -> True)
-  where VkMergePipelineCaches = _VkMergePipelineCaches
+  where
+    VkMergePipelineCaches = _VkMergePipelineCaches
 
 {-# INLINE _VkMergePipelineCaches #-}
 
@@ -14026,22 +14348,23 @@ foreign import ccall safe "dynamic" unwrapVkMergePipelineCachesSafe
                :: PFN_vkMergePipelineCaches -> HS_vkMergePipelineCaches
 
 instance VulkanProc "vkMergePipelineCaches" where
-        type VkProcType "vkMergePipelineCaches" = HS_vkMergePipelineCaches
-        vkProcSymbol = _VkMergePipelineCaches
+    type VkProcType "vkMergePipelineCaches" = HS_vkMergePipelineCaches
+    vkProcSymbol = _VkMergePipelineCaches
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkMergePipelineCachesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkMergePipelineCachesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkMergePipelineCachesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkMergePipelineCachesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateGraphicsPipelines :: CString
 
 pattern VkCreateGraphicsPipelines <-
         (is_VkCreateGraphicsPipelines -> True)
-  where VkCreateGraphicsPipelines = _VkCreateGraphicsPipelines
+  where
+    VkCreateGraphicsPipelines = _VkCreateGraphicsPipelines
 
 {-# INLINE _VkCreateGraphicsPipelines #-}
 
@@ -14285,23 +14608,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateGraphicsPipelines -> HS_vkCreateGraphicsPipelines
 
 instance VulkanProc "vkCreateGraphicsPipelines" where
-        type VkProcType "vkCreateGraphicsPipelines" =
-             HS_vkCreateGraphicsPipelines
-        vkProcSymbol = _VkCreateGraphicsPipelines
+    type VkProcType "vkCreateGraphicsPipelines" =
+         HS_vkCreateGraphicsPipelines
+    vkProcSymbol = _VkCreateGraphicsPipelines
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateGraphicsPipelinesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateGraphicsPipelinesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateGraphicsPipelinesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateGraphicsPipelinesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateComputePipelines :: CString
 
 pattern VkCreateComputePipelines <-
         (is_VkCreateComputePipelines -> True)
-  where VkCreateComputePipelines = _VkCreateComputePipelines
+  where
+    VkCreateComputePipelines = _VkCreateComputePipelines
 
 {-# INLINE _VkCreateComputePipelines #-}
 
@@ -14545,22 +14869,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateComputePipelines -> HS_vkCreateComputePipelines
 
 instance VulkanProc "vkCreateComputePipelines" where
-        type VkProcType "vkCreateComputePipelines" =
-             HS_vkCreateComputePipelines
-        vkProcSymbol = _VkCreateComputePipelines
+    type VkProcType "vkCreateComputePipelines" =
+         HS_vkCreateComputePipelines
+    vkProcSymbol = _VkCreateComputePipelines
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateComputePipelinesUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateComputePipelinesUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateComputePipelinesSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateComputePipelinesSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyPipeline :: CString
 
 pattern VkDestroyPipeline <- (is_VkDestroyPipeline -> True)
-  where VkDestroyPipeline = _VkDestroyPipeline
+  where
+    VkDestroyPipeline = _VkDestroyPipeline
 
 {-# INLINE _VkDestroyPipeline #-}
 
@@ -14728,22 +15053,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroyPipelineSafe ::
                PFN_vkDestroyPipeline -> HS_vkDestroyPipeline
 
 instance VulkanProc "vkDestroyPipeline" where
-        type VkProcType "vkDestroyPipeline" = HS_vkDestroyPipeline
-        vkProcSymbol = _VkDestroyPipeline
+    type VkProcType "vkDestroyPipeline" = HS_vkDestroyPipeline
+    vkProcSymbol = _VkDestroyPipeline
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyPipelineSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyPipelineSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreatePipelineLayout :: CString
 
 pattern VkCreatePipelineLayout <-
         (is_VkCreatePipelineLayout -> True)
-  where VkCreatePipelineLayout = _VkCreatePipelineLayout
+  where
+    VkCreatePipelineLayout = _VkCreatePipelineLayout
 
 {-# INLINE _VkCreatePipelineLayout #-}
 
@@ -14953,23 +15279,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreatePipelineLayout -> HS_vkCreatePipelineLayout
 
 instance VulkanProc "vkCreatePipelineLayout" where
-        type VkProcType "vkCreatePipelineLayout" =
-             HS_vkCreatePipelineLayout
-        vkProcSymbol = _VkCreatePipelineLayout
+    type VkProcType "vkCreatePipelineLayout" =
+         HS_vkCreatePipelineLayout
+    vkProcSymbol = _VkCreatePipelineLayout
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreatePipelineLayoutUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreatePipelineLayoutUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreatePipelineLayoutSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreatePipelineLayoutSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyPipelineLayout :: CString
 
 pattern VkDestroyPipelineLayout <-
         (is_VkDestroyPipelineLayout -> True)
-  where VkDestroyPipelineLayout = _VkDestroyPipelineLayout
+  where
+    VkDestroyPipelineLayout = _VkDestroyPipelineLayout
 
 {-# INLINE _VkDestroyPipelineLayout #-}
 
@@ -15142,22 +15469,23 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyPipelineLayout -> HS_vkDestroyPipelineLayout
 
 instance VulkanProc "vkDestroyPipelineLayout" where
-        type VkProcType "vkDestroyPipelineLayout" =
-             HS_vkDestroyPipelineLayout
-        vkProcSymbol = _VkDestroyPipelineLayout
+    type VkProcType "vkDestroyPipelineLayout" =
+         HS_vkDestroyPipelineLayout
+    vkProcSymbol = _VkDestroyPipelineLayout
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineLayoutUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyPipelineLayoutUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyPipelineLayoutSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyPipelineLayoutSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateSampler :: CString
 
 pattern VkCreateSampler <- (is_VkCreateSampler -> True)
-  where VkCreateSampler = _VkCreateSampler
+  where
+    VkCreateSampler = _VkCreateSampler
 
 {-# INLINE _VkCreateSampler #-}
 
@@ -15363,21 +15691,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateSamplerSafe ::
                PFN_vkCreateSampler -> HS_vkCreateSampler
 
 instance VulkanProc "vkCreateSampler" where
-        type VkProcType "vkCreateSampler" = HS_vkCreateSampler
-        vkProcSymbol = _VkCreateSampler
+    type VkProcType "vkCreateSampler" = HS_vkCreateSampler
+    vkProcSymbol = _VkCreateSampler
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateSamplerUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateSamplerUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateSamplerSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateSamplerSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroySampler :: CString
 
 pattern VkDestroySampler <- (is_VkDestroySampler -> True)
-  where VkDestroySampler = _VkDestroySampler
+  where
+    VkDestroySampler = _VkDestroySampler
 
 {-# INLINE _VkDestroySampler #-}
 
@@ -15545,22 +15874,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroySamplerSafe ::
                PFN_vkDestroySampler -> HS_vkDestroySampler
 
 instance VulkanProc "vkDestroySampler" where
-        type VkProcType "vkDestroySampler" = HS_vkDestroySampler
-        vkProcSymbol = _VkDestroySampler
+    type VkProcType "vkDestroySampler" = HS_vkDestroySampler
+    vkProcSymbol = _VkDestroySampler
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroySamplerUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroySamplerUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroySamplerSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroySamplerSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDescriptorSetLayout :: CString
 
 pattern VkCreateDescriptorSetLayout <-
         (is_VkCreateDescriptorSetLayout -> True)
-  where VkCreateDescriptorSetLayout = _VkCreateDescriptorSetLayout
+  where
+    VkCreateDescriptorSetLayout = _VkCreateDescriptorSetLayout
 
 {-# INLINE _VkCreateDescriptorSetLayout #-}
 
@@ -15780,23 +16110,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateDescriptorSetLayout -> HS_vkCreateDescriptorSetLayout
 
 instance VulkanProc "vkCreateDescriptorSetLayout" where
-        type VkProcType "vkCreateDescriptorSetLayout" =
-             HS_vkCreateDescriptorSetLayout
-        vkProcSymbol = _VkCreateDescriptorSetLayout
+    type VkProcType "vkCreateDescriptorSetLayout" =
+         HS_vkCreateDescriptorSetLayout
+    vkProcSymbol = _VkCreateDescriptorSetLayout
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDescriptorSetLayoutUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDescriptorSetLayoutUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDescriptorSetLayoutSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDescriptorSetLayoutSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDescriptorSetLayout :: CString
 
 pattern VkDestroyDescriptorSetLayout <-
         (is_VkDestroyDescriptorSetLayout -> True)
-  where VkDestroyDescriptorSetLayout = _VkDestroyDescriptorSetLayout
+  where
+    VkDestroyDescriptorSetLayout = _VkDestroyDescriptorSetLayout
 
 {-# INLINE _VkDestroyDescriptorSetLayout #-}
 
@@ -15978,23 +16309,24 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyDescriptorSetLayout -> HS_vkDestroyDescriptorSetLayout
 
 instance VulkanProc "vkDestroyDescriptorSetLayout" where
-        type VkProcType "vkDestroyDescriptorSetLayout" =
-             HS_vkDestroyDescriptorSetLayout
-        vkProcSymbol = _VkDestroyDescriptorSetLayout
+    type VkProcType "vkDestroyDescriptorSetLayout" =
+         HS_vkDestroyDescriptorSetLayout
+    vkProcSymbol = _VkDestroyDescriptorSetLayout
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyDescriptorSetLayoutUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyDescriptorSetLayoutUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorSetLayoutSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorSetLayoutSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDescriptorPool :: CString
 
 pattern VkCreateDescriptorPool <-
         (is_VkCreateDescriptorPool -> True)
-  where VkCreateDescriptorPool = _VkCreateDescriptorPool
+  where
+    VkCreateDescriptorPool = _VkCreateDescriptorPool
 
 {-# INLINE _VkCreateDescriptorPool #-}
 
@@ -16204,23 +16536,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateDescriptorPool -> HS_vkCreateDescriptorPool
 
 instance VulkanProc "vkCreateDescriptorPool" where
-        type VkProcType "vkCreateDescriptorPool" =
-             HS_vkCreateDescriptorPool
-        vkProcSymbol = _VkCreateDescriptorPool
+    type VkProcType "vkCreateDescriptorPool" =
+         HS_vkCreateDescriptorPool
+    vkProcSymbol = _VkCreateDescriptorPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDescriptorPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDescriptorPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDescriptorPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDescriptorPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyDescriptorPool :: CString
 
 pattern VkDestroyDescriptorPool <-
         (is_VkDestroyDescriptorPool -> True)
-  where VkDestroyDescriptorPool = _VkDestroyDescriptorPool
+  where
+    VkDestroyDescriptorPool = _VkDestroyDescriptorPool
 
 {-# INLINE _VkDestroyDescriptorPool #-}
 
@@ -16393,22 +16726,23 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyDescriptorPool -> HS_vkDestroyDescriptorPool
 
 instance VulkanProc "vkDestroyDescriptorPool" where
-        type VkProcType "vkDestroyDescriptorPool" =
-             HS_vkDestroyDescriptorPool
-        vkProcSymbol = _VkDestroyDescriptorPool
+    type VkProcType "vkDestroyDescriptorPool" =
+         HS_vkDestroyDescriptorPool
+    vkProcSymbol = _VkDestroyDescriptorPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyDescriptorPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyDescriptorPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyDescriptorPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkResetDescriptorPool :: CString
 
 pattern VkResetDescriptorPool <- (is_VkResetDescriptorPool -> True)
-  where VkResetDescriptorPool = _VkResetDescriptorPool
+  where
+    VkResetDescriptorPool = _VkResetDescriptorPool
 
 {-# INLINE _VkResetDescriptorPool #-}
 
@@ -16601,22 +16935,23 @@ foreign import ccall safe "dynamic" unwrapVkResetDescriptorPoolSafe
                :: PFN_vkResetDescriptorPool -> HS_vkResetDescriptorPool
 
 instance VulkanProc "vkResetDescriptorPool" where
-        type VkProcType "vkResetDescriptorPool" = HS_vkResetDescriptorPool
-        vkProcSymbol = _VkResetDescriptorPool
+    type VkProcType "vkResetDescriptorPool" = HS_vkResetDescriptorPool
+    vkProcSymbol = _VkResetDescriptorPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkResetDescriptorPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkResetDescriptorPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkResetDescriptorPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkResetDescriptorPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkAllocateDescriptorSets :: CString
 
 pattern VkAllocateDescriptorSets <-
         (is_VkAllocateDescriptorSets -> True)
-  where VkAllocateDescriptorSets = _VkAllocateDescriptorSets
+  where
+    VkAllocateDescriptorSets = _VkAllocateDescriptorSets
 
 {-# INLINE _VkAllocateDescriptorSets #-}
 
@@ -16818,22 +17153,23 @@ foreign import ccall safe "dynamic"
                PFN_vkAllocateDescriptorSets -> HS_vkAllocateDescriptorSets
 
 instance VulkanProc "vkAllocateDescriptorSets" where
-        type VkProcType "vkAllocateDescriptorSets" =
-             HS_vkAllocateDescriptorSets
-        vkProcSymbol = _VkAllocateDescriptorSets
+    type VkProcType "vkAllocateDescriptorSets" =
+         HS_vkAllocateDescriptorSets
+    vkProcSymbol = _VkAllocateDescriptorSets
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAllocateDescriptorSetsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAllocateDescriptorSetsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAllocateDescriptorSetsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAllocateDescriptorSetsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkFreeDescriptorSets :: CString
 
 pattern VkFreeDescriptorSets <- (is_VkFreeDescriptorSets -> True)
-  where VkFreeDescriptorSets = _VkFreeDescriptorSets
+  where
+    VkFreeDescriptorSets = _VkFreeDescriptorSets
 
 {-# INLINE _VkFreeDescriptorSets #-}
 
@@ -17036,22 +17372,23 @@ foreign import ccall safe "dynamic" unwrapVkFreeDescriptorSetsSafe
                :: PFN_vkFreeDescriptorSets -> HS_vkFreeDescriptorSets
 
 instance VulkanProc "vkFreeDescriptorSets" where
-        type VkProcType "vkFreeDescriptorSets" = HS_vkFreeDescriptorSets
-        vkProcSymbol = _VkFreeDescriptorSets
+    type VkProcType "vkFreeDescriptorSets" = HS_vkFreeDescriptorSets
+    vkProcSymbol = _VkFreeDescriptorSets
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkFreeDescriptorSetsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkFreeDescriptorSetsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkFreeDescriptorSetsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkFreeDescriptorSetsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUpdateDescriptorSets :: CString
 
 pattern VkUpdateDescriptorSets <-
         (is_VkUpdateDescriptorSets -> True)
-  where VkUpdateDescriptorSets = _VkUpdateDescriptorSets
+  where
+    VkUpdateDescriptorSets = _VkUpdateDescriptorSets
 
 {-# INLINE _VkUpdateDescriptorSets #-}
 
@@ -17261,22 +17598,23 @@ foreign import ccall safe "dynamic"
                PFN_vkUpdateDescriptorSets -> HS_vkUpdateDescriptorSets
 
 instance VulkanProc "vkUpdateDescriptorSets" where
-        type VkProcType "vkUpdateDescriptorSets" =
-             HS_vkUpdateDescriptorSets
-        vkProcSymbol = _VkUpdateDescriptorSets
+    type VkProcType "vkUpdateDescriptorSets" =
+         HS_vkUpdateDescriptorSets
+    vkProcSymbol = _VkUpdateDescriptorSets
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkUpdateDescriptorSetsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkUpdateDescriptorSetsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkUpdateDescriptorSetsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkUpdateDescriptorSetsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateFramebuffer :: CString
 
 pattern VkCreateFramebuffer <- (is_VkCreateFramebuffer -> True)
-  where VkCreateFramebuffer = _VkCreateFramebuffer
+  where
+    VkCreateFramebuffer = _VkCreateFramebuffer
 
 {-# INLINE _VkCreateFramebuffer #-}
 
@@ -17484,21 +17822,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateFramebufferSafe
                :: PFN_vkCreateFramebuffer -> HS_vkCreateFramebuffer
 
 instance VulkanProc "vkCreateFramebuffer" where
-        type VkProcType "vkCreateFramebuffer" = HS_vkCreateFramebuffer
-        vkProcSymbol = _VkCreateFramebuffer
+    type VkProcType "vkCreateFramebuffer" = HS_vkCreateFramebuffer
+    vkProcSymbol = _VkCreateFramebuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateFramebufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateFramebufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateFramebufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateFramebufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyFramebuffer :: CString
 
 pattern VkDestroyFramebuffer <- (is_VkDestroyFramebuffer -> True)
-  where VkDestroyFramebuffer = _VkDestroyFramebuffer
+  where
+    VkDestroyFramebuffer = _VkDestroyFramebuffer
 
 {-# INLINE _VkDestroyFramebuffer #-}
 
@@ -17669,21 +18008,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyFramebufferSafe
                :: PFN_vkDestroyFramebuffer -> HS_vkDestroyFramebuffer
 
 instance VulkanProc "vkDestroyFramebuffer" where
-        type VkProcType "vkDestroyFramebuffer" = HS_vkDestroyFramebuffer
-        vkProcSymbol = _VkDestroyFramebuffer
+    type VkProcType "vkDestroyFramebuffer" = HS_vkDestroyFramebuffer
+    vkProcSymbol = _VkDestroyFramebuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyFramebufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyFramebufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyFramebufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyFramebufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateRenderPass :: CString
 
 pattern VkCreateRenderPass <- (is_VkCreateRenderPass -> True)
-  where VkCreateRenderPass = _VkCreateRenderPass
+  where
+    VkCreateRenderPass = _VkCreateRenderPass
 
 {-# INLINE _VkCreateRenderPass #-}
 
@@ -17891,21 +18231,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateRenderPassSafe ::
                PFN_vkCreateRenderPass -> HS_vkCreateRenderPass
 
 instance VulkanProc "vkCreateRenderPass" where
-        type VkProcType "vkCreateRenderPass" = HS_vkCreateRenderPass
-        vkProcSymbol = _VkCreateRenderPass
+    type VkProcType "vkCreateRenderPass" = HS_vkCreateRenderPass
+    vkProcSymbol = _VkCreateRenderPass
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateRenderPassUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateRenderPassUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateRenderPassSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateRenderPassSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyRenderPass :: CString
 
 pattern VkDestroyRenderPass <- (is_VkDestroyRenderPass -> True)
-  where VkDestroyRenderPass = _VkDestroyRenderPass
+  where
+    VkDestroyRenderPass = _VkDestroyRenderPass
 
 {-# INLINE _VkDestroyRenderPass #-}
 
@@ -18075,22 +18416,23 @@ foreign import ccall safe "dynamic" unwrapVkDestroyRenderPassSafe
                :: PFN_vkDestroyRenderPass -> HS_vkDestroyRenderPass
 
 instance VulkanProc "vkDestroyRenderPass" where
-        type VkProcType "vkDestroyRenderPass" = HS_vkDestroyRenderPass
-        vkProcSymbol = _VkDestroyRenderPass
+    type VkProcType "vkDestroyRenderPass" = HS_vkDestroyRenderPass
+    vkProcSymbol = _VkDestroyRenderPass
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyRenderPassUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyRenderPassUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyRenderPassSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyRenderPassSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetRenderAreaGranularity :: CString
 
 pattern VkGetRenderAreaGranularity <-
         (is_VkGetRenderAreaGranularity -> True)
-  where VkGetRenderAreaGranularity = _VkGetRenderAreaGranularity
+  where
+    VkGetRenderAreaGranularity = _VkGetRenderAreaGranularity
 
 {-# INLINE _VkGetRenderAreaGranularity #-}
 
@@ -18265,22 +18607,23 @@ foreign import ccall safe "dynamic"
                PFN_vkGetRenderAreaGranularity -> HS_vkGetRenderAreaGranularity
 
 instance VulkanProc "vkGetRenderAreaGranularity" where
-        type VkProcType "vkGetRenderAreaGranularity" =
-             HS_vkGetRenderAreaGranularity
-        vkProcSymbol = _VkGetRenderAreaGranularity
+    type VkProcType "vkGetRenderAreaGranularity" =
+         HS_vkGetRenderAreaGranularity
+    vkProcSymbol = _VkGetRenderAreaGranularity
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetRenderAreaGranularityUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetRenderAreaGranularityUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetRenderAreaGranularitySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetRenderAreaGranularitySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateCommandPool :: CString
 
 pattern VkCreateCommandPool <- (is_VkCreateCommandPool -> True)
-  where VkCreateCommandPool = _VkCreateCommandPool
+  where
+    VkCreateCommandPool = _VkCreateCommandPool
 
 {-# INLINE _VkCreateCommandPool #-}
 
@@ -18488,21 +18831,22 @@ foreign import ccall safe "dynamic" unwrapVkCreateCommandPoolSafe
                :: PFN_vkCreateCommandPool -> HS_vkCreateCommandPool
 
 instance VulkanProc "vkCreateCommandPool" where
-        type VkProcType "vkCreateCommandPool" = HS_vkCreateCommandPool
-        vkProcSymbol = _VkCreateCommandPool
+    type VkProcType "vkCreateCommandPool" = HS_vkCreateCommandPool
+    vkProcSymbol = _VkCreateCommandPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateCommandPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateCommandPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateCommandPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateCommandPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyCommandPool :: CString
 
 pattern VkDestroyCommandPool <- (is_VkDestroyCommandPool -> True)
-  where VkDestroyCommandPool = _VkDestroyCommandPool
+  where
+    VkDestroyCommandPool = _VkDestroyCommandPool
 
 {-# INLINE _VkDestroyCommandPool #-}
 
@@ -18673,21 +19017,22 @@ foreign import ccall safe "dynamic" unwrapVkDestroyCommandPoolSafe
                :: PFN_vkDestroyCommandPool -> HS_vkDestroyCommandPool
 
 instance VulkanProc "vkDestroyCommandPool" where
-        type VkProcType "vkDestroyCommandPool" = HS_vkDestroyCommandPool
-        vkProcSymbol = _VkDestroyCommandPool
+    type VkProcType "vkDestroyCommandPool" = HS_vkDestroyCommandPool
+    vkProcSymbol = _VkDestroyCommandPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyCommandPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyCommandPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyCommandPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyCommandPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkResetCommandPool :: CString
 
 pattern VkResetCommandPool <- (is_VkResetCommandPool -> True)
-  where VkResetCommandPool = _VkResetCommandPool
+  where
+    VkResetCommandPool = _VkResetCommandPool
 
 {-# INLINE _VkResetCommandPool #-}
 
@@ -18873,22 +19218,23 @@ foreign import ccall safe "dynamic" unwrapVkResetCommandPoolSafe ::
                PFN_vkResetCommandPool -> HS_vkResetCommandPool
 
 instance VulkanProc "vkResetCommandPool" where
-        type VkProcType "vkResetCommandPool" = HS_vkResetCommandPool
-        vkProcSymbol = _VkResetCommandPool
+    type VkProcType "vkResetCommandPool" = HS_vkResetCommandPool
+    vkProcSymbol = _VkResetCommandPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkResetCommandPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkResetCommandPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkResetCommandPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkResetCommandPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkAllocateCommandBuffers :: CString
 
 pattern VkAllocateCommandBuffers <-
         (is_VkAllocateCommandBuffers -> True)
-  where VkAllocateCommandBuffers = _VkAllocateCommandBuffers
+  where
+    VkAllocateCommandBuffers = _VkAllocateCommandBuffers
 
 {-# INLINE _VkAllocateCommandBuffers #-}
 
@@ -19090,22 +19436,23 @@ foreign import ccall safe "dynamic"
                PFN_vkAllocateCommandBuffers -> HS_vkAllocateCommandBuffers
 
 instance VulkanProc "vkAllocateCommandBuffers" where
-        type VkProcType "vkAllocateCommandBuffers" =
-             HS_vkAllocateCommandBuffers
-        vkProcSymbol = _VkAllocateCommandBuffers
+    type VkProcType "vkAllocateCommandBuffers" =
+         HS_vkAllocateCommandBuffers
+    vkProcSymbol = _VkAllocateCommandBuffers
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkAllocateCommandBuffersUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkAllocateCommandBuffersUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkAllocateCommandBuffersSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkAllocateCommandBuffersSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkFreeCommandBuffers :: CString
 
 pattern VkFreeCommandBuffers <- (is_VkFreeCommandBuffers -> True)
-  where VkFreeCommandBuffers = _VkFreeCommandBuffers
+  where
+    VkFreeCommandBuffers = _VkFreeCommandBuffers
 
 {-# INLINE _VkFreeCommandBuffers #-}
 
@@ -19286,21 +19633,22 @@ foreign import ccall safe "dynamic" unwrapVkFreeCommandBuffersSafe
                :: PFN_vkFreeCommandBuffers -> HS_vkFreeCommandBuffers
 
 instance VulkanProc "vkFreeCommandBuffers" where
-        type VkProcType "vkFreeCommandBuffers" = HS_vkFreeCommandBuffers
-        vkProcSymbol = _VkFreeCommandBuffers
+    type VkProcType "vkFreeCommandBuffers" = HS_vkFreeCommandBuffers
+    vkProcSymbol = _VkFreeCommandBuffers
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkFreeCommandBuffersUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkFreeCommandBuffersUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkFreeCommandBuffersSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkFreeCommandBuffersSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkBeginCommandBuffer :: CString
 
 pattern VkBeginCommandBuffer <- (is_VkBeginCommandBuffer -> True)
-  where VkBeginCommandBuffer = _VkBeginCommandBuffer
+  where
+    VkBeginCommandBuffer = _VkBeginCommandBuffer
 
 {-# INLINE _VkBeginCommandBuffer #-}
 
@@ -19477,21 +19825,22 @@ foreign import ccall safe "dynamic" unwrapVkBeginCommandBufferSafe
                :: PFN_vkBeginCommandBuffer -> HS_vkBeginCommandBuffer
 
 instance VulkanProc "vkBeginCommandBuffer" where
-        type VkProcType "vkBeginCommandBuffer" = HS_vkBeginCommandBuffer
-        vkProcSymbol = _VkBeginCommandBuffer
+    type VkProcType "vkBeginCommandBuffer" = HS_vkBeginCommandBuffer
+    vkProcSymbol = _VkBeginCommandBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkBeginCommandBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkBeginCommandBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkBeginCommandBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkBeginCommandBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkEndCommandBuffer :: CString
 
 pattern VkEndCommandBuffer <- (is_VkEndCommandBuffer -> True)
-  where VkEndCommandBuffer = _VkEndCommandBuffer
+  where
+    VkEndCommandBuffer = _VkEndCommandBuffer
 
 {-# INLINE _VkEndCommandBuffer #-}
 
@@ -19651,21 +20000,22 @@ foreign import ccall safe "dynamic" unwrapVkEndCommandBufferSafe ::
                PFN_vkEndCommandBuffer -> HS_vkEndCommandBuffer
 
 instance VulkanProc "vkEndCommandBuffer" where
-        type VkProcType "vkEndCommandBuffer" = HS_vkEndCommandBuffer
-        vkProcSymbol = _VkEndCommandBuffer
+    type VkProcType "vkEndCommandBuffer" = HS_vkEndCommandBuffer
+    vkProcSymbol = _VkEndCommandBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkEndCommandBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkEndCommandBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkEndCommandBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkEndCommandBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkResetCommandBuffer :: CString
 
 pattern VkResetCommandBuffer <- (is_VkResetCommandBuffer -> True)
-  where VkResetCommandBuffer = _VkResetCommandBuffer
+  where
+    VkResetCommandBuffer = _VkResetCommandBuffer
 
 {-# INLINE _VkResetCommandBuffer #-}
 
@@ -19842,21 +20192,22 @@ foreign import ccall safe "dynamic" unwrapVkResetCommandBufferSafe
                :: PFN_vkResetCommandBuffer -> HS_vkResetCommandBuffer
 
 instance VulkanProc "vkResetCommandBuffer" where
-        type VkProcType "vkResetCommandBuffer" = HS_vkResetCommandBuffer
-        vkProcSymbol = _VkResetCommandBuffer
+    type VkProcType "vkResetCommandBuffer" = HS_vkResetCommandBuffer
+    vkProcSymbol = _VkResetCommandBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkResetCommandBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkResetCommandBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkResetCommandBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkResetCommandBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBindPipeline :: CString
 
 pattern VkCmdBindPipeline <- (is_VkCmdBindPipeline -> True)
-  where VkCmdBindPipeline = _VkCmdBindPipeline
+  where
+    VkCmdBindPipeline = _VkCmdBindPipeline
 
 {-# INLINE _VkCmdBindPipeline #-}
 
@@ -20040,21 +20391,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdBindPipelineSafe ::
                PFN_vkCmdBindPipeline -> HS_vkCmdBindPipeline
 
 instance VulkanProc "vkCmdBindPipeline" where
-        type VkProcType "vkCmdBindPipeline" = HS_vkCmdBindPipeline
-        vkProcSymbol = _VkCmdBindPipeline
+    type VkProcType "vkCmdBindPipeline" = HS_vkCmdBindPipeline
+    vkProcSymbol = _VkCmdBindPipeline
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBindPipelineUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBindPipelineUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBindPipelineSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBindPipelineSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetViewport :: CString
 
 pattern VkCmdSetViewport <- (is_VkCmdSetViewport -> True)
-  where VkCmdSetViewport = _VkCmdSetViewport
+  where
+    VkCmdSetViewport = _VkCmdSetViewport
 
 {-# INLINE _VkCmdSetViewport #-}
 
@@ -20248,21 +20600,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetViewportSafe ::
                PFN_vkCmdSetViewport -> HS_vkCmdSetViewport
 
 instance VulkanProc "vkCmdSetViewport" where
-        type VkProcType "vkCmdSetViewport" = HS_vkCmdSetViewport
-        vkProcSymbol = _VkCmdSetViewport
+    type VkProcType "vkCmdSetViewport" = HS_vkCmdSetViewport
+    vkProcSymbol = _VkCmdSetViewport
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetViewportUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetViewportUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetViewportSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetViewportSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetScissor :: CString
 
 pattern VkCmdSetScissor <- (is_VkCmdSetScissor -> True)
-  where VkCmdSetScissor = _VkCmdSetScissor
+  where
+    VkCmdSetScissor = _VkCmdSetScissor
 
 {-# INLINE _VkCmdSetScissor #-}
 
@@ -20455,21 +20808,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetScissorSafe ::
                PFN_vkCmdSetScissor -> HS_vkCmdSetScissor
 
 instance VulkanProc "vkCmdSetScissor" where
-        type VkProcType "vkCmdSetScissor" = HS_vkCmdSetScissor
-        vkProcSymbol = _VkCmdSetScissor
+    type VkProcType "vkCmdSetScissor" = HS_vkCmdSetScissor
+    vkProcSymbol = _VkCmdSetScissor
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetScissorUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetScissorUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetScissorSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetScissorSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetLineWidth :: CString
 
 pattern VkCmdSetLineWidth <- (is_VkCmdSetLineWidth -> True)
-  where VkCmdSetLineWidth = _VkCmdSetLineWidth
+  where
+    VkCmdSetLineWidth = _VkCmdSetLineWidth
 
 {-# INLINE _VkCmdSetLineWidth #-}
 
@@ -20637,21 +20991,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetLineWidthSafe ::
                PFN_vkCmdSetLineWidth -> HS_vkCmdSetLineWidth
 
 instance VulkanProc "vkCmdSetLineWidth" where
-        type VkProcType "vkCmdSetLineWidth" = HS_vkCmdSetLineWidth
-        vkProcSymbol = _VkCmdSetLineWidth
+    type VkProcType "vkCmdSetLineWidth" = HS_vkCmdSetLineWidth
+    vkProcSymbol = _VkCmdSetLineWidth
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetLineWidthUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetLineWidthUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetLineWidthSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetLineWidthSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetDepthBias :: CString
 
 pattern VkCmdSetDepthBias <- (is_VkCmdSetDepthBias -> True)
-  where VkCmdSetDepthBias = _VkCmdSetDepthBias
+  where
+    VkCmdSetDepthBias = _VkCmdSetDepthBias
 
 {-# INLINE _VkCmdSetDepthBias #-}
 
@@ -20840,22 +21195,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetDepthBiasSafe ::
                PFN_vkCmdSetDepthBias -> HS_vkCmdSetDepthBias
 
 instance VulkanProc "vkCmdSetDepthBias" where
-        type VkProcType "vkCmdSetDepthBias" = HS_vkCmdSetDepthBias
-        vkProcSymbol = _VkCmdSetDepthBias
+    type VkProcType "vkCmdSetDepthBias" = HS_vkCmdSetDepthBias
+    vkProcSymbol = _VkCmdSetDepthBias
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetDepthBiasUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetDepthBiasUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetDepthBiasSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetDepthBiasSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetBlendConstants :: CString
 
 pattern VkCmdSetBlendConstants <-
         (is_VkCmdSetBlendConstants -> True)
-  where VkCmdSetBlendConstants = _VkCmdSetBlendConstants
+  where
+    VkCmdSetBlendConstants = _VkCmdSetBlendConstants
 
 {-# INLINE _VkCmdSetBlendConstants #-}
 
@@ -21033,22 +21389,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdSetBlendConstants -> HS_vkCmdSetBlendConstants
 
 instance VulkanProc "vkCmdSetBlendConstants" where
-        type VkProcType "vkCmdSetBlendConstants" =
-             HS_vkCmdSetBlendConstants
-        vkProcSymbol = _VkCmdSetBlendConstants
+    type VkProcType "vkCmdSetBlendConstants" =
+         HS_vkCmdSetBlendConstants
+    vkProcSymbol = _VkCmdSetBlendConstants
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetBlendConstantsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetBlendConstantsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetBlendConstantsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetBlendConstantsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetDepthBounds :: CString
 
 pattern VkCmdSetDepthBounds <- (is_VkCmdSetDepthBounds -> True)
-  where VkCmdSetDepthBounds = _VkCmdSetDepthBounds
+  where
+    VkCmdSetDepthBounds = _VkCmdSetDepthBounds
 
 {-# INLINE _VkCmdSetDepthBounds #-}
 
@@ -21228,22 +21585,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetDepthBoundsSafe
                :: PFN_vkCmdSetDepthBounds -> HS_vkCmdSetDepthBounds
 
 instance VulkanProc "vkCmdSetDepthBounds" where
-        type VkProcType "vkCmdSetDepthBounds" = HS_vkCmdSetDepthBounds
-        vkProcSymbol = _VkCmdSetDepthBounds
+    type VkProcType "vkCmdSetDepthBounds" = HS_vkCmdSetDepthBounds
+    vkProcSymbol = _VkCmdSetDepthBounds
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetDepthBoundsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetDepthBoundsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetDepthBoundsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetDepthBoundsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetStencilCompareMask :: CString
 
 pattern VkCmdSetStencilCompareMask <-
         (is_VkCmdSetStencilCompareMask -> True)
-  where VkCmdSetStencilCompareMask = _VkCmdSetStencilCompareMask
+  where
+    VkCmdSetStencilCompareMask = _VkCmdSetStencilCompareMask
 
 {-# INLINE _VkCmdSetStencilCompareMask #-}
 
@@ -21434,23 +21792,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdSetStencilCompareMask -> HS_vkCmdSetStencilCompareMask
 
 instance VulkanProc "vkCmdSetStencilCompareMask" where
-        type VkProcType "vkCmdSetStencilCompareMask" =
-             HS_vkCmdSetStencilCompareMask
-        vkProcSymbol = _VkCmdSetStencilCompareMask
+    type VkProcType "vkCmdSetStencilCompareMask" =
+         HS_vkCmdSetStencilCompareMask
+    vkProcSymbol = _VkCmdSetStencilCompareMask
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilCompareMaskUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilCompareMaskUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetStencilCompareMaskSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetStencilCompareMaskSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetStencilWriteMask :: CString
 
 pattern VkCmdSetStencilWriteMask <-
         (is_VkCmdSetStencilWriteMask -> True)
-  where VkCmdSetStencilWriteMask = _VkCmdSetStencilWriteMask
+  where
+    VkCmdSetStencilWriteMask = _VkCmdSetStencilWriteMask
 
 {-# INLINE _VkCmdSetStencilWriteMask #-}
 
@@ -21640,23 +21999,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdSetStencilWriteMask -> HS_vkCmdSetStencilWriteMask
 
 instance VulkanProc "vkCmdSetStencilWriteMask" where
-        type VkProcType "vkCmdSetStencilWriteMask" =
-             HS_vkCmdSetStencilWriteMask
-        vkProcSymbol = _VkCmdSetStencilWriteMask
+    type VkProcType "vkCmdSetStencilWriteMask" =
+         HS_vkCmdSetStencilWriteMask
+    vkProcSymbol = _VkCmdSetStencilWriteMask
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilWriteMaskUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilWriteMaskUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetStencilWriteMaskSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetStencilWriteMaskSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetStencilReference :: CString
 
 pattern VkCmdSetStencilReference <-
         (is_VkCmdSetStencilReference -> True)
-  where VkCmdSetStencilReference = _VkCmdSetStencilReference
+  where
+    VkCmdSetStencilReference = _VkCmdSetStencilReference
 
 {-# INLINE _VkCmdSetStencilReference #-}
 
@@ -21846,23 +22206,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdSetStencilReference -> HS_vkCmdSetStencilReference
 
 instance VulkanProc "vkCmdSetStencilReference" where
-        type VkProcType "vkCmdSetStencilReference" =
-             HS_vkCmdSetStencilReference
-        vkProcSymbol = _VkCmdSetStencilReference
+    type VkProcType "vkCmdSetStencilReference" =
+         HS_vkCmdSetStencilReference
+    vkProcSymbol = _VkCmdSetStencilReference
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilReferenceUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetStencilReferenceUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetStencilReferenceSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetStencilReferenceSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBindDescriptorSets :: CString
 
 pattern VkCmdBindDescriptorSets <-
         (is_VkCmdBindDescriptorSets -> True)
-  where VkCmdBindDescriptorSets = _VkCmdBindDescriptorSets
+  where
+    VkCmdBindDescriptorSets = _VkCmdBindDescriptorSets
 
 {-# INLINE _VkCmdBindDescriptorSets #-}
 
@@ -22125,22 +22486,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdBindDescriptorSets -> HS_vkCmdBindDescriptorSets
 
 instance VulkanProc "vkCmdBindDescriptorSets" where
-        type VkProcType "vkCmdBindDescriptorSets" =
-             HS_vkCmdBindDescriptorSets
-        vkProcSymbol = _VkCmdBindDescriptorSets
+    type VkProcType "vkCmdBindDescriptorSets" =
+         HS_vkCmdBindDescriptorSets
+    vkProcSymbol = _VkCmdBindDescriptorSets
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBindDescriptorSetsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBindDescriptorSetsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBindDescriptorSetsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBindDescriptorSetsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBindIndexBuffer :: CString
 
 pattern VkCmdBindIndexBuffer <- (is_VkCmdBindIndexBuffer -> True)
-  where VkCmdBindIndexBuffer = _VkCmdBindIndexBuffer
+  where
+    VkCmdBindIndexBuffer = _VkCmdBindIndexBuffer
 
 {-# INLINE _VkCmdBindIndexBuffer #-}
 
@@ -22337,22 +22699,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdBindIndexBufferSafe
                :: PFN_vkCmdBindIndexBuffer -> HS_vkCmdBindIndexBuffer
 
 instance VulkanProc "vkCmdBindIndexBuffer" where
-        type VkProcType "vkCmdBindIndexBuffer" = HS_vkCmdBindIndexBuffer
-        vkProcSymbol = _VkCmdBindIndexBuffer
+    type VkProcType "vkCmdBindIndexBuffer" = HS_vkCmdBindIndexBuffer
+    vkProcSymbol = _VkCmdBindIndexBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBindIndexBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBindIndexBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBindIndexBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBindIndexBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBindVertexBuffers :: CString
 
 pattern VkCmdBindVertexBuffers <-
         (is_VkCmdBindVertexBuffers -> True)
-  where VkCmdBindVertexBuffers = _VkCmdBindVertexBuffers
+  where
+    VkCmdBindVertexBuffers = _VkCmdBindVertexBuffers
 
 {-# INLINE _VkCmdBindVertexBuffers #-}
 
@@ -22566,22 +22929,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdBindVertexBuffers -> HS_vkCmdBindVertexBuffers
 
 instance VulkanProc "vkCmdBindVertexBuffers" where
-        type VkProcType "vkCmdBindVertexBuffers" =
-             HS_vkCmdBindVertexBuffers
-        vkProcSymbol = _VkCmdBindVertexBuffers
+    type VkProcType "vkCmdBindVertexBuffers" =
+         HS_vkCmdBindVertexBuffers
+    vkProcSymbol = _VkCmdBindVertexBuffers
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBindVertexBuffersUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBindVertexBuffersUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBindVertexBuffersSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBindVertexBuffersSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDraw :: CString
 
 pattern VkCmdDraw <- (is_VkCmdDraw -> True)
-  where VkCmdDraw = _VkCmdDraw
+  where
+    VkCmdDraw = _VkCmdDraw
 
 {-# INLINE _VkCmdDraw #-}
 
@@ -22791,21 +23155,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdDrawSafe ::
                PFN_vkCmdDraw -> HS_vkCmdDraw
 
 instance VulkanProc "vkCmdDraw" where
-        type VkProcType "vkCmdDraw" = HS_vkCmdDraw
-        vkProcSymbol = _VkCmdDraw
+    type VkProcType "vkCmdDraw" = HS_vkCmdDraw
+    vkProcSymbol = _VkCmdDraw
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndexed :: CString
 
 pattern VkCmdDrawIndexed <- (is_VkCmdDrawIndexed -> True)
-  where VkCmdDrawIndexed = _VkCmdDrawIndexed
+  where
+    VkCmdDrawIndexed = _VkCmdDrawIndexed
 
 {-# INLINE _VkCmdDrawIndexed #-}
 
@@ -23034,21 +23399,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdDrawIndexedSafe ::
                PFN_vkCmdDrawIndexed -> HS_vkCmdDrawIndexed
 
 instance VulkanProc "vkCmdDrawIndexed" where
-        type VkProcType "vkCmdDrawIndexed" = HS_vkCmdDrawIndexed
-        vkProcSymbol = _VkCmdDrawIndexed
+    type VkProcType "vkCmdDrawIndexed" = HS_vkCmdDrawIndexed
+    vkProcSymbol = _VkCmdDrawIndexed
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndexedUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndexedUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndirect :: CString
 
 pattern VkCmdDrawIndirect <- (is_VkCmdDrawIndirect -> True)
-  where VkCmdDrawIndirect = _VkCmdDrawIndirect
+  where
+    VkCmdDrawIndirect = _VkCmdDrawIndirect
 
 {-# INLINE _VkCmdDrawIndirect #-}
 
@@ -23267,22 +23633,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdDrawIndirectSafe ::
                PFN_vkCmdDrawIndirect -> HS_vkCmdDrawIndirect
 
 instance VulkanProc "vkCmdDrawIndirect" where
-        type VkProcType "vkCmdDrawIndirect" = HS_vkCmdDrawIndirect
-        vkProcSymbol = _VkCmdDrawIndirect
+    type VkProcType "vkCmdDrawIndirect" = HS_vkCmdDrawIndirect
+    vkProcSymbol = _VkCmdDrawIndirect
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndirectUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndirectSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDrawIndexedIndirect :: CString
 
 pattern VkCmdDrawIndexedIndirect <-
         (is_VkCmdDrawIndexedIndirect -> True)
-  where VkCmdDrawIndexedIndirect = _VkCmdDrawIndexedIndirect
+  where
+    VkCmdDrawIndexedIndirect = _VkCmdDrawIndexedIndirect
 
 {-# INLINE _VkCmdDrawIndexedIndirect #-}
 
@@ -23506,22 +23873,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDrawIndexedIndirect -> HS_vkCmdDrawIndexedIndirect
 
 instance VulkanProc "vkCmdDrawIndexedIndirect" where
-        type VkProcType "vkCmdDrawIndexedIndirect" =
-             HS_vkCmdDrawIndexedIndirect
-        vkProcSymbol = _VkCmdDrawIndexedIndirect
+    type VkProcType "vkCmdDrawIndexedIndirect" =
+         HS_vkCmdDrawIndexedIndirect
+    vkProcSymbol = _VkCmdDrawIndexedIndirect
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndexedIndirectUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDrawIndexedIndirectUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDrawIndexedIndirectSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDispatch :: CString
 
 pattern VkCmdDispatch <- (is_VkCmdDispatch -> True)
-  where VkCmdDispatch = _VkCmdDispatch
+  where
+    VkCmdDispatch = _VkCmdDispatch
 
 {-# INLINE _VkCmdDispatch #-}
 
@@ -23722,21 +24090,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdDispatchSafe ::
                PFN_vkCmdDispatch -> HS_vkCmdDispatch
 
 instance VulkanProc "vkCmdDispatch" where
-        type VkProcType "vkCmdDispatch" = HS_vkCmdDispatch
-        vkProcSymbol = _VkCmdDispatch
+    type VkProcType "vkCmdDispatch" = HS_vkCmdDispatch
+    vkProcSymbol = _VkCmdDispatch
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDispatchSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDispatchSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDispatchIndirect :: CString
 
 pattern VkCmdDispatchIndirect <- (is_VkCmdDispatchIndirect -> True)
-  where VkCmdDispatchIndirect = _VkCmdDispatchIndirect
+  where
+    VkCmdDispatchIndirect = _VkCmdDispatchIndirect
 
 {-# INLINE _VkCmdDispatchIndirect #-}
 
@@ -23931,21 +24300,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdDispatchIndirectSafe
                :: PFN_vkCmdDispatchIndirect -> HS_vkCmdDispatchIndirect
 
 instance VulkanProc "vkCmdDispatchIndirect" where
-        type VkProcType "vkCmdDispatchIndirect" = HS_vkCmdDispatchIndirect
-        vkProcSymbol = _VkCmdDispatchIndirect
+    type VkProcType "vkCmdDispatchIndirect" = HS_vkCmdDispatchIndirect
+    vkProcSymbol = _VkCmdDispatchIndirect
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchIndirectUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDispatchIndirectUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDispatchIndirectSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDispatchIndirectSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdCopyBuffer :: CString
 
 pattern VkCmdCopyBuffer <- (is_VkCmdCopyBuffer -> True)
-  where VkCmdCopyBuffer = _VkCmdCopyBuffer
+  where
+    VkCmdCopyBuffer = _VkCmdCopyBuffer
 
 {-# INLINE _VkCmdCopyBuffer #-}
 
@@ -24163,21 +24533,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdCopyBufferSafe ::
                PFN_vkCmdCopyBuffer -> HS_vkCmdCopyBuffer
 
 instance VulkanProc "vkCmdCopyBuffer" where
-        type VkProcType "vkCmdCopyBuffer" = HS_vkCmdCopyBuffer
-        vkProcSymbol = _VkCmdCopyBuffer
+    type VkProcType "vkCmdCopyBuffer" = HS_vkCmdCopyBuffer
+    vkProcSymbol = _VkCmdCopyBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdCopyBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdCopyBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdCopyBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdCopyBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdCopyImage :: CString
 
 pattern VkCmdCopyImage <- (is_VkCmdCopyImage -> True)
-  where VkCmdCopyImage = _VkCmdCopyImage
+  where
+    VkCmdCopyImage = _VkCmdCopyImage
 
 {-# INLINE _VkCmdCopyImage #-}
 
@@ -24427,21 +24798,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdCopyImageSafe ::
                PFN_vkCmdCopyImage -> HS_vkCmdCopyImage
 
 instance VulkanProc "vkCmdCopyImage" where
-        type VkProcType "vkCmdCopyImage" = HS_vkCmdCopyImage
-        vkProcSymbol = _VkCmdCopyImage
+    type VkProcType "vkCmdCopyImage" = HS_vkCmdCopyImage
+    vkProcSymbol = _VkCmdCopyImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdCopyImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdCopyImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdCopyImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdCopyImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBlitImage :: CString
 
 pattern VkCmdBlitImage <- (is_VkCmdBlitImage -> True)
-  where VkCmdBlitImage = _VkCmdBlitImage
+  where
+    VkCmdBlitImage = _VkCmdBlitImage
 
 {-# INLINE _VkCmdBlitImage #-}
 
@@ -24707,22 +25079,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdBlitImageSafe ::
                PFN_vkCmdBlitImage -> HS_vkCmdBlitImage
 
 instance VulkanProc "vkCmdBlitImage" where
-        type VkProcType "vkCmdBlitImage" = HS_vkCmdBlitImage
-        vkProcSymbol = _VkCmdBlitImage
+    type VkProcType "vkCmdBlitImage" = HS_vkCmdBlitImage
+    vkProcSymbol = _VkCmdBlitImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBlitImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBlitImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBlitImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBlitImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdCopyBufferToImage :: CString
 
 pattern VkCmdCopyBufferToImage <-
         (is_VkCmdCopyBufferToImage -> True)
-  where VkCmdCopyBufferToImage = _VkCmdCopyBufferToImage
+  where
+    VkCmdCopyBufferToImage = _VkCmdCopyBufferToImage
 
 {-# INLINE _VkCmdCopyBufferToImage #-}
 
@@ -24966,23 +25339,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdCopyBufferToImage -> HS_vkCmdCopyBufferToImage
 
 instance VulkanProc "vkCmdCopyBufferToImage" where
-        type VkProcType "vkCmdCopyBufferToImage" =
-             HS_vkCmdCopyBufferToImage
-        vkProcSymbol = _VkCmdCopyBufferToImage
+    type VkProcType "vkCmdCopyBufferToImage" =
+         HS_vkCmdCopyBufferToImage
+    vkProcSymbol = _VkCmdCopyBufferToImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdCopyBufferToImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdCopyBufferToImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdCopyBufferToImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdCopyBufferToImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdCopyImageToBuffer :: CString
 
 pattern VkCmdCopyImageToBuffer <-
         (is_VkCmdCopyImageToBuffer -> True)
-  where VkCmdCopyImageToBuffer = _VkCmdCopyImageToBuffer
+  where
+    VkCmdCopyImageToBuffer = _VkCmdCopyImageToBuffer
 
 {-# INLINE _VkCmdCopyImageToBuffer #-}
 
@@ -25226,22 +25600,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdCopyImageToBuffer -> HS_vkCmdCopyImageToBuffer
 
 instance VulkanProc "vkCmdCopyImageToBuffer" where
-        type VkProcType "vkCmdCopyImageToBuffer" =
-             HS_vkCmdCopyImageToBuffer
-        vkProcSymbol = _VkCmdCopyImageToBuffer
+    type VkProcType "vkCmdCopyImageToBuffer" =
+         HS_vkCmdCopyImageToBuffer
+    vkProcSymbol = _VkCmdCopyImageToBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdCopyImageToBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdCopyImageToBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdCopyImageToBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdCopyImageToBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdUpdateBuffer :: CString
 
 pattern VkCmdUpdateBuffer <- (is_VkCmdUpdateBuffer -> True)
-  where VkCmdUpdateBuffer = _VkCmdUpdateBuffer
+  where
+    VkCmdUpdateBuffer = _VkCmdUpdateBuffer
 
 {-# INLINE _VkCmdUpdateBuffer #-}
 
@@ -25460,21 +25835,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdUpdateBufferSafe ::
                PFN_vkCmdUpdateBuffer -> HS_vkCmdUpdateBuffer
 
 instance VulkanProc "vkCmdUpdateBuffer" where
-        type VkProcType "vkCmdUpdateBuffer" = HS_vkCmdUpdateBuffer
-        vkProcSymbol = _VkCmdUpdateBuffer
+    type VkProcType "vkCmdUpdateBuffer" = HS_vkCmdUpdateBuffer
+    vkProcSymbol = _VkCmdUpdateBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdUpdateBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdUpdateBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdUpdateBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdUpdateBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdFillBuffer :: CString
 
 pattern VkCmdFillBuffer <- (is_VkCmdFillBuffer -> True)
-  where VkCmdFillBuffer = _VkCmdFillBuffer
+  where
+    VkCmdFillBuffer = _VkCmdFillBuffer
 
 {-# INLINE _VkCmdFillBuffer #-}
 
@@ -25700,21 +26076,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdFillBufferSafe ::
                PFN_vkCmdFillBuffer -> HS_vkCmdFillBuffer
 
 instance VulkanProc "vkCmdFillBuffer" where
-        type VkProcType "vkCmdFillBuffer" = HS_vkCmdFillBuffer
-        vkProcSymbol = _VkCmdFillBuffer
+    type VkProcType "vkCmdFillBuffer" = HS_vkCmdFillBuffer
+    vkProcSymbol = _VkCmdFillBuffer
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdFillBufferUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdFillBufferUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdFillBufferSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdFillBufferSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdClearColorImage :: CString
 
 pattern VkCmdClearColorImage <- (is_VkCmdClearColorImage -> True)
-  where VkCmdClearColorImage = _VkCmdClearColorImage
+  where
+    VkCmdClearColorImage = _VkCmdClearColorImage
 
 {-# INLINE _VkCmdClearColorImage #-}
 
@@ -25963,22 +26340,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdClearColorImageSafe
                :: PFN_vkCmdClearColorImage -> HS_vkCmdClearColorImage
 
 instance VulkanProc "vkCmdClearColorImage" where
-        type VkProcType "vkCmdClearColorImage" = HS_vkCmdClearColorImage
-        vkProcSymbol = _VkCmdClearColorImage
+    type VkProcType "vkCmdClearColorImage" = HS_vkCmdClearColorImage
+    vkProcSymbol = _VkCmdClearColorImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdClearColorImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdClearColorImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdClearColorImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdClearColorImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdClearDepthStencilImage :: CString
 
 pattern VkCmdClearDepthStencilImage <-
         (is_VkCmdClearDepthStencilImage -> True)
-  where VkCmdClearDepthStencilImage = _VkCmdClearDepthStencilImage
+  where
+    VkCmdClearDepthStencilImage = _VkCmdClearDepthStencilImage
 
 {-# INLINE _VkCmdClearDepthStencilImage #-}
 
@@ -26232,22 +26610,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdClearDepthStencilImage -> HS_vkCmdClearDepthStencilImage
 
 instance VulkanProc "vkCmdClearDepthStencilImage" where
-        type VkProcType "vkCmdClearDepthStencilImage" =
-             HS_vkCmdClearDepthStencilImage
-        vkProcSymbol = _VkCmdClearDepthStencilImage
+    type VkProcType "vkCmdClearDepthStencilImage" =
+         HS_vkCmdClearDepthStencilImage
+    vkProcSymbol = _VkCmdClearDepthStencilImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdClearDepthStencilImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdClearDepthStencilImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdClearDepthStencilImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdClearDepthStencilImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdClearAttachments :: CString
 
 pattern VkCmdClearAttachments <- (is_VkCmdClearAttachments -> True)
-  where VkCmdClearAttachments = _VkCmdClearAttachments
+  where
+    VkCmdClearAttachments = _VkCmdClearAttachments
 
 {-# INLINE _VkCmdClearAttachments #-}
 
@@ -26474,21 +26853,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdClearAttachmentsSafe
                :: PFN_vkCmdClearAttachments -> HS_vkCmdClearAttachments
 
 instance VulkanProc "vkCmdClearAttachments" where
-        type VkProcType "vkCmdClearAttachments" = HS_vkCmdClearAttachments
-        vkProcSymbol = _VkCmdClearAttachments
+    type VkProcType "vkCmdClearAttachments" = HS_vkCmdClearAttachments
+    vkProcSymbol = _VkCmdClearAttachments
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdClearAttachmentsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdClearAttachmentsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdClearAttachmentsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdClearAttachmentsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdResolveImage :: CString
 
 pattern VkCmdResolveImage <- (is_VkCmdResolveImage -> True)
-  where VkCmdResolveImage = _VkCmdResolveImage
+  where
+    VkCmdResolveImage = _VkCmdResolveImage
 
 {-# INLINE _VkCmdResolveImage #-}
 
@@ -26739,21 +27119,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdResolveImageSafe ::
                PFN_vkCmdResolveImage -> HS_vkCmdResolveImage
 
 instance VulkanProc "vkCmdResolveImage" where
-        type VkProcType "vkCmdResolveImage" = HS_vkCmdResolveImage
-        vkProcSymbol = _VkCmdResolveImage
+    type VkProcType "vkCmdResolveImage" = HS_vkCmdResolveImage
+    vkProcSymbol = _VkCmdResolveImage
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdResolveImageUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdResolveImageUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdResolveImageSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdResolveImageSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdSetEvent :: CString
 
 pattern VkCmdSetEvent <- (is_VkCmdSetEvent -> True)
-  where VkCmdSetEvent = _VkCmdSetEvent
+  where
+    VkCmdSetEvent = _VkCmdSetEvent
 
 {-# INLINE _VkCmdSetEvent #-}
 
@@ -26936,21 +27317,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdSetEventSafe ::
                PFN_vkCmdSetEvent -> HS_vkCmdSetEvent
 
 instance VulkanProc "vkCmdSetEvent" where
-        type VkProcType "vkCmdSetEvent" = HS_vkCmdSetEvent
-        vkProcSymbol = _VkCmdSetEvent
+    type VkProcType "vkCmdSetEvent" = HS_vkCmdSetEvent
+    vkProcSymbol = _VkCmdSetEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdSetEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdSetEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdSetEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdSetEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdResetEvent :: CString
 
 pattern VkCmdResetEvent <- (is_VkCmdResetEvent -> True)
-  where VkCmdResetEvent = _VkCmdResetEvent
+  where
+    VkCmdResetEvent = _VkCmdResetEvent
 
 {-# INLINE _VkCmdResetEvent #-}
 
@@ -27133,21 +27515,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdResetEventSafe ::
                PFN_vkCmdResetEvent -> HS_vkCmdResetEvent
 
 instance VulkanProc "vkCmdResetEvent" where
-        type VkProcType "vkCmdResetEvent" = HS_vkCmdResetEvent
-        vkProcSymbol = _VkCmdResetEvent
+    type VkProcType "vkCmdResetEvent" = HS_vkCmdResetEvent
+    vkProcSymbol = _VkCmdResetEvent
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdResetEventUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdResetEventUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdResetEventSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdResetEventSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdWaitEvents :: CString
 
 pattern VkCmdWaitEvents <- (is_VkCmdWaitEvents -> True)
-  where VkCmdWaitEvents = _VkCmdWaitEvents
+  where
+    VkCmdWaitEvents = _VkCmdWaitEvents
 
 {-# INLINE _VkCmdWaitEvents #-}
 
@@ -27465,21 +27848,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdWaitEventsSafe ::
                PFN_vkCmdWaitEvents -> HS_vkCmdWaitEvents
 
 instance VulkanProc "vkCmdWaitEvents" where
-        type VkProcType "vkCmdWaitEvents" = HS_vkCmdWaitEvents
-        vkProcSymbol = _VkCmdWaitEvents
+    type VkProcType "vkCmdWaitEvents" = HS_vkCmdWaitEvents
+    vkProcSymbol = _VkCmdWaitEvents
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdWaitEventsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdWaitEventsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdWaitEventsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdWaitEventsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdPipelineBarrier :: CString
 
 pattern VkCmdPipelineBarrier <- (is_VkCmdPipelineBarrier -> True)
-  where VkCmdPipelineBarrier = _VkCmdPipelineBarrier
+  where
+    VkCmdPipelineBarrier = _VkCmdPipelineBarrier
 
 {-# INLINE _VkCmdPipelineBarrier #-}
 
@@ -27784,21 +28168,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdPipelineBarrierSafe
                :: PFN_vkCmdPipelineBarrier -> HS_vkCmdPipelineBarrier
 
 instance VulkanProc "vkCmdPipelineBarrier" where
-        type VkProcType "vkCmdPipelineBarrier" = HS_vkCmdPipelineBarrier
-        vkProcSymbol = _VkCmdPipelineBarrier
+    type VkProcType "vkCmdPipelineBarrier" = HS_vkCmdPipelineBarrier
+    vkProcSymbol = _VkCmdPipelineBarrier
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdPipelineBarrierUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdPipelineBarrierUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdPipelineBarrierSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdPipelineBarrierSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBeginQuery :: CString
 
 pattern VkCmdBeginQuery <- (is_VkCmdBeginQuery -> True)
-  where VkCmdBeginQuery = _VkCmdBeginQuery
+  where
+    VkCmdBeginQuery = _VkCmdBeginQuery
 
 {-# INLINE _VkCmdBeginQuery #-}
 
@@ -27998,21 +28383,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdBeginQuerySafe ::
                PFN_vkCmdBeginQuery -> HS_vkCmdBeginQuery
 
 instance VulkanProc "vkCmdBeginQuery" where
-        type VkProcType "vkCmdBeginQuery" = HS_vkCmdBeginQuery
-        vkProcSymbol = _VkCmdBeginQuery
+    type VkProcType "vkCmdBeginQuery" = HS_vkCmdBeginQuery
+    vkProcSymbol = _VkCmdBeginQuery
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBeginQueryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBeginQueryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBeginQuerySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBeginQuerySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdEndQuery :: CString
 
 pattern VkCmdEndQuery <- (is_VkCmdEndQuery -> True)
-  where VkCmdEndQuery = _VkCmdEndQuery
+  where
+    VkCmdEndQuery = _VkCmdEndQuery
 
 {-# INLINE _VkCmdEndQuery #-}
 
@@ -28194,21 +28580,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdEndQuerySafe ::
                PFN_vkCmdEndQuery -> HS_vkCmdEndQuery
 
 instance VulkanProc "vkCmdEndQuery" where
-        type VkProcType "vkCmdEndQuery" = HS_vkCmdEndQuery
-        vkProcSymbol = _VkCmdEndQuery
+    type VkProcType "vkCmdEndQuery" = HS_vkCmdEndQuery
+    vkProcSymbol = _VkCmdEndQuery
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdEndQueryUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdEndQueryUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdEndQuerySafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdEndQuerySafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdResetQueryPool :: CString
 
 pattern VkCmdResetQueryPool <- (is_VkCmdResetQueryPool -> True)
-  where VkCmdResetQueryPool = _VkCmdResetQueryPool
+  where
+    VkCmdResetQueryPool = _VkCmdResetQueryPool
 
 {-# INLINE _VkCmdResetQueryPool #-}
 
@@ -28404,21 +28791,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdResetQueryPoolSafe
                :: PFN_vkCmdResetQueryPool -> HS_vkCmdResetQueryPool
 
 instance VulkanProc "vkCmdResetQueryPool" where
-        type VkProcType "vkCmdResetQueryPool" = HS_vkCmdResetQueryPool
-        vkProcSymbol = _VkCmdResetQueryPool
+    type VkProcType "vkCmdResetQueryPool" = HS_vkCmdResetQueryPool
+    vkProcSymbol = _VkCmdResetQueryPool
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdResetQueryPoolUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdResetQueryPoolUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdResetQueryPoolSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdResetQueryPoolSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdWriteTimestamp :: CString
 
 pattern VkCmdWriteTimestamp <- (is_VkCmdWriteTimestamp -> True)
-  where VkCmdWriteTimestamp = _VkCmdWriteTimestamp
+  where
+    VkCmdWriteTimestamp = _VkCmdWriteTimestamp
 
 {-# INLINE _VkCmdWriteTimestamp #-}
 
@@ -28628,22 +29016,23 @@ foreign import ccall safe "dynamic" unwrapVkCmdWriteTimestampSafe
                :: PFN_vkCmdWriteTimestamp -> HS_vkCmdWriteTimestamp
 
 instance VulkanProc "vkCmdWriteTimestamp" where
-        type VkProcType "vkCmdWriteTimestamp" = HS_vkCmdWriteTimestamp
-        vkProcSymbol = _VkCmdWriteTimestamp
+    type VkProcType "vkCmdWriteTimestamp" = HS_vkCmdWriteTimestamp
+    vkProcSymbol = _VkCmdWriteTimestamp
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdWriteTimestampUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdWriteTimestampUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdWriteTimestampSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdWriteTimestampSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdCopyQueryPoolResults :: CString
 
 pattern VkCmdCopyQueryPoolResults <-
         (is_VkCmdCopyQueryPoolResults -> True)
-  where VkCmdCopyQueryPoolResults = _VkCmdCopyQueryPoolResults
+  where
+    VkCmdCopyQueryPoolResults = _VkCmdCopyQueryPoolResults
 
 {-# INLINE _VkCmdCopyQueryPoolResults #-}
 
@@ -28922,22 +29311,23 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdCopyQueryPoolResults -> HS_vkCmdCopyQueryPoolResults
 
 instance VulkanProc "vkCmdCopyQueryPoolResults" where
-        type VkProcType "vkCmdCopyQueryPoolResults" =
-             HS_vkCmdCopyQueryPoolResults
-        vkProcSymbol = _VkCmdCopyQueryPoolResults
+    type VkProcType "vkCmdCopyQueryPoolResults" =
+         HS_vkCmdCopyQueryPoolResults
+    vkProcSymbol = _VkCmdCopyQueryPoolResults
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdCopyQueryPoolResultsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdCopyQueryPoolResultsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdCopyQueryPoolResultsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdCopyQueryPoolResultsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdPushConstants :: CString
 
 pattern VkCmdPushConstants <- (is_VkCmdPushConstants -> True)
-  where VkCmdPushConstants = _VkCmdPushConstants
+  where
+    VkCmdPushConstants = _VkCmdPushConstants
 
 {-# INLINE _VkCmdPushConstants #-}
 
@@ -29165,21 +29555,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdPushConstantsSafe ::
                PFN_vkCmdPushConstants -> HS_vkCmdPushConstants
 
 instance VulkanProc "vkCmdPushConstants" where
-        type VkProcType "vkCmdPushConstants" = HS_vkCmdPushConstants
-        vkProcSymbol = _VkCmdPushConstants
+    type VkProcType "vkCmdPushConstants" = HS_vkCmdPushConstants
+    vkProcSymbol = _VkCmdPushConstants
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdPushConstantsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdPushConstantsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdPushConstantsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdPushConstantsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdBeginRenderPass :: CString
 
 pattern VkCmdBeginRenderPass <- (is_VkCmdBeginRenderPass -> True)
-  where VkCmdBeginRenderPass = _VkCmdBeginRenderPass
+  where
+    VkCmdBeginRenderPass = _VkCmdBeginRenderPass
 
 {-# INLINE _VkCmdBeginRenderPass #-}
 
@@ -29380,21 +29771,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdBeginRenderPassSafe
                :: PFN_vkCmdBeginRenderPass -> HS_vkCmdBeginRenderPass
 
 instance VulkanProc "vkCmdBeginRenderPass" where
-        type VkProcType "vkCmdBeginRenderPass" = HS_vkCmdBeginRenderPass
-        vkProcSymbol = _VkCmdBeginRenderPass
+    type VkProcType "vkCmdBeginRenderPass" = HS_vkCmdBeginRenderPass
+    vkProcSymbol = _VkCmdBeginRenderPass
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdBeginRenderPassUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdBeginRenderPassUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdBeginRenderPassSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdBeginRenderPassSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdNextSubpass :: CString
 
 pattern VkCmdNextSubpass <- (is_VkCmdNextSubpass -> True)
-  where VkCmdNextSubpass = _VkCmdNextSubpass
+  where
+    VkCmdNextSubpass = _VkCmdNextSubpass
 
 {-# INLINE _VkCmdNextSubpass #-}
 
@@ -29575,21 +29967,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdNextSubpassSafe ::
                PFN_vkCmdNextSubpass -> HS_vkCmdNextSubpass
 
 instance VulkanProc "vkCmdNextSubpass" where
-        type VkProcType "vkCmdNextSubpass" = HS_vkCmdNextSubpass
-        vkProcSymbol = _VkCmdNextSubpass
+    type VkProcType "vkCmdNextSubpass" = HS_vkCmdNextSubpass
+    vkProcSymbol = _VkCmdNextSubpass
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdNextSubpassUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdNextSubpassUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdNextSubpassSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdNextSubpassSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdEndRenderPass :: CString
 
 pattern VkCmdEndRenderPass <- (is_VkCmdEndRenderPass -> True)
-  where VkCmdEndRenderPass = _VkCmdEndRenderPass
+  where
+    VkCmdEndRenderPass = _VkCmdEndRenderPass
 
 {-# INLINE _VkCmdEndRenderPass #-}
 
@@ -29757,21 +30150,22 @@ foreign import ccall safe "dynamic" unwrapVkCmdEndRenderPassSafe ::
                PFN_vkCmdEndRenderPass -> HS_vkCmdEndRenderPass
 
 instance VulkanProc "vkCmdEndRenderPass" where
-        type VkProcType "vkCmdEndRenderPass" = HS_vkCmdEndRenderPass
-        vkProcSymbol = _VkCmdEndRenderPass
+    type VkProcType "vkCmdEndRenderPass" = HS_vkCmdEndRenderPass
+    vkProcSymbol = _VkCmdEndRenderPass
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdEndRenderPassUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdEndRenderPassUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdEndRenderPassSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdEndRenderPassSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdExecuteCommands :: CString
 
 pattern VkCmdExecuteCommands <- (is_VkCmdExecuteCommands -> True)
-  where VkCmdExecuteCommands = _VkCmdExecuteCommands
+  where
+    VkCmdExecuteCommands = _VkCmdExecuteCommands
 
 {-# INLINE _VkCmdExecuteCommands #-}
 
@@ -29958,13 +30352,13 @@ foreign import ccall safe "dynamic" unwrapVkCmdExecuteCommandsSafe
                :: PFN_vkCmdExecuteCommands -> HS_vkCmdExecuteCommands
 
 instance VulkanProc "vkCmdExecuteCommands" where
-        type VkProcType "vkCmdExecuteCommands" = HS_vkCmdExecuteCommands
-        vkProcSymbol = _VkCmdExecuteCommands
+    type VkProcType "vkCmdExecuteCommands" = HS_vkCmdExecuteCommands
+    vkProcSymbol = _VkCmdExecuteCommands
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdExecuteCommandsUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdExecuteCommandsUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdExecuteCommandsSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdExecuteCommandsSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}

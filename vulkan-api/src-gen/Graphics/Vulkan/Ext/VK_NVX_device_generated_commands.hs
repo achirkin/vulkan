@@ -10,33 +10,43 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
-       (-- * Vulkan extension: @VK_NVX_device_generated_commands@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @Christoph Kubisch @pixeljetstream@
-        --
-        -- author: @NVX@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @87@
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Cmd,
-        module Graphics.Vulkan.Types.Struct.Device,
-        module Graphics.Vulkan.Types.Enum.IndexType,
-        module Graphics.Vulkan.Types.Struct.IndirectCommands,
-        module Graphics.Vulkan.Types.Enum.IndirectCommands,
-        module Graphics.Vulkan.Types.Enum.Object,
-        module Graphics.Vulkan.Types.Struct.ObjectTable,
-        module Graphics.Vulkan.Types.Enum.Pipeline,
-        module Graphics.Vulkan.Types.Enum.Shader,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VkCmdProcessCommandsNVX, pattern VkCmdProcessCommandsNVX,
-        HS_vkCmdProcessCommandsNVX, PFN_vkCmdProcessCommandsNVX,
-        VkCmdReserveSpaceForCommandsNVX,
+       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkCmdProcessCommandsInfoNVX, VkCmdReserveSpaceForCommandsInfoNVX,
+        VkDeviceGeneratedCommandsFeaturesNVX,
+        VkDeviceGeneratedCommandsLimitsNVX, VkIndexType(..),
+        VkIndirectCommandsLayoutCreateInfoNVX,
+        VkIndirectCommandsLayoutTokenNVX,
+        VkIndirectCommandsLayoutUsageBitmaskNVX(..),
+        VkIndirectCommandsTokenTypeNVX(..),
+        VkIndirectCommandsLayoutUsageFlagBitsNVX(),
+        VkIndirectCommandsLayoutUsageFlagsNVX(),
+        VkIndirectCommandsTokenNVX, VkObjectEntryTypeNVX(..),
+        VkObjectEntryUsageBitmaskNVX(..), VkObjectType(..),
+        VkObjectEntryUsageFlagBitsNVX(), VkObjectEntryUsageFlagsNVX(),
+        VkObjectTableCreateInfoNVX, VkObjectTableDescriptorSetEntryNVX,
+        VkObjectTableEntryNVX, VkObjectTableIndexBufferEntryNVX,
+        VkObjectTablePipelineEntryNVX, VkObjectTablePushConstantEntryNVX,
+        VkObjectTableVertexBufferEntryNVX, VkPipelineBindPoint(..),
+        VkPipelineCacheHeaderVersion(..), VkPipelineCreateBitmask(..),
+        VkPipelineStageBitmask(..), VkPipelineCacheCreateFlagBits(..),
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        VkPipelineDynamicStateCreateFlagBits(..),
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        VkPipelineLayoutCreateFlagBits(..),
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(),
+        VkPipelineTessellationStateCreateFlagBits(..),
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        VkPipelineViewportStateCreateFlagBits(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkStructureType(..), -- > #include "vk_platform.h"
+                                                   VkCmdProcessCommandsNVX,
+        pattern VkCmdProcessCommandsNVX, HS_vkCmdProcessCommandsNVX,
+        PFN_vkCmdProcessCommandsNVX, VkCmdReserveSpaceForCommandsNVX,
         pattern VkCmdReserveSpaceForCommandsNVX,
         HS_vkCmdReserveSpaceForCommandsNVX,
         PFN_vkCmdReserveSpaceForCommandsNVX,
@@ -60,14 +70,60 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
-        VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION,
+        module Graphics.Vulkan.Marshal, VkInternalAllocationType(..),
+        VkResult(..), VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkDeviceCreateInfo, VkDeviceEventInfoEXT,
+        VkDeviceGroupBindSparseInfo, VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceGroupCommandBufferBeginInfo,
+        VkDeviceGroupCommandBufferBeginInfoKHR,
+        VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
+        VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
+        VkDeviceGroupRenderPassBeginInfo,
+        VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
+        VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
+        VkDeviceQueueInfo2, VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION,
         pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION,
         VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME,
         pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME,
@@ -83,34 +139,34 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX,
         pattern VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..),
-                                                                    VkAccessFlagBits)
-import           Graphics.Vulkan.Types.Enum.IndexType
-import           Graphics.Vulkan.Types.Enum.IndirectCommands
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Object
-import           Graphics.Vulkan.Types.Enum.Pipeline
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.Cmd
-import           Graphics.Vulkan.Types.Struct.Device
-import           Graphics.Vulkan.Types.Struct.IndirectCommands
-import           Graphics.Vulkan.Types.Struct.ObjectTable
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.AccessFlags            (VkAccessBitmask (..))
+import Graphics.Vulkan.Types.Enum.IndexType
+import Graphics.Vulkan.Types.Enum.IndirectCommands
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.Pipeline
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.Cmd
+import Graphics.Vulkan.Types.Struct.Device
+import Graphics.Vulkan.Types.Struct.IndirectCommands
+import Graphics.Vulkan.Types.Struct.ObjectTable
 
 pattern VkCmdProcessCommandsNVX :: CString
 
 pattern VkCmdProcessCommandsNVX <-
         (is_VkCmdProcessCommandsNVX -> True)
-  where VkCmdProcessCommandsNVX = _VkCmdProcessCommandsNVX
+  where
+    VkCmdProcessCommandsNVX = _VkCmdProcessCommandsNVX
 
 {-# INLINE _VkCmdProcessCommandsNVX #-}
 
@@ -152,24 +208,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdProcessCommandsNVX -> HS_vkCmdProcessCommandsNVX
 
 instance VulkanProc "vkCmdProcessCommandsNVX" where
-        type VkProcType "vkCmdProcessCommandsNVX" =
-             HS_vkCmdProcessCommandsNVX
-        vkProcSymbol = _VkCmdProcessCommandsNVX
+    type VkProcType "vkCmdProcessCommandsNVX" =
+         HS_vkCmdProcessCommandsNVX
+    vkProcSymbol = _VkCmdProcessCommandsNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdProcessCommandsNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdProcessCommandsNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdProcessCommandsNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdProcessCommandsNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdReserveSpaceForCommandsNVX :: CString
 
 pattern VkCmdReserveSpaceForCommandsNVX <-
         (is_VkCmdReserveSpaceForCommandsNVX -> True)
-  where VkCmdReserveSpaceForCommandsNVX
-          = _VkCmdReserveSpaceForCommandsNVX
+  where
+    VkCmdReserveSpaceForCommandsNVX = _VkCmdReserveSpaceForCommandsNVX
 
 {-# INLINE _VkCmdReserveSpaceForCommandsNVX #-}
 
@@ -215,24 +271,25 @@ foreign import ccall safe "dynamic"
                  HS_vkCmdReserveSpaceForCommandsNVX
 
 instance VulkanProc "vkCmdReserveSpaceForCommandsNVX" where
-        type VkProcType "vkCmdReserveSpaceForCommandsNVX" =
-             HS_vkCmdReserveSpaceForCommandsNVX
-        vkProcSymbol = _VkCmdReserveSpaceForCommandsNVX
+    type VkProcType "vkCmdReserveSpaceForCommandsNVX" =
+         HS_vkCmdReserveSpaceForCommandsNVX
+    vkProcSymbol = _VkCmdReserveSpaceForCommandsNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdReserveSpaceForCommandsNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdReserveSpaceForCommandsNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdReserveSpaceForCommandsNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdReserveSpaceForCommandsNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateIndirectCommandsLayoutNVX :: CString
 
 pattern VkCreateIndirectCommandsLayoutNVX <-
         (is_VkCreateIndirectCommandsLayoutNVX -> True)
-  where VkCreateIndirectCommandsLayoutNVX
-          = _VkCreateIndirectCommandsLayoutNVX
+  where
+    VkCreateIndirectCommandsLayoutNVX
+      = _VkCreateIndirectCommandsLayoutNVX
 
 {-# INLINE _VkCreateIndirectCommandsLayoutNVX #-}
 
@@ -285,25 +342,26 @@ foreign import ccall safe "dynamic"
                  HS_vkCreateIndirectCommandsLayoutNVX
 
 instance VulkanProc "vkCreateIndirectCommandsLayoutNVX" where
-        type VkProcType "vkCreateIndirectCommandsLayoutNVX" =
-             HS_vkCreateIndirectCommandsLayoutNVX
-        vkProcSymbol = _VkCreateIndirectCommandsLayoutNVX
+    type VkProcType "vkCreateIndirectCommandsLayoutNVX" =
+         HS_vkCreateIndirectCommandsLayoutNVX
+    vkProcSymbol = _VkCreateIndirectCommandsLayoutNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkCreateIndirectCommandsLayoutNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkCreateIndirectCommandsLayoutNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateIndirectCommandsLayoutNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateIndirectCommandsLayoutNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyIndirectCommandsLayoutNVX :: CString
 
 pattern VkDestroyIndirectCommandsLayoutNVX <-
         (is_VkDestroyIndirectCommandsLayoutNVX -> True)
-  where VkDestroyIndirectCommandsLayoutNVX
-          = _VkDestroyIndirectCommandsLayoutNVX
+  where
+    VkDestroyIndirectCommandsLayoutNVX
+      = _VkDestroyIndirectCommandsLayoutNVX
 
 {-# INLINE _VkDestroyIndirectCommandsLayoutNVX #-}
 
@@ -348,24 +406,25 @@ foreign import ccall safe "dynamic"
                  HS_vkDestroyIndirectCommandsLayoutNVX
 
 instance VulkanProc "vkDestroyIndirectCommandsLayoutNVX" where
-        type VkProcType "vkDestroyIndirectCommandsLayoutNVX" =
-             HS_vkDestroyIndirectCommandsLayoutNVX
-        vkProcSymbol = _VkDestroyIndirectCommandsLayoutNVX
+    type VkProcType "vkDestroyIndirectCommandsLayoutNVX" =
+         HS_vkDestroyIndirectCommandsLayoutNVX
+    vkProcSymbol = _VkDestroyIndirectCommandsLayoutNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkDestroyIndirectCommandsLayoutNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkDestroyIndirectCommandsLayoutNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyIndirectCommandsLayoutNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyIndirectCommandsLayoutNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateObjectTableNVX :: CString
 
 pattern VkCreateObjectTableNVX <-
         (is_VkCreateObjectTableNVX -> True)
-  where VkCreateObjectTableNVX = _VkCreateObjectTableNVX
+  where
+    VkCreateObjectTableNVX = _VkCreateObjectTableNVX
 
 {-# INLINE _VkCreateObjectTableNVX #-}
 
@@ -412,23 +471,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateObjectTableNVX -> HS_vkCreateObjectTableNVX
 
 instance VulkanProc "vkCreateObjectTableNVX" where
-        type VkProcType "vkCreateObjectTableNVX" =
-             HS_vkCreateObjectTableNVX
-        vkProcSymbol = _VkCreateObjectTableNVX
+    type VkProcType "vkCreateObjectTableNVX" =
+         HS_vkCreateObjectTableNVX
+    vkProcSymbol = _VkCreateObjectTableNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateObjectTableNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateObjectTableNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateObjectTableNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateObjectTableNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDestroyObjectTableNVX :: CString
 
 pattern VkDestroyObjectTableNVX <-
         (is_VkDestroyObjectTableNVX -> True)
-  where VkDestroyObjectTableNVX = _VkDestroyObjectTableNVX
+  where
+    VkDestroyObjectTableNVX = _VkDestroyObjectTableNVX
 
 {-# INLINE _VkDestroyObjectTableNVX #-}
 
@@ -468,22 +528,23 @@ foreign import ccall safe "dynamic"
                PFN_vkDestroyObjectTableNVX -> HS_vkDestroyObjectTableNVX
 
 instance VulkanProc "vkDestroyObjectTableNVX" where
-        type VkProcType "vkDestroyObjectTableNVX" =
-             HS_vkDestroyObjectTableNVX
-        vkProcSymbol = _VkDestroyObjectTableNVX
+    type VkProcType "vkDestroyObjectTableNVX" =
+         HS_vkDestroyObjectTableNVX
+    vkProcSymbol = _VkDestroyObjectTableNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDestroyObjectTableNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDestroyObjectTableNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDestroyObjectTableNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDestroyObjectTableNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkRegisterObjectsNVX :: CString
 
 pattern VkRegisterObjectsNVX <- (is_VkRegisterObjectsNVX -> True)
-  where VkRegisterObjectsNVX = _VkRegisterObjectsNVX
+  where
+    VkRegisterObjectsNVX = _VkRegisterObjectsNVX
 
 {-# INLINE _VkRegisterObjectsNVX #-}
 
@@ -532,22 +593,23 @@ foreign import ccall safe "dynamic" unwrapVkRegisterObjectsNVXSafe
                :: PFN_vkRegisterObjectsNVX -> HS_vkRegisterObjectsNVX
 
 instance VulkanProc "vkRegisterObjectsNVX" where
-        type VkProcType "vkRegisterObjectsNVX" = HS_vkRegisterObjectsNVX
-        vkProcSymbol = _VkRegisterObjectsNVX
+    type VkProcType "vkRegisterObjectsNVX" = HS_vkRegisterObjectsNVX
+    vkProcSymbol = _VkRegisterObjectsNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkRegisterObjectsNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkRegisterObjectsNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkRegisterObjectsNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkRegisterObjectsNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkUnregisterObjectsNVX :: CString
 
 pattern VkUnregisterObjectsNVX <-
         (is_VkUnregisterObjectsNVX -> True)
-  where VkUnregisterObjectsNVX = _VkUnregisterObjectsNVX
+  where
+    VkUnregisterObjectsNVX = _VkUnregisterObjectsNVX
 
 {-# INLINE _VkUnregisterObjectsNVX #-}
 
@@ -596,25 +658,26 @@ foreign import ccall safe "dynamic"
                PFN_vkUnregisterObjectsNVX -> HS_vkUnregisterObjectsNVX
 
 instance VulkanProc "vkUnregisterObjectsNVX" where
-        type VkProcType "vkUnregisterObjectsNVX" =
-             HS_vkUnregisterObjectsNVX
-        vkProcSymbol = _VkUnregisterObjectsNVX
+    type VkProcType "vkUnregisterObjectsNVX" =
+         HS_vkUnregisterObjectsNVX
+    vkProcSymbol = _VkUnregisterObjectsNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkUnregisterObjectsNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkUnregisterObjectsNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkUnregisterObjectsNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkUnregisterObjectsNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
         CString
 
 pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX <-
         (is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX -> True)
-  where VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
-          = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+  where
+    VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+      = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
 {-# INLINE _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX #-}
 
@@ -664,19 +727,19 @@ foreign import ccall safe "dynamic"
 instance VulkanProc
            "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
          where
-        type VkProcType "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
-             = HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
-        vkProcSymbol = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+    type VkProcType "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+         = HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+    vkProcSymbol = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -689,8 +752,9 @@ pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME :: CString
 
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME <-
         (is_VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME -> True)
-  where VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
-          = _VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
+  where
+    VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
+      = _VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
 
 {-# INLINE _VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME #-}
 

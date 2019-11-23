@@ -27,10 +27,15 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         --
 
         -- ** Required extensions: 'VK_EXT_debug_report'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Struct.Debug,
-        module Graphics.Vulkan.Types.Enum.Debug,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        module Graphics.Vulkan.Marshal, VkDebugMarkerMarkerInfoEXT,
+        VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectTagInfoEXT,
+        VkDebugReportBitmaskEXT(..), VkDebugReportObjectTypeEXT(..),
+        VkDebugUtilsMessageSeverityBitmaskEXT(..),
+        VkDebugUtilsMessageTypeBitmaskEXT(..), VkDebugReportFlagBitsEXT(),
+        VkDebugReportFlagsEXT(), VkDebugUtilsMessageSeverityFlagBitsEXT(),
+        VkDebugUtilsMessageSeverityFlagsEXT(),
+        VkDebugUtilsMessageTypeFlagBitsEXT(),
+        VkDebugUtilsMessageTypeFlagsEXT(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VkDebugMarkerSetObjectTagEXT, pattern VkDebugMarkerSetObjectTagEXT,
         HS_vkDebugMarkerSetObjectTagEXT, PFN_vkDebugMarkerSetObjectTagEXT,
@@ -43,9 +48,32 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VkCmdDebugMarkerEndEXT, HS_vkCmdDebugMarkerEndEXT,
         PFN_vkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
         pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
-        PFN_vkCmdDebugMarkerInsertEXT,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        PFN_vkCmdDebugMarkerInsertEXT, VkResult(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkDebugReportCallbackCreateInfoEXT, VkDebugUtilsObjectTagInfoEXT,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         VK_EXT_DEBUG_MARKER_EXTENSION_NAME,
@@ -54,20 +82,21 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.Debug
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Debug
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
+import Graphics.Vulkan.Types.Enum.Debug
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Debug
 
 pattern VkDebugMarkerSetObjectTagEXT :: CString
 
 pattern VkDebugMarkerSetObjectTagEXT <-
         (is_VkDebugMarkerSetObjectTagEXT -> True)
-  where VkDebugMarkerSetObjectTagEXT = _VkDebugMarkerSetObjectTagEXT
+  where
+    VkDebugMarkerSetObjectTagEXT = _VkDebugMarkerSetObjectTagEXT
 
 {-# INLINE _VkDebugMarkerSetObjectTagEXT #-}
 
@@ -110,24 +139,24 @@ foreign import ccall safe "dynamic"
                PFN_vkDebugMarkerSetObjectTagEXT -> HS_vkDebugMarkerSetObjectTagEXT
 
 instance VulkanProc "vkDebugMarkerSetObjectTagEXT" where
-        type VkProcType "vkDebugMarkerSetObjectTagEXT" =
-             HS_vkDebugMarkerSetObjectTagEXT
-        vkProcSymbol = _VkDebugMarkerSetObjectTagEXT
+    type VkProcType "vkDebugMarkerSetObjectTagEXT" =
+         HS_vkDebugMarkerSetObjectTagEXT
+    vkProcSymbol = _VkDebugMarkerSetObjectTagEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectTagEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectTagEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectTagEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectTagEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkDebugMarkerSetObjectNameEXT :: CString
 
 pattern VkDebugMarkerSetObjectNameEXT <-
         (is_VkDebugMarkerSetObjectNameEXT -> True)
-  where VkDebugMarkerSetObjectNameEXT
-          = _VkDebugMarkerSetObjectNameEXT
+  where
+    VkDebugMarkerSetObjectNameEXT = _VkDebugMarkerSetObjectNameEXT
 
 {-# INLINE _VkDebugMarkerSetObjectNameEXT #-}
 
@@ -173,23 +202,24 @@ foreign import ccall safe "dynamic"
                  HS_vkDebugMarkerSetObjectNameEXT
 
 instance VulkanProc "vkDebugMarkerSetObjectNameEXT" where
-        type VkProcType "vkDebugMarkerSetObjectNameEXT" =
-             HS_vkDebugMarkerSetObjectNameEXT
-        vkProcSymbol = _VkDebugMarkerSetObjectNameEXT
+    type VkProcType "vkDebugMarkerSetObjectNameEXT" =
+         HS_vkDebugMarkerSetObjectNameEXT
+    vkProcSymbol = _VkDebugMarkerSetObjectNameEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectNameEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkDebugMarkerSetObjectNameEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectNameEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkDebugMarkerSetObjectNameEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerBeginEXT :: CString
 
 pattern VkCmdDebugMarkerBeginEXT <-
         (is_VkCmdDebugMarkerBeginEXT -> True)
-  where VkCmdDebugMarkerBeginEXT = _VkCmdDebugMarkerBeginEXT
+  where
+    VkCmdDebugMarkerBeginEXT = _VkCmdDebugMarkerBeginEXT
 
 {-# INLINE _VkCmdDebugMarkerBeginEXT #-}
 
@@ -231,23 +261,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDebugMarkerBeginEXT -> HS_vkCmdDebugMarkerBeginEXT
 
 instance VulkanProc "vkCmdDebugMarkerBeginEXT" where
-        type VkProcType "vkCmdDebugMarkerBeginEXT" =
-             HS_vkCmdDebugMarkerBeginEXT
-        vkProcSymbol = _VkCmdDebugMarkerBeginEXT
+    type VkProcType "vkCmdDebugMarkerBeginEXT" =
+         HS_vkCmdDebugMarkerBeginEXT
+    vkProcSymbol = _VkCmdDebugMarkerBeginEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerBeginEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerBeginEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerBeginEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerBeginEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerEndEXT :: CString
 
 pattern VkCmdDebugMarkerEndEXT <-
         (is_VkCmdDebugMarkerEndEXT -> True)
-  where VkCmdDebugMarkerEndEXT = _VkCmdDebugMarkerEndEXT
+  where
+    VkCmdDebugMarkerEndEXT = _VkCmdDebugMarkerEndEXT
 
 {-# INLINE _VkCmdDebugMarkerEndEXT #-}
 
@@ -285,23 +316,24 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
 
 instance VulkanProc "vkCmdDebugMarkerEndEXT" where
-        type VkProcType "vkCmdDebugMarkerEndEXT" =
-             HS_vkCmdDebugMarkerEndEXT
-        vkProcSymbol = _VkCmdDebugMarkerEndEXT
+    type VkProcType "vkCmdDebugMarkerEndEXT" =
+         HS_vkCmdDebugMarkerEndEXT
+    vkProcSymbol = _VkCmdDebugMarkerEndEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerEndEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerEndEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerEndEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerEndEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCmdDebugMarkerInsertEXT :: CString
 
 pattern VkCmdDebugMarkerInsertEXT <-
         (is_VkCmdDebugMarkerInsertEXT -> True)
-  where VkCmdDebugMarkerInsertEXT = _VkCmdDebugMarkerInsertEXT
+  where
+    VkCmdDebugMarkerInsertEXT = _VkCmdDebugMarkerInsertEXT
 
 {-# INLINE _VkCmdDebugMarkerInsertEXT #-}
 
@@ -343,17 +375,17 @@ foreign import ccall safe "dynamic"
                PFN_vkCmdDebugMarkerInsertEXT -> HS_vkCmdDebugMarkerInsertEXT
 
 instance VulkanProc "vkCmdDebugMarkerInsertEXT" where
-        type VkProcType "vkCmdDebugMarkerInsertEXT" =
-             HS_vkCmdDebugMarkerInsertEXT
-        vkProcSymbol = _VkCmdDebugMarkerInsertEXT
+    type VkProcType "vkCmdDebugMarkerInsertEXT" =
+         HS_vkCmdDebugMarkerInsertEXT
+    vkProcSymbol = _VkCmdDebugMarkerInsertEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerInsertEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCmdDebugMarkerInsertEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerInsertEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCmdDebugMarkerInsertEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -365,8 +397,9 @@ pattern VK_EXT_DEBUG_MARKER_EXTENSION_NAME :: CString
 
 pattern VK_EXT_DEBUG_MARKER_EXTENSION_NAME <-
         (is_VK_EXT_DEBUG_MARKER_EXTENSION_NAME -> True)
-  where VK_EXT_DEBUG_MARKER_EXTENSION_NAME
-          = _VK_EXT_DEBUG_MARKER_EXTENSION_NAME
+  where
+    VK_EXT_DEBUG_MARKER_EXTENSION_NAME
+      = _VK_EXT_DEBUG_MARKER_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_DEBUG_MARKER_EXTENSION_NAME #-}
 

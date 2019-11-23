@@ -3,16 +3,21 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE Strict              #-}
 {-# LANGUAGE TypeApplications    #-}
+{-# LANGUAGE MagicHash           #-}
+{-# LANGUAGE UnboxedTuples       #-}
 -- | Collection of functions adapted from @Foreign@ module hierarchy
 module Lib.Program.Foreign
     ( Ptr, plusPtr, Storable.sizeOf
+    , withVkArrayLen
     , alloca, allocaArray
-    , peek, peekArray
+    , peek, peekArray, poke
+    , ptrAtIndex
     , asListVk
     , allocaPeek, allocaPeekVk, allocaPeekDF
     , mallocRes, mallocArrayRes, newArrayRes
     ) where
 
+import qualified GHC.Base
 
 import           Control.Concurrent.MVar
 import           Control.Monad.IO.Class
@@ -25,11 +30,26 @@ import           Graphics.Vulkan.Marshal
 import           Numeric.DataFrame
 import           Numeric.DataFrame.IO
 import           Numeric.Dimensions
-import           Numeric.PrimBytes
 
-import           Lib.Program
+import Lib.Program
+
+-- | This should probably be in Graphics.Vulkan.Marshal
+withArrayLen :: (Storable a, VulkanMarshal a) => [a] -> (Word32 -> Ptr a -> IO b) -> IO b
+withArrayLen xs pf = do
+  ret <- Foreign.withArrayLen xs (pf . fromIntegral)
+  touch xs
+  return ret
+{-# INLINE withArrayLen #-}
+
+withVkArrayLen :: (Storable a, VulkanMarshal a) => [a] -> (Word32 -> Ptr a -> Program' b) -> Program r b
+withVkArrayLen xs pf = liftIOWith (withArrayLen xs . curry) (uncurry pf)
+{-# INLINE withVkArrayLen #-}
 
 
+-- | Prevent earlier GC of given value
+touch :: a -> IO ()
+touch x = GHC.Base.IO $ \s -> case GHC.Base.touch# x s of s' -> (# s', () #)
+{-# INLINE touch #-}
 
 alloca :: Storable a
        => (Ptr a -> Program' b)
@@ -51,8 +71,7 @@ allocaPeekDF :: forall a (ns :: [Nat]) r
              => (Ptr a -> Program () ())
              -> Program r (DataFrame a ns)
 allocaPeekDF pf
-  | E <- inferASing' @a @ns
-  , E <- inferPrim' @a @ns
+  | Dict <- inferKnownBackend @a @ns
   = Program $ \ref c -> do
     mdf <- newPinnedDataFrame
     locVar <- liftIO newEmptyMVar
@@ -78,6 +97,12 @@ peekArray n = liftIO . Foreign.peekArray n
 
 peek :: Storable a => Ptr a -> Program r a
 peek = liftIO . Storable.peek
+
+poke :: Storable a => Ptr a -> a -> Program r ()
+poke p v = liftIO $ Storable.poke p v
+
+ptrAtIndex :: forall a. Storable a => Ptr a -> Int -> Ptr a
+ptrAtIndex ptr i = ptr `plusPtr` (i * Storable.sizeOf @a undefined)
 
 
 -- | Get size of action output and then get the result,

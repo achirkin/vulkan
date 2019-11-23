@@ -17,11 +17,14 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         -- type: @device@
         --
         -- Extension number: @175@
-        module Graphics.Vulkan.Types.Enum.Device,
-        module Graphics.Vulkan.Types.Struct.Device,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Queue,
-        module Graphics.Vulkan.Types.Enum.StructureType,
+        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
+        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
+        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
+        VkQueueFlagBits(), VkQueueFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION,
         pattern VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION,
@@ -30,14 +33,14 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
         pattern VK_ERROR_NOT_PERMITTED_EXT)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Device
-import           Graphics.Vulkan.Types.Enum.Queue
-import           Graphics.Vulkan.Types.Enum.Result        (VkResult (..))
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Device
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Device
+import Graphics.Vulkan.Types.Enum.Queue
+import Graphics.Vulkan.Types.Enum.Result        (VkResult (..))
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Device      (VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT)
 
 pattern VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -49,8 +52,9 @@ pattern VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME :: CString
 
 pattern VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME <-
         (is_VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME -> True)
-  where VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME
-          = _VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME
+  where
+    VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME
+      = _VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME #-}
 

@@ -8,18 +8,16 @@ module Lib.Vulkan.VertexBuffer
   , createIndexBuffer
   ) where
 
-import           Data.Bits
-import           Foreign.Ptr                              (castPtr)
-import           Foreign.Storable                         (poke)
-import           Graphics.Vulkan
-import           Graphics.Vulkan.Core_1_0
-import           Numeric.DataFrame
-import           Numeric.Dimensions
+import Data.Bits
+import Foreign.Ptr              (castPtr)
+import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
+import Numeric.DataFrame
 
-import           Lib.Program
-import           Lib.Program.Foreign
-import           Lib.Vulkan.Buffer
-import           Lib.Vulkan.Vertex
+import Lib.Program
+import Lib.Program.Foreign
+import Lib.Vulkan.Buffer
+import Lib.Vulkan.Vertex
 
 
 createVertexBuffer :: VkPhysicalDevice
@@ -31,7 +29,7 @@ createVertexBuffer :: VkPhysicalDevice
                    -> Program r VkBuffer
 createVertexBuffer pdev dev cmdPool cmdQueue (XFrame vertices) = do
 
-    let bSize = fromIntegral $ bSizeOf vertices
+    let bSize = bSizeOf vertices
 
     (_, vertexBuf) <-
       createBuffer pdev dev bSize
@@ -45,9 +43,9 @@ createVertexBuffer pdev dev cmdPool cmdQueue (XFrame vertices) = do
           ( VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT .|. VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )
 
       -- copy data
-      dataPtr <- allocaPeek $
-        runVk . vkMapMemory dev stagingMem 0 bSize 0
-      liftIO $ poke (castPtr dataPtr) vertices
+      stagingDataPtr <- allocaPeek $
+        runVk . vkMapMemory dev stagingMem 0 bSize VK_ZERO_FLAGS
+      poke (castPtr stagingDataPtr) vertices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
@@ -58,12 +56,12 @@ createIndexBuffer :: VkPhysicalDevice
                   -> VkDevice
                   -> VkCommandPool
                   -> VkQueue
-                  -> DataFrame Word16 '[XN 3]
+                  -> DataFrame Word32 '[XN 3]
                      -- ^ A collection of at least three indices
                   -> Program r VkBuffer
 createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
 
-    let bSize = fromIntegral $ bSizeOf indices
+    let bSize = bSizeOf indices
 
     (_, vertexBuf) <-
       createBuffer pdev dev bSize
@@ -77,11 +75,10 @@ createIndexBuffer pdev dev cmdPool cmdQueue (XFrame indices) = do
           ( VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT .|. VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )
 
       -- copy data
-      dataPtr <- allocaPeek $
-        runVk . vkMapMemory dev stagingMem 0 bSize 0
-      liftIO $ poke (castPtr dataPtr) indices
+      stagingDataPtr <- allocaPeek $
+        runVk . vkMapMemory dev stagingMem 0 bSize VK_ZERO_FLAGS
+      poke (castPtr stagingDataPtr) indices
       liftIO $ vkUnmapMemory dev stagingMem
       copyBuffer dev cmdPool cmdQueue stagingBuf vertexBuf bSize
 
     return vertexBuf
-

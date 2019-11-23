@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_AMD_mixed_attachment_samples
         VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME,
         pattern VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -36,8 +36,9 @@ pattern VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME :: CString
 
 pattern VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME <-
         (is_VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME -> True)
-  where VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME
-          = _VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME
+  where
+    VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME
+      = _VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME
 
 {-# INLINE _VK_AMD_MIXED_ATTACHMENT_SAMPLES_EXTENSION_NAME #-}
 

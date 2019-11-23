@@ -17,33 +17,73 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         -- type: @device@
         --
         -- Extension number: @99@
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Pipeline,
-        module Graphics.Vulkan.Types.Struct.Rect,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.Viewport,
-        module Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV,
-        -- > #include "vk_platform.h"
-        VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION,
+        VkExtent2D, VkBool32(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkOffset2D, VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkPipelineViewportStateCreateInfo,
+        VkPipelineViewportSwizzleStateCreateInfoNV, VkRect2D,
+        VkStructureType(..), VkViewport, VkViewportCoordinateSwizzleNV(..),
+        VkViewportSwizzleNV, -- > #include "vk_platform.h"
+                             VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION,
         pattern VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION,
         VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME,
         pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV)
        where
-import           GHC.Ptr                                                (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
-import           Graphics.Vulkan.Types.Struct.Pipeline
-import           Graphics.Vulkan.Types.Struct.Rect
-import           Graphics.Vulkan.Types.Struct.Viewport
+import GHC.Ptr                                                (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV
+import Graphics.Vulkan.Types.Struct.Extent                    (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Offset                    (VkOffset2D)
+import Graphics.Vulkan.Types.Struct.Pipeline                  (VkPipelineViewportStateCreateInfo,
+                                                               VkPipelineViewportSwizzleStateCreateInfoNV)
+import Graphics.Vulkan.Types.Struct.Rect                      (VkRect2D)
+import Graphics.Vulkan.Types.Struct.Viewport                  (VkViewport, VkViewportSwizzleNV)
 
 pattern VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -55,8 +95,9 @@ pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME :: CString
 
 pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME <-
         (is_VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME -> True)
-  where VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME
-          = _VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME
+  where
+    VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME
+      = _VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME
 
 {-# INLINE _VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME #-}
 

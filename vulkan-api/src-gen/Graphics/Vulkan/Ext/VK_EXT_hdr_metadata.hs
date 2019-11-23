@@ -27,31 +27,53 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain'.
-        module Graphics.Vulkan.Types.Struct.HdrMetadataEXT,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.XYColorEXT,
+        VkHdrMetadataEXT, VkStructureType(..), VkXYColorEXT,
         -- > #include "vk_platform.h"
         VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
-        HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT,
-        module Graphics.Vulkan.Types.Handles,
+        HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT, VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_HDR_METADATA_EXT)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.HdrMetadataEXT
-import           Graphics.Vulkan.Types.Struct.XYColorEXT
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                (VulkanProc (..))
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.HdrMetadataEXT
+import Graphics.Vulkan.Types.Struct.XYColorEXT
 
 pattern VkSetHdrMetadataEXT :: CString
 
 pattern VkSetHdrMetadataEXT <- (is_VkSetHdrMetadataEXT -> True)
-  where VkSetHdrMetadataEXT = _VkSetHdrMetadataEXT
+  where
+    VkSetHdrMetadataEXT = _VkSetHdrMetadataEXT
 
 {-# INLINE _VkSetHdrMetadataEXT #-}
 
@@ -91,16 +113,16 @@ foreign import ccall safe "dynamic" unwrapVkSetHdrMetadataEXTSafe
                :: PFN_vkSetHdrMetadataEXT -> HS_vkSetHdrMetadataEXT
 
 instance VulkanProc "vkSetHdrMetadataEXT" where
-        type VkProcType "vkSetHdrMetadataEXT" = HS_vkSetHdrMetadataEXT
-        vkProcSymbol = _VkSetHdrMetadataEXT
+    type VkProcType "vkSetHdrMetadataEXT" = HS_vkSetHdrMetadataEXT
+    vkProcSymbol = _VkSetHdrMetadataEXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkSetHdrMetadataEXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkSetHdrMetadataEXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkSetHdrMetadataEXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkSetHdrMetadataEXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_HDR_METADATA_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -112,8 +134,9 @@ pattern VK_EXT_HDR_METADATA_EXTENSION_NAME :: CString
 
 pattern VK_EXT_HDR_METADATA_EXTENSION_NAME <-
         (is_VK_EXT_HDR_METADATA_EXTENSION_NAME -> True)
-  where VK_EXT_HDR_METADATA_EXTENSION_NAME
-          = _VK_EXT_HDR_METADATA_EXTENSION_NAME
+  where
+    VK_EXT_HDR_METADATA_EXTENSION_NAME
+      = _VK_EXT_HDR_METADATA_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_HDR_METADATA_EXTENSION_NAME #-}
 

@@ -23,32 +23,58 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         -- type: @device@
         --
         -- Extension number: @43@
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Shader,
-        module Graphics.Vulkan.Types.Struct.Shader, -- > #include "vk_platform.h"
-                                                    VkGetShaderInfoAMD,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkShaderResourceUsageAMD,
+        VkShaderStatisticsInfoAMD, -- > #include "vk_platform.h"
+                                   VkGetShaderInfoAMD,
         pattern VkGetShaderInfoAMD, HS_vkGetShaderInfoAMD,
-        PFN_vkGetShaderInfoAMD, module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        PFN_vkGetShaderInfoAMD, VkResult(..), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_AMD_SHADER_INFO_SPEC_VERSION,
         pattern VK_AMD_SHADER_INFO_SPEC_VERSION,
         VK_AMD_SHADER_INFO_EXTENSION_NAME,
         pattern VK_AMD_SHADER_INFO_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.Shader
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Shader
+import GHC.Ptr                             (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.Shader
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Shader (VkShaderResourceUsageAMD,
+                                            VkShaderStatisticsInfoAMD)
 
 pattern VkGetShaderInfoAMD :: CString
 
 pattern VkGetShaderInfoAMD <- (is_VkGetShaderInfoAMD -> True)
-  where VkGetShaderInfoAMD = _VkGetShaderInfoAMD
+  where
+    VkGetShaderInfoAMD = _VkGetShaderInfoAMD
 
 {-# INLINE _VkGetShaderInfoAMD #-}
 
@@ -98,16 +124,16 @@ foreign import ccall safe "dynamic" unwrapVkGetShaderInfoAMDSafe ::
                PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
 
 instance VulkanProc "vkGetShaderInfoAMD" where
-        type VkProcType "vkGetShaderInfoAMD" = HS_vkGetShaderInfoAMD
-        vkProcSymbol = _VkGetShaderInfoAMD
+    type VkProcType "vkGetShaderInfoAMD" = HS_vkGetShaderInfoAMD
+    vkProcSymbol = _VkGetShaderInfoAMD
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetShaderInfoAMDUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetShaderInfoAMDUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetShaderInfoAMDSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetShaderInfoAMDSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_AMD_SHADER_INFO_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -119,8 +145,9 @@ pattern VK_AMD_SHADER_INFO_EXTENSION_NAME :: CString
 
 pattern VK_AMD_SHADER_INFO_EXTENSION_NAME <-
         (is_VK_AMD_SHADER_INFO_EXTENSION_NAME -> True)
-  where VK_AMD_SHADER_INFO_EXTENSION_NAME
-          = _VK_AMD_SHADER_INFO_EXTENSION_NAME
+  where
+    VK_AMD_SHADER_INFO_EXTENSION_NAME
+      = _VK_AMD_SHADER_INFO_EXTENSION_NAME
 
 {-# INLINE _VK_AMD_SHADER_INFO_EXTENSION_NAME #-}
 

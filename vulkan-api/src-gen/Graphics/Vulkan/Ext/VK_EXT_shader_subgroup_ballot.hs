@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_ballot
         VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME,
         pattern VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -36,8 +36,9 @@ pattern VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME :: CString
 
 pattern VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME <-
         (is_VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME -> True)
-  where VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME
-          = _VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME
+  where
+    VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME
+      = _VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_SHADER_SUBGROUP_BALLOT_EXTENSION_NAME #-}
 

@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -82,33 +80,30 @@ module Graphics.Vulkan.Types.Enum.External
         VkExternalSemaphoreHandleTypeFlags,
         VkExternalSemaphoreHandleTypeFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR VkFlags
-                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                        FiniteBits, Storable, Real, Data, Generic)
+                                            deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalFenceFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalFenceFeatureFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalFenceFeatureFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalFenceFeatureBitmask (a ::
                                          FlagType) = VkExternalFenceFeatureBitmask VkFlags
-                                                       deriving (Eq, Ord, Storable, Data, Generic)
+                                                     deriving (Eq, Ord, Storable)
 
 type VkExternalFenceFeatureFlags =
      VkExternalFenceFeatureBitmask FlagMask
@@ -133,37 +128,27 @@ deriving instance Bits (VkExternalFenceFeatureBitmask FlagMask)
 deriving instance
          FiniteBits (VkExternalFenceFeatureBitmask FlagMask)
 
-deriving instance Integral (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalFenceFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalFenceFeatureBitmask FlagMask)
-
 instance Show (VkExternalFenceFeatureBitmask a) where
-        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT
-          = showString "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT"
-        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT
-          = showString "VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT"
-        showsPrec p (VkExternalFenceFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalFenceFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT
+      = showString "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT"
+    showsPrec _ VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT
+      = showString "VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT"
+    showsPrec p (VkExternalFenceFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalFenceFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkExternalFenceFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT",
-                   pure VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT),
-                  ("VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT",
-                   pure VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalFenceFeatureBitmask") >>
-                      (VkExternalFenceFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT",
+               pure VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT),
+              ("VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT",
+               pure VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalFenceFeatureBitmask") >>
+                  (VkExternalFenceFeatureBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT ::
@@ -180,22 +165,19 @@ pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT =
         VkExternalFenceFeatureBitmask 2
 
 newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR VkFlags
-                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                           Bits, FiniteBits, Storable, Real, Data,
-                                                           Generic)
+                                               deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalFenceHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalFenceHandleTypeFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalFenceHandleTypeFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalFenceHandleTypeBitmask (a ::
                                             FlagType) = VkExternalFenceHandleTypeBitmask VkFlags
-                                                          deriving (Eq, Ord, Storable, Data,
-                                                                    Generic)
+                                                        deriving (Eq, Ord, Storable)
 
 type VkExternalFenceHandleTypeFlags =
      VkExternalFenceHandleTypeBitmask FlagMask
@@ -220,47 +202,35 @@ deriving instance Bits (VkExternalFenceHandleTypeBitmask FlagMask)
 deriving instance
          FiniteBits (VkExternalFenceHandleTypeBitmask FlagMask)
 
-deriving instance
-         Integral (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Num (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Enum (VkExternalFenceHandleTypeBitmask FlagMask)
-
-deriving instance Real (VkExternalFenceHandleTypeBitmask FlagMask)
-
 instance Show (VkExternalFenceHandleTypeBitmask a) where
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT"
-        showsPrec p (VkExternalFenceHandleTypeBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalFenceHandleTypeBitmask " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT
+      = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT"
+    showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT
+      = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT"
+    showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+      = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
+    showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT
+      = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT"
+    showsPrec p (VkExternalFenceHandleTypeBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalFenceHandleTypeBitmask " . showsPrec 11 x)
 
 instance Read (VkExternalFenceHandleTypeBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalFenceHandleTypeBitmask") >>
-                      (VkExternalFenceHandleTypeBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT",
+               pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT),
+              ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+               pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT),
+              ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+               pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
+              ("VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT",
+               pure VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalFenceHandleTypeBitmask") >>
+                  (VkExternalFenceHandleTypeBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT ::
@@ -291,21 +261,19 @@ pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT =
         VkExternalFenceHandleTypeBitmask 8
 
 newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR VkFlags
-                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                         Bits, FiniteBits, Storable, Real, Data,
-                                                         Generic)
+                                             deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalMemoryFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalMemoryFeatureFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalMemoryFeatureFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalMemoryFeatureBitmask (a ::
                                           FlagType) = VkExternalMemoryFeatureBitmask VkFlags
-                                                        deriving (Eq, Ord, Storable, Data, Generic)
+                                                      deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryFeatureFlags =
      VkExternalMemoryFeatureBitmask FlagMask
@@ -330,42 +298,31 @@ deriving instance Bits (VkExternalMemoryFeatureBitmask FlagMask)
 deriving instance
          FiniteBits (VkExternalMemoryFeatureBitmask FlagMask)
 
-deriving instance
-         Integral (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalMemoryFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalMemoryFeatureBitmask FlagMask)
-
 instance Show (VkExternalMemoryFeatureBitmask a) where
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT"
-        showsPrec p (VkExternalMemoryFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT"
+    showsPrec p (VkExternalMemoryFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalMemoryFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkExternalMemoryFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryFeatureBitmask") >>
-                      (VkExternalMemoryFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT",
+               pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT),
+              ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT",
+               pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT),
+              ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT",
+               pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalMemoryFeatureBitmask") >>
+                  (VkExternalMemoryFeatureBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT ::
@@ -390,8 +347,7 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT =
 
 newtype VkExternalMemoryFeatureBitmaskNV (a ::
                                             FlagType) = VkExternalMemoryFeatureBitmaskNV VkFlags
-                                                          deriving (Eq, Ord, Storable, Data,
-                                                                    Generic)
+                                                        deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryFeatureFlagsNV =
      VkExternalMemoryFeatureBitmaskNV FlagMask
@@ -416,43 +372,31 @@ deriving instance Bits (VkExternalMemoryFeatureBitmaskNV FlagMask)
 deriving instance
          FiniteBits (VkExternalMemoryFeatureBitmaskNV FlagMask)
 
-deriving instance
-         Integral (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Num (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Enum (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
-deriving instance Real (VkExternalMemoryFeatureBitmaskNV FlagMask)
-
 instance Show (VkExternalMemoryFeatureBitmaskNV a) where
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV"
-        showsPrec p (VkExternalMemoryFeatureBitmaskNV x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryFeatureBitmaskNV " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV"
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV"
+    showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV
+      = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV"
+    showsPrec p (VkExternalMemoryFeatureBitmaskNV x)
+      = showParen (p >= 11)
+          (showString "VkExternalMemoryFeatureBitmaskNV " . showsPrec 11 x)
 
 instance Read (VkExternalMemoryFeatureBitmaskNV a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryFeatureBitmaskNV") >>
-                      (VkExternalMemoryFeatureBitmaskNV <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV),
+              ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV),
+              ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalMemoryFeatureBitmaskNV") >>
+                  (VkExternalMemoryFeatureBitmaskNV <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV ::
@@ -476,22 +420,19 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV =
         VkExternalMemoryFeatureBitmaskNV 4
 
 newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
+                                                deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalMemoryHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalMemoryHandleTypeFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalMemoryHandleTypeFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalMemoryHandleTypeBitmask (a ::
                                              FlagType) = VkExternalMemoryHandleTypeBitmask VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                         deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryHandleTypeFlags =
      VkExternalMemoryHandleTypeBitmask FlagMask
@@ -516,59 +457,47 @@ deriving instance Bits (VkExternalMemoryHandleTypeBitmask FlagMask)
 deriving instance
          FiniteBits (VkExternalMemoryHandleTypeBitmask FlagMask)
 
-deriving instance
-         Integral (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Num (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Enum (VkExternalMemoryHandleTypeBitmask FlagMask)
-
-deriving instance Real (VkExternalMemoryHandleTypeBitmask FlagMask)
-
 instance Show (VkExternalMemoryHandleTypeBitmask a) where
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT"
-        showsPrec p (VkExternalMemoryHandleTypeBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryHandleTypeBitmask " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT"
+    showsPrec p (VkExternalMemoryHandleTypeBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalMemoryHandleTypeBitmask " . showsPrec 11 x)
 
 instance Read (VkExternalMemoryHandleTypeBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryHandleTypeBitmask") >>
-                      (VkExternalMemoryHandleTypeBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalMemoryHandleTypeBitmask") >>
+                  (VkExternalMemoryHandleTypeBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT ::
@@ -621,8 +550,7 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT =
 
 newtype VkExternalMemoryHandleTypeBitmaskNV (a ::
                                                FlagType) = VkExternalMemoryHandleTypeBitmaskNV VkFlags
-                                                             deriving (Eq, Ord, Storable, Data,
-                                                                       Generic)
+                                                           deriving (Eq, Ord, Storable)
 
 type VkExternalMemoryHandleTypeFlagsNV =
      VkExternalMemoryHandleTypeBitmaskNV FlagMask
@@ -648,53 +576,38 @@ deriving instance
 deriving instance
          FiniteBits (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
 
-deriving instance
-         Integral (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Num (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Bounded (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Enum (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
-deriving instance
-         Real (VkExternalMemoryHandleTypeBitmaskNV FlagMask)
-
 instance Show (VkExternalMemoryHandleTypeBitmaskNV a) where
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV"
-        showsPrec p (VkExternalMemoryHandleTypeBitmaskNV x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryHandleTypeBitmaskNV " .
-                 showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV
+      = showString
+          "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV
+      = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV"
+    showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV
+      = showString
+          "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV"
+    showsPrec p (VkExternalMemoryHandleTypeBitmaskNV x)
+      = showParen (p >= 11)
+          (showString "VkExternalMemoryHandleTypeBitmaskNV " .
+             showsPrec 11 x)
 
 instance Read (VkExternalMemoryHandleTypeBitmaskNV a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryHandleTypeBitmaskNV") >>
-                      (VkExternalMemoryHandleTypeBitmaskNV <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV),
+              ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV",
+               pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalMemoryHandleTypeBitmaskNV") >>
+                  (VkExternalMemoryHandleTypeBitmaskNV <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV ::
@@ -725,22 +638,19 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV =
         VkExternalMemoryHandleTypeBitmaskNV 8
 
 newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
+                                                deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkExternalSemaphoreFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalSemaphoreFeatureFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalSemaphoreFeatureFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalSemaphoreFeatureBitmask (a ::
                                              FlagType) = VkExternalSemaphoreFeatureBitmask VkFlags
-                                                           deriving (Eq, Ord, Storable, Data,
-                                                                     Generic)
+                                                         deriving (Eq, Ord, Storable)
 
 type VkExternalSemaphoreFeatureFlags =
      VkExternalSemaphoreFeatureBitmask FlagMask
@@ -765,39 +675,27 @@ deriving instance Bits (VkExternalSemaphoreFeatureBitmask FlagMask)
 deriving instance
          FiniteBits (VkExternalSemaphoreFeatureBitmask FlagMask)
 
-deriving instance
-         Integral (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Num (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Enum (VkExternalSemaphoreFeatureBitmask FlagMask)
-
-deriving instance Real (VkExternalSemaphoreFeatureBitmask FlagMask)
-
 instance Show (VkExternalSemaphoreFeatureBitmask a) where
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT"
-        showsPrec p (VkExternalSemaphoreFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalSemaphoreFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT"
+    showsPrec p (VkExternalSemaphoreFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalSemaphoreFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkExternalSemaphoreFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT),
-                  ("VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalSemaphoreFeatureBitmask") >>
-                      (VkExternalSemaphoreFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalSemaphoreFeatureBitmask") >>
+                  (VkExternalSemaphoreFeatureBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT ::
@@ -814,22 +712,20 @@ pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT =
         VkExternalSemaphoreFeatureBitmask 2
 
 newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
+                                                   deriving (Eq, Ord, Enum, Bits, FiniteBits,
+                                                             Storable)
 
 instance Show VkExternalSemaphoreHandleTypeFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkExternalSemaphoreHandleTypeFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkExternalSemaphoreHandleTypeFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkExternalSemaphoreHandleTypeBitmask (a ::
                                                 FlagType) = VkExternalSemaphoreHandleTypeBitmask VkFlags
-                                                              deriving (Eq, Ord, Storable, Data,
-                                                                        Generic)
+                                                            deriving (Eq, Ord, Storable)
 
 type VkExternalSemaphoreHandleTypeFlags =
      VkExternalSemaphoreHandleTypeBitmask FlagMask
@@ -855,56 +751,41 @@ deriving instance
 deriving instance
          FiniteBits (VkExternalSemaphoreHandleTypeBitmask FlagMask)
 
-deriving instance
-         Integral (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Num (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Bounded (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Enum (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
-deriving instance
-         Real (VkExternalSemaphoreHandleTypeBitmask FlagMask)
-
 instance Show (VkExternalSemaphoreHandleTypeBitmask a) where
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
-          = showString
-              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT"
-        showsPrec p (VkExternalSemaphoreHandleTypeBitmask x)
-          = showParen (p >= 11)
-              (showString "VkExternalSemaphoreHandleTypeBitmask " .
-                 showsPrec 11 x)
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+      = showString
+          "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT"
+    showsPrec p (VkExternalSemaphoreHandleTypeBitmask x)
+      = showParen (p >= 11)
+          (showString "VkExternalSemaphoreHandleTypeBitmask " .
+             showsPrec 11 x)
 
 instance Read (VkExternalSemaphoreHandleTypeBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalSemaphoreHandleTypeBitmask") >>
-                      (VkExternalSemaphoreHandleTypeBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkExternalSemaphoreHandleTypeBitmask") >>
+                  (VkExternalSemaphoreHandleTypeBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT ::

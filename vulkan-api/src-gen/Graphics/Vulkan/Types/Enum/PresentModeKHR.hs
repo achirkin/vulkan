@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -10,48 +8,46 @@ module Graphics.Vulkan.Types.Enum.PresentModeKHR
                          VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_FIFO_KHR,
                          VK_PRESENT_MODE_FIFO_RELAXED_KHR))
        where
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentModeKHR VkPresentModeKHR registry at www.khronos.org>
 newtype VkPresentModeKHR = VkPresentModeKHR Int32
-                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                           deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkPresentModeKHR where
-        showsPrec _ VK_PRESENT_MODE_IMMEDIATE_KHR
-          = showString "VK_PRESENT_MODE_IMMEDIATE_KHR"
-        showsPrec _ VK_PRESENT_MODE_MAILBOX_KHR
-          = showString "VK_PRESENT_MODE_MAILBOX_KHR"
-        showsPrec _ VK_PRESENT_MODE_FIFO_KHR
-          = showString "VK_PRESENT_MODE_FIFO_KHR"
-        showsPrec _ VK_PRESENT_MODE_FIFO_RELAXED_KHR
-          = showString "VK_PRESENT_MODE_FIFO_RELAXED_KHR"
-        showsPrec p (VkPresentModeKHR x)
-          = showParen (p >= 11)
-              (showString "VkPresentModeKHR " . showsPrec 11 x)
+    showsPrec _ VK_PRESENT_MODE_IMMEDIATE_KHR
+      = showString "VK_PRESENT_MODE_IMMEDIATE_KHR"
+    showsPrec _ VK_PRESENT_MODE_MAILBOX_KHR
+      = showString "VK_PRESENT_MODE_MAILBOX_KHR"
+    showsPrec _ VK_PRESENT_MODE_FIFO_KHR
+      = showString "VK_PRESENT_MODE_FIFO_KHR"
+    showsPrec _ VK_PRESENT_MODE_FIFO_RELAXED_KHR
+      = showString "VK_PRESENT_MODE_FIFO_RELAXED_KHR"
+    showsPrec p (VkPresentModeKHR x)
+      = showParen (p >= 11)
+          (showString "VkPresentModeKHR " . showsPrec 11 x)
 
 instance Read VkPresentModeKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PRESENT_MODE_IMMEDIATE_KHR",
-                   pure VK_PRESENT_MODE_IMMEDIATE_KHR),
-                  ("VK_PRESENT_MODE_MAILBOX_KHR", pure VK_PRESENT_MODE_MAILBOX_KHR),
-                  ("VK_PRESENT_MODE_FIFO_KHR", pure VK_PRESENT_MODE_FIFO_KHR),
-                  ("VK_PRESENT_MODE_FIFO_RELAXED_KHR",
-                   pure VK_PRESENT_MODE_FIFO_RELAXED_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPresentModeKHR") >>
-                      (VkPresentModeKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_PRESENT_MODE_IMMEDIATE_KHR",
+               pure VK_PRESENT_MODE_IMMEDIATE_KHR),
+              ("VK_PRESENT_MODE_MAILBOX_KHR", pure VK_PRESENT_MODE_MAILBOX_KHR),
+              ("VK_PRESENT_MODE_FIFO_KHR", pure VK_PRESENT_MODE_FIFO_KHR),
+              ("VK_PRESENT_MODE_FIFO_RELAXED_KHR",
+               pure VK_PRESENT_MODE_FIFO_RELAXED_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkPresentModeKHR") >>
+                  (VkPresentModeKHR <$> step readPrec)))
 
 pattern VK_PRESENT_MODE_IMMEDIATE_KHR :: VkPresentModeKHR
 

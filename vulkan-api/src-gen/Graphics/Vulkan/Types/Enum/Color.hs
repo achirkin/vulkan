@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -18,21 +16,18 @@ module Graphics.Vulkan.Types.Enum.Color
         VkColorSpaceKHR(VkColorSpaceKHR,
                         VK_COLOR_SPACE_SRGB_NONLINEAR_KHR))
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType,
-                                                  Int32)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkColorComponentBitmask (a ::
                                    FlagType) = VkColorComponentBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkColorComponentFlags = VkColorComponentBitmask FlagMask
 
@@ -52,41 +47,31 @@ deriving instance Bits (VkColorComponentBitmask FlagMask)
 
 deriving instance FiniteBits (VkColorComponentBitmask FlagMask)
 
-deriving instance Integral (VkColorComponentBitmask FlagMask)
-
-deriving instance Num (VkColorComponentBitmask FlagMask)
-
-deriving instance Bounded (VkColorComponentBitmask FlagMask)
-
-deriving instance Enum (VkColorComponentBitmask FlagMask)
-
-deriving instance Real (VkColorComponentBitmask FlagMask)
-
 instance Show (VkColorComponentBitmask a) where
-        showsPrec _ VK_COLOR_COMPONENT_R_BIT
-          = showString "VK_COLOR_COMPONENT_R_BIT"
-        showsPrec _ VK_COLOR_COMPONENT_G_BIT
-          = showString "VK_COLOR_COMPONENT_G_BIT"
-        showsPrec _ VK_COLOR_COMPONENT_B_BIT
-          = showString "VK_COLOR_COMPONENT_B_BIT"
-        showsPrec _ VK_COLOR_COMPONENT_A_BIT
-          = showString "VK_COLOR_COMPONENT_A_BIT"
-        showsPrec p (VkColorComponentBitmask x)
-          = showParen (p >= 11)
-              (showString "VkColorComponentBitmask " . showsPrec 11 x)
+    showsPrec _ VK_COLOR_COMPONENT_R_BIT
+      = showString "VK_COLOR_COMPONENT_R_BIT"
+    showsPrec _ VK_COLOR_COMPONENT_G_BIT
+      = showString "VK_COLOR_COMPONENT_G_BIT"
+    showsPrec _ VK_COLOR_COMPONENT_B_BIT
+      = showString "VK_COLOR_COMPONENT_B_BIT"
+    showsPrec _ VK_COLOR_COMPONENT_A_BIT
+      = showString "VK_COLOR_COMPONENT_A_BIT"
+    showsPrec p (VkColorComponentBitmask x)
+      = showParen (p >= 11)
+          (showString "VkColorComponentBitmask " . showsPrec 11 x)
 
 instance Read (VkColorComponentBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COLOR_COMPONENT_R_BIT", pure VK_COLOR_COMPONENT_R_BIT),
-                  ("VK_COLOR_COMPONENT_G_BIT", pure VK_COLOR_COMPONENT_G_BIT),
-                  ("VK_COLOR_COMPONENT_B_BIT", pure VK_COLOR_COMPONENT_B_BIT),
-                  ("VK_COLOR_COMPONENT_A_BIT", pure VK_COLOR_COMPONENT_A_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkColorComponentBitmask") >>
-                      (VkColorComponentBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_COLOR_COMPONENT_R_BIT", pure VK_COLOR_COMPONENT_R_BIT),
+              ("VK_COLOR_COMPONENT_G_BIT", pure VK_COLOR_COMPONENT_G_BIT),
+              ("VK_COLOR_COMPONENT_B_BIT", pure VK_COLOR_COMPONENT_B_BIT),
+              ("VK_COLOR_COMPONENT_A_BIT", pure VK_COLOR_COMPONENT_A_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkColorComponentBitmask") >>
+                  (VkColorComponentBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_COLOR_COMPONENT_R_BIT :: VkColorComponentBitmask a
@@ -112,25 +97,25 @@ pattern VK_COLOR_COMPONENT_A_BIT = VkColorComponentBitmask 8
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkColorSpaceKHR VkColorSpaceKHR registry at www.khronos.org>
 newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
-                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                          deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkColorSpaceKHR where
-        showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
-          = showString "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR"
-        showsPrec p (VkColorSpaceKHR x)
-          = showParen (p >= 11)
-              (showString "VkColorSpaceKHR " . showsPrec 11 x)
+    showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+      = showString "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR"
+    showsPrec p (VkColorSpaceKHR x)
+      = showParen (p >= 11)
+          (showString "VkColorSpaceKHR " . showsPrec 11 x)
 
 instance Read VkColorSpaceKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
-                   pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkColorSpaceKHR") >>
-                      (VkColorSpaceKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
+               pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkColorSpaceKHR") >>
+                  (VkColorSpaceKHR <$> step readPrec)))
 
 pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR :: VkColorSpaceKHR
 

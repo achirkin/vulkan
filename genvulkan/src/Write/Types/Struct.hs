@@ -11,9 +11,9 @@ module Write.Types.Struct
   ) where
 
 
-import           Control.Monad                        (when, forM_)
-import           Data.Char                            (toUpper)
-import           Data.Maybe                           (isJust)
+import           Control.Monad                        (forM_)
+import           Data.Char                            (isSpace, toUpper)
+import           Data.Maybe                           (fromMaybe, isJust)
 import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
@@ -23,11 +23,10 @@ import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
-import           VkXml.CommonTypes
-import           VkXml.Sections.Types
+import VkXml.CommonTypes
+import VkXml.Sections.Types
 
-import           Write.ModuleWriter
-import           Write.Util.DeclaredNames
+import Write.ModuleWriter
 
 
 genStruct :: Monad m => VkType -> ModuleWriter m ()
@@ -50,64 +49,31 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
   then do
     writeImport tnameDeclared
     writeExport tnameDeclared
-    return mempty
   else do
-    writePragma "MagicHash"
-
-    writeImport $ DIThing "Storable" DITAll
-    writeImport $ DIThing "Addr#" DITNo
-    writeImport $ DIThing "ByteArray#" DITNo
-    writeImport $ DIVar "plusAddr#"
-    writeImport $ DIVar "byteArrayContents#"
-    -- writeImport $ DIThing "IO" DITAll
-    -- writeImport $ DIThing "Int" DITAll
-    -- writeImport $ DIThing "Ptr" DITAll
-    -- writeImport $ DIThing "ForeignPtr" DITAll
-    -- writeImport $ DIThing "ForeignPtrContents" DITAll
-    -- writeImport $ DIVar   "newForeignPtr_"
 
     writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Marshal.Internal"
     forM_ (requiresTypes structOrUnion) $ \(VkTypeName n) ->
       writeImport $ DIThing n DITNo
 
-    let ds = parseDecls [text|
-          data $tnametxt = $tnametxt# Addr# ByteArray#
+    -- generate field descriptions VkFieldMeta
+    sfields <- mapM
+          (\(m, (a,b)) -> genStructField attrs structNameTxt tname m a b)
+          . zip (items tmems) $  sfimems
 
-          instance Eq $tnametxt where
-            ($tnametxt# a _) == x@($tnametxt# b _)
-              = EQ == cmpBytes# (sizeOf x) a b
-            {-# INLINE (==) #-}
+    let allFields = "'[ (" <> T.intercalate "), (" sfields <> ") ]"
+        ds = parseDecls [text|
+          type $tnametxt = VkStruct $tnametxtPrime
 
-          instance Ord $tnametxt where
-            ($tnametxt# a _) `compare` x@($tnametxt# b _)
-              = cmpBytes# (sizeOf x) a b
-            {-# INLINE compare #-}
-
-          instance Storable $tnametxt where
-            sizeOf ~_ = HSC2HS___ "#{size $structNameTxt}"
-            {-# INLINE sizeOf #-}
-            alignment ~_ = HSC2HS___ "#{alignment $structNameTxt}"
-            {-# INLINE alignment #-}
-            peek = peekVkData#
-            {-# INLINE peek #-}
-            poke = pokeVkData#
-            {-# INLINE poke #-}
-
-          instance VulkanMarshalPrim $tnametxt where
-            unsafeAddr ($tnametxt# a _) = a
-            {-# INLINE unsafeAddr #-}
-            unsafeByteArray ($tnametxt# _ b) = b
-            {-# INLINE unsafeByteArray #-}
-            unsafeFromByteArrayOffset off b
-              = $tnametxt# (plusAddr# (byteArrayContents# b) off) b
-            {-# INLINE unsafeFromByteArrayOffset #-}
+          data $tnametxtPrime
 
           instance VulkanMarshal $tnametxt where
-            type StructFields  $tnametxt = $fieldNamesTxt
-            type CUnionType    $tnametxt = $isUnionTxt
-            type ReturnedOnly  $tnametxt = $returnedonlyTxt
-            type StructExtends $tnametxt = $structextendsTxt
+            type StructRep $tnametxt =
+              'StructMeta "$tnametxt" $tnametxt
+                HSC2HS___ "#{size $structNameTxt}"
+                HSC2HS___ "#{alignment $structNameTxt}"
+                $allFields
+                $isUnionTxt $returnedonlyTxt $structextendsTxt
           |]
 
 
@@ -116,14 +82,7 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
                  >>= preComment . T.unpack
 
     mapM_ writeDecl
-      . insertDeclComment (T.unpack tnametxt) rezComment
-      $ ds
-
-    -- generate field setters and getters
-    mapM_ (\(m, (a,b)) -> genStructField attrs structNameTxt tname m a b)
-          . zip (items tmems) $  sfimems
-
-    genStructShow (VkTypeName tnametxt) $ map snd sfimems
+      . insertDeclComment (T.unpack tnametxt) rezComment $ ds
 
     writeExport tnameDeclared
   where
@@ -131,9 +90,8 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
     isUnionTxt = T.pack . ('\'':) . show $ category attrs == VkTypeCatUnion
     structextendsTxt
       = "'[" <> T.intercalate "," (unVkTypeName <$> structextends attrs) <> "]"
-    fieldNamesTxt = T.pack . ('\'':) . show
-                  $ map (\VkTypeMember{ name = VkMemberName n} -> n ) $ items tmems
-    tnameDeclared = DIThing tnametxt DITAll
+    tnameDeclared = DIThing tnametxt DITNo
+    -- tnamePrimeDeclared = DIThing tnametxtPrime DITNo
     -- totalSizeTxt = T.pack $ prettyPrint totalSize
     (_totalSize, sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
@@ -151,6 +109,7 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
               else id
     tname = toQName vkTName
     tnametxt = qNameTxt tname
+    tnametxtPrime = tnametxt <> "'"
     structNameTxt = unVkTypeName vkTName
     rezComment'' = appendComLine rezComment'
                  $ T.unlines . map ("> " <>) $ T.lines ccode
@@ -172,33 +131,27 @@ genStructOrUnion _ VkTypeSimple
   , attributes = VkTypeAttrs
       { alias = Just vkTAlias
       }
-  }
-  = do
-    indeed <- isIdentDeclared anameDeclared
+  } = do
+  indeed <- isIdentDeclared tnameDeclared
+  if indeed
+  then do
+    writeImport tnameDeclared
+    writeExport tnameDeclared
+  else do
     writeImport anameDeclared
     writeDecl
       . setComment
         (preComment $ T.unpack [text|Alias for `$anametxt`|])
       $ parseDecl'
         [text|type $tnametxt = $anametxt|]
-    writeExportExplicit (DIThing tnametxt DITAll)
-      [ diToImportSpec anameDeclared
-      , diToImportSpec $ DIThing tnametxt DITNo
-      ]
-      ( diToExportSpec (DIThing tnametxt DITNo) :
-      [ diToExportSpec anameDeclared | indeed ] -- export aliased name only if from another module
-      )
-    writeExportExplicit (DIThing tnametxt DITNo)
-      [ diToImportSpec $ DIThing tnametxt DITNo] []
-    writeExportExplicit (DIThing tnametxt DITEmpty)
-      [ diToImportSpec $ DIThing tnametxt DITEmpty] []
+    writeExport tnameDeclared
   where
-    anameDeclared = DIThing anametxt DITAll
+    anameDeclared = DIThing anametxt DITNo
+    tnameDeclared = DIThing tnametxt DITNo
     tname = toQName vkTName
     aname = toQName vkTAlias
     tnametxt = qNameTxt tname
     anametxt = qNameTxt aname
-
 
 
 genStructOrUnion _ t
@@ -208,51 +161,6 @@ genStructOrUnion _ t
 
 
 
-
-
-genStructShow :: Monad m => VkTypeName -> [StructFieldInfo] -> ModuleWriter m ()
-genStructShow (VkTypeName tname) xs = do
-    mapM_ importEnums xs
-    writePragma "TypeApplications"
-    writeDecl $ parseDecl'
-       $  [text|
-            instance Show $tname where
-              showsPrec d x = showString "$tname {"
-          |]
-       <> "       . "
-            <>  T.intercalate " . showString \", \"  . " ( map showMem xs )
-            <> " . showChar '}'"
-  where
-    importEnums SFI { sfiTyElemN = Just en }
-      = do
-        writePragma "PatternSynonyms"
-        writeImport $ DIPat en
-    importEnums _ = pure ()
-    showMem SFI{..}
-      | Just en <- sfiElemN
-      , ntxt <- T.pack $ prettyPrint en
-        = T.strip . T.unwords $ T.lines
-          [text|
-           ( showString "$origNameTxt = ["
-             . showsPrec d
-               ( let {s = sizeOf (undefined :: FieldType $fNameQ $tname);
-                      o = fieldOffset $fNameApp $tnameApp;
-                      f i = peekByteOff (unsafePtr x) i :: IO (FieldType $fNameQ $tname)}
-                 in unsafeDupablePerformIO
-                      . mapM f
-                      $ map (\i -> o + i * s )  [ 0 .. $ntxt - 1 ]
-               )
-             . showChar ']'
-           ) |]
-      | otherwise
-        = T.strip [text|showString "$origNameTxt = " . showsPrec d (getField $fNameApp x)|]
-      where
-        VkTypeMember { name = VkMemberName origNameTxt} = sfdata
-        fNameQ = "\"" <> origNameTxt <> "\""
-        fNameApp = "@" <> fNameQ
-        tnameApp = "@" <> tname
-
-
 genStructField :: Monad m
                => VkTypeAttrs
                -> Text
@@ -260,7 +168,7 @@ genStructField :: Monad m
                -> VkTypeMember
                -> Exp () -- ^ offset
                -> StructFieldInfo
-               -> ModuleWriter m ()
+               -> ModuleWriter m Text
 genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE SFI{..}
     = genInstance
   where
@@ -273,8 +181,6 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
     valueTypeTxt = T.pack $ prettyPrint sfiType
     offsetExpr = "HSC2HS___ \"#{offset " <> structNameTxt
                                  <> ", " <> origNameTxt <> "}\""
-    esizeExpr = "sizeOf (undefined :: " <> valueTypeTxt <> ")"
-    fieldIsArrayT = T.pack . ('\'':) . show $ isJust sfiElemN
     fieldOptionalT = "'" <> fieldOptional
     fieldOptional = T.pack . show $ optional attributes
 
@@ -283,84 +189,32 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
       writePragma "MultiParamTypeClasses"
       writePragma "FlexibleInstances"
       writePragma "DataKinds"
-      writeImport $ DIVar "unsafeDupablePerformIO"
+      -- writeImport $ DIVar "unsafeDupablePerformIO"
       writeImport $ DIThing valueTypeTxt DITNo
       writeImport $ DIThing sfiRTypeTxt DITNo
       writeImport $ DIThing structTypeTxt DITAll
-      when (isJust sfiTyElemN) $ do
-        writeImport $ DIThing "Proxy#" DITNo
-        writeImport $ DIVar "proxy#"
+      -- when (isJust sfiTyElemN) $ do
+      --   writeImport $ DIThing "Proxy#" DITNo
+      --   writeImport $ DIVar "proxy#"
       case memberData of
             VkTypeData { name = Just (_, [VkTypeQArrLenEnum n]) }
               -> writeImport $ DIThing (unVkEnumName n) DITNo
             _ -> pure ()
 
-      let ds = parseDecls [text|
-            instance {-# OVERLAPPING #-} HasField $origNameTxtQQ $structTypeTxt where
-              type FieldType $origNameTxtQQ $structTypeTxt = $valueTypeTxt
-              type FieldOptional $origNameTxtQQ $structTypeTxt = $fieldOptionalT
-              type FieldOffset $origNameTxtQQ $structTypeTxt = $offsetExpr
-              type FieldIsArray $origNameTxtQQ $structTypeTxt = $fieldIsArrayT
-              {-# INLINE fieldOptional #-}
-              fieldOptional = $fieldOptional
-              {-# INLINE fieldOffset #-}
-              fieldOffset = $offsetExpr
-            |]
-          dsRead = case sfiTyElemN of
-            Nothing -> parseDecls [text|
-              instance {-# OVERLAPPING #-} CanReadField $origNameTxtQQ $structTypeTxt where
-                {-# NOINLINE getField #-}
-                getField x
-                  = unsafeDupablePerformIO (peekByteOff (unsafePtr x) $offsetExpr)
-                {-# INLINE readField #-}
-                readField p = peekByteOff p $offsetExpr
-              |]
-            Just lentxt -> parseDecls [text|
-              instance {-# OVERLAPPING #-}
-                       CanReadFieldArray $origNameTxtQQ $structTypeTxt where
-                type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
-                {-# INLINE fieldArrayLength #-}
-                fieldArrayLength = $lentxt
-                {-# INLINE getFieldArrayUnsafe #-}
-                getFieldArrayUnsafe i = f
-                  where
-                    {-# NOINLINE f #-}
-                    f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
-                    off = $offsetExpr + $esizeExpr * i
-                {-# INLINE readFieldArrayUnsafe #-}
-                readFieldArrayUnsafe i p = peekByteOff p
-                  ( $offsetExpr + $esizeExpr * i )
-              |]
-          dsWrite =
-            if False -- returnedonly structAttrs
-                     -- TODO: what to do? sometimes we need to create such structs
-                     -- e.g. VkSurfaceFormatKHR
-            then []
-            else case sfiTyElemN of
-              Nothing -> parseDecls [text|
-                instance {-# OVERLAPPING #-}
-                         CanWriteField $origNameTxtQQ $structTypeTxt where
-                  {-# INLINE writeField #-}
-                  writeField p = pokeByteOff p $offsetExpr
-                |]
-              Just _ -> parseDecls [text|
-                instance {-# OVERLAPPING #-}
-                         CanWriteFieldArray $origNameTxtQQ $structTypeTxt where
-                  {-# INLINE writeFieldArrayUnsafe #-}
-                  writeFieldArrayUnsafe i p = pokeByteOff p
-                    ( $offsetExpr + $esizeExpr * i )
-                |]
-
-      when (isJust sfiTyElemN) $ do
-        writeImport $ DIThing "KnownNat" DITEmpty
-        writeImport $ DIVar "natVal'"
-        writePragma "ScopedTypeVariables"
-        writePragma "FlexibleContexts"
-        writePragma "UndecidableInstances"
-
-      mapM_ writeDecl ds
-      mapM_ writeDecl dsRead
-      mapM_ writeDecl dsWrite
+      let len1 = fromMaybe "1" sfiTyElemN
+          valueTypeTxtParen = if T.any isSpace valueTypeTxt
+                              then "(" <> valueTypeTxt <> ")" else valueTypeTxt
+          spec = T.unwords
+            ["'FieldMeta"
+            , origNameTxtQQ  -- fieldName
+            , valueTypeTxtParen   -- fieldType
+            , fieldOptionalT -- optional
+            , offsetExpr     -- byteOffset
+            , len1           -- length (for arrays, 1 otherwise)
+            , "'True"        -- canRead
+            , "'True"        -- canWrite
+            ]
+      return spec
 
 
 

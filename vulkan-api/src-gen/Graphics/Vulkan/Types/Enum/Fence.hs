@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -18,21 +16,19 @@ module Graphics.Vulkan.Types.Enum.Fence
                              VkFenceImportFlagBits, VK_FENCE_IMPORT_TEMPORARY_BIT),
         VkFenceImportFlags, VkFenceImportFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkFenceCreateBitmask (a ::
                                 FlagType) = VkFenceCreateBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                            deriving (Eq, Ord, Storable)
 
 type VkFenceCreateFlags = VkFenceCreateBitmask FlagMask
 
@@ -52,33 +48,23 @@ deriving instance Bits (VkFenceCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkFenceCreateBitmask FlagMask)
 
-deriving instance Integral (VkFenceCreateBitmask FlagMask)
-
-deriving instance Num (VkFenceCreateBitmask FlagMask)
-
-deriving instance Bounded (VkFenceCreateBitmask FlagMask)
-
-deriving instance Enum (VkFenceCreateBitmask FlagMask)
-
-deriving instance Real (VkFenceCreateBitmask FlagMask)
-
 instance Show (VkFenceCreateBitmask a) where
-        showsPrec _ VK_FENCE_CREATE_SIGNALED_BIT
-          = showString "VK_FENCE_CREATE_SIGNALED_BIT"
-        showsPrec p (VkFenceCreateBitmask x)
-          = showParen (p >= 11)
-              (showString "VkFenceCreateBitmask " . showsPrec 11 x)
+    showsPrec _ VK_FENCE_CREATE_SIGNALED_BIT
+      = showString "VK_FENCE_CREATE_SIGNALED_BIT"
+    showsPrec p (VkFenceCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkFenceCreateBitmask " . showsPrec 11 x)
 
 instance Read (VkFenceCreateBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FENCE_CREATE_SIGNALED_BIT",
-                   pure VK_FENCE_CREATE_SIGNALED_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFenceCreateBitmask") >>
-                      (VkFenceCreateBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_FENCE_CREATE_SIGNALED_BIT",
+               pure VK_FENCE_CREATE_SIGNALED_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkFenceCreateBitmask") >>
+                  (VkFenceCreateBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_FENCE_CREATE_SIGNALED_BIT :: VkFenceCreateBitmask a
@@ -86,20 +72,19 @@ pattern VK_FENCE_CREATE_SIGNALED_BIT :: VkFenceCreateBitmask a
 pattern VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateBitmask 1
 
 newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
+                                   deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkFenceImportFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkFenceImportFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkFenceImportFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkFenceImportBitmask (a ::
                                 FlagType) = VkFenceImportBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                            deriving (Eq, Ord, Storable)
 
 type VkFenceImportFlags = VkFenceImportBitmask FlagMask
 
@@ -119,33 +104,23 @@ deriving instance Bits (VkFenceImportBitmask FlagMask)
 
 deriving instance FiniteBits (VkFenceImportBitmask FlagMask)
 
-deriving instance Integral (VkFenceImportBitmask FlagMask)
-
-deriving instance Num (VkFenceImportBitmask FlagMask)
-
-deriving instance Bounded (VkFenceImportBitmask FlagMask)
-
-deriving instance Enum (VkFenceImportBitmask FlagMask)
-
-deriving instance Real (VkFenceImportBitmask FlagMask)
-
 instance Show (VkFenceImportBitmask a) where
-        showsPrec _ VK_FENCE_IMPORT_TEMPORARY_BIT
-          = showString "VK_FENCE_IMPORT_TEMPORARY_BIT"
-        showsPrec p (VkFenceImportBitmask x)
-          = showParen (p >= 11)
-              (showString "VkFenceImportBitmask " . showsPrec 11 x)
+    showsPrec _ VK_FENCE_IMPORT_TEMPORARY_BIT
+      = showString "VK_FENCE_IMPORT_TEMPORARY_BIT"
+    showsPrec p (VkFenceImportBitmask x)
+      = showParen (p >= 11)
+          (showString "VkFenceImportBitmask " . showsPrec 11 x)
 
 instance Read (VkFenceImportBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FENCE_IMPORT_TEMPORARY_BIT",
-                   pure VK_FENCE_IMPORT_TEMPORARY_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFenceImportBitmask") >>
-                      (VkFenceImportBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_FENCE_IMPORT_TEMPORARY_BIT",
+               pure VK_FENCE_IMPORT_TEMPORARY_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkFenceImportBitmask") >>
+                  (VkFenceImportBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
 pattern VK_FENCE_IMPORT_TEMPORARY_BIT :: VkFenceImportBitmask a

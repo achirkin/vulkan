@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -17,20 +15,18 @@ module Graphics.Vulkan.Types.Enum.SampleCountFlags
                              VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_64_BIT),
         VkSampleCountFlags, VkSampleCountFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkSampleCountBitmask (a ::
                                 FlagType) = VkSampleCountBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                            deriving (Eq, Ord, Storable)
 
 type VkSampleCountFlags = VkSampleCountBitmask FlagMask
 
@@ -50,50 +46,40 @@ deriving instance Bits (VkSampleCountBitmask FlagMask)
 
 deriving instance FiniteBits (VkSampleCountBitmask FlagMask)
 
-deriving instance Integral (VkSampleCountBitmask FlagMask)
-
-deriving instance Num (VkSampleCountBitmask FlagMask)
-
-deriving instance Bounded (VkSampleCountBitmask FlagMask)
-
-deriving instance Enum (VkSampleCountBitmask FlagMask)
-
-deriving instance Real (VkSampleCountBitmask FlagMask)
-
 instance Show (VkSampleCountBitmask a) where
-        showsPrec _ VK_SAMPLE_COUNT_1_BIT
-          = showString "VK_SAMPLE_COUNT_1_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_2_BIT
-          = showString "VK_SAMPLE_COUNT_2_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_4_BIT
-          = showString "VK_SAMPLE_COUNT_4_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_8_BIT
-          = showString "VK_SAMPLE_COUNT_8_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_16_BIT
-          = showString "VK_SAMPLE_COUNT_16_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_32_BIT
-          = showString "VK_SAMPLE_COUNT_32_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_64_BIT
-          = showString "VK_SAMPLE_COUNT_64_BIT"
-        showsPrec p (VkSampleCountBitmask x)
-          = showParen (p >= 11)
-              (showString "VkSampleCountBitmask " . showsPrec 11 x)
+    showsPrec _ VK_SAMPLE_COUNT_1_BIT
+      = showString "VK_SAMPLE_COUNT_1_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_2_BIT
+      = showString "VK_SAMPLE_COUNT_2_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_4_BIT
+      = showString "VK_SAMPLE_COUNT_4_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_8_BIT
+      = showString "VK_SAMPLE_COUNT_8_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_16_BIT
+      = showString "VK_SAMPLE_COUNT_16_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_32_BIT
+      = showString "VK_SAMPLE_COUNT_32_BIT"
+    showsPrec _ VK_SAMPLE_COUNT_64_BIT
+      = showString "VK_SAMPLE_COUNT_64_BIT"
+    showsPrec p (VkSampleCountBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSampleCountBitmask " . showsPrec 11 x)
 
 instance Read (VkSampleCountBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
-                  ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
-                  ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
-                  ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
-                  ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
-                  ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
-                  ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSampleCountBitmask") >>
-                      (VkSampleCountBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
+              ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
+              ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
+              ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
+              ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
+              ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
+              ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkSampleCountBitmask") >>
+                  (VkSampleCountBitmask <$> step readPrec)))
 
 -- | Sample count 1 supported
 --

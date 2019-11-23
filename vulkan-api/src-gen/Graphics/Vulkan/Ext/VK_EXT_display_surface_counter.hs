@@ -28,21 +28,51 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        module Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Struct.Surface,
-        module Graphics.Vulkan.Types.Enum.Surface,
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkExtent2D, VkBool32(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(), VkStructureType(..),
+        VkSurfaceCapabilities2EXT, VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(),
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
+        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
+        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
+        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
+        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkExtent3D, VkSurfaceCapabilities2KHR, VkSurfaceCapabilitiesKHR,
+        VkSurfaceFormat2KHR, VkSurfaceFormatKHR,
         VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
         pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
         VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME,
@@ -50,25 +80,26 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT,
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Surface
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Surface
 
 pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT :: CString
 
 pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT <-
         (is_VkGetPhysicalDeviceSurfaceCapabilities2EXT -> True)
-  where VkGetPhysicalDeviceSurfaceCapabilities2EXT
-          = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
+  where
+    VkGetPhysicalDeviceSurfaceCapabilities2EXT
+      = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
 
 {-# INLINE _VkGetPhysicalDeviceSurfaceCapabilities2EXT #-}
 
@@ -118,19 +149,19 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
          where
-        type VkProcType "vkGetPhysicalDeviceSurfaceCapabilities2EXT" =
-             HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
-        vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
+    type VkProcType "vkGetPhysicalDeviceSurfaceCapabilities2EXT" =
+         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
+    vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXTSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -143,8 +174,9 @@ pattern VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME :: CString
 
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME <-
         (is_VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME -> True)
-  where VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME
-          = _VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME
+  where
+    VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME
+      = _VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME #-}
 

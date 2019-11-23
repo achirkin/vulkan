@@ -50,7 +50,7 @@ genDefine t@VkTypeSimple
     }
 
   | vkName == VkTypeName "VK_MAKE_VERSION"
-  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))" || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    (((major) << 22) | ((minor) << 12) | (patch))"
   = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_MAKE_VERSION :: Bits a => a -> a -> a -> a|]
       [text|_VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch|]

@@ -41,9 +41,9 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         pattern VK_COLOR_SPACE_PASS_THROUGH_EXT,
         pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT)
        where
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.Color (VkColorSpaceKHR (..))
+import GHC.Ptr                          (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.Color (VkColorSpaceKHR (..))
 
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -56,8 +56,9 @@ pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME :: CString
 
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME <-
         (is_VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME -> True)
-  where VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME
-          = _VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME
+  where
+    VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME
+      = _VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME
 
 {-# INLINE _VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME #-}
 

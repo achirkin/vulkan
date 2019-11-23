@@ -31,8 +31,8 @@ module Graphics.Vulkan.Types.Defines
         pattern VK_NULL_HANDLE, _VK_VERSION_MAJOR, _VK_VERSION_MINOR,
         _VK_VERSION_PATCH)
        where
-import           Data.Bits               (Bits (..))
-import           Graphics.Vulkan.Marshal
+import Data.Bits               (Bits (..))
+import Graphics.Vulkan.Marshal
 
 -- | > struct AHardwareBuffer;
 data AHardwareBuffer

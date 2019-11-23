@@ -23,10 +23,9 @@ module Graphics.Vulkan.Ext.VK_NV_shader_subgroup_partitioned
         pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME,
         pattern VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV)
        where
-import           GHC.Ptr                                         (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags (VkSubgroupFeatureBitmask (..),
-                                                                  VkSubgroupFeatureFlagBits)
+import GHC.Ptr                                         (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.SubgroupFeatureFlags (VkSubgroupFeatureBitmask (..))
 
 pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -39,8 +38,9 @@ pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME :: CString
 
 pattern VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME <-
         (is_VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME -> True)
-  where VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME
-          = _VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME
+  where
+    VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME
+      = _VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME
 
 {-# INLINE _VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME #-}
 

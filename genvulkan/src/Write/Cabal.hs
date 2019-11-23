@@ -1,21 +1,21 @@
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE QuasiQuotes           #-}
-{-# LANGUAGE Strict                #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes       #-}
+{-# LANGUAGE Strict            #-}
 module Write.Cabal
   ( genCabalFile
   ) where
 
-import           Control.Arrow                        (first, second)
-import qualified Data.List                            as L
-import Paths_genvulkan (version)
-import Data.Version (showVersion)
+import           Control.Arrow     (first, second)
+import qualified Data.List         as L
 import           Data.Semigroup
-import           Data.Text                            (Text)
-import qualified Data.Text                            as T
+import           Data.Text         (Text)
+import qualified Data.Text         as T
+import           Data.Version      (showVersion)
 import           NeatInterpolation
+import           Paths_genvulkan   (version)
 
-import           VkXml.CommonTypes
-import           Write.Feature
+import VkXml.CommonTypes
+import Write.Feature
 
 hardcodedModules :: [Text]
 hardcodedModules =

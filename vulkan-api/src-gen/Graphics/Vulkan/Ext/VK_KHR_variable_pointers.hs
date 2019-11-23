@@ -23,17 +23,17 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2', 'VK_KHR_storage_buffer_storage_class'.
-        module Graphics.Vulkan.Types.Struct.PhysicalDevice,
+        VkPhysicalDeviceVariablePointerFeaturesKHR,
         VK_KHR_VARIABLE_POINTERS_SPEC_VERSION,
         pattern VK_KHR_VARIABLE_POINTERS_SPEC_VERSION,
         VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
         pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES)
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Struct.PhysicalDevice
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Core_1_1                    (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDeviceVariablePointerFeaturesKHR)
 
 pattern VK_KHR_VARIABLE_POINTERS_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -45,8 +45,9 @@ pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME :: CString
 
 pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME <-
         (is_VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME -> True)
-  where VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME
-          = _VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME
+  where
+    VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME
+      = _VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME #-}
 

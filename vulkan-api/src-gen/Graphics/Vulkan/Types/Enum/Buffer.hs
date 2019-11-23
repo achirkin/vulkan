@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -28,21 +26,19 @@ module Graphics.Vulkan.Types.Enum.Buffer
         VkBufferUsageFlags, VkBufferUsageFlagBits,
         VkBufferViewCreateFlagBits(..))
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkBufferCreateBitmask (a ::
                                  FlagType) = VkBufferCreateBitmask VkFlags
-                                               deriving (Eq, Ord, Storable, Data, Generic)
+                                             deriving (Eq, Ord, Storable)
 
 type VkBufferCreateFlags = VkBufferCreateBitmask FlagMask
 
@@ -62,41 +58,31 @@ deriving instance Bits (VkBufferCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkBufferCreateBitmask FlagMask)
 
-deriving instance Integral (VkBufferCreateBitmask FlagMask)
-
-deriving instance Num (VkBufferCreateBitmask FlagMask)
-
-deriving instance Bounded (VkBufferCreateBitmask FlagMask)
-
-deriving instance Enum (VkBufferCreateBitmask FlagMask)
-
-deriving instance Real (VkBufferCreateBitmask FlagMask)
-
 instance Show (VkBufferCreateBitmask a) where
-        showsPrec _ VK_BUFFER_CREATE_SPARSE_BINDING_BIT
-          = showString "VK_BUFFER_CREATE_SPARSE_BINDING_BIT"
-        showsPrec _ VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT
-          = showString "VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT"
-        showsPrec _ VK_BUFFER_CREATE_SPARSE_ALIASED_BIT
-          = showString "VK_BUFFER_CREATE_SPARSE_ALIASED_BIT"
-        showsPrec p (VkBufferCreateBitmask x)
-          = showParen (p >= 11)
-              (showString "VkBufferCreateBitmask " . showsPrec 11 x)
+    showsPrec _ VK_BUFFER_CREATE_SPARSE_BINDING_BIT
+      = showString "VK_BUFFER_CREATE_SPARSE_BINDING_BIT"
+    showsPrec _ VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT
+      = showString "VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT"
+    showsPrec _ VK_BUFFER_CREATE_SPARSE_ALIASED_BIT
+      = showString "VK_BUFFER_CREATE_SPARSE_ALIASED_BIT"
+    showsPrec p (VkBufferCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkBufferCreateBitmask " . showsPrec 11 x)
 
 instance Read (VkBufferCreateBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_BUFFER_CREATE_SPARSE_BINDING_BIT",
-                   pure VK_BUFFER_CREATE_SPARSE_BINDING_BIT),
-                  ("VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT",
-                   pure VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT),
-                  ("VK_BUFFER_CREATE_SPARSE_ALIASED_BIT",
-                   pure VK_BUFFER_CREATE_SPARSE_ALIASED_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkBufferCreateBitmask") >>
-                      (VkBufferCreateBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_BUFFER_CREATE_SPARSE_BINDING_BIT",
+               pure VK_BUFFER_CREATE_SPARSE_BINDING_BIT),
+              ("VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT",
+               pure VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT),
+              ("VK_BUFFER_CREATE_SPARSE_ALIASED_BIT",
+               pure VK_BUFFER_CREATE_SPARSE_ALIASED_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkBufferCreateBitmask") >>
+                  (VkBufferCreateBitmask <$> step readPrec)))
 
 -- | Buffer should support sparse backing
 --
@@ -127,7 +113,7 @@ pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT =
 
 newtype VkBufferUsageBitmask (a ::
                                 FlagType) = VkBufferUsageBitmask VkFlags
-                                              deriving (Eq, Ord, Storable, Data, Generic)
+                                            deriving (Eq, Ord, Storable)
 
 type VkBufferUsageFlags = VkBufferUsageBitmask FlagMask
 
@@ -147,65 +133,55 @@ deriving instance Bits (VkBufferUsageBitmask FlagMask)
 
 deriving instance FiniteBits (VkBufferUsageBitmask FlagMask)
 
-deriving instance Integral (VkBufferUsageBitmask FlagMask)
-
-deriving instance Num (VkBufferUsageBitmask FlagMask)
-
-deriving instance Bounded (VkBufferUsageBitmask FlagMask)
-
-deriving instance Enum (VkBufferUsageBitmask FlagMask)
-
-deriving instance Real (VkBufferUsageBitmask FlagMask)
-
 instance Show (VkBufferUsageBitmask a) where
-        showsPrec _ VK_BUFFER_USAGE_TRANSFER_SRC_BIT
-          = showString "VK_BUFFER_USAGE_TRANSFER_SRC_BIT"
-        showsPrec _ VK_BUFFER_USAGE_TRANSFER_DST_BIT
-          = showString "VK_BUFFER_USAGE_TRANSFER_DST_BIT"
-        showsPrec _ VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_STORAGE_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_STORAGE_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_INDEX_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_INDEX_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_VERTEX_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_VERTEX_BUFFER_BIT"
-        showsPrec _ VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT
-          = showString "VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT"
-        showsPrec p (VkBufferUsageBitmask x)
-          = showParen (p >= 11)
-              (showString "VkBufferUsageBitmask " . showsPrec 11 x)
+    showsPrec _ VK_BUFFER_USAGE_TRANSFER_SRC_BIT
+      = showString "VK_BUFFER_USAGE_TRANSFER_SRC_BIT"
+    showsPrec _ VK_BUFFER_USAGE_TRANSFER_DST_BIT
+      = showString "VK_BUFFER_USAGE_TRANSFER_DST_BIT"
+    showsPrec _ VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_STORAGE_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_STORAGE_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_INDEX_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_INDEX_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_VERTEX_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_VERTEX_BUFFER_BIT"
+    showsPrec _ VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT
+      = showString "VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT"
+    showsPrec p (VkBufferUsageBitmask x)
+      = showParen (p >= 11)
+          (showString "VkBufferUsageBitmask " . showsPrec 11 x)
 
 instance Read (VkBufferUsageBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_BUFFER_USAGE_TRANSFER_SRC_BIT",
-                   pure VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
-                  ("VK_BUFFER_USAGE_TRANSFER_DST_BIT",
-                   pure VK_BUFFER_USAGE_TRANSFER_DST_BIT),
-                  ("VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_STORAGE_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_STORAGE_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_INDEX_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_INDEX_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_VERTEX_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
-                  ("VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT",
-                   pure VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkBufferUsageBitmask") >>
-                      (VkBufferUsageBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_BUFFER_USAGE_TRANSFER_SRC_BIT",
+               pure VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+              ("VK_BUFFER_USAGE_TRANSFER_DST_BIT",
+               pure VK_BUFFER_USAGE_TRANSFER_DST_BIT),
+              ("VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_STORAGE_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_STORAGE_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_INDEX_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_INDEX_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_VERTEX_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
+              ("VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT",
+               pure VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkBufferUsageBitmask") >>
+                  (VkBufferUsageBitmask <$> step readPrec)))
 
 -- | Can be used as a source of transfer operations
 --
@@ -282,13 +258,12 @@ pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT =
         VkBufferUsageBitmask 256
 
 newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
+                                     deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkBufferViewCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkBufferViewCreateFlagBits x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkBufferViewCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

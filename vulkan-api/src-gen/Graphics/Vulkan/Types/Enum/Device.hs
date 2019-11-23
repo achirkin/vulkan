@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -26,54 +24,50 @@ module Graphics.Vulkan.Types.Enum.Device
                                    VkDeviceQueueCreateFlags, VkDeviceQueueCreateFlagBits),
         VkDeviceQueueCreateFlags, VkDeviceQueueCreateFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType,
-                                                  Int32)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkDeviceCreateFlagBits = VkDeviceCreateFlagBits VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
+                                 deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkDeviceCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkDeviceCreateFlagBits x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkDeviceCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | type = @enum@
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventTypeEXT VkDeviceEventTypeEXT registry at www.khronos.org>
 newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+                               deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDeviceEventTypeEXT where
-        showsPrec _ VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT
-          = showString "VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT"
-        showsPrec p (VkDeviceEventTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDeviceEventTypeEXT " . showsPrec 11 x)
+    showsPrec _ VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT
+      = showString "VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT"
+    showsPrec p (VkDeviceEventTypeEXT x)
+      = showParen (p >= 11)
+          (showString "VkDeviceEventTypeEXT " . showsPrec 11 x)
 
 instance Read VkDeviceEventTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT",
-                   pure VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDeviceEventTypeEXT") >>
-                      (VkDeviceEventTypeEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT",
+               pure VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDeviceEventTypeEXT") >>
+                  (VkDeviceEventTypeEXT <$> step readPrec)))
 
 pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT ::
         VkDeviceEventTypeEXT
@@ -83,8 +77,7 @@ pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT =
 
 newtype VkDeviceGroupPresentModeBitmaskKHR (a ::
                                               FlagType) = VkDeviceGroupPresentModeBitmaskKHR VkFlags
-                                                            deriving (Eq, Ord, Storable, Data,
-                                                                      Generic)
+                                                          deriving (Eq, Ord, Storable)
 
 type VkDeviceGroupPresentModeFlagsKHR =
      VkDeviceGroupPresentModeBitmaskKHR FlagMask
@@ -110,50 +103,36 @@ deriving instance
 deriving instance
          FiniteBits (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
 
-deriving instance
-         Integral (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance Num (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Bounded (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Enum (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
-deriving instance
-         Real (VkDeviceGroupPresentModeBitmaskKHR FlagMask)
-
 instance Show (VkDeviceGroupPresentModeBitmaskKHR a) where
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR
-          = showString
-              "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR"
-        showsPrec p (VkDeviceGroupPresentModeBitmaskKHR x)
-          = showParen (p >= 11)
-              (showString "VkDeviceGroupPresentModeBitmaskKHR " . showsPrec 11 x)
+    showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR
+      = showString "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR"
+    showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR
+      = showString "VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR"
+    showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR
+      = showString "VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR"
+    showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR
+      = showString
+          "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR"
+    showsPrec p (VkDeviceGroupPresentModeBitmaskKHR x)
+      = showParen (p >= 11)
+          (showString "VkDeviceGroupPresentModeBitmaskKHR " . showsPrec 11 x)
 
 instance Read (VkDeviceGroupPresentModeBitmaskKHR a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDeviceGroupPresentModeBitmaskKHR") >>
-                      (VkDeviceGroupPresentModeBitmaskKHR <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR",
+               pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR),
+              ("VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR",
+               pure VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR),
+              ("VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR",
+               pure VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR),
+              ("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR",
+               pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkDeviceGroupPresentModeBitmaskKHR") >>
+                  (VkDeviceGroupPresentModeBitmaskKHR <$> step readPrec)))
 
 -- | Present from local memory
 --
@@ -193,7 +172,7 @@ pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR =
 
 newtype VkDeviceQueueCreateBitmask (a ::
                                       FlagType) = VkDeviceQueueCreateBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                  deriving (Eq, Ord, Storable)
 
 type VkDeviceQueueCreateFlags = VkDeviceQueueCreateBitmask FlagMask
 
@@ -215,25 +194,15 @@ deriving instance Bits (VkDeviceQueueCreateBitmask FlagMask)
 
 deriving instance FiniteBits (VkDeviceQueueCreateBitmask FlagMask)
 
-deriving instance Integral (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Num (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Bounded (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Enum (VkDeviceQueueCreateBitmask FlagMask)
-
-deriving instance Real (VkDeviceQueueCreateBitmask FlagMask)
-
 instance Show (VkDeviceQueueCreateBitmask a) where
-        showsPrec p (VkDeviceQueueCreateBitmask x)
-          = showParen (p >= 11)
-              (showString "VkDeviceQueueCreateBitmask " . showsPrec 11 x)
+    showsPrec p (VkDeviceQueueCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkDeviceQueueCreateBitmask " . showsPrec 11 x)
 
 instance Read (VkDeviceQueueCreateBitmask a) where
-        readPrec
-          = parens
-              (choose [] +++
-                 prec 10
-                   (expectP (Ident "VkDeviceQueueCreateBitmask") >>
-                      (VkDeviceQueueCreateBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkDeviceQueueCreateBitmask") >>
+                  (VkDeviceQueueCreateBitmask <$> step readPrec)))

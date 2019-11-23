@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -19,33 +17,30 @@ module Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
                                    VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT),
         VkPeerMemoryFeatureFlags, VkPeerMemoryFeatureFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBitsKHR VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
+                                         deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkPeerMemoryFeatureFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkPeerMemoryFeatureFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkPeerMemoryFeatureFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkPeerMemoryFeatureBitmask (a ::
                                       FlagType) = VkPeerMemoryFeatureBitmask VkFlags
-                                                    deriving (Eq, Ord, Storable, Data, Generic)
+                                                  deriving (Eq, Ord, Storable)
 
 type VkPeerMemoryFeatureFlags = VkPeerMemoryFeatureBitmask FlagMask
 
@@ -67,45 +62,35 @@ deriving instance Bits (VkPeerMemoryFeatureBitmask FlagMask)
 
 deriving instance FiniteBits (VkPeerMemoryFeatureBitmask FlagMask)
 
-deriving instance Integral (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Num (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Bounded (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Enum (VkPeerMemoryFeatureBitmask FlagMask)
-
-deriving instance Real (VkPeerMemoryFeatureBitmask FlagMask)
-
 instance Show (VkPeerMemoryFeatureBitmask a) where
-        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT
-          = showString "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_DST_BIT
-          = showString "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT
-          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT
-          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT"
-        showsPrec p (VkPeerMemoryFeatureBitmask x)
-          = showParen (p >= 11)
-              (showString "VkPeerMemoryFeatureBitmask " . showsPrec 11 x)
+    showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT
+      = showString "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT"
+    showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_DST_BIT
+      = showString "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT"
+    showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT
+      = showString "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT"
+    showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT
+      = showString "VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT"
+    showsPrec p (VkPeerMemoryFeatureBitmask x)
+      = showParen (p >= 11)
+          (showString "VkPeerMemoryFeatureBitmask " . showsPrec 11 x)
 
 instance Read (VkPeerMemoryFeatureBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT",
-                   pure VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT),
-                  ("VK_PEER_MEMORY_FEATURE_COPY_DST_BIT",
-                   pure VK_PEER_MEMORY_FEATURE_COPY_DST_BIT),
-                  ("VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT",
-                   pure VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT),
-                  ("VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT",
-                   pure VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPeerMemoryFeatureBitmask") >>
-                      (VkPeerMemoryFeatureBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT",
+               pure VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT),
+              ("VK_PEER_MEMORY_FEATURE_COPY_DST_BIT",
+               pure VK_PEER_MEMORY_FEATURE_COPY_DST_BIT),
+              ("VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT",
+               pure VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT),
+              ("VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT",
+               pure VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkPeerMemoryFeatureBitmask") >>
+                  (VkPeerMemoryFeatureBitmask <$> step readPrec)))
 
 -- | Can read with vkCmdCopy commands
 --

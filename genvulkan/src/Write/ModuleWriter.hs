@@ -58,12 +58,12 @@ import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
-import           Write.Util.DeclaredNames
-import           Write.Util.NFData                    ()
+import Write.Util.DeclaredNames
+import Write.Util.NFData        ()
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
-import qualified VkXml.Sections.Feature               as Feature
+import qualified VkXml.Sections.Feature as Feature
 
 
 
@@ -260,12 +260,32 @@ writeExport di = do
 
 -- | Add an export declaration to a module export list
 writeExportSpec :: Monad m => ExportSpec () -> ModuleWriter m ()
+-- export or ignore everything explicitly
+writeExportSpec (EModuleContents () exportedModuleName@(ModuleName _ n))
+   |    n == "Graphics.Vulkan.Marshal.Internal"
+     || not ("Graphics.Vulkan" `List.isPrefixOf` n)
+     = return ()
+   | n /= "Graphics.Vulkan.Marshal" = do
+   specs <- ModuleWriter . gets $
+         (>>= map importToExportSpec . snd)
+       . filter ((exportedModuleName ==) . fst)
+       . Map.elems . globalNames
+   mapM_ writeExportSpec specs
+-- normal exports
 writeExportSpec espec = ModuleWriter . modify $
-   \mr -> mr { mExports = mExports mr Seq.|>
+   \mr -> mr { mExports =
+                  let (found, exports') = mapAccumL combine False (mExports mr)
+                  in if found
+                     then exports'
+                     else exports' Seq.|>
                           setComment (f $ pendingSec mr) (Nothing <$ espec)
              , pendingSec = mempty
              }
   where
+    combine True e = (True, e)
+    combine False e = case combineExportSpecs e (Nothing <$ espec) of
+                  Just e' -> (True, e')
+                  Nothing -> (False, e)
     -- the whole thing below is to compile comments
     f txts = case removeLastNewline . unlines . g $ toList txts >>= normalize of
        "" -> Nothing

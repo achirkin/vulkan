@@ -29,28 +29,26 @@ module Graphics.Vulkan.Marshal.Create
     , unsafeIOCreate
     ) where
 
-import           Data.Coerce
-import           Data.Kind                        (Constraint, Type)
-import           Data.Type.Bool                   (If, type (||))
-import           Data.Type.Equality               (type (==))
-import           Foreign.C.String                 (newCString)
-import           Foreign.C.Types                  (CChar)
-import           Foreign.Marshal.Alloc            (finalizerFree, free)
-import           Foreign.Marshal.Array            (newArray, pokeArray0)
-import           Foreign.Ptr                      (nullPtr, plusPtr)
-import           Foreign.Storable                 (Storable)
-import           GHC.Base                         (ByteArray#, IO (..),
-                                                   RealWorld, State#, Weak#,
-                                                   addCFinalizerToWeak#,
-                                                   mkWeak#, mkWeakNoFinalizer#,
-                                                   nullAddr#)
-import           GHC.Ptr                          (FunPtr (..), Ptr (..))
-import           GHC.TypeLits
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import Data.Coerce
+import Data.Kind             (Constraint, Type)
+import Data.Type.Bool        (If, type (||))
+import Data.Type.Equality    (type (==))
+import Foreign.C.String      (newCString)
+import Foreign.C.Types       (CChar)
+import Foreign.Marshal.Alloc (finalizerFree, free)
+import Foreign.Marshal.Array (newArray, pokeArray0)
+import Foreign.Ptr           (nullPtr, plusPtr)
+import Foreign.Storable      (Storable)
+import GHC.Base              (ByteArray#, IO (..), RealWorld, State#, Weak#,
+                              addCFinalizerToWeak#, mkWeak#, mkWeakNoFinalizer#,
+                              nullAddr#)
+import GHC.Ptr               (FunPtr (..), Ptr (..))
+import GHC.TypeLits
+import System.IO.Unsafe      (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes  (VkBool32)
 
 
 -- | Safely fill-in a new vulkan structure
@@ -104,9 +102,10 @@ instance Monad (CreateVkStruct x fs) where
 --     with a set of haskell and C finalizers.
 --   These finalizers make sure all `malloc`ed memory is released and
 --    no managed memory gets purged too early.
-createVk :: ( VulkanMarshal x, VulkanMarshalPrim x
-            , HandleRemFields x fs
-            ) => CreateVkStruct x fs () -> x
+createVk :: forall a fs .
+            ( VulkanMarshal a
+            , HandleRemFields a fs
+            ) => CreateVkStruct a fs () -> a
 createVk a = unsafeDupablePerformIO $ do
     x <- mallocVkData
     withPtr x $ \xptr -> do
@@ -132,9 +131,7 @@ createVk a = unsafeDupablePerformIO $ do
 {-# NOINLINE createVk #-}
 
 -- | `writeField` wrapped into `CreateVkStruct` monad.
-set :: forall fname x
-     . ( CanWriteField fname x
-       )
+set :: forall fname x . CanWriteField fname x
     => FieldType fname x -> CreateVkStruct x '[fname] ()
 set v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeField @fname @x p v
 
@@ -307,7 +304,7 @@ class CUnionType x ~ isUnion
 type SetUnionMsg x =
    'Text "You have to set exactly one field for a union type " ':<>: 'ShowType x
    ':$$: 'Text "Note, this type has following fields: "
-         ':<>: 'ShowType (StructFields x)
+         ':<>: 'ShowType (StructFieldNames x)
 
 instance ( TypeError ( SetUnionMsg x )
          , CUnionType x ~ 'True
@@ -323,11 +320,11 @@ instance ( TypeError ( SetUnionMsg x )
   handleRemFields = pure ()
 
 
-instance ( SetOptionalFields x (Difference (StructFields x) fs)
+instance ( SetOptionalFields x (Difference (StructFieldNames x) fs)
          , CUnionType x ~ 'False
          ) => HandleRemainingFields x fs 'False where
   handleRemFields
-    = ( coerce :: CreateVkStruct x (Difference (StructFields x) fs) ()
+    = ( coerce :: CreateVkStruct x (Difference (StructFieldNames x) fs) ()
                -> CreateVkStruct x fs ()
       ) setOptionalFields
 

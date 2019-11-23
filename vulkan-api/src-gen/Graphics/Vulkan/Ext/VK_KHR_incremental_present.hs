@@ -22,27 +22,25 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         --
 
         -- ** Required extensions: 'VK_KHR_swapchain'.
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Struct.Present,
-        module Graphics.Vulkan.Types.Struct.Rect,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION,
+        VkExtent2D, VkOffset2D, VkPresentInfoKHR, VkPresentRegionKHR,
+        VkPresentRegionsKHR, VkRectLayerKHR, VkResult(..),
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION,
         pattern VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION,
         VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME,
         pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR)
        where
-import           GHC.Ptr                                  (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
-import           Graphics.Vulkan.Types.Struct.Present
-import           Graphics.Vulkan.Types.Struct.Rect
+import GHC.Ptr                                  (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
+import Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR,
+                                                 VkPresentRegionKHR,
+                                                 VkPresentRegionsKHR)
+import Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
 
 pattern VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -55,8 +53,9 @@ pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME :: CString
 
 pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME <-
         (is_VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME -> True)
-  where VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME
-          = _VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME
+  where
+    VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME
+      = _VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME #-}
 

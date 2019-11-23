@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE Strict                     #-}
@@ -10,43 +8,40 @@ module Graphics.Vulkan.Types.Enum.DiscardRectangleModeEXT
                                   VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT,
                                   VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT))
        where
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (Int32)
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDiscardRectangleModeEXT VkDiscardRectangleModeEXT registry at www.khronos.org>
 newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT Int32
-                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                Generic)
+                                    deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkDiscardRectangleModeEXT where
-        showsPrec _ VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT
-          = showString "VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT"
-        showsPrec _ VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT
-          = showString "VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT"
-        showsPrec p (VkDiscardRectangleModeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDiscardRectangleModeEXT " . showsPrec 11 x)
+    showsPrec _ VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT
+      = showString "VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT"
+    showsPrec _ VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT
+      = showString "VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT"
+    showsPrec p (VkDiscardRectangleModeEXT x)
+      = showParen (p >= 11)
+          (showString "VkDiscardRectangleModeEXT " . showsPrec 11 x)
 
 instance Read VkDiscardRectangleModeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT",
-                   pure VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT),
-                  ("VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT",
-                   pure VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDiscardRectangleModeEXT") >>
-                      (VkDiscardRectangleModeEXT <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT",
+               pure VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT),
+              ("VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT",
+               pure VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkDiscardRectangleModeEXT") >>
+                  (VkDiscardRectangleModeEXT <$> step readPrec)))
 
 pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT ::
         VkDiscardRectangleModeEXT

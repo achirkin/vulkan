@@ -29,15 +29,62 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.Display,
-        module Graphics.Vulkan.Types.Enum.Display,
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.Struct.Offset,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        module Graphics.Vulkan.Types.Enum.Surface,
+        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
+        VkFlags(..), VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
+        VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkDisplayModeCreateInfoKHR,
+        VkDisplayModeParametersKHR, VkDisplayModePropertiesKHR,
+        VkDisplayEventTypeEXT(..), VkDisplayPlaneAlphaBitmaskKHR(..),
+        VkDisplayPowerStateEXT(..), VkDisplayPlaneAlphaFlagBitsKHR(),
+        VkDisplayPlaneAlphaFlagsKHR(), VkDisplayPlaneCapabilitiesKHR,
+        VkDisplayPlanePropertiesKHR, VkDisplayPropertiesKHR,
+        VkDisplaySurfaceCreateInfoKHR, VkExtent2D, VkOffset2D,
+        VkStructureType(..), VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(),
         -- > #include "vk_platform.h"
         VkGetPhysicalDeviceDisplayPropertiesKHR,
         pattern VkGetPhysicalDeviceDisplayPropertiesKHR,
@@ -81,13 +128,54 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         HS_vkCreateDisplayPlaneSurfaceKHR,
         PFN_vkCreateDisplayPlaneSurfaceKHR, vkCreateDisplayPlaneSurfaceKHR,
         vkCreateDisplayPlaneSurfaceKHRUnsafe,
-        vkCreateDisplayPlaneSurfaceKHRSafe,
-        module Graphics.Vulkan.Types.Enum.InternalAllocationType,
-        module Graphics.Vulkan.Types.Enum.Result,
-        module Graphics.Vulkan.Types.Enum.SystemAllocationScope,
-        module Graphics.Vulkan.Types.Funcpointers,
-        module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Struct.AllocationCallbacks,
+        vkCreateDisplayPlaneSurfaceKHRSafe, VkInternalAllocationType(..),
+        VkResult(..), VkSystemAllocationScope(..), newVkAllocationFunction,
+        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
+        newVkFreeFunction, newVkInternalAllocationNotification,
+        newVkInternalFreeNotification, newVkReallocationFunction,
+        newVkVoidFunction, unwrapVkAllocationFunction,
+        unwrapVkDebugReportCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
+        unwrapVkInternalAllocationNotification,
+        unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
+        unwrapVkVoidFunction, HS_vkAllocationFunction,
+        HS_vkDebugReportCallbackEXT, HS_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkFreeFunction, HS_vkInternalAllocationNotification,
+        HS_vkInternalFreeNotification, HS_vkReallocationFunction,
+        HS_vkVoidFunction, PFN_vkAllocationFunction,
+        PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
+        PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
+        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
+        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
+        VkCommandPool_T(), VkDebugReportCallbackEXT,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
+        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
+        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
+        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
+        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
+        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
+        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
+        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
+        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
+        VkRenderPass, VkRenderPass_T(), VkSampler,
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
+        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
+        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
+        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
+        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkDisplayEventInfoEXT,
+        VkDisplayModeProperties2KHR, VkDisplayPlaneCapabilities2KHR,
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneProperties2KHR,
+        VkDisplayPowerInfoEXT, VkDisplayPresentInfoKHR,
+        VkDisplayProperties2KHR, VkExtent3D, VkOffset3D,
         VK_KHR_DISPLAY_SPEC_VERSION, pattern VK_KHR_DISPLAY_SPEC_VERSION,
         VK_KHR_DISPLAY_EXTENSION_NAME,
         pattern VK_KHR_DISPLAY_EXTENSION_NAME,
@@ -96,32 +184,33 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         pattern VK_OBJECT_TYPE_DISPLAY_KHR,
         pattern VK_OBJECT_TYPE_DISPLAY_MODE_KHR)
        where
-import           GHC.Ptr                                           (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Proc
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.Display
-import           Graphics.Vulkan.Types.Enum.InternalAllocationType
-import           Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
-import           Graphics.Vulkan.Types.Enum.Result
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Enum.Surface
-import           Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import           Graphics.Vulkan.Types.Funcpointers
-import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import           Graphics.Vulkan.Types.Struct.Display
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Offset
-import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Marshal.Proc
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Display
+import Graphics.Vulkan.Types.Enum.InternalAllocationType
+import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Enum.Surface
+import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Funcpointers
+import Graphics.Vulkan.Types.Handles
+import Graphics.Vulkan.Types.Struct.AllocationCallbacks
+import Graphics.Vulkan.Types.Struct.Display
+import Graphics.Vulkan.Types.Struct.Extent
+import Graphics.Vulkan.Types.Struct.Offset
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkGetPhysicalDeviceDisplayPropertiesKHR :: CString
 
 pattern VkGetPhysicalDeviceDisplayPropertiesKHR <-
         (is_VkGetPhysicalDeviceDisplayPropertiesKHR -> True)
-  where VkGetPhysicalDeviceDisplayPropertiesKHR
-          = _VkGetPhysicalDeviceDisplayPropertiesKHR
+  where
+    VkGetPhysicalDeviceDisplayPropertiesKHR
+      = _VkGetPhysicalDeviceDisplayPropertiesKHR
 
 {-# INLINE _VkGetPhysicalDeviceDisplayPropertiesKHR #-}
 
@@ -327,26 +416,27 @@ foreign import ccall safe "dynamic"
                  HS_vkGetPhysicalDeviceDisplayPropertiesKHR
 
 instance VulkanProc "vkGetPhysicalDeviceDisplayPropertiesKHR" where
-        type VkProcType "vkGetPhysicalDeviceDisplayPropertiesKHR" =
-             HS_vkGetPhysicalDeviceDisplayPropertiesKHR
-        vkProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
+    type VkProcType "vkGetPhysicalDeviceDisplayPropertiesKHR" =
+         HS_vkGetPhysicalDeviceDisplayPropertiesKHR
+    vkProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceDisplayPropertiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR :: CString
 
 pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR <-
         (is_VkGetPhysicalDeviceDisplayPlanePropertiesKHR -> True)
-  where VkGetPhysicalDeviceDisplayPlanePropertiesKHR
-          = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+  where
+    VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+      = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
 {-# INLINE _VkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
 
@@ -557,26 +647,27 @@ foreign import ccall safe "dynamic"
 
 instance VulkanProc "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
          where
-        type VkProcType "vkGetPhysicalDeviceDisplayPlanePropertiesKHR" =
-             HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
-        vkProcSymbol = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+    type VkProcType "vkGetPhysicalDeviceDisplayPlanePropertiesKHR" =
+         HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+    vkProcSymbol = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDisplayPlaneSupportedDisplaysKHR :: CString
 
 pattern VkGetDisplayPlaneSupportedDisplaysKHR <-
         (is_VkGetDisplayPlaneSupportedDisplaysKHR -> True)
-  where VkGetDisplayPlaneSupportedDisplaysKHR
-          = _VkGetDisplayPlaneSupportedDisplaysKHR
+  where
+    VkGetDisplayPlaneSupportedDisplaysKHR
+      = _VkGetDisplayPlaneSupportedDisplaysKHR
 
 {-# INLINE _VkGetDisplayPlaneSupportedDisplaysKHR #-}
 
@@ -790,26 +881,26 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDisplayPlaneSupportedDisplaysKHR
 
 instance VulkanProc "vkGetDisplayPlaneSupportedDisplaysKHR" where
-        type VkProcType "vkGetDisplayPlaneSupportedDisplaysKHR" =
-             HS_vkGetDisplayPlaneSupportedDisplaysKHR
-        vkProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
+    type VkProcType "vkGetDisplayPlaneSupportedDisplaysKHR" =
+         HS_vkGetDisplayPlaneSupportedDisplaysKHR
+    vkProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDisplayPlaneSupportedDisplaysKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDisplayPlaneSupportedDisplaysKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe
-          = unwrapVkGetDisplayPlaneSupportedDisplaysKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe
+      = unwrapVkGetDisplayPlaneSupportedDisplaysKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDisplayModePropertiesKHR :: CString
 
 pattern VkGetDisplayModePropertiesKHR <-
         (is_VkGetDisplayModePropertiesKHR -> True)
-  where VkGetDisplayModePropertiesKHR
-          = _VkGetDisplayModePropertiesKHR
+  where
+    VkGetDisplayModePropertiesKHR = _VkGetDisplayModePropertiesKHR
 
 {-# INLINE _VkGetDisplayModePropertiesKHR #-}
 
@@ -1026,23 +1117,24 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDisplayModePropertiesKHR
 
 instance VulkanProc "vkGetDisplayModePropertiesKHR" where
-        type VkProcType "vkGetDisplayModePropertiesKHR" =
-             HS_vkGetDisplayModePropertiesKHR
-        vkProcSymbol = _VkGetDisplayModePropertiesKHR
+    type VkProcType "vkGetDisplayModePropertiesKHR" =
+         HS_vkGetDisplayModePropertiesKHR
+    vkProcSymbol = _VkGetDisplayModePropertiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkGetDisplayModePropertiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkGetDisplayModePropertiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDisplayModePropertiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDisplayModePropertiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDisplayModeKHR :: CString
 
 pattern VkCreateDisplayModeKHR <-
         (is_VkCreateDisplayModeKHR -> True)
-  where VkCreateDisplayModeKHR = _VkCreateDisplayModeKHR
+  where
+    VkCreateDisplayModeKHR = _VkCreateDisplayModeKHR
 
 {-# INLINE _VkCreateDisplayModeKHR #-}
 
@@ -1268,24 +1360,25 @@ foreign import ccall safe "dynamic"
                PFN_vkCreateDisplayModeKHR -> HS_vkCreateDisplayModeKHR
 
 instance VulkanProc "vkCreateDisplayModeKHR" where
-        type VkProcType "vkCreateDisplayModeKHR" =
-             HS_vkCreateDisplayModeKHR
-        vkProcSymbol = _VkCreateDisplayModeKHR
+    type VkProcType "vkCreateDisplayModeKHR" =
+         HS_vkCreateDisplayModeKHR
+    vkProcSymbol = _VkCreateDisplayModeKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayModeKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayModeKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDisplayModeKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDisplayModeKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkGetDisplayPlaneCapabilitiesKHR :: CString
 
 pattern VkGetDisplayPlaneCapabilitiesKHR <-
         (is_VkGetDisplayPlaneCapabilitiesKHR -> True)
-  where VkGetDisplayPlaneCapabilitiesKHR
-          = _VkGetDisplayPlaneCapabilitiesKHR
+  where
+    VkGetDisplayPlaneCapabilitiesKHR
+      = _VkGetDisplayPlaneCapabilitiesKHR
 
 {-# INLINE _VkGetDisplayPlaneCapabilitiesKHR #-}
 
@@ -1505,25 +1598,25 @@ foreign import ccall safe "dynamic"
                  HS_vkGetDisplayPlaneCapabilitiesKHR
 
 instance VulkanProc "vkGetDisplayPlaneCapabilitiesKHR" where
-        type VkProcType "vkGetDisplayPlaneCapabilitiesKHR" =
-             HS_vkGetDisplayPlaneCapabilitiesKHR
-        vkProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
+    type VkProcType "vkGetDisplayPlaneCapabilitiesKHR" =
+         HS_vkGetDisplayPlaneCapabilitiesKHR
+    vkProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe
-          = unwrapVkGetDisplayPlaneCapabilitiesKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe
+      = unwrapVkGetDisplayPlaneCapabilitiesKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkGetDisplayPlaneCapabilitiesKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkGetDisplayPlaneCapabilitiesKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VkCreateDisplayPlaneSurfaceKHR :: CString
 
 pattern VkCreateDisplayPlaneSurfaceKHR <-
         (is_VkCreateDisplayPlaneSurfaceKHR -> True)
-  where VkCreateDisplayPlaneSurfaceKHR
-          = _VkCreateDisplayPlaneSurfaceKHR
+  where
+    VkCreateDisplayPlaneSurfaceKHR = _VkCreateDisplayPlaneSurfaceKHR
 
 {-# INLINE _VkCreateDisplayPlaneSurfaceKHR #-}
 
@@ -1742,17 +1835,17 @@ foreign import ccall safe "dynamic"
                  HS_vkCreateDisplayPlaneSurfaceKHR
 
 instance VulkanProc "vkCreateDisplayPlaneSurfaceKHR" where
-        type VkProcType "vkCreateDisplayPlaneSurfaceKHR" =
-             HS_vkCreateDisplayPlaneSurfaceKHR
-        vkProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
+    type VkProcType "vkCreateDisplayPlaneSurfaceKHR" =
+         HS_vkCreateDisplayPlaneSurfaceKHR
+    vkProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
 
-        {-# INLINE vkProcSymbol #-}
-        unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayPlaneSurfaceKHRUnsafe
+    {-# INLINE vkProcSymbol #-}
+    unwrapVkProcPtrUnsafe = unwrapVkCreateDisplayPlaneSurfaceKHRUnsafe
 
-        {-# INLINE unwrapVkProcPtrUnsafe #-}
-        unwrapVkProcPtrSafe = unwrapVkCreateDisplayPlaneSurfaceKHRSafe
+    {-# INLINE unwrapVkProcPtrUnsafe #-}
+    unwrapVkProcPtrSafe = unwrapVkCreateDisplayPlaneSurfaceKHRSafe
 
-        {-# INLINE unwrapVkProcPtrSafe #-}
+    {-# INLINE unwrapVkProcPtrSafe #-}
 
 pattern VK_KHR_DISPLAY_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -1764,8 +1857,8 @@ pattern VK_KHR_DISPLAY_EXTENSION_NAME :: CString
 
 pattern VK_KHR_DISPLAY_EXTENSION_NAME <-
         (is_VK_KHR_DISPLAY_EXTENSION_NAME -> True)
-  where VK_KHR_DISPLAY_EXTENSION_NAME
-          = _VK_KHR_DISPLAY_EXTENSION_NAME
+  where
+    VK_KHR_DISPLAY_EXTENSION_NAME = _VK_KHR_DISPLAY_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_DISPLAY_EXTENSION_NAME #-}
 

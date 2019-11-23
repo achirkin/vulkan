@@ -1,7 +1,5 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
@@ -27,33 +25,30 @@ module Graphics.Vulkan.Types.Enum.Memory
                                 VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT),
         VkMemoryPropertyFlags, VkMemoryPropertyFlagBits)
        where
-import           Data.Bits                       (Bits, FiniteBits)
-import           Data.Coerce                     (coerce)
-import           Data.Data                       (Data)
-import           Foreign.Storable                (Storable)
-import           GHC.Generics                    (Generic)
-import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
-import           Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
-import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
-import           Text.Read                       (Read (..), parens)
-import           Text.Read.Lex                   (Lexeme (..))
+import Data.Bits                       (Bits, FiniteBits)
+import Data.Coerce                     (coerce)
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
 
 newtype VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBitsKHR VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
+                                      deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
 instance Show VkMemoryAllocateFlagBitsKHR where
-        {-# INLINE show #-}
-        show (VkMemoryAllocateFlagBitsKHR x) = show x
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
 instance Read VkMemoryAllocateFlagBitsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkMemoryAllocateBitmask (a ::
                                    FlagType) = VkMemoryAllocateBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkMemoryAllocateFlags = VkMemoryAllocateBitmask FlagMask
 
@@ -73,33 +68,23 @@ deriving instance Bits (VkMemoryAllocateBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryAllocateBitmask FlagMask)
 
-deriving instance Integral (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Num (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Enum (VkMemoryAllocateBitmask FlagMask)
-
-deriving instance Real (VkMemoryAllocateBitmask FlagMask)
-
 instance Show (VkMemoryAllocateBitmask a) where
-        showsPrec _ VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT
-          = showString "VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT"
-        showsPrec p (VkMemoryAllocateBitmask x)
-          = showParen (p >= 11)
-              (showString "VkMemoryAllocateBitmask " . showsPrec 11 x)
+    showsPrec _ VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT
+      = showString "VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT"
+    showsPrec p (VkMemoryAllocateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkMemoryAllocateBitmask " . showsPrec 11 x)
 
 instance Read (VkMemoryAllocateBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT",
-                   pure VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkMemoryAllocateBitmask") >>
-                      (VkMemoryAllocateBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT",
+               pure VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkMemoryAllocateBitmask") >>
+                  (VkMemoryAllocateBitmask <$> step readPrec)))
 
 -- | Force allocation on specific devices
 --
@@ -112,7 +97,7 @@ pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT =
 
 newtype VkMemoryHeapBitmask (a ::
                                FlagType) = VkMemoryHeapBitmask VkFlags
-                                             deriving (Eq, Ord, Storable, Data, Generic)
+                                           deriving (Eq, Ord, Storable)
 
 type VkMemoryHeapFlags = VkMemoryHeapBitmask FlagMask
 
@@ -132,33 +117,23 @@ deriving instance Bits (VkMemoryHeapBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryHeapBitmask FlagMask)
 
-deriving instance Integral (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Num (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Enum (VkMemoryHeapBitmask FlagMask)
-
-deriving instance Real (VkMemoryHeapBitmask FlagMask)
-
 instance Show (VkMemoryHeapBitmask a) where
-        showsPrec _ VK_MEMORY_HEAP_DEVICE_LOCAL_BIT
-          = showString "VK_MEMORY_HEAP_DEVICE_LOCAL_BIT"
-        showsPrec p (VkMemoryHeapBitmask x)
-          = showParen (p >= 11)
-              (showString "VkMemoryHeapBitmask " . showsPrec 11 x)
+    showsPrec _ VK_MEMORY_HEAP_DEVICE_LOCAL_BIT
+      = showString "VK_MEMORY_HEAP_DEVICE_LOCAL_BIT"
+    showsPrec p (VkMemoryHeapBitmask x)
+      = showParen (p >= 11)
+          (showString "VkMemoryHeapBitmask " . showsPrec 11 x)
 
 instance Read (VkMemoryHeapBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_MEMORY_HEAP_DEVICE_LOCAL_BIT",
-                   pure VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkMemoryHeapBitmask") >>
-                      (VkMemoryHeapBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_MEMORY_HEAP_DEVICE_LOCAL_BIT",
+               pure VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkMemoryHeapBitmask") >>
+                  (VkMemoryHeapBitmask <$> step readPrec)))
 
 -- | If set, heap represents device memory
 --
@@ -169,7 +144,7 @@ pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapBitmask 1
 
 newtype VkMemoryPropertyBitmask (a ::
                                    FlagType) = VkMemoryPropertyBitmask VkFlags
-                                                 deriving (Eq, Ord, Storable, Data, Generic)
+                                               deriving (Eq, Ord, Storable)
 
 type VkMemoryPropertyFlags = VkMemoryPropertyBitmask FlagMask
 
@@ -189,49 +164,39 @@ deriving instance Bits (VkMemoryPropertyBitmask FlagMask)
 
 deriving instance FiniteBits (VkMemoryPropertyBitmask FlagMask)
 
-deriving instance Integral (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Num (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Bounded (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Enum (VkMemoryPropertyBitmask FlagMask)
-
-deriving instance Real (VkMemoryPropertyBitmask FlagMask)
-
 instance Show (VkMemoryPropertyBitmask a) where
-        showsPrec _ VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
-          = showString "VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT"
-        showsPrec _ VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
-          = showString "VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT"
-        showsPrec _ VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
-          = showString "VK_MEMORY_PROPERTY_HOST_COHERENT_BIT"
-        showsPrec _ VK_MEMORY_PROPERTY_HOST_CACHED_BIT
-          = showString "VK_MEMORY_PROPERTY_HOST_CACHED_BIT"
-        showsPrec _ VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT
-          = showString "VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT"
-        showsPrec p (VkMemoryPropertyBitmask x)
-          = showParen (p >= 11)
-              (showString "VkMemoryPropertyBitmask " . showsPrec 11 x)
+    showsPrec _ VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
+      = showString "VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT"
+    showsPrec _ VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
+      = showString "VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT"
+    showsPrec _ VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
+      = showString "VK_MEMORY_PROPERTY_HOST_COHERENT_BIT"
+    showsPrec _ VK_MEMORY_PROPERTY_HOST_CACHED_BIT
+      = showString "VK_MEMORY_PROPERTY_HOST_CACHED_BIT"
+    showsPrec _ VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT
+      = showString "VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT"
+    showsPrec p (VkMemoryPropertyBitmask x)
+      = showParen (p >= 11)
+          (showString "VkMemoryPropertyBitmask " . showsPrec 11 x)
 
 instance Read (VkMemoryPropertyBitmask a) where
-        readPrec
-          = parens
-              (choose
-                 [("VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT",
-                   pure VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
-                  ("VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT",
-                   pure VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
-                  ("VK_MEMORY_PROPERTY_HOST_COHERENT_BIT",
-                   pure VK_MEMORY_PROPERTY_HOST_COHERENT_BIT),
-                  ("VK_MEMORY_PROPERTY_HOST_CACHED_BIT",
-                   pure VK_MEMORY_PROPERTY_HOST_CACHED_BIT),
-                  ("VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT",
-                   pure VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkMemoryPropertyBitmask") >>
-                      (VkMemoryPropertyBitmask <$> step readPrec)))
+    readPrec
+      = parens
+          (choose
+             [("VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT",
+               pure VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+              ("VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT",
+               pure VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
+              ("VK_MEMORY_PROPERTY_HOST_COHERENT_BIT",
+               pure VK_MEMORY_PROPERTY_HOST_COHERENT_BIT),
+              ("VK_MEMORY_PROPERTY_HOST_CACHED_BIT",
+               pure VK_MEMORY_PROPERTY_HOST_CACHED_BIT),
+              ("VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT",
+               pure VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT)]
+             +++
+             prec 10
+               (expectP (Ident "VkMemoryPropertyBitmask") >>
+                  (VkMemoryPropertyBitmask <$> step readPrec)))
 
 -- | If otherwise stated, then allocate memory on device
 --

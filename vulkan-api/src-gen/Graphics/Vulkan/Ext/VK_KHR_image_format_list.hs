@@ -17,31 +17,34 @@ module Graphics.Vulkan.Ext.VK_KHR_image_format_list
         -- type: @device@
         --
         -- Extension number: @148@
-        module Graphics.Vulkan.Types.Struct.Extent,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.Format,
-        module Graphics.Vulkan.Types.Enum.Image,
-        module Graphics.Vulkan.Types.Struct.Image,
-        module Graphics.Vulkan.Types.Enum.SampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.SharingMode,
-        module Graphics.Vulkan.Types.Enum.StructureType,
-        -- > #include "vk_platform.h"
-        VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION,
+        VkExtent3D, VkBool32(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
+        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
+        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
+        VkImageFormatListCreateInfoKHR, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkSharingMode(..),
+        VkStructureType(..), -- > #include "vk_platform.h"
+                             VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION,
         pattern VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION,
         VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME,
         pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO_KHR)
        where
-import           GHC.Ptr                                     (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.Format
-import           Graphics.Vulkan.Types.Enum.Image
-import           Graphics.Vulkan.Types.Enum.SampleCountFlags
-import           Graphics.Vulkan.Types.Enum.SharingMode
-import           Graphics.Vulkan.Types.Enum.StructureType
-import           Graphics.Vulkan.Types.Struct.Extent
-import           Graphics.Vulkan.Types.Struct.Image
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.BaseTypes
+import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.Image
+import Graphics.Vulkan.Types.Enum.SampleCountFlags
+import Graphics.Vulkan.Types.Enum.SharingMode
+import Graphics.Vulkan.Types.Enum.StructureType
+import Graphics.Vulkan.Types.Struct.Extent         (VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Image          (VkImageCreateInfo, VkImageFormatListCreateInfoKHR)
 
 pattern VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -53,8 +56,9 @@ pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME :: CString
 
 pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME <-
         (is_VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME -> True)
-  where VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME
-          = _VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME
+  where
+    VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME
+      = _VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME #-}
 

@@ -23,9 +23,9 @@ module Graphics.Vulkan.Ext.VK_NV_fill_rectangle
         pattern VK_NV_FILL_RECTANGLE_EXTENSION_NAME,
         pattern VK_POLYGON_MODE_FILL_RECTANGLE_NV)
        where
-import           GHC.Ptr                                (Ptr (..))
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.Enum.PolygonMode (VkPolygonMode (..))
+import GHC.Ptr                                (Ptr (..))
+import Graphics.Vulkan.Marshal
+import Graphics.Vulkan.Types.Enum.PolygonMode (VkPolygonMode (..))
 
 pattern VK_NV_FILL_RECTANGLE_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -37,8 +37,9 @@ pattern VK_NV_FILL_RECTANGLE_EXTENSION_NAME :: CString
 
 pattern VK_NV_FILL_RECTANGLE_EXTENSION_NAME <-
         (is_VK_NV_FILL_RECTANGLE_EXTENSION_NAME -> True)
-  where VK_NV_FILL_RECTANGLE_EXTENSION_NAME
-          = _VK_NV_FILL_RECTANGLE_EXTENSION_NAME
+  where
+    VK_NV_FILL_RECTANGLE_EXTENSION_NAME
+      = _VK_NV_FILL_RECTANGLE_EXTENSION_NAME
 
 {-# INLINE _VK_NV_FILL_RECTANGLE_EXTENSION_NAME #-}
 

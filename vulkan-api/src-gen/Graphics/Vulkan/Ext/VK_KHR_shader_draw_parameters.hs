@@ -22,8 +22,8 @@ module Graphics.Vulkan.Ext.VK_KHR_shader_draw_parameters
         VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME,
         pattern VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME)
        where
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Marshal
+import GHC.Ptr                 (Ptr (..))
+import Graphics.Vulkan.Marshal
 
 pattern VK_KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -36,8 +36,9 @@ pattern VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME :: CString
 
 pattern VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME <-
         (is_VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME -> True)
-  where VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME
-          = _VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME
+  where
+    VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME
+      = _VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME
 
 {-# INLINE _VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME #-}
 
