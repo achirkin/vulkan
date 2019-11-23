@@ -1,19 +1,18 @@
 { mkDerivation, base, containers, dimensions, directory, easytensor
-, easytensor-vulkan, filepath, GLFW-b, monad-logger, mtl, process
-, stdenv, template-haskell, time, transformers, vulkan-api, vulkan, glfwFrameworks
+, easytensor-vulkan, filepath, GLFW-b, glfwFrameworks, JuicyPixels, monad-logger
+, mtl, process, stdenv, template-haskell, time, transformers
+, vector, vulkan-api, wavefront, vulkan
 }:
 mkDerivation {
   pname = "vulkan-triangles";
-  version = "0.3.0.0";
+  version = "0.4.0.0";
   src = ./.;
   isLibrary = true;
   isExecutable = true;
-  librarySystemDepends = [ vulkan ] ++ glfwFrameworks;
-  executableSystemDepends = [ vulkan ] ++ glfwFrameworks;
   libraryHaskellDepends = [
-    base containers dimensions directory easytensor easytensor-vulkan
-    filepath GLFW-b monad-logger mtl process template-haskell time
-    transformers vulkan-api
+    base containers dimensions directory easytensor glfwFrameworks easytensor-vulkan
+    filepath GLFW-b JuicyPixels monad-logger mtl process vulkan
+    template-haskell time transformers vector vulkan-api wavefront
   ];
   executableHaskellDepends = [ base ];
   homepage = "https://github.com/achirkin/genvulkan#readme";

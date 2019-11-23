@@ -1,4 +1,4 @@
-{ localVulkan ? "/Users/timpierson/Downloads/vulkansdk-macos-1.1.106.0.tar.gz"}:
+{ localVulkan ? "/Users/timpierson/Downloads/vulkansdk-macos-1.1.106.0.tar.gz", compiler ? "ghc881"}:
 let
   vulkan = import ./vulkan.nix {
     stdenv = pkgs.stdenv;
@@ -15,8 +15,12 @@ let
   config = {
     allowBroken = true; # easytensor is marked as broken.
     packageOverrides = pkgs: rec {
-      haskellPackages = pkgs.haskell.packages.ghc864.override {
+      haskellPackages = pkgs.haskell.packages.${compiler}.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
+
+          monad-par = pkgs.haskell.lib.dontCheck haskellPackagesOld.monad-par;
+
+          # lens = pkgs.haskell.lib.disableCabalFlag (haskellPackagesNew.callHackage "lens" "4.18.1" {}) "test-doctests";
 
           # until bindings-GLFW and GLFW-b are updated to support GLFW 3.3 we override
           bindings-GLFW = pkgs.lib.overrideDerivation
@@ -104,4 +108,4 @@ in {
   vulkan-api = vulkan-api;
   vulkanEnvHooks = drv: vulkanEnvHooks {vulkan = vulkan; drv = drv; };
 }
-# test with: nix-shell -A vulkan-triangles --command 'result-2/bin/vulkan-triangles'
+# test with: nix-shell -A vulkan-triangles --command 'result-4/bin/vulkan-triangles'
