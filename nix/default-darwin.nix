@@ -1,4 +1,4 @@
-{ compiler ? "ghc865" }:
+{ pkgs', compiler ? "ghc865" }:
 let
   # MoltenVK
   # vulkan = import (pkgs.fetchgit {
@@ -39,7 +39,7 @@ let
 
               buildInputs = (drv.buildInputs ++ [
                 frameworks.Cocoa
-                frameworks.Security
+                # frameworks.Security
                 frameworks.CoreFoundation
                 frameworks.CoreServices
                 frameworks.AGL
@@ -72,7 +72,7 @@ let
     };
   };
 
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = import pkgs' { inherit config; };
 
 in let
   moltenOverrides = drv: {
