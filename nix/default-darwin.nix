@@ -83,7 +83,7 @@ in let
   vulkan-api =
     pkgs.haskellPackages.callPackage ../vulkan-api { inherit vulkan; };
 in {
-  inherit moltenOverrides vulkan-api;
+  inherit moltenOverrides vulkan-api glfwFrameworks;
   vulkan-examples = pkgs.lib.overrideDerivation
     (pkgs.haskellPackages.callPackage ../vulkan-examples {
       inherit glfwFrameworks vulkan vulkan-api;
