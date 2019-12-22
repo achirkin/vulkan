@@ -27,5 +27,6 @@ let requireVulkanMac= version: sha256:
 
 in lib.makeExtensible (self: {
   vulkan-darwin_1_1_126_0 = requireVulkanMac "1.1.126.0" "1ae62cc33227cbb32eff50951011405b0afa7a220765df06a975d6334cc45db4";
-  vulkan-darwin = requireVulkanMac "1.1.126.0" "1ae62cc33227cbb32eff50951011405b0afa7a220765df06a975d6334cc45db4";
+  vulkan-darwin_1_1_130_0 = requireVulkanMac "1.1.130.0" "d6d80ab96e3b4363be969f9d256772e9cfb8f583db130076a9a9618d2551c726";
+  vulkan-darwin = requireVulkanMac "1.1.130.0" "d6d80ab96e3b4363be969f9d256772e9cfb8f583db130076a9a9618d2551c726";
 })
