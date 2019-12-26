@@ -6,7 +6,7 @@ let
       localVulkanSdktargz = (pkgs.callPackage ./lunarSDK.nix { }).vulkan-darwin;
     };
 
-  moltenOverrides = vulkan: drv: {
+  moltenHooks = vulkan: drv: {
     VK_LAYER_PATH = "${vulkan}/etc/vulkan/explicit_layer.d";
     VK_ICD_FILENAMES = "${vulkan}/etc/vulkan/icd.d/MoltenVK_icd.json";
     DYLD_LIBRARY_PATH = "${vulkan}/lib";
@@ -36,7 +36,7 @@ let
                     (pkgsSuper.haskell.lib.addBuildDepend
                       (haskellPackagesSelf.callCabal2nix "vulkan-api"
                         ../vulkan-api { }) (mkVulkan pkgsSuper))
-                    (moltenOverrides (mkVulkan pkgsSuper));
+                    (moltenHooks (mkVulkan pkgsSuper));
                 in {
                   inherit vulkan-api;
 
@@ -88,11 +88,11 @@ let
                   vulkan-triangles = pkgsSuper.lib.overrideDerivation
                     (haskellPackagesSuper.callPackage ../vulkan-triangles {
                       inherit glfwFrameworks vulkan-api;
-                    }) (moltenOverrides (mkVulkan pkgsSuper));
+                    }) (moltenHooks (mkVulkan pkgsSuper));
                   vulkan-examples = pkgsSuper.lib.overrideDerivation
                     (haskellPackagesSuper.callPackage ../vulkan-examples {
                       inherit glfwFrameworks vulkan-api;
-                    }) (moltenOverrides (mkVulkan pkgsSuper));
+                    }) (moltenHooks (mkVulkan pkgsSuper));
                 };
             in pkgsSelf.lib.fold pkgsSelf.lib.composeExtensions
             (old.overrides or (_: _: { })) [ mkMoltenExtension ];
@@ -115,8 +115,9 @@ in let
   glfwFrameworks = mkGLFWFrameworks nixpkgs;
   base-compiler = nixpkgs.haskell.packages."${compiler}";
 in {
-  inherit moltenOverrides glfwFrameworks overlayShared base-compiler;
+  inherit glfwFrameworks overlayShared base-compiler;
   inherit (base-compiler) vulkan-api vulkan vulkan-triangles vulkan-examples;
+  moltenHooks = moltenHooks nixpkgs.vulkan;
 }
 # test with:
 # nix-build . -A vulkan-triangles && cd vulkan-trianges && nix-shell .. -A vulkan-triangles --command '../result/bin/vulkan-triangles'
