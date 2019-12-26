@@ -7,18 +7,11 @@ let
   });
 in { pkgs' ? pkgs, compiler ? "ghc864" }:
 let
-
   pkgs = import pkgs' { };
-  # TODO: vulkan needs to be installed and passed to all the subpackages with the platform appropriate frameworks.
-  # default = {
-  #   vulkan-examples =
-  #     pkgs.haskellPackages.callCabal2nix "vulkan-examples" ./vulkan-examples
-  #     { };
-  #   vulkan-triangles =
-  #     pkgs.haskellPackages.callCabal2nix "vulkan-triangles" ../vulkan-triangles
-  #     { };
-  #   vulkan-api =
-  #     pkgs.haskellPackages.callCabal2nix "vulkan-api" ../vulkan-api { };
-  # };
+  # TODO: On a linux box, vulkan needs to be installed and passed to all the subpackages with the platform appropriate frameworks.
+  # and an expression exposing the same api as the below `darwin` attribute should be implemented.
   darwin = import ./nix/default-darwin.nix { inherit pkgs' compiler; };
-in darwin#  if pkgs.stdenv.isDarwin then darwin else default
+in if pkgs.stdenv.isDarwin then
+  darwin
+else
+  throw "Only darwin is currently supported!"
