@@ -1,7 +1,7 @@
 { mkDerivation, base, stdenv, vulkan }:
 mkDerivation {
   pname = "vulkan-api";
-  version = "1.1.4.0";
+  version = "1.3.0.0";
   src = ./.;
   librarySystemDepends = [ vulkan ];
   libraryHaskellDepends = [ base ];

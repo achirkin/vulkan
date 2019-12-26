@@ -1,7 +1,7 @@
-{ stdenv, fetchurl, localVulkanSdktargz}:
+{ stdenv, localVulkanSdktargz}:
 
 stdenv.mkDerivation rec {
-  name = "vulkan-darwin";
+  name = "vulkan";
   version = "1.0.0";
 
   src = localVulkanSdktargz;
