@@ -1,17 +1,6 @@
 { pkgs', compiler ? "ghc864" }:
 let
-  # MoltenVK
-  # vulkan = import (pkgs.fetchgit {
-  #   url = "https://github.com/o1lo01ol1o/MoltenVK-nix.git";
-  #   rev = "524b0699cc3785f219e8cc597f996e7c48232ea2";
-  #   sha256 = "1azp3jihxsxgmv5mwd9yw2zznvjmzl0p7s0dpjvm48xl3fvb5ks6";
-  # }) { };
 
-  # vulkan = import /Users/timpierson/arity/MoltenVK/default.nix {};
-  easytensor-src = builtins.fetchGit {
-    url = "https://github.com/achirkin/easytensor.git";
-    rev = "3ef88ab3bfc095d131365a588fe3282a2be5d0c1";
-  };
   mkVulkan = pkgs:
     pkgs.callPackage ./vulkan.nix {
       localVulkanSdktargz = (pkgs.callPackage ./lunarSDK.nix { }).vulkan-darwin;
@@ -54,19 +43,18 @@ let
                   monad-par = pkgsSuper.haskell.lib.dontCheck
                     haskellPackagesSuper.monad-par;
 
-                  # until bindings-GLFW and GLFW-b are updated to support GLFW 3.3 we override
+                  # Need GLFW 3.3 
                   bindings-GLFW = pkgsSuper.lib.overrideDerivation
                     (haskellPackagesSuper.callCabal2nix "bindings-GLFW"
                       (pkgsSuper.fetchgit {
                         url = "https://github.com/bsl/bindings-GLFW.git";
-                        rev = "3b300787078ec12d0ef6ac10ced031ecb2b11e6d";
+                        rev = "e3a625f81ff490fef6e867abde20db50e7f26fa0";
                         sha256 =
-                          "07sixxmhcnzxi9xc4j5bg9qwac27jdnx0sl239si5hi7isyja6wm";
+                          "006fzr1jkya5dwrl5vgm2in3arpg7bxzv6flilpkr1vk6q94h8pc";
                       }) { }) (drv: {
 
                         buildInputs = (drv.buildInputs ++ [
                           frameworks.Cocoa
-                          # frameworks.Security
                           frameworks.CoreFoundation
                           frameworks.CoreServices
                           frameworks.AGL
@@ -81,29 +69,28 @@ let
                           frameworks.GLUT
                           frameworks.GameController
                           frameworks.IOSurface
-                          frameworks.Kernel # think just need Kernel and Foundation; and Cocoa, CoreVideo, Graphics, IOKit, OpenGL
+                          frameworks.Kernel # TODO: think just need Kernel and Foundation; and Cocoa, CoreVideo, Graphics, IOKit, OpenGL
                         ]);
                       });
 
-                  # tests fail to return expected version
                   GLFW-b = pkgsSuper.lib.overrideDerivation
-                    (pkgsSuper.haskell.lib.dontCheck
-                      (haskellPackagesSuper.callCabal2nix "GLFW-b"
-                        (pkgsSuper.fetchgit {
-                          url = "https://github.com/bsl/GLFW-b.git";
-                          rev = "96ae257f7b6b6058d5ff41809757d69fd5a03287";
-                          sha256 =
-                            "1daazpnc7y6k3aky9833d2qhn7ba769hbwmir0dvag7l3hkbwa94";
-                        }) { })) (drv: {
-                          buildInputs = (drv.buildInputs ++ glfwFrameworks);
-                        });
+                    (haskellPackagesSuper.callCabal2nix "GLFW-b"
+                      (pkgsSuper.fetchgit {
+                        url = "https://github.com/bsl/GLFW-b.git";
+                        rev = "f1026edc6dbd53291836154097f7b50616fef98e";
+                        sha256 =
+                          "1s5max6969hvskw5x8npvghk4zj8c5lha8lg6l4jhkf2zipagb8n";
+                      }) { }) (drv: {
+                        buildInputs = (drv.buildInputs ++ glfwFrameworks);
+                      });
                   vulkan = mkVulkan pkgsSuper;
-                  easytensor-vulkan =
-                    haskellPackagesSelf.callCabal2nix "easytensor-vulkan"
-                    (easytensor-src + /easytensor-vulkan) {
-                    };
+
                   vulkan-triangles = pkgsSuper.lib.overrideDerivation
                     (haskellPackagesSuper.callPackage ../vulkan-triangles {
+                      inherit glfwFrameworks vulkan-api;
+                    }) (moltenOverrides (mkVulkan pkgsSuper));
+                  vulkan-examples = pkgsSuper.lib.overrideDerivation
+                    (haskellPackagesSuper.callPackage ../vulkan-examples {
                       inherit glfwFrameworks vulkan-api;
                     }) (moltenOverrides (mkVulkan pkgsSuper));
                 };
@@ -129,7 +116,7 @@ in let
   base-compiler = nixpkgs.haskell.packages."${compiler}";
 in {
   inherit moltenOverrides glfwFrameworks overlayShared base-compiler;
-  inherit (base-compiler) vulkan-api vulkan vulkan-triangles;
+  inherit (base-compiler) vulkan-api vulkan vulkan-triangles vulkan-examples;
 }
 # test with:
 # nix-build . -A vulkan-triangles && cd vulkan-trianges && nix-shell .. -A vulkan-triangles --command '../result/bin/vulkan-triangles'
