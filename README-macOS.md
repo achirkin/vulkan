@@ -73,28 +73,37 @@ It can be worked around by changing the install name of the file to an absolute 
 
 You don't need to do this if you use vulkan-api without the useNativeFFI-1-1 or useNativeFFI-1-0 flag.
 
-## Installing the needed Haskell libraries
+## Using GLFW and/or using vulkan-api without compile-time linking
 
-GLFW supports Vulkan on macOS only since version 3.3, which isn't released yet at the time of writing. You need to use bindings-GLFW and
-GLFW-b with a version >= 3.3 and vulkan-api with a version >= 1.1.3.1.
+Before launching Haskell programs that use the Haskell library bindings-GLFW
+(usually via the higher-level GLFW binding GLFW-b) and/or using vulkan-api
+without compile-time linking agaist Vulkan (which is the default), you need to
+make sure that the Vulkan loader from the SDK (`libvulkan.1.dylib`) can be found
+by dlopen (see `man dlopen`).
 
-Check if the right versions have been released yet first.
-Where to get the right versions depends on if the following pull requests have been merged:
-- https://github.com/bsl/bindings-GLFW/pull/65
-- https://github.com/bsl/GLFW-b/pull/83
+Note that bindings-GLFW doesn't do compile time linking against the Vulkan
+loader at the time of writing (version 3.3.1.0). It will dlopen the lib at
+runtime even if vulkan-api is compile-time linked against Vulkan.
 
-You can use a cabal.project file to get them compiled together with your code, i.e. in vulkan/vulkan-examples the content might be
+There are no configuration files to control dlopen searching on macOS. Using
+environment variables does also not work reliably because of security
+restrictions in recent versions of macOS. `dlopen` searches for library files in
+the current working directory, if that fails it searches in `$HOME/lib`,
+`/usr/local/lib`, and `/usr/lib` (searching for frameworks is handled
+differently).
 
-    packages: ., ../../bindings-GLFW, ../../GLFW-b, ../vulkan-api
+If you linked the Vulkan loader to `~/.local/lib` as described in the install
+section, it's probably a good idea to unify `~/.local/lib` with `~/lib` by
+making one of them a symlink to the other one, for example:
 
-When launching Haskell programs that use GLFW-b (via bindings-GLFW), you need to:
+    mv ~/lib/* ~/.local/lib
+    rmdir ~/lib
+    ln -s ~/.local/lib ~/lib
 
-    export DYLD_LIBRARY_PATH="~/.local/lib"
+Alternatively, just make the Vulkan loader available in the working directory
+where the executable is launched, for example:
 
-You can also prefix your `cabal v2-run/v2-repl` commands with `DYLD_LIBRARY_PATH="~/.local/lib"` instead.
-
-This is because bindings-GLFW currently doesn't do compile time linking against the Vulkan loader (libvulkan.1.dylib).
-It will dlopen the lib at runtime regardless of how vulkan-api is linked.
+    ln -s ~/.local/lib/libvulkan.1.dylib .
 
 ## Pitfalls
 
