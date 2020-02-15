@@ -56,7 +56,7 @@ also you can do things with pointers:
 instance PrimBytes Vertex
 
 -- | Check if the frame has enough elements.
-atLeastThree :: (All KnownXNatType ns, BoundedDims ns)
+atLeastThree :: (All KnownDimType ns, BoundedDims ns)
              => DataFrame t (n ': ns) -> DataFrame t (XN 3 ': ns)
 atLeastThree = fromMaybe (error "Lib.Vulkan.Vertex.atLeastThree: not enough points")
              . constrainDF
@@ -81,19 +81,19 @@ vertIBD = createVk
 vertIADs :: Vector VkVertexInputAttributeDescription 3
 vertIADs = ST.runST $ do
     mv <- ST.newPinnedDataFrame
-    ST.writeDataFrame mv 0 . scalar $ createVk
+    ST.writeDataFrame mv (0 :* Empty) . scalar $ createVk
         $  set @"location" 0
         &* set @"binding" 0
         &* set @"format" VK_FORMAT_R32G32B32_SFLOAT
         &* set @"offset" (bFieldOffsetOf @"pos" @Vertex undefined)
-    ST.writeDataFrame mv 1 . scalar $ createVk
+    ST.writeDataFrame mv (1 :* Empty) . scalar $ createVk
         $  set @"location" 1
         &* set @"binding" 0
         &* set @"format" VK_FORMAT_R32G32B32_SFLOAT
         &* set @"offset" (bFieldOffsetOf @"color" @Vertex undefined)
                           -- Now we can use bFieldOffsetOf derived
                           -- in PrimBytes via Generics. How cool is that!
-    ST.writeDataFrame mv 2 . scalar $ createVk
+    ST.writeDataFrame mv (2 :* Empty) . scalar $ createVk
         $  set @"location" 2
         &* set @"binding" 0
         &* set @"format" VK_FORMAT_R32G32_SFLOAT

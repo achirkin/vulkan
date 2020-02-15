@@ -24,7 +24,7 @@ import Lib.Program.Foreign
 import Lib.Vulkan.Presentation
 
 
-createGraphicsPipeline :: KnownDim n
+createGraphicsPipeline :: KnownDim (n :: Nat)
                        => VkDevice
                        -> SwapchainInfo
                        -> VkVertexInputBindingDescription
