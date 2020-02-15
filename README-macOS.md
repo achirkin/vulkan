@@ -20,7 +20,9 @@ While the SDK documentation claims it can't be installed, I recommend the follow
 
     cd ~
     tar xzf Downloads/vulkan-sdk.tar.gz
-    cd vulkansdk-macos-1.1.101.0/macOS
+    # otherwise Gatekeeper prevents loading the lib because it was downloaded but is not signed:
+    sudo xattr -r -d com.apple.quarantine ~/vulkansdk-macos-1.2.131.2
+    cd vulkansdk-macos-1.2.131.2/macOS
     mkdir ~/.local/lib
     cp -a lib/*.dylib ~/.local/lib
     mkdir ~/.local/share/vulkan
@@ -43,10 +45,12 @@ so make sure the Vulkan loader can find MoltenVK.
 
     cd ~
     tar xzf Downloads/vulkan-sdk.tar.gz
+    # otherwise Gatekeeper prevents loading the lib because it was downloaded but is not signed:
+    sudo xattr -r -d com.apple.quarantine ~/vulkansdk-macos-1.2.131.2
 
 When developing:
 
-    VULKAN_SDK="${HOME}/vulkansdk-macos-1.1.101.0/macOS"
+    VULKAN_SDK="${HOME}/vulkansdk-macos-1.2.131.2/macOS"
     export VK_LAYER_PATH="${VULKAN_SDK}/etc/vulkan/explicit_layer.d"
     export VK_ICD_FILENAMES="${VULKAN_SDK}/etc/vulkan/icd.d/MoltenVK_icd.json"
     export PATH="${VULKAN_SDK}/bin:${PATH}"
