@@ -54,7 +54,9 @@ When developing:
     export VK_LAYER_PATH="${VULKAN_SDK}/etc/vulkan/explicit_layer.d"
     export VK_ICD_FILENAMES="${VULKAN_SDK}/etc/vulkan/icd.d/MoltenVK_icd.json"
     export PATH="${VULKAN_SDK}/bin:${PATH}"
-    export DYLD_LIBRARY_PATH="${VULKAN_SDK}/lib"
+    ln -s ${VULKAN_SDK}/lib/libvulkan.1.dylib .
+
+Regarding the last line, see remarks about linking and dlopen below.
 
 ### Workaround for compile-time linking vulkan-api
 
