@@ -5,7 +5,7 @@ let
     url = "${spec.url}/archive/${spec.rev}.tar.gz";
     inherit (spec) sha256;
   });
-in { pkgs' ? pkgs, compiler ? "ghc864" }:
+in { pkgs' ? pkgs, compiler ? "ghc883" }:
 let
   pkgs = import pkgs' { };
   # TODO: On a linux box, vulkan needs to be installed and passed to all the subpackages with the platform appropriate frameworks.

@@ -1,4 +1,4 @@
-{ pkgs', compiler ? "ghc864" }:
+{ pkgs', compiler ? "ghc883" }:
 let
 
   mkVulkan = pkgs:
@@ -74,16 +74,18 @@ let
                       });
 
                   GLFW-b = pkgsSuper.lib.overrideDerivation
-                    (haskellPackagesSuper.callCabal2nix "GLFW-b"
-                      (pkgsSuper.fetchgit {
-                        url = "https://github.com/bsl/GLFW-b.git";
-                        rev = "f1026edc6dbd53291836154097f7b50616fef98e";
-                        sha256 =
-                          "1s5max6969hvskw5x8npvghk4zj8c5lha8lg6l4jhkf2zipagb8n";
-                      }) { }) (drv: {
+                    (haskellPackagesSuper.callHackage "GLFW-b" "3.3.0.0" { }) (drv: {
                         buildInputs = (drv.buildInputs ++ glfwFrameworks);
                       });
                   vulkan = mkVulkan pkgsSuper;
+
+                  wavefront = (haskellPackagesSuper.callCabal2nix "wavefront"
+                      (pkgsSuper.fetchgit {
+                        url = "https://github.com/phaazon/wavefront.git";
+                        rev = "74dc61e8e298dce19c1c50ebf21d1c6fe841458c";
+                        sha256 =
+                          "0ihbhkwqmw6s3s1jlq3xiyxfvpdasg3qq80y021yq858hd087m8k";
+                      }) { });
 
                   vulkan-triangles = pkgsSuper.lib.overrideDerivation
                     (haskellPackagesSuper.callPackage ../vulkan-triangles {
