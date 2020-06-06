@@ -122,4 +122,4 @@ in {
   moltenHooks = moltenHooks nixpkgs.vulkan;
 }
 # test with:
-# nix-build . -A vulkan-triangles && cd vulkan-trianges && nix-shell .. -A vulkan-triangles --command '../result/bin/vulkan-triangles'
+# nix-build . -A vulkan-triangles && cd vulkan-triangles && nix-shell .. -A vulkan-triangles --command '../result/bin/vulkan-triangles'
