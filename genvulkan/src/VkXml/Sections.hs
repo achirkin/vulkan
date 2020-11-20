@@ -2,6 +2,7 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NamedFieldPuns        #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
@@ -40,25 +41,21 @@ import           VkXml.Sections.Extensions
 import           VkXml.Sections.Feature
 import           VkXml.Sections.Tags
 import           VkXml.Sections.Types
-import           VkXml.Sections.VendorIds
 import           VkXml.Sections.Platforms
+import           VkXml.Sections.SPIRV
 
 
 
 parseVkXml :: VkXmlParser m => Sink Event m VkXml
 parseVkXml = fmap fixVkXml . execStateC
-    (VkXmlPartial mempty mempty mempty mempty
-                  mempty mempty mempty mempty)
+    (VkXmlPartial mempty mempty mempty
+                  mempty mempty mempty
+                  mempty mempty mempty)
       $ tagIgnoreAttrs "registry" parseAll
   where
     parseAll = do
       mr <- choose
         [ ignoreTreeContent "comment"
-        , parseVendorIds >>= \case
-            Nothing -> pure Nothing
-            Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpVendorIds = gpVendorIds v |> x
-                }
         , parsePlatforms >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
@@ -94,12 +91,20 @@ parseVkXml = fmap fixVkXml . execStateC
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
                 { gpExtensions = gpExtensions v |> x
                 }
+        , parseSPIRVExtensions >>= \case
+            Nothing -> pure Nothing
+            Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
+                { gpSPIRVExtensions = gpSPIRVExtensions v |> x
+                }
+        , parseSPIRVCapabilities >>= \case
+            Nothing -> pure Nothing
+            Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
+                { gpSPIRVCapabilities = gpSPIRVCapabilities v |> x
+                }
         ]
       case mr of
         Nothing -> return ()
         Just () -> parseAll
-
-
 
 -- | Contains all parsed content of vk.xml,
 --    hopefully, preserves ordering of original vk.xml.
@@ -107,54 +112,66 @@ parseVkXml = fmap fixVkXml . execStateC
 --   The data type is foldable and traversable functor
 data VkXml
   = VkXml
-  { globVendorIds  :: VendorIds
-  , globPlatforms  :: VkPlatforms
-  , globTags       :: VkTags
-  , globTypes      :: Map VkTypeName VkType
-  , globEnums      :: Map (Maybe VkTypeName) VkEnums
-  , globCommands   :: Map VkCommandName VkCommand
-  , globFeature    :: [VkFeature]
-  , globExtensions :: Map VkExtensionName VkExtension
+  { globPlatforms         :: VkPlatforms
+  , globTags              :: VkTags
+  , globTypes             :: Map VkTypeName VkType
+  , globEnums             :: Map (Maybe VkTypeName) VkEnums
+  , globCommands          :: Map VkCommandName VkCommand
+  , globFeature           :: [VkFeature]
+  , globExtensions        :: Map VkExtensionName VkExtension
+  , globSPIRVExtensions   :: Map SPIRVExtensionName SPIRVExtension
+  , globSPIRVCapabilities :: Map SPIRVCapabilityName SPIRVCapability
   } deriving Show
 
 data VkXmlPartial
   = VkXmlPartial
-  { gpVendorIds  :: Seq VendorIds
-  , gpPlatforms  :: Seq VkPlatforms
-  , gpTags       :: Seq VkTags
-  , gpTypes      :: Seq VkTypes
-  , gpEnums      :: Seq VkEnums
-  , gpCommands   :: Seq VkCommands
-  , gpFeature    :: Seq VkFeature
-  , gpExtensions :: Seq VkExtensions
+  { gpPlatforms         :: Seq VkPlatforms
+  , gpTags              :: Seq VkTags
+  , gpTypes             :: Seq VkTypes
+  , gpEnums             :: Seq VkEnums
+  , gpCommands          :: Seq VkCommands
+  , gpFeature           :: Seq VkFeature
+  , gpExtensions        :: Seq VkExtensions
+  , gpSPIRVExtensions   :: Seq SPIRVExtensions
+  , gpSPIRVCapabilities :: Seq SPIRVCapabilities
   } deriving Show
 
 
 fixVkXml :: VkXmlPartial
          -> VkXml
 fixVkXml VkXmlPartial
-  { gpVendorIds  = Seq.Empty Seq.:|> pVendorIds
-  , gpPlatforms  = Seq.Empty Seq.:|> pPlatforms
-  , gpTags       = Seq.Empty Seq.:|> pTags
-  , gpTypes      = Seq.Empty Seq.:|> pTypes
-  , gpEnums      = pEnums
-  , gpCommands   = Seq.Empty Seq.:|> pCommands
-  , gpFeature    = pFeatures
-  , gpExtensions = Seq.Empty Seq.:|> pExtensions
+  { gpPlatforms         = Seq.Empty Seq.:|> pPlatforms
+  , gpTags              = Seq.Empty Seq.:|> pTags
+  , gpTypes             = Seq.Empty Seq.:|> pTypes
+  , gpEnums
+  , gpCommands          = Seq.Empty Seq.:|> pCommands
+  , gpFeature
+  , gpExtensions        = Seq.Empty Seq.:|> pExtensions
+  , gpSPIRVExtensions   = Seq.Empty Seq.:|> pSPIRVExtensions
+  , gpSPIRVCapabilities = Seq.Empty Seq.:|> pSPIRVCapabilities
   } = VkXml
-  { globVendorIds  = pVendorIds
-  , globPlatforms  = pPlatforms
-  , globTags       = pTags
-  , globTypes      = pTypes
-  , globEnums      = Map.fromList
-                   . map (\e -> ( _vkEnumsTypeName e, e)
-                         )
-                   $ toList pEnums
-  , globCommands   = pCommands
-  , globFeature    = toList pFeatures
-  , globExtensions = pExtensions
+  { globPlatforms         = pPlatforms
+  , globTags              = pTags
+  , globTypes             = pTypes
+  , globEnums             = Map.fromList
+                          . map (\e -> ( _vkEnumsTypeName e, e)
+                                )
+                          $ toList gpEnums
+  , globCommands          = pCommands
+  , globFeature           = toList gpFeature
+  , globExtensions        = pExtensions
+  , globSPIRVExtensions   = pSPIRVExtensions
+  , globSPIRVCapabilities = pSPIRVCapabilities
   }
-fixVkXml _ = error "Unexpected number of sections in vk.xml"
+fixVkXml VkXmlPartial { .. } = error $
+  "Unexpected number of sections in vk.xml:\n\
+  \         platforms: " <> show ( length gpPlatforms ) <> "\n\
+  \              tags: " <> show ( length gpTags ) <> "\n\
+  \             types: " <> show ( length gpTypes ) <> "\n\
+  \          commands: " <> show ( length gpCommands ) <> "\n\
+  \        extensions: " <> show ( length gpExtensions ) <> "\n\ 
+  \  SPIRV extensions: " <> show ( length gpSPIRVExtensions ) <> "\n\
+  \SPIRV capabilities: " <> show ( length gpSPIRVCapabilities )
 
 
 reexportedTypesRequire :: VkXml -> VkRequire -> [VkTypeName]

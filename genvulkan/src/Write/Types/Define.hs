@@ -1,13 +1,17 @@
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 module Write.Types.Define
   ( genDefine
   ) where
 
 -- import           Control.Arrow                        ((***))
 import           Data.Bits
+import           Data.Maybe
 import           Data.Semigroup
 import qualified Data.Text                            as T
 import qualified Data.Text.Read                       as T
@@ -50,7 +54,9 @@ genDefine t@VkTypeSimple
     }
 
   | vkName == VkTypeName "VK_MAKE_VERSION"
-  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))" || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))"
   = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_MAKE_VERSION :: Bits a => a -> a -> a -> a|]
       [text|_VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch|]
@@ -116,6 +122,16 @@ genDefine t@VkTypeSimple
       (fromIntegral (v :: Word32))
       "(Num a, Eq a) => a"
     }
+
+  | VkTypeName "VK_HEADER_VERSION_COMPLETE" <- vkName
+  , Just _ <- matchedText ( c ?=~ [reBS|#define[[:space:]]+VK_HEADER_VERSION_COMPLETE+[[:space:]]+VK_MAKE_VERSION\(.*,.*,.*\)|])
+  , [major, minor] <- matches ( c *=~ [reBS|[0-9]+|] )
+  = go (writeImport $ DIThing "Bits" DITAll)
+      [text|_VK_HEADER_VERSION_COMPLETE :: (Num a, Bits a) => a -> a|]
+      [text|_VK_HEADER_VERSION_COMPLETE header = unsafeShiftL $major 22 .|. unsafeShiftL $minor 12 .|. header|]
+      [text|{-# INLINE _VK_HEADER_VERSION_COMPLETE #-}|]
+      [text|###define VK_HEADER_VERSION_COMPLETE _VK_HEADER_VERSION_COMPLETE VK_HEADER_VERSION|]
+      "_VK_HEADER_VERSION_COMPLETE"
 
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
   && "#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;" `T.isInfixOf` c

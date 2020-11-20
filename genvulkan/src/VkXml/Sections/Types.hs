@@ -89,15 +89,16 @@ data VkTypeQualifier
 -- <https://www.khronos.org/registry/vulkan/specs/1.1/registry.html#_attributes_of_code_type_code_tags >
 data VkTypeAttrs
   = VkTypeAttrs
-  { name          :: Maybe VkTypeName
-  , alias         :: Maybe VkTypeName
+  { name           :: Maybe VkTypeName
+  , alias          :: Maybe VkTypeName
     -- ^ Additional name for this type
-  , category      :: VkTypeCategory
-  , requires      :: Maybe VkTypeName
-  , parent        :: [VkTypeName]
-  , returnedonly  :: Bool
-  , comment       :: Text
-  , structextends :: [VkTypeName]
+  , category       :: VkTypeCategory
+  , requires       :: Maybe VkTypeName
+  , parent         :: [VkTypeName]
+  , returnedonly   :: Bool
+  , comment        :: Text
+  , structextends  :: [VkTypeName]
+  , allowduplicate :: Bool
   } deriving Show
 
 data VkTypeCategory
@@ -150,6 +151,8 @@ data VkMemberAttrs
     -- ^ normally, this is c-like expression depending on other struct members
   , noautovalidity :: Bool
   , externsync     :: Bool
+  , selector       :: Maybe Text
+  , selection      :: Maybe Text
   }
   deriving Show
 
@@ -215,6 +218,12 @@ parseAttrVkTypeStructextends
   = commaSeparated <$> lift (attr "structextends")
   >>= mapM toHaskellType
 
+parseAttrVkTypeAllowduplicate :: ReaderT ParseLoc AttrParser Bool
+parseAttrVkTypeAllowduplicate = do
+  allowdup <- lift $ attr "allowduplicate"
+  case T.toLower <$> allowdup of
+    Just "true" -> pure True
+    _           -> pure False
 
 parseVkTypeAttrs :: ReaderT ParseLoc AttrParser VkTypeAttrs
 parseVkTypeAttrs = VkTypeAttrs <$> parseAttrVkTypeName
@@ -225,6 +234,7 @@ parseVkTypeAttrs = VkTypeAttrs <$> parseAttrVkTypeName
                                <*> parseAttrVkTypeReturnedonly
                                <*> parseAttrVkTypeComment
                                <*> parseAttrVkTypeStructextends
+                               <*> parseAttrVkTypeAllowduplicate
 
 
 
@@ -261,6 +271,12 @@ parseAttrVkMemberExternsync = do
     Just "true" -> pure True
     _           -> pure False
 
+parseAttrVkMemberSelector :: ReaderT ParseLoc AttrParser (Maybe Text)
+parseAttrVkMemberSelector = lift $ attr "selector"
+
+parseAttrVkMemberSelection :: ReaderT ParseLoc AttrParser (Maybe Text)
+parseAttrVkMemberSelection = lift $ attr "selection"
+
 
 parseVkMemberAttrs :: ReaderT ParseLoc AttrParser VkMemberAttrs
 parseVkMemberAttrs = VkMemberAttrs <$> parseAttrVkMemberValues
@@ -268,6 +284,8 @@ parseVkMemberAttrs = VkMemberAttrs <$> parseAttrVkMemberValues
                                    <*> parseAttrVkMemberLen
                                    <*> parseAttrVkMemberNoautovalidity
                                    <*> parseAttrVkMemberExternsync
+                                   <*> parseAttrVkMemberSelector
+                                   <*> parseAttrVkMemberSelection
 
 
 -- TODO: rewrite this either using regex or language-c

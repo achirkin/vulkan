@@ -10,6 +10,8 @@ module VkXml.CommonTypes
   , VkPlatformName (..)
   , Sections (..), VkTagName (..)
   , VkExtensionName (..)
+  , SPIRVExtensionName (..)
+  , SPIRVCapabilityName (..)
   , ProtectCPP (..), ProtectFlag (..), ProtectDef (..)
   , parseSections, parseSectionsL
   , (<:>)
@@ -66,10 +68,14 @@ newtype VkTagName = VkTagName { unVkTagName :: Text }
 newtype VkPlatformName = VkPlatformName { unVkPlatformName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
-
 newtype VkExtensionName = VkExtensionName { unVkExtensionName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
+newtype SPIRVExtensionName = SPIRVExtensionName { unSPIRVExtensionName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+newtype SPIRVCapabilityName = SPIRVCapabilityName { unSPIRVCapabilityName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
 
 newtype ProtectCPP = ProtectCPP { unProtectCPP :: Text }
   deriving (Eq, Ord, Show, Read, IsString)

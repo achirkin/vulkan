@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans       #-}
 -- | NFData instances to make haskell-src-exts a little bit more strict.
 module Write.Util.NFData () where
@@ -18,7 +19,6 @@ instance NFData a => NFData (Name a)
 instance NFData a => NFData (QName a)
 instance NFData a => NFData (InjectivityInfo a)
 instance NFData a => NFData (MaybePromotedName a)
-instance NFData a => NFData (Kind a)
 instance NFData a => NFData (Asst a)
 instance NFData a => NFData (ModuleName a)
 instance NFData a => NFData (IPName a)

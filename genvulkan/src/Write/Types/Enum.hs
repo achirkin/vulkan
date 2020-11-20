@@ -336,18 +336,21 @@ genAlias t = error $ "genAlias: expected a simple enum type, but got: "
 bitmaskPattern :: Monad m => Text -> Text -> VkEnum -> ModuleWriter m Text
 bitmaskPattern tnameTxt constrTxt
   VkEnum
-  { _vkEnumName = VkEnumName patnameTxt
+  { _vkEnumName    = VkEnumName patnameTxt
   , _vkEnumComment = comm
-  , _vkEnumValue = VkEnumIntegral n _
+  , _vkEnumValue   = enumValue
   } = do
-    writeDecl . setComment rezComment
+    writeDecl . setComment ( preComment $ T.unpack comm )
               $ parseDecl' [text|pattern $patnameTxt :: $tnameTxt|]
-    writeDecl $ parseDecl' [text|pattern $patnameTxt = $constrTxt $patVal|]
+    case enumValue of
+      VkEnumIntegral n _
+        | let patVal = T.pack $ show n
+        -> writeDecl $ parseDecl' [text|pattern $patnameTxt = $constrTxt $patVal|]
+      VkEnumAlias alias
+        | let patVal = unVkEnumName alias
+        -> writeDecl $ parseDecl' [text|pattern $patnameTxt = $patVal|]
+      _ -> error $ "Unexpected enum value " <> show enumValue
     return patnameTxt
-  where
-    patVal = T.pack $ show n
-    rezComment = preComment $ T.unpack comm
-bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m (Maybe Text)

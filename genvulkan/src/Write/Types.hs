@@ -19,6 +19,7 @@ import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
 import           Data.Char                            (isLower, isUpper)
 import qualified Data.List                            as L
+import           Data.Foldable                        (for_)
 import qualified Data.Map                             as Map
 import           Data.Maybe                           (fromMaybe, isNothing)
 import           Data.Semigroup
@@ -418,10 +419,11 @@ genInclude t = error
 genBasetypeAlias :: Monad m => VkType -> ModuleWriter m ()
 genBasetypeAlias t@VkTypeSimple
     { typeData = VkTypeData
-       { reference = [(vkTRef, [])]
+       { reference = refs
        }
     } = do
-  writeImport $ DIThing (unVkTypeName vkTRef) DITNo
+  for_ refs $ \ (vkTRef,_) ->
+    writeImport $ DIThing (unVkTypeName vkTRef) DITNo
   genAlias t
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "

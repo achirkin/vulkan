@@ -1,5 +1,6 @@
 module Main where
 
+import Control.Monad(filterM)
 import ProcessVkXml
 import Path
 import Path.IO
@@ -12,9 +13,10 @@ main = do
   createDir outVkHFolder
 
   (_, fnames ) <- listDir inVkHFolder
+  headerNames <- filterM (fmap (".h" == ) . fileExtension) fnames
   mapM_
     (\inVkH -> copyFile inVkH (outVkHFolder </> filename inVkH))
-    (filter ((".h" == ) . fileExtension) fnames)
+    headerNames
 
   vkXml <- resolveFile' "../vulkan-docs/xml/vk.xml"
   outDir <- resolveDir' "../vulkan-api/src-gen"

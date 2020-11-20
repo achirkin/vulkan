@@ -14,6 +14,7 @@ module VkXml.Parser
   , parseWithLoc
   , parseFailed
   , awaitReq
+  , parseBoolAttr
   , parseTag
   , parseTagForceAttrs
   , unContent
@@ -164,6 +165,12 @@ readLoc defLoc pipe
 awaitReq :: (VkXmlParser m, HasCallStack) => Consumer Event m Event
 awaitReq = await >>= maybe (parseFailed "unexpected end of input") pure
 
+parseBoolAttr :: Name -> ReaderT ParseLoc AttrParser Bool
+parseBoolAttr n = do
+  mr <- lift $ attr n
+  case T.toLower <$> mr of
+    Just "true" -> pure True
+    _           -> pure False
 
 -- | Wrapper on top of `tag'` function
 --    tries to consume only tag content

@@ -198,10 +198,3 @@ parseVkCommandParamAttrs = do
     len            <- lift $ attr "len"
     return VkCommandParamAttrs {..}
 
-
-parseBoolAttr :: Name -> ReaderT ParseLoc AttrParser Bool
-parseBoolAttr n = do
-  mr <- lift $ attr n
-  case T.toLower <$> mr of
-    Just "true" -> pure True
-    _           -> pure False

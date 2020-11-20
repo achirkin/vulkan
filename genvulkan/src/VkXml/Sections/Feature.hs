@@ -97,10 +97,16 @@ parseVkRequire extN baseExtReqs
 
     parseIt = choose
         [ parseTagForceAttrs "type"
-            (forceAttr "name" >>= toHaskellType)
+            ( do
+              _ <- lift $ attr "comment"
+              forceAttr "name" >>= toHaskellType
+            )
             (\x -> pure $ \r -> r {requireTypes = x : requireTypes r})
         , parseTagForceAttrs "command"
-            (forceAttr "name" >>= toHaskellComm)
+            ( do
+              _ <- lift $ attr "comment"
+              forceAttr "name" >>= toHaskellComm
+            )
             (\x -> pure $ \r -> r {requireComms = x : requireComms r})
         , parseVkEnum extN Nothing >>= \case
               [] -> pure Nothing

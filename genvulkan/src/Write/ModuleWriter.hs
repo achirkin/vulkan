@@ -459,7 +459,7 @@ insertDeclComment s c (x:xs)
   --   = setComment c x : xs
   | TypeSig _ (n:_) _ <- x, matchName n
     = setComment c x : xs
-  | PatSynSig _ (n:_) _ _ _ _ <- x, matchName n
+  | PatSynSig _ (n:_) _ _ _ _ _ <- x, matchName n
     = setComment c x : xs
   --  FunBind l [Match l] <- x, matchDHead h
   --   = setComment c x : xs
