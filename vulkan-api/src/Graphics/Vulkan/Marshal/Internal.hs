@@ -34,17 +34,18 @@ module Graphics.Vulkan.Marshal.Internal
     -- * Type-indexed access to struct members
   , StructFields, CUnionType, ReturnedOnly, StructExtends
   , StructFieldNames, HasField, FieldRep, FieldType
-  , FieldOptional, FieldOffset
+  , FieldOptional, FieldOffset, FieldBitmask
   , FieldIsArray, FieldArrayLength
-  , CanReadField, CanWriteField
+  , CanReadField(..), CanWriteField(..)
+  , ReadableFieldWithBitmask(..), WritableFieldWithBitmask(..)
   , CanReadFieldArray, CanWriteFieldArray
   , fieldOptional, fieldOffset, fieldArrayLength
-  , getField, readField, writeField
   , getFieldArrayUnsafe, readFieldArrayUnsafe, writeFieldArrayUnsafe
   , getFieldArray, readFieldArray, writeFieldArray
   , IndexInBounds
     -- * Type-level info about Structs
-  , VulkanStruct (..), VulkanField (..), VulkanFields (..), KnownBool (..)
+  , VulkanStruct (..), VulkanField (..), VulkanFields (..)
+  , KnownBool (..), Bitmask (..), KnownBitmask (..)
   , FieldMeta (..), StructMeta (..)
     -- * Utilities for string types
   , withCStringField, unsafeCStringField
@@ -52,9 +53,11 @@ module Graphics.Vulkan.Marshal.Internal
   , cmpCStrings, cmpCStringsN
   ) where
 
-
+import Data.Bits             (Bits((.|.),(.&.),complement))
+import Data.Coerce           (Coercible, coerce)
 import Data.Kind             (Constraint, Type)
 import Data.Type.Equality
+import Data.Word             (Word32)
 import Foreign.C.String      (CString, peekCString)
 import Foreign.C.Types       (CChar, CInt (..), CSize (..))
 import Foreign.ForeignPtr    (ForeignPtr, newForeignPtr_)
@@ -106,11 +109,11 @@ unsafeFromByteArrayOffset off b
 
 
 {- |
-@FieldMeta fieldName fieldType optional byteOffset length canRead canWrite@
+@FieldMeta fieldName fieldType optional byteOffset length canRead canWrite Bitmask@
 represents a Vulkan structure field at the type level.
  -}
 data FieldMeta
-  = FieldMeta Symbol Type Bool Nat Nat Bool Bool
+  = FieldMeta Symbol Type Bool Nat Nat Bool Bool Bitmask
 
 {- |
 @StructMeta structName structType size alignment fields isUnion isReturnedOnly structExtends@
@@ -128,6 +131,16 @@ class KnownBool (b :: Bool) where
 instance KnownBool 'True  where boolSing = True
 instance KnownBool 'False where boolSing = False
 
+data Bitmask
+  = NoBitmask
+  | Bitmask Nat
+
+class KnownBitmask (bm :: Bitmask) where
+    bitmaskSing :: Maybe Word32
+
+instance                  KnownBitmask   'NoBitmask      where bitmaskSing = Nothing
+instance KnownNat mask => KnownBitmask ( 'Bitmask mask ) where bitmaskSing = Just (fromInteger $ natVal' @mask proxy#)
+
 class (Show (FType m), Storable (FType m))
      => VulkanField (m :: FieldMeta) where
     type FName m       :: Symbol
@@ -137,37 +150,42 @@ class (Show (FType m), Storable (FType m))
     type FLength m     :: Nat
     type FCanRead m    :: Bool
     type FCanWrite m   :: Bool
+    type FBitmask m    :: Bitmask
     fName :: String
     fOptional :: Bool
     fByteOffset :: Int
     fLength :: Int
     fCanRead :: Bool
     fCanWrite :: Bool
+    fBitmask :: Maybe Word32
 
 instance ( KnownSymbol fieldName
          , Show t, Storable t
-         , KnownBool   optional
-         , KnownNat    byteOffset
-         , KnownNat    length
-         , KnownBool   canRead
-         , KnownBool   canWrite
-         ) => VulkanField ('FieldMeta fieldName t optional byteOffset length canRead canWrite) where
-    type FName       ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = fieldName
-    type FType       ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = t
-    type FOptional   ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = optional
-    type FByteOffset ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = byteOffset
-    type FLength     ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = length
-    type FCanRead    ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = canRead
-    type FCanWrite   ('FieldMeta fieldName t optional byteOffset length canRead canWrite) = canWrite
-    fName       = symbolVal' @fieldName proxy#
-    fOptional   = boolSing   @optional
+         , KnownBool    optional
+         , KnownNat     byteOffset
+         , KnownNat     length
+         , KnownBool    canRead
+         , KnownBool    canWrite
+         , KnownBitmask mbMask
+         ) => VulkanField ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) where
+    type FName       ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = fieldName
+    type FType       ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = t
+    type FOptional   ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = optional
+    type FByteOffset ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = byteOffset
+    type FLength     ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = length
+    type FCanRead    ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = canRead
+    type FCanWrite   ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = canWrite
+    type FBitmask    ('FieldMeta fieldName t optional byteOffset length canRead canWrite mbMask) = mbMask
+    fName       = symbolVal'  @fieldName proxy#
+    fOptional   = boolSing    @optional
     fByteOffset = fromInteger $ natVal' @byteOffset proxy#
     fLength     = fromInteger $ natVal' @length proxy#
-    fCanRead    = boolSing   @canRead
-    fCanWrite   = boolSing   @canWrite
+    fCanRead    = boolSing    @canRead
+    fCanWrite   = boolSing    @canWrite
+    fBitmask    = bitmaskSing @mbMask
 
 type family GetFieldMeta (errMsg :: ErrorMessage) (fname :: Symbol) (ms :: [FieldMeta]) :: FieldMeta where
-    GetFieldMeta _ n ('FieldMeta n t o b l r w ': _) = 'FieldMeta n t o b l r w
+    GetFieldMeta _ n ('FieldMeta n t o b l r w m ': _) = 'FieldMeta n t o b l r w m
     GetFieldMeta e n (_ ': ms) = GetFieldMeta e n ms
     GetFieldMeta e n '[] = TypeError e
 
@@ -437,6 +455,10 @@ type FieldOptional (fname :: Symbol) (a :: Type)
 type FieldOffset (fname :: Symbol) (a :: Type)
     = FByteOffset (FieldRep fname a)
 
+-- | Bitmask used for a field (structure uses C bitfields).
+type FieldBitmask (fname :: Symbol) (a :: Type)
+    = FBitmask (FieldRep fname a)
+
 -- | Whether this field is a fixed-length array stored directly in a struct.
 type FieldIsArray (fname :: Symbol) (a :: Type)
     = IsArrayLen (FLength (FieldRep fname a))
@@ -449,17 +471,99 @@ type family IsArrayLen (l :: Nat) :: Bool where
 type FieldArrayLength (fname :: Symbol) (a :: Type)
     = FLength (FieldRep fname a)
 
-type CanReadField (fname :: Symbol) (a :: Type)
-    = ( HasField fname a
-      , IsTrue (ErrorNotReadableField fname a)
-               (FCanRead (FieldRep fname a))
-      , Storable (FieldType fname a))
+class 
+  ( HasField fname a
+  , Storable (FieldType fname a))
+  => CanReadField fname a where
+    getField  :: a -> FieldType fname a
+    readField :: Ptr a -> IO (FieldType fname a)
+instance (ReadableFieldWithBitmask fname a (FieldBitmask fname a))
+    => CanReadField fname a where
+    getField  = getFieldBitmask  @fname @a @(FieldBitmask fname a)
+    readField = readFieldBitmask @fname @a @(FieldBitmask fname a)
 
-type CanWriteField (fname :: Symbol) (a :: Type)
-    = ( HasField fname a
-      , IsTrue (ErrorNotWritableField fname a)
-               (FCanWrite (FieldRep fname a))
-      , Storable (FieldType fname a))
+class
+  ( HasField fname a
+  , Storable (FieldType fname a))
+  => CanWriteField fname a where
+    writeField :: Ptr a -> FieldType fname a -> IO ()
+instance WritableFieldWithBitmask fname a (FieldBitmask fname a)
+      => CanWriteField fname a where
+    writeField = writeFieldBitmask @fname @a @(FieldBitmask fname a)
+
+
+class
+  ( HasField fname a
+  , Storable (FieldType fname a))
+  => ReadableFieldWithBitmask (fname :: Symbol) (a :: Type) (bm :: Bitmask) where
+    getFieldBitmask  :: a -> FieldType fname a
+    readFieldBitmask :: Ptr a -> IO (FieldType fname a)
+instance
+  ( HasField fname a
+  , IsTrue (ErrorNotReadableField fname a)
+           (FCanRead (FieldRep fname a))
+  , Storable (FieldType fname a))
+  => ReadableFieldWithBitmask fname a 'NoBitmask where
+    getFieldBitmask x = unsafeDupablePerformIO $
+      peekByteOff (unsafePtr x) (fieldOffset @fname @a)
+    {-# NOINLINE getFieldBitmask #-}
+    readFieldBitmask p = peekByteOff p (fieldOffset @fname @a)
+instance
+  ( HasField fname a
+  , IsTrue (ErrorNotReadableField fname a)
+           (FCanRead (FieldRep fname a))
+  , Coercible (FieldType fname a) Word32
+  , Storable (FieldType fname a)
+  , KnownNat mask)
+  => ReadableFieldWithBitmask fname a ('Bitmask mask) where
+    getFieldBitmask x = unsafeDupablePerformIO $ do
+      ( v :: FieldType fname a ) <- peekByteOff (unsafePtr x) (fieldOffset @fname @a)
+      pure $ coerce (mask .&.) v
+        where
+          mask :: Word32
+          mask = fromIntegral $ natVal' @mask proxy#
+    {-# NOINLINE getFieldBitmask #-}
+    readFieldBitmask p = do
+      ( v :: FieldType fname a ) <- peekByteOff p (fieldOffset @fname @a)
+      pure $ coerce (mask .&.) v
+        where
+          mask :: Word32
+          mask = fromIntegral $ natVal' @mask proxy#
+
+class
+  ( HasField fname a
+  , IsTrue (ErrorNotWritableField fname a)
+           (FCanWrite (FieldRep fname a))
+  , Storable (FieldType fname a))
+  => WritableFieldWithBitmask (fname :: Symbol) (a :: Type) (bm :: Bitmask) where
+  writeFieldBitmask :: Ptr a -> FieldType fname a -> IO ()
+instance
+  ( HasField fname a
+  , IsTrue (ErrorNotWritableField fname a)
+           (FCanWrite (FieldRep fname a))
+  , Storable (FieldType fname a))
+  => WritableFieldWithBitmask fname a 'NoBitmask where
+  writeFieldBitmask p = pokeByteOff p (fieldOffset @fname @a)
+instance
+  ( IsTrue (ErrorNotWritableField fname a)
+           (FCanWrite (FieldRep fname a))
+  , KnownNat mask
+  , ReadableFieldWithBitmask fname a ('Bitmask mask)
+  , Coercible (FieldType fname a) Word32)
+  => WritableFieldWithBitmask fname a ('Bitmask mask) where
+  writeFieldBitmask p a = do
+    ( v :: FieldType fname a ) <- peekByteOff p (fieldOffset @fname @a)
+    let
+      b :: FieldType fname a
+      b = coerce
+          (   (coerce v .&. complement mask)
+          .|. (coerce a .&. mask)
+          )        
+    pokeByteOff p (fieldOffset @fname @a) b
+      where
+        mask :: Word32
+        mask = fromIntegral $ natVal' @mask proxy#
+
 
 type CanReadFieldArray (fname :: Symbol) (a :: Type)
     = CanReadField fname a
@@ -560,20 +664,6 @@ fieldOffset = fByteOffset @(FieldRep fname a)
 fieldArrayLength :: forall (fname :: Symbol) (a :: Type)
                   . HasField fname a => Int
 fieldArrayLength = fLength @(FieldRep fname a)
-
-getField :: forall (fname :: Symbol) (a :: Type)
-          . CanReadField fname a => a -> FieldType fname a
-getField x = unsafeDupablePerformIO $
-    peekByteOff (unsafePtr x) (fieldOffset @fname @a)
-{-# NOINLINE getField #-}
-
-readField :: forall (fname :: Symbol) (a :: Type)
-           . CanReadField fname a => Ptr a -> IO (FieldType fname a)
-readField p = peekByteOff p (fieldOffset @fname @a)
-
-writeField :: forall (fname :: Symbol) (a :: Type)
-            . CanWriteField fname a => Ptr a -> FieldType fname a -> IO ()
-writeField p = pokeByteOff p (fieldOffset @fname @a)
 
 -- | Index an array-type field. No bound checks.
 getFieldArrayUnsafe :: forall (fname :: Symbol) (a :: Type)
