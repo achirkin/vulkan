@@ -78,8 +78,8 @@ compileGLSL fpath = do
 
 
 
-    return $ TupE [ LitE . IntegerL . fromIntegral $ length contents
-                  , AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
+    return $ TupE [ Just . LitE . IntegerL . fromIntegral $ length contents
+                  , Just $ AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
 
 
 reportGlslMsgs :: String -> Q ()
