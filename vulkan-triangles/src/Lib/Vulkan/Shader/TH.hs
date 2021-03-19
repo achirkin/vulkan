@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE CPP #-}
 module Lib.Vulkan.Shader.TH
     ( compileGLSL
     ) where
@@ -78,8 +79,13 @@ compileGLSL fpath = do
 
 
 
+#if __GLASGOW_HASKELL__ >= 810
     return $ TupE [ Just . LitE . IntegerL . fromIntegral $ length contents
                   , Just $ AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
+#else
+    return $ TupE [ LitE . IntegerL . fromIntegral $ length contents
+                  , AppE (ConE 'Ptr) (LitE $ StringPrimL contents) ]
+#endif
 
 
 reportGlslMsgs :: String -> Q ()
