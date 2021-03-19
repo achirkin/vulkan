@@ -80,7 +80,7 @@ rectIndices = atLeastThree $ fromList $
     oneRectIndices = [0, 3, 2, 2, 1, 0]
 
 
-data WhichDemo = Squares | Chalet
+data WhichDemo = Squares | Chalet | VikingRoom
 
 runVulkanProgram :: WhichDemo -> IO ()
 runVulkanProgram demo = runProgram checkStatus $ do
@@ -125,13 +125,19 @@ runVulkanProgram demo = runProgram checkStatus $ do
     -- we need this later, but don't want to realloc every swapchain recreation.
     imgIndexPtr <- mallocRes
 
+    let
+      load basename = do
+        let obj_path = "models/" ++ basename ++ ".obj"
+            tex_path = "textures/" ++ basename ++ ".jpg/.png"
+        modelExist <- liftIO . doesFileExist $ obj_path
+        unless modelExist $
+          throwVkMsg $ "Get " ++ obj_path ++ " and " ++ tex_path ++ " from the links in https://vulkan-tutorial.com/Loading_models"
+        loadModel obj_path
+
     (vertices, indices) <- case demo of
       Squares -> return (rectVertices, rectIndices)
-      Chalet -> do
-        modelExist <- liftIO $ doesFileExist "models/chalet.obj"
-        unless modelExist $
-          throwVkMsg "Get models/chalet.obj and textures/chalet.jpg from the links in https://vulkan-tutorial.com/Loading_models"
-        loadModel "models/chalet.obj"
+      Chalet -> load "chalet"
+      VikingRoom -> load "viking_room"
 
     vertexBuffer <-
       createVertexBuffer pdev dev commandPool (graphicsQueue queues) vertices
@@ -145,6 +151,7 @@ runVulkanProgram demo = runProgram checkStatus $ do
     let texturePath = case demo of
           Squares -> "textures/texture.jpg"
           Chalet  -> "textures/chalet.jpg"
+          VikingRoom  -> "textures/viking_room.png"
     (textureView, mipLevels) <- createTextureImageView pdev dev commandPool (graphicsQueue queues) texturePath
     textureSampler <- createTextureSampler dev mipLevels
     descriptorTextureInfo <- textureImageInfo textureView textureSampler
