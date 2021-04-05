@@ -10,23 +10,40 @@
 module Graphics.Vulkan.Types.Enum.Pipeline
        (VkPipelineBindPoint(VkPipelineBindPoint,
                             VK_PIPELINE_BIND_POINT_GRAPHICS, VK_PIPELINE_BIND_POINT_COMPUTE),
-        VkPipelineCacheCreateFlagBits(..),
+        VkPipelineCacheCreateBitmask(VkPipelineCacheCreateBitmask,
+                                     VkPipelineCacheCreateFlags, VkPipelineCacheCreateFlagBits),
+        VkPipelineCacheCreateFlags, VkPipelineCacheCreateFlagBits,
         VkPipelineCacheHeaderVersion(VkPipelineCacheHeaderVersion,
                                      VK_PIPELINE_CACHE_HEADER_VERSION_ONE),
-        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineCompilerControlBitmaskAMD(VkPipelineCompilerControlBitmaskAMD,
+                                            VkPipelineCompilerControlFlagsAMD,
+                                            VkPipelineCompilerControlFlagBitsAMD),
+        VkPipelineCompilerControlFlagsAMD,
+        VkPipelineCompilerControlFlagBitsAMD,
         VkPipelineCreateBitmask(VkPipelineCreateBitmask,
                                 VkPipelineCreateFlags, VkPipelineCreateFlagBits,
                                 VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT,
                                 VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT,
                                 VK_PIPELINE_CREATE_DERIVATIVE_BIT),
         VkPipelineCreateFlags, VkPipelineCreateFlagBits,
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..),
+        VkPipelineCreationFeedbackBitmaskEXT(VkPipelineCreationFeedbackBitmaskEXT,
+                                             VkPipelineCreationFeedbackFlagsEXT,
+                                             VkPipelineCreationFeedbackFlagBitsEXT,
+                                             VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT,
+                                             VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT,
+                                             VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT),
+        VkPipelineCreationFeedbackFlagsEXT,
+        VkPipelineCreationFeedbackFlagBitsEXT,
+        VkPipelineExecutableStatisticFormatKHR(VkPipelineExecutableStatisticFormatKHR,
+                                               VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR,
+                                               VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR,
+                                               VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR,
+                                               VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR),
+        VkPipelineShaderStageCreateBitmask(VkPipelineShaderStageCreateBitmask,
+                                           VkPipelineShaderStageCreateFlags,
+                                           VkPipelineShaderStageCreateFlagBits),
+        VkPipelineShaderStageCreateFlags,
+        VkPipelineShaderStageCreateFlagBits,
         VkPipelineStageBitmask(VkPipelineStageBitmask,
                                VkPipelineStageFlags, VkPipelineStageFlagBits,
                                VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
@@ -45,13 +62,9 @@ module Graphics.Vulkan.Types.Enum.Pipeline
                                VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, VK_PIPELINE_STAGE_HOST_BIT,
                                VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT,
                                VK_PIPELINE_STAGE_ALL_COMMANDS_BIT),
-        VkPipelineStageFlags, VkPipelineStageFlagBits,
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..))
+        VkPipelineStageFlags, VkPipelineStageFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Coerce                     (coerce)
 import Foreign.Storable                (Storable)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
@@ -62,7 +75,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineBindPoint VkPipelineBindPoint registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPipelineBindPoint VkPipelineBindPoint registry at www.khronos.org>
 newtype VkPipelineBindPoint = VkPipelineBindPoint Int32
                               deriving (Eq, Ord, Enum, Storable)
 
@@ -96,20 +109,49 @@ pattern VK_PIPELINE_BIND_POINT_COMPUTE :: VkPipelineBindPoint
 
 pattern VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint 1
 
-newtype VkPipelineCacheCreateFlagBits = VkPipelineCacheCreateFlagBits VkFlags
-                                        deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+newtype VkPipelineCacheCreateBitmask (a ::
+                                        FlagType) = VkPipelineCacheCreateBitmask VkFlags
+                                                    deriving (Eq, Ord, Storable)
 
-instance Show VkPipelineCacheCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+type VkPipelineCacheCreateFlags =
+     VkPipelineCacheCreateBitmask FlagMask
 
-instance Read VkPipelineCacheCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+type VkPipelineCacheCreateFlagBits =
+     VkPipelineCacheCreateBitmask FlagBit
+
+pattern VkPipelineCacheCreateFlagBits ::
+        VkFlags -> VkPipelineCacheCreateBitmask FlagBit
+
+pattern VkPipelineCacheCreateFlagBits n =
+        VkPipelineCacheCreateBitmask n
+
+pattern VkPipelineCacheCreateFlags ::
+        VkFlags -> VkPipelineCacheCreateBitmask FlagMask
+
+pattern VkPipelineCacheCreateFlags n =
+        VkPipelineCacheCreateBitmask n
+
+deriving instance Bits (VkPipelineCacheCreateBitmask FlagMask)
+
+deriving instance
+         FiniteBits (VkPipelineCacheCreateBitmask FlagMask)
+
+instance Show (VkPipelineCacheCreateBitmask a) where
+    showsPrec p (VkPipelineCacheCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkPipelineCacheCreateBitmask " . showsPrec 11 x)
+
+instance Read (VkPipelineCacheCreateBitmask a) where
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkPipelineCacheCreateBitmask") >>
+                  (VkPipelineCacheCreateBitmask <$> step readPrec)))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPipelineCacheHeaderVersion VkPipelineCacheHeaderVersion registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPipelineCacheHeaderVersion VkPipelineCacheHeaderVersion registry at www.khronos.org>
 newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion Int32
                                        deriving (Eq, Ord, Enum, Storable)
 
@@ -137,17 +179,47 @@ pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE ::
 pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE =
         VkPipelineCacheHeaderVersion 1
 
-newtype VkPipelineColorBlendStateCreateFlagBits = VkPipelineColorBlendStateCreateFlagBits VkFlags
-                                                  deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                            Storable)
+newtype VkPipelineCompilerControlBitmaskAMD (a ::
+                                               FlagType) = VkPipelineCompilerControlBitmaskAMD VkFlags
+                                                           deriving (Eq, Ord, Storable)
 
-instance Show VkPipelineColorBlendStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+type VkPipelineCompilerControlFlagsAMD =
+     VkPipelineCompilerControlBitmaskAMD FlagMask
 
-instance Read VkPipelineColorBlendStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+type VkPipelineCompilerControlFlagBitsAMD =
+     VkPipelineCompilerControlBitmaskAMD FlagBit
+
+pattern VkPipelineCompilerControlFlagBitsAMD ::
+        VkFlags -> VkPipelineCompilerControlBitmaskAMD FlagBit
+
+pattern VkPipelineCompilerControlFlagBitsAMD n =
+        VkPipelineCompilerControlBitmaskAMD n
+
+pattern VkPipelineCompilerControlFlagsAMD ::
+        VkFlags -> VkPipelineCompilerControlBitmaskAMD FlagMask
+
+pattern VkPipelineCompilerControlFlagsAMD n =
+        VkPipelineCompilerControlBitmaskAMD n
+
+deriving instance
+         Bits (VkPipelineCompilerControlBitmaskAMD FlagMask)
+
+deriving instance
+         FiniteBits (VkPipelineCompilerControlBitmaskAMD FlagMask)
+
+instance Show (VkPipelineCompilerControlBitmaskAMD a) where
+    showsPrec p (VkPipelineCompilerControlBitmaskAMD x)
+      = showParen (p >= 11)
+          (showString "VkPipelineCompilerControlBitmaskAMD " .
+             showsPrec 11 x)
+
+instance Read (VkPipelineCompilerControlBitmaskAMD a) where
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkPipelineCompilerControlBitmaskAMD") >>
+                  (VkPipelineCompilerControlBitmaskAMD <$> step readPrec)))
 
 newtype VkPipelineCreateBitmask (a ::
                                    FlagType) = VkPipelineCreateBitmask VkFlags
@@ -218,86 +290,189 @@ pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT ::
 pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT =
         VkPipelineCreateBitmask 4
 
-newtype VkPipelineDepthStencilStateCreateFlagBits = VkPipelineDepthStencilStateCreateFlagBits VkFlags
-                                                    deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                              Storable)
+newtype VkPipelineCreationFeedbackBitmaskEXT (a ::
+                                                FlagType) = VkPipelineCreationFeedbackBitmaskEXT VkFlags
+                                                            deriving (Eq, Ord, Storable)
 
-instance Show VkPipelineDepthStencilStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+type VkPipelineCreationFeedbackFlagsEXT =
+     VkPipelineCreationFeedbackBitmaskEXT FlagMask
 
-instance Read VkPipelineDepthStencilStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+type VkPipelineCreationFeedbackFlagBitsEXT =
+     VkPipelineCreationFeedbackBitmaskEXT FlagBit
 
-newtype VkPipelineDynamicStateCreateFlagBits = VkPipelineDynamicStateCreateFlagBits VkFlags
-                                               deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+pattern VkPipelineCreationFeedbackFlagBitsEXT ::
+        VkFlags -> VkPipelineCreationFeedbackBitmaskEXT FlagBit
 
-instance Show VkPipelineDynamicStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+pattern VkPipelineCreationFeedbackFlagBitsEXT n =
+        VkPipelineCreationFeedbackBitmaskEXT n
 
-instance Read VkPipelineDynamicStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+pattern VkPipelineCreationFeedbackFlagsEXT ::
+        VkFlags -> VkPipelineCreationFeedbackBitmaskEXT FlagMask
 
-newtype VkPipelineInputAssemblyStateCreateFlagBits = VkPipelineInputAssemblyStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                               Storable)
+pattern VkPipelineCreationFeedbackFlagsEXT n =
+        VkPipelineCreationFeedbackBitmaskEXT n
 
-instance Show VkPipelineInputAssemblyStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+deriving instance
+         Bits (VkPipelineCreationFeedbackBitmaskEXT FlagMask)
 
-instance Read VkPipelineInputAssemblyStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+deriving instance
+         FiniteBits (VkPipelineCreationFeedbackBitmaskEXT FlagMask)
 
-newtype VkPipelineLayoutCreateFlagBits = VkPipelineLayoutCreateFlagBits VkFlags
-                                         deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+instance Show (VkPipelineCreationFeedbackBitmaskEXT a) where
+    showsPrec _ VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT
+      = showString "VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT"
+    showsPrec _
+      VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT
+      = showString
+          "VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT"
+    showsPrec _
+      VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT
+      = showString
+          "VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT"
+    showsPrec p (VkPipelineCreationFeedbackBitmaskEXT x)
+      = showParen (p >= 11)
+          (showString "VkPipelineCreationFeedbackBitmaskEXT " .
+             showsPrec 11 x)
 
-instance Show VkPipelineLayoutCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+instance Read (VkPipelineCreationFeedbackBitmaskEXT a) where
+    readPrec
+      = parens
+          (choose
+             [("VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT",
+               pure VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT),
+              ("VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT",
+               pure
+                 VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT),
+              ("VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT",
+               pure
+                 VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT)]
+             +++
+             prec 10
+               (expectP (Ident "VkPipelineCreationFeedbackBitmaskEXT") >>
+                  (VkPipelineCreationFeedbackBitmaskEXT <$> step readPrec)))
 
-instance Read VkPipelineLayoutCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+-- | bitpos = @0@
+pattern VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT ::
+        VkPipelineCreationFeedbackBitmaskEXT a
 
-newtype VkPipelineMultisampleStateCreateFlagBits = VkPipelineMultisampleStateCreateFlagBits VkFlags
-                                                   deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                             Storable)
+pattern VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT =
+        VkPipelineCreationFeedbackBitmaskEXT 1
 
-instance Show VkPipelineMultisampleStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+-- | bitpos = @1@
+pattern VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT
+        :: VkPipelineCreationFeedbackBitmaskEXT a
 
-instance Read VkPipelineMultisampleStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+pattern VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT
+        = VkPipelineCreationFeedbackBitmaskEXT 2
 
-newtype VkPipelineRasterizationStateCreateFlagBits = VkPipelineRasterizationStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                               Storable)
+-- | bitpos = @2@
+pattern VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT
+        :: VkPipelineCreationFeedbackBitmaskEXT a
 
-instance Show VkPipelineRasterizationStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+pattern VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT
+        = VkPipelineCreationFeedbackBitmaskEXT 4
 
-instance Read VkPipelineRasterizationStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPipelineExecutableStatisticFormatKHR VkPipelineExecutableStatisticFormatKHR registry at www.khronos.org>
+newtype VkPipelineExecutableStatisticFormatKHR = VkPipelineExecutableStatisticFormatKHR Int32
+                                                 deriving (Eq, Ord, Enum, Storable)
 
-newtype VkPipelineShaderStageCreateFlagBits = VkPipelineShaderStageCreateFlagBits VkFlags
-                                              deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+instance Show VkPipelineExecutableStatisticFormatKHR where
+    showsPrec _ VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR
+      = showString "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR"
+    showsPrec _ VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR
+      = showString "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR"
+    showsPrec _ VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR
+      = showString "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR"
+    showsPrec _ VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR
+      = showString "VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR"
+    showsPrec p (VkPipelineExecutableStatisticFormatKHR x)
+      = showParen (p >= 11)
+          (showString "VkPipelineExecutableStatisticFormatKHR " .
+             showsPrec 11 x)
 
-instance Show VkPipelineShaderStageCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+instance Read VkPipelineExecutableStatisticFormatKHR where
+    readPrec
+      = parens
+          (choose
+             [("VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR",
+               pure VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR),
+              ("VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR",
+               pure VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR),
+              ("VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR",
+               pure VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR),
+              ("VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR",
+               pure VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR)]
+             +++
+             prec 10
+               (expectP (Ident "VkPipelineExecutableStatisticFormatKHR") >>
+                  (VkPipelineExecutableStatisticFormatKHR <$> step readPrec)))
 
-instance Read VkPipelineShaderStageCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR ::
+        VkPipelineExecutableStatisticFormatKHR
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR =
+        VkPipelineExecutableStatisticFormatKHR 0
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR ::
+        VkPipelineExecutableStatisticFormatKHR
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR =
+        VkPipelineExecutableStatisticFormatKHR 1
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR ::
+        VkPipelineExecutableStatisticFormatKHR
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR =
+        VkPipelineExecutableStatisticFormatKHR 2
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR ::
+        VkPipelineExecutableStatisticFormatKHR
+
+pattern VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR =
+        VkPipelineExecutableStatisticFormatKHR 3
+
+newtype VkPipelineShaderStageCreateBitmask (a ::
+                                              FlagType) = VkPipelineShaderStageCreateBitmask VkFlags
+                                                          deriving (Eq, Ord, Storable)
+
+type VkPipelineShaderStageCreateFlags =
+     VkPipelineShaderStageCreateBitmask FlagMask
+
+type VkPipelineShaderStageCreateFlagBits =
+     VkPipelineShaderStageCreateBitmask FlagBit
+
+pattern VkPipelineShaderStageCreateFlagBits ::
+        VkFlags -> VkPipelineShaderStageCreateBitmask FlagBit
+
+pattern VkPipelineShaderStageCreateFlagBits n =
+        VkPipelineShaderStageCreateBitmask n
+
+pattern VkPipelineShaderStageCreateFlags ::
+        VkFlags -> VkPipelineShaderStageCreateBitmask FlagMask
+
+pattern VkPipelineShaderStageCreateFlags n =
+        VkPipelineShaderStageCreateBitmask n
+
+deriving instance
+         Bits (VkPipelineShaderStageCreateBitmask FlagMask)
+
+deriving instance
+         FiniteBits (VkPipelineShaderStageCreateBitmask FlagMask)
+
+instance Show (VkPipelineShaderStageCreateBitmask a) where
+    showsPrec p (VkPipelineShaderStageCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkPipelineShaderStageCreateBitmask " . showsPrec 11 x)
+
+instance Read (VkPipelineShaderStageCreateBitmask a) where
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkPipelineShaderStageCreateBitmask") >>
+                  (VkPipelineShaderStageCreateBitmask <$> step readPrec)))
 
 newtype VkPipelineStageBitmask (a ::
                                   FlagType) = VkPipelineStageBitmask VkFlags
@@ -551,38 +726,3 @@ pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT ::
 
 pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT =
         VkPipelineStageBitmask 65536
-
-newtype VkPipelineTessellationStateCreateFlagBits = VkPipelineTessellationStateCreateFlagBits VkFlags
-                                                    deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                              Storable)
-
-instance Show VkPipelineTessellationStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
-
-instance Read VkPipelineTessellationStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineVertexInputStateCreateFlagBits = VkPipelineVertexInputStateCreateFlagBits VkFlags
-                                                   deriving (Eq, Ord, Enum, Bits, FiniteBits,
-                                                             Storable)
-
-instance Show VkPipelineVertexInputStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
-
-instance Read VkPipelineVertexInputStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineViewportStateCreateFlagBits = VkPipelineViewportStateCreateFlagBits VkFlags
-                                                deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
-
-instance Show VkPipelineViewportStateCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
-
-instance Read VkPipelineViewportStateCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

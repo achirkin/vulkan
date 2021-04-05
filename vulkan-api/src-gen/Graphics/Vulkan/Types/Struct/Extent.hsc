@@ -15,7 +15,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     uint32_t        height;
 --   > } VkExtent2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtent2D VkExtent2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExtent2D VkExtent2D registry at www.khronos.org>
 type VkExtent2D = VkStruct VkExtent2D' -- ' closing tick for hsc2hs
 
 data VkExtent2D' -- ' closing tick for hsc2hs
@@ -45,7 +45,7 @@ instance VulkanMarshal VkExtent2D where
 --   >     uint32_t        depth;
 --   > } VkExtent3D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtent3D VkExtent3D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExtent3D VkExtent3D registry at www.khronos.org>
 type VkExtent3D = VkStruct VkExtent3D' -- ' closing tick for hsc2hs
 
 data VkExtent3D' -- ' closing tick for hsc2hs

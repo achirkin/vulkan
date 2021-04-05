@@ -25,32 +25,37 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         --
         -- Extension number: @130@
         --
-        -- Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign'.
+        -- Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign', 'VK_KHR_dedicated_allocation'.
         --
 
-        -- ** Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign'.
+        -- ** Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign', 'VK_KHR_dedicated_allocation'.
         VkAndroidHardwareBufferFormatPropertiesANDROID,
         VkAndroidHardwareBufferPropertiesANDROID,
-        VkAndroidHardwareBufferUsageANDROID, VkBool32(..),
+        VkAndroidHardwareBufferUsageANDROID, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkChromaLocation(..), VkChromaLocationKHR(..), VkComponentMapping,
-        VkComponentSwizzle(..), VkExtent3D, VkExternalFormatANDROID,
-        VkFilter(..), VkFormat(..), VkFormatFeatureBitmask(..),
-        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
-        VkImageAspectBitmask(..), VkImageCreateBitmask(..),
-        VkImageLayout(..), VkImageTiling(..), VkImageType(..),
-        VkImageUsageBitmask(..), VkImageViewType(..),
+        VkComponentSwizzle(..), VkComponentTypeNV(..), VkExtent3D,
+        VkExternalFormatANDROID, VkFilter(..), VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageCreateInfo,
         VkImageFormatProperties, VkImageFormatProperties2,
         VkImportAndroidHardwareBufferInfoANDROID, VkMemoryAllocateInfo,
         VkMemoryGetAndroidHardwareBufferInfoANDROID,
         VkSampleCountBitmask(..), VkSampleCountFlagBits(),
         VkSampleCountFlags(), VkSamplerYcbcrConversionCreateInfo,
         VkSamplerAddressMode(..), VkSamplerMipmapMode(..),
-        VkSamplerReductionModeEXT(..), VkSamplerYcbcrModelConversion(..),
-        VkSamplerYcbcrRange(..), VkSamplerCreateFlagBits(..),
+        VkSamplerReductionMode(..), VkSamplerYcbcrModelConversion(..),
+        VkSamplerYcbcrRange(..), VkSamplerCreateBitmask(..),
+        VkSamplerCreateFlagBits(), VkSamplerCreateFlags(),
+        VkSamplerReductionModeEXT(..),
         VkSamplerYcbcrModelConversionKHR(..), VkSamplerYcbcrRangeKHR(..),
         VkSharingMode(..), VkStructureType(..),
         -- > #include "vk_platform.h"
@@ -62,11 +67,14 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         pattern VkGetMemoryAndroidHardwareBufferANDROID,
         HS_vkGetMemoryAndroidHardwareBufferANDROID,
         PFN_vkGetMemoryAndroidHardwareBufferANDROID,
-        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        module Graphics.Vulkan.Marshal, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -76,17 +84,19 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkAndroidSurfaceCreateInfoKHR,
         VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION,
         pattern VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION,
@@ -104,9 +114,8 @@ import GHC.Ptr                                         (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Defines                   (AHardwareBuffer)
 import Graphics.Vulkan.Types.Enum.ChromaLocation
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.Component
 import Graphics.Vulkan.Types.Enum.External             (VkExternalMemoryHandleTypeBitmask (..))
 import Graphics.Vulkan.Types.Enum.Filter
 import Graphics.Vulkan.Types.Enum.Format
@@ -152,7 +161,7 @@ type VkGetAndroidHardwareBufferPropertiesANDROID =
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
 --
 --   > VkResult vkGetAndroidHardwareBufferPropertiesANDROID
 --   >     ( VkDevice device
@@ -160,7 +169,7 @@ type VkGetAndroidHardwareBufferPropertiesANDROID =
 --   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
 type HS_vkGetAndroidHardwareBufferPropertiesANDROID =
      VkDevice -- ^ device
               ->
@@ -231,7 +240,7 @@ type VkGetMemoryAndroidHardwareBufferANDROID =
 --   >     , struct AHardwareBuffer** pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryAndroidHardwareBufferANDROID vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryAndroidHardwareBufferANDROID vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
 type HS_vkGetMemoryAndroidHardwareBufferANDROID =
      VkDevice -- ^ device
               ->

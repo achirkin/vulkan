@@ -83,7 +83,7 @@ pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT =
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentLoadOp VkAttachmentLoadOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAttachmentLoadOp VkAttachmentLoadOp registry at www.khronos.org>
 newtype VkAttachmentLoadOp = VkAttachmentLoadOp Int32
                              deriving (Eq, Ord, Enum, Storable)
 
@@ -125,7 +125,7 @@ pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp 2
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAttachmentStoreOp VkAttachmentStoreOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAttachmentStoreOp VkAttachmentStoreOp registry at www.khronos.org>
 newtype VkAttachmentStoreOp = VkAttachmentStoreOp Int32
                               deriving (Eq, Ord, Enum, Storable)
 

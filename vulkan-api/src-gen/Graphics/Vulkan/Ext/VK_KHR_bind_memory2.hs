@@ -28,39 +28,50 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         HS_vkBindBufferMemory2KHR, PFN_vkBindBufferMemory2KHR,
         VkBindImageMemory2KHR, pattern VkBindImageMemory2KHR,
         HS_vkBindImageMemory2KHR, PFN_vkBindImageMemory2KHR,
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkResult(..), VkStructureType(..),
-        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
-        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(), ANativeWindow(),
+        CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..), VkResult(..),
+        VkStructureType(..), VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
+#ifdef VK_ENABLE_BETA_EXTENSIONS
+        VkBindAccelerationStructureMemoryInfoNV,
+#endif
         VkBindBufferMemoryDeviceGroupInfo,
         VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo,
         VkBindImageMemoryDeviceGroupInfo,
         VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo,
         VkBindImageMemorySwapchainInfoKHR, VkBindImagePlaneMemoryInfo,
-        VkBindImagePlaneMemoryInfoKHR, VkBindSparseInfo,
+        VkBindImagePlaneMemoryInfoKHR, VkBindIndexBufferIndirectCommandNV,
+        VkBindShaderGroupIndirectCommandNV, VkBindSparseInfo,
+        VkBindVertexBufferIndirectCommandNV,
         VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION,
         VK_KHR_BIND_MEMORY_2_EXTENSION_NAME,
@@ -105,7 +116,7 @@ type VkBindBufferMemory2KHR = "vkBindBufferMemory2KHR"
 --
 --   Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 --   > VkResult vkBindBufferMemory2KHR
 --   >     ( VkDevice device
@@ -113,7 +124,7 @@ type VkBindBufferMemory2KHR = "vkBindBufferMemory2KHR"
 --   >     , const VkBindBufferMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2KHR vkBindBufferMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory2KHR vkBindBufferMemory2KHR registry at www.khronos.org>
 type HS_vkBindBufferMemory2KHR =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount
@@ -174,7 +185,7 @@ type VkBindImageMemory2KHR = "vkBindImageMemory2KHR"
 --   >     , const VkBindImageMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2KHR vkBindImageMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory2KHR vkBindImageMemory2KHR registry at www.khronos.org>
 type HS_vkBindImageMemory2KHR =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount

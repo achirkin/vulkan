@@ -12,23 +12,32 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_swapchain
-       (-- * Vulkan extension: @VK_KHR_swapchain@
-        -- |
-        --
-        -- supported: @vulkan@
-        --
-        -- contact: @James Jones @cubanismo,Ian Elliott @ianelliottus@
-        --
-        -- author: @KHR@
-        --
-        -- type: @device@
-        --
-        -- Extension number: @2@
-        --
-        -- Required extensions: 'VK_KHR_surface'.
-        --
-
-        -- ** Required extensions: 'VK_KHR_surface'.
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
+        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkExtent2D, VkFormat(..),
+        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
+        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkPresentInfoKHR, VkPresentModeKHR(..),
+        VkResult(..), VkSharingMode(..), VkStructureType(..),
+        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
+        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
+        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        VkSwapchainImageUsageBitmaskANDROID(..),
+        VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
+        VkSwapchainCreateFlagsKHR(),
+        VkSwapchainImageUsageFlagBitsANDROID(),
+        VkSwapchainImageUsageFlagsANDROID(), VkSwapchainCreateInfoKHR,
+        -- > #include "vk_platform.h"
         VkCreateSwapchainKHR, pattern VkCreateSwapchainKHR,
         HS_vkCreateSwapchainKHR, PFN_vkCreateSwapchainKHR,
         vkCreateSwapchainKHR, vkCreateSwapchainKHRUnsafe,
@@ -46,25 +55,7 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         VkQueuePresentKHR, pattern VkQueuePresentKHR, HS_vkQueuePresentKHR,
         PFN_vkQueuePresentKHR, vkQueuePresentKHR, vkQueuePresentKHRUnsafe,
         vkQueuePresentKHRSafe, module Graphics.Vulkan.Marshal,
-        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
-        VkColorComponentFlagBits(), VkColorComponentFlags(),
-        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
-        VkCompositeAlphaFlagsKHR(), VkFormat(..),
-        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
-        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
-        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
-        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
-        VkImageAspectFlagBits(), VkImageAspectFlags(),
-        VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(),
-        VkInternalAllocationType(..), VkPresentModeKHR(..), VkResult(..),
-        VkSharingMode(..), VkStructureType(..),
-        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
-        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
-        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
-        VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
-        VkSwapchainCreateFlagsKHR(), VkSystemAllocationScope(..),
+        VkInternalAllocationType(..), VkSystemAllocationScope(..),
         newVkAllocationFunction, newVkDebugReportCallbackEXT,
         newVkDebugUtilsMessengerCallbackEXT, newVkFreeFunction,
         newVkInternalAllocationNotification, newVkInternalFreeNotification,
@@ -81,35 +72,41 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        VkAllocationCallbacks, VkExtent2D, VkExtent3D, VkPresentInfoKHR,
-        VkPresentRegionKHR, VkPresentRegionsKHR, VkPresentTimeGOOGLE,
-        VkPresentTimesInfoGOOGLE, VkSwapchainCounterCreateInfoEXT,
-        VkSwapchainCreateInfoKHR, VK_KHR_SWAPCHAIN_SPEC_VERSION,
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkExtent3D, VkPresentRegionKHR,
+        VkPresentRegionsKHR, VkPresentTimeGOOGLE, VkPresentTimesInfoGOOGLE,
+        VkSwapchainCounterCreateInfoEXT,
+        VkSwapchainDisplayNativeHdrCreateInfoAMD,
+        VK_KHR_SWAPCHAIN_SPEC_VERSION,
         pattern VK_KHR_SWAPCHAIN_SPEC_VERSION,
         VK_KHR_SWAPCHAIN_EXTENSION_NAME,
         pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME,
@@ -121,8 +118,11 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
                                               VkAcquireNextImageInfoKHR,
         VkBindImageMemoryInfo, VkBindImageMemorySwapchainInfoKHR,
         VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
         VkDeviceGroupSwapchainCreateInfoKHR, VkImageCreateInfo,
@@ -153,16 +153,19 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         VkAcquireNextImage2KHR, pattern VkAcquireNextImage2KHR,
         HS_vkAcquireNextImage2KHR, PFN_vkAcquireNextImage2KHR,
         vkAcquireNextImage2KHR, vkAcquireNextImage2KHRUnsafe,
-        vkAcquireNextImage2KHRSafe, VkDeviceCreateInfo,
-        VkDeviceEventInfoEXT, VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+        vkAcquireNextImage2KHRSafe, VkAcquireProfilingLockInfoKHR,
+        VkDeviceCreateInfo, VkDeviceDiagnosticsConfigCreateInfoNV,
+        VkDeviceEventInfoEXT, VkDeviceGroupBindSparseInfo,
         VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfo,
         VkDeviceGroupCommandBufferBeginInfoKHR,
         VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
         VkDeviceGroupRenderPassBeginInfo,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
-        VkDeviceGroupSubmitInfoKHR, VkDeviceQueueCreateInfo,
+        VkDeviceGroupSubmitInfoKHR, VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT, VkDeviceQueueCreateInfo,
         VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
         VkOffset2D, VkOffset3D, VkRect2D, VkRectLayerKHR,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
@@ -174,7 +177,7 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
         pattern VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR)
        where
-import GHC.Ptr                                              (Ptr (..))
+import GHC.Ptr                                           (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc
 import Graphics.Vulkan.Types.BaseTypes
@@ -184,29 +187,28 @@ import Graphics.Vulkan.Types.Enum.Device
 import Graphics.Vulkan.Types.Enum.Format
 import Graphics.Vulkan.Types.Enum.Image
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                    (VkObjectType (..))
+import Graphics.Vulkan.Types.Enum.ObjectType             (VkObjectType (..))
 import Graphics.Vulkan.Types.Enum.PresentModeKHR
 import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import Graphics.Vulkan.Types.Enum.Swapchain
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR
+import Graphics.Vulkan.Types.Struct.Acquire
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Bind                    (VkBindImageMemoryInfo,
-                                                             VkBindImageMemorySwapchainInfoKHR)
+import Graphics.Vulkan.Types.Struct.Bind                 (VkBindImageMemoryInfo, VkBindImageMemorySwapchainInfoKHR)
 import Graphics.Vulkan.Types.Struct.Device
 import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Image                (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
 import Graphics.Vulkan.Types.Struct.Offset
 import Graphics.Vulkan.Types.Struct.Present
 import Graphics.Vulkan.Types.Struct.Rect
-import Graphics.Vulkan.Types.Struct.SwapchainC
-import System.IO.Unsafe                                     (unsafeDupablePerformIO)
+import Graphics.Vulkan.Types.Struct.Swapchain
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkCreateSwapchainKHR :: CString
 
@@ -230,7 +232,7 @@ type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
 -- > VkResult vkCreateSwapchainKHR
 -- >     ( VkDevice device
@@ -239,7 +241,7 @@ type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 -- >     , VkSwapchainKHR* pSwapchain
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -288,7 +290,7 @@ vkCreateSwapchainKHRUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
 -- > VkResult vkCreateSwapchainKHR
 -- >     ( VkDevice device
@@ -297,7 +299,7 @@ vkCreateSwapchainKHRUnsafe
 -- >     , VkSwapchainKHR* pSwapchain
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -346,7 +348,7 @@ vkCreateSwapchainKHRSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
 -- > VkResult vkCreateSwapchainKHR
 -- >     ( VkDevice device
@@ -355,7 +357,7 @@ vkCreateSwapchainKHRSafe
 -- >     , VkSwapchainKHR* pSwapchain
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -392,7 +394,7 @@ vkCreateSwapchainKHR = vkCreateSwapchainKHRSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR', 'VK_ERROR_INITIALIZATION_FAILED'.
 --
 --   > VkResult vkCreateSwapchainKHR
 --   >     ( VkDevice device
@@ -401,7 +403,7 @@ vkCreateSwapchainKHR = vkCreateSwapchainKHRSafe
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSwapchainKHR vkCreateSwapchainKHR registry at www.khronos.org>
 type HS_vkCreateSwapchainKHR =
      VkDevice -- ^ device
               ->
@@ -458,7 +460,7 @@ type VkDestroySwapchainKHR = "vkDestroySwapchainKHR"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -505,7 +507,7 @@ vkDestroySwapchainKHRUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -552,7 +554,7 @@ vkDestroySwapchainKHRSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -590,7 +592,7 @@ vkDestroySwapchainKHR = vkDestroySwapchainKHRSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySwapchainKHR vkDestroySwapchainKHR registry at www.khronos.org>
 type HS_vkDestroySwapchainKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain
@@ -650,7 +652,7 @@ type VkGetSwapchainImagesKHR = "vkGetSwapchainImagesKHR"
 -- >     , VkImage* pSwapchainImages
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -706,7 +708,7 @@ vkGetSwapchainImagesKHRUnsafe
 -- >     , VkImage* pSwapchainImages
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -762,7 +764,7 @@ vkGetSwapchainImagesKHRSafe
 -- >     , VkImage* pSwapchainImages
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -807,7 +809,7 @@ vkGetSwapchainImagesKHR = vkGetSwapchainImagesKHRSafe
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR registry at www.khronos.org>
 type HS_vkGetSwapchainImagesKHR =
      VkDevice -- ^ device
               ->
@@ -862,7 +864,7 @@ type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImageKHR
 -- >     ( VkDevice device
@@ -873,7 +875,7 @@ type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -926,7 +928,7 @@ vkAcquireNextImageKHRUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImageKHR
 -- >     ( VkDevice device
@@ -937,7 +939,7 @@ vkAcquireNextImageKHRUnsafe
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -990,7 +992,7 @@ vkAcquireNextImageKHRSafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImageKHR
 -- >     ( VkDevice device
@@ -1001,7 +1003,7 @@ vkAcquireNextImageKHRSafe
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1040,7 +1042,7 @@ vkAcquireNextImageKHR = vkAcquireNextImageKHRSafe
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 --   > VkResult vkAcquireNextImageKHR
 --   >     ( VkDevice device
@@ -1051,7 +1053,7 @@ vkAcquireNextImageKHR = vkAcquireNextImageKHRSafe
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImageKHR vkAcquireNextImageKHR registry at www.khronos.org>
 type HS_vkAcquireNextImageKHR =
      VkDevice -- ^ device
               ->
@@ -1105,14 +1107,14 @@ type VkQueuePresentKHR = "vkQueuePresentKHR"
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkQueuePresentKHR
 -- >     ( VkQueue queue
 -- >     , const VkPresentInfoKHR* pPresentInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1153,14 +1155,14 @@ vkQueuePresentKHRUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkQueuePresentKHR
 -- >     ( VkQueue queue
 -- >     , const VkPresentInfoKHR* pPresentInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1200,14 +1202,14 @@ vkQueuePresentKHRSafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkQueuePresentKHR
 -- >     ( VkQueue queue
 -- >     , const VkPresentInfoKHR* pPresentInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1239,14 +1241,14 @@ vkQueuePresentKHR = vkQueuePresentKHRSafe
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 --   > VkResult vkQueuePresentKHR
 --   >     ( VkQueue queue
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueuePresentKHR vkQueuePresentKHR registry at www.khronos.org>
 type HS_vkQueuePresentKHR =
      VkQueue -- ^ queue
              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -1359,7 +1361,7 @@ type VkGetDeviceGroupPresentCapabilitiesKHR =
 -- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1411,7 +1413,7 @@ vkGetDeviceGroupPresentCapabilitiesKHRUnsafe
 -- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1461,7 +1463,7 @@ vkGetDeviceGroupPresentCapabilitiesKHRSafe
 -- >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1504,7 +1506,7 @@ vkGetDeviceGroupPresentCapabilitiesKHR
 --   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupPresentCapabilitiesKHR =
      VkDevice -- ^ device
               -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
@@ -1572,7 +1574,7 @@ type VkGetDeviceGroupSurfacePresentModesKHR =
 -- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1628,7 +1630,7 @@ vkGetDeviceGroupSurfacePresentModesKHRUnsafe
 -- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1683,7 +1685,7 @@ vkGetDeviceGroupSurfacePresentModesKHRSafe
 -- >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1729,7 +1731,7 @@ vkGetDeviceGroupSurfacePresentModesKHR
 --   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupSurfacePresentModesKHR =
      VkDevice -- ^ device
               ->
@@ -1800,7 +1802,7 @@ type VkGetPhysicalDevicePresentRectanglesKHR =
 -- >     , VkRect2D* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1859,7 +1861,7 @@ vkGetPhysicalDevicePresentRectanglesKHRUnsafe
 -- >     , VkRect2D* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1917,7 +1919,7 @@ vkGetPhysicalDevicePresentRectanglesKHRSafe
 -- >     , VkRect2D* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1964,7 +1966,7 @@ vkGetPhysicalDevicePresentRectanglesKHR
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDevicePresentRectanglesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2024,7 +2026,7 @@ type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImage2KHR
 -- >     ( VkDevice device
@@ -2032,7 +2034,7 @@ type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2077,7 +2079,7 @@ vkAcquireNextImage2KHRUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImage2KHR
 -- >     ( VkDevice device
@@ -2085,7 +2087,7 @@ vkAcquireNextImage2KHRUnsafe
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2130,7 +2132,7 @@ vkAcquireNextImage2KHRSafe
 -- |
 -- Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 -- > VkResult vkAcquireNextImage2KHR
 -- >     ( VkDevice device
@@ -2138,7 +2140,7 @@ vkAcquireNextImage2KHRSafe
 -- >     , uint32_t* pImageIndex
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2173,7 +2175,7 @@ vkAcquireNextImage2KHR = vkAcquireNextImage2KHRSafe
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 --   > VkResult vkAcquireNextImage2KHR
 --   >     ( VkDevice device
@@ -2181,7 +2183,7 @@ vkAcquireNextImage2KHR = vkAcquireNextImage2KHRSafe
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAcquireNextImage2KHR vkAcquireNextImage2KHR registry at www.khronos.org>
 type HS_vkAcquireNextImage2KHR =
      VkDevice -- ^ device
               ->

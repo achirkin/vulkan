@@ -7,7 +7,10 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Command
        (VkCommandBufferAllocateInfo, VkCommandBufferBeginInfo,
-        VkCommandBufferInheritanceInfo, VkCommandPoolCreateInfo)
+        VkCommandBufferInheritanceConditionalRenderingInfoEXT,
+        VkCommandBufferInheritanceInfo,
+        VkCommandBufferInheritanceRenderPassTransformInfoQCOM,
+        VkCommandPoolCreateInfo)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
@@ -18,8 +21,10 @@ import Graphics.Vulkan.Types.Enum.Command       (VkCommandBufferLevel,
 import Graphics.Vulkan.Types.Enum.Query         (VkQueryControlFlags,
                                                  VkQueryPipelineStatisticFlags)
 import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Enum.Surface       (VkSurfaceTransformFlagBitsKHR)
 import Graphics.Vulkan.Types.Handles            (VkCommandPool, VkFramebuffer,
                                                  VkRenderPass)
+import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
 
 -- | > typedef struct VkCommandBufferAllocateInfo {
 --   >     VkStructureType sType;
@@ -29,7 +34,7 @@ import Graphics.Vulkan.Types.Handles            (VkCommandPool, VkFramebuffer,
 --   >     uint32_t               commandBufferCount;
 --   > } VkCommandBufferAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferAllocateInfo VkCommandBufferAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferAllocateInfo VkCommandBufferAllocateInfo registry at www.khronos.org>
 type VkCommandBufferAllocateInfo =
      VkStruct VkCommandBufferAllocateInfo' -- ' closing tick for hsc2hs
 
@@ -77,7 +82,7 @@ instance VulkanMarshal VkCommandBufferAllocateInfo where
 --   >     const VkCommandBufferInheritanceInfo*       pInheritanceInfo;
 --   > } VkCommandBufferBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferBeginInfo VkCommandBufferBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferBeginInfo VkCommandBufferBeginInfo registry at www.khronos.org>
 type VkCommandBufferBeginInfo = VkStruct VkCommandBufferBeginInfo' -- ' closing tick for hsc2hs
 
 data VkCommandBufferBeginInfo' -- ' closing tick for hsc2hs
@@ -112,6 +117,47 @@ instance VulkanMarshal VkCommandBufferBeginInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkCommandBufferInheritanceConditionalRenderingInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                         pNext;
+--   >     VkBool32                            conditionalRenderingEnable;
+--   > } VkCommandBufferInheritanceConditionalRenderingInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferInheritanceConditionalRenderingInfoEXT VkCommandBufferInheritanceConditionalRenderingInfoEXT registry at www.khronos.org>
+type VkCommandBufferInheritanceConditionalRenderingInfoEXT =
+     VkStruct VkCommandBufferInheritanceConditionalRenderingInfoEXT' -- ' closing tick for hsc2hs
+
+data VkCommandBufferInheritanceConditionalRenderingInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal
+           VkCommandBufferInheritanceConditionalRenderingInfoEXT
+         where
+    type StructRep
+           VkCommandBufferInheritanceConditionalRenderingInfoEXT
+         =
+         'StructMeta "VkCommandBufferInheritanceConditionalRenderingInfoEXT" -- ' closing tick for hsc2hs
+           VkCommandBufferInheritanceConditionalRenderingInfoEXT
+           #{size VkCommandBufferInheritanceConditionalRenderingInfoEXT}
+           #{alignment VkCommandBufferInheritanceConditionalRenderingInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkCommandBufferInheritanceConditionalRenderingInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkCommandBufferInheritanceConditionalRenderingInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "conditionalRenderingEnable" VkBool32 'False 
+                                                                      #{offset VkCommandBufferInheritanceConditionalRenderingInfoEXT, conditionalRenderingEnable}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkCommandBufferInheritanceInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkCommandBufferInheritanceInfo {
 --   >     VkStructureType sType;
 --   >     const void*            pNext;
@@ -123,7 +169,7 @@ instance VulkanMarshal VkCommandBufferBeginInfo where
 --   >     VkQueryPipelineStatisticFlags pipelineStatistics;
 --   > } VkCommandBufferInheritanceInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferInheritanceInfo VkCommandBufferInheritanceInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferInheritanceInfo VkCommandBufferInheritanceInfo registry at www.khronos.org>
 type VkCommandBufferInheritanceInfo =
      VkStruct VkCommandBufferInheritanceInfo' -- ' closing tick for hsc2hs
 
@@ -180,6 +226,53 @@ instance VulkanMarshal VkCommandBufferInheritanceInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkCommandBufferInheritanceRenderPassTransformInfoQCOM {
+--   >     VkStructureType sType;
+--   >     void*                           pNext;
+--   >     VkSurfaceTransformFlagBitsKHR   transform;
+--   >     VkRect2D                        renderArea;
+--   > } VkCommandBufferInheritanceRenderPassTransformInfoQCOM;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferInheritanceRenderPassTransformInfoQCOM VkCommandBufferInheritanceRenderPassTransformInfoQCOM registry at www.khronos.org>
+type VkCommandBufferInheritanceRenderPassTransformInfoQCOM =
+     VkStruct VkCommandBufferInheritanceRenderPassTransformInfoQCOM' -- ' closing tick for hsc2hs
+
+data VkCommandBufferInheritanceRenderPassTransformInfoQCOM' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal
+           VkCommandBufferInheritanceRenderPassTransformInfoQCOM
+         where
+    type StructRep
+           VkCommandBufferInheritanceRenderPassTransformInfoQCOM
+         =
+         'StructMeta "VkCommandBufferInheritanceRenderPassTransformInfoQCOM" -- ' closing tick for hsc2hs
+           VkCommandBufferInheritanceRenderPassTransformInfoQCOM
+           #{size VkCommandBufferInheritanceRenderPassTransformInfoQCOM}
+           #{alignment VkCommandBufferInheritanceRenderPassTransformInfoQCOM}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkCommandBufferInheritanceRenderPassTransformInfoQCOM, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkCommandBufferInheritanceRenderPassTransformInfoQCOM, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "transform" VkSurfaceTransformFlagBitsKHR 'False
+                #{offset VkCommandBufferInheritanceRenderPassTransformInfoQCOM, transform}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "renderArea" VkRect2D 'False 
+                                                      #{offset VkCommandBufferInheritanceRenderPassTransformInfoQCOM, renderArea}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkCommandBufferInheritanceInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkCommandPoolCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*            pNext;
@@ -187,7 +280,7 @@ instance VulkanMarshal VkCommandBufferInheritanceInfo where
 --   >     uint32_t               queueFamilyIndex;
 --   > } VkCommandPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandPoolCreateInfo VkCommandPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandPoolCreateInfo VkCommandPoolCreateInfo registry at www.khronos.org>
 type VkCommandPoolCreateInfo = VkStruct VkCommandPoolCreateInfo' -- ' closing tick for hsc2hs
 
 data VkCommandPoolCreateInfo' -- ' closing tick for hsc2hs

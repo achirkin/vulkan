@@ -18,7 +18,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     uint64_t                         presentMargin;
 --   > } VkPastPresentationTimingGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPastPresentationTimingGOOGLE VkPastPresentationTimingGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPastPresentationTimingGOOGLE VkPastPresentationTimingGOOGLE registry at www.khronos.org>
 type VkPastPresentationTimingGOOGLE =
      VkStruct VkPastPresentationTimingGOOGLE' -- ' closing tick for hsc2hs
 
@@ -56,5 +56,5 @@ instance VulkanMarshal VkPastPresentationTimingGOOGLE where
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs

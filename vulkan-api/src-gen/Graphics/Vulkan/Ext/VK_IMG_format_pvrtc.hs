@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
         --
         -- supported: @vulkan@
         --
-        -- contact: @Tobias Hector @tobski@
+        -- contact: @Stuart Smith@
         --
         -- author: @IMG@
         --

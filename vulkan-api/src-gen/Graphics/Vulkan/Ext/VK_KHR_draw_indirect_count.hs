@@ -28,12 +28,16 @@ module Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
         pattern VkCmdDrawIndexedIndirectCountKHR,
         HS_vkCmdDrawIndexedIndirectCountKHR,
         PFN_vkCmdDrawIndexedIndirectCountKHR,
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkBuffer, VkBufferView,
-        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(), ANativeWindow(),
+        CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -43,17 +47,19 @@ module Graphics.Vulkan.Ext.VK_KHR_draw_indirect_count
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION,
         VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
@@ -85,7 +91,9 @@ is_VkCmdDrawIndirectCountKHR
 
 type VkCmdDrawIndirectCountKHR = "vkCmdDrawIndirectCountKHR"
 
--- | Queues: 'graphics'.
+-- | This is an alias for `vkCmdDrawIndirectCount`.
+--
+--   Queues: 'graphics'.
 --
 --   Renderpass: @inside@
 --
@@ -101,7 +109,7 @@ type VkCmdDrawIndirectCountKHR = "vkCmdDrawIndirectCountKHR"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirectCountKHR vkCmdDrawIndirectCountKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndirectCountKHR vkCmdDrawIndirectCountKHR registry at www.khronos.org>
 type HS_vkCmdDrawIndirectCountKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -162,7 +170,9 @@ is_VkCmdDrawIndexedIndirectCountKHR
 type VkCmdDrawIndexedIndirectCountKHR =
      "vkCmdDrawIndexedIndirectCountKHR"
 
--- | Queues: 'graphics'.
+-- | This is an alias for `vkCmdDrawIndexedIndirectCount`.
+--
+--   Queues: 'graphics'.
 --
 --   Renderpass: @inside@
 --
@@ -178,7 +188,7 @@ type VkCmdDrawIndexedIndirectCountKHR =
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirectCountKHR vkCmdDrawIndexedIndirectCountKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexedIndirectCountKHR vkCmdDrawIndexedIndirectCountKHR registry at www.khronos.org>
 type HS_vkCmdDrawIndexedIndirectCountKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->

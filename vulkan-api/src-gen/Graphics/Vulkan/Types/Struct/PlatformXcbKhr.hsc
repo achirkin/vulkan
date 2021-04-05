@@ -21,7 +21,7 @@ import Graphics.Vulkan.Types.Include            (XcbConnectionT, XcbWindowT)
 --   >     xcb_window_t                     window;
 --   > } VkXcbSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkXcbSurfaceCreateInfoKHR VkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkXcbSurfaceCreateInfoKHR VkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
 type VkXcbSurfaceCreateInfoKHR =
      VkStruct VkXcbSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 

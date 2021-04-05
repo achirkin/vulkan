@@ -7,6 +7,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Image
        (VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageDrmFormatModifierExplicitCreateInfoEXT,
+        VkImageDrmFormatModifierListCreateInfoEXT,
+        VkImageDrmFormatModifierPropertiesEXT, VkImageFormatListCreateInfo,
         VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
         VkImageFormatProperties2, VkImageFormatProperties2KHR,
         VkImageMemoryBarrier, VkImageMemoryRequirementsInfo2,
@@ -14,33 +17,43 @@ module Graphics.Vulkan.Types.Struct.Image
         VkImagePlaneMemoryRequirementsInfo,
         VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
         VkImageSparseMemoryRequirementsInfo2,
-        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
-        VkImageSubresourceLayers, VkImageSubresourceRange,
-        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageSparseMemoryRequirementsInfo2KHR,
+        VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfoEXT,
+        VkImageSubresource, VkImageSubresourceLayers,
+        VkImageSubresourceRange, VkImageSwapchainCreateInfoKHR,
+        VkImageViewASTCDecodeModeEXT, VkImageViewAddressPropertiesNVX,
+        VkImageViewCreateInfo, VkImageViewHandleInfoNVX,
         VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
-import Graphics.Vulkan.Types.Bitmasks                (VkImageViewCreateFlags)
-import Graphics.Vulkan.Types.Enum.AccessFlags        (VkAccessFlags)
-import Graphics.Vulkan.Types.Enum.Format             (VkFormat)
-import Graphics.Vulkan.Types.Enum.Image              (VkImageAspectFlagBits,
-                                                      VkImageAspectFlags,
-                                                      VkImageCreateFlags,
-                                                      VkImageLayout,
-                                                      VkImageTiling,
-                                                      VkImageType,
-                                                      VkImageUsageFlags,
-                                                      VkImageViewType)
-import Graphics.Vulkan.Types.Enum.SampleCountFlags   (VkSampleCountFlagBits,
-                                                      VkSampleCountFlags)
-import Graphics.Vulkan.Types.Enum.SharingMode        (VkSharingMode)
-import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
-import Graphics.Vulkan.Types.Handles                 (VkImage, VkSwapchainKHR)
-import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
-import Graphics.Vulkan.Types.Struct.Extent           (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Offset           (VkOffset3D)
+import Graphics.Vulkan.Types.BaseTypes                (VkDeviceAddress,
+                                                       VkDeviceSize)
+import Graphics.Vulkan.Types.Enum.AccessFlags         (VkAccessFlags)
+import Graphics.Vulkan.Types.Enum.Descriptor          (VkDescriptorType)
+import Graphics.Vulkan.Types.Enum.Format              (VkFormat)
+import Graphics.Vulkan.Types.Enum.Image               (VkImageAspectFlagBits,
+                                                       VkImageAspectFlags,
+                                                       VkImageCreateFlags,
+                                                       VkImageLayout,
+                                                       VkImageTiling,
+                                                       VkImageType,
+                                                       VkImageUsageFlags,
+                                                       VkImageViewCreateFlags,
+                                                       VkImageViewType)
+import Graphics.Vulkan.Types.Enum.SampleCountFlags    (VkSampleCountFlagBits,
+                                                       VkSampleCountFlags)
+import Graphics.Vulkan.Types.Enum.SharingMode         (VkSharingMode)
+import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
+import Graphics.Vulkan.Types.Handles                  (VkImage, VkImageView,
+                                                       VkSampler,
+                                                       VkSwapchainKHR)
+import Graphics.Vulkan.Types.Struct.ComponentMapping  (VkComponentMapping)
+import Graphics.Vulkan.Types.Struct.Extent            (VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Offset            (VkOffset3D)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice    (VkPhysicalDeviceImageFormatInfo2)
+import Graphics.Vulkan.Types.Struct.SubresourceLayout (VkSubresourceLayout)
+import Graphics.Vulkan.Types.Struct.Swapchain         (VkSwapchainCreateInfoKHR)
 
 -- | > typedef struct VkImageBlit {
 --   >     VkImageSubresourceLayers srcSubresource;
@@ -49,7 +62,7 @@ import Graphics.Vulkan.Types.Struct.Offset           (VkOffset3D)
 --   >     VkOffset3D             dstOffsets[2];
 --   > } VkImageBlit;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageBlit VkImageBlit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageBlit VkImageBlit registry at www.khronos.org>
 type VkImageBlit = VkStruct VkImageBlit' -- ' closing tick for hsc2hs
 
 data VkImageBlit' -- ' closing tick for hsc2hs
@@ -91,7 +104,7 @@ instance VulkanMarshal VkImageBlit where
 --   >     VkExtent3D             extent;
 --   > } VkImageCopy;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageCopy VkImageCopy registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageCopy VkImageCopy registry at www.khronos.org>
 type VkImageCopy = VkStruct VkImageCopy' -- ' closing tick for hsc2hs
 
 data VkImageCopy' -- ' closing tick for hsc2hs
@@ -148,7 +161,7 @@ instance VulkanMarshal VkImageCopy where
 --   >     VkImageLayout          initialLayout;
 --   > } VkImageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageCreateInfo VkImageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageCreateInfo VkImageCreateInfo registry at www.khronos.org>
 type VkImageCreateInfo = VkStruct VkImageCreateInfo' -- ' closing tick for hsc2hs
 
 data VkImageCreateInfo' -- ' closing tick for hsc2hs
@@ -237,48 +250,184 @@ instance VulkanMarshal VkImageCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
--- | > typedef struct VkImageFormatListCreateInfoKHR {
+-- | > typedef struct VkImageDrmFormatModifierExplicitCreateInfoEXT {
 --   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     uint32_t               viewFormatCount;
---   >     const VkFormat*      pViewFormats;
---   > } VkImageFormatListCreateInfoKHR;
+--   >     const void* pNext;
+--   >     uint64_t drmFormatModifier;
+--   >     uint32_t drmFormatModifierPlaneCount;
+--   >     const VkSubresourceLayout* pPlaneLayouts;
+--   > } VkImageDrmFormatModifierExplicitCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageFormatListCreateInfoKHR VkImageFormatListCreateInfoKHR registry at www.khronos.org>
-type VkImageFormatListCreateInfoKHR =
-     VkStruct VkImageFormatListCreateInfoKHR' -- ' closing tick for hsc2hs
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageDrmFormatModifierExplicitCreateInfoEXT VkImageDrmFormatModifierExplicitCreateInfoEXT registry at www.khronos.org>
+type VkImageDrmFormatModifierExplicitCreateInfoEXT =
+     VkStruct VkImageDrmFormatModifierExplicitCreateInfoEXT' -- ' closing tick for hsc2hs
 
-data VkImageFormatListCreateInfoKHR' -- ' closing tick for hsc2hs
+data VkImageDrmFormatModifierExplicitCreateInfoEXT' -- ' closing tick for hsc2hs
 
-instance VulkanMarshal VkImageFormatListCreateInfoKHR where
-    type StructRep VkImageFormatListCreateInfoKHR =
-         'StructMeta "VkImageFormatListCreateInfoKHR" -- ' closing tick for hsc2hs
-           VkImageFormatListCreateInfoKHR
-           #{size VkImageFormatListCreateInfoKHR}
-           #{alignment VkImageFormatListCreateInfoKHR}
+instance VulkanMarshal
+           VkImageDrmFormatModifierExplicitCreateInfoEXT
+         where
+    type StructRep VkImageDrmFormatModifierExplicitCreateInfoEXT =
+         'StructMeta "VkImageDrmFormatModifierExplicitCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkImageDrmFormatModifierExplicitCreateInfoEXT
+           #{size VkImageDrmFormatModifierExplicitCreateInfoEXT}
+           #{alignment VkImageDrmFormatModifierExplicitCreateInfoEXT}
            '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkImageFormatListCreateInfoKHR, sType}
+                                                        #{offset VkImageDrmFormatModifierExplicitCreateInfoEXT, sType}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkImageFormatListCreateInfoKHR, pNext}
+                                                   #{offset VkImageDrmFormatModifierExplicitCreateInfoEXT, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "viewFormatCount" Word32 'True 
-                                                        #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
+             ('FieldMeta "drmFormatModifier" Word64 'False 
+                                                           #{offset VkImageDrmFormatModifierExplicitCreateInfoEXT, drmFormatModifier}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pViewFormats" (Ptr VkFormat) 'False 
-                                                              #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
+             ('FieldMeta "drmFormatModifierPlaneCount" Word32 'False 
+                                                                     #{offset VkImageDrmFormatModifierExplicitCreateInfoEXT, drmFormatModifierPlaneCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pPlaneLayouts" (Ptr VkSubresourceLayout) 'False
+                #{offset VkImageDrmFormatModifierExplicitCreateInfoEXT, pPlaneLayouts}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            '[VkImageCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkImageDrmFormatModifierListCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     uint32_t drmFormatModifierCount;
+--   >     const uint64_t* pDrmFormatModifiers;
+--   > } VkImageDrmFormatModifierListCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageDrmFormatModifierListCreateInfoEXT VkImageDrmFormatModifierListCreateInfoEXT registry at www.khronos.org>
+type VkImageDrmFormatModifierListCreateInfoEXT =
+     VkStruct VkImageDrmFormatModifierListCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkImageDrmFormatModifierListCreateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageDrmFormatModifierListCreateInfoEXT
+         where
+    type StructRep VkImageDrmFormatModifierListCreateInfoEXT =
+         'StructMeta "VkImageDrmFormatModifierListCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkImageDrmFormatModifierListCreateInfoEXT
+           #{size VkImageDrmFormatModifierListCreateInfoEXT}
+           #{alignment VkImageDrmFormatModifierListCreateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageDrmFormatModifierListCreateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageDrmFormatModifierListCreateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "drmFormatModifierCount" Word32 'False 
+                                                                #{offset VkImageDrmFormatModifierListCreateInfoEXT, drmFormatModifierCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pDrmFormatModifiers" (Ptr Word64) 'False 
+                                                                   #{offset VkImageDrmFormatModifierListCreateInfoEXT, pDrmFormatModifiers}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkImageCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkImageDrmFormatModifierPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     uint64_t drmFormatModifier;
+--   > } VkImageDrmFormatModifierPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageDrmFormatModifierPropertiesEXT VkImageDrmFormatModifierPropertiesEXT registry at www.khronos.org>
+type VkImageDrmFormatModifierPropertiesEXT =
+     VkStruct VkImageDrmFormatModifierPropertiesEXT' -- ' closing tick for hsc2hs
+
+data VkImageDrmFormatModifierPropertiesEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageDrmFormatModifierPropertiesEXT where
+    type StructRep VkImageDrmFormatModifierPropertiesEXT =
+         'StructMeta "VkImageDrmFormatModifierPropertiesEXT" -- ' closing tick for hsc2hs
+           VkImageDrmFormatModifierPropertiesEXT
+           #{size VkImageDrmFormatModifierPropertiesEXT}
+           #{alignment VkImageDrmFormatModifierPropertiesEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageDrmFormatModifierPropertiesEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageDrmFormatModifierPropertiesEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "drmFormatModifier" Word64 'False 
+                                                           #{offset VkImageDrmFormatModifierPropertiesEXT, drmFormatModifier}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkImageFormatListCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*                            pNext;
+--   >     uint32_t               viewFormatCount;
+--   >     const VkFormat*  pViewFormats;
+--   > } VkImageFormatListCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageFormatListCreateInfo VkImageFormatListCreateInfo registry at www.khronos.org>
+type VkImageFormatListCreateInfo =
+     VkStruct VkImageFormatListCreateInfo' -- ' closing tick for hsc2hs
+
+data VkImageFormatListCreateInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageFormatListCreateInfo where
+    type StructRep VkImageFormatListCreateInfo =
+         'StructMeta "VkImageFormatListCreateInfo" -- ' closing tick for hsc2hs
+           VkImageFormatListCreateInfo
+           #{size VkImageFormatListCreateInfo}
+           #{alignment VkImageFormatListCreateInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageFormatListCreateInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageFormatListCreateInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "viewFormatCount" Word32 'True 
+                                                        #{offset VkImageFormatListCreateInfo, viewFormatCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pViewFormats" (Ptr VkFormat) 'False 
+                                                              #{offset VkImageFormatListCreateInfo, pViewFormats}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkImageCreateInfo, VkSwapchainCreateInfoKHR, -- ' closing tick for hsc2hs
+             VkPhysicalDeviceImageFormatInfo2]
+
+-- | Alias for `VkImageFormatListCreateInfo`
+type VkImageFormatListCreateInfoKHR = VkImageFormatListCreateInfo
 
 -- | > typedef struct VkImageFormatProperties {
 --   >     VkExtent3D             maxExtent;
@@ -288,7 +437,7 @@ instance VulkanMarshal VkImageFormatListCreateInfoKHR where
 --   >     VkDeviceSize           maxResourceSize;
 --   > } VkImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageFormatProperties VkImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageFormatProperties VkImageFormatProperties registry at www.khronos.org>
 type VkImageFormatProperties = VkStruct VkImageFormatProperties' -- ' closing tick for hsc2hs
 
 data VkImageFormatProperties' -- ' closing tick for hsc2hs
@@ -333,7 +482,7 @@ instance VulkanMarshal VkImageFormatProperties where
 --   >     VkImageFormatProperties          imageFormatProperties;
 --   > } VkImageFormatProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageFormatProperties2 VkImageFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageFormatProperties2 VkImageFormatProperties2 registry at www.khronos.org>
 type VkImageFormatProperties2 = VkStruct VkImageFormatProperties2' -- ' closing tick for hsc2hs
 
 data VkImageFormatProperties2' -- ' closing tick for hsc2hs
@@ -378,7 +527,7 @@ type VkImageFormatProperties2KHR = VkImageFormatProperties2
 --   >     VkImageSubresourceRange subresourceRange;
 --   > } VkImageMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageMemoryBarrier VkImageMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageMemoryBarrier VkImageMemoryBarrier registry at www.khronos.org>
 type VkImageMemoryBarrier = VkStruct VkImageMemoryBarrier' -- ' closing tick for hsc2hs
 
 data VkImageMemoryBarrier' -- ' closing tick for hsc2hs
@@ -398,13 +547,13 @@ instance VulkanMarshal VkImageMemoryBarrier where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "srcAccessMask" VkAccessFlags 'True 
-                                                             #{offset VkImageMemoryBarrier, srcAccessMask}
+             ('FieldMeta "srcAccessMask" VkAccessFlags 'False 
+                                                              #{offset VkImageMemoryBarrier, srcAccessMask}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "dstAccessMask" VkAccessFlags 'True 
-                                                             #{offset VkImageMemoryBarrier, dstAccessMask}
+             ('FieldMeta "dstAccessMask" VkAccessFlags 'False 
+                                                              #{offset VkImageMemoryBarrier, dstAccessMask}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
@@ -448,7 +597,7 @@ instance VulkanMarshal VkImageMemoryBarrier where
 --   >     VkImage                                                              image;
 --   > } VkImageMemoryRequirementsInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageMemoryRequirementsInfo2 VkImageMemoryRequirementsInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageMemoryRequirementsInfo2 VkImageMemoryRequirementsInfo2 registry at www.khronos.org>
 type VkImageMemoryRequirementsInfo2 =
      VkStruct VkImageMemoryRequirementsInfo2' -- ' closing tick for hsc2hs
 
@@ -489,7 +638,7 @@ type VkImageMemoryRequirementsInfo2KHR =
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkImagePlaneMemoryRequirementsInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImagePlaneMemoryRequirementsInfo VkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImagePlaneMemoryRequirementsInfo VkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
 type VkImagePlaneMemoryRequirementsInfo =
      VkStruct VkImagePlaneMemoryRequirementsInfo' -- ' closing tick for hsc2hs
 
@@ -532,7 +681,7 @@ type VkImagePlaneMemoryRequirementsInfoKHR =
 --   >     VkExtent3D             extent;
 --   > } VkImageResolve;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageResolve VkImageResolve registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageResolve VkImageResolve registry at www.khronos.org>
 type VkImageResolve = VkStruct VkImageResolve' -- ' closing tick for hsc2hs
 
 data VkImageResolve' -- ' closing tick for hsc2hs
@@ -577,7 +726,7 @@ instance VulkanMarshal VkImageResolve where
 --   >     VkImage                                                              image;
 --   > } VkImageSparseMemoryRequirementsInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSparseMemoryRequirementsInfo2 VkImageSparseMemoryRequirementsInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageSparseMemoryRequirementsInfo2 VkImageSparseMemoryRequirementsInfo2 registry at www.khronos.org>
 type VkImageSparseMemoryRequirementsInfo2 =
      VkStruct VkImageSparseMemoryRequirementsInfo2' -- ' closing tick for hsc2hs
 
@@ -612,13 +761,54 @@ instance VulkanMarshal VkImageSparseMemoryRequirementsInfo2 where
 type VkImageSparseMemoryRequirementsInfo2KHR =
      VkImageSparseMemoryRequirementsInfo2
 
+-- | > typedef struct VkImageStencilUsageCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkImageUsageFlags stencilUsage;
+--   > } VkImageStencilUsageCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageStencilUsageCreateInfo VkImageStencilUsageCreateInfo registry at www.khronos.org>
+type VkImageStencilUsageCreateInfo =
+     VkStruct VkImageStencilUsageCreateInfo' -- ' closing tick for hsc2hs
+
+data VkImageStencilUsageCreateInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageStencilUsageCreateInfo where
+    type StructRep VkImageStencilUsageCreateInfo =
+         'StructMeta "VkImageStencilUsageCreateInfo" -- ' closing tick for hsc2hs
+           VkImageStencilUsageCreateInfo
+           #{size VkImageStencilUsageCreateInfo}
+           #{alignment VkImageStencilUsageCreateInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageStencilUsageCreateInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageStencilUsageCreateInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "stencilUsage" VkImageUsageFlags 'False 
+                                                                 #{offset VkImageStencilUsageCreateInfo, stencilUsage}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkImageCreateInfo, VkPhysicalDeviceImageFormatInfo2] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkImageStencilUsageCreateInfo`
+type VkImageStencilUsageCreateInfoEXT =
+     VkImageStencilUsageCreateInfo
+
 -- | > typedef struct VkImageSubresource {
 --   >     VkImageAspectFlags     aspectMask;
 --   >     uint32_t               mipLevel;
 --   >     uint32_t               arrayLayer;
 --   > } VkImageSubresource;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSubresource VkImageSubresource registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageSubresource VkImageSubresource registry at www.khronos.org>
 type VkImageSubresource = VkStruct VkImageSubresource' -- ' closing tick for hsc2hs
 
 data VkImageSubresource' -- ' closing tick for hsc2hs
@@ -654,7 +844,7 @@ instance VulkanMarshal VkImageSubresource where
 --   >     uint32_t               layerCount;
 --   > } VkImageSubresourceLayers;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSubresourceLayers VkImageSubresourceLayers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageSubresourceLayers VkImageSubresourceLayers registry at www.khronos.org>
 type VkImageSubresourceLayers = VkStruct VkImageSubresourceLayers' -- ' closing tick for hsc2hs
 
 data VkImageSubresourceLayers' -- ' closing tick for hsc2hs
@@ -696,7 +886,7 @@ instance VulkanMarshal VkImageSubresourceLayers where
 --   >     uint32_t               layerCount;
 --   > } VkImageSubresourceRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSubresourceRange VkImageSubresourceRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageSubresourceRange VkImageSubresourceRange registry at www.khronos.org>
 type VkImageSubresourceRange = VkStruct VkImageSubresourceRange' -- ' closing tick for hsc2hs
 
 data VkImageSubresourceRange' -- ' closing tick for hsc2hs
@@ -741,7 +931,7 @@ instance VulkanMarshal VkImageSubresourceRange where
 --   >     VkSwapchainKHR   swapchain;
 --   > } VkImageSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageSwapchainCreateInfoKHR VkImageSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageSwapchainCreateInfoKHR VkImageSwapchainCreateInfoKHR registry at www.khronos.org>
 type VkImageSwapchainCreateInfoKHR =
      VkStruct VkImageSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
 
@@ -772,6 +962,86 @@ instance VulkanMarshal VkImageSwapchainCreateInfoKHR where
            'False -- ' closing tick for hsc2hs
            '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkImageViewASTCDecodeModeEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkFormat                         decodeMode;
+--   > } VkImageViewASTCDecodeModeEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewASTCDecodeModeEXT VkImageViewASTCDecodeModeEXT registry at www.khronos.org>
+type VkImageViewASTCDecodeModeEXT =
+     VkStruct VkImageViewASTCDecodeModeEXT' -- ' closing tick for hsc2hs
+
+data VkImageViewASTCDecodeModeEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageViewASTCDecodeModeEXT where
+    type StructRep VkImageViewASTCDecodeModeEXT =
+         'StructMeta "VkImageViewASTCDecodeModeEXT" -- ' closing tick for hsc2hs
+           VkImageViewASTCDecodeModeEXT
+           #{size VkImageViewASTCDecodeModeEXT}
+           #{alignment VkImageViewASTCDecodeModeEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageViewASTCDecodeModeEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageViewASTCDecodeModeEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "decodeMode" VkFormat 'False 
+                                                      #{offset VkImageViewASTCDecodeModeEXT, decodeMode}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkImageViewCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkImageViewAddressPropertiesNVX {
+--   >     VkStructureType sType;
+--   >     void*              pNext;
+--   >     VkDeviceAddress    deviceAddress;
+--   >     VkDeviceSize       size;
+--   > } VkImageViewAddressPropertiesNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewAddressPropertiesNVX VkImageViewAddressPropertiesNVX registry at www.khronos.org>
+type VkImageViewAddressPropertiesNVX =
+     VkStruct VkImageViewAddressPropertiesNVX' -- ' closing tick for hsc2hs
+
+data VkImageViewAddressPropertiesNVX' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageViewAddressPropertiesNVX where
+    type StructRep VkImageViewAddressPropertiesNVX =
+         'StructMeta "VkImageViewAddressPropertiesNVX" -- ' closing tick for hsc2hs
+           VkImageViewAddressPropertiesNVX
+           #{size VkImageViewAddressPropertiesNVX}
+           #{alignment VkImageViewAddressPropertiesNVX}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageViewAddressPropertiesNVX, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageViewAddressPropertiesNVX, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "deviceAddress" VkDeviceAddress 'False 
+                                                                #{offset VkImageViewAddressPropertiesNVX, deviceAddress}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "size" VkDeviceSize 'False 
+                                                    #{offset VkImageViewAddressPropertiesNVX, size}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkImageViewCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*            pNext;
@@ -783,7 +1053,7 @@ instance VulkanMarshal VkImageSwapchainCreateInfoKHR where
 --   >     VkImageSubresourceRange subresourceRange;
 --   > } VkImageViewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewCreateInfo VkImageViewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewCreateInfo VkImageViewCreateInfo registry at www.khronos.org>
 type VkImageViewCreateInfo = VkStruct VkImageViewCreateInfo' -- ' closing tick for hsc2hs
 
 data VkImageViewCreateInfo' -- ' closing tick for hsc2hs
@@ -837,13 +1107,60 @@ instance VulkanMarshal VkImageViewCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkImageViewHandleInfoNVX {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkImageView                         imageView;
+--   >     VkDescriptorType                    descriptorType;
+--   >     VkSampler           sampler;
+--   > } VkImageViewHandleInfoNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewHandleInfoNVX VkImageViewHandleInfoNVX registry at www.khronos.org>
+type VkImageViewHandleInfoNVX = VkStruct VkImageViewHandleInfoNVX' -- ' closing tick for hsc2hs
+
+data VkImageViewHandleInfoNVX' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkImageViewHandleInfoNVX where
+    type StructRep VkImageViewHandleInfoNVX =
+         'StructMeta "VkImageViewHandleInfoNVX" VkImageViewHandleInfoNVX -- ' closing tick for hsc2hs
+           #{size VkImageViewHandleInfoNVX}
+           #{alignment VkImageViewHandleInfoNVX}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkImageViewHandleInfoNVX, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkImageViewHandleInfoNVX, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "imageView" VkImageView 'False 
+                                                        #{offset VkImageViewHandleInfoNVX, imageView}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "descriptorType" VkDescriptorType 'False 
+                                                                  #{offset VkImageViewHandleInfoNVX, descriptorType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "sampler" VkSampler 'True 
+                                                   #{offset VkImageViewHandleInfoNVX, sampler}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkImageViewUsageCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void* pNext;
 --   >     VkImageUsageFlags usage;
 --   > } VkImageViewUsageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewUsageCreateInfo VkImageViewUsageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewUsageCreateInfo VkImageViewUsageCreateInfo registry at www.khronos.org>
 type VkImageViewUsageCreateInfo =
      VkStruct VkImageViewUsageCreateInfo' -- ' closing tick for hsc2hs
 

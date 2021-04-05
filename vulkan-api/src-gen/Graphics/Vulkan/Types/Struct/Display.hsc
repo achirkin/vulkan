@@ -8,12 +8,13 @@
 module Graphics.Vulkan.Types.Struct.Display
        (VkDisplayEventInfoEXT, VkDisplayModeCreateInfoKHR,
         VkDisplayModeParametersKHR, VkDisplayModeProperties2KHR,
-        VkDisplayModePropertiesKHR, VkDisplayPlaneCapabilities2KHR,
-        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneInfo2KHR,
-        VkDisplayPlaneProperties2KHR, VkDisplayPlanePropertiesKHR,
-        VkDisplayPowerInfoEXT, VkDisplayPresentInfoKHR,
-        VkDisplayProperties2KHR, VkDisplayPropertiesKHR,
-        VkDisplaySurfaceCreateInfoKHR)
+        VkDisplayModePropertiesKHR,
+        VkDisplayNativeHdrSurfaceCapabilitiesAMD,
+        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilitiesKHR,
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneProperties2KHR,
+        VkDisplayPlanePropertiesKHR, VkDisplayPowerInfoEXT,
+        VkDisplayPresentInfoKHR, VkDisplayProperties2KHR,
+        VkDisplayPropertiesKHR, VkDisplaySurfaceCreateInfoKHR)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
@@ -32,6 +33,7 @@ import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
 import Graphics.Vulkan.Types.Struct.Offset      (VkOffset2D)
 import Graphics.Vulkan.Types.Struct.Present     (VkPresentInfoKHR)
 import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
+import Graphics.Vulkan.Types.Struct.Surface     (VkSurfaceCapabilities2KHR)
 
 -- | > typedef struct VkDisplayEventInfoEXT {
 --   >     VkStructureType sType;
@@ -39,7 +41,7 @@ import Graphics.Vulkan.Types.Struct.Rect        (VkRect2D)
 --   >     VkDisplayEventTypeEXT            displayEvent;
 --   > } VkDisplayEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayEventInfoEXT VkDisplayEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayEventInfoEXT VkDisplayEventInfoEXT registry at www.khronos.org>
 type VkDisplayEventInfoEXT = VkStruct VkDisplayEventInfoEXT' -- ' closing tick for hsc2hs
 
 data VkDisplayEventInfoEXT' -- ' closing tick for hsc2hs
@@ -75,7 +77,7 @@ instance VulkanMarshal VkDisplayEventInfoEXT where
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModeCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeCreateInfoKHR VkDisplayModeCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayModeCreateInfoKHR VkDisplayModeCreateInfoKHR registry at www.khronos.org>
 type VkDisplayModeCreateInfoKHR =
      VkStruct VkDisplayModeCreateInfoKHR' -- ' closing tick for hsc2hs
 
@@ -112,10 +114,10 @@ instance VulkanMarshal VkDisplayModeCreateInfoKHR where
 
 -- | > typedef struct VkDisplayModeParametersKHR {
 --   >     VkExtent2D                       visibleRegion;
---   >     uint32_t                         refreshRate;
+--   >     uint32_t   refreshRate;
 --   > } VkDisplayModeParametersKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeParametersKHR VkDisplayModeParametersKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayModeParametersKHR VkDisplayModeParametersKHR registry at www.khronos.org>
 type VkDisplayModeParametersKHR =
      VkStruct VkDisplayModeParametersKHR' -- ' closing tick for hsc2hs
 
@@ -146,7 +148,7 @@ instance VulkanMarshal VkDisplayModeParametersKHR where
 --   >     VkDisplayModePropertiesKHR displayModeProperties;
 --   > } VkDisplayModeProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModeProperties2KHR VkDisplayModeProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayModeProperties2KHR VkDisplayModeProperties2KHR registry at www.khronos.org>
 type VkDisplayModeProperties2KHR =
      VkStruct VkDisplayModeProperties2KHR' -- ' closing tick for hsc2hs
 
@@ -183,7 +185,7 @@ instance VulkanMarshal VkDisplayModeProperties2KHR where
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayModePropertiesKHR VkDisplayModePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayModePropertiesKHR VkDisplayModePropertiesKHR registry at www.khronos.org>
 type VkDisplayModePropertiesKHR =
      VkStruct VkDisplayModePropertiesKHR' -- ' closing tick for hsc2hs
 
@@ -208,13 +210,51 @@ instance VulkanMarshal VkDisplayModePropertiesKHR where
            'True -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkDisplayNativeHdrSurfaceCapabilitiesAMD {
+--   >     VkStructureType sType;
+--   >     void*          pNext;
+--   >     VkBool32       localDimmingSupport;
+--   > } VkDisplayNativeHdrSurfaceCapabilitiesAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayNativeHdrSurfaceCapabilitiesAMD VkDisplayNativeHdrSurfaceCapabilitiesAMD registry at www.khronos.org>
+type VkDisplayNativeHdrSurfaceCapabilitiesAMD =
+     VkStruct VkDisplayNativeHdrSurfaceCapabilitiesAMD' -- ' closing tick for hsc2hs
+
+data VkDisplayNativeHdrSurfaceCapabilitiesAMD' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkDisplayNativeHdrSurfaceCapabilitiesAMD
+         where
+    type StructRep VkDisplayNativeHdrSurfaceCapabilitiesAMD =
+         'StructMeta "VkDisplayNativeHdrSurfaceCapabilitiesAMD" -- ' closing tick for hsc2hs
+           VkDisplayNativeHdrSurfaceCapabilitiesAMD
+           #{size VkDisplayNativeHdrSurfaceCapabilitiesAMD}
+           #{alignment VkDisplayNativeHdrSurfaceCapabilitiesAMD}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDisplayNativeHdrSurfaceCapabilitiesAMD, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDisplayNativeHdrSurfaceCapabilitiesAMD, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "localDimmingSupport" VkBool32 'False 
+                                                               #{offset VkDisplayNativeHdrSurfaceCapabilitiesAMD, localDimmingSupport}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
+           '[VkSurfaceCapabilities2KHR] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkDisplayPlaneCapabilities2KHR {
 --   >     VkStructureType sType;
 --   >     void* pNext;
 --   >     VkDisplayPlaneCapabilitiesKHR capabilities;
 --   > } VkDisplayPlaneCapabilities2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneCapabilities2KHR VkDisplayPlaneCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPlaneCapabilities2KHR VkDisplayPlaneCapabilities2KHR registry at www.khronos.org>
 type VkDisplayPlaneCapabilities2KHR =
      VkStruct VkDisplayPlaneCapabilities2KHR' -- ' closing tick for hsc2hs
 
@@ -257,7 +297,7 @@ instance VulkanMarshal VkDisplayPlaneCapabilities2KHR where
 --   >     VkExtent2D                       maxDstExtent;
 --   > } VkDisplayPlaneCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneCapabilitiesKHR VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPlaneCapabilitiesKHR VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 type VkDisplayPlaneCapabilitiesKHR =
      VkStruct VkDisplayPlaneCapabilitiesKHR' -- ' closing tick for hsc2hs
 
@@ -325,7 +365,7 @@ instance VulkanMarshal VkDisplayPlaneCapabilitiesKHR where
 --   >     uint32_t planeIndex;
 --   > } VkDisplayPlaneInfo2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneInfo2KHR VkDisplayPlaneInfo2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPlaneInfo2KHR VkDisplayPlaneInfo2KHR registry at www.khronos.org>
 type VkDisplayPlaneInfo2KHR = VkStruct VkDisplayPlaneInfo2KHR' -- ' closing tick for hsc2hs
 
 data VkDisplayPlaneInfo2KHR' -- ' closing tick for hsc2hs
@@ -365,7 +405,7 @@ instance VulkanMarshal VkDisplayPlaneInfo2KHR where
 --   >     VkDisplayPlanePropertiesKHR displayPlaneProperties;
 --   > } VkDisplayPlaneProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlaneProperties2KHR VkDisplayPlaneProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPlaneProperties2KHR VkDisplayPlaneProperties2KHR registry at www.khronos.org>
 type VkDisplayPlaneProperties2KHR =
      VkStruct VkDisplayPlaneProperties2KHR' -- ' closing tick for hsc2hs
 
@@ -402,7 +442,7 @@ instance VulkanMarshal VkDisplayPlaneProperties2KHR where
 --   >     uint32_t                         currentStackIndex;
 --   > } VkDisplayPlanePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPlanePropertiesKHR VkDisplayPlanePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPlanePropertiesKHR VkDisplayPlanePropertiesKHR registry at www.khronos.org>
 type VkDisplayPlanePropertiesKHR =
      VkStruct VkDisplayPlanePropertiesKHR' -- ' closing tick for hsc2hs
 
@@ -434,7 +474,7 @@ instance VulkanMarshal VkDisplayPlanePropertiesKHR where
 --   >     VkDisplayPowerStateEXT           powerState;
 --   > } VkDisplayPowerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPowerInfoEXT VkDisplayPowerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPowerInfoEXT VkDisplayPowerInfoEXT registry at www.khronos.org>
 type VkDisplayPowerInfoEXT = VkStruct VkDisplayPowerInfoEXT' -- ' closing tick for hsc2hs
 
 data VkDisplayPowerInfoEXT' -- ' closing tick for hsc2hs
@@ -471,7 +511,7 @@ instance VulkanMarshal VkDisplayPowerInfoEXT where
 --   >     VkBool32                         persistent;
 --   > } VkDisplayPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPresentInfoKHR VkDisplayPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPresentInfoKHR VkDisplayPresentInfoKHR registry at www.khronos.org>
 type VkDisplayPresentInfoKHR = VkStruct VkDisplayPresentInfoKHR' -- ' closing tick for hsc2hs
 
 data VkDisplayPresentInfoKHR' -- ' closing tick for hsc2hs
@@ -516,7 +556,7 @@ instance VulkanMarshal VkDisplayPresentInfoKHR where
 --   >     VkDisplayPropertiesKHR displayProperties;
 --   > } VkDisplayProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayProperties2KHR VkDisplayProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayProperties2KHR VkDisplayProperties2KHR registry at www.khronos.org>
 type VkDisplayProperties2KHR = VkStruct VkDisplayProperties2KHR' -- ' closing tick for hsc2hs
 
 data VkDisplayProperties2KHR' -- ' closing tick for hsc2hs
@@ -555,7 +595,7 @@ instance VulkanMarshal VkDisplayProperties2KHR where
 --   >     VkBool32                         persistentContent;
 --   > } VkDisplayPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplayPropertiesKHR VkDisplayPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplayPropertiesKHR VkDisplayPropertiesKHR registry at www.khronos.org>
 type VkDisplayPropertiesKHR = VkStruct VkDisplayPropertiesKHR' -- ' closing tick for hsc2hs
 
 data VkDisplayPropertiesKHR' -- ' closing tick for hsc2hs
@@ -617,7 +657,7 @@ instance VulkanMarshal VkDisplayPropertiesKHR where
 --   >     VkExtent2D                       imageExtent;
 --   > } VkDisplaySurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDisplaySurfaceCreateInfoKHR VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDisplaySurfaceCreateInfoKHR VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
 type VkDisplaySurfaceCreateInfoKHR =
      VkStruct VkDisplaySurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 

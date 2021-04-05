@@ -1,21 +1,27 @@
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
+{-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE KindSignatures             #-}
 {-# LANGUAGE PatternSynonyms            #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# LANGUAGE Strict                     #-}
+{-# LANGUAGE TypeSynonymInstances       #-}
 module Graphics.Vulkan.Types.Enum.Sampler
        (VkSamplerAddressMode(VkSamplerAddressMode,
                              VK_SAMPLER_ADDRESS_MODE_REPEAT,
                              VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT,
                              VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
                              VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER),
-        VkSamplerCreateFlagBits(..),
+        VkSamplerCreateBitmask(VkSamplerCreateBitmask,
+                               VkSamplerCreateFlags, VkSamplerCreateFlagBits),
+        VkSamplerCreateFlags, VkSamplerCreateFlagBits,
         VkSamplerMipmapMode(VkSamplerMipmapMode,
                             VK_SAMPLER_MIPMAP_MODE_NEAREST, VK_SAMPLER_MIPMAP_MODE_LINEAR),
-        VkSamplerReductionModeEXT(VkSamplerReductionModeEXT,
-                                  VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT,
-                                  VK_SAMPLER_REDUCTION_MODE_MIN_EXT,
-                                  VK_SAMPLER_REDUCTION_MODE_MAX_EXT),
+        VkSamplerReductionMode(VkSamplerReductionMode,
+                               VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE,
+                               VK_SAMPLER_REDUCTION_MODE_MIN, VK_SAMPLER_REDUCTION_MODE_MAX),
+        VkSamplerReductionModeEXT(..),
         VkSamplerYcbcrModelConversion(VkSamplerYcbcrModelConversion,
                                       VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY,
                                       VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY,
@@ -32,15 +38,15 @@ import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
 import Foreign.Storable                (Storable)
 import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (Int32)
-import Graphics.Vulkan.Types.BaseTypes (VkFlags)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
+import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerAddressMode VkSamplerAddressMode registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerAddressMode VkSamplerAddressMode registry at www.khronos.org>
 newtype VkSamplerAddressMode = VkSamplerAddressMode Int32
                                deriving (Eq, Ord, Enum, Storable)
 
@@ -96,20 +102,44 @@ pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER ::
 pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER =
         VkSamplerAddressMode 3
 
-newtype VkSamplerCreateFlagBits = VkSamplerCreateFlagBits VkFlags
-                                  deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+newtype VkSamplerCreateBitmask (a ::
+                                  FlagType) = VkSamplerCreateBitmask VkFlags
+                                              deriving (Eq, Ord, Storable)
 
-instance Show VkSamplerCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+type VkSamplerCreateFlags = VkSamplerCreateBitmask FlagMask
 
-instance Read VkSamplerCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+type VkSamplerCreateFlagBits = VkSamplerCreateBitmask FlagBit
+
+pattern VkSamplerCreateFlagBits ::
+        VkFlags -> VkSamplerCreateBitmask FlagBit
+
+pattern VkSamplerCreateFlagBits n = VkSamplerCreateBitmask n
+
+pattern VkSamplerCreateFlags ::
+        VkFlags -> VkSamplerCreateBitmask FlagMask
+
+pattern VkSamplerCreateFlags n = VkSamplerCreateBitmask n
+
+deriving instance Bits (VkSamplerCreateBitmask FlagMask)
+
+deriving instance FiniteBits (VkSamplerCreateBitmask FlagMask)
+
+instance Show (VkSamplerCreateBitmask a) where
+    showsPrec p (VkSamplerCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkSamplerCreateBitmask " . showsPrec 11 x)
+
+instance Read (VkSamplerCreateBitmask a) where
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkSamplerCreateBitmask") >>
+                  (VkSamplerCreateBitmask <$> step readPrec)))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerMipmapMode VkSamplerMipmapMode registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerMipmapMode VkSamplerMipmapMode registry at www.khronos.org>
 newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
                               deriving (Eq, Ord, Enum, Storable)
 
@@ -147,57 +177,64 @@ pattern VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerReductionModeEXT VkSamplerReductionModeEXT registry at www.khronos.org>
-newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
-                                    deriving (Eq, Ord, Enum, Storable)
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerReductionMode VkSamplerReductionMode registry at www.khronos.org>
+newtype VkSamplerReductionMode = VkSamplerReductionMode Int32
+                                 deriving (Eq, Ord, Enum, Storable)
 
-instance Show VkSamplerReductionModeEXT where
-    showsPrec _ VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT
-      = showString "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT"
-    showsPrec _ VK_SAMPLER_REDUCTION_MODE_MIN_EXT
-      = showString "VK_SAMPLER_REDUCTION_MODE_MIN_EXT"
-    showsPrec _ VK_SAMPLER_REDUCTION_MODE_MAX_EXT
-      = showString "VK_SAMPLER_REDUCTION_MODE_MAX_EXT"
-    showsPrec p (VkSamplerReductionModeEXT x)
+instance Show VkSamplerReductionMode where
+    showsPrec _ VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE
+      = showString "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE"
+    showsPrec _ VK_SAMPLER_REDUCTION_MODE_MIN
+      = showString "VK_SAMPLER_REDUCTION_MODE_MIN"
+    showsPrec _ VK_SAMPLER_REDUCTION_MODE_MAX
+      = showString "VK_SAMPLER_REDUCTION_MODE_MAX"
+    showsPrec p (VkSamplerReductionMode x)
       = showParen (p >= 11)
-          (showString "VkSamplerReductionModeEXT " . showsPrec 11 x)
+          (showString "VkSamplerReductionMode " . showsPrec 11 x)
 
-instance Read VkSamplerReductionModeEXT where
+instance Read VkSamplerReductionMode where
     readPrec
       = parens
           (choose
-             [("VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT",
-               pure VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT),
-              ("VK_SAMPLER_REDUCTION_MODE_MIN_EXT",
-               pure VK_SAMPLER_REDUCTION_MODE_MIN_EXT),
-              ("VK_SAMPLER_REDUCTION_MODE_MAX_EXT",
-               pure VK_SAMPLER_REDUCTION_MODE_MAX_EXT)]
+             [("VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE",
+               pure VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE),
+              ("VK_SAMPLER_REDUCTION_MODE_MIN",
+               pure VK_SAMPLER_REDUCTION_MODE_MIN),
+              ("VK_SAMPLER_REDUCTION_MODE_MAX",
+               pure VK_SAMPLER_REDUCTION_MODE_MAX)]
              +++
              prec 10
-               (expectP (Ident "VkSamplerReductionModeEXT") >>
-                  (VkSamplerReductionModeEXT <$> step readPrec)))
+               (expectP (Ident "VkSamplerReductionMode") >>
+                  (VkSamplerReductionMode <$> step readPrec)))
 
-pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT ::
-        VkSamplerReductionModeEXT
+pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE ::
+        VkSamplerReductionMode
 
-pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT =
-        VkSamplerReductionModeEXT 0
+pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE =
+        VkSamplerReductionMode 0
 
-pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT ::
-        VkSamplerReductionModeEXT
+pattern VK_SAMPLER_REDUCTION_MODE_MIN :: VkSamplerReductionMode
 
-pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT =
-        VkSamplerReductionModeEXT 1
+pattern VK_SAMPLER_REDUCTION_MODE_MIN = VkSamplerReductionMode 1
 
-pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT ::
-        VkSamplerReductionModeEXT
+pattern VK_SAMPLER_REDUCTION_MODE_MAX :: VkSamplerReductionMode
 
-pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT =
-        VkSamplerReductionModeEXT 2
+pattern VK_SAMPLER_REDUCTION_MODE_MAX = VkSamplerReductionMode 2
+
+newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT VkFlags
+                                    deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
+
+instance Show VkSamplerReductionModeEXT where
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
+
+instance Read VkSamplerReductionModeEXT where
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrModelConversion VkSamplerYcbcrModelConversion registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerYcbcrModelConversion VkSamplerYcbcrModelConversion registry at www.khronos.org>
 newtype VkSamplerYcbcrModelConversion = VkSamplerYcbcrModelConversion Int32
                                         deriving (Eq, Ord, Enum, Storable)
 
@@ -282,7 +319,7 @@ instance Read VkSamplerYcbcrModelConversionKHR where
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrRange VkSamplerYcbcrRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerYcbcrRange VkSamplerYcbcrRange registry at www.khronos.org>
 newtype VkSamplerYcbcrRange = VkSamplerYcbcrRange Int32
                               deriving (Eq, Ord, Enum, Storable)
 

@@ -2,25 +2,29 @@
 {-# LANGUAGE EmptyDataDecls #-}
 {-# LANGUAGE Strict         #-}
 module Graphics.Vulkan.Types.Handles
-       (VkBuffer, VkBuffer_T(), VkBufferView, VkBufferView_T(),
-        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSet_T(),
-        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplate_T(),
-        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
-        VkDevice, VkDevice_T(), VkDeviceMemory, VkDeviceMemory_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImage_T(),
-        VkImageView, VkImageView_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+       (VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
+        VkBuffer_T(), VkBufferView, VkBufferView_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSet_T(), VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplate_T(), VkDescriptorUpdateTemplateKHR,
+        VkDescriptorUpdateTemplateKHR_T(), VkDevice, VkDevice_T(),
+        VkDeviceMemory, VkDeviceMemory_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImage_T(), VkImageView, VkImageView_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipeline_T(), VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(), VkQueryPool,
+        VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
         VkRenderPass_T(), VkSampler, VkSampler_T(),
         VkSamplerYcbcrConversion, VkSamplerYcbcrConversion_T(),
         VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
@@ -29,6 +33,17 @@ module Graphics.Vulkan.Types.Handles
         VkValidationCacheEXT, VkValidationCacheEXT_T())
        where
 import Graphics.Vulkan.Marshal (Ptr, VkPtr)
+
+type VkAccelerationStructureKHR =
+     VkPtr VkAccelerationStructureKHR_T
+
+-- | Opaque data type referenced by VkAccelerationStructureKHR
+data VkAccelerationStructureKHR_T
+
+type VkAccelerationStructureNV = VkPtr VkAccelerationStructureNV_T
+
+-- | Opaque data type referenced by VkAccelerationStructureNV
+data VkAccelerationStructureNV_T
 
 type VkBuffer = VkPtr VkBuffer_T
 
@@ -59,6 +74,11 @@ type VkDebugUtilsMessengerEXT = VkPtr VkDebugUtilsMessengerEXT_T
 
 -- | Opaque data type referenced by VkDebugUtilsMessengerEXT
 data VkDebugUtilsMessengerEXT_T
+
+type VkDeferredOperationKHR = VkPtr VkDeferredOperationKHR_T
+
+-- | Opaque data type referenced by VkDeferredOperationKHR
+data VkDeferredOperationKHR_T
 
 type VkDescriptorPool = VkPtr VkDescriptorPool_T
 
@@ -132,21 +152,22 @@ type VkImageView = VkPtr VkImageView_T
 -- | Opaque data type referenced by VkImageView
 data VkImageView_T
 
-type VkIndirectCommandsLayoutNVX =
-     VkPtr VkIndirectCommandsLayoutNVX_T
+type VkIndirectCommandsLayoutNV =
+     VkPtr VkIndirectCommandsLayoutNV_T
 
--- | Opaque data type referenced by VkIndirectCommandsLayoutNVX
-data VkIndirectCommandsLayoutNVX_T
+-- | Opaque data type referenced by VkIndirectCommandsLayoutNV
+data VkIndirectCommandsLayoutNV_T
 
 type VkInstance = Ptr VkInstance_T
 
 -- | Opaque data type referenced by VkInstance
 data VkInstance_T
 
-type VkObjectTableNVX = VkPtr VkObjectTableNVX_T
+type VkPerformanceConfigurationINTEL =
+     VkPtr VkPerformanceConfigurationINTEL_T
 
--- | Opaque data type referenced by VkObjectTableNVX
-data VkObjectTableNVX_T
+-- | Opaque data type referenced by VkPerformanceConfigurationINTEL
+data VkPerformanceConfigurationINTEL_T
 
 type VkPhysicalDevice = Ptr VkPhysicalDevice_T
 
@@ -167,6 +188,11 @@ type VkPipelineLayout = VkPtr VkPipelineLayout_T
 
 -- | Opaque data type referenced by VkPipelineLayout
 data VkPipelineLayout_T
+
+type VkPrivateDataSlotEXT = VkPtr VkPrivateDataSlotEXT_T
+
+-- | Opaque data type referenced by VkPrivateDataSlotEXT
+data VkPrivateDataSlotEXT_T
 
 type VkQueryPool = VkPtr VkQueryPool_T
 

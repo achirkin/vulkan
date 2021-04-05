@@ -25,7 +25,7 @@ import Graphics.Vulkan.Types.Struct.XYColorEXT  (VkXYColorEXT)
 --   >     float          maxFrameAverageLightLevel;
 --   > } VkHdrMetadataEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkHdrMetadataEXT VkHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkHdrMetadataEXT VkHdrMetadataEXT registry at www.khronos.org>
 type VkHdrMetadataEXT = VkStruct VkHdrMetadataEXT' -- ' closing tick for hsc2hs
 
 data VkHdrMetadataEXT' -- ' closing tick for hsc2hs

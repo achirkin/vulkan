@@ -76,6 +76,7 @@ module Graphics.Vulkan.Types.Enum.External
                                              VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT,
                                              VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT,
                                              VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT,
+                                             VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT,
                                              VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT),
         VkExternalSemaphoreHandleTypeFlags,
         VkExternalSemaphoreHandleTypeFlagBits)
@@ -761,6 +762,8 @@ instance Show (VkExternalSemaphoreHandleTypeBitmask a) where
           "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT"
     showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
       = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT"
+    showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT
+      = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT"
     showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT
       = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT"
     showsPrec p (VkExternalSemaphoreHandleTypeBitmask x)
@@ -780,6 +783,8 @@ instance Read (VkExternalSemaphoreHandleTypeBitmask a) where
                pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT),
               ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT",
                pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT),
+              ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT",
+               pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT),
               ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT",
                pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT)]
              +++
@@ -814,6 +819,12 @@ pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT ::
 
 pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT =
         VkExternalSemaphoreHandleTypeBitmask 8
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT ::
+        VkExternalSemaphoreHandleTypeBitmask a
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT =
+        VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
 
 -- | bitpos = @4@
 pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT ::

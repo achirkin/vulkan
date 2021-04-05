@@ -23,11 +23,9 @@ module Graphics.Vulkan.Types.Enum.Buffer
                              VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
                              VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
                              VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT),
-        VkBufferUsageFlags, VkBufferUsageFlagBits,
-        VkBufferViewCreateFlagBits(..))
+        VkBufferUsageFlags, VkBufferUsageFlagBits)
        where
 import Data.Bits                       (Bits, FiniteBits)
-import Data.Coerce                     (coerce)
 import Foreign.Storable                (Storable)
 import GHC.Read                        (choose, expectP)
 import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
@@ -256,14 +254,3 @@ pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT ::
 
 pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT =
         VkBufferUsageBitmask 256
-
-newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
-                                     deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
-
-instance Show VkBufferViewCreateFlagBits where
-    {-# INLINE showsPrec #-}
-    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
-
-instance Read VkBufferViewCreateFlagBits where
-    {-# INLINE readsPrec #-}
-    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)

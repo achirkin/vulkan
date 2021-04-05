@@ -24,7 +24,7 @@ import Graphics.Vulkan.Types.Handles            (VkCommandBuffer, VkSemaphore)
 --   >     const VkSemaphore*     pSignalSemaphores;
 --   > } VkSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubmitInfo VkSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSubmitInfo VkSubmitInfo registry at www.khronos.org>
 type VkSubmitInfo = VkStruct VkSubmitInfo' -- ' closing tick for hsc2hs
 
 data VkSubmitInfo' -- ' closing tick for hsc2hs

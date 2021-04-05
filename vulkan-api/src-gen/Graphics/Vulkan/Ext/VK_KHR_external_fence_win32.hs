@@ -61,7 +61,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         VkFenceImportBitmask(..), VkFenceCreateFlagBits(),
         VkFenceCreateFlags(), VkFenceImportFlagBits(),
         VkFenceImportFlagBitsKHR(..), VkFenceImportFlags(),
-        VkFenceCreateInfo, VkFenceGetWin32HandleInfoKHR, VkBool32(..),
+        VkFenceCreateInfo, VkFenceGetWin32HandleInfoKHR, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkImportFenceWin32HandleInfoKHR, VkStructureType(..),
         -- > #include "vk_platform.h"
@@ -69,11 +70,14 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         HS_vkImportFenceWin32HandleKHR, PFN_vkImportFenceWin32HandleKHR,
         VkGetFenceWin32HandleKHR, pattern VkGetFenceWin32HandleKHR,
         HS_vkGetFenceWin32HandleKHR, PFN_vkGetFenceWin32HandleKHR,
-        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        module Graphics.Vulkan.Marshal, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -83,26 +87,32 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR, MirConnection,
-        MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
-        WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT,
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(), DWORD, Display,
+        GgpFrameToken, GgpStreamDescriptor, HANDLE, HINSTANCE, HMONITOR,
+        HWND, IDirectFB, IDirectFBSurface, LPCWSTR, RROutput,
+        SECURITY_ATTRIBUTES, VisualID, Window, WlDisplay, WlSurface,
+        XcbConnectionT, XcbVisualidT, XcbWindowT, Zx_handle_t,
         VkD3D12FenceSubmitInfoKHR, VkExportMemoryWin32HandleInfoKHR,
         VkExportMemoryWin32HandleInfoNV,
         VkExportSemaphoreWin32HandleInfoKHR,
         VkImportMemoryWin32HandleInfoKHR, VkImportMemoryWin32HandleInfoNV,
         VkImportSemaphoreWin32HandleInfoKHR, VkMemoryGetWin32HandleInfoKHR,
         VkMemoryWin32HandlePropertiesKHR, VkSemaphoreGetWin32HandleInfoKHR,
+        VkSurfaceCapabilitiesFullScreenExclusiveEXT,
+        VkSurfaceFullScreenExclusiveInfoEXT,
+        VkSurfaceFullScreenExclusiveWin32InfoEXT,
         VkWin32KeyedMutexAcquireReleaseInfoKHR,
         VkWin32KeyedMutexAcquireReleaseInfoNV, VkWin32SurfaceCreateInfoKHR,
         VK_KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION,
@@ -156,7 +166,7 @@ type VkImportFenceWin32HandleKHR = "vkImportFenceWin32HandleKHR"
 --   >     , const VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceWin32HandleKHR vkImportFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkImportFenceWin32HandleKHR vkImportFenceWin32HandleKHR registry at www.khronos.org>
 type HS_vkImportFenceWin32HandleKHR =
      VkDevice -- ^ device
               -> Ptr VkImportFenceWin32HandleInfoKHR -- ^ pImportFenceWin32HandleInfo
@@ -216,7 +226,7 @@ type VkGetFenceWin32HandleKHR = "vkGetFenceWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceWin32HandleKHR vkGetFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetFenceWin32HandleKHR vkGetFenceWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetFenceWin32HandleKHR =
      VkDevice -- ^ device
               ->

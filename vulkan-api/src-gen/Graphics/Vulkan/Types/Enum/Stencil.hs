@@ -10,7 +10,8 @@
 module Graphics.Vulkan.Types.Enum.Stencil
        (VkStencilFaceBitmask(VkStencilFaceBitmask, VkStencilFaceFlags,
                              VkStencilFaceFlagBits, VK_STENCIL_FACE_FRONT_BIT,
-                             VK_STENCIL_FACE_BACK_BIT, VK_STENCIL_FRONT_AND_BACK),
+                             VK_STENCIL_FACE_BACK_BIT, VK_STENCIL_FACE_FRONT_AND_BACK,
+                             VK_STENCIL_FRONT_AND_BACK),
         VkStencilFaceFlags, VkStencilFaceFlagBits,
         VkStencilOp(VkStencilOp, VK_STENCIL_OP_KEEP, VK_STENCIL_OP_ZERO,
                     VK_STENCIL_OP_REPLACE, VK_STENCIL_OP_INCREMENT_AND_CLAMP,
@@ -54,6 +55,8 @@ instance Show (VkStencilFaceBitmask a) where
       = showString "VK_STENCIL_FACE_FRONT_BIT"
     showsPrec _ VK_STENCIL_FACE_BACK_BIT
       = showString "VK_STENCIL_FACE_BACK_BIT"
+    showsPrec _ VK_STENCIL_FACE_FRONT_AND_BACK
+      = showString "VK_STENCIL_FACE_FRONT_AND_BACK"
     showsPrec _ VK_STENCIL_FRONT_AND_BACK
       = showString "VK_STENCIL_FRONT_AND_BACK"
     showsPrec p (VkStencilFaceBitmask x)
@@ -66,6 +69,8 @@ instance Read (VkStencilFaceBitmask a) where
           (choose
              [("VK_STENCIL_FACE_FRONT_BIT", pure VK_STENCIL_FACE_FRONT_BIT),
               ("VK_STENCIL_FACE_BACK_BIT", pure VK_STENCIL_FACE_BACK_BIT),
+              ("VK_STENCIL_FACE_FRONT_AND_BACK",
+               pure VK_STENCIL_FACE_FRONT_AND_BACK),
               ("VK_STENCIL_FRONT_AND_BACK", pure VK_STENCIL_FRONT_AND_BACK)]
              +++
              prec 10
@@ -87,13 +92,18 @@ pattern VK_STENCIL_FACE_BACK_BIT :: VkStencilFaceBitmask a
 pattern VK_STENCIL_FACE_BACK_BIT = VkStencilFaceBitmask 2
 
 -- | Front and back faces
+pattern VK_STENCIL_FACE_FRONT_AND_BACK :: VkStencilFaceBitmask a
+
+pattern VK_STENCIL_FACE_FRONT_AND_BACK = VkStencilFaceBitmask 3
+
+-- | Alias for backwards compatibility
 pattern VK_STENCIL_FRONT_AND_BACK :: VkStencilFaceBitmask a
 
-pattern VK_STENCIL_FRONT_AND_BACK = VkStencilFaceBitmask 3
+pattern VK_STENCIL_FRONT_AND_BACK = VK_STENCIL_FACE_FRONT_AND_BACK
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkStencilOp VkStencilOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkStencilOp VkStencilOp registry at www.khronos.org>
 newtype VkStencilOp = VkStencilOp Int32
                       deriving (Eq, Ord, Enum, Storable)
 

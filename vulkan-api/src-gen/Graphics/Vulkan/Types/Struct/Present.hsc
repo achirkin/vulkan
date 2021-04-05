@@ -27,7 +27,7 @@ import Graphics.Vulkan.Types.Struct.Rect        (VkRectLayerKHR)
 --   >     VkResult* pResults;
 --   > } VkPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentInfoKHR VkPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPresentInfoKHR VkPresentInfoKHR registry at www.khronos.org>
 type VkPresentInfoKHR = VkStruct VkPresentInfoKHR' -- ' closing tick for hsc2hs
 
 data VkPresentInfoKHR' -- ' closing tick for hsc2hs
@@ -86,7 +86,7 @@ instance VulkanMarshal VkPresentInfoKHR where
 --   >     const VkRectLayerKHR*   pRectangles;
 --   > } VkPresentRegionKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionKHR VkPresentRegionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPresentRegionKHR VkPresentRegionKHR registry at www.khronos.org>
 type VkPresentRegionKHR = VkStruct VkPresentRegionKHR' -- ' closing tick for hsc2hs
 
 data VkPresentRegionKHR' -- ' closing tick for hsc2hs
@@ -117,7 +117,7 @@ instance VulkanMarshal VkPresentRegionKHR where
 --   >     const VkPresentRegionKHR*   pRegions;
 --   > } VkPresentRegionsKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentRegionsKHR VkPresentRegionsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPresentRegionsKHR VkPresentRegionsKHR registry at www.khronos.org>
 type VkPresentRegionsKHR = VkStruct VkPresentRegionsKHR' -- ' closing tick for hsc2hs
 
 data VkPresentRegionsKHR' -- ' closing tick for hsc2hs
@@ -156,7 +156,7 @@ instance VulkanMarshal VkPresentRegionsKHR where
 --   >     uint64_t                         desiredPresentTime;
 --   > } VkPresentTimeGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentTimeGOOGLE VkPresentTimeGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPresentTimeGOOGLE VkPresentTimeGOOGLE registry at www.khronos.org>
 type VkPresentTimeGOOGLE = VkStruct VkPresentTimeGOOGLE' -- ' closing tick for hsc2hs
 
 data VkPresentTimeGOOGLE' -- ' closing tick for hsc2hs
@@ -187,7 +187,7 @@ instance VulkanMarshal VkPresentTimeGOOGLE where
 --   >     const VkPresentTimeGOOGLE*   pTimes;
 --   > } VkPresentTimesInfoGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPresentTimesInfoGOOGLE VkPresentTimesInfoGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPresentTimesInfoGOOGLE VkPresentTimesInfoGOOGLE registry at www.khronos.org>
 type VkPresentTimesInfoGOOGLE = VkStruct VkPresentTimesInfoGOOGLE' -- ' closing tick for hsc2hs
 
 data VkPresentTimesInfoGOOGLE' -- ' closing tick for hsc2hs

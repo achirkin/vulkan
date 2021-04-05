@@ -87,7 +87,7 @@ type HS_vkDebugUtilsMessengerCallbackEXT =
 
 -- | > typedef VkBool32 (VKAPI_PTR *PFN_vkDebugUtilsMessengerCallbackEXT)(
 --   >     VkDebugUtilsMessageSeverityFlagBitsEXT           messageSeverity,
---   >     VkDebugUtilsMessageTypeFlagsEXT                  messageType,
+--   >     VkDebugUtilsMessageTypeFlagsEXT                  messageTypes,
 --   >     const VkDebugUtilsMessengerCallbackDataEXT*      pCallbackData,
 --   >     void*                                            pUserData);
 type PFN_vkDebugUtilsMessengerCallbackEXT =

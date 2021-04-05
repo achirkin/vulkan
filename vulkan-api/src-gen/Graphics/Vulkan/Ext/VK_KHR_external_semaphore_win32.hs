@@ -57,32 +57,34 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         VkExternalSemaphoreFeatureFlags(),
         VkExternalSemaphoreHandleTypeFlagBits(),
         VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
-        VkExternalSemaphoreHandleTypeFlags(), VkBool32(..),
+        VkExternalSemaphoreHandleTypeFlags(), AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkImportSemaphoreWin32HandleInfoKHR, VkPipelineBindPoint(..),
         VkPipelineCacheHeaderVersion(..), VkPipelineCreateBitmask(..),
-        VkPipelineStageBitmask(..), VkPipelineCacheCreateFlagBits(..),
-        VkPipelineColorBlendStateCreateFlagBits(..),
-        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
-        VkPipelineStageFlags(),
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..),
-        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkPipelineCreationFeedbackBitmaskEXT(..),
+        VkPipelineExecutableStatisticFormatKHR(..),
+        VkPipelineStageBitmask(..), VkPipelineCacheCreateBitmask(..),
+        VkPipelineCacheCreateFlagBits(), VkPipelineCacheCreateFlags(),
+        VkPipelineCompilerControlBitmaskAMD(..),
+        VkPipelineCompilerControlFlagBitsAMD(),
+        VkPipelineCompilerControlFlagsAMD(), VkPipelineCreateFlagBits(),
+        VkPipelineCreateFlags(), VkPipelineCreationFeedbackFlagBitsEXT(),
+        VkPipelineCreationFeedbackFlagsEXT(),
+        VkPipelineShaderStageCreateBitmask(..),
+        VkPipelineShaderStageCreateFlagBits(),
+        VkPipelineShaderStageCreateFlags(), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -90,14 +92,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -106,22 +110,27 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..), VkSemaphoreCreateInfo,
         VkSemaphoreGetWin32HandleInfoKHR, VkSemaphoreImportBitmask(..),
+        VkSemaphoreType(..), VkSemaphoreWaitBitmask(..),
         VkSemaphoreImportFlagBits(), VkSemaphoreImportFlagBitsKHR(..),
-        VkSemaphoreImportFlags(), VkStructureType(..), VkSubmitInfo,
+        VkSemaphoreImportFlags(), VkSemaphoreTypeKHR(..),
+        VkSemaphoreWaitFlagBits(), VkSemaphoreWaitFlagBitsKHR(..),
+        VkSemaphoreWaitFlags(), VkStructureType(..), VkSubmitInfo,
         -- > #include "vk_platform.h"
         VkImportSemaphoreWin32HandleKHR,
         pattern VkImportSemaphoreWin32HandleKHR,
@@ -129,11 +138,14 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         PFN_vkImportSemaphoreWin32HandleKHR, VkGetSemaphoreWin32HandleKHR,
         pattern VkGetSemaphoreWin32HandleKHR,
         HS_vkGetSemaphoreWin32HandleKHR, PFN_vkGetSemaphoreWin32HandleKHR,
-        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        module Graphics.Vulkan.Marshal, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -143,25 +155,31 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR, MirConnection,
-        MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
-        WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT,
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(), DWORD, Display,
+        GgpFrameToken, GgpStreamDescriptor, HANDLE, HINSTANCE, HMONITOR,
+        HWND, IDirectFB, IDirectFBSurface, LPCWSTR, RROutput,
+        SECURITY_ATTRIBUTES, VisualID, Window, WlDisplay, WlSurface,
+        XcbConnectionT, XcbVisualidT, XcbWindowT, Zx_handle_t,
         VkExportFenceWin32HandleInfoKHR, VkExportMemoryWin32HandleInfoKHR,
         VkExportMemoryWin32HandleInfoNV, VkFenceGetWin32HandleInfoKHR,
         VkImportFenceWin32HandleInfoKHR, VkImportMemoryWin32HandleInfoKHR,
         VkImportMemoryWin32HandleInfoNV, VkMemoryGetWin32HandleInfoKHR,
         VkMemoryWin32HandlePropertiesKHR,
+        VkSurfaceCapabilitiesFullScreenExclusiveEXT,
+        VkSurfaceFullScreenExclusiveInfoEXT,
+        VkSurfaceFullScreenExclusiveWin32InfoEXT,
         VkWin32KeyedMutexAcquireReleaseInfoKHR,
         VkWin32KeyedMutexAcquireReleaseInfoNV, VkWin32SurfaceCreateInfoKHR,
         VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION,
@@ -173,21 +191,21 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         pattern VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR)
        where
-import GHC.Ptr                                        (Ptr (..))
+import GHC.Ptr                                       (Ptr (..))
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
+import Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.External
 import Graphics.Vulkan.Types.Enum.Pipeline
 import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Enum.Semaphore
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Include
 import Graphics.Vulkan.Types.Struct.PlatformWin32Khr
-import Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
-import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
+import Graphics.Vulkan.Types.Struct.Semaphore        (VkSemaphoreCreateInfo)
+import Graphics.Vulkan.Types.Struct.SubmitInfo       (VkSubmitInfo)
 
 pattern VkImportSemaphoreWin32HandleKHR :: CString
 
@@ -220,7 +238,7 @@ type VkImportSemaphoreWin32HandleKHR =
 --   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
@@ -283,7 +301,7 @@ type VkGetSemaphoreWin32HandleKHR = "vkGetSemaphoreWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               ->

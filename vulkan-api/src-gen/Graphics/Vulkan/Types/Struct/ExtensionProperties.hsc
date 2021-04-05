@@ -16,7 +16,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     uint32_t        specVersion;
 --   > } VkExtensionProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExtensionProperties VkExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExtensionProperties VkExtensionProperties registry at www.khronos.org>
 type VkExtensionProperties = VkStruct VkExtensionProperties' -- ' closing tick for hsc2hs
 
 data VkExtensionProperties' -- ' closing tick for hsc2hs

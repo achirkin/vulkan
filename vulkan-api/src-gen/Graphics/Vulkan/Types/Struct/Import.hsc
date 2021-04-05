@@ -11,14 +11,14 @@ module Graphics.Vulkan.Types.Struct.Import
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagBits,
-                                                       VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import Graphics.Vulkan.Types.Handles                  (VkFence, VkSemaphore)
-import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
+import Graphics.Vulkan.Types.Enum.External      (VkExternalFenceHandleTypeFlagBits,
+                                                 VkExternalMemoryHandleTypeFlagBits,
+                                                 VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Fence         (VkFenceImportFlags)
+import Graphics.Vulkan.Types.Enum.Semaphore     (VkSemaphoreImportFlags)
+import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
+import Graphics.Vulkan.Types.Handles            (VkFence, VkSemaphore)
+import Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
 
 -- | > typedef struct VkImportFenceFdInfoKHR {
 --   >     VkStructureType sType;
@@ -29,7 +29,7 @@ import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
 --   >     int                                    fd;
 --   > } VkImportFenceFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportFenceFdInfoKHR VkImportFenceFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportFenceFdInfoKHR VkImportFenceFdInfoKHR registry at www.khronos.org>
 type VkImportFenceFdInfoKHR = VkStruct VkImportFenceFdInfoKHR' -- ' closing tick for hsc2hs
 
 data VkImportFenceFdInfoKHR' -- ' closing tick for hsc2hs
@@ -80,7 +80,7 @@ instance VulkanMarshal VkImportFenceFdInfoKHR where
 --   >     int                              fd;
 --   > } VkImportMemoryFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryFdInfoKHR VkImportMemoryFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportMemoryFdInfoKHR VkImportMemoryFdInfoKHR registry at www.khronos.org>
 type VkImportMemoryFdInfoKHR = VkStruct VkImportMemoryFdInfoKHR' -- ' closing tick for hsc2hs
 
 data VkImportMemoryFdInfoKHR' -- ' closing tick for hsc2hs
@@ -121,7 +121,7 @@ instance VulkanMarshal VkImportMemoryFdInfoKHR where
 --   >     void* pHostPointer;
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryHostPointerInfoEXT VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportMemoryHostPointerInfoEXT VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
 type VkImportMemoryHostPointerInfoEXT =
      VkStruct VkImportMemoryHostPointerInfoEXT' -- ' closing tick for hsc2hs
 
@@ -166,7 +166,7 @@ instance VulkanMarshal VkImportMemoryHostPointerInfoEXT where
 --   >     int                              fd;
 --   > } VkImportSemaphoreFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportSemaphoreFdInfoKHR VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportSemaphoreFdInfoKHR VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
 type VkImportSemaphoreFdInfoKHR =
      VkStruct VkImportSemaphoreFdInfoKHR' -- ' closing tick for hsc2hs
 

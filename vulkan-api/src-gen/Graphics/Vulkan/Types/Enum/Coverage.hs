@@ -1,0 +1,121 @@
+{-# OPTIONS_HADDOCK ignore-exports#-}
+{-# LANGUAGE DataKinds                  #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE PatternSynonyms            #-}
+{-# LANGUAGE Strict                     #-}
+module Graphics.Vulkan.Types.Enum.Coverage
+       (VkCoverageModulationModeNV(VkCoverageModulationModeNV,
+                                   VK_COVERAGE_MODULATION_MODE_NONE_NV,
+                                   VK_COVERAGE_MODULATION_MODE_RGB_NV,
+                                   VK_COVERAGE_MODULATION_MODE_ALPHA_NV,
+                                   VK_COVERAGE_MODULATION_MODE_RGBA_NV),
+        VkCoverageReductionModeNV(VkCoverageReductionModeNV,
+                                  VK_COVERAGE_REDUCTION_MODE_MERGE_NV,
+                                  VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV))
+       where
+import Foreign.Storable                (Storable)
+import GHC.Read                        (choose, expectP)
+import Graphics.Vulkan.Marshal         (Int32)
+import Text.ParserCombinators.ReadPrec (prec, step, (+++))
+import Text.Read                       (Read (..), parens)
+import Text.Read.Lex                   (Lexeme (..))
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCoverageModulationModeNV VkCoverageModulationModeNV registry at www.khronos.org>
+newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
+                                     deriving (Eq, Ord, Enum, Storable)
+
+instance Show VkCoverageModulationModeNV where
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_NONE_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_NONE_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_RGB_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_RGB_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_ALPHA_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_ALPHA_NV"
+    showsPrec _ VK_COVERAGE_MODULATION_MODE_RGBA_NV
+      = showString "VK_COVERAGE_MODULATION_MODE_RGBA_NV"
+    showsPrec p (VkCoverageModulationModeNV x)
+      = showParen (p >= 11)
+          (showString "VkCoverageModulationModeNV " . showsPrec 11 x)
+
+instance Read VkCoverageModulationModeNV where
+    readPrec
+      = parens
+          (choose
+             [("VK_COVERAGE_MODULATION_MODE_NONE_NV",
+               pure VK_COVERAGE_MODULATION_MODE_NONE_NV),
+              ("VK_COVERAGE_MODULATION_MODE_RGB_NV",
+               pure VK_COVERAGE_MODULATION_MODE_RGB_NV),
+              ("VK_COVERAGE_MODULATION_MODE_ALPHA_NV",
+               pure VK_COVERAGE_MODULATION_MODE_ALPHA_NV),
+              ("VK_COVERAGE_MODULATION_MODE_RGBA_NV",
+               pure VK_COVERAGE_MODULATION_MODE_RGBA_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkCoverageModulationModeNV") >>
+                  (VkCoverageModulationModeNV <$> step readPrec)))
+
+pattern VK_COVERAGE_MODULATION_MODE_NONE_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_NONE_NV =
+        VkCoverageModulationModeNV 0
+
+pattern VK_COVERAGE_MODULATION_MODE_RGB_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_RGB_NV =
+        VkCoverageModulationModeNV 1
+
+pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV =
+        VkCoverageModulationModeNV 2
+
+pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV =
+        VkCoverageModulationModeNV 3
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCoverageReductionModeNV VkCoverageReductionModeNV registry at www.khronos.org>
+newtype VkCoverageReductionModeNV = VkCoverageReductionModeNV Int32
+                                    deriving (Eq, Ord, Enum, Storable)
+
+instance Show VkCoverageReductionModeNV where
+    showsPrec _ VK_COVERAGE_REDUCTION_MODE_MERGE_NV
+      = showString "VK_COVERAGE_REDUCTION_MODE_MERGE_NV"
+    showsPrec _ VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV
+      = showString "VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV"
+    showsPrec p (VkCoverageReductionModeNV x)
+      = showParen (p >= 11)
+          (showString "VkCoverageReductionModeNV " . showsPrec 11 x)
+
+instance Read VkCoverageReductionModeNV where
+    readPrec
+      = parens
+          (choose
+             [("VK_COVERAGE_REDUCTION_MODE_MERGE_NV",
+               pure VK_COVERAGE_REDUCTION_MODE_MERGE_NV),
+              ("VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV",
+               pure VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkCoverageReductionModeNV") >>
+                  (VkCoverageReductionModeNV <$> step readPrec)))
+
+pattern VK_COVERAGE_REDUCTION_MODE_MERGE_NV ::
+        VkCoverageReductionModeNV
+
+pattern VK_COVERAGE_REDUCTION_MODE_MERGE_NV =
+        VkCoverageReductionModeNV 0
+
+pattern VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV ::
+        VkCoverageReductionModeNV
+
+pattern VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV =
+        VkCoverageReductionModeNV 1

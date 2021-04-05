@@ -16,7 +16,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     const struct VkBaseInStructure* pNext;
 --   > } VkBaseInStructure;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBaseInStructure VkBaseInStructure registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBaseInStructure VkBaseInStructure registry at www.khronos.org>
 type VkBaseInStructure = VkStruct VkBaseInStructure' -- ' closing tick for hsc2hs
 
 data VkBaseInStructure' -- ' closing tick for hsc2hs
@@ -45,7 +45,7 @@ instance VulkanMarshal VkBaseInStructure where
 --   >     struct VkBaseOutStructure* pNext;
 --   > } VkBaseOutStructure;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBaseOutStructure VkBaseOutStructure registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBaseOutStructure VkBaseOutStructure registry at www.khronos.org>
 type VkBaseOutStructure = VkStruct VkBaseOutStructure' -- ' closing tick for hsc2hs
 
 data VkBaseOutStructure' -- ' closing tick for hsc2hs

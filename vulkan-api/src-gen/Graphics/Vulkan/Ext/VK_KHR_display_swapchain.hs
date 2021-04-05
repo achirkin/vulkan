@@ -12,14 +12,16 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkDisplayPresentInfoKHR, VkExtent2D, VkOffset2D, VkPresentInfoKHR,
-        VkRect2D, VkResult(..), VkStructureType(..),
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkDisplayPresentInfoKHR, VkExtent2D, VkOffset2D,
+        VkPresentInfoKHR, VkRect2D, VkResult(..), VkStructureType(..),
         -- > #include "vk_platform.h"
         VkCreateSharedSwapchainsKHR, pattern VkCreateSharedSwapchainsKHR,
         HS_vkCreateSharedSwapchainsKHR, PFN_vkCreateSharedSwapchainsKHR,
         vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRUnsafe,
         vkCreateSharedSwapchainsKHRSafe, module Graphics.Vulkan.Marshal,
+        pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         VkColorComponentBitmask(..), VkColorSpaceKHR(..),
         VkColorComponentFlagBits(), VkColorComponentFlags(),
         VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
@@ -31,18 +33,22 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
         VkImageUsageFlagBits(), VkImageUsageFlags(),
-        VkInternalAllocationType(..), VkPresentModeKHR(..),
-        VkSharingMode(..), VkSurfaceCounterBitmaskEXT(..),
-        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
-        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
-        VkSurfaceTransformFlagsKHR(), VkSwapchainCreateBitmaskKHR(..),
-        VkSwapchainCreateFlagBitsKHR(), VkSwapchainCreateFlagsKHR(),
-        VkSystemAllocationScope(..), newVkAllocationFunction,
-        newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
-        newVkFreeFunction, newVkInternalAllocationNotification,
-        newVkInternalFreeNotification, newVkReallocationFunction,
-        newVkVoidFunction, unwrapVkAllocationFunction,
-        unwrapVkDebugReportCallbackEXT,
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkInternalAllocationType(..),
+        VkPresentModeKHR(..), VkSharingMode(..),
+        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
+        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
+        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        VkSwapchainImageUsageBitmaskANDROID(..),
+        VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
+        VkSwapchainCreateFlagsKHR(),
+        VkSwapchainImageUsageFlagBitsANDROID(),
+        VkSwapchainImageUsageFlagsANDROID(), VkSystemAllocationScope(..),
+        newVkAllocationFunction, newVkDebugReportCallbackEXT,
+        newVkDebugUtilsMessengerCallbackEXT, newVkFreeFunction,
+        newVkInternalAllocationNotification, newVkInternalFreeNotification,
+        newVkReallocationFunction, newVkVoidFunction,
+        unwrapVkAllocationFunction, unwrapVkDebugReportCallbackEXT,
         unwrapVkDebugUtilsMessengerCallbackEXT, unwrapVkFreeFunction,
         unwrapVkInternalAllocationNotification,
         unwrapVkInternalFreeNotification, unwrapVkReallocationFunction,
@@ -54,40 +60,46 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkAllocationCallbacks, VkExtent3D, VkSwapchainCounterCreateInfoEXT,
-        VkSwapchainCreateInfoKHR, VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
+        VkSwapchainCreateInfoKHR, VkSwapchainDisplayNativeHdrCreateInfoAMD,
+        VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
         pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION,
         VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME,
         pattern VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_DISPLAY_PRESENT_INFO_KHR,
         pattern VK_ERROR_INCOMPATIBLE_DISPLAY_KHR)
        where
-import GHC.Ptr                                            (Ptr (..))
+import GHC.Ptr                                           (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc
 import Graphics.Vulkan.Types.BaseTypes
@@ -101,18 +113,18 @@ import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import Graphics.Vulkan.Types.Enum.Swapchain
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
-import Graphics.Vulkan.Types.Struct.Display               (VkDisplayPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Display              (VkDisplayPresentInfoKHR)
 import Graphics.Vulkan.Types.Struct.Extent
-import Graphics.Vulkan.Types.Struct.Offset                (VkOffset2D)
-import Graphics.Vulkan.Types.Struct.Present               (VkPresentInfoKHR)
-import Graphics.Vulkan.Types.Struct.Rect                  (VkRect2D)
-import Graphics.Vulkan.Types.Struct.SwapchainC
-import System.IO.Unsafe                                   (unsafeDupablePerformIO)
+import Graphics.Vulkan.Types.Struct.Offset               (VkOffset2D)
+import Graphics.Vulkan.Types.Struct.Present              (VkPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Rect                 (VkRect2D)
+import Graphics.Vulkan.Types.Struct.Swapchain
+import System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 pattern VkCreateSharedSwapchainsKHR :: CString
 
@@ -148,7 +160,7 @@ type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 -- >     , VkSwapchainKHR* pSwapchains
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -213,7 +225,7 @@ vkCreateSharedSwapchainsKHRUnsafe
 -- >     , VkSwapchainKHR* pSwapchains
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -277,7 +289,7 @@ vkCreateSharedSwapchainsKHRSafe
 -- >     , VkSwapchainKHR* pSwapchains
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -326,7 +338,7 @@ vkCreateSharedSwapchainsKHR = vkCreateSharedSwapchainsKHRSafe
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 type HS_vkCreateSharedSwapchainsKHR =
      VkDevice -- ^ device
               ->
@@ -364,9 +376,9 @@ instance VulkanProc "vkCreateSharedSwapchainsKHR" where
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION = 9
+pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION = 10
 
-type VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION = 9
+type VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION = 10
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME :: CString
 

@@ -6,12 +6,15 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Validation
-       (VkValidationCacheCreateInfoEXT, VkValidationFlagsEXT) where
+       (VkValidationCacheCreateInfoEXT, VkValidationFeaturesEXT,
+        VkValidationFlagsEXT)
+       where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Bitmasks                  (VkValidationCacheCreateFlagsEXT)
 import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
-import Graphics.Vulkan.Types.Enum.ValidationC          (VkValidationCheckEXT)
+import Graphics.Vulkan.Types.Enum.Validation           (VkValidationCheckEXT, VkValidationFeatureDisableEXT,
+                                                        VkValidationFeatureEnableEXT)
 import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 
 -- | > typedef struct VkValidationCacheCreateInfoEXT {
@@ -22,7 +25,7 @@ import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 --   >     const void*            pInitialData;
 --   > } VkValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationCacheCreateInfoEXT VkValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkValidationCacheCreateInfoEXT VkValidationCacheCreateInfoEXT registry at www.khronos.org>
 type VkValidationCacheCreateInfoEXT =
      VkStruct VkValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
 
@@ -63,14 +66,71 @@ instance VulkanMarshal VkValidationCacheCreateInfoEXT where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkValidationFeaturesEXT {
+--   >     VkStructureType  sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         enabledValidationFeatureCount;
+--   >     const VkValidationFeatureEnableEXT* pEnabledValidationFeatures;
+--   >     uint32_t                         disabledValidationFeatureCount;
+--   >     const VkValidationFeatureDisableEXT* pDisabledValidationFeatures;
+--   > } VkValidationFeaturesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkValidationFeaturesEXT VkValidationFeaturesEXT registry at www.khronos.org>
+type VkValidationFeaturesEXT = VkStruct VkValidationFeaturesEXT' -- ' closing tick for hsc2hs
+
+data VkValidationFeaturesEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkValidationFeaturesEXT where
+    type StructRep VkValidationFeaturesEXT =
+         'StructMeta "VkValidationFeaturesEXT" VkValidationFeaturesEXT -- ' closing tick for hsc2hs
+           #{size VkValidationFeaturesEXT}
+           #{alignment VkValidationFeaturesEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkValidationFeaturesEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkValidationFeaturesEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "enabledValidationFeatureCount" Word32 'True 
+                                                                      #{offset VkValidationFeaturesEXT, enabledValidationFeatureCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pEnabledValidationFeatures" -- ' closing tick for hsc2hs
+                (Ptr VkValidationFeatureEnableEXT)
+                'False -- ' closing tick for hsc2hs
+                #{offset VkValidationFeaturesEXT, pEnabledValidationFeatures}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "disabledValidationFeatureCount" Word32 'True 
+                                                                       #{offset VkValidationFeaturesEXT, disabledValidationFeatureCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pDisabledValidationFeatures" -- ' closing tick for hsc2hs
+                (Ptr VkValidationFeatureDisableEXT)
+                'False -- ' closing tick for hsc2hs
+                #{offset VkValidationFeaturesEXT, pDisabledValidationFeatures}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkInstanceCreateInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkValidationFlagsEXT {
 --   >     VkStructureType                  sType;
 --   >     const void*                      pNext;
 --   >     uint32_t                         disabledValidationCheckCount;
---   >     VkValidationCheckEXT* pDisabledValidationChecks;
+--   >     const VkValidationCheckEXT* pDisabledValidationChecks;
 --   > } VkValidationFlagsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationFlagsEXT VkValidationFlagsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkValidationFlagsEXT VkValidationFlagsEXT registry at www.khronos.org>
 type VkValidationFlagsEXT = VkStruct VkValidationFlagsEXT' -- ' closing tick for hsc2hs
 
 data VkValidationFlagsEXT' -- ' closing tick for hsc2hs

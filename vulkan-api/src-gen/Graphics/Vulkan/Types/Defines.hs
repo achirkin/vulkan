@@ -1,15 +1,14 @@
 {-# LANGUAGE CPP             #-}
 {-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE EmptyDataDecls  #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE Strict          #-}
 module Graphics.Vulkan.Types.Defines
-       (AHardwareBuffer(), ANativeWindow(), -- | ===== @VK_API_VERSION@
-                                            -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
-                                            -- > //#define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
-                                            VK_API_VERSION_1_0,
-        pattern VK_API_VERSION_1_0, VK_API_VERSION_1_1,
-        pattern VK_API_VERSION_1_1, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
+       (-- | ===== @VK_API_VERSION@
+        -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
+        -- > //#define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
+        VK_API_VERSION_1_0, pattern VK_API_VERSION_1_0,
+        VK_API_VERSION_1_1, pattern VK_API_VERSION_1_1, VK_API_VERSION_1_2,
+        pattern VK_API_VERSION_1_2, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
                                            -- Dispatchable handles are represented as `Foreign.Ptr`
                                            --
                                            -- >
@@ -25,20 +24,13 @@ module Graphics.Vulkan.Types.Defines
                                                       -- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;
                                                       -- > #endif
                                                       -- > #endif
-                                                      -- >
                                                       VK_HEADER_VERSION,
-        pattern VK_HEADER_VERSION, _VK_MAKE_VERSION, VulkanPtr(..),
-        pattern VK_NULL_HANDLE, _VK_VERSION_MAJOR, _VK_VERSION_MINOR,
-        _VK_VERSION_PATCH)
+        pattern VK_HEADER_VERSION, _VK_HEADER_VERSION_COMPLETE,
+        _VK_MAKE_VERSION, VulkanPtr(..), pattern VK_NULL_HANDLE,
+        _VK_VERSION_MAJOR, _VK_VERSION_MINOR, _VK_VERSION_PATCH)
        where
 import Data.Bits               (Bits (..))
 import Graphics.Vulkan.Marshal
-
--- | > struct AHardwareBuffer;
-data AHardwareBuffer
-
--- | > struct ANativeWindow;
-data ANativeWindow
 
 -- | > // Vulkan 1.0 version number
 --   > #define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0
@@ -56,16 +48,33 @@ pattern VK_API_VERSION_1_1 = 4198400
 
 type VK_API_VERSION_1_1 = 4198400
 
+-- | > // Vulkan 1.2 version number
+--   > #define VK_API_VERSION_1_2 VK_MAKE_VERSION(1, 2, 0)// Patch version should always be set to 0
+pattern VK_API_VERSION_1_2 :: (Num a, Eq a) => a
+
+pattern VK_API_VERSION_1_2 = 4202496
+
+type VK_API_VERSION_1_2 = 4202496
+
 -- | > // Version of this file
---   > #define VK_HEADER_VERSION 77
+--   > #define VK_HEADER_VERSION 152
 pattern VK_HEADER_VERSION :: (Num a, Eq a) => a
 
-pattern VK_HEADER_VERSION = 77
+pattern VK_HEADER_VERSION = 152
 
-type VK_HEADER_VERSION = 77
+type VK_HEADER_VERSION = 152
+
+-- | > // Complete version of this file
+--   > #define VK_HEADER_VERSION_COMPLETE VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)
+_VK_HEADER_VERSION_COMPLETE :: (Bits a, Num a) => a
+_VK_HEADER_VERSION_COMPLETE
+  = _VK_MAKE_VERSION 1 2 VK_HEADER_VERSION
+
+{-# INLINE _VK_HEADER_VERSION_COMPLETE #-}
+#define VK_HEADER_VERSION_COMPLETE _VK_HEADER_VERSION_COMPLETE
 
 -- | > #define VK_MAKE_VERSION(major, minor, patch) \
---   >     (((major) << 22) | ((minor) << 12) | (patch))
+--   >     ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))
 _VK_MAKE_VERSION :: Bits a => a -> a -> a -> a
 _VK_MAKE_VERSION major minor patch
   = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch

@@ -28,8 +28,10 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         --
 
         -- ** Required extensions: 'VK_KHR_external_memory'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkExternalFenceFeatureBitmask(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkExternalFenceFeatureBitmask(..),
         VkExternalFenceHandleTypeBitmask(..),
         VkExternalMemoryFeatureBitmask(..),
         VkExternalMemoryFeatureBitmaskNV(..),
@@ -57,51 +59,8 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         VkExternalSemaphoreHandleTypeFlagBits(),
         VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
         VkExternalSemaphoreHandleTypeFlags(),
-        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
-        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
-        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
-        VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
-        VkDescriptorUpdateTemplateCreateFlags(..),
-        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
-        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
-        VkExternalFenceFeatureFlagsKHR(..),
-        VkExternalFenceHandleTypeFlagsKHR(..),
-        VkExternalMemoryFeatureFlagsKHR(..),
-        VkExternalMemoryHandleTypeFlagsKHR(..),
-        VkExternalSemaphoreFeatureFlagsKHR(..),
-        VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
-        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
-        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
-        VkPipelineColorBlendStateCreateFlags(..),
-        VkPipelineCoverageModulationStateCreateFlagsNV(..),
-        VkPipelineCoverageToColorStateCreateFlagsNV(..),
-        VkPipelineDepthStencilStateCreateFlags(..),
-        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
-        VkPipelineDynamicStateCreateFlags(..),
-        VkPipelineInputAssemblyStateCreateFlags(..),
-        VkPipelineLayoutCreateFlags(..),
-        VkPipelineMultisampleStateCreateFlags(..),
-        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
-        VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
-        VkPipelineTessellationStateCreateFlags(..),
-        VkPipelineVertexInputStateCreateFlags(..),
-        VkPipelineViewportStateCreateFlags(..),
-        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
-        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
-        VkWaylandSurfaceCreateFlagsKHR(..),
-        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..), VkImportMemoryHostPointerInfoEXT,
-        VkMemoryAllocateInfo, VkMemoryHostPointerPropertiesEXT,
+        VkImportMemoryHostPointerInfoEXT, VkMemoryAllocateInfo,
+        VkMemoryHostPointerPropertiesEXT,
         VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
         VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
         VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
@@ -111,11 +70,14 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         VkGetMemoryHostPointerPropertiesEXT,
         pattern VkGetMemoryHostPointerPropertiesEXT,
         HS_vkGetMemoryHostPointerPropertiesEXT,
-        PFN_vkGetMemoryHostPointerPropertiesEXT, VkResult(..), VkBuffer,
+        PFN_vkGetMemoryHostPointerPropertiesEXT, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -125,22 +87,27 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
         VkMemoryBarrier, VkMemoryDedicatedAllocateInfo,
         VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
         VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR,
-        VkMemoryGetFdInfoKHR, VkMemoryHeap, VkMemoryRequirements,
+        VkMemoryGetFdInfoKHR, VkMemoryHeap,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements,
         VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
         VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
         pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
@@ -156,7 +123,6 @@ import GHC.Ptr                                       (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
-import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.External
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.Result
@@ -196,7 +162,7 @@ type VkGetMemoryHostPointerPropertiesEXT =
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryHostPointerPropertiesEXT
 --   >     ( VkDevice device
@@ -205,7 +171,7 @@ type VkGetMemoryHostPointerPropertiesEXT =
 --   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryHostPointerPropertiesEXT vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryHostPointerPropertiesEXT vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 type HS_vkGetMemoryHostPointerPropertiesEXT =
      VkDevice -- ^ device
               ->

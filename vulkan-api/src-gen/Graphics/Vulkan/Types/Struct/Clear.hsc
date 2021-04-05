@@ -20,7 +20,7 @@ import Graphics.Vulkan.Types.Struct.Rect (VkRect2D)
 --   >     VkClearValue           clearValue;
 --   > } VkClearAttachment;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearAttachment VkClearAttachment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkClearAttachment VkClearAttachment registry at www.khronos.org>
 type VkClearAttachment = VkStruct VkClearAttachment' -- ' closing tick for hsc2hs
 
 data VkClearAttachment' -- ' closing tick for hsc2hs
@@ -57,7 +57,7 @@ instance VulkanMarshal VkClearAttachment where
 --   >     uint32_t               uint32[4];
 --   > } VkClearColorValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearColorValue VkClearColorValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkClearColorValue VkClearColorValue registry at www.khronos.org>
 type VkClearColorValue = VkStruct VkClearColorValue' -- ' closing tick for hsc2hs
 
 data VkClearColorValue' -- ' closing tick for hsc2hs
@@ -93,7 +93,7 @@ instance VulkanMarshal VkClearColorValue where
 --   >     uint32_t               stencil;
 --   > } VkClearDepthStencilValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearDepthStencilValue VkClearDepthStencilValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkClearDepthStencilValue VkClearDepthStencilValue registry at www.khronos.org>
 type VkClearDepthStencilValue = VkStruct VkClearDepthStencilValue' -- ' closing tick for hsc2hs
 
 data VkClearDepthStencilValue' -- ' closing tick for hsc2hs
@@ -125,7 +125,7 @@ instance VulkanMarshal VkClearDepthStencilValue where
 --   >     uint32_t       layerCount;
 --   > } VkClearRect;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearRect VkClearRect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkClearRect VkClearRect registry at www.khronos.org>
 type VkClearRect = VkStruct VkClearRect' -- ' closing tick for hsc2hs
 
 data VkClearRect' -- ' closing tick for hsc2hs
@@ -161,7 +161,7 @@ instance VulkanMarshal VkClearRect where
 --   >     VkClearDepthStencilValue depthStencil;
 --   > } VkClearValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkClearValue VkClearValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkClearValue VkClearValue registry at www.khronos.org>
 type VkClearValue = VkStruct VkClearValue' -- ' closing tick for hsc2hs
 
 data VkClearValue' -- ' closing tick for hsc2hs

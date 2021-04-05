@@ -12,16 +12,19 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkStructureType(..), VkAndroidSurfaceCreateFlagsKHR(..),
-        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
-        VkCommandPoolTrimFlagsKHR(..),
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkStructureType(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -29,14 +32,16 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -45,15 +50,17 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
@@ -88,34 +95,40 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR, MirConnection,
-        MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
-        WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT,
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(), DWORD, Display,
+        GgpFrameToken, GgpStreamDescriptor, HANDLE, HINSTANCE, HMONITOR,
+        HWND, IDirectFB, IDirectFBSurface, LPCWSTR, RROutput,
+        SECURITY_ATTRIBUTES, VisualID, Window, WlDisplay, WlSurface,
+        XcbConnectionT, XcbVisualidT, XcbWindowT, Zx_handle_t,
         VkAllocationCallbacks, VK_KHR_XLIB_SURFACE_SPEC_VERSION,
         pattern VK_KHR_XLIB_SURFACE_SPEC_VERSION,
         VK_KHR_XLIB_SURFACE_EXTENSION_NAME,
@@ -170,7 +183,7 @@ type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 -- >     , VkSurfaceKHR* pSurface
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -228,7 +241,7 @@ vkCreateXlibSurfaceKHRUnsafe
 -- >     , VkSurfaceKHR* pSurface
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -286,7 +299,7 @@ vkCreateXlibSurfaceKHRSafe
 -- >     , VkSurfaceKHR* pSurface
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -332,7 +345,7 @@ vkCreateXlibSurfaceKHR = vkCreateXlibSurfaceKHRSafe
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR registry at www.khronos.org>
 type HS_vkCreateXlibSurfaceKHR =
      VkInstance -- ^ instance
                 ->
@@ -397,7 +410,7 @@ type VkGetPhysicalDeviceXlibPresentationSupportKHR =
 -- >     , VisualID visualID
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -453,7 +466,7 @@ vkGetPhysicalDeviceXlibPresentationSupportKHRUnsafe
 -- >     , VisualID visualID
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -507,7 +520,7 @@ vkGetPhysicalDeviceXlibPresentationSupportKHRSafe
 -- >     , VisualID visualID
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -550,7 +563,7 @@ vkGetPhysicalDeviceXlibPresentationSupportKHR
 --   >     , VisualID visualID
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceXlibPresentationSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

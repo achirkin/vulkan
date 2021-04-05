@@ -5,11 +5,12 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
-        VkBufferCreateFlagBits(), VkBufferCreateFlags(),
-        VkBufferUsageFlagBits(), VkBufferUsageFlags(),
-        VkBufferViewCreateFlagBits(..), VkBufferCreateInfo,
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkBufferCreateBitmask(..),
+        VkBufferUsageBitmask(..), VkBufferCreateFlagBits(),
+        VkBufferCreateFlags(), VkBufferUsageFlagBits(),
+        VkBufferUsageFlags(), VkBufferCreateInfo,
         VkDedicatedAllocationBufferCreateInfoNV,
         VkDedicatedAllocationImageCreateInfoNV,
         VkDedicatedAllocationMemoryAllocateInfoNV, VkExtent3D,
@@ -20,11 +21,13 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
-        VkMemoryAllocateInfo, VkSampleCountBitmask(..),
-        VkSampleCountFlagBits(), VkSampleCountFlags(), VkSharingMode(..),
-        VkStructureType(..), -- > #include "vk_platform.h"
-                             VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageCreateInfo, VkMemoryAllocateInfo,
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkSharingMode(..), VkStructureType(..),
+        -- > #include "vk_platform.h"
+        VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
         pattern VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION,
         VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME,
         pattern VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME,

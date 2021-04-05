@@ -41,7 +41,7 @@ import Graphics.Vulkan.Types.Struct.Image       (VkImageCreateInfo,
 --   >     VkExternalMemoryProperties    externalMemoryProperties;
 --   > } VkExternalBufferProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalBufferProperties VkExternalBufferProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalBufferProperties VkExternalBufferProperties registry at www.khronos.org>
 type VkExternalBufferProperties =
      VkStruct VkExternalBufferProperties' -- ' closing tick for hsc2hs
 
@@ -83,7 +83,7 @@ type VkExternalBufferPropertiesKHR = VkExternalBufferProperties
 --   >     VkExternalFenceFeatureFlags externalFenceFeatures;
 --   > } VkExternalFenceProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalFenceProperties VkExternalFenceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalFenceProperties VkExternalFenceProperties registry at www.khronos.org>
 type VkExternalFenceProperties =
      VkStruct VkExternalFenceProperties' -- ' closing tick for hsc2hs
 
@@ -136,7 +136,7 @@ type VkExternalFencePropertiesKHR = VkExternalFenceProperties
 --   >     VkExternalMemoryProperties externalMemoryProperties;
 --   > } VkExternalImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalImageFormatProperties VkExternalImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalImageFormatProperties VkExternalImageFormatProperties registry at www.khronos.org>
 type VkExternalImageFormatProperties =
      VkStruct VkExternalImageFormatProperties' -- ' closing tick for hsc2hs
 
@@ -179,7 +179,7 @@ type VkExternalImageFormatPropertiesKHR =
 --   >     VkExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;
 --   > } VkExternalImageFormatPropertiesNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalImageFormatPropertiesNV VkExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalImageFormatPropertiesNV VkExternalImageFormatPropertiesNV registry at www.khronos.org>
 type VkExternalImageFormatPropertiesNV =
      VkStruct VkExternalImageFormatPropertiesNV' -- ' closing tick for hsc2hs
 
@@ -227,7 +227,7 @@ instance VulkanMarshal VkExternalImageFormatPropertiesNV where
 --   >     VkExternalMemoryHandleTypeFlags handleTypes;
 --   > } VkExternalMemoryBufferCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryBufferCreateInfo VkExternalMemoryBufferCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalMemoryBufferCreateInfo VkExternalMemoryBufferCreateInfo registry at www.khronos.org>
 type VkExternalMemoryBufferCreateInfo =
      VkStruct VkExternalMemoryBufferCreateInfo' -- ' closing tick for hsc2hs
 
@@ -268,7 +268,7 @@ type VkExternalMemoryBufferCreateInfoKHR =
 --   >     VkExternalMemoryHandleTypeFlags handleTypes;
 --   > } VkExternalMemoryImageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfo VkExternalMemoryImageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfo VkExternalMemoryImageCreateInfo registry at www.khronos.org>
 type VkExternalMemoryImageCreateInfo =
      VkStruct VkExternalMemoryImageCreateInfo' -- ' closing tick for hsc2hs
 
@@ -309,7 +309,7 @@ type VkExternalMemoryImageCreateInfoKHR =
 --   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
 --   > } VkExternalMemoryImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfoNV VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalMemoryImageCreateInfoNV VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
 type VkExternalMemoryImageCreateInfoNV =
      VkStruct VkExternalMemoryImageCreateInfoNV' -- ' closing tick for hsc2hs
 
@@ -346,7 +346,7 @@ instance VulkanMarshal VkExternalMemoryImageCreateInfoNV where
 --   >     VkExternalMemoryHandleTypeFlags compatibleHandleTypes;
 --   > } VkExternalMemoryProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalMemoryProperties VkExternalMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalMemoryProperties VkExternalMemoryProperties registry at www.khronos.org>
 type VkExternalMemoryProperties =
      VkStruct VkExternalMemoryProperties' -- ' closing tick for hsc2hs
 
@@ -391,7 +391,7 @@ type VkExternalMemoryPropertiesKHR = VkExternalMemoryProperties
 --   >     VkExternalSemaphoreFeatureFlags externalSemaphoreFeatures;
 --   > } VkExternalSemaphoreProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalSemaphoreProperties VkExternalSemaphoreProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalSemaphoreProperties VkExternalSemaphoreProperties registry at www.khronos.org>
 type VkExternalSemaphoreProperties =
      VkStruct VkExternalSemaphoreProperties' -- ' closing tick for hsc2hs
 

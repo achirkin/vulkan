@@ -6,13 +6,18 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Buffer
-       (VkBufferCopy, VkBufferCreateInfo, VkBufferImageCopy,
-        VkBufferMemoryBarrier, VkBufferMemoryRequirementsInfo2,
-        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo)
+       (VkBufferCopy, VkBufferCreateInfo,
+        VkBufferDeviceAddressCreateInfoEXT, VkBufferDeviceAddressInfo,
+        VkBufferDeviceAddressInfoEXT, VkBufferDeviceAddressInfoKHR,
+        VkBufferImageCopy, VkBufferMemoryBarrier,
+        VkBufferMemoryRequirementsInfo2,
+        VkBufferMemoryRequirementsInfo2KHR,
+        VkBufferOpaqueCaptureAddressCreateInfo,
+        VkBufferOpaqueCaptureAddressCreateInfoKHR, VkBufferViewCreateInfo)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes          (VkDeviceSize)
+import Graphics.Vulkan.Types.BaseTypes          (VkDeviceAddress, VkDeviceSize)
 import Graphics.Vulkan.Types.Bitmasks           (VkBufferViewCreateFlags)
 import Graphics.Vulkan.Types.Enum.AccessFlags   (VkAccessFlags)
 import Graphics.Vulkan.Types.Enum.Buffer        (VkBufferCreateFlags,
@@ -26,12 +31,12 @@ import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresourceLayers)
 import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
 
 -- | > typedef struct VkBufferCopy {
---   >     VkDeviceSize           srcOffset;
---   >     VkDeviceSize           dstOffset;
---   >     VkDeviceSize           size;
+--   >     VkDeviceSize                       srcOffset;
+--   >     VkDeviceSize                       dstOffset;
+--   >     VkDeviceSize size;
 --   > } VkBufferCopy;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCopy VkBufferCopy registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferCopy VkBufferCopy registry at www.khronos.org>
 type VkBufferCopy = VkStruct VkBufferCopy' -- ' closing tick for hsc2hs
 
 data VkBufferCopy' -- ' closing tick for hsc2hs
@@ -71,7 +76,7 @@ instance VulkanMarshal VkBufferCopy where
 --   >     const uint32_t*        pQueueFamilyIndices;
 --   > } VkBufferCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferCreateInfo VkBufferCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferCreateInfo VkBufferCreateInfo registry at www.khronos.org>
 type VkBufferCreateInfo = VkStruct VkBufferCreateInfo' -- ' closing tick for hsc2hs
 
 data VkBufferCreateInfo' -- ' closing tick for hsc2hs
@@ -125,6 +130,85 @@ instance VulkanMarshal VkBufferCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkBufferDeviceAddressCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceAddress                  deviceAddress;
+--   > } VkBufferDeviceAddressCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferDeviceAddressCreateInfoEXT VkBufferDeviceAddressCreateInfoEXT registry at www.khronos.org>
+type VkBufferDeviceAddressCreateInfoEXT =
+     VkStruct VkBufferDeviceAddressCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkBufferDeviceAddressCreateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkBufferDeviceAddressCreateInfoEXT where
+    type StructRep VkBufferDeviceAddressCreateInfoEXT =
+         'StructMeta "VkBufferDeviceAddressCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkBufferDeviceAddressCreateInfoEXT
+           #{size VkBufferDeviceAddressCreateInfoEXT}
+           #{alignment VkBufferDeviceAddressCreateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkBufferDeviceAddressCreateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkBufferDeviceAddressCreateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "deviceAddress" VkDeviceAddress 'False 
+                                                                #{offset VkBufferDeviceAddressCreateInfoEXT, deviceAddress}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkBufferDeviceAddressInfo {
+--   >     VkStructureType sType;
+--   >     const void*                                            pNext;
+--   >     VkBuffer                                               buffer;
+--   > } VkBufferDeviceAddressInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferDeviceAddressInfo VkBufferDeviceAddressInfo registry at www.khronos.org>
+type VkBufferDeviceAddressInfo =
+     VkStruct VkBufferDeviceAddressInfo' -- ' closing tick for hsc2hs
+
+data VkBufferDeviceAddressInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkBufferDeviceAddressInfo where
+    type StructRep VkBufferDeviceAddressInfo =
+         'StructMeta "VkBufferDeviceAddressInfo" VkBufferDeviceAddressInfo -- ' closing tick for hsc2hs
+           #{size VkBufferDeviceAddressInfo}
+           #{alignment VkBufferDeviceAddressInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkBufferDeviceAddressInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkBufferDeviceAddressInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "buffer" VkBuffer 'False 
+                                                  #{offset VkBufferDeviceAddressInfo, buffer}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkBufferDeviceAddressInfo`
+type VkBufferDeviceAddressInfoEXT = VkBufferDeviceAddressInfo
+
+-- | Alias for `VkBufferDeviceAddressInfo`
+type VkBufferDeviceAddressInfoKHR = VkBufferDeviceAddressInfo
+
 -- | > typedef struct VkBufferImageCopy {
 --   >     VkDeviceSize           bufferOffset;
 --   >     uint32_t               bufferRowLength;
@@ -134,7 +218,7 @@ instance VulkanMarshal VkBufferCreateInfo where
 --   >     VkExtent3D             imageExtent;
 --   > } VkBufferImageCopy;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferImageCopy VkBufferImageCopy registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferImageCopy VkBufferImageCopy registry at www.khronos.org>
 type VkBufferImageCopy = VkStruct VkBufferImageCopy' -- ' closing tick for hsc2hs
 
 data VkBufferImageCopy' -- ' closing tick for hsc2hs
@@ -190,7 +274,7 @@ instance VulkanMarshal VkBufferImageCopy where
 --   >     VkDeviceSize           size;
 --   > } VkBufferMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferMemoryBarrier VkBufferMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferMemoryBarrier VkBufferMemoryBarrier registry at www.khronos.org>
 type VkBufferMemoryBarrier = VkStruct VkBufferMemoryBarrier' -- ' closing tick for hsc2hs
 
 data VkBufferMemoryBarrier' -- ' closing tick for hsc2hs
@@ -210,13 +294,13 @@ instance VulkanMarshal VkBufferMemoryBarrier where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "srcAccessMask" VkAccessFlags 'True 
-                                                             #{offset VkBufferMemoryBarrier, srcAccessMask}
+             ('FieldMeta "srcAccessMask" VkAccessFlags 'False 
+                                                              #{offset VkBufferMemoryBarrier, srcAccessMask}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "dstAccessMask" VkAccessFlags 'True 
-                                                             #{offset VkBufferMemoryBarrier, dstAccessMask}
+             ('FieldMeta "dstAccessMask" VkAccessFlags 'False 
+                                                              #{offset VkBufferMemoryBarrier, dstAccessMask}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
@@ -255,7 +339,7 @@ instance VulkanMarshal VkBufferMemoryBarrier where
 --   >     VkBuffer                                                             buffer;
 --   > } VkBufferMemoryRequirementsInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferMemoryRequirementsInfo2 VkBufferMemoryRequirementsInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferMemoryRequirementsInfo2 VkBufferMemoryRequirementsInfo2 registry at www.khronos.org>
 type VkBufferMemoryRequirementsInfo2 =
      VkStruct VkBufferMemoryRequirementsInfo2' -- ' closing tick for hsc2hs
 
@@ -290,6 +374,47 @@ instance VulkanMarshal VkBufferMemoryRequirementsInfo2 where
 type VkBufferMemoryRequirementsInfo2KHR =
      VkBufferMemoryRequirementsInfo2
 
+-- | > typedef struct VkBufferOpaqueCaptureAddressCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint64_t                         opaqueCaptureAddress;
+--   > } VkBufferOpaqueCaptureAddressCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferOpaqueCaptureAddressCreateInfo VkBufferOpaqueCaptureAddressCreateInfo registry at www.khronos.org>
+type VkBufferOpaqueCaptureAddressCreateInfo =
+     VkStruct VkBufferOpaqueCaptureAddressCreateInfo' -- ' closing tick for hsc2hs
+
+data VkBufferOpaqueCaptureAddressCreateInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkBufferOpaqueCaptureAddressCreateInfo where
+    type StructRep VkBufferOpaqueCaptureAddressCreateInfo =
+         'StructMeta "VkBufferOpaqueCaptureAddressCreateInfo" -- ' closing tick for hsc2hs
+           VkBufferOpaqueCaptureAddressCreateInfo
+           #{size VkBufferOpaqueCaptureAddressCreateInfo}
+           #{alignment VkBufferOpaqueCaptureAddressCreateInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkBufferOpaqueCaptureAddressCreateInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkBufferOpaqueCaptureAddressCreateInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "opaqueCaptureAddress" Word64 'False 
+                                                              #{offset VkBufferOpaqueCaptureAddressCreateInfo, opaqueCaptureAddress}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkBufferOpaqueCaptureAddressCreateInfo`
+type VkBufferOpaqueCaptureAddressCreateInfoKHR =
+     VkBufferOpaqueCaptureAddressCreateInfo
+
 -- | > typedef struct VkBufferViewCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*            pNext;
@@ -300,7 +425,7 @@ type VkBufferMemoryRequirementsInfo2KHR =
 --   >     VkDeviceSize           range;
 --   > } VkBufferViewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBufferViewCreateInfo VkBufferViewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBufferViewCreateInfo VkBufferViewCreateInfo registry at www.khronos.org>
 type VkBufferViewCreateInfo = VkStruct VkBufferViewCreateInfo' -- ' closing tick for hsc2hs
 
 data VkBufferViewCreateInfo' -- ' closing tick for hsc2hs

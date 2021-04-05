@@ -50,7 +50,10 @@ genDefine t@VkTypeSimple
     }
 
   | vkName == VkTypeName "VK_MAKE_VERSION"
-  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))" || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    (((major) << 22) | ((minor) << 12) | (patch))"
+  || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))"
+  || c == "#define VK_MAKE_VERSION(major, minor, patch) \\\r\n    ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))"
   = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_MAKE_VERSION :: Bits a => a -> a -> a -> a|]
       [text|_VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch|]
@@ -116,6 +119,19 @@ genDefine t@VkTypeSimple
       (fromIntegral (v :: Word32))
       "(Num a, Eq a) => a"
     }
+
+  | VkTypeName "VK_HEADER_VERSION_COMPLETE" <- vkName
+  , Just rawVals
+    <-   matchedText (c  ?=~ [reBS|#define[[:space:]]+VK_HEADER_VERSION_COMPLETE[[:space:]]+VK_MAKE_VERSION[[:space:]]*\(.*\)|])
+    >>= \c' ->
+         matchedText (c' ?=~ [reBS|\(.*\)|])
+  , [major, minor, patch] <- map T.strip . T.split (== ',') . T.init . T.tail $ rawVals
+  = go (writeImport $ DIThing "Bits" DITAll)
+      [text|_VK_HEADER_VERSION_COMPLETE :: (Bits a, Num a) => a|]
+      [text|_VK_HEADER_VERSION_COMPLETE = _VK_MAKE_VERSION $major $minor $patch|]
+      [text|{-# INLINE _VK_HEADER_VERSION_COMPLETE #-}|]
+      [text|###define VK_HEADER_VERSION_COMPLETE _VK_HEADER_VERSION_COMPLETE|]
+      "_VK_HEADER_VERSION_COMPLETE"
 
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
   && "#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;" `T.isInfixOf` c

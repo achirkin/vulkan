@@ -18,7 +18,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     float                  color[4];
 --   > } VkDebugUtilsLabelEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsLabelEXT VkDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugUtilsLabelEXT VkDebugUtilsLabelEXT registry at www.khronos.org>
 type VkDebugUtilsLabelEXT = VkStruct VkDebugUtilsLabelEXT' -- ' closing tick for hsc2hs
 
 data VkDebugUtilsLabelEXT' -- ' closing tick for hsc2hs

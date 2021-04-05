@@ -32,7 +32,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendFactor VkBlendFactor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBlendFactor VkBlendFactor registry at www.khronos.org>
 newtype VkBlendFactor = VkBlendFactor Int32
                         deriving (Eq, Ord, Enum, Storable)
 
@@ -195,7 +195,7 @@ pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor 18
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendOp VkBlendOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBlendOp VkBlendOp registry at www.khronos.org>
 newtype VkBlendOp = VkBlendOp Int32
                     deriving (Eq, Ord, Enum, Storable)
 
@@ -246,7 +246,7 @@ pattern VK_BLEND_OP_MAX = VkBlendOp 4
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkBlendOverlapEXT VkBlendOverlapEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkBlendOverlapEXT VkBlendOverlapEXT registry at www.khronos.org>
 newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
                             deriving (Eq, Ord, Enum, Storable)
 

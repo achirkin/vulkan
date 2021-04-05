@@ -40,6 +40,9 @@ module Graphics.Vulkan.Types.Enum.Image
                             VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT,
                             VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT),
         VkImageUsageFlags, VkImageUsageFlagBits,
+        VkImageViewCreateBitmask(VkImageViewCreateBitmask,
+                                 VkImageViewCreateFlags, VkImageViewCreateFlagBits),
+        VkImageViewCreateFlags, VkImageViewCreateFlagBits,
         VkImageViewType(VkImageViewType, VK_IMAGE_VIEW_TYPE_1D,
                         VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_VIEW_TYPE_3D,
                         VK_IMAGE_VIEW_TYPE_CUBE, VK_IMAGE_VIEW_TYPE_1D_ARRAY,
@@ -223,7 +226,7 @@ pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT =
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageLayout VkImageLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageLayout VkImageLayout registry at www.khronos.org>
 newtype VkImageLayout = VkImageLayout Int32
                         deriving (Eq, Ord, Enum, Storable)
 
@@ -326,7 +329,7 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageTiling VkImageTiling registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageTiling VkImageTiling registry at www.khronos.org>
 newtype VkImageTiling = VkImageTiling Int32
                         deriving (Eq, Ord, Enum, Storable)
 
@@ -360,7 +363,7 @@ pattern VK_IMAGE_TILING_LINEAR = VkImageTiling 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageType VkImageType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageType VkImageType registry at www.khronos.org>
 newtype VkImageType = VkImageType Int32
                       deriving (Eq, Ord, Enum, Storable)
 
@@ -524,9 +527,44 @@ pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT ::
 pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT =
         VkImageUsageBitmask 128
 
+newtype VkImageViewCreateBitmask (a ::
+                                    FlagType) = VkImageViewCreateBitmask VkFlags
+                                                deriving (Eq, Ord, Storable)
+
+type VkImageViewCreateFlags = VkImageViewCreateBitmask FlagMask
+
+type VkImageViewCreateFlagBits = VkImageViewCreateBitmask FlagBit
+
+pattern VkImageViewCreateFlagBits ::
+        VkFlags -> VkImageViewCreateBitmask FlagBit
+
+pattern VkImageViewCreateFlagBits n = VkImageViewCreateBitmask n
+
+pattern VkImageViewCreateFlags ::
+        VkFlags -> VkImageViewCreateBitmask FlagMask
+
+pattern VkImageViewCreateFlags n = VkImageViewCreateBitmask n
+
+deriving instance Bits (VkImageViewCreateBitmask FlagMask)
+
+deriving instance FiniteBits (VkImageViewCreateBitmask FlagMask)
+
+instance Show (VkImageViewCreateBitmask a) where
+    showsPrec p (VkImageViewCreateBitmask x)
+      = showParen (p >= 11)
+          (showString "VkImageViewCreateBitmask " . showsPrec 11 x)
+
+instance Read (VkImageViewCreateBitmask a) where
+    readPrec
+      = parens
+          (choose [] +++
+             prec 10
+               (expectP (Ident "VkImageViewCreateBitmask") >>
+                  (VkImageViewCreateBitmask <$> step readPrec)))
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImageViewType VkImageViewType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImageViewType VkImageViewType registry at www.khronos.org>
 newtype VkImageViewType = VkImageViewType Int32
                           deriving (Eq, Ord, Enum, Storable)
 

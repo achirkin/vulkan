@@ -17,7 +17,7 @@ import Graphics.Vulkan.Types.Enum.Shader (VkShaderStageFlags)
 --   >     uint32_t               size;
 --   > } VkPushConstantRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPushConstantRange VkPushConstantRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPushConstantRange VkPushConstantRange registry at www.khronos.org>
 type VkPushConstantRange = VkStruct VkPushConstantRange' -- ' closing tick for hsc2hs
 
 data VkPushConstantRange' -- ' closing tick for hsc2hs

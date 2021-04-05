@@ -30,6 +30,8 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         module Graphics.Vulkan.Marshal, VkDebugMarkerMarkerInfoEXT,
         VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectTagInfoEXT,
         VkDebugReportBitmaskEXT(..), VkDebugReportObjectTypeEXT(..),
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT,
         VkDebugUtilsMessageSeverityBitmaskEXT(..),
         VkDebugUtilsMessageTypeBitmaskEXT(..), VkDebugReportFlagBitsEXT(),
         VkDebugReportFlagsEXT(), VkDebugUtilsMessageSeverityFlagBitsEXT(),
@@ -48,11 +50,14 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VkCmdDebugMarkerEndEXT, HS_vkCmdDebugMarkerEndEXT,
         PFN_vkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
         pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
-        PFN_vkCmdDebugMarkerInsertEXT, VkResult(..), VkBuffer,
+        PFN_vkCmdDebugMarkerInsertEXT, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -62,17 +67,19 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkDebugReportCallbackCreateInfoEXT, VkDebugUtilsObjectTagInfoEXT,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
         pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION,
@@ -121,7 +128,7 @@ type VkDebugMarkerSetObjectTagEXT = "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
@@ -182,7 +189,7 @@ type VkDebugMarkerSetObjectNameEXT =
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
@@ -243,7 +250,7 @@ type VkCmdDebugMarkerBeginEXT = "vkCmdDebugMarkerBeginEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerBeginEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
@@ -301,7 +308,7 @@ type VkCmdDebugMarkerEndEXT = "vkCmdDebugMarkerEndEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
                                                  -> IO ()
 
@@ -357,7 +364,7 @@ type VkCmdDebugMarkerInsertEXT = "vkCmdDebugMarkerInsertEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerInsertEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo

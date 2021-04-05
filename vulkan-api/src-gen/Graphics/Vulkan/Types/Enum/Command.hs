@@ -42,7 +42,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCommandBufferLevel VkCommandBufferLevel registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCommandBufferLevel VkCommandBufferLevel registry at www.khronos.org>
 newtype VkCommandBufferLevel = VkCommandBufferLevel Int32
                                deriving (Eq, Ord, Enum, Storable)
 

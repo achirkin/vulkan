@@ -24,16 +24,21 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
 
         -- ** Required extensions: 'VK_KHR_external_semaphore_capabilities'.
         VkExportSemaphoreCreateInfoKHR, VkSemaphoreImportBitmask(..),
+        VkSemaphoreType(..), VkSemaphoreWaitBitmask(..),
         VkSemaphoreImportFlagBits(), VkSemaphoreImportFlagBitsKHR(..),
-        VkSemaphoreImportFlags(), VkAndroidSurfaceCreateFlagsKHR(..),
-        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
-        VkCommandPoolTrimFlagsKHR(..),
+        VkSemaphoreImportFlags(), VkSemaphoreTypeKHR(..),
+        VkSemaphoreWaitFlagBits(), VkSemaphoreWaitFlagBitsKHR(..),
+        VkSemaphoreWaitFlags(), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -41,14 +46,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -57,15 +64,17 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
@@ -77,12 +86,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
         pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR,
         pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR)
        where
-import GHC.Ptr                                        (Ptr (..))
-import Graphics.Vulkan.Core_1_1                       (pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO)
+import GHC.Ptr                              (Ptr (..))
+import Graphics.Vulkan.Core_1_1             (pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO)
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
-import Graphics.Vulkan.Types.Struct.Export            (VkExportSemaphoreCreateInfoKHR)
+import Graphics.Vulkan.Types.Enum.Semaphore
+import Graphics.Vulkan.Types.Struct.Export  (VkExportSemaphoreCreateInfoKHR)
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION :: (Num a, Eq a) =>
         a

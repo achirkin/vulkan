@@ -6,7 +6,7 @@
 
 module VkXml.Sections.Extensions
   ( parseExtensions
-  , VkExtensions, VkExtension (..), VkExtAttrs (..)
+  , VkExtensions, VkExtension (..), VkExtAttrs (..), VkSpecialUse (..)
   ) where
 
 import           Control.Monad.Except
@@ -15,6 +15,7 @@ import           Data.Conduit
 import           Data.Map                   (Map)
 import qualified Data.Map                   as Map
 import           Data.Text                  (Text)
+import qualified Data.Text                  as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -29,6 +30,13 @@ import           VkXml.Sections.Feature
 
 type VkExtensions = Map VkExtensionName VkExtension
 
+data VkSpecialUse
+  = Cadsupport
+  | D3demulation
+  | Debugging
+  | Devtools
+  | Glemulation
+  deriving (Eq, Show)
 
 data VkExtension
   = VkExtension
@@ -50,6 +58,12 @@ data VkExtAttrs
   , extPlatform  :: Maybe VkPlatformName
     -- ^ seems to be used in a similar way as extProtect
   , extComment   :: Maybe Text
+  , extDeprecatedby :: Maybe VkExtensionName
+  , extSpecialuse   :: Maybe VkSpecialUse
+  , extPromotedto   :: Maybe VkExtensionName
+  , extObsoletedby  :: Maybe VkExtensionName
+  , extSortorder    :: Maybe Int
+  , extProvisional  :: Bool
   } deriving Show
 
 
@@ -73,6 +87,38 @@ parseVkExtension =
                               (extReqExts extAttributes)
       pure VkExtension {..}
 
+parseAttrVkExtensionName :: Name -> ReaderT ParseLoc AttrParser (Maybe VkExtensionName)
+parseAttrVkExtensionName name = do
+  mdb <- lift $ attr name
+  case mdb of
+    Nothing -> pure Nothing
+    Just "" -> pure Nothing
+    Just db -> Just <$> toHaskellExt db
+
+parseAttrVkExtensionSpeciause :: ReaderT ParseLoc AttrParser (Maybe VkSpecialUse)
+parseAttrVkExtensionSpeciause  = do
+  su <- lift $ attr "specialuse"
+  pure $ case su of
+    Just "cadsupport"   -> Just Cadsupport
+    Just "d3demulation" -> Just D3demulation
+    Just "debugging"    -> Just Debugging
+    Just "devtools"     -> Just Devtools
+    Just "glemulation"  -> Just Glemulation
+    _                   -> Nothing
+
+parseAttrVkExtensionSortorder :: ReaderT ParseLoc AttrParser (Maybe Int)
+parseAttrVkExtensionSortorder = do
+  x <- lift $ attr "sortorder"
+  pure $ case decOrHex <$> x of
+    Just (Right (i, _)) -> Just (fromInteger i)
+    _                          -> Nothing
+
+parseAttrVkExtensionProvisional :: ReaderT ParseLoc AttrParser Bool
+parseAttrVkExtensionProvisional = do
+  mr <- lift $ attr "provisional"
+  case T.toLower <$> mr of
+    Just "true" -> pure True
+    _           -> pure False
 
 parseVkExtAttrs :: ReaderT ParseLoc AttrParser VkExtAttrs
 parseVkExtAttrs = do
@@ -88,6 +134,12 @@ parseVkExtAttrs = do
   extReqCore   <- lift (attr "requiresCore")
   eextNumber   <- decOrHex <$> forceAttr "number"
   extComment   <- lift $ attr "comment"
+  extDeprecatedby <- parseAttrVkExtensionName "deprecatedby"
+  extSpecialuse   <- parseAttrVkExtensionSpeciause
+  extPromotedto   <- parseAttrVkExtensionName "promotedto"
+  extObsoletedby  <- parseAttrVkExtensionName "obsoletedby"
+  extSortorder    <- parseAttrVkExtensionSortorder
+  extProvisional  <- parseAttrVkExtensionProvisional
   case eextNumber of
     Left err -> parseFailed $ "Could not parse extension.number: " ++ err
     Right (extNumber,_) ->  pure VkExtAttrs {..}

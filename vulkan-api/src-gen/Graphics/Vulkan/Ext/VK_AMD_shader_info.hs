@@ -23,18 +23,28 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         -- type: @device@
         --
         -- Extension number: @43@
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkShaderInfoTypeAMD(..),
-        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkShaderFloatControlsIndependence(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderCorePropertiesBitmaskAMD(..),
+        VkShaderCorePropertiesFlagBitsAMD(),
+        VkShaderCorePropertiesFlagsAMD(),
+        VkShaderFloatControlsIndependenceKHR(..),
+        VkShaderModuleCreateBitmask(..), VkShaderModuleCreateFlagBits(),
+        VkShaderModuleCreateFlags(), VkShaderStageFlagBits(),
         VkShaderStageFlags(), VkShaderResourceUsageAMD,
         VkShaderStatisticsInfoAMD, -- > #include "vk_platform.h"
                                    VkGetShaderInfoAMD,
         pattern VkGetShaderInfoAMD, HS_vkGetShaderInfoAMD,
-        PFN_vkGetShaderInfoAMD, VkResult(..), VkBuffer, VkBufferView,
+        PFN_vkGetShaderInfoAMD, VkResult(..), VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
         VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -44,17 +54,19 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_AMD_SHADER_INFO_SPEC_VERSION,
         pattern VK_AMD_SHADER_INFO_SPEC_VERSION,
         VK_AMD_SHADER_INFO_EXTENSION_NAME,
@@ -101,7 +113,7 @@ type VkGetShaderInfoAMD = "vkGetShaderInfoAMD"
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetShaderInfoAMD vkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetShaderInfoAMD vkGetShaderInfoAMD registry at www.khronos.org>
 type HS_vkGetShaderInfoAMD =
      VkDevice -- ^ device
               ->

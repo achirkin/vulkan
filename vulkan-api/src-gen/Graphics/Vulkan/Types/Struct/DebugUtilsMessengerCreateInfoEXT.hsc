@@ -26,7 +26,7 @@ import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 --   >     void*                                pUserData;
 --   > } VkDebugUtilsMessengerCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsMessengerCreateInfoEXT VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugUtilsMessengerCreateInfoEXT VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
 type VkDebugUtilsMessengerCreateInfoEXT =
      VkStruct VkDebugUtilsMessengerCreateInfoEXT' -- ' closing tick for hsc2hs
 

@@ -12,15 +12,15 @@ import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Enum.ViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
 
 -- | > typedef struct VkViewport {
---   >     float          x;
---   >     float          y;
---   >     float          width;
---   >     float          height;
---   >     float          minDepth;
---   >     float          maxDepth;
+--   >     float x;
+--   >     float y;
+--   >     float width;
+--   >     float height;
+--   >     float                       minDepth;
+--   >     float                       maxDepth;
 --   > } VkViewport;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewport VkViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkViewport VkViewport registry at www.khronos.org>
 type VkViewport = VkStruct VkViewport' -- ' closing tick for hsc2hs
 
 data VkViewport' -- ' closing tick for hsc2hs
@@ -83,7 +83,7 @@ instance VulkanMarshal VkViewport where
 --   >     VkViewportCoordinateSwizzleNV          w;
 --   > } VkViewportSwizzleNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewportSwizzleNV VkViewportSwizzleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkViewportSwizzleNV VkViewportSwizzleNV registry at www.khronos.org>
 type VkViewportSwizzleNV = VkStruct VkViewportSwizzleNV' -- ' closing tick for hsc2hs
 
 data VkViewportSwizzleNV' -- ' closing tick for hsc2hs
@@ -122,7 +122,7 @@ instance VulkanMarshal VkViewportSwizzleNV where
 --   >     float          ycoeff;
 --   > } VkViewportWScalingNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViewportWScalingNV VkViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkViewportWScalingNV VkViewportWScalingNV registry at www.khronos.org>
 type VkViewportWScalingNV = VkStruct VkViewportWScalingNV' -- ' closing tick for hsc2hs
 
 data VkViewportWScalingNV' -- ' closing tick for hsc2hs

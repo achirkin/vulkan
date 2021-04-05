@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE FlexibleInstances          #-}
@@ -15,6 +16,8 @@ module Graphics.Vulkan.Types.Enum.Debug
                                 VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
                                 VK_DEBUG_REPORT_ERROR_BIT_EXT, VK_DEBUG_REPORT_DEBUG_BIT_EXT),
         VkDebugReportFlagsEXT, VkDebugReportFlagBitsEXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT,
         VkDebugReportObjectTypeEXT(VkDebugReportObjectTypeEXT,
                                    VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT,
                                    VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT,
@@ -47,8 +50,6 @@ module Graphics.Vulkan.Types.Enum.Debug
                                    VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
                                    VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT,
                                    VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT,
-                                   VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT,
-                                   VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT,
                                    VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT),
         VkDebugUtilsMessageSeverityBitmaskEXT(VkDebugUtilsMessageSeverityBitmaskEXT,
                                               VkDebugUtilsMessageSeverityFlagsEXT,
@@ -165,7 +166,7 @@ pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportBitmaskEXT 16
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportObjectTypeEXT VkDebugReportObjectTypeEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugReportObjectTypeEXT VkDebugReportObjectTypeEXT registry at www.khronos.org>
 newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
                                      deriving (Eq, Ord, Enum, Storable)
 
@@ -231,18 +232,16 @@ instance Show VkDebugReportObjectTypeEXT where
       VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
       = showString
           "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT"
     showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT
       = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT"
     showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT
       = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT"
-    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT
-      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT"
-    showsPrec _
-      VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-      = showString
-          "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT"
     showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT
       = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT"
+    showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT
+      = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT"
     showsPrec p (VkDebugReportObjectTypeEXT x)
       = showParen (p >= 11)
           (showString "VkDebugReportObjectTypeEXT " . showsPrec 11 x)
@@ -309,16 +308,16 @@ instance Read VkDebugReportObjectTypeEXT where
                pure VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT),
               ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
                pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT),
               ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT",
                pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT),
               ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT",
                pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT),
-              ("VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT",
-               pure VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT),
-              ("VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT",
-               pure VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT),
               ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT",
-               pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT)]
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT),
+              ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT",
+               pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT)]
              +++
              prec 10
                (expectP (Ident "VkDebugReportObjectTypeEXT") >>
@@ -498,6 +497,10 @@ pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT =
         VkDebugReportObjectTypeEXT 28
 
+-- | Backwards-compatible alias containing a typo
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT =
+        VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
+
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT ::
         VkDebugReportObjectTypeEXT
 
@@ -510,23 +513,15 @@ pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT ::
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT =
         VkDebugReportObjectTypeEXT 30
 
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT =
-        VkDebugReportObjectTypeEXT 31
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-        :: VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-        = VkDebugReportObjectTypeEXT 32
-
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT ::
         VkDebugReportObjectTypeEXT
 
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT =
         VkDebugReportObjectTypeEXT 33
+
+-- | Backwards-compatible alias containing a typo
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT =
+        VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT
 
 newtype VkDebugUtilsMessageSeverityBitmaskEXT (a ::
                                                  FlagType) = VkDebugUtilsMessageSeverityBitmaskEXT VkFlags

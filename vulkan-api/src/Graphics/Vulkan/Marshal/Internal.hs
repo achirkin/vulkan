@@ -64,9 +64,9 @@ import Foreign.Storable
 import GHC.Base              (Addr#, ByteArray#, IO (..), Int (..), Int#,
                               byteArrayContents#, copyAddrToByteArray#, eqAddr#,
                               isTrue#, minusAddr#, newAlignedPinnedByteArray#,
-                              plusAddr#, touch#, unsafeCoerce#,
+                              plusAddr#, touch#,
                               unsafeFreezeByteArray#, (*#), (+#), (>=#))
-import GHC.Exts              (Proxy#, proxy#)
+import GHC.Exts              (Proxy#, proxy#, unsafeCoerce#)
 import GHC.ForeignPtr        (ForeignPtr (..), ForeignPtrContents (..))
 import GHC.Ptr               (Ptr (..))
 import GHC.TypeLits

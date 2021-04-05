@@ -25,7 +25,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubpassContents VkSubpassContents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSubpassContents VkSubpassContents registry at www.khronos.org>
 newtype VkSubpassContents = VkSubpassContents Int32
                             deriving (Eq, Ord, Enum, Storable)
 

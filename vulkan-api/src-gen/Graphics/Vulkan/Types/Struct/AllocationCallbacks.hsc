@@ -24,7 +24,7 @@ import Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
 --   >     PFN_vkInternalFreeNotification pfnInternalFree;
 --   > } VkAllocationCallbacks;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAllocationCallbacks VkAllocationCallbacks registry at www.khronos.org>
 type VkAllocationCallbacks = VkStruct VkAllocationCallbacks' -- ' closing tick for hsc2hs
 
 data VkAllocationCallbacks' -- ' closing tick for hsc2hs

@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     VkFormatFeatureFlags   bufferFeatures;
 --   > } VkFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormatProperties VkFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkFormatProperties VkFormatProperties registry at www.khronos.org>
 type VkFormatProperties = VkStruct VkFormatProperties' -- ' closing tick for hsc2hs
 
 data VkFormatProperties' -- ' closing tick for hsc2hs
@@ -54,7 +54,7 @@ instance VulkanMarshal VkFormatProperties where
 --   >     VkFormatProperties               formatProperties;
 --   > } VkFormatProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFormatProperties2 VkFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkFormatProperties2 VkFormatProperties2 registry at www.khronos.org>
 type VkFormatProperties2 = VkStruct VkFormatProperties2' -- ' closing tick for hsc2hs
 
 data VkFormatProperties2' -- ' closing tick for hsc2hs

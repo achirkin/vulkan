@@ -8,13 +8,14 @@
 {-# LANGUAGE Strict                     #-}
 {-# LANGUAGE TypeSynonymInstances       #-}
 module Graphics.Vulkan.Types.Enum.Descriptor
-       (VkDescriptorBindingBitmaskEXT(VkDescriptorBindingBitmaskEXT,
-                                      VkDescriptorBindingFlagsEXT, VkDescriptorBindingFlagBitsEXT,
-                                      VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT,
-                                      VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT,
-                                      VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT,
-                                      VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT),
-        VkDescriptorBindingFlagsEXT, VkDescriptorBindingFlagBitsEXT,
+       (VkDescriptorBindingFlagBitsEXT(..),
+        VkDescriptorBindingBitmask(VkDescriptorBindingBitmask,
+                                   VkDescriptorBindingFlags, VkDescriptorBindingFlagBits,
+                                   VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT,
+                                   VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT,
+                                   VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT,
+                                   VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT),
+        VkDescriptorBindingFlags, VkDescriptorBindingFlagBits,
         VkDescriptorPoolCreateBitmask(VkDescriptorPoolCreateBitmask,
                                       VkDescriptorPoolCreateFlags, VkDescriptorPoolCreateFlagBits,
                                       VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT),
@@ -48,93 +49,99 @@ import Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import Text.Read                       (Read (..), parens)
 import Text.Read.Lex                   (Lexeme (..))
 
-newtype VkDescriptorBindingBitmaskEXT (a ::
-                                         FlagType) = VkDescriptorBindingBitmaskEXT VkFlags
-                                                     deriving (Eq, Ord, Storable)
+newtype VkDescriptorBindingFlagBitsEXT = VkDescriptorBindingFlagBitsEXT VkFlags
+                                         deriving (Eq, Ord, Enum, Bits, FiniteBits, Storable)
 
-type VkDescriptorBindingFlagsEXT =
-     VkDescriptorBindingBitmaskEXT FlagMask
+instance Show VkDescriptorBindingFlagBitsEXT where
+    {-# INLINE showsPrec #-}
+    showsPrec = coerce (showsPrec :: Int -> VkFlags -> ShowS)
 
-type VkDescriptorBindingFlagBitsEXT =
-     VkDescriptorBindingBitmaskEXT FlagBit
+instance Read VkDescriptorBindingFlagBitsEXT where
+    {-# INLINE readsPrec #-}
+    readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-pattern VkDescriptorBindingFlagBitsEXT ::
-        VkFlags -> VkDescriptorBindingBitmaskEXT FlagBit
+newtype VkDescriptorBindingBitmask (a ::
+                                      FlagType) = VkDescriptorBindingBitmask VkFlags
+                                                  deriving (Eq, Ord, Storable)
 
-pattern VkDescriptorBindingFlagBitsEXT n =
-        VkDescriptorBindingBitmaskEXT n
+type VkDescriptorBindingFlags = VkDescriptorBindingBitmask FlagMask
 
-pattern VkDescriptorBindingFlagsEXT ::
-        VkFlags -> VkDescriptorBindingBitmaskEXT FlagMask
+type VkDescriptorBindingFlagBits =
+     VkDescriptorBindingBitmask FlagBit
 
-pattern VkDescriptorBindingFlagsEXT n =
-        VkDescriptorBindingBitmaskEXT n
+pattern VkDescriptorBindingFlagBits ::
+        VkFlags -> VkDescriptorBindingBitmask FlagBit
 
-deriving instance Bits (VkDescriptorBindingBitmaskEXT FlagMask)
+pattern VkDescriptorBindingFlagBits n =
+        VkDescriptorBindingBitmask n
 
-deriving instance
-         FiniteBits (VkDescriptorBindingBitmaskEXT FlagMask)
+pattern VkDescriptorBindingFlags ::
+        VkFlags -> VkDescriptorBindingBitmask FlagMask
 
-instance Show (VkDescriptorBindingBitmaskEXT a) where
-    showsPrec _ VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT
-      = showString "VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT"
-    showsPrec _
-      VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT
+pattern VkDescriptorBindingFlags n = VkDescriptorBindingBitmask n
+
+deriving instance Bits (VkDescriptorBindingBitmask FlagMask)
+
+deriving instance FiniteBits (VkDescriptorBindingBitmask FlagMask)
+
+instance Show (VkDescriptorBindingBitmask a) where
+    showsPrec _ VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT
+      = showString "VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT"
+    showsPrec _ VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT
       = showString
-          "VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT"
-    showsPrec _ VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT
-      = showString "VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT"
-    showsPrec _ VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT
-      = showString
-          "VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT"
-    showsPrec p (VkDescriptorBindingBitmaskEXT x)
+          "VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT"
+    showsPrec _ VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT
+      = showString "VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT"
+    showsPrec _ VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT
+      = showString "VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT"
+    showsPrec p (VkDescriptorBindingBitmask x)
       = showParen (p >= 11)
-          (showString "VkDescriptorBindingBitmaskEXT " . showsPrec 11 x)
+          (showString "VkDescriptorBindingBitmask " . showsPrec 11 x)
 
-instance Read (VkDescriptorBindingBitmaskEXT a) where
+instance Read (VkDescriptorBindingBitmask a) where
     readPrec
       = parens
           (choose
-             [("VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT",
-               pure VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT),
-              ("VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT",
-               pure VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT),
-              ("VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT",
-               pure VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT),
-              ("VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT",
-               pure VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT)]
+             [("VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT",
+               pure VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT),
+              ("VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT",
+               pure VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT),
+              ("VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT",
+               pure VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT),
+              ("VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT",
+               pure VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT)]
              +++
              prec 10
-               (expectP (Ident "VkDescriptorBindingBitmaskEXT") >>
-                  (VkDescriptorBindingBitmaskEXT <$> step readPrec)))
+               (expectP (Ident "VkDescriptorBindingBitmask") >>
+                  (VkDescriptorBindingBitmask <$> step readPrec)))
 
 -- | bitpos = @0@
-pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT ::
-        VkDescriptorBindingBitmaskEXT a
+pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT ::
+        VkDescriptorBindingBitmask a
 
-pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT =
-        VkDescriptorBindingBitmaskEXT 1
+pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT =
+        VkDescriptorBindingBitmask 1
 
 -- | bitpos = @1@
-pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT
-        :: VkDescriptorBindingBitmaskEXT a
+pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT ::
+        VkDescriptorBindingBitmask a
 
-pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT =
-        VkDescriptorBindingBitmaskEXT 2
+pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT =
+        VkDescriptorBindingBitmask 2
 
 -- | bitpos = @2@
-pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT ::
-        VkDescriptorBindingBitmaskEXT a
+pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT ::
+        VkDescriptorBindingBitmask a
 
-pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT =
-        VkDescriptorBindingBitmaskEXT 4
+pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT =
+        VkDescriptorBindingBitmask 4
 
 -- | bitpos = @3@
-pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT ::
-        VkDescriptorBindingBitmaskEXT a
+pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT ::
+        VkDescriptorBindingBitmask a
 
-pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT =
-        VkDescriptorBindingBitmaskEXT 8
+pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT =
+        VkDescriptorBindingBitmask 8
 
 newtype VkDescriptorPoolCreateBitmask (a ::
                                          FlagType) = VkDescriptorPoolCreateBitmask VkFlags
@@ -233,7 +240,7 @@ instance Read (VkDescriptorSetLayoutCreateBitmask a) where
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorType VkDescriptorType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorType VkDescriptorType registry at www.khronos.org>
 newtype VkDescriptorType = VkDescriptorType Int32
                            deriving (Eq, Ord, Enum, Storable)
 
@@ -348,7 +355,7 @@ pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType 10
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateType VkDescriptorUpdateTemplateType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorUpdateTemplateType VkDescriptorUpdateTemplateType registry at www.khronos.org>
 newtype VkDescriptorUpdateTemplateType = VkDescriptorUpdateTemplateType Int32
                                          deriving (Eq, Ord, Enum, Storable)
 

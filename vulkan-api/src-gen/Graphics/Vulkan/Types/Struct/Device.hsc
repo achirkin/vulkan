@@ -6,9 +6,8 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Device
-       (VkDeviceCreateInfo, VkDeviceEventInfoEXT,
-        VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+       (VkDeviceCreateInfo, VkDeviceDiagnosticsConfigCreateInfoNV,
+        VkDeviceEventInfoEXT, VkDeviceGroupBindSparseInfo,
         VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfo,
         VkDeviceGroupCommandBufferBeginInfoKHR,
@@ -17,21 +16,26 @@ module Graphics.Vulkan.Types.Struct.Device
         VkDeviceGroupRenderPassBeginInfo,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
         VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
-        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
-        VkDeviceQueueInfo2)
+        VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT, VkDeviceQueueCreateInfo,
+        VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2)
        where
 import Graphics.Vulkan.Constants                           (VK_MAX_DEVICE_GROUP_SIZE)
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes                     (VkBool32)
 import Graphics.Vulkan.Types.Bitmasks                      (VkDeviceCreateFlags)
-import Graphics.Vulkan.Types.Enum.Device                   (VkDeviceEventTypeEXT,
+import Graphics.Vulkan.Types.Enum.Device                   (VkDeviceDiagnosticsConfigFlagsNV,
+                                                            VkDeviceEventTypeEXT,
                                                             VkDeviceGroupPresentModeFlagBitsKHR,
                                                             VkDeviceGroupPresentModeFlagsKHR,
                                                             VkDeviceQueueCreateFlags)
+import Graphics.Vulkan.Types.Enum.Memory                   (VkMemoryOverallocationBehaviorAMD)
 import Graphics.Vulkan.Types.Enum.Queue                    (VkQueueGlobalPriorityEXT)
 import Graphics.Vulkan.Types.Enum.StructureType            (VkStructureType)
-import Graphics.Vulkan.Types.Handles                       (VkPhysicalDevice)
+import Graphics.Vulkan.Types.Handles                       (VkDeviceMemory,
+                                                            VkPhysicalDevice)
 import Graphics.Vulkan.Types.Struct.Bind                   (VkBindSparseInfo)
 import Graphics.Vulkan.Types.Struct.Command                (VkCommandBufferBeginInfo)
 import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
@@ -39,7 +43,7 @@ import Graphics.Vulkan.Types.Struct.Present                (VkPresentInfoKHR)
 import Graphics.Vulkan.Types.Struct.Rect                   (VkRect2D)
 import Graphics.Vulkan.Types.Struct.RenderPass             (VkRenderPassBeginInfo)
 import Graphics.Vulkan.Types.Struct.SubmitInfo             (VkSubmitInfo)
-import Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Swapchain              (VkSwapchainCreateInfoKHR)
 
 -- | > typedef struct VkDeviceCreateInfo {
 --   >     VkStructureType sType;
@@ -54,7 +58,7 @@ import Graphics.Vulkan.Types.Struct.SwapchainC             (VkSwapchainCreateInf
 --   >     const VkPhysicalDeviceFeatures* pEnabledFeatures;
 --   > } VkDeviceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceCreateInfo VkDeviceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceCreateInfo VkDeviceCreateInfo registry at www.khronos.org>
 type VkDeviceCreateInfo = VkStruct VkDeviceCreateInfo' -- ' closing tick for hsc2hs
 
 data VkDeviceCreateInfo' -- ' closing tick for hsc2hs
@@ -119,13 +123,50 @@ instance VulkanMarshal VkDeviceCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkDeviceDiagnosticsConfigCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                                         pNext;
+--   >     VkDeviceDiagnosticsConfigFlagsNV    flags;
+--   > } VkDeviceDiagnosticsConfigCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceDiagnosticsConfigCreateInfoNV VkDeviceDiagnosticsConfigCreateInfoNV registry at www.khronos.org>
+type VkDeviceDiagnosticsConfigCreateInfoNV =
+     VkStruct VkDeviceDiagnosticsConfigCreateInfoNV' -- ' closing tick for hsc2hs
+
+data VkDeviceDiagnosticsConfigCreateInfoNV' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkDeviceDiagnosticsConfigCreateInfoNV where
+    type StructRep VkDeviceDiagnosticsConfigCreateInfoNV =
+         'StructMeta "VkDeviceDiagnosticsConfigCreateInfoNV" -- ' closing tick for hsc2hs
+           VkDeviceDiagnosticsConfigCreateInfoNV
+           #{size VkDeviceDiagnosticsConfigCreateInfoNV}
+           #{alignment VkDeviceDiagnosticsConfigCreateInfoNV}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDeviceDiagnosticsConfigCreateInfoNV, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDeviceDiagnosticsConfigCreateInfoNV, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "flags" VkDeviceDiagnosticsConfigFlagsNV 'True
+                #{offset VkDeviceDiagnosticsConfigCreateInfoNV, flags}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkDeviceEventInfoEXT {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkDeviceEventTypeEXT             deviceEvent;
 --   > } VkDeviceEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventInfoEXT VkDeviceEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceEventInfoEXT VkDeviceEventInfoEXT registry at www.khronos.org>
 type VkDeviceEventInfoEXT = VkStruct VkDeviceEventInfoEXT' -- ' closing tick for hsc2hs
 
 data VkDeviceEventInfoEXT' -- ' closing tick for hsc2hs
@@ -154,104 +195,6 @@ instance VulkanMarshal VkDeviceEventInfoEXT where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
--- | > typedef struct VkDeviceGeneratedCommandsFeaturesNVX {
---   >     VkStructureType sType;
---   >     const void*                      pNext;
---   >     VkBool32                         computeBindingPointSupport;
---   > } VkDeviceGeneratedCommandsFeaturesNVX;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGeneratedCommandsFeaturesNVX VkDeviceGeneratedCommandsFeaturesNVX registry at www.khronos.org>
-type VkDeviceGeneratedCommandsFeaturesNVX =
-     VkStruct VkDeviceGeneratedCommandsFeaturesNVX' -- ' closing tick for hsc2hs
-
-data VkDeviceGeneratedCommandsFeaturesNVX' -- ' closing tick for hsc2hs
-
-instance VulkanMarshal VkDeviceGeneratedCommandsFeaturesNVX where
-    type StructRep VkDeviceGeneratedCommandsFeaturesNVX =
-         'StructMeta "VkDeviceGeneratedCommandsFeaturesNVX" -- ' closing tick for hsc2hs
-           VkDeviceGeneratedCommandsFeaturesNVX
-           #{size VkDeviceGeneratedCommandsFeaturesNVX}
-           #{alignment VkDeviceGeneratedCommandsFeaturesNVX}
-           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "computeBindingPointSupport" VkBool32 'False 
-                                                                      #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True)] -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
-           '[] -- ' closing tick for hsc2hs
-
--- | > typedef struct VkDeviceGeneratedCommandsLimitsNVX {
---   >     VkStructureType sType;
---   >     const void*                      pNext;
---   >     uint32_t                         maxIndirectCommandsLayoutTokenCount;
---   >     uint32_t                         maxObjectEntryCounts;
---   >     uint32_t                         minSequenceCountBufferOffsetAlignment;
---   >     uint32_t                         minSequenceIndexBufferOffsetAlignment;
---   >     uint32_t                         minCommandsTokenBufferOffsetAlignment;
---   > } VkDeviceGeneratedCommandsLimitsNVX;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGeneratedCommandsLimitsNVX VkDeviceGeneratedCommandsLimitsNVX registry at www.khronos.org>
-type VkDeviceGeneratedCommandsLimitsNVX =
-     VkStruct VkDeviceGeneratedCommandsLimitsNVX' -- ' closing tick for hsc2hs
-
-data VkDeviceGeneratedCommandsLimitsNVX' -- ' closing tick for hsc2hs
-
-instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
-    type StructRep VkDeviceGeneratedCommandsLimitsNVX =
-         'StructMeta "VkDeviceGeneratedCommandsLimitsNVX" -- ' closing tick for hsc2hs
-           VkDeviceGeneratedCommandsLimitsNVX
-           #{size VkDeviceGeneratedCommandsLimitsNVX}
-           #{alignment VkDeviceGeneratedCommandsLimitsNVX}
-           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "maxIndirectCommandsLayoutTokenCount" Word32 'False
-                #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "maxObjectEntryCounts" Word32 'False 
-                                                              #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "minSequenceCountBufferOffsetAlignment" Word32 'False
-                #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "minSequenceIndexBufferOffsetAlignment" Word32 'False
-                #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "minCommandsTokenBufferOffsetAlignment" Word32 'False
-                #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
-                1
-                'True -- ' closing tick for hsc2hs
-                'True)] -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
-           '[] -- ' closing tick for hsc2hs
-
 -- | > typedef struct VkDeviceGroupBindSparseInfo {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
@@ -259,7 +202,7 @@ instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
 --   >     uint32_t                         memoryDeviceIndex;
 --   > } VkDeviceGroupBindSparseInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupBindSparseInfo VkDeviceGroupBindSparseInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupBindSparseInfo VkDeviceGroupBindSparseInfo registry at www.khronos.org>
 type VkDeviceGroupBindSparseInfo =
      VkStruct VkDeviceGroupBindSparseInfo' -- ' closing tick for hsc2hs
 
@@ -304,7 +247,7 @@ type VkDeviceGroupBindSparseInfoKHR = VkDeviceGroupBindSparseInfo
 --   >     uint32_t                         deviceMask;
 --   > } VkDeviceGroupCommandBufferBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupCommandBufferBeginInfo VkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupCommandBufferBeginInfo VkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
 type VkDeviceGroupCommandBufferBeginInfo =
      VkStruct VkDeviceGroupCommandBufferBeginInfo' -- ' closing tick for hsc2hs
 
@@ -346,7 +289,7 @@ type VkDeviceGroupCommandBufferBeginInfoKHR =
 --   >     const VkPhysicalDevice*  pPhysicalDevices;
 --   > } VkDeviceGroupDeviceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupDeviceCreateInfo VkDeviceGroupDeviceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupDeviceCreateInfo VkDeviceGroupDeviceCreateInfo registry at www.khronos.org>
 type VkDeviceGroupDeviceCreateInfo =
      VkStruct VkDeviceGroupDeviceCreateInfo' -- ' closing tick for hsc2hs
 
@@ -393,7 +336,7 @@ type VkDeviceGroupDeviceCreateInfoKHR =
 --   >     VkDeviceGroupPresentModeFlagsKHR modes;
 --   > } VkDeviceGroupPresentCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupPresentCapabilitiesKHR VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupPresentCapabilitiesKHR VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 type VkDeviceGroupPresentCapabilitiesKHR =
      VkStruct VkDeviceGroupPresentCapabilitiesKHR' -- ' closing tick for hsc2hs
 
@@ -437,7 +380,7 @@ instance VulkanMarshal VkDeviceGroupPresentCapabilitiesKHR where
 --   >     VkDeviceGroupPresentModeFlagBitsKHR mode;
 --   > } VkDeviceGroupPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupPresentInfoKHR VkDeviceGroupPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupPresentInfoKHR VkDeviceGroupPresentInfoKHR registry at www.khronos.org>
 type VkDeviceGroupPresentInfoKHR =
      VkStruct VkDeviceGroupPresentInfoKHR' -- ' closing tick for hsc2hs
 
@@ -486,7 +429,7 @@ instance VulkanMarshal VkDeviceGroupPresentInfoKHR where
 --   >     const VkRect2D*  pDeviceRenderAreas;
 --   > } VkDeviceGroupRenderPassBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupRenderPassBeginInfo VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupRenderPassBeginInfo VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
 type VkDeviceGroupRenderPassBeginInfo =
      VkStruct VkDeviceGroupRenderPassBeginInfo' -- ' closing tick for hsc2hs
 
@@ -542,7 +485,7 @@ type VkDeviceGroupRenderPassBeginInfoKHR =
 --   >     const uint32_t*  pSignalSemaphoreDeviceIndices;
 --   > } VkDeviceGroupSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSubmitInfo VkDeviceGroupSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupSubmitInfo VkDeviceGroupSubmitInfo registry at www.khronos.org>
 type VkDeviceGroupSubmitInfo = VkStruct VkDeviceGroupSubmitInfo' -- ' closing tick for hsc2hs
 
 data VkDeviceGroupSubmitInfo' -- ' closing tick for hsc2hs
@@ -605,7 +548,7 @@ type VkDeviceGroupSubmitInfoKHR = VkDeviceGroupSubmitInfo
 --   >     VkDeviceGroupPresentModeFlagsKHR                         modes;
 --   > } VkDeviceGroupSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceGroupSwapchainCreateInfoKHR VkDeviceGroupSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceGroupSwapchainCreateInfoKHR VkDeviceGroupSwapchainCreateInfoKHR registry at www.khronos.org>
 type VkDeviceGroupSwapchainCreateInfoKHR =
      VkStruct VkDeviceGroupSwapchainCreateInfoKHR' -- ' closing tick for hsc2hs
 
@@ -636,6 +579,124 @@ instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHR where
            'False -- ' closing tick for hsc2hs
            '[VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkDeviceMemoryOpaqueCaptureAddressInfo {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceMemory                   memory;
+--   > } VkDeviceMemoryOpaqueCaptureAddressInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceMemoryOpaqueCaptureAddressInfo VkDeviceMemoryOpaqueCaptureAddressInfo registry at www.khronos.org>
+type VkDeviceMemoryOpaqueCaptureAddressInfo =
+     VkStruct VkDeviceMemoryOpaqueCaptureAddressInfo' -- ' closing tick for hsc2hs
+
+data VkDeviceMemoryOpaqueCaptureAddressInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkDeviceMemoryOpaqueCaptureAddressInfo where
+    type StructRep VkDeviceMemoryOpaqueCaptureAddressInfo =
+         'StructMeta "VkDeviceMemoryOpaqueCaptureAddressInfo" -- ' closing tick for hsc2hs
+           VkDeviceMemoryOpaqueCaptureAddressInfo
+           #{size VkDeviceMemoryOpaqueCaptureAddressInfo}
+           #{alignment VkDeviceMemoryOpaqueCaptureAddressInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDeviceMemoryOpaqueCaptureAddressInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDeviceMemoryOpaqueCaptureAddressInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "memory" VkDeviceMemory 'False 
+                                                        #{offset VkDeviceMemoryOpaqueCaptureAddressInfo, memory}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkDeviceMemoryOpaqueCaptureAddressInfo`
+type VkDeviceMemoryOpaqueCaptureAddressInfoKHR =
+     VkDeviceMemoryOpaqueCaptureAddressInfo
+
+-- | > typedef struct VkDeviceMemoryOverallocationCreateInfoAMD {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkMemoryOverallocationBehaviorAMD overallocationBehavior;
+--   > } VkDeviceMemoryOverallocationCreateInfoAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceMemoryOverallocationCreateInfoAMD VkDeviceMemoryOverallocationCreateInfoAMD registry at www.khronos.org>
+type VkDeviceMemoryOverallocationCreateInfoAMD =
+     VkStruct VkDeviceMemoryOverallocationCreateInfoAMD' -- ' closing tick for hsc2hs
+
+data VkDeviceMemoryOverallocationCreateInfoAMD' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkDeviceMemoryOverallocationCreateInfoAMD
+         where
+    type StructRep VkDeviceMemoryOverallocationCreateInfoAMD =
+         'StructMeta "VkDeviceMemoryOverallocationCreateInfoAMD" -- ' closing tick for hsc2hs
+           VkDeviceMemoryOverallocationCreateInfoAMD
+           #{size VkDeviceMemoryOverallocationCreateInfoAMD}
+           #{alignment VkDeviceMemoryOverallocationCreateInfoAMD}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDeviceMemoryOverallocationCreateInfoAMD, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDeviceMemoryOverallocationCreateInfoAMD, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "overallocationBehavior" -- ' closing tick for hsc2hs
+                VkMemoryOverallocationBehaviorAMD
+                'False -- ' closing tick for hsc2hs
+                #{offset VkDeviceMemoryOverallocationCreateInfoAMD, overallocationBehavior}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkDevicePrivateDataCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                            pNext;
+--   >     uint32_t                               privateDataSlotRequestCount;
+--   > } VkDevicePrivateDataCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDevicePrivateDataCreateInfoEXT VkDevicePrivateDataCreateInfoEXT registry at www.khronos.org>
+type VkDevicePrivateDataCreateInfoEXT =
+     VkStruct VkDevicePrivateDataCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDevicePrivateDataCreateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkDevicePrivateDataCreateInfoEXT where
+    type StructRep VkDevicePrivateDataCreateInfoEXT =
+         'StructMeta "VkDevicePrivateDataCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkDevicePrivateDataCreateInfoEXT
+           #{size VkDevicePrivateDataCreateInfoEXT}
+           #{alignment VkDevicePrivateDataCreateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDevicePrivateDataCreateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDevicePrivateDataCreateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "privateDataSlotRequestCount" Word32 'False 
+                                                                     #{offset VkDevicePrivateDataCreateInfoEXT, privateDataSlotRequestCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkDeviceQueueCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*     pNext;
@@ -645,7 +706,7 @@ instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHR where
 --   >     const float*    pQueuePriorities;
 --   > } VkDeviceQueueCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueCreateInfo VkDeviceQueueCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceQueueCreateInfo VkDeviceQueueCreateInfo registry at www.khronos.org>
 type VkDeviceQueueCreateInfo = VkStruct VkDeviceQueueCreateInfo' -- ' closing tick for hsc2hs
 
 data VkDeviceQueueCreateInfo' -- ' closing tick for hsc2hs
@@ -697,7 +758,7 @@ instance VulkanMarshal VkDeviceQueueCreateInfo where
 --   >     VkQueueGlobalPriorityEXT       globalPriority;
 --   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueGlobalPriorityCreateInfoEXT VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceQueueGlobalPriorityCreateInfoEXT VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
 type VkDeviceQueueGlobalPriorityCreateInfoEXT =
      VkStruct VkDeviceQueueGlobalPriorityCreateInfoEXT' -- ' closing tick for hsc2hs
 
@@ -737,7 +798,7 @@ instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
 --   >     uint32_t                            queueIndex;
 --   > } VkDeviceQueueInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceQueueInfo2 VkDeviceQueueInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceQueueInfo2 VkDeviceQueueInfo2 registry at www.khronos.org>
 type VkDeviceQueueInfo2 = VkStruct VkDeviceQueueInfo2' -- ' closing tick for hsc2hs
 
 data VkDeviceQueueInfo2' -- ' closing tick for hsc2hs
@@ -757,8 +818,8 @@ instance VulkanMarshal VkDeviceQueueInfo2 where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "flags" VkDeviceQueueCreateFlags 'False 
-                                                                 #{offset VkDeviceQueueInfo2, flags}
+             ('FieldMeta "flags" VkDeviceQueueCreateFlags 'True 
+                                                                #{offset VkDeviceQueueInfo2, flags}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs

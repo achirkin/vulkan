@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Struct.SubmitInfo  (VkSubmitInfo)
 --   >     VkBool32                        protectedSubmit;
 --   > } VkProtectedSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkProtectedSubmitInfo VkProtectedSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkProtectedSubmitInfo VkProtectedSubmitInfo registry at www.khronos.org>
 type VkProtectedSubmitInfo = VkStruct VkProtectedSubmitInfo' -- ' closing tick for hsc2hs
 
 data VkProtectedSubmitInfo' -- ' closing tick for hsc2hs

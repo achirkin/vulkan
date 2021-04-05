@@ -11,7 +11,10 @@ module Graphics.Vulkan.Types.Struct.Memory
         VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfoKHR,
         VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirementsKHR,
         VkMemoryFdPropertiesKHR, VkMemoryGetFdInfoKHR, VkMemoryHeap,
-        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryHostPointerPropertiesEXT,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements,
         VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType)
        where
 import Graphics.Vulkan.Marshal
@@ -33,7 +36,7 @@ import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
 --   >     uint32_t                         deviceMask;
 --   > } VkMemoryAllocateFlagsInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateFlagsInfo VkMemoryAllocateFlagsInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryAllocateFlagsInfo VkMemoryAllocateFlagsInfo registry at www.khronos.org>
 type VkMemoryAllocateFlagsInfo =
      VkStruct VkMemoryAllocateFlagsInfo' -- ' closing tick for hsc2hs
 
@@ -78,7 +81,7 @@ type VkMemoryAllocateFlagsInfoKHR = VkMemoryAllocateFlagsInfo
 --   >     uint32_t               memoryTypeIndex;
 --   > } VkMemoryAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryAllocateInfo VkMemoryAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryAllocateInfo VkMemoryAllocateInfo registry at www.khronos.org>
 type VkMemoryAllocateInfo = VkStruct VkMemoryAllocateInfo' -- ' closing tick for hsc2hs
 
 data VkMemoryAllocateInfo' -- ' closing tick for hsc2hs
@@ -119,7 +122,7 @@ instance VulkanMarshal VkMemoryAllocateInfo where
 --   >     VkAccessFlags          dstAccessMask;
 --   > } VkMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryBarrier VkMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryBarrier VkMemoryBarrier registry at www.khronos.org>
 type VkMemoryBarrier = VkStruct VkMemoryBarrier' -- ' closing tick for hsc2hs
 
 data VkMemoryBarrier' -- ' closing tick for hsc2hs
@@ -160,7 +163,7 @@ instance VulkanMarshal VkMemoryBarrier where
 --   >     VkBuffer         buffer;
 --   > } VkMemoryDedicatedAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryDedicatedAllocateInfo VkMemoryDedicatedAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryDedicatedAllocateInfo VkMemoryDedicatedAllocateInfo registry at www.khronos.org>
 type VkMemoryDedicatedAllocateInfo =
      VkStruct VkMemoryDedicatedAllocateInfo' -- ' closing tick for hsc2hs
 
@@ -207,7 +210,7 @@ type VkMemoryDedicatedAllocateInfoKHR =
 --   >     VkBool32                         requiresDedicatedAllocation;
 --   > } VkMemoryDedicatedRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryDedicatedRequirements VkMemoryDedicatedRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryDedicatedRequirements VkMemoryDedicatedRequirements registry at www.khronos.org>
 type VkMemoryDedicatedRequirements =
      VkStruct VkMemoryDedicatedRequirements' -- ' closing tick for hsc2hs
 
@@ -253,7 +256,7 @@ type VkMemoryDedicatedRequirementsKHR =
 --   >     uint32_t                         memoryTypeBits;
 --   > } VkMemoryFdPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryFdPropertiesKHR VkMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryFdPropertiesKHR VkMemoryFdPropertiesKHR registry at www.khronos.org>
 type VkMemoryFdPropertiesKHR = VkStruct VkMemoryFdPropertiesKHR' -- ' closing tick for hsc2hs
 
 data VkMemoryFdPropertiesKHR' -- ' closing tick for hsc2hs
@@ -289,7 +292,7 @@ instance VulkanMarshal VkMemoryFdPropertiesKHR where
 --   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   > } VkMemoryGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetFdInfoKHR VkMemoryGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryGetFdInfoKHR VkMemoryGetFdInfoKHR registry at www.khronos.org>
 type VkMemoryGetFdInfoKHR = VkStruct VkMemoryGetFdInfoKHR' -- ' closing tick for hsc2hs
 
 data VkMemoryGetFdInfoKHR' -- ' closing tick for hsc2hs
@@ -328,7 +331,7 @@ instance VulkanMarshal VkMemoryGetFdInfoKHR where
 --   >     VkMemoryHeapFlags      flags;
 --   > } VkMemoryHeap;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryHeap VkMemoryHeap registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryHeap VkMemoryHeap registry at www.khronos.org>
 type VkMemoryHeap = VkStruct VkMemoryHeap' -- ' closing tick for hsc2hs
 
 data VkMemoryHeap' -- ' closing tick for hsc2hs
@@ -358,7 +361,7 @@ instance VulkanMarshal VkMemoryHeap where
 --   >     uint32_t memoryTypeBits;
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryHostPointerPropertiesEXT VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryHostPointerPropertiesEXT VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 type VkMemoryHostPointerPropertiesEXT =
      VkStruct VkMemoryHostPointerPropertiesEXT' -- ' closing tick for hsc2hs
 
@@ -386,8 +389,89 @@ instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkMemoryOpaqueCaptureAddressAllocateInfo {
+--   >     VkStructureType sType;
+--   >     const void*                   pNext;
+--   >     uint64_t                      opaqueCaptureAddress;
+--   > } VkMemoryOpaqueCaptureAddressAllocateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryOpaqueCaptureAddressAllocateInfo VkMemoryOpaqueCaptureAddressAllocateInfo registry at www.khronos.org>
+type VkMemoryOpaqueCaptureAddressAllocateInfo =
+     VkStruct VkMemoryOpaqueCaptureAddressAllocateInfo' -- ' closing tick for hsc2hs
+
+data VkMemoryOpaqueCaptureAddressAllocateInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkMemoryOpaqueCaptureAddressAllocateInfo
+         where
+    type StructRep VkMemoryOpaqueCaptureAddressAllocateInfo =
+         'StructMeta "VkMemoryOpaqueCaptureAddressAllocateInfo" -- ' closing tick for hsc2hs
+           VkMemoryOpaqueCaptureAddressAllocateInfo
+           #{size VkMemoryOpaqueCaptureAddressAllocateInfo}
+           #{alignment VkMemoryOpaqueCaptureAddressAllocateInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkMemoryOpaqueCaptureAddressAllocateInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkMemoryOpaqueCaptureAddressAllocateInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "opaqueCaptureAddress" Word64 'False 
+                                                              #{offset VkMemoryOpaqueCaptureAddressAllocateInfo, opaqueCaptureAddress}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkMemoryOpaqueCaptureAddressAllocateInfo`
+type VkMemoryOpaqueCaptureAddressAllocateInfoKHR =
+     VkMemoryOpaqueCaptureAddressAllocateInfo
+
+-- | > typedef struct VkMemoryPriorityAllocateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                        pNext;
+--   >     float                              priority;
+--   > } VkMemoryPriorityAllocateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryPriorityAllocateInfoEXT VkMemoryPriorityAllocateInfoEXT registry at www.khronos.org>
+type VkMemoryPriorityAllocateInfoEXT =
+     VkStruct VkMemoryPriorityAllocateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkMemoryPriorityAllocateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkMemoryPriorityAllocateInfoEXT where
+    type StructRep VkMemoryPriorityAllocateInfoEXT =
+         'StructMeta "VkMemoryPriorityAllocateInfoEXT" -- ' closing tick for hsc2hs
+           VkMemoryPriorityAllocateInfoEXT
+           #{size VkMemoryPriorityAllocateInfoEXT}
+           #{alignment VkMemoryPriorityAllocateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkMemoryPriorityAllocateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkMemoryPriorityAllocateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "priority" ( -- ' closing tick for hsc2hs
+                                     #{type float}
+                                     ) 'False  -- ' closing tick for hsc2hs
+                                              #{offset VkMemoryPriorityAllocateInfoEXT, priority}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 -- | > typedef struct VkMemoryRequirements {
 --   >     VkDeviceSize           size;
@@ -395,7 +479,7 @@ instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
 --   >     uint32_t               memoryTypeBits;
 --   > } VkMemoryRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryRequirements VkMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryRequirements VkMemoryRequirements registry at www.khronos.org>
 type VkMemoryRequirements = VkStruct VkMemoryRequirements' -- ' closing tick for hsc2hs
 
 data VkMemoryRequirements' -- ' closing tick for hsc2hs
@@ -430,7 +514,7 @@ instance VulkanMarshal VkMemoryRequirements where
 --   >     VkMemoryRequirements                                                 memoryRequirements;
 --   > } VkMemoryRequirements2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryRequirements2 VkMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryRequirements2 VkMemoryRequirements2 registry at www.khronos.org>
 type VkMemoryRequirements2 = VkStruct VkMemoryRequirements2' -- ' closing tick for hsc2hs
 
 data VkMemoryRequirements2' -- ' closing tick for hsc2hs
@@ -467,7 +551,7 @@ type VkMemoryRequirements2KHR = VkMemoryRequirements2
 --   >     uint32_t               heapIndex;
 --   > } VkMemoryType;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryType VkMemoryType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryType VkMemoryType registry at www.khronos.org>
 type VkMemoryType = VkStruct VkMemoryType' -- ' closing tick for hsc2hs
 
 data VkMemoryType' -- ' closing tick for hsc2hs

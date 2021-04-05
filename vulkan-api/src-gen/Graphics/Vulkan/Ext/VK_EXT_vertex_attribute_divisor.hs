@@ -22,22 +22,19 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkFormat(..),
-        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
-        VkFormatFeatureFlags(), VkPhysicalDeviceLimits,
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
-        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-        VkPipelineVertexInputDivisorStateCreateInfoEXT,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -45,14 +42,16 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -61,19 +60,37 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkDeviceCreateInfo,
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
+        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
+        VkDeviceQueueCreateInfo, VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures2,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceType(..),
+        VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
+        VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPipelineVertexInputDivisorStateCreateInfoEXT,
         VkPipelineVertexInputStateCreateInfo, VkSampleCountBitmask(..),
         VkSampleCountFlagBits(), VkSampleCountFlags(), VkStructureType(..),
         VkVertexInputAttributeDescription, VkVertexInputBindingDescription,
@@ -84,34 +101,40 @@ module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
         VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME,
         pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
-        pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT)
+        pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
+        pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT)
        where
-import GHC.Ptr                                       (Ptr (..))
+import GHC.Ptr                                             (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
+import Graphics.Vulkan.Types.Enum.Device
 import Graphics.Vulkan.Types.Enum.Format
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.VertexInputRate
-import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
-                                                      VkPhysicalDeviceProperties,
-                                                      VkPhysicalDeviceProperties2,
-                                                      VkPhysicalDeviceSparseProperties,
-                                                      VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT)
-import Graphics.Vulkan.Types.Struct.Pipeline         (VkPipelineVertexInputDivisorStateCreateInfoEXT,
-                                                      VkPipelineVertexInputStateCreateInfo)
-import Graphics.Vulkan.Types.Struct.VertexInput      (VkVertexInputAttributeDescription,
-                                                      VkVertexInputBindingDescription,
-                                                      VkVertexInputBindingDivisorDescriptionEXT)
+import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo, VkDeviceQueueCreateInfo)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceFeatures2,
+                                                            VkPhysicalDeviceLimits,
+                                                            VkPhysicalDeviceProperties,
+                                                            VkPhysicalDeviceProperties2,
+                                                            VkPhysicalDeviceSparseProperties,
+                                                            VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
+                                                            VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT)
+import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import Graphics.Vulkan.Types.Struct.Pipeline               (VkPipelineVertexInputDivisorStateCreateInfoEXT,
+                                                            VkPipelineVertexInputStateCreateInfo)
+import Graphics.Vulkan.Types.Struct.VertexInput            (VkVertexInputAttributeDescription,
+                                                            VkVertexInputBindingDescription,
+                                                            VkVertexInputBindingDivisorDescriptionEXT)
 
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 1
+pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 3
 
-type VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 1
+type VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 3
 
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME :: CString
 
@@ -149,3 +172,9 @@ pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT
 
 pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT
         = VkStructureType 1000190001
+
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT
+        :: VkStructureType
+
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT
+        = VkStructureType 1000190002

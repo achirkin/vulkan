@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
 --   >     VkDeviceSize           depthPitch;
 --   > } VkSubresourceLayout;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSubresourceLayout VkSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSubresourceLayout VkSubresourceLayout registry at www.khronos.org>
 type VkSubresourceLayout = VkStruct VkSubresourceLayout' -- ' closing tick for hsc2hs
 
 data VkSubresourceLayout' -- ' closing tick for hsc2hs

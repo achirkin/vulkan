@@ -15,7 +15,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     int32_t        y;
 --   > } VkOffset2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkOffset2D VkOffset2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkOffset2D VkOffset2D registry at www.khronos.org>
 type VkOffset2D = VkStruct VkOffset2D' -- ' closing tick for hsc2hs
 
 data VkOffset2D' -- ' closing tick for hsc2hs
@@ -44,7 +44,7 @@ instance VulkanMarshal VkOffset2D where
 --   >     int32_t        z;
 --   > } VkOffset3D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkOffset3D VkOffset3D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkOffset3D VkOffset3D registry at www.khronos.org>
 type VkOffset3D = VkStruct VkOffset3D' -- ' closing tick for hsc2hs
 
 data VkOffset3D' -- ' closing tick for hsc2hs

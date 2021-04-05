@@ -11,8 +11,9 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkExportMemoryWin32HandleInfoKHR,
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkExportMemoryWin32HandleInfoKHR,
         VkExternalFenceFeatureBitmask(..),
         VkExternalFenceHandleTypeBitmask(..),
         VkExternalMemoryFeatureBitmask(..),
@@ -50,11 +51,14 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         pattern VkGetMemoryWin32HandlePropertiesKHR,
         HS_vkGetMemoryWin32HandlePropertiesKHR,
         PFN_vkGetMemoryWin32HandlePropertiesKHR,
-        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        module Graphics.Vulkan.Marshal, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -64,23 +68,28 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkD3D12FenceSubmitInfoKHR, VkExportFenceWin32HandleInfoKHR,
         VkExportMemoryWin32HandleInfoNV,
         VkExportSemaphoreWin32HandleInfoKHR, VkFenceGetWin32HandleInfoKHR,
         VkImportFenceWin32HandleInfoKHR, VkImportMemoryWin32HandleInfoNV,
         VkImportSemaphoreWin32HandleInfoKHR,
         VkSemaphoreGetWin32HandleInfoKHR,
+        VkSurfaceCapabilitiesFullScreenExclusiveEXT,
+        VkSurfaceFullScreenExclusiveInfoEXT,
+        VkSurfaceFullScreenExclusiveWin32InfoEXT,
         VkWin32KeyedMutexAcquireReleaseInfoKHR,
         VkWin32KeyedMutexAcquireReleaseInfoNV, VkWin32SurfaceCreateInfoKHR,
         VK_KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,
@@ -134,7 +143,7 @@ type VkGetMemoryWin32HandleKHR = "vkGetMemoryWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleKHR vkGetMemoryWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryWin32HandleKHR vkGetMemoryWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandleKHR =
      VkDevice -- ^ device
               ->
@@ -191,7 +200,7 @@ type VkGetMemoryWin32HandlePropertiesKHR =
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryWin32HandlePropertiesKHR
 --   >     ( VkDevice device
@@ -200,7 +209,7 @@ type VkGetMemoryWin32HandlePropertiesKHR =
 --   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandlePropertiesKHR vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryWin32HandlePropertiesKHR vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandlePropertiesKHR =
      VkDevice -- ^ device
               ->

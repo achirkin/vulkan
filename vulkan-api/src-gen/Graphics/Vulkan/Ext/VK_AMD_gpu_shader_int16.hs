@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
         --
         -- supported: @vulkan@
         --
-        -- contact: @Qun Lin, AMD @linqun@
+        -- contact: @Qun Lin @linqun@
         --
         -- author: @AMD@
         --
@@ -27,9 +27,9 @@ import Graphics.Vulkan.Marshal
 
 pattern VK_AMD_GPU_SHADER_INT16_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_AMD_GPU_SHADER_INT16_SPEC_VERSION = 1
+pattern VK_AMD_GPU_SHADER_INT16_SPEC_VERSION = 2
 
-type VK_AMD_GPU_SHADER_INT16_SPEC_VERSION = 1
+type VK_AMD_GPU_SHADER_INT16_SPEC_VERSION = 2
 
 pattern VK_AMD_GPU_SHADER_INT16_EXTENSION_NAME :: CString
 

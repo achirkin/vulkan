@@ -97,7 +97,7 @@ parseVkRequire extN baseExtReqs
 
     parseIt = choose
         [ parseTagForceAttrs "type"
-            (forceAttr "name" >>= toHaskellType)
+            (lift ( attr "comment") >> forceAttr "name" >>= toHaskellType)
             (\x -> pure $ \r -> r {requireTypes = x : requireTypes r})
         , parseTagForceAttrs "command"
             (forceAttr "name" >>= toHaskellComm)

@@ -33,19 +33,21 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         VkDeviceGroupCommandBufferBeginInfoKHR,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfoKHR,
         VkMemoryAllocateBitmask(..), VkMemoryHeapBitmask(..),
-        VkMemoryPropertyBitmask(..), VkMemoryAllocateFlagBits(),
-        VkMemoryAllocateFlagBitsKHR(..), VkMemoryAllocateFlags(),
-        VkMemoryHeapFlagBits(), VkMemoryHeapFlags(),
-        VkMemoryPropertyFlagBits(), VkMemoryPropertyFlags(),
-        VkMemoryAllocateFlagsInfoKHR, VkAndroidSurfaceCreateFlagsKHR(..),
-        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
-        VkCommandPoolTrimFlagsKHR(..),
+        VkMemoryOverallocationBehaviorAMD(..), VkMemoryPropertyBitmask(..),
+        VkMemoryAllocateFlagBits(), VkMemoryAllocateFlagBitsKHR(..),
+        VkMemoryAllocateFlags(), VkMemoryHeapFlagBits(),
+        VkMemoryHeapFlags(), VkMemoryPropertyFlagBits(),
+        VkMemoryPropertyFlags(), VkMemoryAllocateFlagsInfoKHR,
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -53,14 +55,16 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -69,15 +73,17 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
@@ -91,32 +97,38 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         PFN_vkCmdSetDeviceMaskKHR, VkCmdDispatchBaseKHR,
         pattern VkCmdDispatchBaseKHR, HS_vkCmdDispatchBaseKHR,
         PFN_vkCmdDispatchBaseKHR, module Graphics.Vulkan.Marshal,
-        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkBuffer, VkBufferView, VkBufferView_T(), VkBuffer_T(),
-        VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_DEVICE_GROUP_SPEC_VERSION,
         pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION,
         VK_KHR_DEVICE_GROUP_EXTENSION_NAME,
@@ -141,8 +153,11 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO_KHR,
         pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
         -- ** Required extensions: 'VK_KHR_surface', 'VK_KHR_device_group_creation'.
-        VkDeviceGroupPresentCapabilitiesKHR, VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentCapabilitiesKHR,
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
         VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
         VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
@@ -160,27 +175,34 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_device_group_creation'.
         VkAcquireNextImageInfoKHR, VkBindImageMemoryInfo,
-        VkBindImageMemorySwapchainInfoKHR, VkColorComponentBitmask(..),
-        VkColorSpaceKHR(..), VkColorComponentFlagBits(),
-        VkColorComponentFlags(), VkCompositeAlphaBitmaskKHR(..),
-        VkCompositeAlphaFlagBitsKHR(), VkCompositeAlphaFlagsKHR(),
-        VkDeviceGroupPresentInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
-        VkExtent2D, VkExtent3D, VkFormat(..), VkFormatFeatureBitmask(..),
+        VkBindImageMemorySwapchainInfoKHR,
+        pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
+        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
+        VkCompositeAlphaFlagsKHR(), VkDeviceGroupPresentInfoKHR,
+        VkDeviceGroupSwapchainCreateInfoKHR, VkExtent2D, VkExtent3D,
+        VkFormat(..), VkFormatFeatureBitmask(..),
         VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
         VkImageAspectBitmask(..), VkImageCreateBitmask(..),
         VkImageLayout(..), VkImageTiling(..), VkImageType(..),
         VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageCreateInfo,
         VkImageSwapchainCreateInfoKHR, VkPresentInfoKHR,
         VkPresentModeKHR(..), VkResult(..), VkSampleCountBitmask(..),
         VkSampleCountFlagBits(), VkSampleCountFlags(), VkSharingMode(..),
         VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
         VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
         VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
+        VkSwapchainImageUsageBitmaskANDROID(..),
         VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
-        VkSwapchainCreateFlagsKHR(), VkSwapchainCreateInfoKHR,
+        VkSwapchainCreateFlagsKHR(),
+        VkSwapchainImageUsageFlagBitsANDROID(),
+        VkSwapchainImageUsageFlagsANDROID(), VkSwapchainCreateInfoKHR,
         -- > #include "vk_platform.h"
         pattern VkAcquireNextImage2KHR, HS_vkAcquireNextImage2KHR,
         PFN_vkAcquireNextImage2KHR,
@@ -191,39 +213,39 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
         pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR)
        where
-import GHC.Ptr                                              (Ptr (..))
-import Graphics.Vulkan.Core_1_1                             (pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
-                                                             pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT,
-                                                             pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
-                                                             pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT,
-                                                             pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
-                                                             pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO)
-import Graphics.Vulkan.Ext.VK_KHR_swapchain                 (HS_vkAcquireNextImage2KHR,
-                                                             HS_vkGetDeviceGroupPresentCapabilitiesKHR,
-                                                             HS_vkGetDeviceGroupSurfacePresentModesKHR,
-                                                             HS_vkGetPhysicalDevicePresentRectanglesKHR,
-                                                             PFN_vkAcquireNextImage2KHR,
-                                                             PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
-                                                             PFN_vkGetDeviceGroupSurfacePresentModesKHR,
-                                                             PFN_vkGetPhysicalDevicePresentRectanglesKHR,
-                                                             pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
-                                                             pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR,
-                                                             pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
-                                                             pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
-                                                             pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
-                                                             pattern VkAcquireNextImage2KHR,
-                                                             pattern VkGetDeviceGroupPresentCapabilitiesKHR,
-                                                             pattern VkGetDeviceGroupSurfacePresentModesKHR,
-                                                             pattern VkGetPhysicalDevicePresentRectanglesKHR)
+import GHC.Ptr                                           (Ptr (..))
+import Graphics.Vulkan.Core_1_1                          (pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
+                                                          pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT,
+                                                          pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
+                                                          pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT,
+                                                          pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
+                                                          pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO)
+import Graphics.Vulkan.Ext.VK_KHR_swapchain              (HS_vkAcquireNextImage2KHR,
+                                                          HS_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                          HS_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                          HS_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                          PFN_vkAcquireNextImage2KHR,
+                                                          PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                          PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                          PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                          pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
+                                                          pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR,
+                                                          pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
+                                                          pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
+                                                          pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
+                                                          pattern VkAcquireNextImage2KHR,
+                                                          pattern VkGetDeviceGroupPresentCapabilitiesKHR,
+                                                          pattern VkGetDeviceGroupSurfacePresentModesKHR,
+                                                          pattern VkGetPhysicalDevicePresentRectanglesKHR)
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                         (VulkanProc (..))
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.Color
@@ -239,26 +261,26 @@ import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import Graphics.Vulkan.Types.Enum.Swapchain
 import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Struct.AcquireNextImageInfoKHR (VkAcquireNextImageInfoKHR)
-import Graphics.Vulkan.Types.Struct.Bind                    (VkBindBufferMemoryDeviceGroupInfoKHR,
-                                                             VkBindImageMemoryDeviceGroupInfoKHR,
-                                                             VkBindImageMemoryInfo,
-                                                             VkBindImageMemorySwapchainInfoKHR)
-import Graphics.Vulkan.Types.Struct.Device                  (VkDeviceGroupBindSparseInfoKHR,
-                                                             VkDeviceGroupCommandBufferBeginInfoKHR,
-                                                             VkDeviceGroupPresentCapabilitiesKHR,
-                                                             VkDeviceGroupPresentInfoKHR,
-                                                             VkDeviceGroupRenderPassBeginInfoKHR,
-                                                             VkDeviceGroupSubmitInfoKHR,
-                                                             VkDeviceGroupSwapchainCreateInfoKHR)
-import Graphics.Vulkan.Types.Struct.Extent                  (VkExtent2D,
-                                                             VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image                   (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
-import Graphics.Vulkan.Types.Struct.Memory                  (VkMemoryAllocateFlagsInfoKHR)
-import Graphics.Vulkan.Types.Struct.Present                 (VkPresentInfoKHR)
-import Graphics.Vulkan.Types.Struct.SwapchainC              (VkSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Acquire              (VkAcquireNextImageInfoKHR)
+import Graphics.Vulkan.Types.Struct.Bind                 (VkBindBufferMemoryDeviceGroupInfoKHR,
+                                                          VkBindImageMemoryDeviceGroupInfoKHR,
+                                                          VkBindImageMemoryInfo,
+                                                          VkBindImageMemorySwapchainInfoKHR)
+import Graphics.Vulkan.Types.Struct.Device               (VkDeviceGroupBindSparseInfoKHR,
+                                                          VkDeviceGroupCommandBufferBeginInfoKHR,
+                                                          VkDeviceGroupPresentCapabilitiesKHR,
+                                                          VkDeviceGroupPresentInfoKHR,
+                                                          VkDeviceGroupRenderPassBeginInfoKHR,
+                                                          VkDeviceGroupSubmitInfoKHR,
+                                                          VkDeviceGroupSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D,
+                                                          VkExtent3D)
+import Graphics.Vulkan.Types.Struct.Image                (VkImageCreateInfo, VkImageSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Memory               (VkMemoryAllocateFlagsInfoKHR)
+import Graphics.Vulkan.Types.Struct.Present              (VkPresentInfoKHR)
+import Graphics.Vulkan.Types.Struct.Swapchain            (VkSwapchainCreateInfoKHR)
 
 pattern VkGetDeviceGroupPeerMemoryFeaturesKHR :: CString
 
@@ -293,7 +315,7 @@ type VkGetDeviceGroupPeerMemoryFeaturesKHR =
 --   >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeaturesKHR vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeaturesKHR vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupPeerMemoryFeaturesKHR =
      VkDevice -- ^ device
               ->
@@ -361,7 +383,7 @@ type VkCmdSetDeviceMaskKHR = "vkCmdSetDeviceMaskKHR"
 --   >     , uint32_t deviceMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMaskKHR vkCmdSetDeviceMaskKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDeviceMaskKHR vkCmdSetDeviceMaskKHR registry at www.khronos.org>
 type HS_vkCmdSetDeviceMaskKHR = VkCommandBuffer -- ^ commandBuffer
                                                 -> Word32 -- ^ deviceMask
                                                           -> IO ()
@@ -422,7 +444,7 @@ type VkCmdDispatchBaseKHR = "vkCmdDispatchBaseKHR"
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBaseKHR vkCmdDispatchBaseKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchBaseKHR vkCmdDispatchBaseKHR registry at www.khronos.org>
 type HS_vkCmdDispatchBaseKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -457,9 +479,9 @@ instance VulkanProc "vkCmdDispatchBaseKHR" where
 
 pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION = 3
+pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION = 4
 
-type VK_KHR_DEVICE_GROUP_SPEC_VERSION = 3
+type VK_KHR_DEVICE_GROUP_SPEC_VERSION = 4
 
 pattern VK_KHR_DEVICE_GROUP_EXTENSION_NAME :: CString
 

@@ -21,7 +21,7 @@ import Graphics.Vulkan.Types.Handles            (VkDeviceMemory)
 --   >     VkDeviceSize           size;
 --   > } VkMappedMemoryRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMappedMemoryRange VkMappedMemoryRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMappedMemoryRange VkMappedMemoryRange registry at www.khronos.org>
 type VkMappedMemoryRange = VkStruct VkMappedMemoryRange' -- ' closing tick for hsc2hs
 
 data VkMappedMemoryRange' -- ' closing tick for hsc2hs

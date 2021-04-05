@@ -17,16 +17,20 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         -- type: @instance@
         --
         -- Extension number: @62@
-        module Graphics.Vulkan.Marshal, VkApplicationInfo, VkBool32(..),
-        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        module Graphics.Vulkan.Marshal, VkApplicationInfo,
+        AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
+        VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -34,14 +38,16 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -50,21 +56,24 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..), VkInstanceCreateInfo,
         VkStructureType(..), VkValidationCacheHeaderVersionEXT(..),
-        VkValidationCheckEXT(..), VkValidationFlagsEXT,
+        VkValidationCheckEXT(..), VkValidationFeatureDisableEXT(..),
+        VkValidationFeatureEnableEXT(..), VkValidationFlagsEXT,
         -- > #include "vk_platform.h"
         VK_EXT_VALIDATION_FLAGS_SPEC_VERSION,
         pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION,
@@ -77,16 +86,16 @@ import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Enum.ValidationC
+import Graphics.Vulkan.Types.Enum.Validation
 import Graphics.Vulkan.Types.Struct.ApplicationInfo    (VkApplicationInfo)
 import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 import Graphics.Vulkan.Types.Struct.Validation         (VkValidationFlagsEXT)
 
 pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION = 1
+pattern VK_EXT_VALIDATION_FLAGS_SPEC_VERSION = 2
 
-type VK_EXT_VALIDATION_FLAGS_SPEC_VERSION = 1
+type VK_EXT_VALIDATION_FLAGS_SPEC_VERSION = 2
 
 pattern VK_EXT_VALIDATION_FLAGS_EXTENSION_NAME :: CString
 

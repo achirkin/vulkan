@@ -17,7 +17,7 @@ import Graphics.Vulkan.Types.Struct.Offset (VkOffset2D)
 --   >     VkExtent2D     extent;
 --   > } VkRect2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRect2D VkRect2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRect2D VkRect2D registry at www.khronos.org>
 type VkRect2D = VkStruct VkRect2D' -- ' closing tick for hsc2hs
 
 data VkRect2D' -- ' closing tick for hsc2hs
@@ -43,11 +43,11 @@ instance VulkanMarshal VkRect2D where
 
 -- | > typedef struct VkRectLayerKHR {
 --   >     VkOffset2D                       offset;
---   >     VkExtent2D                       extent;
+--   >     VkExtent2D extent;
 --   >     uint32_t                         layer;
 --   > } VkRectLayerKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRectLayerKHR VkRectLayerKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRectLayerKHR VkRectLayerKHR registry at www.khronos.org>
 type VkRectLayerKHR = VkStruct VkRectLayerKHR' -- ' closing tick for hsc2hs
 
 data VkRectLayerKHR' -- ' closing tick for hsc2hs

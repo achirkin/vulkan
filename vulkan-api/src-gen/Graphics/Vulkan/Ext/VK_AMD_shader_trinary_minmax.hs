@@ -10,7 +10,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_trinary_minmax
         --
         -- supported: @vulkan@
         --
-        -- contact: @Qun Lin, AMD @linqun@
+        -- contact: @Qun Lin @linqun@
         --
         -- author: @AMD@
         --

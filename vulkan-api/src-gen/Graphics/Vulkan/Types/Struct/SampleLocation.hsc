@@ -12,14 +12,14 @@ import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Enum.SampleCountFlags (VkSampleCountFlagBits)
 import Graphics.Vulkan.Types.Enum.StructureType    (VkStructureType)
 import Graphics.Vulkan.Types.Struct.Extent         (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
+import {-# SOURCE #-} Graphics.Vulkan.Types.Struct.Image          (VkImageMemoryBarrier)
 
 -- | > typedef struct VkSampleLocationEXT {
 --   >     float                            x;
 --   >     float                            y;
 --   > } VkSampleLocationEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSampleLocationEXT VkSampleLocationEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSampleLocationEXT VkSampleLocationEXT registry at www.khronos.org>
 type VkSampleLocationEXT = VkStruct VkSampleLocationEXT' -- ' closing tick for hsc2hs
 
 data VkSampleLocationEXT' -- ' closing tick for hsc2hs
@@ -49,14 +49,14 @@ instance VulkanMarshal VkSampleLocationEXT where
 
 -- | > typedef struct VkSampleLocationsInfoEXT {
 --   >     VkStructureType sType;
---   >     const void*                      pNext;
---   >     VkSampleCountFlagBits            sampleLocationsPerPixel;
---   >     VkExtent2D                       sampleLocationGridSize;
---   >     uint32_t                         sampleLocationsCount;
+--   >     const void*                            pNext;
+--   >     VkSampleCountFlagBits  sampleLocationsPerPixel;
+--   >     VkExtent2D                             sampleLocationGridSize;
+--   >     uint32_t               sampleLocationsCount;
 --   >     const VkSampleLocationEXT* pSampleLocations;
 --   > } VkSampleLocationsInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSampleLocationsInfoEXT VkSampleLocationsInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSampleLocationsInfoEXT VkSampleLocationsInfoEXT registry at www.khronos.org>
 type VkSampleLocationsInfoEXT = VkStruct VkSampleLocationsInfoEXT' -- ' closing tick for hsc2hs
 
 data VkSampleLocationsInfoEXT' -- ' closing tick for hsc2hs
@@ -71,23 +71,23 @@ instance VulkanMarshal VkSampleLocationsInfoEXT where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
+             ('FieldMeta "pNext" (Ptr Void) 'False
                                                    #{offset VkSampleLocationsInfoEXT, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "sampleLocationsPerPixel" VkSampleCountFlagBits 'False
+             ('FieldMeta "sampleLocationsPerPixel" VkSampleCountFlagBits 'True
                 #{offset VkSampleLocationsInfoEXT, sampleLocationsPerPixel}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "sampleLocationGridSize" VkExtent2D 'False 
+             ('FieldMeta "sampleLocationGridSize" VkExtent2D 'False
                                                                     #{offset VkSampleLocationsInfoEXT, sampleLocationGridSize}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "sampleLocationsCount" Word32 'False 
-                                                              #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
+             ('FieldMeta "sampleLocationsCount" Word32 'True
+                                                             #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs

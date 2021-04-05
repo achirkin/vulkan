@@ -57,16 +57,19 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR,
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
-        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
-        VkCommandPoolTrimFlagsKHR(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(), ANativeWindow(),
+        CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -74,14 +77,16 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -90,20 +95,25 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..), VkDeviceEventTypeEXT(..),
+        VkXlibSurfaceCreateFlagsKHR(..),
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
         VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
         VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
@@ -115,7 +125,9 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
         VkImageUsageFlagBits(), VkImageUsageFlags(),
-        VkMemoryAllocateBitmask(..), VkMemoryHeapBitmask(..),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkMemoryAllocateBitmask(..),
+        VkMemoryHeapBitmask(..), VkMemoryOverallocationBehaviorAMD(..),
         VkMemoryPropertyBitmask(..), VkMemoryAllocateFlagBits(),
         VkMemoryAllocateFlagBitsKHR(..), VkMemoryAllocateFlags(),
         VkMemoryHeapFlagBits(), VkMemoryHeapFlags(),
@@ -126,11 +138,14 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkSampleCountFlags(), VkSparseImageFormatBitmask(..),
         VkSparseMemoryBindBitmask(..), VkSparseImageFormatFlagBits(),
         VkSparseImageFormatFlags(), VkSparseMemoryBindFlagBits(),
-        VkSparseMemoryBindFlags(), VkStructureType(..), VkBuffer,
+        VkSparseMemoryBindFlags(), VkStructureType(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -140,21 +155,21 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        VkDeviceCreateInfo, VkDeviceEventInfoEXT,
-        VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
-        VkDeviceGroupBindSparseInfoKHR,
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(), VkDeviceCreateInfo,
+        VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceEventInfoEXT,
+        VkDeviceGroupBindSparseInfo, VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfo,
         VkDeviceGroupCommandBufferBeginInfoKHR,
         VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
@@ -162,34 +177,77 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkDeviceGroupRenderPassBeginInfo,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
         VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
-        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
-        VkDeviceQueueInfo2, VkExtent2D, VkExtent3D, VkFormatProperties,
-        VkFormatProperties2, VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT, VkDeviceQueueCreateInfo,
+        VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
+        VkExtent2D, VkExtent3D, VkFormatProperties, VkFormatProperties2,
+        VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageDrmFormatModifierExplicitCreateInfoEXT,
+        VkImageDrmFormatModifierListCreateInfoEXT,
+        VkImageDrmFormatModifierPropertiesEXT, VkImageFormatListCreateInfo,
         VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
         VkImageFormatProperties2, VkImageMemoryBarrier,
         VkImageMemoryRequirementsInfo2, VkImageMemoryRequirementsInfo2KHR,
         VkImagePlaneMemoryRequirementsInfo,
         VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
         VkImageSparseMemoryRequirementsInfo2,
-        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
-        VkImageSubresourceLayers, VkImageSubresourceRange,
-        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
+        VkImageSparseMemoryRequirementsInfo2KHR,
+        VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfoEXT,
+        VkImageSubresource, VkImageSubresourceLayers,
+        VkImageSubresourceRange, VkImageSwapchainCreateInfoKHR,
+        VkImageViewASTCDecodeModeEXT, VkImageViewAddressPropertiesNVX,
+        VkImageViewCreateInfo, VkImageViewHandleInfoNVX,
         VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
         VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
         VkMemoryAllocateInfo, VkMemoryBarrier,
         VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfoKHR,
         VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirementsKHR,
         VkMemoryFdPropertiesKHR, VkMemoryGetFdInfoKHR, VkMemoryHeap,
-        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryHostPointerPropertiesEXT,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements,
         VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
         VkPhysicalDevice16BitStorageFeatures,
         VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDevice4444FormatsFeaturesEXT,
+        VkPhysicalDevice8BitStorageFeatures,
+        VkPhysicalDevice8BitStorageFeaturesKHR,
+        VkPhysicalDeviceASTCDecodeFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceBufferAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeatures,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesKHR,
+        VkPhysicalDeviceCoherentMemoryFeaturesAMD,
+        VkPhysicalDeviceComputeShaderDerivativesFeaturesNV,
+        VkPhysicalDeviceConditionalRenderingFeaturesEXT,
         VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceCooperativeMatrixFeaturesNV,
+        VkPhysicalDeviceCooperativeMatrixPropertiesNV,
+        VkPhysicalDeviceCornerSampledImageFeaturesNV,
+        VkPhysicalDeviceCoverageReductionModeFeaturesNV,
+        VkPhysicalDeviceCustomBorderColorFeaturesEXT,
+        VkPhysicalDeviceCustomBorderColorPropertiesEXT,
+        VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,
+        VkPhysicalDeviceDepthClipEnableFeaturesEXT,
+        VkPhysicalDeviceDepthStencilResolveProperties,
+        VkPhysicalDeviceDepthStencilResolvePropertiesKHR,
+        VkPhysicalDeviceDescriptorIndexingFeatures,
         VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingProperties,
         VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV,
+        VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV,
+        VkPhysicalDeviceDiagnosticsConfigFeaturesNV,
         VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceDriverProperties,
+        VkPhysicalDeviceDriverPropertiesKHR,
+        VkPhysicalDeviceExclusiveScissorFeaturesNV,
+        VkPhysicalDeviceExtendedDynamicStateFeaturesEXT,
         VkPhysicalDeviceExternalBufferInfo,
         VkPhysicalDeviceExternalBufferInfoKHR,
         VkPhysicalDeviceExternalFenceInfo,
@@ -199,42 +257,126 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
         VkPhysicalDeviceExternalSemaphoreInfo,
         VkPhysicalDeviceExternalSemaphoreInfoKHR,
-        VkPhysicalDeviceFeatures2, VkPhysicalDeviceGroupProperties,
-        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
-        VkPhysicalDeviceIDPropertiesKHR, VkPhysicalDeviceImageFormatInfo2,
-        VkPhysicalDeviceLimits, VkPhysicalDeviceMaintenance3Properties,
+        VkPhysicalDeviceFeatures2, VkPhysicalDeviceFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceFloatControlsProperties,
+        VkPhysicalDeviceFloatControlsPropertiesKHR,
+        VkPhysicalDeviceFragmentDensityMap2FeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMap2PropertiesEXT,
+        VkPhysicalDeviceFragmentDensityMapFeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMapPropertiesEXT,
+        VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV,
+        VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT,
+        VkPhysicalDeviceGroupProperties,
+        VkPhysicalDeviceGroupPropertiesKHR,
+        VkPhysicalDeviceHostQueryResetFeatures,
+        VkPhysicalDeviceHostQueryResetFeaturesEXT,
+        VkPhysicalDeviceIDProperties, VkPhysicalDeviceIDPropertiesKHR,
+        VkPhysicalDeviceImageDrmFormatModifierInfoEXT,
+        VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceImageRobustnessFeaturesEXT,
+        VkPhysicalDeviceImageViewImageFormatInfoEXT,
+        VkPhysicalDeviceImagelessFramebufferFeatures,
+        VkPhysicalDeviceImagelessFramebufferFeaturesKHR,
+        VkPhysicalDeviceIndexTypeUint8FeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockFeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockPropertiesEXT,
+        VkPhysicalDeviceLimits,
+        VkPhysicalDeviceLineRasterizationFeaturesEXT,
+        VkPhysicalDeviceLineRasterizationPropertiesEXT,
+        VkPhysicalDeviceMaintenance3Properties,
         VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkPhysicalDeviceMemoryBudgetPropertiesEXT,
+        VkPhysicalDeviceMemoryPriorityFeaturesEXT,
         VkPhysicalDeviceMemoryProperties,
         VkPhysicalDeviceMemoryProperties2,
+        VkPhysicalDeviceMeshShaderFeaturesNV,
+        VkPhysicalDeviceMeshShaderPropertiesNV,
         VkPhysicalDeviceMultiviewFeatures,
         VkPhysicalDeviceMultiviewFeaturesKHR,
         VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
         VkPhysicalDeviceMultiviewProperties,
         VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePCIBusInfoPropertiesEXT,
+        VkPhysicalDevicePerformanceQueryFeaturesKHR,
+        VkPhysicalDevicePerformanceQueryPropertiesKHR,
+        VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT,
+        VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR,
         VkPhysicalDevicePointClippingProperties,
         VkPhysicalDevicePointClippingPropertiesKHR,
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        VkPhysicalDevicePrivateDataFeaturesEXT, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2,
         VkPhysicalDeviceProtectedMemoryFeatures,
         VkPhysicalDeviceProtectedMemoryProperties,
         VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceRayTracingPropertiesNV,
+        VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV,
+        VkPhysicalDeviceRobustness2FeaturesEXT,
+        VkPhysicalDeviceRobustness2PropertiesEXT,
         VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxProperties,
         VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
         VkPhysicalDeviceSamplerYcbcrConversionFeatures,
         VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceScalarBlockLayoutFeatures,
+        VkPhysicalDeviceScalarBlockLayoutFeaturesEXT,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR,
+        VkPhysicalDeviceShaderAtomicFloatFeaturesEXT,
+        VkPhysicalDeviceShaderAtomicInt64Features,
+        VkPhysicalDeviceShaderAtomicInt64FeaturesKHR,
+        VkPhysicalDeviceShaderClockFeaturesKHR,
+        VkPhysicalDeviceShaderCoreProperties2AMD,
         VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
         VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceShaderDrawParametersFeatures,
+        VkPhysicalDeviceShaderFloat16Int8Features,
+        VkPhysicalDeviceShaderFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceShaderImageFootprintFeaturesNV,
+        VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
+        VkPhysicalDeviceShaderSMBuiltinsFeaturesNV,
+        VkPhysicalDeviceShaderSMBuiltinsPropertiesNV,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR,
+        VkPhysicalDeviceShadingRateImageFeaturesNV,
+        VkPhysicalDeviceShadingRateImagePropertiesNV,
         VkPhysicalDeviceSparseImageFormatInfo2,
         VkPhysicalDeviceSparseProperties,
         VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSubgroupSizeControlFeaturesEXT,
+        VkPhysicalDeviceSubgroupSizeControlPropertiesEXT,
         VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT,
+        VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT,
+        VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
+        VkPhysicalDeviceTimelineSemaphoreFeatures,
+        VkPhysicalDeviceTimelineSemaphoreFeaturesKHR,
+        VkPhysicalDeviceTimelineSemaphoreProperties,
+        VkPhysicalDeviceTimelineSemaphorePropertiesKHR,
+        VkPhysicalDeviceToolPropertiesEXT,
+        VkPhysicalDeviceTransformFeedbackFeaturesEXT,
+        VkPhysicalDeviceTransformFeedbackPropertiesEXT,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeatures,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeaturesKHR,
         VkPhysicalDeviceVariablePointerFeatures,
         VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVariablePointersFeatures,
+        VkPhysicalDeviceVariablePointersFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
         VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-        VkPhysicalDeviceFeatures, VkQueueFamilyProperties,
-        VkQueueFamilyProperties2, VkSparseBufferMemoryBindInfo,
-        VkSparseImageFormatProperties, VkSparseImageFormatProperties2,
-        VkSparseImageMemoryBind, VkSparseImageMemoryBindInfo,
-        VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements2,
+        VkPhysicalDeviceVulkan11Features,
+        VkPhysicalDeviceVulkan11Properties,
+        VkPhysicalDeviceVulkan12Features,
+        VkPhysicalDeviceVulkan12Properties,
+        VkPhysicalDeviceVulkanMemoryModelFeatures,
+        VkPhysicalDeviceVulkanMemoryModelFeaturesKHR,
+        VkPhysicalDeviceYcbcrImageArraysFeaturesEXT,
+        VkPhysicalDeviceFeatures, VkQueueFamilyCheckpointPropertiesNV,
+        VkQueueFamilyProperties, VkQueueFamilyProperties2,
+        VkSparseBufferMemoryBindInfo, VkSparseImageFormatProperties,
+        VkSparseImageFormatProperties2, VkSparseImageMemoryBind,
+        VkSparseImageMemoryBindInfo, VkSparseImageMemoryRequirements,
+        VkSparseImageMemoryRequirements2,
         VkSparseImageMemoryRequirements2KHR,
         VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind,
         VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION,
@@ -283,7 +425,7 @@ import Graphics.Vulkan.Types.Struct.Image
 import Graphics.Vulkan.Types.Struct.Memory
 import Graphics.Vulkan.Types.Struct.PhysicalDevice
 import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
-import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import Graphics.Vulkan.Types.Struct.QueueFamily
 import Graphics.Vulkan.Types.Struct.Sparse
 
 pattern VkGetPhysicalDeviceFeatures2KHR :: CString
@@ -315,7 +457,7 @@ type VkGetPhysicalDeviceFeatures2KHR =
 --   >     , VkPhysicalDeviceFeatures2* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2KHR vkGetPhysicalDeviceFeatures2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2KHR vkGetPhysicalDeviceFeatures2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFeatures2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
@@ -377,7 +519,7 @@ type VkGetPhysicalDeviceProperties2KHR =
 --   >     , VkPhysicalDeviceProperties2* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2KHR vkGetPhysicalDeviceProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2KHR vkGetPhysicalDeviceProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
@@ -441,7 +583,7 @@ type VkGetPhysicalDeviceFormatProperties2KHR =
 --   >     , VkFormatProperties2* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2KHR vkGetPhysicalDeviceFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2KHR vkGetPhysicalDeviceFormatProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFormatProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkFormat -- ^ format
@@ -512,7 +654,7 @@ type VkGetPhysicalDeviceImageFormatProperties2KHR =
 --   >     , VkImageFormatProperties2* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2KHR vkGetPhysicalDeviceImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2KHR vkGetPhysicalDeviceImageFormatProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceImageFormatProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -582,7 +724,7 @@ type VkGetPhysicalDeviceQueueFamilyProperties2KHR =
 --   >     , VkQueueFamilyProperties2* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2KHR vkGetPhysicalDeviceQueueFamilyProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2KHR vkGetPhysicalDeviceQueueFamilyProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -649,7 +791,7 @@ type VkGetPhysicalDeviceMemoryProperties2KHR =
 --   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2KHR vkGetPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2KHR vkGetPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMemoryProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
@@ -719,7 +861,7 @@ type VkGetPhysicalDeviceSparseImageFormatProperties2KHR =
 --   >     , VkSparseImageFormatProperties2* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2KHR vkGetPhysicalDeviceSparseImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2KHR vkGetPhysicalDeviceSparseImageFormatProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -763,9 +905,9 @@ instance VulkanProc
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION = 1
+pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION = 2
 
-type VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION = 1
+type VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION = 2
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME ::
         CString

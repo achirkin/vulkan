@@ -27,6 +27,8 @@ module Graphics.Vulkan.Types.Enum.Query
                                         VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT),
         VkQueryPipelineStatisticFlags, VkQueryPipelineStatisticFlagBits,
         VkQueryPoolCreateFlagBits(..),
+        VkQueryPoolSamplingModeINTEL(VkQueryPoolSamplingModeINTEL,
+                                     VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL),
         VkQueryResultBitmask(VkQueryResultBitmask, VkQueryResultFlags,
                              VkQueryResultFlagBits, VK_QUERY_RESULT_64_BIT,
                              VK_QUERY_RESULT_WAIT_BIT, VK_QUERY_RESULT_WITH_AVAILABILITY_BIT,
@@ -306,6 +308,36 @@ instance Read VkQueryPoolCreateFlagBits where
     {-# INLINE readsPrec #-}
     readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkQueryPoolSamplingModeINTEL VkQueryPoolSamplingModeINTEL registry at www.khronos.org>
+newtype VkQueryPoolSamplingModeINTEL = VkQueryPoolSamplingModeINTEL Int32
+                                       deriving (Eq, Ord, Enum, Storable)
+
+instance Show VkQueryPoolSamplingModeINTEL where
+    showsPrec _ VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL
+      = showString "VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL"
+    showsPrec p (VkQueryPoolSamplingModeINTEL x)
+      = showParen (p >= 11)
+          (showString "VkQueryPoolSamplingModeINTEL " . showsPrec 11 x)
+
+instance Read VkQueryPoolSamplingModeINTEL where
+    readPrec
+      = parens
+          (choose
+             [("VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL",
+               pure VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL)]
+             +++
+             prec 10
+               (expectP (Ident "VkQueryPoolSamplingModeINTEL") >>
+                  (VkQueryPoolSamplingModeINTEL <$> step readPrec)))
+
+pattern VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL ::
+        VkQueryPoolSamplingModeINTEL
+
+pattern VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL =
+        VkQueryPoolSamplingModeINTEL 0
+
 newtype VkQueryResultBitmask (a ::
                                 FlagType) = VkQueryResultBitmask VkFlags
                                             deriving (Eq, Ord, Storable)
@@ -387,7 +419,7 @@ pattern VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultBitmask 8
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueryType VkQueryType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkQueryType VkQueryType registry at www.khronos.org>
 newtype VkQueryType = VkQueryType Int32
                       deriving (Eq, Ord, Enum, Storable)
 

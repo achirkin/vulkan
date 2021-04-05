@@ -30,11 +30,14 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         VkHdrMetadataEXT, VkStructureType(..), VkXYColorEXT,
         -- > #include "vk_platform.h"
         VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
-        HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT, VkBuffer,
+        HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT,
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -44,17 +47,19 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
@@ -94,7 +99,7 @@ type VkSetHdrMetadataEXT = "vkSetHdrMetadataEXT"
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetHdrMetadataEXT vkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetHdrMetadataEXT vkSetHdrMetadataEXT registry at www.khronos.org>
 type HS_vkSetHdrMetadataEXT =
      VkDevice -- ^ device
               ->
@@ -126,9 +131,9 @@ instance VulkanProc "vkSetHdrMetadataEXT" where
 
 pattern VK_EXT_HDR_METADATA_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_EXT_HDR_METADATA_SPEC_VERSION = 1
+pattern VK_EXT_HDR_METADATA_SPEC_VERSION = 2
 
-type VK_EXT_HDR_METADATA_SPEC_VERSION = 1
+type VK_EXT_HDR_METADATA_SPEC_VERSION = 2
 
 pattern VK_EXT_HDR_METADATA_EXTENSION_NAME :: CString
 

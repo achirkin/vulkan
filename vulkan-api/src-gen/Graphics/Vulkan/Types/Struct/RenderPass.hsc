@@ -6,27 +6,85 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.RenderPass
-       (VkRenderPassBeginInfo, VkRenderPassCreateInfo,
+       (VkRenderPassAttachmentBeginInfo,
+        VkRenderPassAttachmentBeginInfoKHR, VkRenderPassBeginInfo,
+        VkRenderPassCreateInfo, VkRenderPassCreateInfo2,
+        VkRenderPassCreateInfo2KHR,
+        VkRenderPassFragmentDensityMapCreateInfoEXT,
         VkRenderPassInputAttachmentAspectCreateInfo,
         VkRenderPassInputAttachmentAspectCreateInfoKHR,
         VkRenderPassMultiviewCreateInfo,
         VkRenderPassMultiviewCreateInfoKHR,
-        VkRenderPassSampleLocationsBeginInfoEXT)
+        VkRenderPassSampleLocationsBeginInfoEXT,
+        VkRenderPassTransformBeginInfoQCOM)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                              (VkRenderPassCreateFlags)
+import Graphics.Vulkan.Types.Enum.RenderPassCreateFlags            (VkRenderPassCreateFlags)
 import Graphics.Vulkan.Types.Enum.StructureType                    (VkStructureType)
+import Graphics.Vulkan.Types.Enum.Surface                          (VkSurfaceTransformFlagBitsKHR)
 import Graphics.Vulkan.Types.Handles                               (VkFramebuffer,
+                                                                    VkImageView,
                                                                     VkRenderPass)
 import Graphics.Vulkan.Types.Struct.Attachment                     (VkAttachmentDescription,
+                                                                    VkAttachmentDescription2,
+                                                                    VkAttachmentReference,
                                                                     VkAttachmentSampleLocationsEXT)
 import Graphics.Vulkan.Types.Struct.Clear                          (VkClearValue)
 import Graphics.Vulkan.Types.Struct.InputAttachmentAspectReference (VkInputAttachmentAspectReference)
 import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
 import Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDependency,
+                                                                    VkSubpassDependency2,
                                                                     VkSubpassDescription,
+                                                                    VkSubpassDescription2,
                                                                     VkSubpassSampleLocationsEXT)
+
+-- | > typedef struct VkRenderPassAttachmentBeginInfo {
+--   >     VkStructureType sType;
+--   >     const void*                              pNext;
+--   >     uint32_t                 attachmentCount;
+--   >     const VkImageView* pAttachments;
+--   > } VkRenderPassAttachmentBeginInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassAttachmentBeginInfo VkRenderPassAttachmentBeginInfo registry at www.khronos.org>
+type VkRenderPassAttachmentBeginInfo =
+     VkStruct VkRenderPassAttachmentBeginInfo' -- ' closing tick for hsc2hs
+
+data VkRenderPassAttachmentBeginInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkRenderPassAttachmentBeginInfo where
+    type StructRep VkRenderPassAttachmentBeginInfo =
+         'StructMeta "VkRenderPassAttachmentBeginInfo" -- ' closing tick for hsc2hs
+           VkRenderPassAttachmentBeginInfo
+           #{size VkRenderPassAttachmentBeginInfo}
+           #{alignment VkRenderPassAttachmentBeginInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkRenderPassAttachmentBeginInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkRenderPassAttachmentBeginInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "attachmentCount" Word32 'True 
+                                                        #{offset VkRenderPassAttachmentBeginInfo, attachmentCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pAttachments" (Ptr VkImageView) 'False 
+                                                                 #{offset VkRenderPassAttachmentBeginInfo, pAttachments}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkRenderPassAttachmentBeginInfo`
+type VkRenderPassAttachmentBeginInfoKHR =
+     VkRenderPassAttachmentBeginInfo
 
 -- | > typedef struct VkRenderPassBeginInfo {
 --   >     VkStructureType sType;
@@ -38,7 +96,7 @@ import Graphics.Vulkan.Types.Struct.Subpass                        (VkSubpassDep
 --   >     const VkClearValue*    pClearValues;
 --   > } VkRenderPassBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassBeginInfo VkRenderPassBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassBeginInfo VkRenderPassBeginInfo registry at www.khronos.org>
 type VkRenderPassBeginInfo = VkStruct VkRenderPassBeginInfo' -- ' closing tick for hsc2hs
 
 data VkRenderPassBeginInfo' -- ' closing tick for hsc2hs
@@ -90,7 +148,7 @@ instance VulkanMarshal VkRenderPassBeginInfo where
 -- | > typedef struct VkRenderPassCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*            pNext;
---   >     VkRenderPassCreateFlags    flags;
+--   >     VkRenderPassCreateFlags flags;
 --   >     uint32_t   attachmentCount;
 --   >     const VkAttachmentDescription* pAttachments;
 --   >     uint32_t               subpassCount;
@@ -99,7 +157,7 @@ instance VulkanMarshal VkRenderPassBeginInfo where
 --   >     const VkSubpassDependency* pDependencies;
 --   > } VkRenderPassCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassCreateInfo VkRenderPassCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassCreateInfo VkRenderPassCreateInfo registry at www.khronos.org>
 type VkRenderPassCreateInfo = VkStruct VkRenderPassCreateInfo' -- ' closing tick for hsc2hs
 
 data VkRenderPassCreateInfo' -- ' closing tick for hsc2hs
@@ -158,6 +216,131 @@ instance VulkanMarshal VkRenderPassCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkRenderPassCreateInfo2 {
+--   >     VkStructureType sType;
+--   >     const void*                                              pNext;
+--   >     VkRenderPassCreateFlags                  flags;
+--   >     uint32_t                                 attachmentCount;
+--   >     const VkAttachmentDescription2*    pAttachments;
+--   >     uint32_t                                                 subpassCount;
+--   >     const VkSubpassDescription2*          pSubpasses;
+--   >     uint32_t                                 dependencyCount;
+--   >     const VkSubpassDependency2*        pDependencies;
+--   >     uint32_t                                 correlatedViewMaskCount;
+--   >     const uint32_t*            pCorrelatedViewMasks;
+--   > } VkRenderPassCreateInfo2;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassCreateInfo2 VkRenderPassCreateInfo2 registry at www.khronos.org>
+type VkRenderPassCreateInfo2 = VkStruct VkRenderPassCreateInfo2' -- ' closing tick for hsc2hs
+
+data VkRenderPassCreateInfo2' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkRenderPassCreateInfo2 where
+    type StructRep VkRenderPassCreateInfo2 =
+         'StructMeta "VkRenderPassCreateInfo2" VkRenderPassCreateInfo2 -- ' closing tick for hsc2hs
+           #{size VkRenderPassCreateInfo2}
+           #{alignment VkRenderPassCreateInfo2}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkRenderPassCreateInfo2, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkRenderPassCreateInfo2, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "flags" VkRenderPassCreateFlags 'True 
+                                                               #{offset VkRenderPassCreateInfo2, flags}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "attachmentCount" Word32 'True 
+                                                        #{offset VkRenderPassCreateInfo2, attachmentCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pAttachments" (Ptr VkAttachmentDescription2) 'False
+                #{offset VkRenderPassCreateInfo2, pAttachments}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "subpassCount" Word32 'False 
+                                                      #{offset VkRenderPassCreateInfo2, subpassCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pSubpasses" (Ptr VkSubpassDescription2) 'False
+                #{offset VkRenderPassCreateInfo2, pSubpasses}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "dependencyCount" Word32 'True 
+                                                        #{offset VkRenderPassCreateInfo2, dependencyCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pDependencies" (Ptr VkSubpassDependency2) 'False
+                #{offset VkRenderPassCreateInfo2, pDependencies}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "correlatedViewMaskCount" Word32 'True 
+                                                                #{offset VkRenderPassCreateInfo2, correlatedViewMaskCount}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pCorrelatedViewMasks" (Ptr Word32) 'False 
+                                                                    #{offset VkRenderPassCreateInfo2, pCorrelatedViewMasks}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkRenderPassCreateInfo2`
+type VkRenderPassCreateInfo2KHR = VkRenderPassCreateInfo2
+
+-- | > typedef struct VkRenderPassFragmentDensityMapCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkAttachmentReference            fragmentDensityMapAttachment;
+--   > } VkRenderPassFragmentDensityMapCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassFragmentDensityMapCreateInfoEXT VkRenderPassFragmentDensityMapCreateInfoEXT registry at www.khronos.org>
+type VkRenderPassFragmentDensityMapCreateInfoEXT =
+     VkStruct VkRenderPassFragmentDensityMapCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkRenderPassFragmentDensityMapCreateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkRenderPassFragmentDensityMapCreateInfoEXT
+         where
+    type StructRep VkRenderPassFragmentDensityMapCreateInfoEXT =
+         'StructMeta "VkRenderPassFragmentDensityMapCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkRenderPassFragmentDensityMapCreateInfoEXT
+           #{size VkRenderPassFragmentDensityMapCreateInfoEXT}
+           #{alignment VkRenderPassFragmentDensityMapCreateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkRenderPassFragmentDensityMapCreateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkRenderPassFragmentDensityMapCreateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "fragmentDensityMapAttachment" VkAttachmentReference -- ' closing tick for hsc2hs
+                'False -- ' closing tick for hsc2hs
+                #{offset VkRenderPassFragmentDensityMapCreateInfoEXT, fragmentDensityMapAttachment}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkRenderPassCreateInfo, VkRenderPassCreateInfo2] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkRenderPassInputAttachmentAspectCreateInfo {
 --   >     VkStructureType sType;
 --   >     const void*                     pNext;
@@ -165,7 +348,7 @@ instance VulkanMarshal VkRenderPassCreateInfo where
 --   >     const VkInputAttachmentAspectReference* pAspectReferences;
 --   > } VkRenderPassInputAttachmentAspectCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassInputAttachmentAspectCreateInfo VkRenderPassInputAttachmentAspectCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassInputAttachmentAspectCreateInfo VkRenderPassInputAttachmentAspectCreateInfo registry at www.khronos.org>
 type VkRenderPassInputAttachmentAspectCreateInfo =
      VkStruct VkRenderPassInputAttachmentAspectCreateInfo' -- ' closing tick for hsc2hs
 
@@ -219,7 +402,7 @@ type VkRenderPassInputAttachmentAspectCreateInfoKHR =
 --   >     const uint32_t* pCorrelationMasks;
 --   > } VkRenderPassMultiviewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassMultiviewCreateInfo VkRenderPassMultiviewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassMultiviewCreateInfo VkRenderPassMultiviewCreateInfo registry at www.khronos.org>
 type VkRenderPassMultiviewCreateInfo =
      VkStruct VkRenderPassMultiviewCreateInfo' -- ' closing tick for hsc2hs
 
@@ -288,7 +471,7 @@ type VkRenderPassMultiviewCreateInfoKHR =
 --   >     const VkSubpassSampleLocationsEXT* pPostSubpassSampleLocations;
 --   > } VkRenderPassSampleLocationsBeginInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRenderPassSampleLocationsBeginInfoEXT VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassSampleLocationsBeginInfoEXT VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
 type VkRenderPassSampleLocationsBeginInfoEXT =
      VkStruct VkRenderPassSampleLocationsBeginInfoEXT' -- ' closing tick for hsc2hs
 
@@ -332,6 +515,43 @@ instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
                 (Ptr VkSubpassSampleLocationsEXT)
                 'False -- ' closing tick for hsc2hs
                 #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkRenderPassTransformBeginInfoQCOM {
+--   >     VkStructureType sType;
+--   >     void*                           pNext;
+--   >     VkSurfaceTransformFlagBitsKHR   transform;
+--   > } VkRenderPassTransformBeginInfoQCOM;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRenderPassTransformBeginInfoQCOM VkRenderPassTransformBeginInfoQCOM registry at www.khronos.org>
+type VkRenderPassTransformBeginInfoQCOM =
+     VkStruct VkRenderPassTransformBeginInfoQCOM' -- ' closing tick for hsc2hs
+
+data VkRenderPassTransformBeginInfoQCOM' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkRenderPassTransformBeginInfoQCOM where
+    type StructRep VkRenderPassTransformBeginInfoQCOM =
+         'StructMeta "VkRenderPassTransformBeginInfoQCOM" -- ' closing tick for hsc2hs
+           VkRenderPassTransformBeginInfoQCOM
+           #{size VkRenderPassTransformBeginInfoQCOM}
+           #{alignment VkRenderPassTransformBeginInfoQCOM}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkRenderPassTransformBeginInfoQCOM, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkRenderPassTransformBeginInfoQCOM, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "transform" VkSurfaceTransformFlagBitsKHR 'False
+                #{offset VkRenderPassTransformBeginInfoQCOM, transform}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs

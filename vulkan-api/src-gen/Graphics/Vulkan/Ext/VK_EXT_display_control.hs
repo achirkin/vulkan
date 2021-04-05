@@ -11,13 +11,18 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_display_control
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         VkColorComponentBitmask(..), VkColorSpaceKHR(..),
         VkColorComponentFlagBits(), VkColorComponentFlags(),
         VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
         VkCompositeAlphaFlagsKHR(), VkDeviceEventInfoEXT,
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
         VkDisplayEventInfoEXT, VkDisplayEventTypeEXT(..),
@@ -30,25 +35,29 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkPresentModeKHR(..),
-        VkSharingMode(..), VkStructureType(..),
-        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
-        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
-        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
-        VkSwapchainCounterCreateInfoEXT, VkSwapchainCreateBitmaskKHR(..),
-        VkSwapchainCreateFlagBitsKHR(), VkSwapchainCreateFlagsKHR(),
-        VkSwapchainCreateInfoKHR, -- > #include "vk_platform.h"
-                                  VkDisplayPowerControlEXT,
-        pattern VkDisplayPowerControlEXT, HS_vkDisplayPowerControlEXT,
-        PFN_vkDisplayPowerControlEXT, VkRegisterDeviceEventEXT,
-        pattern VkRegisterDeviceEventEXT, HS_vkRegisterDeviceEventEXT,
-        PFN_vkRegisterDeviceEventEXT, VkRegisterDisplayEventEXT,
-        pattern VkRegisterDisplayEventEXT, HS_vkRegisterDisplayEventEXT,
-        PFN_vkRegisterDisplayEventEXT, VkGetSwapchainCounterEXT,
-        pattern VkGetSwapchainCounterEXT, HS_vkGetSwapchainCounterEXT,
-        PFN_vkGetSwapchainCounterEXT, module Graphics.Vulkan.Marshal,
-        VkInternalAllocationType(..), VkResult(..),
-        VkSystemAllocationScope(..), newVkAllocationFunction,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkPresentModeKHR(..), VkSharingMode(..),
+        VkStructureType(..), VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(), VkSwapchainCounterCreateInfoEXT,
+        VkSwapchainImageUsageBitmaskANDROID(..),
+        VkSwapchainCreateBitmaskKHR(..), VkSwapchainCreateFlagBitsKHR(),
+        VkSwapchainCreateFlagsKHR(),
+        VkSwapchainImageUsageFlagBitsANDROID(),
+        VkSwapchainImageUsageFlagsANDROID(), VkSwapchainCreateInfoKHR,
+        -- > #include "vk_platform.h"
+        VkDisplayPowerControlEXT, pattern VkDisplayPowerControlEXT,
+        HS_vkDisplayPowerControlEXT, PFN_vkDisplayPowerControlEXT,
+        VkRegisterDeviceEventEXT, pattern VkRegisterDeviceEventEXT,
+        HS_vkRegisterDeviceEventEXT, PFN_vkRegisterDeviceEventEXT,
+        VkRegisterDisplayEventEXT, pattern VkRegisterDisplayEventEXT,
+        HS_vkRegisterDisplayEventEXT, PFN_vkRegisterDisplayEventEXT,
+        VkGetSwapchainCounterEXT, pattern VkGetSwapchainCounterEXT,
+        HS_vkGetSwapchainCounterEXT, PFN_vkGetSwapchainCounterEXT,
+        module Graphics.Vulkan.Marshal, VkInternalAllocationType(..),
+        VkResult(..), VkSystemAllocationScope(..), newVkAllocationFunction,
         newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
         newVkFreeFunction, newVkInternalAllocationNotification,
         newVkInternalFreeNotification, newVkReallocationFunction,
@@ -65,34 +74,38 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkAllocationCallbacks, VkDeviceCreateInfo,
-        VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
+        VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceGroupBindSparseInfo,
         VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfo,
         VkDeviceGroupCommandBufferBeginInfoKHR,
@@ -101,15 +114,19 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         VkDeviceGroupRenderPassBeginInfo,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
         VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
-        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
-        VkDeviceQueueInfo2, VkDisplayModeCreateInfoKHR,
-        VkDisplayModeParametersKHR, VkDisplayModeProperties2KHR,
-        VkDisplayModePropertiesKHR, VkDisplayPlaneCapabilities2KHR,
-        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneInfo2KHR,
-        VkDisplayPlaneProperties2KHR, VkDisplayPlanePropertiesKHR,
-        VkDisplayPresentInfoKHR, VkDisplayProperties2KHR,
-        VkDisplayPropertiesKHR, VkDisplaySurfaceCreateInfoKHR,
-        VK_EXT_DISPLAY_CONTROL_SPEC_VERSION,
+        VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT, VkDeviceQueueCreateInfo,
+        VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
+        VkDisplayModeCreateInfoKHR, VkDisplayModeParametersKHR,
+        VkDisplayModeProperties2KHR, VkDisplayModePropertiesKHR,
+        VkDisplayNativeHdrSurfaceCapabilitiesAMD,
+        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilitiesKHR,
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneProperties2KHR,
+        VkDisplayPlanePropertiesKHR, VkDisplayPresentInfoKHR,
+        VkDisplayProperties2KHR, VkDisplayPropertiesKHR,
+        VkDisplaySurfaceCreateInfoKHR, VK_EXT_DISPLAY_CONTROL_SPEC_VERSION,
         pattern VK_EXT_DISPLAY_CONTROL_SPEC_VERSION,
         VK_EXT_DISPLAY_CONTROL_EXTENSION_NAME,
         pattern VK_EXT_DISPLAY_CONTROL_EXTENSION_NAME,
@@ -118,9 +135,9 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         pattern VK_STRUCTURE_TYPE_DISPLAY_EVENT_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_SWAPCHAIN_COUNTER_CREATE_INFO_EXT)
        where
-import GHC.Ptr                                            (Ptr (..))
+import GHC.Ptr                                           (Ptr (..))
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                       (VulkanProc (..))
+import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Enum.Color
 import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR
@@ -134,16 +151,16 @@ import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Surface
-import Graphics.Vulkan.Types.Enum.SwapchainCreateFlagsKHR
+import Graphics.Vulkan.Types.Enum.Swapchain
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
 import Graphics.Vulkan.Types.Struct.Device
 import Graphics.Vulkan.Types.Struct.Display
-import Graphics.Vulkan.Types.Struct.Extent                (VkExtent2D)
-import Graphics.Vulkan.Types.Struct.SwapchainC            (VkSwapchainCounterCreateInfoEXT,
-                                                           VkSwapchainCreateInfoKHR)
+import Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
+import Graphics.Vulkan.Types.Struct.Swapchain            (VkSwapchainCounterCreateInfoEXT,
+                                                          VkSwapchainCreateInfoKHR)
 
 pattern VkDisplayPowerControlEXT :: CString
 
@@ -167,13 +184,15 @@ type VkDisplayPowerControlEXT = "vkDisplayPowerControlEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 --   > VkResult vkDisplayPowerControlEXT
 --   >     ( VkDevice device
 --   >     , VkDisplayKHR display
 --   >     , const VkDisplayPowerInfoEXT* pDisplayPowerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDisplayPowerControlEXT vkDisplayPowerControlEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDisplayPowerControlEXT vkDisplayPowerControlEXT registry at www.khronos.org>
 type HS_vkDisplayPowerControlEXT =
      VkDevice -- ^ device
               ->
@@ -227,6 +246,8 @@ type VkRegisterDeviceEventEXT = "vkRegisterDeviceEventEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 --   > VkResult vkRegisterDeviceEventEXT
 --   >     ( VkDevice device
 --   >     , const VkDeviceEventInfoEXT* pDeviceEventInfo
@@ -234,7 +255,7 @@ type VkRegisterDeviceEventEXT = "vkRegisterDeviceEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDeviceEventEXT vkRegisterDeviceEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkRegisterDeviceEventEXT vkRegisterDeviceEventEXT registry at www.khronos.org>
 type HS_vkRegisterDeviceEventEXT =
      VkDevice -- ^ device
               ->
@@ -290,6 +311,8 @@ type VkRegisterDisplayEventEXT = "vkRegisterDisplayEventEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 --   > VkResult vkRegisterDisplayEventEXT
 --   >     ( VkDevice device
 --   >     , VkDisplayKHR display
@@ -298,7 +321,7 @@ type VkRegisterDisplayEventEXT = "vkRegisterDisplayEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkRegisterDisplayEventEXT vkRegisterDisplayEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkRegisterDisplayEventEXT vkRegisterDisplayEventEXT registry at www.khronos.org>
 type HS_vkRegisterDisplayEventEXT =
      VkDevice -- ^ device
               ->
@@ -356,7 +379,7 @@ type VkGetSwapchainCounterEXT = "vkGetSwapchainCounterEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
 --
 --   > VkResult vkGetSwapchainCounterEXT
 --   >     ( VkDevice device
@@ -365,7 +388,7 @@ type VkGetSwapchainCounterEXT = "vkGetSwapchainCounterEXT"
 --   >     , uint64_t* pCounterValue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainCounterEXT vkGetSwapchainCounterEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainCounterEXT vkGetSwapchainCounterEXT registry at www.khronos.org>
 type HS_vkGetSwapchainCounterEXT =
      VkDevice -- ^ device
               ->

@@ -114,8 +114,7 @@ writeAllTypes vkXml@VkXml{..}
       ((), mr) <- runModuleWriter vkXml
                       ("Graphics.Vulkan.Types.Struct."
                           <> T.unpack modN
-                          -- T.unpack (unVkTypeName
-                          -- $ (name :: VkType -> VkTypeName) t)
+                          -- T.unpack (unVkTypeName $ (name :: VkType -> VkTypeName) t)
                       ) mds $ do
         writePragma "Strict"
         writePragma "DataKinds"
@@ -423,6 +422,21 @@ genBasetypeAlias t@VkTypeSimple
     } = do
   writeImport $ DIThing (unVkTypeName vkTRef) DITNo
   genAlias t
+genBasetypeAlias VkTypeSimple
+    { name = name
+    , typeData = VkTypeData
+       { reference = []
+       , code = c
+       }
+    } = do
+    writeDecl . setComment rezComment $ parseDecl'
+        [text|
+          data $tnametxt
+        |]
+    writeExport $ DIThing tnametxt DITEmpty
+    where
+      tnametxt = unVkTypeName name
+      rezComment = preComment $ T.unpack . T.unlines . map ("> " <>) . T.lines $  c
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "
          <> show t

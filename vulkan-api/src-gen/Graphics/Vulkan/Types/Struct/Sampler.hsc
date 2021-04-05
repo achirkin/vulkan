@@ -6,7 +6,9 @@
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Sampler
-       (VkSamplerCreateInfo, VkSamplerReductionModeCreateInfoEXT,
+       (VkSamplerCreateInfo, VkSamplerCustomBorderColorCreateInfoEXT,
+        VkSamplerReductionModeCreateInfo,
+        VkSamplerReductionModeCreateInfoEXT,
         VkSamplerYcbcrConversionCreateInfo,
         VkSamplerYcbcrConversionCreateInfoKHR,
         VkSamplerYcbcrConversionImageFormatProperties,
@@ -16,19 +18,20 @@ module Graphics.Vulkan.Types.Struct.Sampler
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.BaseTypes               (VkBool32)
-import Graphics.Vulkan.Types.Bitmasks                (VkSamplerCreateFlags)
 import Graphics.Vulkan.Types.Enum.BorderColor        (VkBorderColor)
 import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
 import Graphics.Vulkan.Types.Enum.CompareOp          (VkCompareOp)
 import Graphics.Vulkan.Types.Enum.Filter             (VkFilter)
 import Graphics.Vulkan.Types.Enum.Format             (VkFormat)
 import Graphics.Vulkan.Types.Enum.Sampler            (VkSamplerAddressMode,
+                                                      VkSamplerCreateFlags,
                                                       VkSamplerMipmapMode,
-                                                      VkSamplerReductionModeEXT,
+                                                      VkSamplerReductionMode,
                                                       VkSamplerYcbcrModelConversion,
                                                       VkSamplerYcbcrRange)
 import Graphics.Vulkan.Types.Enum.StructureType      (VkStructureType)
 import Graphics.Vulkan.Types.Handles                 (VkSamplerYcbcrConversion)
+import Graphics.Vulkan.Types.Struct.Clear            (VkClearColorValue)
 import Graphics.Vulkan.Types.Struct.ComponentMapping (VkComponentMapping)
 import Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
                                                       VkImageViewCreateInfo)
@@ -54,7 +57,7 @@ import Graphics.Vulkan.Types.Struct.Image            (VkImageFormatProperties2,
 --   >     VkBool32               unnormalizedCoordinates;
 --   > } VkSamplerCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerCreateInfo VkSamplerCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerCreateInfo VkSamplerCreateInfo registry at www.khronos.org>
 type VkSamplerCreateInfo = VkStruct VkSamplerCreateInfo' -- ' closing tick for hsc2hs
 
 data VkSamplerCreateInfo' -- ' closing tick for hsc2hs
@@ -166,42 +169,90 @@ instance VulkanMarshal VkSamplerCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
--- | > typedef struct VkSamplerReductionModeCreateInfoEXT {
+-- | > typedef struct VkSamplerCustomBorderColorCreateInfoEXT {
 --   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     VkSamplerReductionModeEXT reductionMode;
---   > } VkSamplerReductionModeCreateInfoEXT;
+--   >     const void*                                                                            pNext;
+--   >     VkClearColorValue                                                                      customBorderColor;
+--   >     VkFormat                                                                               format;
+--   > } VkSamplerCustomBorderColorCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerReductionModeCreateInfoEXT VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
-type VkSamplerReductionModeCreateInfoEXT =
-     VkStruct VkSamplerReductionModeCreateInfoEXT' -- ' closing tick for hsc2hs
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerCustomBorderColorCreateInfoEXT VkSamplerCustomBorderColorCreateInfoEXT registry at www.khronos.org>
+type VkSamplerCustomBorderColorCreateInfoEXT =
+     VkStruct VkSamplerCustomBorderColorCreateInfoEXT' -- ' closing tick for hsc2hs
 
-data VkSamplerReductionModeCreateInfoEXT' -- ' closing tick for hsc2hs
+data VkSamplerCustomBorderColorCreateInfoEXT' -- ' closing tick for hsc2hs
 
-instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
-    type StructRep VkSamplerReductionModeCreateInfoEXT =
-         'StructMeta "VkSamplerReductionModeCreateInfoEXT" -- ' closing tick for hsc2hs
-           VkSamplerReductionModeCreateInfoEXT
-           #{size VkSamplerReductionModeCreateInfoEXT}
-           #{alignment VkSamplerReductionModeCreateInfoEXT}
+instance VulkanMarshal VkSamplerCustomBorderColorCreateInfoEXT
+         where
+    type StructRep VkSamplerCustomBorderColorCreateInfoEXT =
+         'StructMeta "VkSamplerCustomBorderColorCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkSamplerCustomBorderColorCreateInfoEXT
+           #{size VkSamplerCustomBorderColorCreateInfoEXT}
+           #{alignment VkSamplerCustomBorderColorCreateInfoEXT}
            '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkSamplerReductionModeCreateInfoEXT, sType}
+                                                        #{offset VkSamplerCustomBorderColorCreateInfoEXT, sType}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
+                                                   #{offset VkSamplerCustomBorderColorCreateInfoEXT, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "reductionMode" VkSamplerReductionModeEXT 'False
-                #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
+             ('FieldMeta "customBorderColor" VkClearColorValue 'False 
+                                                                      #{offset VkSamplerCustomBorderColorCreateInfoEXT, customBorderColor}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "format" VkFormat 'False 
+                                                  #{offset VkSamplerCustomBorderColorCreateInfoEXT, format}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            '[VkSamplerCreateInfo] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkSamplerReductionModeCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSamplerReductionMode           reductionMode;
+--   > } VkSamplerReductionModeCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerReductionModeCreateInfo VkSamplerReductionModeCreateInfo registry at www.khronos.org>
+type VkSamplerReductionModeCreateInfo =
+     VkStruct VkSamplerReductionModeCreateInfo' -- ' closing tick for hsc2hs
+
+data VkSamplerReductionModeCreateInfo' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkSamplerReductionModeCreateInfo where
+    type StructRep VkSamplerReductionModeCreateInfo =
+         'StructMeta "VkSamplerReductionModeCreateInfo" -- ' closing tick for hsc2hs
+           VkSamplerReductionModeCreateInfo
+           #{size VkSamplerReductionModeCreateInfo}
+           #{alignment VkSamplerReductionModeCreateInfo}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkSamplerReductionModeCreateInfo, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkSamplerReductionModeCreateInfo, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "reductionMode" VkSamplerReductionMode 'False 
+                                                                       #{offset VkSamplerReductionModeCreateInfo, reductionMode}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkSamplerCreateInfo] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkSamplerReductionModeCreateInfo`
+type VkSamplerReductionModeCreateInfoEXT =
+     VkSamplerReductionModeCreateInfo
 
 -- | > typedef struct VkSamplerYcbcrConversionCreateInfo {
 --   >     VkStructureType sType;
@@ -216,7 +267,7 @@ instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
 --   >     VkBool32                         forceExplicitReconstruction;
 --   > } VkSamplerYcbcrConversionCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionCreateInfo VkSamplerYcbcrConversionCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerYcbcrConversionCreateInfo VkSamplerYcbcrConversionCreateInfo registry at www.khronos.org>
 type VkSamplerYcbcrConversionCreateInfo =
      VkStruct VkSamplerYcbcrConversionCreateInfo' -- ' closing tick for hsc2hs
 
@@ -292,7 +343,7 @@ type VkSamplerYcbcrConversionCreateInfoKHR =
 --   >     uint32_t                         combinedImageSamplerDescriptorCount;
 --   > } VkSamplerYcbcrConversionImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionImageFormatProperties VkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerYcbcrConversionImageFormatProperties VkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
 type VkSamplerYcbcrConversionImageFormatProperties =
      VkStruct VkSamplerYcbcrConversionImageFormatProperties' -- ' closing tick for hsc2hs
 
@@ -335,7 +386,7 @@ type VkSamplerYcbcrConversionImageFormatPropertiesKHR =
 --   >     VkSamplerYcbcrConversion      conversion;
 --   > } VkSamplerYcbcrConversionInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerYcbcrConversionInfo VkSamplerYcbcrConversionInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSamplerYcbcrConversionInfo VkSamplerYcbcrConversionInfo registry at www.khronos.org>
 type VkSamplerYcbcrConversionInfo =
      VkStruct VkSamplerYcbcrConversionInfo' -- ' closing tick for hsc2hs
 

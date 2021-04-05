@@ -21,7 +21,7 @@ import Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDynamicState VkDynamicState registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDynamicState VkDynamicState registry at www.khronos.org>
 newtype VkDynamicState = VkDynamicState Int32
                          deriving (Eq, Ord, Enum, Storable)
 

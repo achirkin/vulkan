@@ -12,8 +12,8 @@ module Graphics.Vulkan.Types.Struct.Shader
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks           (VkShaderModuleCreateFlags)
-import Graphics.Vulkan.Types.Enum.Shader        (VkShaderStageFlags)
+import Graphics.Vulkan.Types.Enum.Shader        (VkShaderModuleCreateFlags,
+                                                 VkShaderStageFlags)
 import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 import Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
 
@@ -25,7 +25,7 @@ import Graphics.Vulkan.Types.Handles            (VkValidationCacheEXT)
 --   >     const uint32_t*            pCode;
 --   > } VkShaderModuleCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderModuleCreateInfo VkShaderModuleCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkShaderModuleCreateInfo VkShaderModuleCreateInfo registry at www.khronos.org>
 type VkShaderModuleCreateInfo = VkStruct VkShaderModuleCreateInfo' -- ' closing tick for hsc2hs
 
 data VkShaderModuleCreateInfo' -- ' closing tick for hsc2hs
@@ -70,7 +70,7 @@ instance VulkanMarshal VkShaderModuleCreateInfo where
 --   >     VkValidationCacheEXT    validationCache;
 --   > } VkShaderModuleValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderModuleValidationCacheCreateInfoEXT VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkShaderModuleValidationCacheCreateInfoEXT VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
 type VkShaderModuleValidationCacheCreateInfoEXT =
      VkStruct VkShaderModuleValidationCacheCreateInfoEXT' -- ' closing tick for hsc2hs
 
@@ -110,7 +110,7 @@ instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
 --   >     size_t scratchMemUsageInBytes;
 --   > } VkShaderResourceUsageAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderResourceUsageAMD VkShaderResourceUsageAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkShaderResourceUsageAMD VkShaderResourceUsageAMD registry at www.khronos.org>
 type VkShaderResourceUsageAMD = VkStruct VkShaderResourceUsageAMD' -- ' closing tick for hsc2hs
 
 data VkShaderResourceUsageAMD' -- ' closing tick for hsc2hs
@@ -159,7 +159,7 @@ instance VulkanMarshal VkShaderResourceUsageAMD where
 --   >     uint32_t computeWorkGroupSize[3];
 --   > } VkShaderStatisticsInfoAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkShaderStatisticsInfoAMD VkShaderStatisticsInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkShaderStatisticsInfoAMD VkShaderStatisticsInfoAMD registry at www.khronos.org>
 type VkShaderStatisticsInfoAMD =
      VkStruct VkShaderStatisticsInfoAMD' -- ' closing tick for hsc2hs
 

@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE CPP                      #-}
@@ -23,16 +22,28 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         -- type: @device@
         --
         -- Extension number: @161@
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkAndroidSurfaceCreateFlagsKHR(..),
-        VkBufferViewCreateFlags(..), VkCommandPoolTrimFlags(..),
-        VkCommandPoolTrimFlagsKHR(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkShaderFloatControlsIndependence(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderCorePropertiesBitmaskAMD(..),
+        VkShaderCorePropertiesFlagBitsAMD(),
+        VkShaderCorePropertiesFlagsAMD(),
+        VkShaderFloatControlsIndependenceKHR(..),
+        VkShaderModuleCreateBitmask(..), VkShaderModuleCreateFlagBits(),
+        VkShaderModuleCreateFlags(), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkShaderModuleCreateInfo,
+        VkShaderModuleValidationCacheCreateInfoEXT, VkStructureType(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -40,14 +51,16 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -56,26 +69,28 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..), VkShaderModuleCreateInfo,
-        VkShaderModuleValidationCacheCreateInfoEXT, VkStructureType(..),
-        VkValidationCacheCreateInfoEXT,
+        VkXlibSurfaceCreateFlagsKHR(..), VkValidationCacheCreateInfoEXT,
         VkValidationCacheHeaderVersionEXT(..), VkValidationCheckEXT(..),
-        -- > #include "vk_platform.h"
-        VkCreateValidationCacheEXT, pattern VkCreateValidationCacheEXT,
-        HS_vkCreateValidationCacheEXT, PFN_vkCreateValidationCacheEXT,
-        VkDestroyValidationCacheEXT, pattern VkDestroyValidationCacheEXT,
+        VkValidationFeatureDisableEXT(..),
+        VkValidationFeatureEnableEXT(..), -- > #include "vk_platform.h"
+                                          VkCreateValidationCacheEXT,
+        pattern VkCreateValidationCacheEXT, HS_vkCreateValidationCacheEXT,
+        PFN_vkCreateValidationCacheEXT, VkDestroyValidationCacheEXT,
+        pattern VkDestroyValidationCacheEXT,
         HS_vkDestroyValidationCacheEXT, PFN_vkDestroyValidationCacheEXT,
         VkMergeValidationCachesEXT, pattern VkMergeValidationCachesEXT,
         HS_vkMergeValidationCachesEXT, PFN_vkMergeValidationCachesEXT,
@@ -99,53 +114,57 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        VkAllocationCallbacks, VkValidationFlagsEXT,
-        VK_EXT_VALIDATION_CACHE_SPEC_VERSION,
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkAllocationCallbacks, VkValidationFeaturesEXT,
+        VkValidationFlagsEXT, VK_EXT_VALIDATION_CACHE_SPEC_VERSION,
         pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION,
         VK_EXT_VALIDATION_CACHE_EXTENSION_NAME,
         pattern VK_EXT_VALIDATION_CACHE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_VALIDATION_CACHE_CREATE_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
-        pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT)
+        pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT)
        where
 import GHC.Ptr                                           (Ptr (..))
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
-import Graphics.Vulkan.Types.Enum.Debug                  (VkDebugReportObjectTypeEXT (..))
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object                 (VkObjectType (..))
+import Graphics.Vulkan.Types.Enum.ObjectType             (VkObjectType (..))
 import Graphics.Vulkan.Types.Enum.Result
+import Graphics.Vulkan.Types.Enum.Shader
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
-import Graphics.Vulkan.Types.Enum.ValidationC
+import Graphics.Vulkan.Types.Enum.Validation
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.AllocationCallbacks
@@ -184,7 +203,7 @@ type VkCreateValidationCacheEXT = "vkCreateValidationCacheEXT"
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateValidationCacheEXT vkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateValidationCacheEXT vkCreateValidationCacheEXT registry at www.khronos.org>
 type HS_vkCreateValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -246,7 +265,7 @@ type VkDestroyValidationCacheEXT = "vkDestroyValidationCacheEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT registry at www.khronos.org>
 type HS_vkDestroyValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -309,7 +328,7 @@ type VkMergeValidationCachesEXT = "vkMergeValidationCachesEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergeValidationCachesEXT vkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMergeValidationCachesEXT vkMergeValidationCachesEXT registry at www.khronos.org>
 type HS_vkMergeValidationCachesEXT =
      VkDevice -- ^ device
               ->
@@ -375,7 +394,7 @@ type VkGetValidationCacheDataEXT = "vkGetValidationCacheDataEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetValidationCacheDataEXT vkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetValidationCacheDataEXT vkGetValidationCacheDataEXT registry at www.khronos.org>
 type HS_vkGetValidationCacheDataEXT =
      VkDevice -- ^ device
               ->
@@ -454,6 +473,3 @@ pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT :: VkObjectType
 
 pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT =
         VkObjectType 1000160000
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT =
-        VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT

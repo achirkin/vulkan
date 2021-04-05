@@ -7,12 +7,17 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Descriptor
        (VkDescriptorBufferInfo, VkDescriptorImageInfo,
-        VkDescriptorPoolCreateInfo, VkDescriptorPoolSize,
-        VkDescriptorSetAllocateInfo, VkDescriptorSetLayoutBinding,
+        VkDescriptorPoolCreateInfo,
+        VkDescriptorPoolInlineUniformBlockCreateInfoEXT,
+        VkDescriptorPoolSize, VkDescriptorSetAllocateInfo,
+        VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfo,
         VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
         VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
         VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfo,
         VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupport,
         VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
         VkDescriptorUpdateTemplateCreateInfo,
         VkDescriptorUpdateTemplateCreateInfoKHR,
@@ -23,7 +28,7 @@ import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.BaseTypes          (VkBool32, VkDeviceSize)
 import Graphics.Vulkan.Types.Bitmasks           (VkDescriptorUpdateTemplateCreateFlags)
-import Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlagsEXT,
+import Graphics.Vulkan.Types.Enum.Descriptor    (VkDescriptorBindingFlags,
                                                  VkDescriptorPoolCreateFlags,
                                                  VkDescriptorSetLayoutCreateFlags,
                                                  VkDescriptorType,
@@ -43,7 +48,7 @@ import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDescriptorPool,
 --   >     VkDeviceSize           range;
 --   > } VkDescriptorBufferInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorBufferInfo VkDescriptorBufferInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorBufferInfo VkDescriptorBufferInfo registry at www.khronos.org>
 type VkDescriptorBufferInfo = VkStruct VkDescriptorBufferInfo' -- ' closing tick for hsc2hs
 
 data VkDescriptorBufferInfo' -- ' closing tick for hsc2hs
@@ -53,8 +58,8 @@ instance VulkanMarshal VkDescriptorBufferInfo where
          'StructMeta "VkDescriptorBufferInfo" VkDescriptorBufferInfo -- ' closing tick for hsc2hs
            #{size VkDescriptorBufferInfo}
            #{alignment VkDescriptorBufferInfo}
-           '[('FieldMeta "buffer" VkBuffer 'False  -- ' closing tick for hsc2hs
-                                                  #{offset VkDescriptorBufferInfo, buffer}
+           '[('FieldMeta "buffer" VkBuffer 'True  -- ' closing tick for hsc2hs
+                                                 #{offset VkDescriptorBufferInfo, buffer}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
@@ -78,7 +83,7 @@ instance VulkanMarshal VkDescriptorBufferInfo where
 --   >     VkImageLayout   imageLayout;
 --   > } VkDescriptorImageInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorImageInfo VkDescriptorImageInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorImageInfo VkDescriptorImageInfo registry at www.khronos.org>
 type VkDescriptorImageInfo = VkStruct VkDescriptorImageInfo' -- ' closing tick for hsc2hs
 
 data VkDescriptorImageInfo' -- ' closing tick for hsc2hs
@@ -116,7 +121,7 @@ instance VulkanMarshal VkDescriptorImageInfo where
 --   >     const VkDescriptorPoolSize* pPoolSizes;
 --   > } VkDescriptorPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorPoolCreateInfo VkDescriptorPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorPoolCreateInfo VkDescriptorPoolCreateInfo registry at www.khronos.org>
 type VkDescriptorPoolCreateInfo =
      VkStruct VkDescriptorPoolCreateInfo' -- ' closing tick for hsc2hs
 
@@ -161,12 +166,51 @@ instance VulkanMarshal VkDescriptorPoolCreateInfo where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkDescriptorPoolInlineUniformBlockCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     uint32_t               maxInlineUniformBlockBindings;
+--   > } VkDescriptorPoolInlineUniformBlockCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorPoolInlineUniformBlockCreateInfoEXT VkDescriptorPoolInlineUniformBlockCreateInfoEXT registry at www.khronos.org>
+type VkDescriptorPoolInlineUniformBlockCreateInfoEXT =
+     VkStruct VkDescriptorPoolInlineUniformBlockCreateInfoEXT' -- ' closing tick for hsc2hs
+
+data VkDescriptorPoolInlineUniformBlockCreateInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal
+           VkDescriptorPoolInlineUniformBlockCreateInfoEXT
+         where
+    type StructRep VkDescriptorPoolInlineUniformBlockCreateInfoEXT =
+         'StructMeta "VkDescriptorPoolInlineUniformBlockCreateInfoEXT" -- ' closing tick for hsc2hs
+           VkDescriptorPoolInlineUniformBlockCreateInfoEXT
+           #{size VkDescriptorPoolInlineUniformBlockCreateInfoEXT}
+           #{alignment VkDescriptorPoolInlineUniformBlockCreateInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkDescriptorPoolInlineUniformBlockCreateInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkDescriptorPoolInlineUniformBlockCreateInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "maxInlineUniformBlockBindings" Word32 'False 
+                                                                       #{offset VkDescriptorPoolInlineUniformBlockCreateInfoEXT, maxInlineUniformBlockBindings}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkDescriptorPoolCreateInfo] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkDescriptorPoolSize {
 --   >     VkDescriptorType       type;
 --   >     uint32_t               descriptorCount;
 --   > } VkDescriptorPoolSize;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorPoolSize VkDescriptorPoolSize registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorPoolSize VkDescriptorPoolSize registry at www.khronos.org>
 type VkDescriptorPoolSize = VkStruct VkDescriptorPoolSize' -- ' closing tick for hsc2hs
 
 data VkDescriptorPoolSize' -- ' closing tick for hsc2hs
@@ -198,7 +242,7 @@ instance VulkanMarshal VkDescriptorPoolSize where
 --   >     const VkDescriptorSetLayout* pSetLayouts;
 --   > } VkDescriptorSetAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetAllocateInfo VkDescriptorSetAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetAllocateInfo VkDescriptorSetAllocateInfo registry at www.khronos.org>
 type VkDescriptorSetAllocateInfo =
      VkStruct VkDescriptorSetAllocateInfo' -- ' closing tick for hsc2hs
 
@@ -247,7 +291,7 @@ instance VulkanMarshal VkDescriptorSetAllocateInfo where
 --   >     const VkSampler*       pImmutableSamplers;
 --   > } VkDescriptorSetLayoutBinding;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutBinding VkDescriptorSetLayoutBinding registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetLayoutBinding VkDescriptorSetLayoutBinding registry at www.khronos.org>
 type VkDescriptorSetLayoutBinding =
      VkStruct VkDescriptorSetLayoutBinding' -- ' closing tick for hsc2hs
 
@@ -288,51 +332,53 @@ instance VulkanMarshal VkDescriptorSetLayoutBinding where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
--- | > typedef struct VkDescriptorSetLayoutBindingFlagsCreateInfoEXT {
+-- | > typedef struct VkDescriptorSetLayoutBindingFlagsCreateInfo {
 --   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     uint32_t               bindingCount;
---   >     const VkDescriptorBindingFlagsEXT* pBindingFlags;
---   > } VkDescriptorSetLayoutBindingFlagsCreateInfoEXT;
+--   >     const void*                                                        pNext;
+--   >     uint32_t                                           bindingCount;
+--   >     const VkDescriptorBindingFlags* pBindingFlags;
+--   > } VkDescriptorSetLayoutBindingFlagsCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutBindingFlagsCreateInfoEXT VkDescriptorSetLayoutBindingFlagsCreateInfoEXT registry at www.khronos.org>
-type VkDescriptorSetLayoutBindingFlagsCreateInfoEXT =
-     VkStruct VkDescriptorSetLayoutBindingFlagsCreateInfoEXT' -- ' closing tick for hsc2hs
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetLayoutBindingFlagsCreateInfo VkDescriptorSetLayoutBindingFlagsCreateInfo registry at www.khronos.org>
+type VkDescriptorSetLayoutBindingFlagsCreateInfo =
+     VkStruct VkDescriptorSetLayoutBindingFlagsCreateInfo' -- ' closing tick for hsc2hs
 
-data VkDescriptorSetLayoutBindingFlagsCreateInfoEXT' -- ' closing tick for hsc2hs
+data VkDescriptorSetLayoutBindingFlagsCreateInfo' -- ' closing tick for hsc2hs
 
-instance VulkanMarshal
-           VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
+instance VulkanMarshal VkDescriptorSetLayoutBindingFlagsCreateInfo
          where
-    type StructRep VkDescriptorSetLayoutBindingFlagsCreateInfoEXT =
-         'StructMeta "VkDescriptorSetLayoutBindingFlagsCreateInfoEXT" -- ' closing tick for hsc2hs
-           VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
-           #{size VkDescriptorSetLayoutBindingFlagsCreateInfoEXT}
-           #{alignment VkDescriptorSetLayoutBindingFlagsCreateInfoEXT}
+    type StructRep VkDescriptorSetLayoutBindingFlagsCreateInfo =
+         'StructMeta "VkDescriptorSetLayoutBindingFlagsCreateInfo" -- ' closing tick for hsc2hs
+           VkDescriptorSetLayoutBindingFlagsCreateInfo
+           #{size VkDescriptorSetLayoutBindingFlagsCreateInfo}
+           #{alignment VkDescriptorSetLayoutBindingFlagsCreateInfo}
            '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkDescriptorSetLayoutBindingFlagsCreateInfoEXT, sType}
+                                                        #{offset VkDescriptorSetLayoutBindingFlagsCreateInfo, sType}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkDescriptorSetLayoutBindingFlagsCreateInfoEXT, pNext}
+                                                   #{offset VkDescriptorSetLayoutBindingFlagsCreateInfo, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "bindingCount" Word32 'True 
-                                                     #{offset VkDescriptorSetLayoutBindingFlagsCreateInfoEXT, bindingCount}
+                                                     #{offset VkDescriptorSetLayoutBindingFlagsCreateInfo, bindingCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pBindingFlags" (Ptr VkDescriptorBindingFlagsEXT) -- ' closing tick for hsc2hs
-                'False -- ' closing tick for hsc2hs
-                #{offset VkDescriptorSetLayoutBindingFlagsCreateInfoEXT, pBindingFlags}
+             ('FieldMeta "pBindingFlags" (Ptr VkDescriptorBindingFlags) 'False
+                #{offset VkDescriptorSetLayoutBindingFlagsCreateInfo, pBindingFlags}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
            '[VkDescriptorSetLayoutCreateInfo] -- ' closing tick for hsc2hs
+
+-- | Alias for `VkDescriptorSetLayoutBindingFlagsCreateInfo`
+type VkDescriptorSetLayoutBindingFlagsCreateInfoEXT =
+     VkDescriptorSetLayoutBindingFlagsCreateInfo
 
 -- | > typedef struct VkDescriptorSetLayoutCreateInfo {
 --   >     VkStructureType sType;
@@ -342,7 +388,7 @@ instance VulkanMarshal
 --   >     const VkDescriptorSetLayoutBinding* pBindings;
 --   > } VkDescriptorSetLayoutCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutCreateInfo VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetLayoutCreateInfo VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
 type VkDescriptorSetLayoutCreateInfo =
      VkStruct VkDescriptorSetLayoutCreateInfo' -- ' closing tick for hsc2hs
 
@@ -389,7 +435,7 @@ instance VulkanMarshal VkDescriptorSetLayoutCreateInfo where
 --   >     VkBool32         supported;
 --   > } VkDescriptorSetLayoutSupport;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetLayoutSupport VkDescriptorSetLayoutSupport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetLayoutSupport VkDescriptorSetLayoutSupport registry at www.khronos.org>
 type VkDescriptorSetLayoutSupport =
      VkStruct VkDescriptorSetLayoutSupport' -- ' closing tick for hsc2hs
 
@@ -423,46 +469,44 @@ instance VulkanMarshal VkDescriptorSetLayoutSupport where
 -- | Alias for `VkDescriptorSetLayoutSupport`
 type VkDescriptorSetLayoutSupportKHR = VkDescriptorSetLayoutSupport
 
--- | > typedef struct VkDescriptorSetVariableDescriptorCountAllocateInfoEXT {
+-- | > typedef struct VkDescriptorSetVariableDescriptorCountAllocateInfo {
 --   >     VkStructureType sType;
---   >     const void*            pNext;
+--   >     const void*                            pNext;
 --   >     uint32_t               descriptorSetCount;
 --   >     const uint32_t* pDescriptorCounts;
---   > } VkDescriptorSetVariableDescriptorCountAllocateInfoEXT;
+--   > } VkDescriptorSetVariableDescriptorCountAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountAllocateInfoEXT VkDescriptorSetVariableDescriptorCountAllocateInfoEXT registry at www.khronos.org>
-type VkDescriptorSetVariableDescriptorCountAllocateInfoEXT =
-     VkStruct VkDescriptorSetVariableDescriptorCountAllocateInfoEXT' -- ' closing tick for hsc2hs
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountAllocateInfo VkDescriptorSetVariableDescriptorCountAllocateInfo registry at www.khronos.org>
+type VkDescriptorSetVariableDescriptorCountAllocateInfo =
+     VkStruct VkDescriptorSetVariableDescriptorCountAllocateInfo' -- ' closing tick for hsc2hs
 
-data VkDescriptorSetVariableDescriptorCountAllocateInfoEXT' -- ' closing tick for hsc2hs
+data VkDescriptorSetVariableDescriptorCountAllocateInfo' -- ' closing tick for hsc2hs
 
 instance VulkanMarshal
-           VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
+           VkDescriptorSetVariableDescriptorCountAllocateInfo
          where
-    type StructRep
-           VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
-         =
-         'StructMeta "VkDescriptorSetVariableDescriptorCountAllocateInfoEXT" -- ' closing tick for hsc2hs
-           VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
-           #{size VkDescriptorSetVariableDescriptorCountAllocateInfoEXT}
-           #{alignment VkDescriptorSetVariableDescriptorCountAllocateInfoEXT}
+    type StructRep VkDescriptorSetVariableDescriptorCountAllocateInfo =
+         'StructMeta "VkDescriptorSetVariableDescriptorCountAllocateInfo" -- ' closing tick for hsc2hs
+           VkDescriptorSetVariableDescriptorCountAllocateInfo
+           #{size VkDescriptorSetVariableDescriptorCountAllocateInfo}
+           #{alignment VkDescriptorSetVariableDescriptorCountAllocateInfo}
            '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkDescriptorSetVariableDescriptorCountAllocateInfoEXT, sType}
+                                                        #{offset VkDescriptorSetVariableDescriptorCountAllocateInfo, sType}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkDescriptorSetVariableDescriptorCountAllocateInfoEXT, pNext}
+                                                   #{offset VkDescriptorSetVariableDescriptorCountAllocateInfo, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "descriptorSetCount" Word32 'True 
-                                                           #{offset VkDescriptorSetVariableDescriptorCountAllocateInfoEXT, descriptorSetCount}
+                                                           #{offset VkDescriptorSetVariableDescriptorCountAllocateInfo, descriptorSetCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pDescriptorCounts" (Ptr Word32) 'False 
-                                                                 #{offset VkDescriptorSetVariableDescriptorCountAllocateInfoEXT, pDescriptorCounts}
+                                                                 #{offset VkDescriptorSetVariableDescriptorCountAllocateInfo, pDescriptorCounts}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
@@ -470,41 +514,43 @@ instance VulkanMarshal
            'False -- ' closing tick for hsc2hs
            '[VkDescriptorSetAllocateInfo] -- ' closing tick for hsc2hs
 
--- | > typedef struct VkDescriptorSetVariableDescriptorCountLayoutSupportEXT {
+-- | Alias for `VkDescriptorSetVariableDescriptorCountAllocateInfo`
+type VkDescriptorSetVariableDescriptorCountAllocateInfoEXT =
+     VkDescriptorSetVariableDescriptorCountAllocateInfo
+
+-- | > typedef struct VkDescriptorSetVariableDescriptorCountLayoutSupport {
 --   >     VkStructureType sType;
 --   >     void*            pNext;
 --   >     uint32_t         maxVariableDescriptorCount;
---   > } VkDescriptorSetVariableDescriptorCountLayoutSupportEXT;
+--   > } VkDescriptorSetVariableDescriptorCountLayoutSupport;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountLayoutSupportEXT VkDescriptorSetVariableDescriptorCountLayoutSupportEXT registry at www.khronos.org>
-type VkDescriptorSetVariableDescriptorCountLayoutSupportEXT =
-     VkStruct VkDescriptorSetVariableDescriptorCountLayoutSupportEXT' -- ' closing tick for hsc2hs
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorSetVariableDescriptorCountLayoutSupport VkDescriptorSetVariableDescriptorCountLayoutSupport registry at www.khronos.org>
+type VkDescriptorSetVariableDescriptorCountLayoutSupport =
+     VkStruct VkDescriptorSetVariableDescriptorCountLayoutSupport' -- ' closing tick for hsc2hs
 
-data VkDescriptorSetVariableDescriptorCountLayoutSupportEXT' -- ' closing tick for hsc2hs
+data VkDescriptorSetVariableDescriptorCountLayoutSupport' -- ' closing tick for hsc2hs
 
 instance VulkanMarshal
-           VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
+           VkDescriptorSetVariableDescriptorCountLayoutSupport
          where
-    type StructRep
-           VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
+    type StructRep VkDescriptorSetVariableDescriptorCountLayoutSupport
          =
-         'StructMeta -- ' closing tick for hsc2hs
-           "VkDescriptorSetVariableDescriptorCountLayoutSupportEXT"
-           VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
-           #{size VkDescriptorSetVariableDescriptorCountLayoutSupportEXT}
-           #{alignment VkDescriptorSetVariableDescriptorCountLayoutSupportEXT}
+         'StructMeta "VkDescriptorSetVariableDescriptorCountLayoutSupport" -- ' closing tick for hsc2hs
+           VkDescriptorSetVariableDescriptorCountLayoutSupport
+           #{size VkDescriptorSetVariableDescriptorCountLayoutSupport}
+           #{alignment VkDescriptorSetVariableDescriptorCountLayoutSupport}
            '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
-                                                        #{offset VkDescriptorSetVariableDescriptorCountLayoutSupportEXT, sType}
+                                                        #{offset VkDescriptorSetVariableDescriptorCountLayoutSupport, sType}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "pNext" (Ptr Void) 'False 
-                                                   #{offset VkDescriptorSetVariableDescriptorCountLayoutSupportEXT, pNext}
+                                                   #{offset VkDescriptorSetVariableDescriptorCountLayoutSupport, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
              ('FieldMeta "maxVariableDescriptorCount" Word32 'False 
-                                                                    #{offset VkDescriptorSetVariableDescriptorCountLayoutSupportEXT, maxVariableDescriptorCount}
+                                                                    #{offset VkDescriptorSetVariableDescriptorCountLayoutSupport, maxVariableDescriptorCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
@@ -512,9 +558,13 @@ instance VulkanMarshal
            'True -- ' closing tick for hsc2hs
            '[VkDescriptorSetLayoutSupport] -- ' closing tick for hsc2hs
 
+-- | Alias for `VkDescriptorSetVariableDescriptorCountLayoutSupport`
+type VkDescriptorSetVariableDescriptorCountLayoutSupportEXT =
+     VkDescriptorSetVariableDescriptorCountLayoutSupport
+
 -- | > typedef struct VkDescriptorUpdateTemplateCreateInfo {
 --   >     VkStructureType sType;
---   >     void*                                   pNext;
+--   >     const void*                               pNext;
 --   >     VkDescriptorUpdateTemplateCreateFlags    flags;
 --   >     uint32_t                 descriptorUpdateEntryCount;
 --   >     const VkDescriptorUpdateTemplateEntry* pDescriptorUpdateEntries;
@@ -525,7 +575,7 @@ instance VulkanMarshal
 --   >     uint32_t set;
 --   > } VkDescriptorUpdateTemplateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateCreateInfo VkDescriptorUpdateTemplateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorUpdateTemplateCreateInfo VkDescriptorUpdateTemplateCreateInfo registry at www.khronos.org>
 type VkDescriptorUpdateTemplateCreateInfo =
      VkStruct VkDescriptorUpdateTemplateCreateInfo' -- ' closing tick for hsc2hs
 
@@ -569,7 +619,7 @@ instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "descriptorSetLayout" VkDescriptorSetLayout 'True
+             ('FieldMeta "descriptorSetLayout" VkDescriptorSetLayout 'False
                 #{offset VkDescriptorUpdateTemplateCreateInfo, descriptorSetLayout}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -606,7 +656,7 @@ type VkDescriptorUpdateTemplateCreateInfoKHR =
 --   >     size_t                           stride;
 --   > } VkDescriptorUpdateTemplateEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDescriptorUpdateTemplateEntry VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDescriptorUpdateTemplateEntry VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
 type VkDescriptorUpdateTemplateEntry =
      VkStruct VkDescriptorUpdateTemplateEntry' -- ' closing tick for hsc2hs
 

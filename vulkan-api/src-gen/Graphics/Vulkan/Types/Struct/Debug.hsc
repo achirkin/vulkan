@@ -13,7 +13,7 @@ module Graphics.Vulkan.Types.Struct.Debug
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Enum.Debug                (VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT)
-import Graphics.Vulkan.Types.Enum.Object               (VkObjectType)
+import Graphics.Vulkan.Types.Enum.ObjectType           (VkObjectType)
 import Graphics.Vulkan.Types.Enum.StructureType        (VkStructureType)
 import Graphics.Vulkan.Types.Funcpointers              (PFN_vkDebugReportCallbackEXT)
 import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
@@ -25,7 +25,7 @@ import Graphics.Vulkan.Types.Struct.InstanceCreateInfo (VkInstanceCreateInfo)
 --   >     float            color[4];
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerMarkerInfoEXT VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugMarkerMarkerInfoEXT VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
 type VkDebugMarkerMarkerInfoEXT =
      VkStruct VkDebugMarkerMarkerInfoEXT' -- ' closing tick for hsc2hs
 
@@ -70,7 +70,7 @@ instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
 --   >     const char* pObjectName;
 --   > } VkDebugMarkerObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerObjectNameInfoEXT VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugMarkerObjectNameInfoEXT VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
 type VkDebugMarkerObjectNameInfoEXT =
      VkStruct VkDebugMarkerObjectNameInfoEXT' -- ' closing tick for hsc2hs
 
@@ -121,7 +121,7 @@ instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
 --   >     const void*        pTag;
 --   > } VkDebugMarkerObjectTagInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugMarkerObjectTagInfoEXT VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugMarkerObjectTagInfoEXT VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
 type VkDebugMarkerObjectTagInfoEXT =
      VkStruct VkDebugMarkerObjectTagInfoEXT' -- ' closing tick for hsc2hs
 
@@ -180,7 +180,7 @@ instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
 --   >     void*            pUserData;
 --   > } VkDebugReportCallbackCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugReportCallbackCreateInfoEXT VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugReportCallbackCreateInfoEXT VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
 type VkDebugReportCallbackCreateInfoEXT =
      VkStruct VkDebugReportCallbackCreateInfoEXT' -- ' closing tick for hsc2hs
 
@@ -231,7 +231,7 @@ instance VulkanMarshal VkDebugReportCallbackCreateInfoEXT where
 --   >     const void*              pTag;
 --   > } VkDebugUtilsObjectTagInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsObjectTagInfoEXT VkDebugUtilsObjectTagInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugUtilsObjectTagInfoEXT VkDebugUtilsObjectTagInfoEXT registry at www.khronos.org>
 type VkDebugUtilsObjectTagInfoEXT =
      VkStruct VkDebugUtilsObjectTagInfoEXT' -- ' closing tick for hsc2hs
 

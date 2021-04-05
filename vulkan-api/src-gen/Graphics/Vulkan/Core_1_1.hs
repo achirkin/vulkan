@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
@@ -34,14 +35,21 @@ module Graphics.Vulkan.Core_1_1
         --
 
         -- ** Originally based on VK_KHR_subgroup (extension 94), but the actual enum block used was, incorrectly, that of extension 95
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkPhysicalDeviceLimits,
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceSparseProperties,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(), ANativeWindow(),
+        CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
         VkPhysicalDeviceSubgroupProperties, VkPhysicalDeviceType(..),
         VkSampleCountBitmask(..), VkSampleCountFlagBits(),
-        VkSampleCountFlags(), VkShaderInfoTypeAMD(..),
-        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
+        VkSampleCountFlags(), VkShaderFloatControlsIndependence(..),
+        VkShaderInfoTypeAMD(..), VkShaderStageBitmask(..),
+        VkShaderCorePropertiesBitmaskAMD(..),
+        VkShaderCorePropertiesFlagBitsAMD(),
+        VkShaderCorePropertiesFlagsAMD(),
+        VkShaderFloatControlsIndependenceKHR(..),
+        VkShaderModuleCreateBitmask(..), VkShaderModuleCreateFlagBits(),
+        VkShaderModuleCreateFlags(), VkShaderStageFlagBits(),
         VkShaderStageFlags(), VkStructureType(..),
         VkSubgroupFeatureBitmask(..), VkSubgroupFeatureFlagBits(),
         VkSubgroupFeatureFlags(),
@@ -55,11 +63,14 @@ module Graphics.Vulkan.Core_1_1
         vkBindBufferMemory2Unsafe, vkBindBufferMemory2Safe,
         VkBindImageMemory2, pattern VkBindImageMemory2,
         HS_vkBindImageMemory2, PFN_vkBindImageMemory2, vkBindImageMemory2,
-        vkBindImageMemory2Unsafe, vkBindImageMemory2Safe, VkBuffer,
+        vkBindImageMemory2Unsafe, vkBindImageMemory2Safe,
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -69,34 +80,43 @@ module Graphics.Vulkan.Core_1_1
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
+#ifdef VK_ENABLE_BETA_EXTENSIONS
+        VkBindAccelerationStructureMemoryInfoNV,
+#endif
         VkBindBufferMemoryDeviceGroupInfo,
         VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfoKHR,
         VkBindImageMemoryDeviceGroupInfo,
         VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfoKHR,
         VkBindImageMemorySwapchainInfoKHR, VkBindImagePlaneMemoryInfo,
-        VkBindImagePlaneMemoryInfoKHR, VkBindSparseInfo,
+        VkBindImagePlaneMemoryInfoKHR, VkBindIndexBufferIndirectCommandNV,
+        VkBindShaderGroupIndirectCommandNV, VkBindSparseInfo,
+        VkBindVertexBufferIndirectCommandNV,
         pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO,
         pattern VK_IMAGE_CREATE_ALIAS_BIT,
         VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -104,14 +124,16 @@ module Graphics.Vulkan.Core_1_1
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -120,21 +142,26 @@ module Graphics.Vulkan.Core_1_1
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..), VkDeviceCreateInfo,
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
         VkDeviceQueueCreateInfo, VkPhysicalDevice16BitStorageFeatures,
@@ -164,34 +191,35 @@ module Graphics.Vulkan.Core_1_1
         VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageSubresource,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageSubresource,
         VkMemoryAllocateBitmask(..), VkMemoryHeapBitmask(..),
-        VkMemoryPropertyBitmask(..), VkMemoryAllocateFlagBits(),
-        VkMemoryAllocateFlagBitsKHR(..), VkMemoryAllocateFlags(),
-        VkMemoryHeapFlagBits(), VkMemoryHeapFlags(),
-        VkMemoryPropertyFlagBits(), VkMemoryPropertyFlags(),
-        VkMemoryAllocateFlagsInfo, VkOffset2D, VkOffset3D,
-        VkPeerMemoryFeatureBitmask(..), VkPeerMemoryFeatureFlagBits(),
-        VkPeerMemoryFeatureFlagBitsKHR(..), VkPeerMemoryFeatureFlags(),
-        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
-        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
-        VkPipelineCacheCreateFlagBits(..),
-        VkPipelineColorBlendStateCreateFlagBits(..),
-        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
-        VkPipelineStageFlags(),
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..),
-        VkQueryControlBitmask(..), VkQueryPipelineStatisticBitmask(..),
-        VkQueryResultBitmask(..), VkQueryType(..),
-        VkQueryControlFlagBits(), VkQueryControlFlags(),
+        VkMemoryOverallocationBehaviorAMD(..), VkMemoryPropertyBitmask(..),
+        VkMemoryAllocateFlagBits(), VkMemoryAllocateFlagBitsKHR(..),
+        VkMemoryAllocateFlags(), VkMemoryHeapFlagBits(),
+        VkMemoryHeapFlags(), VkMemoryPropertyFlagBits(),
+        VkMemoryPropertyFlags(), VkMemoryAllocateFlagsInfo, VkOffset2D,
+        VkOffset3D, VkPeerMemoryFeatureBitmask(..),
+        VkPeerMemoryFeatureFlagBits(), VkPeerMemoryFeatureFlagBitsKHR(..),
+        VkPeerMemoryFeatureFlags(), VkPipelineBindPoint(..),
+        VkPipelineCacheHeaderVersion(..), VkPipelineCreateBitmask(..),
+        VkPipelineCreationFeedbackBitmaskEXT(..),
+        VkPipelineExecutableStatisticFormatKHR(..),
+        VkPipelineStageBitmask(..), VkPipelineCacheCreateBitmask(..),
+        VkPipelineCacheCreateFlagBits(), VkPipelineCacheCreateFlags(),
+        VkPipelineCompilerControlBitmaskAMD(..),
+        VkPipelineCompilerControlFlagBitsAMD(),
+        VkPipelineCompilerControlFlagsAMD(), VkPipelineCreateFlagBits(),
+        VkPipelineCreateFlags(), VkPipelineCreationFeedbackFlagBitsEXT(),
+        VkPipelineCreationFeedbackFlagsEXT(),
+        VkPipelineShaderStageCreateBitmask(..),
+        VkPipelineShaderStageCreateFlagBits(),
+        VkPipelineShaderStageCreateFlags(), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(), VkQueryControlBitmask(..),
+        VkQueryPipelineStatisticBitmask(..),
+        VkQueryPoolSamplingModeINTEL(..), VkQueryResultBitmask(..),
+        VkQueryType(..), VkQueryControlFlagBits(), VkQueryControlFlags(),
         VkQueryPipelineStatisticFlagBits(),
         VkQueryPipelineStatisticFlags(), VkQueryPoolCreateFlagBits(..),
         VkQueryResultFlagBits(), VkQueryResultFlags(), VkRect2D,
@@ -221,6 +249,7 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO,
         pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT,
+        pattern VK_PIPELINE_CREATE_DISPATCH_BASE_BIT,
         pattern VK_PIPELINE_CREATE_DISPATCH_BASE,
         pattern VK_DEPENDENCY_DEVICE_GROUP_BIT,
         -- > #include "vk_platform.h"
@@ -237,12 +266,42 @@ module Graphics.Vulkan.Core_1_1
         vkEnumeratePhysicalDeviceGroupsUnsafe,
         vkEnumeratePhysicalDeviceGroupsSafe,
         VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDevice4444FormatsFeaturesEXT,
+        VkPhysicalDevice8BitStorageFeatures,
+        VkPhysicalDevice8BitStorageFeaturesKHR,
+        VkPhysicalDeviceASTCDecodeFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceBufferAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeatures,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesKHR,
+        VkPhysicalDeviceCoherentMemoryFeaturesAMD,
+        VkPhysicalDeviceComputeShaderDerivativesFeaturesNV,
+        VkPhysicalDeviceConditionalRenderingFeaturesEXT,
         VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceCooperativeMatrixFeaturesNV,
+        VkPhysicalDeviceCooperativeMatrixPropertiesNV,
+        VkPhysicalDeviceCornerSampledImageFeaturesNV,
+        VkPhysicalDeviceCoverageReductionModeFeaturesNV,
+        VkPhysicalDeviceCustomBorderColorFeaturesEXT,
+        VkPhysicalDeviceCustomBorderColorPropertiesEXT,
+        VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,
+        VkPhysicalDeviceDepthClipEnableFeaturesEXT,
+        VkPhysicalDeviceDepthStencilResolveProperties,
+        VkPhysicalDeviceDepthStencilResolvePropertiesKHR,
+        VkPhysicalDeviceDescriptorIndexingFeatures,
         VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingProperties,
         VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV,
+        VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV,
+        VkPhysicalDeviceDiagnosticsConfigFeaturesNV,
         VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceDriverProperties,
+        VkPhysicalDeviceDriverPropertiesKHR,
+        VkPhysicalDeviceExclusiveScissorFeaturesNV,
+        VkPhysicalDeviceExtendedDynamicStateFeaturesEXT,
         VkPhysicalDeviceExternalBufferInfo,
         VkPhysicalDeviceExternalBufferInfoKHR,
         VkPhysicalDeviceExternalFenceInfo,
@@ -252,38 +311,120 @@ module Graphics.Vulkan.Core_1_1
         VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
         VkPhysicalDeviceExternalSemaphoreInfo,
         VkPhysicalDeviceExternalSemaphoreInfoKHR,
-        VkPhysicalDeviceFeatures2KHR, VkPhysicalDeviceGroupPropertiesKHR,
+        VkPhysicalDeviceFeatures2KHR,
+        VkPhysicalDeviceFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceFloatControlsProperties,
+        VkPhysicalDeviceFloatControlsPropertiesKHR,
+        VkPhysicalDeviceFragmentDensityMap2FeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMap2PropertiesEXT,
+        VkPhysicalDeviceFragmentDensityMapFeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMapPropertiesEXT,
+        VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV,
+        VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT,
+        VkPhysicalDeviceGroupPropertiesKHR,
+        VkPhysicalDeviceHostQueryResetFeatures,
+        VkPhysicalDeviceHostQueryResetFeaturesEXT,
         VkPhysicalDeviceIDProperties, VkPhysicalDeviceIDPropertiesKHR,
+        VkPhysicalDeviceImageDrmFormatModifierInfoEXT,
         VkPhysicalDeviceImageFormatInfo2,
         VkPhysicalDeviceImageFormatInfo2KHR,
+        VkPhysicalDeviceImageRobustnessFeaturesEXT,
+        VkPhysicalDeviceImageViewImageFormatInfoEXT,
+        VkPhysicalDeviceImagelessFramebufferFeatures,
+        VkPhysicalDeviceImagelessFramebufferFeaturesKHR,
+        VkPhysicalDeviceIndexTypeUint8FeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockFeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockPropertiesEXT,
+        VkPhysicalDeviceLineRasterizationFeaturesEXT,
+        VkPhysicalDeviceLineRasterizationPropertiesEXT,
         VkPhysicalDeviceMaintenance3Properties,
         VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkPhysicalDeviceMemoryBudgetPropertiesEXT,
+        VkPhysicalDeviceMemoryPriorityFeaturesEXT,
         VkPhysicalDeviceMemoryProperties,
         VkPhysicalDeviceMemoryProperties2,
         VkPhysicalDeviceMemoryProperties2KHR,
+        VkPhysicalDeviceMeshShaderFeaturesNV,
+        VkPhysicalDeviceMeshShaderPropertiesNV,
         VkPhysicalDeviceMultiviewFeatures,
         VkPhysicalDeviceMultiviewFeaturesKHR,
         VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
         VkPhysicalDeviceMultiviewProperties,
         VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePCIBusInfoPropertiesEXT,
+        VkPhysicalDevicePerformanceQueryFeaturesKHR,
+        VkPhysicalDevicePerformanceQueryPropertiesKHR,
+        VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT,
+        VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR,
         VkPhysicalDevicePointClippingProperties,
         VkPhysicalDevicePointClippingPropertiesKHR,
+        VkPhysicalDevicePrivateDataFeaturesEXT,
         VkPhysicalDeviceProperties2KHR,
         VkPhysicalDeviceProtectedMemoryFeatures,
         VkPhysicalDeviceProtectedMemoryProperties,
         VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceRayTracingPropertiesNV,
+        VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV,
+        VkPhysicalDeviceRobustness2FeaturesEXT,
+        VkPhysicalDeviceRobustness2PropertiesEXT,
         VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxProperties,
         VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
         VkPhysicalDeviceSamplerYcbcrConversionFeatures,
         VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceScalarBlockLayoutFeatures,
+        VkPhysicalDeviceScalarBlockLayoutFeaturesEXT,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR,
+        VkPhysicalDeviceShaderAtomicFloatFeaturesEXT,
+        VkPhysicalDeviceShaderAtomicInt64Features,
+        VkPhysicalDeviceShaderAtomicInt64FeaturesKHR,
+        VkPhysicalDeviceShaderClockFeaturesKHR,
+        VkPhysicalDeviceShaderCoreProperties2AMD,
         VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
         VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceShaderDrawParametersFeatures,
+        VkPhysicalDeviceShaderFloat16Int8Features,
+        VkPhysicalDeviceShaderFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceShaderImageFootprintFeaturesNV,
+        VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
+        VkPhysicalDeviceShaderSMBuiltinsFeaturesNV,
+        VkPhysicalDeviceShaderSMBuiltinsPropertiesNV,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR,
+        VkPhysicalDeviceShadingRateImageFeaturesNV,
+        VkPhysicalDeviceShadingRateImagePropertiesNV,
         VkPhysicalDeviceSparseImageFormatInfo2,
         VkPhysicalDeviceSparseImageFormatInfo2KHR,
+        VkPhysicalDeviceSubgroupSizeControlFeaturesEXT,
+        VkPhysicalDeviceSubgroupSizeControlPropertiesEXT,
         VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT,
+        VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT,
+        VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
+        VkPhysicalDeviceTimelineSemaphoreFeatures,
+        VkPhysicalDeviceTimelineSemaphoreFeaturesKHR,
+        VkPhysicalDeviceTimelineSemaphoreProperties,
+        VkPhysicalDeviceTimelineSemaphorePropertiesKHR,
+        VkPhysicalDeviceToolPropertiesEXT,
+        VkPhysicalDeviceTransformFeedbackFeaturesEXT,
+        VkPhysicalDeviceTransformFeedbackPropertiesEXT,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeatures,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeaturesKHR,
         VkPhysicalDeviceVariablePointerFeatures,
         VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVariablePointersFeatures,
+        VkPhysicalDeviceVariablePointersFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
         VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
+        VkPhysicalDeviceVulkan11Features,
+        VkPhysicalDeviceVulkan11Properties,
+        VkPhysicalDeviceVulkan12Features,
+        VkPhysicalDeviceVulkan12Properties,
+        VkPhysicalDeviceVulkanMemoryModelFeatures,
+        VkPhysicalDeviceVulkanMemoryModelFeaturesKHR,
+        VkPhysicalDeviceYcbcrImageArraysFeaturesEXT,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
         pattern VK_MAX_DEVICE_GROUP_SIZE,
@@ -311,22 +452,35 @@ module Graphics.Vulkan.Core_1_1
         vkGetImageSparseMemoryRequirements2,
         vkGetImageSparseMemoryRequirements2Unsafe,
         vkGetImageSparseMemoryRequirements2Safe, VkBufferCopy,
-        VkBufferCreateInfo, VkBufferImageCopy, VkBufferMemoryBarrier,
-        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo,
+        VkBufferCreateInfo, VkBufferDeviceAddressCreateInfoEXT,
+        VkBufferDeviceAddressInfo, VkBufferDeviceAddressInfoEXT,
+        VkBufferDeviceAddressInfoKHR, VkBufferImageCopy,
+        VkBufferMemoryBarrier, VkBufferMemoryRequirementsInfo2KHR,
+        VkBufferOpaqueCaptureAddressCreateInfo,
+        VkBufferOpaqueCaptureAddressCreateInfoKHR, VkBufferViewCreateInfo,
         VkImageBlit, VkImageCopy, VkImageCreateInfo,
+        VkImageDrmFormatModifierExplicitCreateInfoEXT,
+        VkImageDrmFormatModifierListCreateInfoEXT,
+        VkImageDrmFormatModifierPropertiesEXT, VkImageFormatListCreateInfo,
         VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
         VkImageFormatProperties2, VkImageFormatProperties2KHR,
         VkImageMemoryBarrier, VkImageMemoryRequirementsInfo2KHR,
         VkImagePlaneMemoryRequirementsInfo,
         VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
-        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresourceLayers,
-        VkImageSubresourceRange, VkImageSwapchainCreateInfoKHR,
-        VkImageViewCreateInfo, VkImageViewUsageCreateInfo,
+        VkImageSparseMemoryRequirementsInfo2KHR,
+        VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfoEXT,
+        VkImageSubresourceLayers, VkImageSubresourceRange,
+        VkImageSwapchainCreateInfoKHR, VkImageViewASTCDecodeModeEXT,
+        VkImageViewAddressPropertiesNVX, VkImageViewCreateInfo,
+        VkImageViewHandleInfoNVX, VkImageViewUsageCreateInfo,
         VkImageViewUsageCreateInfoKHR, VkMemoryAllocateFlagsInfoKHR,
         VkMemoryBarrier, VkMemoryDedicatedAllocateInfoKHR,
         VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR,
         VkMemoryGetFdInfoKHR, VkMemoryHeap,
-        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements2KHR,
+        VkMemoryHostPointerPropertiesEXT,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements2KHR,
         VkMemoryType, VkSparseImageFormatProperties2,
         VkSparseImageFormatProperties2KHR,
         VkSparseImageMemoryRequirements2KHR,
@@ -385,15 +539,20 @@ module Graphics.Vulkan.Core_1_1
         vkGetPhysicalDeviceSparseImageFormatProperties2,
         vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe,
         vkGetPhysicalDeviceSparseImageFormatProperties2Safe,
-        VkDeviceEventInfoEXT, VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceEventInfoEXT,
+        VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfoKHR,
         VkDeviceGroupDeviceCreateInfoKHR,
         VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentInfoKHR,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfoKHR,
         VkDeviceGroupSwapchainCreateInfoKHR,
+        VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT,
         VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
-        VkFormatProperties2KHR, VkQueueFamilyProperties2KHR,
+        VkFormatProperties2KHR, VkQueueFamilyCheckpointPropertiesNV,
+        VkQueueFamilyProperties2KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
         pattern VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2,
@@ -419,11 +578,14 @@ module Graphics.Vulkan.Core_1_1
         VkAttachmentLoadOp(..), VkAttachmentStoreOp(..),
         VkAttachmentDescriptionFlagBits(), VkAttachmentDescriptionFlags(),
         VkAttachmentReference, VkComponentMapping, VkComponentSwizzle(..),
-        VkDependencyBitmask(..), VkDependencyFlagBits(),
-        VkDependencyFlags(), VkInputAttachmentAspectReference,
+        VkComponentTypeNV(..), VkDependencyBitmask(..),
+        VkDependencyFlagBits(), VkDependencyFlags(),
+        VkInputAttachmentAspectReference,
         VkPipelineTessellationDomainOriginStateCreateInfo,
         VkPipelineTessellationStateCreateInfo, VkPointClippingBehavior(..),
-        VkPointClippingBehaviorKHR(..), VkRenderPassCreateInfo,
+        VkPointClippingBehaviorKHR(..), VkRenderPassCreateBitmask(..),
+        VkRenderPassCreateFlagBits(), VkRenderPassCreateFlags(),
+        VkRenderPassCreateInfo,
         VkRenderPassInputAttachmentAspectCreateInfo, VkSubpassDependency,
         VkSubpassDescription, VkSubpassContents(..),
         VkSubpassDescriptionBitmask(..), VkSubpassDescriptionFlagBits(),
@@ -445,6 +607,7 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
         pattern VK_DEPENDENCY_VIEW_LOCAL_BIT,
         -- > #include "vk_platform.h"
+        pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES,
         VkProtectedSubmitInfo, -- > #include "vk_platform.h"
                                VkGetDeviceQueue2,
@@ -463,8 +626,10 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT, VkBorderColor(..),
         VkChromaLocation(..), VkChromaLocationKHR(..), VkCompareOp(..),
         VkFilter(..), VkSamplerAddressMode(..), VkSamplerMipmapMode(..),
-        VkSamplerReductionModeEXT(..), VkSamplerYcbcrModelConversion(..),
-        VkSamplerYcbcrRange(..), VkSamplerCreateFlagBits(..),
+        VkSamplerReductionMode(..), VkSamplerYcbcrModelConversion(..),
+        VkSamplerYcbcrRange(..), VkSamplerCreateBitmask(..),
+        VkSamplerCreateFlagBits(), VkSamplerCreateFlags(),
+        VkSamplerReductionModeEXT(..),
         VkSamplerYcbcrModelConversionKHR(..), VkSamplerYcbcrRangeKHR(..),
         VkSamplerCreateInfo, VkSamplerYcbcrConversionCreateInfo,
         VkSamplerYcbcrConversionImageFormatProperties,
@@ -500,6 +665,8 @@ module Graphics.Vulkan.Core_1_1
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
         PFN_vkVoidFunction, VkAllocationCallbacks,
+        VkSamplerCustomBorderColorCreateInfoEXT,
+        VkSamplerReductionModeCreateInfo,
         VkSamplerReductionModeCreateInfoEXT,
         VkSamplerYcbcrConversionCreateInfoKHR,
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
@@ -557,11 +724,11 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_FORMAT_FEATURE_DISJOINT_BIT,
         pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT,
         -- ** Promoted from VK_KHR_descriptor_update_template
-        VkDescriptorBindingBitmaskEXT(..),
-        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
-        VkDescriptorUpdateTemplateType(..),
-        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
-        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorBindingBitmask(..), VkDescriptorPoolCreateBitmask(..),
+        VkDescriptorType(..), VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBits(), VkDescriptorBindingFlagBitsEXT(..),
+        VkDescriptorBindingFlags(), VkDescriptorPoolCreateFlagBits(),
+        VkDescriptorPoolCreateFlags(),
         VkDescriptorSetLayoutCreateBitmask(..),
         VkDescriptorSetLayoutCreateFlagBits(),
         VkDescriptorSetLayoutCreateFlags(),
@@ -590,12 +757,16 @@ module Graphics.Vulkan.Core_1_1
         vkUpdateDescriptorSetWithTemplateUnsafe,
         vkUpdateDescriptorSetWithTemplateSafe, VkDescriptorBufferInfo,
         VkDescriptorImageInfo, VkDescriptorPoolCreateInfo,
+        VkDescriptorPoolInlineUniformBlockCreateInfoEXT,
         VkDescriptorPoolSize, VkDescriptorSetAllocateInfo,
         VkDescriptorSetLayoutBinding,
+        VkDescriptorSetLayoutBindingFlagsCreateInfo,
         VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
         VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
         VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfo,
         VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupport,
         VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
         VkDescriptorUpdateTemplateCreateInfoKHR,
         VkDescriptorUpdateTemplateEntryKHR,
@@ -605,8 +776,8 @@ module Graphics.Vulkan.Core_1_1
         VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
         VkBufferCreateFlagBits(), VkBufferCreateFlags(),
         VkBufferUsageFlagBits(), VkBufferUsageFlags(),
-        VkBufferViewCreateFlagBits(..), VkExternalBufferProperties,
-        VkExternalImageFormatProperties, VkExternalFenceFeatureBitmask(..),
+        VkExternalBufferProperties, VkExternalImageFormatProperties,
+        VkExternalFenceFeatureBitmask(..),
         VkExternalFenceHandleTypeBitmask(..),
         VkExternalMemoryFeatureBitmask(..),
         VkExternalMemoryFeatureBitmaskNV(..),
@@ -684,8 +855,11 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO,
         -- ** Promoted from VK_KHR_external_semaphore
         VkExportSemaphoreCreateInfo, VkSemaphoreCreateInfo,
-        VkSemaphoreImportBitmask(..), VkSemaphoreImportFlagBits(),
+        VkSemaphoreImportBitmask(..), VkSemaphoreType(..),
+        VkSemaphoreWaitBitmask(..), VkSemaphoreImportFlagBits(),
         VkSemaphoreImportFlagBitsKHR(..), VkSemaphoreImportFlags(),
+        VkSemaphoreTypeKHR(..), VkSemaphoreWaitFlagBits(),
+        VkSemaphoreWaitFlagBitsKHR(..), VkSemaphoreWaitFlags(),
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO,
         -- > #include "vk_platform.h"
@@ -709,6 +883,7 @@ module Graphics.Vulkan.Core_1_1
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
         -- > #include "vk_platform.h"
+        pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES)
        where
 import GHC.Ptr                                                     (Ptr (..))
@@ -726,7 +901,7 @@ import Graphics.Vulkan.Types.Enum.Buffer
 import Graphics.Vulkan.Types.Enum.ChromaLocation
 import Graphics.Vulkan.Types.Enum.Command
 import Graphics.Vulkan.Types.Enum.CompareOp
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.Component
 import Graphics.Vulkan.Types.Enum.DependencyFlags
 import Graphics.Vulkan.Types.Enum.Descriptor
 import Graphics.Vulkan.Types.Enum.Device
@@ -737,17 +912,18 @@ import Graphics.Vulkan.Types.Enum.Format
 import Graphics.Vulkan.Types.Enum.Image
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
 import Graphics.Vulkan.Types.Enum.Memory
-import Graphics.Vulkan.Types.Enum.Object                           (VkObjectType (..))
+import Graphics.Vulkan.Types.Enum.ObjectType                       (VkObjectType (..))
 import Graphics.Vulkan.Types.Enum.PeerMemoryFeatureFlag
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.Pipeline
 import Graphics.Vulkan.Types.Enum.PointClippingBehavior
 import Graphics.Vulkan.Types.Enum.Query
 import Graphics.Vulkan.Types.Enum.Queue
+import Graphics.Vulkan.Types.Enum.RenderPassCreateFlags
 import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.Sampler
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Enum.Semaphore
 import Graphics.Vulkan.Types.Enum.Shader
 import Graphics.Vulkan.Types.Enum.SharingMode
 import Graphics.Vulkan.Types.Enum.Sparse
@@ -788,7 +964,7 @@ import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
 import Graphics.Vulkan.Types.Struct.Pipeline                       (VkPipelineTessellationDomainOriginStateCreateInfo,
                                                                     VkPipelineTessellationStateCreateInfo)
 import Graphics.Vulkan.Types.Struct.ProtectedSubmitInfo            (VkProtectedSubmitInfo)
-import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import Graphics.Vulkan.Types.Struct.QueueFamily
 import Graphics.Vulkan.Types.Struct.Rect                           (VkRect2D)
 import Graphics.Vulkan.Types.Struct.RenderPass                     (VkRenderPassBeginInfo,
                                                                     VkRenderPassCreateInfo,
@@ -825,11 +1001,13 @@ type VkEnumerateInstanceVersion = "vkEnumerateInstanceVersion"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 -- > VkResult vkEnumerateInstanceVersion
 -- >     ( uint32_t* pApiVersion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -867,11 +1045,13 @@ vkEnumerateInstanceVersionUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 -- > VkResult vkEnumerateInstanceVersion
 -- >     ( uint32_t* pApiVersion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -909,11 +1089,13 @@ vkEnumerateInstanceVersionSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 -- > VkResult vkEnumerateInstanceVersion
 -- >     ( uint32_t* pApiVersion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -944,11 +1126,13 @@ vkEnumerateInstanceVersion = vkEnumerateInstanceVersionSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
 --   > VkResult vkEnumerateInstanceVersion
 --   >     ( uint32_t* pApiVersion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceVersion vkEnumerateInstanceVersion registry at www.khronos.org>
 type HS_vkEnumerateInstanceVersion = Ptr Word32 -- ^ pApiVersion
                                                 -> IO VkResult
 
@@ -1003,7 +1187,7 @@ type VkBindBufferMemory2 = "vkBindBufferMemory2"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory2
 -- >     ( VkDevice device
@@ -1011,7 +1195,7 @@ type VkBindBufferMemory2 = "vkBindBufferMemory2"
 -- >     , const VkBindBufferMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1054,7 +1238,7 @@ vkBindBufferMemory2Unsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory2
 -- >     ( VkDevice device
@@ -1062,7 +1246,7 @@ vkBindBufferMemory2Unsafe
 -- >     , const VkBindBufferMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1105,7 +1289,7 @@ vkBindBufferMemory2Safe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory2
 -- >     ( VkDevice device
@@ -1113,7 +1297,7 @@ vkBindBufferMemory2Safe
 -- >     , const VkBindBufferMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1147,7 +1331,7 @@ vkBindBufferMemory2 = vkBindBufferMemory2Safe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 --   > VkResult vkBindBufferMemory2
 --   >     ( VkDevice device
@@ -1155,7 +1339,7 @@ vkBindBufferMemory2 = vkBindBufferMemory2Safe
 --   >     , const VkBindBufferMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory2 vkBindBufferMemory2 registry at www.khronos.org>
 type HS_vkBindBufferMemory2 =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount
@@ -1212,7 +1396,7 @@ type VkBindImageMemory2 = "vkBindImageMemory2"
 -- >     , const VkBindImageMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1263,7 +1447,7 @@ vkBindImageMemory2Unsafe
 -- >     , const VkBindImageMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1314,7 +1498,7 @@ vkBindImageMemory2Safe
 -- >     , const VkBindImageMemoryInfo* pBindInfos
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1356,7 +1540,7 @@ vkBindImageMemory2 = vkBindImageMemory2Safe
 --   >     , const VkBindImageMemoryInfo* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory2 vkBindImageMemory2 registry at www.khronos.org>
 type HS_vkBindImageMemory2 =
      VkDevice -- ^ device
               -> Word32 -- ^ bindInfoCount
@@ -1450,7 +1634,7 @@ type VkGetDeviceGroupPeerMemoryFeatures =
 -- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1508,7 +1692,7 @@ vkGetDeviceGroupPeerMemoryFeaturesUnsafe
 -- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1565,7 +1749,7 @@ vkGetDeviceGroupPeerMemoryFeaturesSafe
 -- >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1611,7 +1795,7 @@ vkGetDeviceGroupPeerMemoryFeatures
 --   >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceGroupPeerMemoryFeatures vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
 type HS_vkGetDeviceGroupPeerMemoryFeatures =
      VkDevice -- ^ device
               ->
@@ -1676,7 +1860,7 @@ type VkCmdSetDeviceMask = "vkCmdSetDeviceMask"
 -- >     , uint32_t deviceMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1722,7 +1906,7 @@ vkCmdSetDeviceMaskUnsafe
 -- >     , uint32_t deviceMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1768,7 +1952,7 @@ vkCmdSetDeviceMaskSafe
 -- >     , uint32_t deviceMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1807,7 +1991,7 @@ vkCmdSetDeviceMask = vkCmdSetDeviceMaskSafe
 --   >     , uint32_t deviceMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDeviceMask vkCmdSetDeviceMask registry at www.khronos.org>
 type HS_vkCmdSetDeviceMask = VkCommandBuffer -- ^ commandBuffer
                                              -> Word32 -- ^ deviceMask
                                                        -> IO ()
@@ -1866,7 +2050,7 @@ type VkCmdDispatchBase = "vkCmdDispatchBase"
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1931,7 +2115,7 @@ vkCmdDispatchBaseUnsafe
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1996,7 +2180,7 @@ vkCmdDispatchBaseSafe
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2047,7 +2231,7 @@ vkCmdDispatchBase = vkCmdDispatchBaseSafe
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchBase vkCmdDispatchBase registry at www.khronos.org>
 type HS_vkCmdDispatchBase =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -2117,11 +2301,14 @@ pattern VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT =
         VkPipelineCreateBitmask 8
 
 -- | bitpos = @4@
-pattern VK_PIPELINE_CREATE_DISPATCH_BASE ::
+pattern VK_PIPELINE_CREATE_DISPATCH_BASE_BIT ::
         VkPipelineCreateBitmask a
 
-pattern VK_PIPELINE_CREATE_DISPATCH_BASE =
+pattern VK_PIPELINE_CREATE_DISPATCH_BASE_BIT =
         VkPipelineCreateBitmask 16
+
+pattern VK_PIPELINE_CREATE_DISPATCH_BASE =
+        VK_PIPELINE_CREATE_DISPATCH_BASE_BIT
 
 -- | Dependency is across devices
 --
@@ -2184,7 +2371,7 @@ type VkEnumeratePhysicalDeviceGroups =
 -- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2239,7 +2426,7 @@ vkEnumeratePhysicalDeviceGroupsUnsafe
 -- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2294,7 +2481,7 @@ vkEnumeratePhysicalDeviceGroupsSafe
 -- >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2339,7 +2526,7 @@ vkEnumeratePhysicalDeviceGroups
 --   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroups vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDeviceGroups =
      VkInstance -- ^ instance
                 ->
@@ -2421,7 +2608,7 @@ type VkGetImageMemoryRequirements2 =
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2473,7 +2660,7 @@ vkGetImageMemoryRequirements2Unsafe
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2525,7 +2712,7 @@ vkGetImageMemoryRequirements2Safe
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2565,7 +2752,7 @@ vkGetImageMemoryRequirements2 = vkGetImageMemoryRequirements2Safe
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements2 vkGetImageMemoryRequirements2 registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements2 =
      VkDevice -- ^ device
               ->
@@ -2629,7 +2816,7 @@ type VkGetBufferMemoryRequirements2 =
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2681,7 +2868,7 @@ vkGetBufferMemoryRequirements2Unsafe
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2733,7 +2920,7 @@ vkGetBufferMemoryRequirements2Safe
 -- >     , VkMemoryRequirements2* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2774,7 +2961,7 @@ vkGetBufferMemoryRequirements2 = vkGetBufferMemoryRequirements2Safe
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements2 =
      VkDevice -- ^ device
               ->
@@ -2840,7 +3027,7 @@ type VkGetImageSparseMemoryRequirements2 =
 -- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2896,7 +3083,7 @@ vkGetImageSparseMemoryRequirements2Unsafe
 -- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2952,7 +3139,7 @@ vkGetImageSparseMemoryRequirements2Safe
 -- >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2996,7 +3183,7 @@ vkGetImageSparseMemoryRequirements2
 --   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2 vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements2 =
      VkDevice -- ^ device
               ->
@@ -3089,7 +3276,7 @@ type VkGetPhysicalDeviceFeatures2 = "vkGetPhysicalDeviceFeatures2"
 -- >     , VkPhysicalDeviceFeatures2* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3134,7 +3321,7 @@ vkGetPhysicalDeviceFeatures2Unsafe
 -- >     , VkPhysicalDeviceFeatures2* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3179,7 +3366,7 @@ vkGetPhysicalDeviceFeatures2Safe
 -- >     , VkPhysicalDeviceFeatures2* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3215,7 +3402,7 @@ vkGetPhysicalDeviceFeatures2 = vkGetPhysicalDeviceFeatures2Safe
 --   >     , VkPhysicalDeviceFeatures2* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFeatures2 =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
@@ -3273,7 +3460,7 @@ type VkGetPhysicalDeviceProperties2 =
 -- >     , VkPhysicalDeviceProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3318,7 +3505,7 @@ vkGetPhysicalDeviceProperties2Unsafe
 -- >     , VkPhysicalDeviceProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3363,7 +3550,7 @@ vkGetPhysicalDeviceProperties2Safe
 -- >     , VkPhysicalDeviceProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3400,7 +3587,7 @@ vkGetPhysicalDeviceProperties2 = vkGetPhysicalDeviceProperties2Safe
 --   >     , VkPhysicalDeviceProperties2* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
@@ -3462,7 +3649,7 @@ type VkGetPhysicalDeviceFormatProperties2 =
 -- >     , VkFormatProperties2* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3511,7 +3698,7 @@ vkGetPhysicalDeviceFormatProperties2Unsafe
 -- >     , VkFormatProperties2* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3560,7 +3747,7 @@ vkGetPhysicalDeviceFormatProperties2Safe
 -- >     , VkFormatProperties2* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3601,7 +3788,7 @@ vkGetPhysicalDeviceFormatProperties2
 --   >     , VkFormatProperties2* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFormatProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkFormat -- ^ format
@@ -3670,7 +3857,7 @@ type VkGetPhysicalDeviceImageFormatProperties2 =
 -- >     , VkImageFormatProperties2* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3727,7 +3914,7 @@ vkGetPhysicalDeviceImageFormatProperties2Unsafe
 -- >     , VkImageFormatProperties2* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3784,7 +3971,7 @@ vkGetPhysicalDeviceImageFormatProperties2Safe
 -- >     , VkImageFormatProperties2* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3830,7 +4017,7 @@ vkGetPhysicalDeviceImageFormatProperties2
 --   >     , VkImageFormatProperties2* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties2 vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceImageFormatProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -3898,7 +4085,7 @@ type VkGetPhysicalDeviceQueueFamilyProperties2 =
 -- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3950,7 +4137,7 @@ vkGetPhysicalDeviceQueueFamilyProperties2Unsafe
 -- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4001,7 +4188,7 @@ vkGetPhysicalDeviceQueueFamilyProperties2Safe
 -- >     , VkQueueFamilyProperties2* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4042,7 +4229,7 @@ vkGetPhysicalDeviceQueueFamilyProperties2
 --   >     , VkQueueFamilyProperties2* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceQueueFamilyProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -4108,7 +4295,7 @@ type VkGetPhysicalDeviceMemoryProperties2 =
 -- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4154,7 +4341,7 @@ vkGetPhysicalDeviceMemoryProperties2Unsafe
 -- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4200,7 +4387,7 @@ vkGetPhysicalDeviceMemoryProperties2Safe
 -- >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4239,7 +4426,7 @@ vkGetPhysicalDeviceMemoryProperties2
 --   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMemoryProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
@@ -4306,7 +4493,7 @@ type VkGetPhysicalDeviceSparseImageFormatProperties2 =
 -- >     , VkSparseImageFormatProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4365,7 +4552,7 @@ vkGetPhysicalDeviceSparseImageFormatProperties2Unsafe
 -- >     , VkSparseImageFormatProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4424,7 +4611,7 @@ vkGetPhysicalDeviceSparseImageFormatProperties2Safe
 -- >     , VkSparseImageFormatProperties2* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4469,7 +4656,7 @@ vkGetPhysicalDeviceSparseImageFormatProperties2
 --   >     , VkSparseImageFormatProperties2* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties2 vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSparseImageFormatProperties2 =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -4587,7 +4774,7 @@ type VkTrimCommandPool = "vkTrimCommandPool"
 -- >     , VkCommandPoolTrimFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4634,7 +4821,7 @@ vkTrimCommandPoolUnsafe
 -- >     , VkCommandPoolTrimFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4680,7 +4867,7 @@ vkTrimCommandPoolSafe
 -- >     , VkCommandPoolTrimFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4718,7 +4905,7 @@ vkTrimCommandPool = vkTrimCommandPoolSafe
 --   >     , VkCommandPoolTrimFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkTrimCommandPool vkTrimCommandPool registry at www.khronos.org>
 type HS_vkTrimCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -4849,11 +5036,14 @@ pattern VK_DEPENDENCY_VIEW_LOCAL_BIT :: VkDependencyBitmask a
 
 pattern VK_DEPENDENCY_VIEW_LOCAL_BIT = VkDependencyBitmask 2
 
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES
         :: VkStructureType
 
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES
         = VkStructureType 1000120000
+
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES
 
 pattern VkGetDeviceQueue2 :: CString
 
@@ -4880,7 +5070,7 @@ type VkGetDeviceQueue2 = "vkGetDeviceQueue2"
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4927,7 +5117,7 @@ vkGetDeviceQueue2Unsafe
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4973,7 +5163,7 @@ vkGetDeviceQueue2Safe
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5011,7 +5201,7 @@ vkGetDeviceQueue2 = vkGetDeviceQueue2Safe
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue2 vkGetDeviceQueue2 registry at www.khronos.org>
 type HS_vkGetDeviceQueue2 =
      VkDevice -- ^ device
               -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
@@ -5142,7 +5332,7 @@ type VkCreateSamplerYcbcrConversion =
 -- >     , VkSamplerYcbcrConversion* pYcbcrConversion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5203,7 +5393,7 @@ vkCreateSamplerYcbcrConversionUnsafe
 -- >     , VkSamplerYcbcrConversion* pYcbcrConversion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5264,7 +5454,7 @@ vkCreateSamplerYcbcrConversionSafe
 -- >     , VkSamplerYcbcrConversion* pYcbcrConversion
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5312,7 +5502,7 @@ vkCreateSamplerYcbcrConversion = vkCreateSamplerYcbcrConversionSafe
 --   >     , VkSamplerYcbcrConversion* pYcbcrConversion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversion vkCreateSamplerYcbcrConversion registry at www.khronos.org>
 type HS_vkCreateSamplerYcbcrConversion =
      VkDevice -- ^ device
               ->
@@ -5378,7 +5568,7 @@ type VkDestroySamplerYcbcrConversion =
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5429,7 +5619,7 @@ vkDestroySamplerYcbcrConversionUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5479,7 +5669,7 @@ vkDestroySamplerYcbcrConversionSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5520,7 +5710,7 @@ vkDestroySamplerYcbcrConversion
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversion vkDestroySamplerYcbcrConversion registry at www.khronos.org>
 type HS_vkDestroySamplerYcbcrConversion =
      VkDevice -- ^ device
               ->
@@ -5877,7 +6067,7 @@ type VkCreateDescriptorUpdateTemplate =
 -- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5938,7 +6128,7 @@ vkCreateDescriptorUpdateTemplateUnsafe
 -- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5999,7 +6189,7 @@ vkCreateDescriptorUpdateTemplateSafe
 -- >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6048,7 +6238,7 @@ vkCreateDescriptorUpdateTemplate
 --   >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorUpdateTemplate vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
 type HS_vkCreateDescriptorUpdateTemplate =
      VkDevice -- ^ device
               ->
@@ -6116,7 +6306,7 @@ type VkDestroyDescriptorUpdateTemplate =
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6167,7 +6357,7 @@ vkDestroyDescriptorUpdateTemplateUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6218,7 +6408,7 @@ vkDestroyDescriptorUpdateTemplateSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6259,7 +6449,7 @@ vkDestroyDescriptorUpdateTemplate
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorUpdateTemplate vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
 type HS_vkDestroyDescriptorUpdateTemplate =
      VkDevice -- ^ device
               ->
@@ -6325,7 +6515,7 @@ type VkUpdateDescriptorSetWithTemplate =
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6379,7 +6569,7 @@ vkUpdateDescriptorSetWithTemplateUnsafe
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6433,7 +6623,7 @@ vkUpdateDescriptorSetWithTemplateSafe
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6477,7 +6667,7 @@ vkUpdateDescriptorSetWithTemplate
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSetWithTemplate vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
 type HS_vkUpdateDescriptorSetWithTemplate =
      VkDevice -- ^ device
               ->
@@ -6555,7 +6745,7 @@ type VkGetPhysicalDeviceExternalBufferProperties =
 -- >     , VkExternalBufferProperties* pExternalBufferProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6608,7 +6798,7 @@ vkGetPhysicalDeviceExternalBufferPropertiesUnsafe
 -- >     , VkExternalBufferProperties* pExternalBufferProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6661,7 +6851,7 @@ vkGetPhysicalDeviceExternalBufferPropertiesSafe
 -- >     , VkExternalBufferProperties* pExternalBufferProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6703,7 +6893,7 @@ vkGetPhysicalDeviceExternalBufferProperties
 --   >     , VkExternalBufferProperties* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferProperties vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalBufferProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -6823,7 +7013,7 @@ type VkGetPhysicalDeviceExternalFenceProperties =
 -- >     , VkExternalFenceProperties* pExternalFenceProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6876,7 +7066,7 @@ vkGetPhysicalDeviceExternalFencePropertiesUnsafe
 -- >     , VkExternalFenceProperties* pExternalFenceProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6929,7 +7119,7 @@ vkGetPhysicalDeviceExternalFencePropertiesSafe
 -- >     , VkExternalFenceProperties* pExternalFenceProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6971,7 +7161,7 @@ vkGetPhysicalDeviceExternalFenceProperties
 --   >     , VkExternalFenceProperties* pExternalFenceProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFenceProperties vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalFenceProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -7065,7 +7255,7 @@ type VkGetPhysicalDeviceExternalSemaphoreProperties =
 -- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7119,7 +7309,7 @@ vkGetPhysicalDeviceExternalSemaphorePropertiesUnsafe
 -- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7172,7 +7362,7 @@ vkGetPhysicalDeviceExternalSemaphorePropertiesSafe
 -- >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7214,7 +7404,7 @@ vkGetPhysicalDeviceExternalSemaphoreProperties
 --   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphoreProperties vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalSemaphoreProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -7294,7 +7484,7 @@ type VkGetDescriptorSetLayoutSupport =
 -- >     , VkDescriptorSetLayoutSupport* pSupport
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7346,7 +7536,7 @@ vkGetDescriptorSetLayoutSupportUnsafe
 -- >     , VkDescriptorSetLayoutSupport* pSupport
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7398,7 +7588,7 @@ vkGetDescriptorSetLayoutSupportSafe
 -- >     , VkDescriptorSetLayoutSupport* pSupport
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-1@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7440,7 +7630,7 @@ vkGetDescriptorSetLayoutSupport
 --   >     , VkDescriptorSetLayoutSupport* pSupport
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupport vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
 type HS_vkGetDescriptorSetLayoutSupport =
      VkDevice -- ^ device
               ->
@@ -7487,8 +7677,11 @@ pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT ::
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT =
         VkStructureType 1000168001
 
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES
         :: VkStructureType
 
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES
         = VkStructureType 1000063000
+
+pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES

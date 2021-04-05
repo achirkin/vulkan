@@ -28,7 +28,8 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
 
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHR_get_physical_device_properties2', 'VK_KHR_get_surface_capabilities2'.
         VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
-        VkCompositeAlphaFlagsKHR(), VkExtent2D, VkBool32(..),
+        VkCompositeAlphaFlagsKHR(), VkExtent2D, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkImageAspectBitmask(..), VkImageCreateBitmask(..),
         VkImageLayout(..), VkImageTiling(..), VkImageType(..),
@@ -36,39 +37,45 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
         VkImageUsageFlagBits(), VkImageUsageFlags(),
-        VkSharedPresentSurfaceCapabilitiesKHR, VkStructureType(..),
-        VkSurfaceCapabilities2KHR, VkSurfaceCapabilitiesKHR,
-        VkSurfaceCounterBitmaskEXT(..), VkSurfaceTransformBitmaskKHR(..),
-        VkSurfaceCounterFlagBitsEXT(), VkSurfaceCounterFlagsEXT(),
-        VkSurfaceTransformFlagBitsKHR(), VkSurfaceTransformFlagsKHR(),
-        -- > #include "vk_platform.h"
-        VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
-        HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
-        VkResult(..), VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkSharedPresentSurfaceCapabilitiesKHR,
+        VkStructureType(..), VkSurfaceCapabilities2KHR,
+        VkSurfaceCapabilitiesKHR, VkSurfaceCounterBitmaskEXT(..),
+        VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
+        VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
+        VkSurfaceTransformFlagsKHR(), -- > #include "vk_platform.h"
+                                      VkGetSwapchainStatusKHR,
+        pattern VkGetSwapchainStatusKHR, HS_vkGetSwapchainStatusKHR,
+        PFN_vkGetSwapchainStatusKHR, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
+        VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
         pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME,
@@ -116,14 +123,14 @@ type VkGetSwapchainStatusKHR = "vkGetSwapchainStatusKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT'.
 --
 --   > VkResult vkGetSwapchainStatusKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainStatusKHR vkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSwapchainStatusKHR vkGetSwapchainStatusKHR registry at www.khronos.org>
 type HS_vkGetSwapchainStatusKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain

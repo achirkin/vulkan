@@ -7,10 +7,12 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.Surface
        (VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2KHR,
-        VkSurfaceCapabilitiesKHR, VkSurfaceFormat2KHR, VkSurfaceFormatKHR)
+        VkSurfaceCapabilitiesKHR, VkSurfaceFormat2KHR, VkSurfaceFormatKHR,
+        VkSurfaceProtectedCapabilitiesKHR)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
+import Graphics.Vulkan.Types.BaseTypes                   (VkBool32)
 import Graphics.Vulkan.Types.Enum.Color                  (VkColorSpaceKHR)
 import Graphics.Vulkan.Types.Enum.CompositeAlphaFlagsKHR (VkCompositeAlphaFlagsKHR)
 import Graphics.Vulkan.Types.Enum.Format                 (VkFormat)
@@ -37,7 +39,7 @@ import Graphics.Vulkan.Types.Struct.Extent               (VkExtent2D)
 --   >     VkSurfaceCounterFlagsEXT supportedSurfaceCounters;
 --   > } VkSurfaceCapabilities2EXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilities2EXT VkSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceCapabilities2EXT VkSurfaceCapabilities2EXT registry at www.khronos.org>
 type VkSurfaceCapabilities2EXT =
      VkStruct VkSurfaceCapabilities2EXT' -- ' closing tick for hsc2hs
 
@@ -125,7 +127,7 @@ instance VulkanMarshal VkSurfaceCapabilities2EXT where
 --   >     VkSurfaceCapabilitiesKHR surfaceCapabilities;
 --   > } VkSurfaceCapabilities2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilities2KHR VkSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceCapabilities2KHR VkSurfaceCapabilities2KHR registry at www.khronos.org>
 type VkSurfaceCapabilities2KHR =
      VkStruct VkSurfaceCapabilities2KHR' -- ' closing tick for hsc2hs
 
@@ -168,7 +170,7 @@ instance VulkanMarshal VkSurfaceCapabilities2KHR where
 --   >     VkImageUsageFlags                supportedUsageFlags;
 --   > } VkSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceCapabilitiesKHR VkSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceCapabilitiesKHR VkSurfaceCapabilitiesKHR registry at www.khronos.org>
 type VkSurfaceCapabilitiesKHR = VkStruct VkSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
 
 data VkSurfaceCapabilitiesKHR' -- ' closing tick for hsc2hs
@@ -239,7 +241,7 @@ instance VulkanMarshal VkSurfaceCapabilitiesKHR where
 --   >     VkSurfaceFormatKHR surfaceFormat;
 --   > } VkSurfaceFormat2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceFormat2KHR VkSurfaceFormat2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceFormat2KHR VkSurfaceFormat2KHR registry at www.khronos.org>
 type VkSurfaceFormat2KHR = VkStruct VkSurfaceFormat2KHR' -- ' closing tick for hsc2hs
 
 data VkSurfaceFormat2KHR' -- ' closing tick for hsc2hs
@@ -273,7 +275,7 @@ instance VulkanMarshal VkSurfaceFormat2KHR where
 --   >     VkColorSpaceKHR                  colorSpace;
 --   > } VkSurfaceFormatKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSurfaceFormatKHR VkSurfaceFormatKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceFormatKHR VkSurfaceFormatKHR registry at www.khronos.org>
 type VkSurfaceFormatKHR = VkStruct VkSurfaceFormatKHR' -- ' closing tick for hsc2hs
 
 data VkSurfaceFormatKHR' -- ' closing tick for hsc2hs
@@ -296,3 +298,40 @@ instance VulkanMarshal VkSurfaceFormatKHR where
            'False -- ' closing tick for hsc2hs
            'True -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkSurfaceProtectedCapabilitiesKHR {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkBool32 supportsProtected;
+--   > } VkSurfaceProtectedCapabilitiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceProtectedCapabilitiesKHR VkSurfaceProtectedCapabilitiesKHR registry at www.khronos.org>
+type VkSurfaceProtectedCapabilitiesKHR =
+     VkStruct VkSurfaceProtectedCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+data VkSurfaceProtectedCapabilitiesKHR' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkSurfaceProtectedCapabilitiesKHR where
+    type StructRep VkSurfaceProtectedCapabilitiesKHR =
+         'StructMeta "VkSurfaceProtectedCapabilitiesKHR" -- ' closing tick for hsc2hs
+           VkSurfaceProtectedCapabilitiesKHR
+           #{size VkSurfaceProtectedCapabilitiesKHR}
+           #{alignment VkSurfaceProtectedCapabilitiesKHR}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkSurfaceProtectedCapabilitiesKHR, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkSurfaceProtectedCapabilitiesKHR, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "supportsProtected" VkBool32 'False 
+                                                             #{offset VkSurfaceProtectedCapabilitiesKHR, supportsProtected}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkSurfaceCapabilities2KHR] -- ' closing tick for hsc2hs

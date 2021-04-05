@@ -24,7 +24,7 @@ import Graphics.Vulkan.Types.Handles            (VkDescriptorSet)
 --   >     uint32_t               descriptorCount;
 --   > } VkCopyDescriptorSet;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkCopyDescriptorSet VkCopyDescriptorSet registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkCopyDescriptorSet VkCopyDescriptorSet registry at www.khronos.org>
 type VkCopyDescriptorSet = VkStruct VkCopyDescriptorSet' -- ' closing tick for hsc2hs
 
 data VkCopyDescriptorSet' -- ' closing tick for hsc2hs

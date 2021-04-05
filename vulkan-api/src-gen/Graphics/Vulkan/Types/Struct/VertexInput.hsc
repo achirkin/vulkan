@@ -22,7 +22,7 @@ import Graphics.Vulkan.Types.Enum.VertexInputRate (VkVertexInputRate)
 --   >     uint32_t               offset;
 --   > } VkVertexInputAttributeDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputAttributeDescription VkVertexInputAttributeDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkVertexInputAttributeDescription VkVertexInputAttributeDescription registry at www.khronos.org>
 type VkVertexInputAttributeDescription =
      VkStruct VkVertexInputAttributeDescription' -- ' closing tick for hsc2hs
 
@@ -64,7 +64,7 @@ instance VulkanMarshal VkVertexInputAttributeDescription where
 --   >     VkVertexInputRate      inputRate;
 --   > } VkVertexInputBindingDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputBindingDescription VkVertexInputBindingDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkVertexInputBindingDescription VkVertexInputBindingDescription registry at www.khronos.org>
 type VkVertexInputBindingDescription =
      VkStruct VkVertexInputBindingDescription' -- ' closing tick for hsc2hs
 
@@ -100,7 +100,7 @@ instance VulkanMarshal VkVertexInputBindingDescription where
 --   >     uint32_t          divisor;
 --   > } VkVertexInputBindingDivisorDescriptionEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkVertexInputBindingDivisorDescriptionEXT VkVertexInputBindingDivisorDescriptionEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkVertexInputBindingDivisorDescriptionEXT VkVertexInputBindingDivisorDescriptionEXT registry at www.khronos.org>
 type VkVertexInputBindingDivisorDescriptionEXT =
      VkStruct VkVertexInputBindingDivisorDescriptionEXT' -- ' closing tick for hsc2hs
 

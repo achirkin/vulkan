@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -22,29 +23,25 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2', 'VK_KHR_maintenance3'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkDescriptorBindingBitmaskEXT(..),
-        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
-        VkDescriptorUpdateTemplateType(..),
-        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
-        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
+        VkDescriptorBindingBitmask(..), VkDescriptorPoolCreateBitmask(..),
+        VkDescriptorType(..), VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBits(), VkDescriptorBindingFlagBitsEXT(..),
+        VkDescriptorBindingFlags(), VkDescriptorPoolCreateFlagBits(),
+        VkDescriptorPoolCreateFlags(),
         VkDescriptorSetLayoutCreateBitmask(..),
         VkDescriptorSetLayoutCreateFlagBits(),
         VkDescriptorSetLayoutCreateFlags(),
-        VkDescriptorUpdateTemplateTypeKHR(..), VkDescriptorSetAllocateInfo,
-        VkDescriptorSetLayoutBinding,
-        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
-        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
-        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
+        VkDescriptorUpdateTemplateTypeKHR(..),
         VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -52,14 +49,16 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -68,34 +67,26 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..), VkDeviceCreateInfo,
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
-        VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
-        VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
-        VkDeviceQueueCreateInfo,
+        VkXlibSurfaceCreateFlagsKHR(..),
+        VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
         VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
         VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
-        VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures2,
-        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
-        VkPhysicalDeviceProperties2, VkPhysicalDeviceSparseProperties,
-        VkPhysicalDeviceType(..), VkSampleCountBitmask(..),
-        VkSampleCountFlagBits(), VkSampleCountFlags(),
-        VkShaderInfoTypeAMD(..), VkShaderStageBitmask(..),
-        VkShaderStageFlagBits(), VkShaderStageFlags(), VkStructureType(..),
-        -- > #include "vk_platform.h"
         VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION,
         pattern VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION,
         VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME,
@@ -105,37 +96,31 @@ module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
+        pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT,
+        pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT,
+        pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT,
+        pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT,
         pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT,
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT,
         pattern VK_ERROR_FRAGMENTATION_EXT)
        where
-import GHC.Ptr                                             (Ptr (..))
+import GHC.Ptr                                     (Ptr (..))
+import Graphics.Vulkan.Core_1_2                    (pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT,
+                                                    pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT,
+                                                    pattern VK_ERROR_FRAGMENTATION,
+                                                    pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO,
+                                                    pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO,
+                                                    pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT,
+                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES,
+                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES)
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.Descriptor
-import Graphics.Vulkan.Types.Enum.Device
-import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
-import Graphics.Vulkan.Types.Enum.Result                   (VkResult (..))
-import Graphics.Vulkan.Types.Enum.SampleCountFlags
-import Graphics.Vulkan.Types.Enum.Shader
-import Graphics.Vulkan.Types.Enum.StructureType
-import Graphics.Vulkan.Types.Struct.Descriptor             (VkDescriptorSetAllocateInfo,
-                                                            VkDescriptorSetLayoutBinding,
-                                                            VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-                                                            VkDescriptorSetLayoutCreateInfo,
-                                                            VkDescriptorSetLayoutSupport,
-                                                            VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
-                                                            VkDescriptorSetVariableDescriptorCountLayoutSupportEXT)
-import Graphics.Vulkan.Types.Struct.Device                 (VkDeviceCreateInfo, VkDeviceQueueCreateInfo)
-import Graphics.Vulkan.Types.Struct.PhysicalDevice         (VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
-                                                            VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
-                                                            VkPhysicalDeviceFeatures2,
-                                                            VkPhysicalDeviceLimits,
-                                                            VkPhysicalDeviceProperties,
-                                                            VkPhysicalDeviceProperties2,
-                                                            VkPhysicalDeviceSparseProperties)
-import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures (VkPhysicalDeviceFeatures)
+import Graphics.Vulkan.Types.Struct.Descriptor     (VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
+                                                    VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+                                                    VkDescriptorSetVariableDescriptorCountLayoutSupportEXT)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice (VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+                                                    VkPhysicalDeviceDescriptorIndexingPropertiesEXT)
 
 pattern VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -168,49 +153,38 @@ type VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME =
      "VK_EXT_descriptor_indexing"
 
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT
-        = VkStructureType 1000161000
+        = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT
-        = VkStructureType 1000161001
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT
-        = VkStructureType 1000161002
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES
 
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT
-        = VkStructureType 1000161003
+        =
+        VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO
 
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT
-        :: VkStructureType
+        =
+        VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT
 
-pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT
-        = VkStructureType 1000161004
+pattern VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT =
+        VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT
 
--- | bitpos = @1@
-pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT ::
-        VkDescriptorPoolCreateBitmask a
+pattern VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT =
+        VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT
+
+pattern VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT =
+        VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT
+
+pattern VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT =
+        VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT
 
 pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT =
-        VkDescriptorPoolCreateBitmask 2
-
--- | bitpos = @1@
-pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT
-        :: VkDescriptorSetLayoutCreateBitmask a
+        VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT
 
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT
-        = VkDescriptorSetLayoutCreateBitmask 2
+        = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT
 
-pattern VK_ERROR_FRAGMENTATION_EXT :: VkResult
-
-pattern VK_ERROR_FRAGMENTATION_EXT = VkResult (-1000161000)
+pattern VK_ERROR_FRAGMENTATION_EXT = VK_ERROR_FRAGMENTATION

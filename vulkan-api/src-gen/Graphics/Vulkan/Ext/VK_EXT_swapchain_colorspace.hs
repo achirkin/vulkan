@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -28,7 +29,7 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME,
         pattern VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT,
         pattern VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT,
-        pattern VK_COLOR_SPACE_DCI_P3_LINEAR_EXT,
+        pattern VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT,
         pattern VK_COLOR_SPACE_DCI_P3_NONLINEAR_EXT,
         pattern VK_COLOR_SPACE_BT709_LINEAR_EXT,
         pattern VK_COLOR_SPACE_BT709_NONLINEAR_EXT,
@@ -39,7 +40,8 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         pattern VK_COLOR_SPACE_ADOBERGB_LINEAR_EXT,
         pattern VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT,
         pattern VK_COLOR_SPACE_PASS_THROUGH_EXT,
-        pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT)
+        pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT,
+        pattern VK_COLOR_SPACE_DCI_P3_LINEAR_EXT)
        where
 import GHC.Ptr                          (Ptr (..))
 import Graphics.Vulkan.Marshal
@@ -48,9 +50,9 @@ import Graphics.Vulkan.Types.Enum.Color (VkColorSpaceKHR (..))
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION = 3
+pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION = 4
 
-type VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION = 3
+type VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION = 4
 
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_EXTENSION_NAME :: CString
 
@@ -86,9 +88,9 @@ pattern VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT :: VkColorSpaceKHR
 pattern VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT =
         VkColorSpaceKHR 1000104002
 
-pattern VK_COLOR_SPACE_DCI_P3_LINEAR_EXT :: VkColorSpaceKHR
+pattern VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT :: VkColorSpaceKHR
 
-pattern VK_COLOR_SPACE_DCI_P3_LINEAR_EXT =
+pattern VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT =
         VkColorSpaceKHR 1000104003
 
 pattern VK_COLOR_SPACE_DCI_P3_NONLINEAR_EXT :: VkColorSpaceKHR
@@ -144,3 +146,7 @@ pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT ::
 
 pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT =
         VkColorSpaceKHR 1000104014
+
+-- | Deprecated name for backwards compatibility
+pattern VK_COLOR_SPACE_DCI_P3_LINEAR_EXT =
+        VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT

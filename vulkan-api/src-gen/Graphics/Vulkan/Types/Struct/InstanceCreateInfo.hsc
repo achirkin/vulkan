@@ -24,7 +24,7 @@ import Graphics.Vulkan.Types.Struct.ApplicationInfo (VkApplicationInfo)
 --   >     const char* const*      ppEnabledExtensionNames;
 --   > } VkInstanceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkInstanceCreateInfo VkInstanceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkInstanceCreateInfo VkInstanceCreateInfo registry at www.khronos.org>
 type VkInstanceCreateInfo = VkStruct VkInstanceCreateInfo' -- ' closing tick for hsc2hs
 
 data VkInstanceCreateInfo' -- ' closing tick for hsc2hs

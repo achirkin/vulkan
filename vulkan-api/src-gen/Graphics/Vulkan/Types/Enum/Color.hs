@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK ignore-exports#-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE FlexibleInstances          #-}
@@ -13,6 +14,7 @@ module Graphics.Vulkan.Types.Enum.Color
                                 VK_COLOR_COMPONENT_R_BIT, VK_COLOR_COMPONENT_G_BIT,
                                 VK_COLOR_COMPONENT_B_BIT, VK_COLOR_COMPONENT_A_BIT),
         VkColorComponentFlags, VkColorComponentFlagBits,
+        pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         VkColorSpaceKHR(VkColorSpaceKHR,
                         VK_COLOR_SPACE_SRGB_NONLINEAR_KHR))
        where
@@ -95,13 +97,15 @@ pattern VK_COLOR_COMPONENT_A_BIT = VkColorComponentBitmask 8
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkColorSpaceKHR VkColorSpaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkColorSpaceKHR VkColorSpaceKHR registry at www.khronos.org>
 newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
                           deriving (Eq, Ord, Enum, Storable)
 
 instance Show VkColorSpaceKHR where
     showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
       = showString "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR"
+    showsPrec _ VK_COLORSPACE_SRGB_NONLINEAR_KHR
+      = showString "VK_COLORSPACE_SRGB_NONLINEAR_KHR"
     showsPrec p (VkColorSpaceKHR x)
       = showParen (p >= 11)
           (showString "VkColorSpaceKHR " . showsPrec 11 x)
@@ -111,7 +115,9 @@ instance Read VkColorSpaceKHR where
       = parens
           (choose
              [("VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
-               pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)]
+               pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR),
+              ("VK_COLORSPACE_SRGB_NONLINEAR_KHR",
+               pure VK_COLORSPACE_SRGB_NONLINEAR_KHR)]
              +++
              prec 10
                (expectP (Ident "VkColorSpaceKHR") >>
@@ -120,3 +126,7 @@ instance Read VkColorSpaceKHR where
 pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR :: VkColorSpaceKHR
 
 pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR = VkColorSpaceKHR 0
+
+-- | Backwards-compatible alias containing a typo
+pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR =
+        VK_COLOR_SPACE_SRGB_NONLINEAR_KHR

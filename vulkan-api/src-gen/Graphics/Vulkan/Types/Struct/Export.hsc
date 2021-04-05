@@ -28,7 +28,7 @@ import Graphics.Vulkan.Types.Struct.Semaphore   (VkSemaphoreCreateInfo)
 --   >     VkExternalFenceHandleTypeFlags handleTypes;
 --   > } VkExportFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportFenceCreateInfo VkExportFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportFenceCreateInfo VkExportFenceCreateInfo registry at www.khronos.org>
 type VkExportFenceCreateInfo = VkStruct VkExportFenceCreateInfo' -- ' closing tick for hsc2hs
 
 data VkExportFenceCreateInfo' -- ' closing tick for hsc2hs
@@ -66,7 +66,7 @@ type VkExportFenceCreateInfoKHR = VkExportFenceCreateInfo
 --   >     VkExternalMemoryHandleTypeFlags handleTypes;
 --   > } VkExportMemoryAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryAllocateInfo VkExportMemoryAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportMemoryAllocateInfo VkExportMemoryAllocateInfo registry at www.khronos.org>
 type VkExportMemoryAllocateInfo =
      VkStruct VkExportMemoryAllocateInfo' -- ' closing tick for hsc2hs
 
@@ -105,7 +105,7 @@ type VkExportMemoryAllocateInfoKHR = VkExportMemoryAllocateInfo
 --   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
 --   > } VkExportMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryAllocateInfoNV VkExportMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportMemoryAllocateInfoNV VkExportMemoryAllocateInfoNV registry at www.khronos.org>
 type VkExportMemoryAllocateInfoNV =
      VkStruct VkExportMemoryAllocateInfoNV' -- ' closing tick for hsc2hs
 
@@ -142,7 +142,7 @@ instance VulkanMarshal VkExportMemoryAllocateInfoNV where
 --   >     VkExternalSemaphoreHandleTypeFlags handleTypes;
 --   > } VkExportSemaphoreCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportSemaphoreCreateInfo VkExportSemaphoreCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportSemaphoreCreateInfo VkExportSemaphoreCreateInfo registry at www.khronos.org>
 type VkExportSemaphoreCreateInfo =
      VkStruct VkExportSemaphoreCreateInfo' -- ' closing tick for hsc2hs
 

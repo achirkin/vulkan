@@ -34,10 +34,12 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         VkSamplerYcbcrConversionCreateInfoKHR,
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
         VkSamplerYcbcrConversionInfoKHR, VkSamplerAddressMode(..),
-        VkSamplerMipmapMode(..), VkSamplerReductionModeEXT(..),
+        VkSamplerMipmapMode(..), VkSamplerReductionMode(..),
         VkSamplerYcbcrModelConversion(..), VkSamplerYcbcrRange(..),
-        VkSamplerCreateFlagBits(..), VkSamplerYcbcrModelConversionKHR(..),
-        VkSamplerYcbcrRangeKHR(..), VkCreateSamplerYcbcrConversionKHR,
+        VkSamplerCreateBitmask(..), VkSamplerCreateFlagBits(),
+        VkSamplerCreateFlags(), VkSamplerReductionModeEXT(..),
+        VkSamplerYcbcrModelConversionKHR(..), VkSamplerYcbcrRangeKHR(..),
+        VkCreateSamplerYcbcrConversionKHR,
         pattern VkCreateSamplerYcbcrConversionKHR,
         HS_vkCreateSamplerYcbcrConversionKHR,
         PFN_vkCreateSamplerYcbcrConversionKHR,
@@ -45,9 +47,11 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VkDestroySamplerYcbcrConversionKHR,
         HS_vkDestroySamplerYcbcrConversionKHR,
         PFN_vkDestroySamplerYcbcrConversionKHR,
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkComponentSwizzle(..),
-        VkFilter(..), VkFormat(..), VkFormatFeatureBitmask(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(), ANativeWindow(),
+        CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkComponentSwizzle(..), VkComponentTypeNV(..), VkFilter(..),
+        VkFormat(..), VkFormatFeatureBitmask(..),
         VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
         VkInternalAllocationType(..), VkResult(..), VkStructureType(..),
         VkSystemAllocationScope(..), newVkAllocationFunction,
@@ -67,32 +71,39 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkAllocationCallbacks, VkComponentMapping, VkSamplerCreateInfo,
+        VkSamplerCustomBorderColorCreateInfoEXT,
+        VkSamplerReductionModeCreateInfo,
         VkSamplerReductionModeCreateInfoEXT,
         VkSamplerYcbcrConversionCreateInfo,
         VkSamplerYcbcrConversionImageFormatProperties,
@@ -224,7 +235,7 @@ import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Proc                      (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Enum.ChromaLocation
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.Component
 import Graphics.Vulkan.Types.Enum.Filter
 import Graphics.Vulkan.Types.Enum.Format
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
@@ -277,7 +288,7 @@ type VkCreateSamplerYcbcrConversionKHR =
 --   >     , VkSamplerYcbcrConversion* pYcbcrConversion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversionKHR vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversionKHR vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkCreateSamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->
@@ -346,7 +357,7 @@ type VkDestroySamplerYcbcrConversionKHR =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversionKHR vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversionKHR vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkDestroySamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->
@@ -384,9 +395,9 @@ instance VulkanProc "vkDestroySamplerYcbcrConversionKHR" where
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION = 1
+pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION = 14
 
-type VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION = 1
+type VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION = 14
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME :: CString
 

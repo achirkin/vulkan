@@ -21,7 +21,7 @@ import Graphics.Vulkan.Types.Include            (WlDisplay, WlSurface)
 --   >     struct wl_surface*               surface;
 --   > } VkWaylandSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWaylandSurfaceCreateInfoKHR VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkWaylandSurfaceCreateInfoKHR VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
 type VkWaylandSurfaceCreateInfoKHR =
      VkStruct VkWaylandSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 

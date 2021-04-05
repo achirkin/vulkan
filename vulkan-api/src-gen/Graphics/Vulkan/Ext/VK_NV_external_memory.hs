@@ -5,8 +5,9 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkExportMemoryAllocateInfoNV, VkExtent3D,
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkExportMemoryAllocateInfoNV, VkExtent3D,
         VkExternalFenceFeatureBitmask(..),
         VkExternalFenceHandleTypeBitmask(..),
         VkExternalMemoryFeatureBitmask(..),
@@ -42,11 +43,13 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory
         VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkImageCreateInfo,
-        VkMemoryAllocateInfo, VkSampleCountBitmask(..),
-        VkSampleCountFlagBits(), VkSampleCountFlags(), VkSharingMode(..),
-        VkStructureType(..), -- > #include "vk_platform.h"
-                             VK_NV_EXTERNAL_MEMORY_SPEC_VERSION,
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageCreateInfo, VkMemoryAllocateInfo,
+        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
+        VkSampleCountFlags(), VkSharingMode(..), VkStructureType(..),
+        -- > #include "vk_platform.h"
+        VK_NV_EXTERNAL_MEMORY_SPEC_VERSION,
         pattern VK_NV_EXTERNAL_MEMORY_SPEC_VERSION,
         VK_NV_EXTERNAL_MEMORY_EXTENSION_NAME,
         pattern VK_NV_EXTERNAL_MEMORY_EXTENSION_NAME,

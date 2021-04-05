@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     void*                            window;
 --   > } VkViSurfaceCreateInfoNN;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkViSurfaceCreateInfoNN VkViSurfaceCreateInfoNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkViSurfaceCreateInfoNN VkViSurfaceCreateInfoNN registry at www.khronos.org>
 type VkViSurfaceCreateInfoNN = VkStruct VkViSurfaceCreateInfoNN' -- ' closing tick for hsc2hs
 
 data VkViSurfaceCreateInfoNN' -- ' closing tick for hsc2hs

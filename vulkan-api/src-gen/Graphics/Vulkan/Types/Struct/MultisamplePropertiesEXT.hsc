@@ -18,7 +18,7 @@ import Graphics.Vulkan.Types.Struct.Extent      (VkExtent2D)
 --   >     VkExtent2D                       maxSampleLocationGridSize;
 --   > } VkMultisamplePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMultisamplePropertiesEXT VkMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMultisamplePropertiesEXT VkMultisamplePropertiesEXT registry at www.khronos.org>
 type VkMultisamplePropertiesEXT =
      VkStruct VkMultisamplePropertiesEXT' -- ' closing tick for hsc2hs
 

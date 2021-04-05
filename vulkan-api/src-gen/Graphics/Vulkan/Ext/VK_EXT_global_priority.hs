@@ -17,13 +17,17 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         -- type: @device@
         --
         -- Extension number: @175@
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
         VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
-        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
+        AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
         VkQueueFlagBits(), VkQueueFlags(), VkStructureType(..),
         -- > #include "vk_platform.h"
         VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION,

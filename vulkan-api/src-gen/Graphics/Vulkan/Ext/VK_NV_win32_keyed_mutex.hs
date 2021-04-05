@@ -5,24 +5,24 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
-        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
-        VkPipelineCacheCreateFlagBits(..),
-        VkPipelineColorBlendStateCreateFlagBits(..),
-        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
-        VkPipelineStageFlags(),
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..), VkStructureType(..),
-        VkSubmitInfo, VkWin32KeyedMutexAcquireReleaseInfoNV,
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkPipelineBindPoint(..),
+        VkPipelineCacheHeaderVersion(..), VkPipelineCreateBitmask(..),
+        VkPipelineCreationFeedbackBitmaskEXT(..),
+        VkPipelineExecutableStatisticFormatKHR(..),
+        VkPipelineStageBitmask(..), VkPipelineCacheCreateBitmask(..),
+        VkPipelineCacheCreateFlagBits(), VkPipelineCacheCreateFlags(),
+        VkPipelineCompilerControlBitmaskAMD(..),
+        VkPipelineCompilerControlFlagBitsAMD(),
+        VkPipelineCompilerControlFlagsAMD(), VkPipelineCreateFlagBits(),
+        VkPipelineCreateFlags(), VkPipelineCreationFeedbackFlagBitsEXT(),
+        VkPipelineCreationFeedbackFlagsEXT(),
+        VkPipelineShaderStageCreateBitmask(..),
+        VkPipelineShaderStageCreateFlagBits(),
+        VkPipelineShaderStageCreateFlags(), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(), VkStructureType(..), VkSubmitInfo,
+        VkWin32KeyedMutexAcquireReleaseInfoNV,
         -- > #include "vk_platform.h"
         VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION,
         pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION,
@@ -40,9 +40,9 @@ import Graphics.Vulkan.Types.Struct.SubmitInfo       (VkSubmitInfo)
 
 pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION = 1
+pattern VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION = 2
 
-type VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION = 1
+type VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION = 2
 
 pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME :: CString
 

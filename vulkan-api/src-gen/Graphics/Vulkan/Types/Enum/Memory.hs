@@ -16,6 +16,10 @@ module Graphics.Vulkan.Types.Enum.Memory
         VkMemoryHeapBitmask(VkMemoryHeapBitmask, VkMemoryHeapFlags,
                             VkMemoryHeapFlagBits, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT),
         VkMemoryHeapFlags, VkMemoryHeapFlagBits,
+        VkMemoryOverallocationBehaviorAMD(VkMemoryOverallocationBehaviorAMD,
+                                          VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD,
+                                          VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD,
+                                          VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD),
         VkMemoryPropertyBitmask(VkMemoryPropertyBitmask,
                                 VkMemoryPropertyFlags, VkMemoryPropertyFlagBits,
                                 VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
@@ -29,7 +33,7 @@ import Data.Bits                       (Bits, FiniteBits)
 import Data.Coerce                     (coerce)
 import Foreign.Storable                (Storable)
 import GHC.Read                        (choose, expectP)
-import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType)
+import Graphics.Vulkan.Marshal         (FlagBit, FlagMask, FlagType, Int32)
 import Graphics.Vulkan.Types.BaseTypes (VkFlags (..))
 import Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import Text.Read                       (Read (..), parens)
@@ -141,6 +145,56 @@ instance Read (VkMemoryHeapBitmask a) where
 pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT :: VkMemoryHeapBitmask a
 
 pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapBitmask 1
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryOverallocationBehaviorAMD VkMemoryOverallocationBehaviorAMD registry at www.khronos.org>
+newtype VkMemoryOverallocationBehaviorAMD = VkMemoryOverallocationBehaviorAMD Int32
+                                            deriving (Eq, Ord, Enum, Storable)
+
+instance Show VkMemoryOverallocationBehaviorAMD where
+    showsPrec _ VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD
+      = showString "VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD"
+    showsPrec _ VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD
+      = showString "VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD"
+    showsPrec _ VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD
+      = showString "VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD"
+    showsPrec p (VkMemoryOverallocationBehaviorAMD x)
+      = showParen (p >= 11)
+          (showString "VkMemoryOverallocationBehaviorAMD " . showsPrec 11 x)
+
+instance Read VkMemoryOverallocationBehaviorAMD where
+    readPrec
+      = parens
+          (choose
+             [("VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD",
+               pure VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD),
+              ("VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD",
+               pure VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD),
+              ("VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD",
+               pure VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD)]
+             +++
+             prec 10
+               (expectP (Ident "VkMemoryOverallocationBehaviorAMD") >>
+                  (VkMemoryOverallocationBehaviorAMD <$> step readPrec)))
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD ::
+        VkMemoryOverallocationBehaviorAMD
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD =
+        VkMemoryOverallocationBehaviorAMD 0
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD ::
+        VkMemoryOverallocationBehaviorAMD
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD =
+        VkMemoryOverallocationBehaviorAMD 1
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD ::
+        VkMemoryOverallocationBehaviorAMD
+
+pattern VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD =
+        VkMemoryOverallocationBehaviorAMD 2
 
 newtype VkMemoryPropertyBitmask (a ::
                                    FlagType) = VkMemoryPropertyBitmask VkFlags

@@ -23,10 +23,13 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         -- type: @instance@
         --
         -- Extension number: @129@
-        module Graphics.Vulkan.Marshal, VkApplicationInfo, VkBool32(..),
-        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkDebugUtilsLabelEXT, VkDebugReportBitmaskEXT(..),
-        VkDebugReportObjectTypeEXT(..),
+        module Graphics.Vulkan.Marshal, VkApplicationInfo,
+        AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkDebugUtilsLabelEXT,
+        VkDebugReportBitmaskEXT(..), VkDebugReportObjectTypeEXT(..),
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT,
         VkDebugUtilsMessageSeverityBitmaskEXT(..),
         VkDebugUtilsMessageTypeBitmaskEXT(..), VkDebugReportFlagBitsEXT(),
         VkDebugReportFlagsEXT(), VkDebugUtilsMessageSeverityFlagBitsEXT(),
@@ -35,13 +38,15 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         VkDebugUtilsMessageTypeFlagsEXT(),
         VkDebugUtilsMessengerCallbackDataEXT,
         VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
         VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
         VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
         VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
         VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
         VkExternalFenceFeatureFlagsKHR(..),
         VkExternalFenceHandleTypeFlagsKHR(..),
@@ -49,14 +54,16 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         VkExternalMemoryHandleTypeFlagsKHR(..),
         VkExternalSemaphoreFeatureFlagsKHR(..),
         VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
         VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
         VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
         VkPipelineDepthStencilStateCreateFlags(..),
         VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
@@ -65,24 +72,24 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         VkPipelineLayoutCreateFlags(..),
         VkPipelineMultisampleStateCreateFlags(..),
         VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
         VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
         VkPipelineTessellationStateCreateFlags(..),
         VkPipelineVertexInputStateCreateFlags(..),
         VkPipelineViewportStateCreateFlags(..),
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
         VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
         VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..),
         VkDebugUtilsMessengerCreateInfoEXT, VkDebugUtilsObjectNameInfoEXT,
         VkDebugUtilsObjectTagInfoEXT, VkInstanceCreateInfo,
-        VkObjectEntryTypeNVX(..), VkObjectEntryUsageBitmaskNVX(..),
-        VkObjectType(..), VkObjectEntryUsageFlagBitsNVX(),
-        VkObjectEntryUsageFlagsNVX(), VkStructureType(..),
+        VkObjectType(..), VkStructureType(..),
         -- > #include "vk_platform.h"
         VkSetDebugUtilsObjectNameEXT, pattern VkSetDebugUtilsObjectNameEXT,
         HS_vkSetDebugUtilsObjectNameEXT, PFN_vkSetDebugUtilsObjectNameEXT,
@@ -133,31 +140,36 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkAllocationCallbacks, VkDebugMarkerMarkerInfoEXT,
         VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectTagInfoEXT,
         VkDebugReportCallbackCreateInfoEXT,
@@ -179,7 +191,7 @@ import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Bitmasks
 import Graphics.Vulkan.Types.Enum.Debug
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
-import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.ObjectType
 import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
@@ -224,7 +236,7 @@ type VkSetDebugUtilsObjectNameEXT = "vkSetDebugUtilsObjectNameEXT"
 --   >     , const VkDebugUtilsObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectNameEXT vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetDebugUtilsObjectNameEXT vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectNameInfoEXT -- ^ pNameInfo
@@ -284,7 +296,7 @@ type VkSetDebugUtilsObjectTagEXT = "vkSetDebugUtilsObjectTagEXT"
 --   >     , const VkDebugUtilsObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectTagEXT vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetDebugUtilsObjectTagEXT vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectTagInfoEXT -- ^ pTagInfo
@@ -341,7 +353,7 @@ type VkQueueBeginDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBeginDebugUtilsLabelEXT vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueBeginDebugUtilsLabelEXT vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueBeginDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -398,7 +410,7 @@ type VkQueueEndDebugUtilsLabelEXT = "vkQueueEndDebugUtilsLabelEXT"
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueEndDebugUtilsLabelEXT vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueEndDebugUtilsLabelEXT vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueEndDebugUtilsLabelEXT = VkQueue -- ^ queue
                                                -> IO ()
 
@@ -453,7 +465,7 @@ type VkQueueInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueInsertDebugUtilsLabelEXT vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueInsertDebugUtilsLabelEXT vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueInsertDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -515,7 +527,7 @@ type VkCmdBeginDebugUtilsLabelEXT = "vkCmdBeginDebugUtilsLabelEXT"
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginDebugUtilsLabelEXT vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginDebugUtilsLabelEXT vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdBeginDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -573,7 +585,7 @@ type VkCmdEndDebugUtilsLabelEXT = "vkCmdEndDebugUtilsLabelEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndDebugUtilsLabelEXT vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndDebugUtilsLabelEXT vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdEndDebugUtilsLabelEXT = VkCommandBuffer -- ^ commandBuffer
                                                      -> IO ()
 
@@ -632,7 +644,7 @@ type VkCmdInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdInsertDebugUtilsLabelEXT vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdInsertDebugUtilsLabelEXT vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdInsertDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -697,7 +709,7 @@ type VkCreateDebugUtilsMessengerEXT =
 --   >     , VkDebugUtilsMessengerEXT* pMessenger
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkCreateDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -762,7 +774,7 @@ type VkDestroyDebugUtilsMessengerEXT =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkDestroyDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -824,7 +836,7 @@ type VkSubmitDebugUtilsMessageEXT = "vkSubmitDebugUtilsMessageEXT"
 --   >     , const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
 type HS_vkSubmitDebugUtilsMessageEXT =
      VkInstance -- ^ instance
                 ->
@@ -861,9 +873,9 @@ instance VulkanProc "vkSubmitDebugUtilsMessageEXT" where
 
 pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION = 1
+pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION = 2
 
-type VK_EXT_DEBUG_UTILS_SPEC_VERSION = 1
+type VK_EXT_DEBUG_UTILS_SPEC_VERSION = 2
 
 pattern VK_EXT_DEBUG_UTILS_EXTENSION_NAME :: CString
 

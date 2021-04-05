@@ -27,16 +27,18 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkDisplayModeParametersKHR,
-        VkDisplayModeProperties2KHR, VkDisplayModePropertiesKHR,
-        VkDisplayEventTypeEXT(..), VkDisplayPlaneAlphaBitmaskKHR(..),
-        VkDisplayPowerStateEXT(..), VkDisplayPlaneAlphaFlagBitsKHR(),
-        VkDisplayPlaneAlphaFlagsKHR(), VkDisplayPlaneCapabilities2KHR,
-        VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneInfo2KHR,
-        VkDisplayPlaneProperties2KHR, VkDisplayPlanePropertiesKHR,
-        VkDisplayProperties2KHR, VkDisplayPropertiesKHR, VkExtent2D,
-        VkOffset2D, VkStructureType(..), VkSurfaceCounterBitmaskEXT(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkDisplayModeParametersKHR, VkDisplayModeProperties2KHR,
+        VkDisplayModePropertiesKHR, VkDisplayEventTypeEXT(..),
+        VkDisplayPlaneAlphaBitmaskKHR(..), VkDisplayPowerStateEXT(..),
+        VkDisplayPlaneAlphaFlagBitsKHR(), VkDisplayPlaneAlphaFlagsKHR(),
+        VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilitiesKHR,
+        VkDisplayPlaneInfo2KHR, VkDisplayPlaneProperties2KHR,
+        VkDisplayPlanePropertiesKHR, VkDisplayProperties2KHR,
+        VkDisplayPropertiesKHR, VkExtent2D, VkOffset2D,
+        VkStructureType(..), VkSurfaceCounterBitmaskEXT(..),
         VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
         VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
         VkSurfaceTransformFlagsKHR(),
@@ -56,11 +58,14 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         VkGetDisplayPlaneCapabilities2KHR,
         pattern VkGetDisplayPlaneCapabilities2KHR,
         HS_vkGetDisplayPlaneCapabilities2KHR,
-        PFN_vkGetDisplayPlaneCapabilities2KHR, VkResult(..), VkBuffer,
+        PFN_vkGetDisplayPlaneCapabilities2KHR, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -70,21 +75,23 @@ module Graphics.Vulkan.Ext.VK_KHR_get_display_properties2
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkDisplayEventInfoEXT, VkDisplayModeCreateInfoKHR,
-        VkDisplayPowerInfoEXT, VkDisplayPresentInfoKHR,
-        VkDisplaySurfaceCreateInfoKHR, VkExtent3D, VkOffset3D,
-        VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
+        VkDisplayNativeHdrSurfaceCapabilitiesAMD, VkDisplayPowerInfoEXT,
+        VkDisplayPresentInfoKHR, VkDisplaySurfaceCreateInfoKHR, VkExtent3D,
+        VkOffset3D, VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION,
         VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME,
         pattern VK_KHR_GET_DISPLAY_PROPERTIES_2_EXTENSION_NAME,
@@ -140,7 +147,7 @@ type VkGetPhysicalDeviceDisplayProperties2KHR =
 --   >     , VkDisplayProperties2KHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayProperties2KHR vkGetPhysicalDeviceDisplayProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayProperties2KHR vkGetPhysicalDeviceDisplayProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceDisplayProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -211,7 +218,7 @@ type VkGetPhysicalDeviceDisplayPlaneProperties2KHR =
 --   >     , VkDisplayPlaneProperties2KHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPlaneProperties2KHR vkGetPhysicalDeviceDisplayPlaneProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceDisplayPlaneProperties2KHR vkGetPhysicalDeviceDisplayPlaneProperties2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceDisplayPlaneProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -281,7 +288,7 @@ type VkGetDisplayModeProperties2KHR =
 --   >     , VkDisplayModeProperties2KHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayModeProperties2KHR vkGetDisplayModeProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDisplayModeProperties2KHR vkGetDisplayModeProperties2KHR registry at www.khronos.org>
 type HS_vkGetDisplayModeProperties2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -350,7 +357,7 @@ type VkGetDisplayPlaneCapabilities2KHR =
 --   >     , VkDisplayPlaneCapabilities2KHR* pCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDisplayPlaneCapabilities2KHR vkGetDisplayPlaneCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDisplayPlaneCapabilities2KHR vkGetDisplayPlaneCapabilities2KHR registry at www.khronos.org>
 type HS_vkGetDisplayPlaneCapabilities2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

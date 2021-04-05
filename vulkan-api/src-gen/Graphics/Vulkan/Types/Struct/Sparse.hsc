@@ -23,7 +23,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 import Graphics.Vulkan.Types.Handles            (VkBuffer, VkDeviceMemory,
                                                  VkImage)
 import Graphics.Vulkan.Types.Struct.Extent      (VkExtent3D)
-import Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
+import {-# SOURCE #-} Graphics.Vulkan.Types.Struct.Image       (VkImageSubresource)
 import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
 
 -- | > typedef struct VkSparseBufferMemoryBindInfo {
@@ -32,7 +32,7 @@ import Graphics.Vulkan.Types.Struct.Offset      (VkOffset3D)
 --   >     const VkSparseMemoryBind* pBinds;
 --   > } VkSparseBufferMemoryBindInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseBufferMemoryBindInfo VkSparseBufferMemoryBindInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseBufferMemoryBindInfo VkSparseBufferMemoryBindInfo registry at www.khronos.org>
 type VkSparseBufferMemoryBindInfo =
      VkStruct VkSparseBufferMemoryBindInfo' -- ' closing tick for hsc2hs
 
@@ -49,12 +49,12 @@ instance VulkanMarshal VkSparseBufferMemoryBindInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "bindCount" Word32 'False 
+             ('FieldMeta "bindCount" Word32 'False
                                                    #{offset VkSparseBufferMemoryBindInfo, bindCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pBinds" (Ptr VkSparseMemoryBind) 'False 
+             ('FieldMeta "pBinds" (Ptr VkSparseMemoryBind) 'False
                                                                   #{offset VkSparseBufferMemoryBindInfo, pBinds}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -69,7 +69,7 @@ instance VulkanMarshal VkSparseBufferMemoryBindInfo where
 --   >     VkSparseImageFormatFlags flags;
 --   > } VkSparseImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageFormatProperties VkSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageFormatProperties VkSparseImageFormatProperties registry at www.khronos.org>
 type VkSparseImageFormatProperties =
      VkStruct VkSparseImageFormatProperties' -- ' closing tick for hsc2hs
 
@@ -86,12 +86,12 @@ instance VulkanMarshal VkSparseImageFormatProperties where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "imageGranularity" VkExtent3D 'False 
+             ('FieldMeta "imageGranularity" VkExtent3D 'False
                                                               #{offset VkSparseImageFormatProperties, imageGranularity}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "flags" VkSparseImageFormatFlags 'True 
+             ('FieldMeta "flags" VkSparseImageFormatFlags 'True
                                                                 #{offset VkSparseImageFormatProperties, flags}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -106,7 +106,7 @@ instance VulkanMarshal VkSparseImageFormatProperties where
 --   >     VkSparseImageFormatProperties    properties;
 --   > } VkSparseImageFormatProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageFormatProperties2 VkSparseImageFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageFormatProperties2 VkSparseImageFormatProperties2 registry at www.khronos.org>
 type VkSparseImageFormatProperties2 =
      VkStruct VkSparseImageFormatProperties2' -- ' closing tick for hsc2hs
 
@@ -123,7 +123,7 @@ instance VulkanMarshal VkSparseImageFormatProperties2 where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
+             ('FieldMeta "pNext" (Ptr Void) 'False
                                                    #{offset VkSparseImageFormatProperties2, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -150,7 +150,7 @@ type VkSparseImageFormatProperties2KHR =
 --   >     VkSparseMemoryBindFlagsflags;
 --   > } VkSparseImageMemoryBind;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryBind VkSparseImageMemoryBind registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageMemoryBind VkSparseImageMemoryBind registry at www.khronos.org>
 type VkSparseImageMemoryBind = VkStruct VkSparseImageMemoryBind' -- ' closing tick for hsc2hs
 
 data VkSparseImageMemoryBind' -- ' closing tick for hsc2hs
@@ -165,27 +165,27 @@ instance VulkanMarshal VkSparseImageMemoryBind where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "offset" VkOffset3D 'False 
+             ('FieldMeta "offset" VkOffset3D 'False
                                                     #{offset VkSparseImageMemoryBind, offset}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "extent" VkExtent3D 'False 
+             ('FieldMeta "extent" VkExtent3D 'False
                                                     #{offset VkSparseImageMemoryBind, extent}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "memory" VkDeviceMemory 'True 
+             ('FieldMeta "memory" VkDeviceMemory 'True
                                                        #{offset VkSparseImageMemoryBind, memory}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "memoryOffset" VkDeviceSize 'False 
+             ('FieldMeta "memoryOffset" VkDeviceSize 'False
                                                             #{offset VkSparseImageMemoryBind, memoryOffset}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "flags" VkSparseMemoryBindFlags 'True 
+             ('FieldMeta "flags" VkSparseMemoryBindFlags 'True
                                                                #{offset VkSparseImageMemoryBind, flags}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -200,7 +200,7 @@ instance VulkanMarshal VkSparseImageMemoryBind where
 --   >     const VkSparseImageMemoryBind* pBinds;
 --   > } VkSparseImageMemoryBindInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryBindInfo VkSparseImageMemoryBindInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageMemoryBindInfo VkSparseImageMemoryBindInfo registry at www.khronos.org>
 type VkSparseImageMemoryBindInfo =
      VkStruct VkSparseImageMemoryBindInfo' -- ' closing tick for hsc2hs
 
@@ -217,12 +217,12 @@ instance VulkanMarshal VkSparseImageMemoryBindInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "bindCount" Word32 'False 
+             ('FieldMeta "bindCount" Word32 'False
                                                    #{offset VkSparseImageMemoryBindInfo, bindCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pBinds" (Ptr VkSparseImageMemoryBind) 'False 
+             ('FieldMeta "pBinds" (Ptr VkSparseImageMemoryBind) 'False
                                                                        #{offset VkSparseImageMemoryBindInfo, pBinds}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -239,7 +239,7 @@ instance VulkanMarshal VkSparseImageMemoryBindInfo where
 --   >     VkDeviceSize           imageMipTailStride;
 --   > } VkSparseImageMemoryRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryRequirements VkSparseImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageMemoryRequirements VkSparseImageMemoryRequirements registry at www.khronos.org>
 type VkSparseImageMemoryRequirements =
      VkStruct VkSparseImageMemoryRequirements' -- ' closing tick for hsc2hs
 
@@ -257,22 +257,22 @@ instance VulkanMarshal VkSparseImageMemoryRequirements where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "imageMipTailFirstLod" Word32 'False 
+             ('FieldMeta "imageMipTailFirstLod" Word32 'False
                                                               #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "imageMipTailSize" VkDeviceSize 'False 
+             ('FieldMeta "imageMipTailSize" VkDeviceSize 'False
                                                                 #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "imageMipTailOffset" VkDeviceSize 'False 
+             ('FieldMeta "imageMipTailOffset" VkDeviceSize 'False
                                                                   #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "imageMipTailStride" VkDeviceSize 'False 
+             ('FieldMeta "imageMipTailStride" VkDeviceSize 'False
                                                                   #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -287,7 +287,7 @@ instance VulkanMarshal VkSparseImageMemoryRequirements where
 --   >     VkSparseImageMemoryRequirements                                      memoryRequirements;
 --   > } VkSparseImageMemoryRequirements2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageMemoryRequirements2 VkSparseImageMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageMemoryRequirements2 VkSparseImageMemoryRequirements2 registry at www.khronos.org>
 type VkSparseImageMemoryRequirements2 =
      VkStruct VkSparseImageMemoryRequirements2' -- ' closing tick for hsc2hs
 
@@ -304,7 +304,7 @@ instance VulkanMarshal VkSparseImageMemoryRequirements2 where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
+             ('FieldMeta "pNext" (Ptr Void) 'False
                                                    #{offset VkSparseImageMemoryRequirements2, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -329,7 +329,7 @@ type VkSparseImageMemoryRequirements2KHR =
 --   >     const VkSparseMemoryBind* pBinds;
 --   > } VkSparseImageOpaqueMemoryBindInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseImageOpaqueMemoryBindInfo VkSparseImageOpaqueMemoryBindInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseImageOpaqueMemoryBindInfo VkSparseImageOpaqueMemoryBindInfo registry at www.khronos.org>
 type VkSparseImageOpaqueMemoryBindInfo =
      VkStruct VkSparseImageOpaqueMemoryBindInfo' -- ' closing tick for hsc2hs
 
@@ -346,12 +346,12 @@ instance VulkanMarshal VkSparseImageOpaqueMemoryBindInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "bindCount" Word32 'False 
+             ('FieldMeta "bindCount" Word32 'False
                                                    #{offset VkSparseImageOpaqueMemoryBindInfo, bindCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pBinds" (Ptr VkSparseMemoryBind) 'False 
+             ('FieldMeta "pBinds" (Ptr VkSparseMemoryBind) 'False
                                                                   #{offset VkSparseImageOpaqueMemoryBindInfo, pBinds}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -368,7 +368,7 @@ instance VulkanMarshal VkSparseImageOpaqueMemoryBindInfo where
 --   >     VkSparseMemoryBindFlagsflags;
 --   > } VkSparseMemoryBind;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSparseMemoryBind VkSparseMemoryBind registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSparseMemoryBind VkSparseMemoryBind registry at www.khronos.org>
 type VkSparseMemoryBind = VkStruct VkSparseMemoryBind' -- ' closing tick for hsc2hs
 
 data VkSparseMemoryBind' -- ' closing tick for hsc2hs
@@ -383,22 +383,22 @@ instance VulkanMarshal VkSparseMemoryBind where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "size" VkDeviceSize 'False 
+             ('FieldMeta "size" VkDeviceSize 'False
                                                     #{offset VkSparseMemoryBind, size}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "memory" VkDeviceMemory 'True 
+             ('FieldMeta "memory" VkDeviceMemory 'True
                                                        #{offset VkSparseMemoryBind, memory}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "memoryOffset" VkDeviceSize 'False 
+             ('FieldMeta "memoryOffset" VkDeviceSize 'False
                                                             #{offset VkSparseMemoryBind, memoryOffset}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "flags" VkSparseMemoryBindFlags 'True 
+             ('FieldMeta "flags" VkSparseMemoryBindFlags 'True
                                                                #{offset VkSparseMemoryBind, flags}
                 1
                 'True -- ' closing tick for hsc2hs

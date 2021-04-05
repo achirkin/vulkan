@@ -20,7 +20,7 @@ import Graphics.Vulkan.Types.Handles            (VkFence)
 --   >     VkFenceCreateFlags     flags;
 --   > } VkFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceCreateInfo VkFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkFenceCreateInfo VkFenceCreateInfo registry at www.khronos.org>
 type VkFenceCreateInfo = VkStruct VkFenceCreateInfo' -- ' closing tick for hsc2hs
 
 data VkFenceCreateInfo' -- ' closing tick for hsc2hs
@@ -56,7 +56,7 @@ instance VulkanMarshal VkFenceCreateInfo where
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceGetFdInfoKHR VkFenceGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkFenceGetFdInfoKHR VkFenceGetFdInfoKHR registry at www.khronos.org>
 type VkFenceGetFdInfoKHR = VkStruct VkFenceGetFdInfoKHR' -- ' closing tick for hsc2hs
 
 data VkFenceGetFdInfoKHR' -- ' closing tick for hsc2hs

@@ -14,48 +14,123 @@
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Core_1_0
-       (-- * Vulkan core API interface definitions
-        -- |
-        --
-        -- @api = vulkan@
-        --
-        -- @name = VK_VERSION_1_0@
-        --
-        -- @number = 1.0@
-        --
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkExtent2D, VkExtent3D, VkOffset2D, VkOffset3D,
+        VkRect2D, VkResult(..), VkStructureType(..), -- > ##include "vk_platform.h"
+                                                     --
 
-        -- ** Header boilerplate
-        --
-        -- |
-        -- > ##include "vk_platform.h"
-        --
+                                                     -- ** These types are part of the API, though not directly used in API commands or data structures
+                                                     VkAccessBitmask(..),
+        VkAccessFlagBits(), VkAccessFlags(), VkBaseInStructure,
+        VkBaseOutStructure, VkBufferMemoryBarrier,
+        VkDispatchIndirectCommand, VkDrawIndexedIndirectCommand,
+        VkDrawIndirectCommand, VkImageAspectBitmask(..),
+        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
+        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
+        VkImageAspectFlagBits(), VkImageAspectFlags(),
+        VkImageCreateFlagBits(), VkImageCreateFlags(),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkImageMemoryBarrier,
+        VkImageSubresourceRange, VkMemoryBarrier, VkObjectType(..),
+        VkVendorId(..), -- > ##include "vk_platform.h"
+                        --
 
-        -- ** API version
-        --
+                        -- ** API version macros
+                        --
 
-        -- ** API constants
-        VkPipelineBindPoint(..), VkPipelineCacheHeaderVersion(..),
-        VkPipelineCreateBitmask(..), VkPipelineStageBitmask(..),
-        VkPipelineCacheCreateFlagBits(..),
-        VkPipelineColorBlendStateCreateFlagBits(..),
-        VkPipelineCreateFlagBits(), VkPipelineCreateFlags(),
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..), VkPipelineStageFlagBits(),
-        VkPipelineStageFlags(),
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..),
-        pattern VK_LOD_CLAMP_NONE, pattern VK_REMAINING_MIP_LEVELS,
-        pattern VK_REMAINING_ARRAY_LAYERS, pattern VK_WHOLE_SIZE,
-        pattern VK_ATTACHMENT_UNUSED, pattern VK_TRUE, pattern VK_FALSE,
-        pattern VK_QUEUE_FAMILY_IGNORED, pattern VK_SUBPASS_EXTERNAL,
+                        -- ** API constants
+                        VkPipelineBindPoint(..),
+        VkPipelineCacheHeaderVersion(..), VkPipelineCreateBitmask(..),
+        VkPipelineCreationFeedbackBitmaskEXT(..),
+        VkPipelineExecutableStatisticFormatKHR(..),
+        VkPipelineStageBitmask(..), VkPipelineCacheCreateBitmask(..),
+        VkPipelineCacheCreateFlagBits(), VkPipelineCacheCreateFlags(),
+        VkPipelineCompilerControlBitmaskAMD(..),
+        VkPipelineCompilerControlFlagBitsAMD(),
+        VkPipelineCompilerControlFlagsAMD(), VkPipelineCreateFlagBits(),
+        VkPipelineCreateFlags(), VkPipelineCreationFeedbackFlagBitsEXT(),
+        VkPipelineCreationFeedbackFlagsEXT(),
+        VkPipelineShaderStageCreateBitmask(..),
+        VkPipelineShaderStageCreateFlagBits(),
+        VkPipelineShaderStageCreateFlags(), VkPipelineStageFlagBits(),
+        VkPipelineStageFlags(), pattern VK_ATTACHMENT_UNUSED,
+        pattern VK_FALSE, pattern VK_LOD_CLAMP_NONE,
+        pattern VK_QUEUE_FAMILY_IGNORED, pattern VK_REMAINING_ARRAY_LAYERS,
+        pattern VK_REMAINING_MIP_LEVELS, pattern VK_SUBPASS_EXTERNAL,
+        pattern VK_TRUE, pattern VK_WHOLE_SIZE,
         -- ** Device initialization
-        VkCreateInstance, pattern VkCreateInstance, HS_vkCreateInstance,
+        module Graphics.Vulkan.Marshal, VkAllocationCallbacks,
+        VkApplicationInfo, VkFormat(..), VkFormatFeatureBitmask(..),
+        VkFormatFeatureFlagBits(), VkFormatFeatureFlags(),
+        VkFormatProperties, VkImageFormatProperties,
+        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
+        VkBuildAccelerationStructureFlagsNV(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorBindingFlagsEXT(..), VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDirectFBSurfaceCreateFlagsEXT(..),
+        VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkGeometryFlagsNV(..),
+        VkGeometryInstanceFlagsNV(..), VkHeadlessSurfaceCreateFlagsEXT(..),
+        VkIOSSurfaceCreateFlagsMVK(..),
+        VkImagePipeSurfaceCreateFlagsFUCHSIA(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMetalSurfaceCreateFlagsEXT(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkPipelineCoverageReductionStateCreateFlagsNV(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineLayoutCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        VkPipelineRasterizationDepthClipStateCreateFlagsEXT(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineRasterizationStateStreamCreateFlagsEXT(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkQueryPoolCreateFlags(..), VkResolveModeFlagsKHR(..),
+        VkSemaphoreCreateFlags(..), VkSemaphoreImportFlagsKHR(..),
+        VkSemaphoreWaitFlagsKHR(..),
+        VkStreamDescriptorSurfaceCreateFlagsGGP(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
+        VkXlibSurfaceCreateFlagsKHR(..), VkInstanceCreateInfo,
+        VkInternalAllocationType(..), VkMemoryHeap,
+        VkMemoryAllocateBitmask(..), VkMemoryHeapBitmask(..),
+        VkMemoryOverallocationBehaviorAMD(..), VkMemoryPropertyBitmask(..),
+        VkMemoryAllocateFlagBits(), VkMemoryAllocateFlagBitsKHR(..),
+        VkMemoryAllocateFlags(), VkMemoryHeapFlagBits(),
+        VkMemoryHeapFlags(), VkMemoryPropertyFlagBits(),
+        VkMemoryPropertyFlags(), VkMemoryType, VkPhysicalDeviceFeatures,
+        VkPhysicalDeviceLimits, VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceProperties, VkPhysicalDeviceSparseProperties,
+        VkPhysicalDeviceType(..), VkQueueFamilyProperties,
+        VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
+        VkQueueFlagBits(), VkQueueFlags(), VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(),
+        VkSystemAllocationScope(..), -- > ##include "vk_platform.h"
+                                     VkCreateInstance,
+        pattern VkCreateInstance, HS_vkCreateInstance,
         PFN_vkCreateInstance, vkCreateInstance, vkCreateInstanceUnsafe,
         vkCreateInstanceSafe, VkDestroyInstance, pattern VkDestroyInstance,
         HS_vkDestroyInstance, PFN_vkDestroyInstance, vkDestroyInstance,
@@ -108,70 +183,7 @@ module Graphics.Vulkan.Core_1_0
         VkGetDeviceProcAddr, pattern VkGetDeviceProcAddr,
         HS_vkGetDeviceProcAddr, PFN_vkGetDeviceProcAddr,
         vkGetDeviceProcAddr, vkGetDeviceProcAddrUnsafe,
-        vkGetDeviceProcAddrSafe, module Graphics.Vulkan.Marshal,
-        VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
-        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
-        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
-        VkDebugUtilsMessengerCreateFlagsEXT(..),
-        VkDescriptorPoolResetFlags(..),
-        VkDescriptorUpdateTemplateCreateFlags(..),
-        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
-        VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
-        VkExternalFenceFeatureFlagsKHR(..),
-        VkExternalFenceHandleTypeFlagsKHR(..),
-        VkExternalMemoryFeatureFlagsKHR(..),
-        VkExternalMemoryHandleTypeFlagsKHR(..),
-        VkExternalSemaphoreFeatureFlagsKHR(..),
-        VkExternalSemaphoreHandleTypeFlagsKHR(..),
-        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
-        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
-        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
-        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
-        VkPipelineCacheCreateFlags(..),
-        VkPipelineColorBlendStateCreateFlags(..),
-        VkPipelineCoverageModulationStateCreateFlagsNV(..),
-        VkPipelineCoverageToColorStateCreateFlagsNV(..),
-        VkPipelineDepthStencilStateCreateFlags(..),
-        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
-        VkPipelineDynamicStateCreateFlags(..),
-        VkPipelineInputAssemblyStateCreateFlags(..),
-        VkPipelineLayoutCreateFlags(..),
-        VkPipelineMultisampleStateCreateFlags(..),
-        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
-        VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
-        VkPipelineTessellationStateCreateFlags(..),
-        VkPipelineVertexInputStateCreateFlags(..),
-        VkPipelineViewportStateCreateFlags(..),
-        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
-        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
-        VkWaylandSurfaceCreateFlagsKHR(..),
-        VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
-        VkXlibSurfaceCreateFlagsKHR(..), VkFormat(..),
-        VkFormatFeatureBitmask(..), VkFormatFeatureFlagBits(),
-        VkFormatFeatureFlags(), VkImageAspectBitmask(..),
-        VkImageCreateBitmask(..), VkImageLayout(..), VkImageTiling(..),
-        VkImageType(..), VkImageUsageBitmask(..), VkImageViewType(..),
-        VkImageAspectFlagBits(), VkImageAspectFlags(),
-        VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(),
-        VkInternalAllocationType(..), VkMemoryAllocateBitmask(..),
-        VkMemoryHeapBitmask(..), VkMemoryPropertyBitmask(..),
-        VkMemoryAllocateFlagBits(), VkMemoryAllocateFlagBitsKHR(..),
-        VkMemoryAllocateFlags(), VkMemoryHeapFlagBits(),
-        VkMemoryHeapFlags(), VkMemoryPropertyFlagBits(),
-        VkMemoryPropertyFlags(), VkPhysicalDeviceType(..),
-        VkQueueBitmask(..), VkQueueGlobalPriorityEXT(..),
-        VkQueueFlagBits(), VkQueueFlags(), VkResult(..),
-        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
-        VkSampleCountFlags(), VkStructureType(..),
-        VkSystemAllocationScope(..), newVkAllocationFunction,
+        vkGetDeviceProcAddrSafe, newVkAllocationFunction,
         newVkDebugReportCallbackEXT, newVkDebugUtilsMessengerCallbackEXT,
         newVkFreeFunction, newVkInternalAllocationNotification,
         newVkInternalFreeNotification, newVkReallocationFunction,
@@ -188,61 +200,101 @@ module Graphics.Vulkan.Core_1_0
         PFN_vkDebugReportCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT,
         PFN_vkFreeFunction, PFN_vkInternalAllocationNotification,
         PFN_vkInternalFreeNotification, PFN_vkReallocationFunction,
-        PFN_vkVoidFunction, VkBuffer, VkBufferView, VkBufferView_T(),
-        VkBuffer_T(), VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
-        VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
-        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSetLayout,
-        VkDescriptorSetLayout_T(), VkDescriptorSet_T(),
-        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplateKHR,
-        VkDescriptorUpdateTemplateKHR_T(), VkDescriptorUpdateTemplate_T(),
-        VkDevice, VkDeviceMemory, VkDeviceMemory_T(), VkDevice_T(),
-        VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
-        VkDisplayModeKHR_T(), VkEvent, VkEvent_T(), VkFence, VkFence_T(),
-        VkFramebuffer, VkFramebuffer_T(), VkImage, VkImageView,
-        VkImageView_T(), VkImage_T(), VkIndirectCommandsLayoutNVX,
-        VkIndirectCommandsLayoutNVX_T(), VkInstance, VkInstance_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(), VkPhysicalDevice,
+        PFN_vkVoidFunction, VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
+        VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
+        VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
+        VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
+        VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        VkDescriptorUpdateTemplate_T(), VkDevice, VkDeviceMemory,
+        VkDeviceMemory_T(), VkDevice_T(), VkDisplayKHR, VkDisplayKHR_T(),
+        VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
+        VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
+        VkImageView, VkImageView_T(), VkImage_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
         VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
-        VkPipeline_T(), VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(),
-        VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        VkAllocationCallbacks, VkApplicationInfo, VkExtent2D, VkExtent3D,
-        VkFormatProperties, VkFormatProperties2, VkFormatProperties2KHR,
-        VkImageBlit, VkImageCopy, VkImageCreateInfo,
-        VkImageFormatListCreateInfoKHR, VkImageFormatProperties,
-        VkImageFormatProperties2, VkImageFormatProperties2KHR,
-        VkImageMemoryBarrier, VkImageMemoryRequirementsInfo2,
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkFormatProperties2, VkFormatProperties2KHR, VkImageBlit,
+        VkImageCopy, VkImageCreateInfo,
+        VkImageDrmFormatModifierExplicitCreateInfoEXT,
+        VkImageDrmFormatModifierListCreateInfoEXT,
+        VkImageDrmFormatModifierPropertiesEXT, VkImageFormatListCreateInfo,
+        VkImageFormatListCreateInfoKHR, VkImageFormatProperties2,
+        VkImageFormatProperties2KHR, VkImageMemoryRequirementsInfo2,
         VkImageMemoryRequirementsInfo2KHR,
         VkImagePlaneMemoryRequirementsInfo,
         VkImagePlaneMemoryRequirementsInfoKHR, VkImageResolve,
         VkImageSparseMemoryRequirementsInfo2,
-        VkImageSparseMemoryRequirementsInfo2KHR, VkImageSubresource,
-        VkImageSubresourceLayers, VkImageSubresourceRange,
-        VkImageSwapchainCreateInfoKHR, VkImageViewCreateInfo,
-        VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfoKHR,
-        VkInstanceCreateInfo, VkMemoryAllocateFlagsInfo,
+        VkImageSparseMemoryRequirementsInfo2KHR,
+        VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfoEXT,
+        VkImageSubresource, VkImageSubresourceLayers,
+        VkImageSwapchainCreateInfoKHR, VkImageViewASTCDecodeModeEXT,
+        VkImageViewAddressPropertiesNVX, VkImageViewCreateInfo,
+        VkImageViewHandleInfoNVX, VkImageViewUsageCreateInfo,
+        VkImageViewUsageCreateInfoKHR, VkMemoryAllocateFlagsInfo,
         VkMemoryAllocateFlagsInfoKHR, VkMemoryAllocateInfo,
-        VkMemoryBarrier, VkMemoryDedicatedAllocateInfo,
-        VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
-        VkMemoryDedicatedRequirementsKHR, VkMemoryFdPropertiesKHR,
-        VkMemoryGetFdInfoKHR, VkMemoryHeap,
-        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
-        VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
+        VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfoKHR,
+        VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirementsKHR,
+        VkMemoryFdPropertiesKHR, VkMemoryGetFdInfoKHR,
+        VkMemoryHostPointerPropertiesEXT,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements,
+        VkMemoryRequirements2, VkMemoryRequirements2KHR,
         VkPhysicalDevice16BitStorageFeatures,
         VkPhysicalDevice16BitStorageFeaturesKHR,
+        VkPhysicalDevice4444FormatsFeaturesEXT,
+        VkPhysicalDevice8BitStorageFeatures,
+        VkPhysicalDevice8BitStorageFeaturesKHR,
+        VkPhysicalDeviceASTCDecodeFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
         VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
+        VkPhysicalDeviceBufferAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeatures,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesEXT,
+        VkPhysicalDeviceBufferDeviceAddressFeaturesKHR,
+        VkPhysicalDeviceCoherentMemoryFeaturesAMD,
+        VkPhysicalDeviceComputeShaderDerivativesFeaturesNV,
+        VkPhysicalDeviceConditionalRenderingFeaturesEXT,
         VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
+        VkPhysicalDeviceCooperativeMatrixFeaturesNV,
+        VkPhysicalDeviceCooperativeMatrixPropertiesNV,
+        VkPhysicalDeviceCornerSampledImageFeaturesNV,
+        VkPhysicalDeviceCoverageReductionModeFeaturesNV,
+        VkPhysicalDeviceCustomBorderColorFeaturesEXT,
+        VkPhysicalDeviceCustomBorderColorPropertiesEXT,
+        VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,
+        VkPhysicalDeviceDepthClipEnableFeaturesEXT,
+        VkPhysicalDeviceDepthStencilResolveProperties,
+        VkPhysicalDeviceDepthStencilResolvePropertiesKHR,
+        VkPhysicalDeviceDescriptorIndexingFeatures,
         VkPhysicalDeviceDescriptorIndexingFeaturesEXT,
+        VkPhysicalDeviceDescriptorIndexingProperties,
         VkPhysicalDeviceDescriptorIndexingPropertiesEXT,
+        VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV,
+        VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV,
+        VkPhysicalDeviceDiagnosticsConfigFeaturesNV,
         VkPhysicalDeviceDiscardRectanglePropertiesEXT,
+        VkPhysicalDeviceDriverProperties,
+        VkPhysicalDeviceDriverPropertiesKHR,
+        VkPhysicalDeviceExclusiveScissorFeaturesNV,
+        VkPhysicalDeviceExtendedDynamicStateFeaturesEXT,
         VkPhysicalDeviceExternalBufferInfo,
         VkPhysicalDeviceExternalBufferInfoKHR,
         VkPhysicalDeviceExternalFenceInfo,
@@ -253,57 +305,138 @@ module Graphics.Vulkan.Core_1_0
         VkPhysicalDeviceExternalSemaphoreInfo,
         VkPhysicalDeviceExternalSemaphoreInfoKHR,
         VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2KHR,
+        VkPhysicalDeviceFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceFloatControlsProperties,
+        VkPhysicalDeviceFloatControlsPropertiesKHR,
+        VkPhysicalDeviceFragmentDensityMap2FeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMap2PropertiesEXT,
+        VkPhysicalDeviceFragmentDensityMapFeaturesEXT,
+        VkPhysicalDeviceFragmentDensityMapPropertiesEXT,
+        VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV,
+        VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT,
         VkPhysicalDeviceGroupProperties,
-        VkPhysicalDeviceGroupPropertiesKHR, VkPhysicalDeviceIDProperties,
-        VkPhysicalDeviceIDPropertiesKHR, VkPhysicalDeviceImageFormatInfo2,
-        VkPhysicalDeviceImageFormatInfo2KHR, VkPhysicalDeviceLimits,
+        VkPhysicalDeviceGroupPropertiesKHR,
+        VkPhysicalDeviceHostQueryResetFeatures,
+        VkPhysicalDeviceHostQueryResetFeaturesEXT,
+        VkPhysicalDeviceIDProperties, VkPhysicalDeviceIDPropertiesKHR,
+        VkPhysicalDeviceImageDrmFormatModifierInfoEXT,
+        VkPhysicalDeviceImageFormatInfo2,
+        VkPhysicalDeviceImageFormatInfo2KHR,
+        VkPhysicalDeviceImageRobustnessFeaturesEXT,
+        VkPhysicalDeviceImageViewImageFormatInfoEXT,
+        VkPhysicalDeviceImagelessFramebufferFeatures,
+        VkPhysicalDeviceImagelessFramebufferFeaturesKHR,
+        VkPhysicalDeviceIndexTypeUint8FeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockFeaturesEXT,
+        VkPhysicalDeviceInlineUniformBlockPropertiesEXT,
+        VkPhysicalDeviceLineRasterizationFeaturesEXT,
+        VkPhysicalDeviceLineRasterizationPropertiesEXT,
         VkPhysicalDeviceMaintenance3Properties,
         VkPhysicalDeviceMaintenance3PropertiesKHR,
-        VkPhysicalDeviceMemoryProperties,
+        VkPhysicalDeviceMemoryBudgetPropertiesEXT,
+        VkPhysicalDeviceMemoryPriorityFeaturesEXT,
         VkPhysicalDeviceMemoryProperties2,
         VkPhysicalDeviceMemoryProperties2KHR,
+        VkPhysicalDeviceMeshShaderFeaturesNV,
+        VkPhysicalDeviceMeshShaderPropertiesNV,
         VkPhysicalDeviceMultiviewFeatures,
         VkPhysicalDeviceMultiviewFeaturesKHR,
         VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
         VkPhysicalDeviceMultiviewProperties,
         VkPhysicalDeviceMultiviewPropertiesKHR,
+        VkPhysicalDevicePCIBusInfoPropertiesEXT,
+        VkPhysicalDevicePerformanceQueryFeaturesKHR,
+        VkPhysicalDevicePerformanceQueryPropertiesKHR,
+        VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT,
+        VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR,
         VkPhysicalDevicePointClippingProperties,
         VkPhysicalDevicePointClippingPropertiesKHR,
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
-        VkPhysicalDeviceProperties2KHR,
+        VkPhysicalDevicePrivateDataFeaturesEXT,
+        VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2KHR,
         VkPhysicalDeviceProtectedMemoryFeatures,
         VkPhysicalDeviceProtectedMemoryProperties,
         VkPhysicalDevicePushDescriptorPropertiesKHR,
+        VkPhysicalDeviceRayTracingPropertiesNV,
+        VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV,
+        VkPhysicalDeviceRobustness2FeaturesEXT,
+        VkPhysicalDeviceRobustness2PropertiesEXT,
         VkPhysicalDeviceSampleLocationsPropertiesEXT,
+        VkPhysicalDeviceSamplerFilterMinmaxProperties,
         VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
         VkPhysicalDeviceSamplerYcbcrConversionFeatures,
         VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR,
+        VkPhysicalDeviceScalarBlockLayoutFeatures,
+        VkPhysicalDeviceScalarBlockLayoutFeaturesEXT,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures,
+        VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR,
+        VkPhysicalDeviceShaderAtomicFloatFeaturesEXT,
+        VkPhysicalDeviceShaderAtomicInt64Features,
+        VkPhysicalDeviceShaderAtomicInt64FeaturesKHR,
+        VkPhysicalDeviceShaderClockFeaturesKHR,
+        VkPhysicalDeviceShaderCoreProperties2AMD,
         VkPhysicalDeviceShaderCorePropertiesAMD,
+        VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
         VkPhysicalDeviceShaderDrawParameterFeatures,
+        VkPhysicalDeviceShaderDrawParametersFeatures,
+        VkPhysicalDeviceShaderFloat16Int8Features,
+        VkPhysicalDeviceShaderFloat16Int8FeaturesKHR,
+        VkPhysicalDeviceShaderImageFootprintFeaturesNV,
+        VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
+        VkPhysicalDeviceShaderSMBuiltinsFeaturesNV,
+        VkPhysicalDeviceShaderSMBuiltinsPropertiesNV,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures,
+        VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR,
+        VkPhysicalDeviceShadingRateImageFeaturesNV,
+        VkPhysicalDeviceShadingRateImagePropertiesNV,
         VkPhysicalDeviceSparseImageFormatInfo2,
         VkPhysicalDeviceSparseImageFormatInfo2KHR,
-        VkPhysicalDeviceSparseProperties,
         VkPhysicalDeviceSubgroupProperties,
+        VkPhysicalDeviceSubgroupSizeControlFeaturesEXT,
+        VkPhysicalDeviceSubgroupSizeControlPropertiesEXT,
         VkPhysicalDeviceSurfaceInfo2KHR,
+        VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT,
+        VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT,
+        VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
+        VkPhysicalDeviceTimelineSemaphoreFeatures,
+        VkPhysicalDeviceTimelineSemaphoreFeaturesKHR,
+        VkPhysicalDeviceTimelineSemaphoreProperties,
+        VkPhysicalDeviceTimelineSemaphorePropertiesKHR,
+        VkPhysicalDeviceToolPropertiesEXT,
+        VkPhysicalDeviceTransformFeedbackFeaturesEXT,
+        VkPhysicalDeviceTransformFeedbackPropertiesEXT,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeatures,
+        VkPhysicalDeviceUniformBufferStandardLayoutFeaturesKHR,
         VkPhysicalDeviceVariablePointerFeatures,
         VkPhysicalDeviceVariablePointerFeaturesKHR,
+        VkPhysicalDeviceVariablePointersFeatures,
+        VkPhysicalDeviceVariablePointersFeaturesKHR,
+        VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
         VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-        VkPhysicalDeviceFeatures, VkQueueFamilyProperties,
-        VkQueueFamilyProperties2, VkQueueFamilyProperties2KHR,
-        -- ** Device commands
-        VkCreateDevice, pattern VkCreateDevice, HS_vkCreateDevice,
-        PFN_vkCreateDevice, vkCreateDevice, vkCreateDeviceUnsafe,
-        vkCreateDeviceSafe, VkDestroyDevice, pattern VkDestroyDevice,
-        HS_vkDestroyDevice, PFN_vkDestroyDevice, vkDestroyDevice,
-        vkDestroyDeviceUnsafe, vkDestroyDeviceSafe,
-        VkDeviceEventTypeEXT(..), VkDeviceGroupPresentModeBitmaskKHR(..),
-        VkDeviceCreateFlagBits(..), VkDeviceGroupPresentModeFlagBitsKHR(),
+        VkPhysicalDeviceVulkan11Features,
+        VkPhysicalDeviceVulkan11Properties,
+        VkPhysicalDeviceVulkan12Features,
+        VkPhysicalDeviceVulkan12Properties,
+        VkPhysicalDeviceVulkanMemoryModelFeatures,
+        VkPhysicalDeviceVulkanMemoryModelFeaturesKHR,
+        VkPhysicalDeviceYcbcrImageArraysFeaturesEXT,
+        VkQueueFamilyCheckpointPropertiesNV, VkQueueFamilyProperties2,
+        VkQueueFamilyProperties2KHR, -- ** Device commands
+                                     VkDeviceCreateInfo,
+        VkDeviceDiagnosticsConfigBitmaskNV(..), VkDeviceEventTypeEXT(..),
+        VkDeviceGroupPresentModeBitmaskKHR(..), VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigFlagBitsNV(),
+        VkDeviceDiagnosticsConfigFlagsNV(),
+        VkDeviceGroupPresentModeFlagBitsKHR(),
         VkDeviceGroupPresentModeFlagsKHR(), VkDeviceQueueCreateBitmask(..),
         VkDeviceQueueCreateFlagBits(), VkDeviceQueueCreateFlags(),
-        VkDeviceCreateInfo, VkDeviceEventInfoEXT,
-        VkDeviceGeneratedCommandsFeaturesNVX,
-        VkDeviceGeneratedCommandsLimitsNVX, VkDeviceGroupBindSparseInfo,
-        VkDeviceGroupBindSparseInfoKHR,
+        VkDeviceQueueCreateInfo, -- > ##include "vk_platform.h"
+                                 VkCreateDevice, pattern VkCreateDevice,
+        HS_vkCreateDevice, PFN_vkCreateDevice, vkCreateDevice,
+        vkCreateDeviceUnsafe, vkCreateDeviceSafe, VkDestroyDevice,
+        pattern VkDestroyDevice, HS_vkDestroyDevice, PFN_vkDestroyDevice,
+        vkDestroyDevice, vkDestroyDeviceUnsafe, vkDestroyDeviceSafe,
+        VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceEventInfoEXT,
+        VkDeviceGroupBindSparseInfo, VkDeviceGroupBindSparseInfoKHR,
         VkDeviceGroupCommandBufferBeginInfo,
         VkDeviceGroupCommandBufferBeginInfoKHR,
         VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfoKHR,
@@ -311,9 +444,14 @@ module Graphics.Vulkan.Core_1_0
         VkDeviceGroupRenderPassBeginInfo,
         VkDeviceGroupRenderPassBeginInfoKHR, VkDeviceGroupSubmitInfo,
         VkDeviceGroupSubmitInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR,
-        VkDeviceQueueCreateInfo, VkDeviceQueueGlobalPriorityCreateInfoEXT,
-        VkDeviceQueueInfo2, -- ** Extension discovery commands
-                            VkEnumerateInstanceExtensionProperties,
+        VkDeviceMemoryOpaqueCaptureAddressInfo,
+        VkDeviceMemoryOpaqueCaptureAddressInfoKHR,
+        VkDeviceMemoryOverallocationCreateInfoAMD,
+        VkDevicePrivateDataCreateInfoEXT,
+        VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueInfo2,
+        -- ** Extension discovery commands
+        VkExtensionProperties, -- > ##include "vk_platform.h"
+                               VkEnumerateInstanceExtensionProperties,
         pattern VkEnumerateInstanceExtensionProperties,
         HS_vkEnumerateInstanceExtensionProperties,
         PFN_vkEnumerateInstanceExtensionProperties,
@@ -326,8 +464,9 @@ module Graphics.Vulkan.Core_1_0
         PFN_vkEnumerateDeviceExtensionProperties,
         vkEnumerateDeviceExtensionProperties,
         vkEnumerateDeviceExtensionPropertiesUnsafe,
-        vkEnumerateDeviceExtensionPropertiesSafe, VkExtensionProperties,
-        -- ** Layer discovery commands
+        vkEnumerateDeviceExtensionPropertiesSafe, -- ** Layer discovery commands
+                                                  VkLayerProperties,
+        -- > ##include "vk_platform.h"
         VkEnumerateInstanceLayerProperties,
         pattern VkEnumerateInstanceLayerProperties,
         HS_vkEnumerateInstanceLayerProperties,
@@ -341,8 +480,9 @@ module Graphics.Vulkan.Core_1_0
         PFN_vkEnumerateDeviceLayerProperties,
         vkEnumerateDeviceLayerProperties,
         vkEnumerateDeviceLayerPropertiesUnsafe,
-        vkEnumerateDeviceLayerPropertiesSafe, VkLayerProperties,
-        -- ** queue commands
+        vkEnumerateDeviceLayerPropertiesSafe, -- ** Queue commands
+                                              VkSubmitInfo,
+        -- > ##include "vk_platform.h"
         VkGetDeviceQueue, pattern VkGetDeviceQueue, HS_vkGetDeviceQueue,
         PFN_vkGetDeviceQueue, vkGetDeviceQueue, vkGetDeviceQueueUnsafe,
         vkGetDeviceQueueSafe, VkQueueSubmit, pattern VkQueueSubmit,
@@ -352,8 +492,9 @@ module Graphics.Vulkan.Core_1_0
         vkQueueWaitIdle, vkQueueWaitIdleUnsafe, vkQueueWaitIdleSafe,
         VkDeviceWaitIdle, pattern VkDeviceWaitIdle, HS_vkDeviceWaitIdle,
         PFN_vkDeviceWaitIdle, vkDeviceWaitIdle, vkDeviceWaitIdleUnsafe,
-        vkDeviceWaitIdleSafe, VkSubmitInfo, -- ** Memory commands
-                                            VkAllocateMemory,
+        vkDeviceWaitIdleSafe, -- ** Memory commands
+                              VkMappedMemoryRange, -- > ##include "vk_platform.h"
+                                                   VkAllocateMemory,
         pattern VkAllocateMemory, HS_vkAllocateMemory,
         PFN_vkAllocateMemory, vkAllocateMemory, vkAllocateMemoryUnsafe,
         vkAllocateMemorySafe, VkFreeMemory, pattern VkFreeMemory,
@@ -375,10 +516,10 @@ module Graphics.Vulkan.Core_1_0
         pattern VkGetDeviceMemoryCommitment,
         HS_vkGetDeviceMemoryCommitment, PFN_vkGetDeviceMemoryCommitment,
         vkGetDeviceMemoryCommitment, vkGetDeviceMemoryCommitmentUnsafe,
-        vkGetDeviceMemoryCommitmentSafe, VkMappedMemoryRange,
-        -- ** Memory management API commands
-        VkBindBufferMemory, pattern VkBindBufferMemory,
-        HS_vkBindBufferMemory, PFN_vkBindBufferMemory, vkBindBufferMemory,
+        vkGetDeviceMemoryCommitmentSafe, -- > ##include "vk_platform.h"
+                                         VkBindBufferMemory,
+        pattern VkBindBufferMemory, HS_vkBindBufferMemory,
+        PFN_vkBindBufferMemory, vkBindBufferMemory,
         vkBindBufferMemoryUnsafe, vkBindBufferMemorySafe,
         VkBindImageMemory, pattern VkBindImageMemory, HS_vkBindImageMemory,
         PFN_vkBindImageMemory, vkBindImageMemory, vkBindImageMemoryUnsafe,
@@ -391,9 +532,16 @@ module Graphics.Vulkan.Core_1_0
         pattern VkGetImageMemoryRequirements,
         HS_vkGetImageMemoryRequirements, PFN_vkGetImageMemoryRequirements,
         vkGetImageMemoryRequirements, vkGetImageMemoryRequirementsUnsafe,
-        vkGetImageMemoryRequirementsSafe,
-        -- ** Sparse resource memory management API commands
-        VkGetImageSparseMemoryRequirements,
+        vkGetImageMemoryRequirementsSafe, -- ** Sparse resource memory management API commands
+                                          VkBindSparseInfo,
+        VkSparseBufferMemoryBindInfo, VkSparseImageFormatBitmask(..),
+        VkSparseMemoryBindBitmask(..), VkSparseImageFormatFlagBits(),
+        VkSparseImageFormatFlags(), VkSparseMemoryBindFlagBits(),
+        VkSparseMemoryBindFlags(), VkSparseImageFormatProperties,
+        VkSparseImageMemoryBind, VkSparseImageMemoryBindInfo,
+        VkSparseImageMemoryRequirements, VkSparseImageOpaqueMemoryBindInfo,
+        VkSparseMemoryBind, -- > ##include "vk_platform.h"
+                            VkGetImageSparseMemoryRequirements,
         pattern VkGetImageSparseMemoryRequirements,
         HS_vkGetImageSparseMemoryRequirements,
         PFN_vkGetImageSparseMemoryRequirements,
@@ -409,48 +557,55 @@ module Graphics.Vulkan.Core_1_0
         vkGetPhysicalDeviceSparseImageFormatPropertiesSafe,
         VkQueueBindSparse, pattern VkQueueBindSparse, HS_vkQueueBindSparse,
         PFN_vkQueueBindSparse, vkQueueBindSparse, vkQueueBindSparseUnsafe,
-        vkQueueBindSparseSafe, VkSparseImageFormatBitmask(..),
-        VkSparseMemoryBindBitmask(..), VkSparseImageFormatFlagBits(),
-        VkSparseImageFormatFlags(), VkSparseMemoryBindFlagBits(),
-        VkSparseMemoryBindFlags(), VkBindBufferMemoryDeviceGroupInfo,
+        vkQueueBindSparseSafe,
+#ifdef VK_ENABLE_BETA_EXTENSIONS
+        VkBindAccelerationStructureMemoryInfoNV,
+        VkWriteDescriptorSetAccelerationStructureNV,
+#endif
+        VkBindBufferMemoryDeviceGroupInfo,
         VkBindBufferMemoryDeviceGroupInfoKHR, VkBindBufferMemoryInfo,
         VkBindBufferMemoryInfoKHR, VkBindImageMemoryDeviceGroupInfo,
         VkBindImageMemoryDeviceGroupInfoKHR, VkBindImageMemoryInfo,
         VkBindImageMemoryInfoKHR, VkBindImageMemorySwapchainInfoKHR,
         VkBindImagePlaneMemoryInfo, VkBindImagePlaneMemoryInfoKHR,
-        VkBindSparseInfo, VkOffset2D, VkOffset3D,
-        VkSparseBufferMemoryBindInfo, VkSparseImageFormatProperties,
+        VkBindIndexBufferIndirectCommandNV,
+        VkBindShaderGroupIndirectCommandNV,
+        VkBindVertexBufferIndirectCommandNV,
         VkSparseImageFormatProperties2, VkSparseImageFormatProperties2KHR,
-        VkSparseImageMemoryBind, VkSparseImageMemoryBindInfo,
-        VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements2,
-        VkSparseImageMemoryRequirements2KHR,
-        VkSparseImageOpaqueMemoryBindInfo, VkSparseMemoryBind,
-        -- ** Fence commands
-        VkCreateFence, pattern VkCreateFence, HS_vkCreateFence,
-        PFN_vkCreateFence, vkCreateFence, vkCreateFenceUnsafe,
-        vkCreateFenceSafe, VkDestroyFence, pattern VkDestroyFence,
-        HS_vkDestroyFence, PFN_vkDestroyFence, vkDestroyFence,
-        vkDestroyFenceUnsafe, vkDestroyFenceSafe, VkResetFences,
-        pattern VkResetFences, HS_vkResetFences, PFN_vkResetFences,
-        vkResetFences, vkResetFencesUnsafe, vkResetFencesSafe,
-        VkGetFenceStatus, pattern VkGetFenceStatus, HS_vkGetFenceStatus,
-        PFN_vkGetFenceStatus, vkGetFenceStatus, vkGetFenceStatusUnsafe,
-        vkGetFenceStatusSafe, VkWaitForFences, pattern VkWaitForFences,
-        HS_vkWaitForFences, PFN_vkWaitForFences, vkWaitForFences,
-        vkWaitForFencesUnsafe, vkWaitForFencesSafe,
-        VkFenceCreateBitmask(..), VkFenceImportBitmask(..),
-        VkFenceCreateFlagBits(), VkFenceCreateFlags(),
-        VkFenceImportFlagBits(), VkFenceImportFlagBitsKHR(..),
-        VkFenceImportFlags(), VkFenceCreateInfo, VkFenceGetFdInfoKHR,
-        -- ** Queue semaphore commands
-        VkCreateSemaphore, pattern VkCreateSemaphore, HS_vkCreateSemaphore,
+        VkSparseImageMemoryRequirements2,
+        VkSparseImageMemoryRequirements2KHR, -- ** Fence commands
+                                             VkFenceCreateBitmask(..),
+        VkFenceImportBitmask(..), VkFenceCreateFlagBits(),
+        VkFenceCreateFlags(), VkFenceImportFlagBits(),
+        VkFenceImportFlagBitsKHR(..), VkFenceImportFlags(),
+        VkFenceCreateInfo, -- > ##include "vk_platform.h"
+                           VkCreateFence, pattern VkCreateFence,
+        HS_vkCreateFence, PFN_vkCreateFence, vkCreateFence,
+        vkCreateFenceUnsafe, vkCreateFenceSafe, VkDestroyFence,
+        pattern VkDestroyFence, HS_vkDestroyFence, PFN_vkDestroyFence,
+        vkDestroyFence, vkDestroyFenceUnsafe, vkDestroyFenceSafe,
+        VkResetFences, pattern VkResetFences, HS_vkResetFences,
+        PFN_vkResetFences, vkResetFences, vkResetFencesUnsafe,
+        vkResetFencesSafe, VkGetFenceStatus, pattern VkGetFenceStatus,
+        HS_vkGetFenceStatus, PFN_vkGetFenceStatus, vkGetFenceStatus,
+        vkGetFenceStatusUnsafe, vkGetFenceStatusSafe, VkWaitForFences,
+        pattern VkWaitForFences, HS_vkWaitForFences, PFN_vkWaitForFences,
+        vkWaitForFences, vkWaitForFencesUnsafe, vkWaitForFencesSafe,
+        VkFenceGetFdInfoKHR, -- ** Queue semaphore commands
+                             VkSemaphoreCreateInfo, -- > ##include "vk_platform.h"
+                                                    VkCreateSemaphore,
+        pattern VkCreateSemaphore, HS_vkCreateSemaphore,
         PFN_vkCreateSemaphore, vkCreateSemaphore, vkCreateSemaphoreUnsafe,
         vkCreateSemaphoreSafe, VkDestroySemaphore,
         pattern VkDestroySemaphore, HS_vkDestroySemaphore,
         PFN_vkDestroySemaphore, vkDestroySemaphore,
         vkDestroySemaphoreUnsafe, vkDestroySemaphoreSafe,
-        VkSemaphoreCreateInfo, VkSemaphoreGetFdInfoKHR, -- ** Event commands
-                                                        VkCreateEvent,
+        VkSemaphoreGetFdInfoKHR, VkSemaphoreSignalInfo,
+        VkSemaphoreSignalInfoKHR, VkSemaphoreTypeCreateInfo,
+        VkSemaphoreTypeCreateInfoKHR, VkSemaphoreWaitInfo,
+        VkSemaphoreWaitInfoKHR, -- ** Event commands
+                                VkEventCreateInfo, -- > ##include "vk_platform.h"
+                                                   VkCreateEvent,
         pattern VkCreateEvent, HS_vkCreateEvent, PFN_vkCreateEvent,
         vkCreateEvent, vkCreateEventUnsafe, vkCreateEventSafe,
         VkDestroyEvent, pattern VkDestroyEvent, HS_vkDestroyEvent,
@@ -462,110 +617,160 @@ module Graphics.Vulkan.Core_1_0
         vkSetEventUnsafe, vkSetEventSafe, VkResetEvent,
         pattern VkResetEvent, HS_vkResetEvent, PFN_vkResetEvent,
         vkResetEvent, vkResetEventUnsafe, vkResetEventSafe,
-        VkEventCreateInfo, -- ** Query commands
-                           VkCreateQueryPool, pattern VkCreateQueryPool,
-        HS_vkCreateQueryPool, PFN_vkCreateQueryPool, vkCreateQueryPool,
-        vkCreateQueryPoolUnsafe, vkCreateQueryPoolSafe, VkDestroyQueryPool,
+        -- ** Query commands
+        VkQueryControlBitmask(..), VkQueryPipelineStatisticBitmask(..),
+        VkQueryPoolSamplingModeINTEL(..), VkQueryResultBitmask(..),
+        VkQueryType(..), VkQueryControlFlagBits(), VkQueryControlFlags(),
+        VkQueryPipelineStatisticFlagBits(),
+        VkQueryPipelineStatisticFlags(), VkQueryPoolCreateFlagBits(..),
+        VkQueryResultFlagBits(), VkQueryResultFlags(),
+        VkQueryPoolCreateInfo, -- > ##include "vk_platform.h"
+                               VkCreateQueryPool,
+        pattern VkCreateQueryPool, HS_vkCreateQueryPool,
+        PFN_vkCreateQueryPool, vkCreateQueryPool, vkCreateQueryPoolUnsafe,
+        vkCreateQueryPoolSafe, VkDestroyQueryPool,
         pattern VkDestroyQueryPool, HS_vkDestroyQueryPool,
         PFN_vkDestroyQueryPool, vkDestroyQueryPool,
         vkDestroyQueryPoolUnsafe, vkDestroyQueryPoolSafe,
         VkGetQueryPoolResults, pattern VkGetQueryPoolResults,
         HS_vkGetQueryPoolResults, PFN_vkGetQueryPoolResults,
         vkGetQueryPoolResults, vkGetQueryPoolResultsUnsafe,
-        vkGetQueryPoolResultsSafe, VkQueryControlBitmask(..),
-        VkQueryPipelineStatisticBitmask(..), VkQueryResultBitmask(..),
-        VkQueryType(..), VkQueryControlFlagBits(), VkQueryControlFlags(),
-        VkQueryPipelineStatisticFlagBits(),
-        VkQueryPipelineStatisticFlags(), VkQueryPoolCreateFlagBits(..),
-        VkQueryResultFlagBits(), VkQueryResultFlags(),
-        VkQueryPoolCreateInfo, -- ** Buffer commands
-                               VkCreateBuffer, pattern VkCreateBuffer,
+        vkGetQueryPoolResultsSafe, VkQueryPoolCreateInfoINTEL,
+        VkQueryPoolPerformanceCreateInfoKHR,
+        VkQueryPoolPerformanceQueryCreateInfoINTEL,
+        -- ** Buffer commands
+        VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
+        VkBufferCreateFlagBits(), VkBufferCreateFlags(),
+        VkBufferUsageFlagBits(), VkBufferUsageFlags(), VkBufferCreateInfo,
+        VkSharingMode(..), -- > ##include "vk_platform.h"
+                           VkCreateBuffer, pattern VkCreateBuffer,
         HS_vkCreateBuffer, PFN_vkCreateBuffer, vkCreateBuffer,
         vkCreateBufferUnsafe, vkCreateBufferSafe, VkDestroyBuffer,
         pattern VkDestroyBuffer, HS_vkDestroyBuffer, PFN_vkDestroyBuffer,
         vkDestroyBuffer, vkDestroyBufferUnsafe, vkDestroyBufferSafe,
-        VkBufferCreateBitmask(..), VkBufferUsageBitmask(..),
-        VkBufferCreateFlagBits(), VkBufferCreateFlags(),
-        VkBufferUsageFlagBits(), VkBufferUsageFlags(),
-        VkBufferViewCreateFlagBits(..), VkSharingMode(..), VkBufferCopy,
-        VkBufferCreateInfo, VkBufferImageCopy, VkBufferMemoryBarrier,
+        VkBufferCopy, VkBufferDeviceAddressCreateInfoEXT,
+        VkBufferDeviceAddressInfo, VkBufferDeviceAddressInfoEXT,
+        VkBufferDeviceAddressInfoKHR, VkBufferImageCopy,
         VkBufferMemoryRequirementsInfo2,
-        VkBufferMemoryRequirementsInfo2KHR, VkBufferViewCreateInfo,
-        -- ** Buffer view commands
+        VkBufferMemoryRequirementsInfo2KHR,
+        VkBufferOpaqueCaptureAddressCreateInfo,
+        VkBufferOpaqueCaptureAddressCreateInfoKHR, VkBufferViewCreateInfo,
+        -- > ##include "vk_platform.h"
         VkCreateBufferView, pattern VkCreateBufferView,
         HS_vkCreateBufferView, PFN_vkCreateBufferView, vkCreateBufferView,
         vkCreateBufferViewUnsafe, vkCreateBufferViewSafe,
         VkDestroyBufferView, pattern VkDestroyBufferView,
         HS_vkDestroyBufferView, PFN_vkDestroyBufferView,
         vkDestroyBufferView, vkDestroyBufferViewUnsafe,
-        vkDestroyBufferViewSafe, -- ** Image commands
-                                 VkCreateImage, pattern VkCreateImage,
-        HS_vkCreateImage, PFN_vkCreateImage, vkCreateImage,
-        vkCreateImageUnsafe, vkCreateImageSafe, VkDestroyImage,
-        pattern VkDestroyImage, HS_vkDestroyImage, PFN_vkDestroyImage,
-        vkDestroyImage, vkDestroyImageUnsafe, vkDestroyImageSafe,
-        VkGetImageSubresourceLayout, pattern VkGetImageSubresourceLayout,
+        vkDestroyBufferViewSafe, VkSubresourceLayout, -- > ##include "vk_platform.h"
+                                                      VkCreateImage,
+        pattern VkCreateImage, HS_vkCreateImage, PFN_vkCreateImage,
+        vkCreateImage, vkCreateImageUnsafe, vkCreateImageSafe,
+        VkDestroyImage, pattern VkDestroyImage, HS_vkDestroyImage,
+        PFN_vkDestroyImage, vkDestroyImage, vkDestroyImageUnsafe,
+        vkDestroyImageSafe, VkGetImageSubresourceLayout,
+        pattern VkGetImageSubresourceLayout,
         HS_vkGetImageSubresourceLayout, PFN_vkGetImageSubresourceLayout,
         vkGetImageSubresourceLayout, vkGetImageSubresourceLayoutUnsafe,
-        vkGetImageSubresourceLayoutSafe, VkSubresourceLayout,
-        -- ** Image view commands
-        VkCreateImageView, pattern VkCreateImageView, HS_vkCreateImageView,
+        vkGetImageSubresourceLayoutSafe, -- ** Image view commands
+                                         VkComponentMapping,
+        VkComponentSwizzle(..), VkComponentTypeNV(..), -- > ##include "vk_platform.h"
+                                                       VkCreateImageView,
+        pattern VkCreateImageView, HS_vkCreateImageView,
         PFN_vkCreateImageView, vkCreateImageView, vkCreateImageViewUnsafe,
         vkCreateImageViewSafe, VkDestroyImageView,
         pattern VkDestroyImageView, HS_vkDestroyImageView,
         PFN_vkDestroyImageView, vkDestroyImageView,
         vkDestroyImageViewUnsafe, vkDestroyImageViewSafe,
-        VkComponentSwizzle(..), VkComponentMapping, -- ** Shader commands
-                                                    VkCreateShaderModule,
-        pattern VkCreateShaderModule, HS_vkCreateShaderModule,
-        PFN_vkCreateShaderModule, vkCreateShaderModule,
-        vkCreateShaderModuleUnsafe, vkCreateShaderModuleSafe,
-        VkDestroyShaderModule, pattern VkDestroyShaderModule,
-        HS_vkDestroyShaderModule, PFN_vkDestroyShaderModule,
-        vkDestroyShaderModule, vkDestroyShaderModuleUnsafe,
-        vkDestroyShaderModuleSafe, VkShaderModuleCreateInfo,
+        -- ** Shader commands
+        VkShaderFloatControlsIndependence(..), VkShaderInfoTypeAMD(..),
+        VkShaderStageBitmask(..), VkShaderCorePropertiesBitmaskAMD(..),
+        VkShaderCorePropertiesFlagBitsAMD(),
+        VkShaderCorePropertiesFlagsAMD(),
+        VkShaderFloatControlsIndependenceKHR(..),
+        VkShaderModuleCreateBitmask(..), VkShaderModuleCreateFlagBits(),
+        VkShaderModuleCreateFlags(), VkShaderStageFlagBits(),
+        VkShaderStageFlags(), VkShaderModuleCreateInfo,
+        -- > ##include "vk_platform.h"
+        VkCreateShaderModule, pattern VkCreateShaderModule,
+        HS_vkCreateShaderModule, PFN_vkCreateShaderModule,
+        vkCreateShaderModule, vkCreateShaderModuleUnsafe,
+        vkCreateShaderModuleSafe, VkDestroyShaderModule,
+        pattern VkDestroyShaderModule, HS_vkDestroyShaderModule,
+        PFN_vkDestroyShaderModule, vkDestroyShaderModule,
+        vkDestroyShaderModuleUnsafe, vkDestroyShaderModuleSafe,
         VkShaderModuleValidationCacheCreateInfoEXT,
         VkShaderResourceUsageAMD, VkShaderStatisticsInfoAMD,
         -- ** Pipeline Cache commands
-        VkCreatePipelineCache, pattern VkCreatePipelineCache,
-        HS_vkCreatePipelineCache, PFN_vkCreatePipelineCache,
-        vkCreatePipelineCache, vkCreatePipelineCacheUnsafe,
-        vkCreatePipelineCacheSafe, VkDestroyPipelineCache,
-        pattern VkDestroyPipelineCache, HS_vkDestroyPipelineCache,
-        PFN_vkDestroyPipelineCache, vkDestroyPipelineCache,
-        vkDestroyPipelineCacheUnsafe, vkDestroyPipelineCacheSafe,
-        VkGetPipelineCacheData, pattern VkGetPipelineCacheData,
-        HS_vkGetPipelineCacheData, PFN_vkGetPipelineCacheData,
-        vkGetPipelineCacheData, vkGetPipelineCacheDataUnsafe,
-        vkGetPipelineCacheDataSafe, VkMergePipelineCaches,
-        pattern VkMergePipelineCaches, HS_vkMergePipelineCaches,
-        PFN_vkMergePipelineCaches, vkMergePipelineCaches,
-        vkMergePipelineCachesUnsafe, vkMergePipelineCachesSafe,
-        VkGraphicsPipelineCreateInfo, VkPipelineCacheCreateInfo,
+        VkPipelineCacheCreateInfo, -- > ##include "vk_platform.h"
+                                   VkCreatePipelineCache,
+        pattern VkCreatePipelineCache, HS_vkCreatePipelineCache,
+        PFN_vkCreatePipelineCache, vkCreatePipelineCache,
+        vkCreatePipelineCacheUnsafe, vkCreatePipelineCacheSafe,
+        VkDestroyPipelineCache, pattern VkDestroyPipelineCache,
+        HS_vkDestroyPipelineCache, PFN_vkDestroyPipelineCache,
+        vkDestroyPipelineCache, vkDestroyPipelineCacheUnsafe,
+        vkDestroyPipelineCacheSafe, VkGetPipelineCacheData,
+        pattern VkGetPipelineCacheData, HS_vkGetPipelineCacheData,
+        PFN_vkGetPipelineCacheData, vkGetPipelineCacheData,
+        vkGetPipelineCacheDataUnsafe, vkGetPipelineCacheDataSafe,
+        VkMergePipelineCaches, pattern VkMergePipelineCaches,
+        HS_vkMergePipelineCaches, PFN_vkMergePipelineCaches,
+        vkMergePipelineCaches, vkMergePipelineCachesUnsafe,
+        vkMergePipelineCachesSafe, VkGraphicsPipelineCreateInfo,
         VkPipelineColorBlendAdvancedStateCreateInfoEXT,
         VkPipelineColorBlendAttachmentState,
         VkPipelineColorBlendStateCreateInfo,
+        VkPipelineCompilerControlCreateInfoAMD,
         VkPipelineCoverageModulationStateCreateInfoNV,
+        VkPipelineCoverageReductionStateCreateInfoNV,
         VkPipelineCoverageToColorStateCreateInfoNV,
+        VkPipelineCreationFeedbackCreateInfoEXT,
+        VkPipelineCreationFeedbackEXT,
         VkPipelineDepthStencilStateCreateInfo,
         VkPipelineDiscardRectangleStateCreateInfoEXT,
-        VkPipelineDynamicStateCreateInfo,
+        VkPipelineDynamicStateCreateInfo, VkPipelineExecutableInfoKHR,
+        VkPipelineExecutableInternalRepresentationKHR,
+        VkPipelineExecutablePropertiesKHR,
+        VkPipelineExecutableStatisticKHR,
+        VkPipelineExecutableStatisticValueKHR, VkPipelineInfoKHR,
         VkPipelineInputAssemblyStateCreateInfo, VkPipelineLayoutCreateInfo,
         VkPipelineMultisampleStateCreateInfo,
         VkPipelineRasterizationConservativeStateCreateInfoEXT,
+        VkPipelineRasterizationDepthClipStateCreateInfoEXT,
+        VkPipelineRasterizationLineStateCreateInfoEXT,
         VkPipelineRasterizationStateCreateInfo,
         VkPipelineRasterizationStateRasterizationOrderAMD,
+        VkPipelineRasterizationStateStreamCreateInfoEXT,
+        VkPipelineRepresentativeFragmentTestStateCreateInfoNV,
         VkPipelineSampleLocationsStateCreateInfoEXT,
         VkPipelineShaderStageCreateInfo,
+        VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT,
         VkPipelineTessellationDomainOriginStateCreateInfo,
         VkPipelineTessellationDomainOriginStateCreateInfoKHR,
         VkPipelineTessellationStateCreateInfo,
         VkPipelineVertexInputDivisorStateCreateInfoEXT,
         VkPipelineVertexInputStateCreateInfo,
+        VkPipelineViewportCoarseSampleOrderStateCreateInfoNV,
+        VkPipelineViewportExclusiveScissorStateCreateInfoNV,
+        VkPipelineViewportShadingRateImageStateCreateInfoNV,
         VkPipelineViewportStateCreateInfo,
         VkPipelineViewportSwizzleStateCreateInfoNV,
-        VkPipelineViewportWScalingStateCreateInfoNV,
-        -- ** Pipeline commands
+        VkPipelineViewportWScalingStateCreateInfoNV, -- ** Pipeline commands
+                                                     VkBlendFactor(..),
+        VkBlendOp(..), VkBlendOverlapEXT(..),
+        pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
+        VkColorComponentBitmask(..), VkColorSpaceKHR(..),
+        VkColorComponentFlagBits(), VkColorComponentFlags(),
+        VkCompareOp(..), VkComputePipelineCreateInfo,
+        VkCullModeBitmask(..), VkCullModeFlagBits(), VkCullModeFlags(),
+        VkDynamicState(..), VkFrontFace(..), VkLogicOp(..),
+        VkPolygonMode(..), VkPrimitiveTopology(..), VkSpecializationInfo,
+        VkSpecializationMapEntry, VkStencilFaceBitmask(..),
+        VkStencilOp(..), VkStencilFaceFlagBits(), VkStencilFaceFlags(),
+        VkStencilOpState, VkVertexInputAttributeDescription,
+        VkVertexInputBindingDescription, VkVertexInputRate(..), VkViewport,
+        -- > ##include "vk_platform.h"
         VkCreateGraphicsPipelines, pattern VkCreateGraphicsPipelines,
         HS_vkCreateGraphicsPipelines, PFN_vkCreateGraphicsPipelines,
         vkCreateGraphicsPipelines, vkCreateGraphicsPipelinesUnsafe,
@@ -575,22 +780,9 @@ module Graphics.Vulkan.Core_1_0
         vkCreateComputePipelinesUnsafe, vkCreateComputePipelinesSafe,
         VkDestroyPipeline, pattern VkDestroyPipeline, HS_vkDestroyPipeline,
         PFN_vkDestroyPipeline, vkDestroyPipeline, vkDestroyPipelineUnsafe,
-        vkDestroyPipelineSafe, VkBlendFactor(..), VkBlendOp(..),
-        VkBlendOverlapEXT(..), VkColorComponentBitmask(..),
-        VkColorSpaceKHR(..), VkColorComponentFlagBits(),
-        VkColorComponentFlags(), VkCompareOp(..), VkCullModeBitmask(..),
-        VkCullModeFlagBits(), VkCullModeFlags(), VkDynamicState(..),
-        VkFrontFace(..), VkLogicOp(..), VkPolygonMode(..),
-        VkPrimitiveTopology(..), VkShaderInfoTypeAMD(..),
-        VkShaderStageBitmask(..), VkShaderStageFlagBits(),
-        VkShaderStageFlags(), VkStencilFaceBitmask(..), VkStencilOp(..),
-        VkStencilFaceFlagBits(), VkStencilFaceFlags(),
-        VkVertexInputRate(..), VkComputePipelineCreateInfo, VkRect2D,
-        VkRectLayerKHR, VkSpecializationInfo, VkSpecializationMapEntry,
-        VkStencilOpState, VkVertexInputAttributeDescription,
-        VkVertexInputBindingDescription,
-        VkVertexInputBindingDivisorDescriptionEXT, VkViewport,
-        VkViewportSwizzleNV, VkViewportWScalingNV, -- ** Pipeline layout commands
+        vkDestroyPipelineSafe, VkRectLayerKHR,
+        VkVertexInputBindingDivisorDescriptionEXT, VkViewportSwizzleNV,
+        VkViewportWScalingNV, VkPushConstantRange, -- > ##include "vk_platform.h"
                                                    VkCreatePipelineLayout,
         pattern VkCreatePipelineLayout, HS_vkCreatePipelineLayout,
         PFN_vkCreatePipelineLayout, vkCreatePipelineLayout,
@@ -598,25 +790,44 @@ module Graphics.Vulkan.Core_1_0
         VkDestroyPipelineLayout, pattern VkDestroyPipelineLayout,
         HS_vkDestroyPipelineLayout, PFN_vkDestroyPipelineLayout,
         vkDestroyPipelineLayout, vkDestroyPipelineLayoutUnsafe,
-        vkDestroyPipelineLayoutSafe, VkPushConstantRange, -- ** Sampler commands
-                                                          VkCreateSampler,
-        pattern VkCreateSampler, HS_vkCreateSampler, PFN_vkCreateSampler,
-        vkCreateSampler, vkCreateSamplerUnsafe, vkCreateSamplerSafe,
-        VkDestroySampler, pattern VkDestroySampler, HS_vkDestroySampler,
-        PFN_vkDestroySampler, vkDestroySampler, vkDestroySamplerUnsafe,
-        vkDestroySamplerSafe, VkBorderColor(..), VkFilter(..),
+        vkDestroyPipelineLayoutSafe, -- ** Sampler commands
+                                     VkBorderColor(..), VkFilter(..),
         VkSamplerAddressMode(..), VkSamplerMipmapMode(..),
-        VkSamplerReductionModeEXT(..), VkSamplerYcbcrModelConversion(..),
-        VkSamplerYcbcrRange(..), VkSamplerCreateFlagBits(..),
+        VkSamplerReductionMode(..), VkSamplerYcbcrModelConversion(..),
+        VkSamplerYcbcrRange(..), VkSamplerCreateBitmask(..),
+        VkSamplerCreateFlagBits(), VkSamplerCreateFlags(),
+        VkSamplerReductionModeEXT(..),
         VkSamplerYcbcrModelConversionKHR(..), VkSamplerYcbcrRangeKHR(..),
-        VkSamplerCreateInfo, VkSamplerReductionModeCreateInfoEXT,
+        VkSamplerCreateInfo, -- > ##include "vk_platform.h"
+                             VkCreateSampler, pattern VkCreateSampler,
+        HS_vkCreateSampler, PFN_vkCreateSampler, vkCreateSampler,
+        vkCreateSamplerUnsafe, vkCreateSamplerSafe, VkDestroySampler,
+        pattern VkDestroySampler, HS_vkDestroySampler,
+        PFN_vkDestroySampler, vkDestroySampler, vkDestroySamplerUnsafe,
+        vkDestroySamplerSafe, VkSamplerCustomBorderColorCreateInfoEXT,
+        VkSamplerReductionModeCreateInfo,
+        VkSamplerReductionModeCreateInfoEXT,
         VkSamplerYcbcrConversionCreateInfo,
         VkSamplerYcbcrConversionCreateInfoKHR,
         VkSamplerYcbcrConversionImageFormatProperties,
         VkSamplerYcbcrConversionImageFormatPropertiesKHR,
         VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfoKHR,
         -- ** Descriptor set commands
-        VkCreateDescriptorSetLayout, pattern VkCreateDescriptorSetLayout,
+        VkCopyDescriptorSet, VkDescriptorBufferInfo, VkDescriptorImageInfo,
+        VkDescriptorBindingBitmask(..), VkDescriptorPoolCreateBitmask(..),
+        VkDescriptorType(..), VkDescriptorUpdateTemplateType(..),
+        VkDescriptorBindingFlagBits(), VkDescriptorBindingFlagBitsEXT(..),
+        VkDescriptorBindingFlags(), VkDescriptorPoolCreateFlagBits(),
+        VkDescriptorPoolCreateFlags(),
+        VkDescriptorSetLayoutCreateBitmask(..),
+        VkDescriptorSetLayoutCreateFlagBits(),
+        VkDescriptorSetLayoutCreateFlags(),
+        VkDescriptorUpdateTemplateTypeKHR(..), VkDescriptorPoolCreateInfo,
+        VkDescriptorPoolSize, VkDescriptorSetAllocateInfo,
+        VkDescriptorSetLayoutBinding, VkDescriptorSetLayoutCreateInfo,
+        VkWriteDescriptorSet, -- > ##include "vk_platform.h"
+                              VkCreateDescriptorSetLayout,
+        pattern VkCreateDescriptorSetLayout,
         HS_vkCreateDescriptorSetLayout, PFN_vkCreateDescriptorSetLayout,
         vkCreateDescriptorSetLayout, vkCreateDescriptorSetLayoutUnsafe,
         vkCreateDescriptorSetLayoutSafe, VkDestroyDescriptorSetLayout,
@@ -644,28 +855,33 @@ module Graphics.Vulkan.Core_1_0
         VkUpdateDescriptorSets, pattern VkUpdateDescriptorSets,
         HS_vkUpdateDescriptorSets, PFN_vkUpdateDescriptorSets,
         vkUpdateDescriptorSets, vkUpdateDescriptorSetsUnsafe,
-        vkUpdateDescriptorSetsSafe, VkDescriptorBindingBitmaskEXT(..),
-        VkDescriptorPoolCreateBitmask(..), VkDescriptorType(..),
-        VkDescriptorUpdateTemplateType(..),
-        VkDescriptorBindingFlagBitsEXT(), VkDescriptorBindingFlagsEXT(),
-        VkDescriptorPoolCreateFlagBits(), VkDescriptorPoolCreateFlags(),
-        VkDescriptorSetLayoutCreateBitmask(..),
-        VkDescriptorSetLayoutCreateFlagBits(),
-        VkDescriptorSetLayoutCreateFlags(),
-        VkDescriptorUpdateTemplateTypeKHR(..), VkCopyDescriptorSet,
-        VkDescriptorBufferInfo, VkDescriptorImageInfo,
-        VkDescriptorPoolCreateInfo, VkDescriptorPoolSize,
-        VkDescriptorSetAllocateInfo, VkDescriptorSetLayoutBinding,
+        vkUpdateDescriptorSetsSafe,
+        VkDescriptorPoolInlineUniformBlockCreateInfoEXT,
+        VkDescriptorSetLayoutBindingFlagsCreateInfo,
         VkDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-        VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutSupport,
-        VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetLayoutSupport, VkDescriptorSetLayoutSupportKHR,
+        VkDescriptorSetVariableDescriptorCountAllocateInfo,
         VkDescriptorSetVariableDescriptorCountAllocateInfoEXT,
+        VkDescriptorSetVariableDescriptorCountLayoutSupport,
         VkDescriptorSetVariableDescriptorCountLayoutSupportEXT,
         VkDescriptorUpdateTemplateCreateInfo,
         VkDescriptorUpdateTemplateCreateInfoKHR,
         VkDescriptorUpdateTemplateEntry,
-        VkDescriptorUpdateTemplateEntryKHR, VkWriteDescriptorSet,
-        -- ** Pass commands
+        VkDescriptorUpdateTemplateEntryKHR,
+        VkWriteDescriptorSetInlineUniformBlockEXT, -- ** Pass commands
+                                                   VkAttachmentDescription,
+        VkAttachmentDescriptionBitmask(..), VkAttachmentLoadOp(..),
+        VkAttachmentStoreOp(..), VkAttachmentDescriptionFlagBits(),
+        VkAttachmentDescriptionFlags(), VkAttachmentReference,
+        VkDependencyBitmask(..), VkDependencyFlagBits(),
+        VkDependencyFlags(), VkFramebufferCreateBitmask(..),
+        VkFramebufferCreateFlagBits(), VkFramebufferCreateFlags(),
+        VkFramebufferCreateInfo, VkRenderPassCreateBitmask(..),
+        VkRenderPassCreateFlagBits(), VkRenderPassCreateFlags(),
+        VkRenderPassCreateInfo, VkSubpassDependency, VkSubpassDescription,
+        VkSubpassContents(..), VkSubpassDescriptionBitmask(..),
+        VkSubpassDescriptionFlagBits(), VkSubpassDescriptionFlags(),
+        -- > ##include "vk_platform.h"
         VkCreateFramebuffer, pattern VkCreateFramebuffer,
         HS_vkCreateFramebuffer, PFN_vkCreateFramebuffer,
         vkCreateFramebuffer, vkCreateFramebufferUnsafe,
@@ -683,23 +899,40 @@ module Graphics.Vulkan.Core_1_0
         pattern VkGetRenderAreaGranularity, HS_vkGetRenderAreaGranularity,
         PFN_vkGetRenderAreaGranularity, vkGetRenderAreaGranularity,
         vkGetRenderAreaGranularityUnsafe, vkGetRenderAreaGranularitySafe,
-        VkAccessBitmask(..), VkAccessFlagBits(), VkAccessFlags(),
-        VkAttachmentDescriptionBitmask(..), VkAttachmentLoadOp(..),
-        VkAttachmentStoreOp(..), VkAttachmentDescriptionFlagBits(),
-        VkAttachmentDescriptionFlags(), VkDependencyBitmask(..),
-        VkDependencyFlagBits(), VkDependencyFlags(), VkSubpassContents(..),
-        VkSubpassDescriptionBitmask(..), VkSubpassDescriptionFlagBits(),
-        VkSubpassDescriptionFlags(), VkAttachmentDescription,
-        VkAttachmentReference, VkAttachmentSampleLocationsEXT,
-        VkFramebufferCreateInfo, VkRenderPassBeginInfo,
-        VkRenderPassCreateInfo,
+        VkAttachmentDescription2, VkAttachmentDescription2KHR,
+        VkAttachmentDescriptionStencilLayout,
+        VkAttachmentDescriptionStencilLayoutKHR, VkAttachmentReference2,
+        VkAttachmentReference2KHR, VkAttachmentReferenceStencilLayout,
+        VkAttachmentReferenceStencilLayoutKHR,
+        VkAttachmentSampleLocationsEXT, VkFramebufferAttachmentImageInfo,
+        VkFramebufferAttachmentImageInfoKHR,
+        VkFramebufferAttachmentsCreateInfo,
+        VkFramebufferAttachmentsCreateInfoKHR,
+        VkFramebufferMixedSamplesCombinationNV,
+        VkRenderPassAttachmentBeginInfo,
+        VkRenderPassAttachmentBeginInfoKHR, VkRenderPassBeginInfo,
+        VkRenderPassCreateInfo2, VkRenderPassCreateInfo2KHR,
+        VkRenderPassFragmentDensityMapCreateInfoEXT,
         VkRenderPassInputAttachmentAspectCreateInfo,
         VkRenderPassInputAttachmentAspectCreateInfoKHR,
         VkRenderPassMultiviewCreateInfo,
         VkRenderPassMultiviewCreateInfoKHR,
-        VkRenderPassSampleLocationsBeginInfoEXT, VkSubpassDependency,
-        VkSubpassDescription, VkSubpassSampleLocationsEXT,
+        VkRenderPassSampleLocationsBeginInfoEXT,
+        VkRenderPassTransformBeginInfoQCOM, VkSubpassBeginInfo,
+        VkSubpassBeginInfoKHR, VkSubpassDependency2,
+        VkSubpassDependency2KHR, VkSubpassDescription2,
+        VkSubpassDescription2KHR, VkSubpassDescriptionDepthStencilResolve,
+        VkSubpassDescriptionDepthStencilResolveKHR, VkSubpassEndInfo,
+        VkSubpassEndInfoKHR, VkSubpassSampleLocationsEXT,
         -- ** Command pool commands
+        VkCommandBufferLevel(..), VkCommandBufferResetBitmask(..),
+        VkCommandBufferUsageBitmask(..), VkCommandPoolCreateBitmask(..),
+        VkCommandPoolResetBitmask(..), VkCommandBufferResetFlagBits(),
+        VkCommandBufferResetFlags(), VkCommandBufferUsageFlagBits(),
+        VkCommandBufferUsageFlags(), VkCommandPoolCreateFlagBits(),
+        VkCommandPoolCreateFlags(), VkCommandPoolResetFlagBits(),
+        VkCommandPoolResetFlags(), VkCommandPoolCreateInfo,
+        -- > ##include "vk_platform.h"
         VkCreateCommandPool, pattern VkCreateCommandPool,
         HS_vkCreateCommandPool, PFN_vkCreateCommandPool,
         vkCreateCommandPool, vkCreateCommandPoolUnsafe,
@@ -710,42 +943,40 @@ module Graphics.Vulkan.Core_1_0
         VkResetCommandPool, pattern VkResetCommandPool,
         HS_vkResetCommandPool, PFN_vkResetCommandPool, vkResetCommandPool,
         vkResetCommandPoolUnsafe, vkResetCommandPoolSafe,
-        VkCommandBufferLevel(..), VkCommandBufferResetBitmask(..),
-        VkCommandBufferUsageBitmask(..), VkCommandPoolCreateBitmask(..),
-        VkCommandPoolResetBitmask(..), VkCommandBufferResetFlagBits(),
-        VkCommandBufferResetFlags(), VkCommandBufferUsageFlagBits(),
-        VkCommandBufferUsageFlags(), VkCommandPoolCreateFlagBits(),
-        VkCommandPoolCreateFlags(), VkCommandPoolResetFlagBits(),
-        VkCommandPoolResetFlags(), VkCommandBufferAllocateInfo,
-        VkCommandBufferBeginInfo, VkCommandBufferInheritanceInfo,
-        VkCommandPoolCreateInfo, -- ** Command buffer commands
-                                 VkAllocateCommandBuffers,
-        pattern VkAllocateCommandBuffers, HS_vkAllocateCommandBuffers,
-        PFN_vkAllocateCommandBuffers, vkAllocateCommandBuffers,
-        vkAllocateCommandBuffersUnsafe, vkAllocateCommandBuffersSafe,
-        VkFreeCommandBuffers, pattern VkFreeCommandBuffers,
-        HS_vkFreeCommandBuffers, PFN_vkFreeCommandBuffers,
-        vkFreeCommandBuffers, vkFreeCommandBuffersUnsafe,
-        vkFreeCommandBuffersSafe, VkBeginCommandBuffer,
-        pattern VkBeginCommandBuffer, HS_vkBeginCommandBuffer,
-        PFN_vkBeginCommandBuffer, vkBeginCommandBuffer,
-        vkBeginCommandBufferUnsafe, vkBeginCommandBufferSafe,
-        VkEndCommandBuffer, pattern VkEndCommandBuffer,
-        HS_vkEndCommandBuffer, PFN_vkEndCommandBuffer, vkEndCommandBuffer,
+        VkCommandBufferAllocateInfo, VkCommandBufferBeginInfo,
+        VkCommandBufferInheritanceConditionalRenderingInfoEXT,
+        VkCommandBufferInheritanceInfo,
+        VkCommandBufferInheritanceRenderPassTransformInfoQCOM,
+        -- > ##include "vk_platform.h"
+        VkAllocateCommandBuffers, pattern VkAllocateCommandBuffers,
+        HS_vkAllocateCommandBuffers, PFN_vkAllocateCommandBuffers,
+        vkAllocateCommandBuffers, vkAllocateCommandBuffersUnsafe,
+        vkAllocateCommandBuffersSafe, VkFreeCommandBuffers,
+        pattern VkFreeCommandBuffers, HS_vkFreeCommandBuffers,
+        PFN_vkFreeCommandBuffers, vkFreeCommandBuffers,
+        vkFreeCommandBuffersUnsafe, vkFreeCommandBuffersSafe,
+        VkBeginCommandBuffer, pattern VkBeginCommandBuffer,
+        HS_vkBeginCommandBuffer, PFN_vkBeginCommandBuffer,
+        vkBeginCommandBuffer, vkBeginCommandBufferUnsafe,
+        vkBeginCommandBufferSafe, VkEndCommandBuffer,
+        pattern VkEndCommandBuffer, HS_vkEndCommandBuffer,
+        PFN_vkEndCommandBuffer, vkEndCommandBuffer,
         vkEndCommandBufferUnsafe, vkEndCommandBufferSafe,
         VkResetCommandBuffer, pattern VkResetCommandBuffer,
         HS_vkResetCommandBuffer, PFN_vkResetCommandBuffer,
         vkResetCommandBuffer, vkResetCommandBufferUnsafe,
-        vkResetCommandBufferSafe, -- ** Command buffer building commands
-                                  VkCmdBindPipeline,
-        pattern VkCmdBindPipeline, HS_vkCmdBindPipeline,
-        PFN_vkCmdBindPipeline, vkCmdBindPipeline, vkCmdBindPipelineUnsafe,
-        vkCmdBindPipelineSafe, VkCmdSetViewport, pattern VkCmdSetViewport,
-        HS_vkCmdSetViewport, PFN_vkCmdSetViewport, vkCmdSetViewport,
-        vkCmdSetViewportUnsafe, vkCmdSetViewportSafe, VkCmdSetScissor,
-        pattern VkCmdSetScissor, HS_vkCmdSetScissor, PFN_vkCmdSetScissor,
-        vkCmdSetScissor, vkCmdSetScissorUnsafe, vkCmdSetScissorSafe,
-        VkCmdSetLineWidth, pattern VkCmdSetLineWidth, HS_vkCmdSetLineWidth,
+        vkResetCommandBufferSafe, VkClearAttachment, VkClearColorValue,
+        VkClearDepthStencilValue, VkClearRect, VkClearValue,
+        VkIndexType(..), -- > ##include "vk_platform.h"
+                         VkCmdBindPipeline, pattern VkCmdBindPipeline,
+        HS_vkCmdBindPipeline, PFN_vkCmdBindPipeline, vkCmdBindPipeline,
+        vkCmdBindPipelineUnsafe, vkCmdBindPipelineSafe, VkCmdSetViewport,
+        pattern VkCmdSetViewport, HS_vkCmdSetViewport,
+        PFN_vkCmdSetViewport, vkCmdSetViewport, vkCmdSetViewportUnsafe,
+        vkCmdSetViewportSafe, VkCmdSetScissor, pattern VkCmdSetScissor,
+        HS_vkCmdSetScissor, PFN_vkCmdSetScissor, vkCmdSetScissor,
+        vkCmdSetScissorUnsafe, vkCmdSetScissorSafe, VkCmdSetLineWidth,
+        pattern VkCmdSetLineWidth, HS_vkCmdSetLineWidth,
         PFN_vkCmdSetLineWidth, vkCmdSetLineWidth, vkCmdSetLineWidthUnsafe,
         vkCmdSetLineWidthSafe, VkCmdSetDepthBias,
         pattern VkCmdSetDepthBias, HS_vkCmdSetDepthBias,
@@ -868,14 +1099,7 @@ module Graphics.Vulkan.Core_1_0
         VkCmdExecuteCommands, pattern VkCmdExecuteCommands,
         HS_vkCmdExecuteCommands, PFN_vkCmdExecuteCommands,
         vkCmdExecuteCommands, vkCmdExecuteCommandsUnsafe,
-        vkCmdExecuteCommandsSafe, VkIndexType(..), VkClearAttachment,
-        VkClearColorValue, VkClearDepthStencilValue, VkClearRect,
-        VkClearValue, -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
-                      VkBaseInStructure, VkBaseOutStructure,
-        VkDispatchIndirectCommand, VkDrawIndexedIndirectCommand,
-        VkDrawIndirectCommand, VkObjectEntryTypeNVX(..),
-        VkObjectEntryUsageBitmaskNVX(..), VkObjectType(..),
-        VkObjectEntryUsageFlagBitsNVX(), VkObjectEntryUsageFlagsNVX())
+        vkCmdExecuteCommandsSafe)
        where
 import GHC.Ptr                                                (Ptr (..))
 import Graphics.Vulkan.Constants                              (pattern VK_ATTACHMENT_UNUSED,
@@ -899,7 +1123,7 @@ import Graphics.Vulkan.Types.Enum.Buffer
 import Graphics.Vulkan.Types.Enum.Color
 import Graphics.Vulkan.Types.Enum.Command
 import Graphics.Vulkan.Types.Enum.CompareOp
-import Graphics.Vulkan.Types.Enum.ComponentSwizzle
+import Graphics.Vulkan.Types.Enum.Component
 import Graphics.Vulkan.Types.Enum.CullModeFlags
 import Graphics.Vulkan.Types.Enum.DependencyFlags
 import Graphics.Vulkan.Types.Enum.Descriptor
@@ -908,19 +1132,21 @@ import Graphics.Vulkan.Types.Enum.DynamicState
 import Graphics.Vulkan.Types.Enum.Fence
 import Graphics.Vulkan.Types.Enum.Filter
 import Graphics.Vulkan.Types.Enum.Format
+import Graphics.Vulkan.Types.Enum.FramebufferCreateFlags
 import Graphics.Vulkan.Types.Enum.FrontFace
 import Graphics.Vulkan.Types.Enum.Image
 import Graphics.Vulkan.Types.Enum.IndexType
 import Graphics.Vulkan.Types.Enum.InternalAllocationType
 import Graphics.Vulkan.Types.Enum.LogicOp
 import Graphics.Vulkan.Types.Enum.Memory
-import Graphics.Vulkan.Types.Enum.Object
+import Graphics.Vulkan.Types.Enum.ObjectType
 import Graphics.Vulkan.Types.Enum.PhysicalDeviceType
 import Graphics.Vulkan.Types.Enum.Pipeline
 import Graphics.Vulkan.Types.Enum.PolygonMode
 import Graphics.Vulkan.Types.Enum.PrimitiveTopology
 import Graphics.Vulkan.Types.Enum.Query
 import Graphics.Vulkan.Types.Enum.Queue
+import Graphics.Vulkan.Types.Enum.RenderPassCreateFlags
 import Graphics.Vulkan.Types.Enum.Result
 import Graphics.Vulkan.Types.Enum.SampleCountFlags
 import Graphics.Vulkan.Types.Enum.Sampler
@@ -931,6 +1157,7 @@ import Graphics.Vulkan.Types.Enum.Stencil
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Enum.Subpass
 import Graphics.Vulkan.Types.Enum.SystemAllocationScope
+import Graphics.Vulkan.Types.Enum.VendorId
 import Graphics.Vulkan.Types.Enum.VertexInputRate
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
@@ -949,14 +1176,14 @@ import Graphics.Vulkan.Types.Struct.CopyDescriptorSet
 import Graphics.Vulkan.Types.Struct.Descriptor
 import Graphics.Vulkan.Types.Struct.Device
 import Graphics.Vulkan.Types.Struct.DispatchIndirectCommand   (VkDispatchIndirectCommand)
-import Graphics.Vulkan.Types.Struct.DrawInd                   (VkDrawIndexedIndirectCommand,
+import Graphics.Vulkan.Types.Struct.Draw                      (VkDrawIndexedIndirectCommand,
                                                                VkDrawIndirectCommand)
 import Graphics.Vulkan.Types.Struct.EventCreateInfo
 import Graphics.Vulkan.Types.Struct.ExtensionProperties
 import Graphics.Vulkan.Types.Struct.Extent
 import Graphics.Vulkan.Types.Struct.Fence
 import Graphics.Vulkan.Types.Struct.FormatProperties
-import Graphics.Vulkan.Types.Struct.FramebufferCreateInfo
+import Graphics.Vulkan.Types.Struct.Framebuffer
 import Graphics.Vulkan.Types.Struct.Image
 import Graphics.Vulkan.Types.Struct.InstanceCreateInfo
 import Graphics.Vulkan.Types.Struct.LayerProperties
@@ -967,8 +1194,8 @@ import Graphics.Vulkan.Types.Struct.PhysicalDevice
 import Graphics.Vulkan.Types.Struct.PhysicalDeviceFeatures
 import Graphics.Vulkan.Types.Struct.Pipeline
 import Graphics.Vulkan.Types.Struct.PushConstantRange
-import Graphics.Vulkan.Types.Struct.QueryPoolCreateInfo
-import Graphics.Vulkan.Types.Struct.QueueFamilyProperties
+import Graphics.Vulkan.Types.Struct.QueryPool
+import Graphics.Vulkan.Types.Struct.QueueFamily
 import Graphics.Vulkan.Types.Struct.Rect
 import Graphics.Vulkan.Types.Struct.RenderPass
 import Graphics.Vulkan.Types.Struct.Sampler
@@ -1014,7 +1241,7 @@ type VkCreateInstance = "vkCreateInstance"
 -- >     , VkInstance* pInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1067,7 +1294,7 @@ vkCreateInstanceUnsafe
 -- >     , VkInstance* pInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1120,7 +1347,7 @@ vkCreateInstanceSafe
 -- >     , VkInstance* pInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1163,7 +1390,7 @@ vkCreateInstance = vkCreateInstanceSafe
 --   >     , VkInstance* pInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateInstance vkCreateInstance registry at www.khronos.org>
 type HS_vkCreateInstance =
      Ptr VkInstanceCreateInfo -- ^ pCreateInfo
                               ->
@@ -1215,7 +1442,7 @@ type VkDestroyInstance = "vkDestroyInstance"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1259,7 +1486,7 @@ vkDestroyInstanceUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1302,7 +1529,7 @@ vkDestroyInstanceSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1338,7 +1565,7 @@ vkDestroyInstance = vkDestroyInstanceSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyInstance vkDestroyInstance registry at www.khronos.org>
 type HS_vkDestroyInstance =
      VkInstance -- ^ instance
                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1395,7 +1622,7 @@ type VkEnumeratePhysicalDevices = "vkEnumeratePhysicalDevices"
 -- >     , VkPhysicalDevice* pPhysicalDevices
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1447,7 +1674,7 @@ vkEnumeratePhysicalDevicesUnsafe
 -- >     , VkPhysicalDevice* pPhysicalDevices
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1499,7 +1726,7 @@ vkEnumeratePhysicalDevicesSafe
 -- >     , VkPhysicalDevice* pPhysicalDevices
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1541,7 +1768,7 @@ vkEnumeratePhysicalDevices = vkEnumeratePhysicalDevicesSafe
 --   >     , VkPhysicalDevice* pPhysicalDevices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDevices =
      VkInstance -- ^ instance
                 -> Ptr Word32 -- ^ pPhysicalDeviceCount
@@ -1599,7 +1826,7 @@ type VkGetPhysicalDeviceFeatures = "vkGetPhysicalDeviceFeatures"
 -- >     , VkPhysicalDeviceFeatures* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1644,7 +1871,7 @@ vkGetPhysicalDeviceFeaturesUnsafe
 -- >     , VkPhysicalDeviceFeatures* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1689,7 +1916,7 @@ vkGetPhysicalDeviceFeaturesSafe
 -- >     , VkPhysicalDeviceFeatures* pFeatures
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1725,7 +1952,7 @@ vkGetPhysicalDeviceFeatures = vkGetPhysicalDeviceFeaturesSafe
 --   >     , VkPhysicalDeviceFeatures* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFeatures =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
@@ -1785,7 +2012,7 @@ type VkGetPhysicalDeviceFormatProperties =
 -- >     , VkFormatProperties* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1834,7 +2061,7 @@ vkGetPhysicalDeviceFormatPropertiesUnsafe
 -- >     , VkFormatProperties* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1883,7 +2110,7 @@ vkGetPhysicalDeviceFormatPropertiesSafe
 -- >     , VkFormatProperties* pFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -1923,7 +2150,7 @@ vkGetPhysicalDeviceFormatProperties
 --   >     , VkFormatProperties* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkFormat -- ^ format
@@ -1995,7 +2222,7 @@ type VkGetPhysicalDeviceImageFormatProperties =
 -- >     , VkImageFormatProperties* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2072,7 +2299,7 @@ vkGetPhysicalDeviceImageFormatPropertiesUnsafe
 -- >     , VkImageFormatProperties* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2148,7 +2375,7 @@ vkGetPhysicalDeviceImageFormatPropertiesSafe
 -- >     , VkImageFormatProperties* pImageFormatProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2206,7 +2433,7 @@ vkGetPhysicalDeviceImageFormatProperties
 --   >     , VkImageFormatProperties* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2279,7 +2506,7 @@ type VkGetPhysicalDeviceProperties =
 -- >     , VkPhysicalDeviceProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2324,7 +2551,7 @@ vkGetPhysicalDevicePropertiesUnsafe
 -- >     , VkPhysicalDeviceProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2369,7 +2596,7 @@ vkGetPhysicalDevicePropertiesSafe
 -- >     , VkPhysicalDeviceProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2405,7 +2632,7 @@ vkGetPhysicalDeviceProperties = vkGetPhysicalDevicePropertiesSafe
 --   >     , VkPhysicalDeviceProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
@@ -2467,7 +2694,7 @@ type VkGetPhysicalDeviceQueueFamilyProperties =
 -- >     , VkQueueFamilyProperties* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2518,7 +2745,7 @@ vkGetPhysicalDeviceQueueFamilyPropertiesUnsafe
 -- >     , VkQueueFamilyProperties* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2569,7 +2796,7 @@ vkGetPhysicalDeviceQueueFamilyPropertiesSafe
 -- >     , VkQueueFamilyProperties* pQueueFamilyProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2610,7 +2837,7 @@ vkGetPhysicalDeviceQueueFamilyProperties
 --   >     , VkQueueFamilyProperties* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceQueueFamilyProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2676,7 +2903,7 @@ type VkGetPhysicalDeviceMemoryProperties =
 -- >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2722,7 +2949,7 @@ vkGetPhysicalDeviceMemoryPropertiesUnsafe
 -- >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2768,7 +2995,7 @@ vkGetPhysicalDeviceMemoryPropertiesSafe
 -- >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2807,7 +3034,7 @@ vkGetPhysicalDeviceMemoryProperties
 --   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMemoryProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
@@ -2865,7 +3092,7 @@ type VkGetInstanceProcAddr = "vkGetInstanceProcAddr"
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2909,7 +3136,7 @@ vkGetInstanceProcAddrUnsafe
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2953,7 +3180,7 @@ vkGetInstanceProcAddrSafe
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -2989,7 +3216,7 @@ vkGetInstanceProcAddr = vkGetInstanceProcAddrSafe
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetInstanceProcAddr vkGetInstanceProcAddr registry at www.khronos.org>
 type HS_vkGetInstanceProcAddr =
      VkInstance -- ^ instance
                 -> CString -- ^ pName
@@ -3040,7 +3267,7 @@ type VkGetDeviceProcAddr = "vkGetDeviceProcAddr"
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3084,7 +3311,7 @@ vkGetDeviceProcAddrUnsafe
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3128,7 +3355,7 @@ vkGetDeviceProcAddrSafe
 -- >     , const char* pName
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3163,7 +3390,7 @@ vkGetDeviceProcAddr = vkGetDeviceProcAddrSafe
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceProcAddr vkGetDeviceProcAddr registry at www.khronos.org>
 type HS_vkGetDeviceProcAddr =
      VkDevice -- ^ device
               -> CString -- ^ pName
@@ -3220,7 +3447,7 @@ type VkCreateDevice = "vkCreateDevice"
 -- >     , VkDevice* pDevice
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3278,7 +3505,7 @@ vkCreateDeviceUnsafe
 -- >     , VkDevice* pDevice
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3335,7 +3562,7 @@ vkCreateDeviceSafe
 -- >     , VkDevice* pDevice
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3381,7 +3608,7 @@ vkCreateDevice = vkCreateDeviceSafe
 --   >     , VkDevice* pDevice
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDevice vkCreateDevice registry at www.khronos.org>
 type HS_vkCreateDevice =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -3435,7 +3662,7 @@ type VkDestroyDevice = "vkDestroyDevice"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3478,7 +3705,7 @@ vkDestroyDeviceUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3521,7 +3748,7 @@ vkDestroyDeviceSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3556,7 +3783,7 @@ vkDestroyDevice = vkDestroyDeviceSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDevice vkDestroyDevice registry at www.khronos.org>
 type HS_vkDestroyDevice =
      VkDevice -- ^ device
               -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -3616,7 +3843,7 @@ type VkEnumerateInstanceExtensionProperties =
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3671,7 +3898,7 @@ vkEnumerateInstanceExtensionPropertiesUnsafe
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3724,7 +3951,7 @@ vkEnumerateInstanceExtensionPropertiesSafe
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3769,7 +3996,7 @@ vkEnumerateInstanceExtensionProperties
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceExtensionProperties =
      CString -- ^ pLayerName
              -> Ptr Word32 -- ^ pPropertyCount
@@ -3839,7 +4066,7 @@ type VkEnumerateDeviceExtensionProperties =
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3898,7 +4125,7 @@ vkEnumerateDeviceExtensionPropertiesUnsafe
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -3956,7 +4183,7 @@ vkEnumerateDeviceExtensionPropertiesSafe
 -- >     , VkExtensionProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4004,7 +4231,7 @@ vkEnumerateDeviceExtensionProperties
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceExtensionProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -4074,7 +4301,7 @@ type VkEnumerateInstanceLayerProperties =
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4123,7 +4350,7 @@ vkEnumerateInstanceLayerPropertiesUnsafe
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4172,7 +4399,7 @@ vkEnumerateInstanceLayerPropertiesSafe
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4214,7 +4441,7 @@ vkEnumerateInstanceLayerProperties
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceLayerProperties =
      Ptr Word32 -- ^ pPropertyCount
                 -> Ptr VkLayerProperties -- ^ pProperties
@@ -4281,7 +4508,7 @@ type VkEnumerateDeviceLayerProperties =
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4335,7 +4562,7 @@ vkEnumerateDeviceLayerPropertiesUnsafe
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4389,7 +4616,7 @@ vkEnumerateDeviceLayerPropertiesSafe
 -- >     , VkLayerProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4434,7 +4661,7 @@ vkEnumerateDeviceLayerProperties
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceLayerProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -4495,7 +4722,7 @@ type VkGetDeviceQueue = "vkGetDeviceQueue"
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4545,7 +4772,7 @@ vkGetDeviceQueueUnsafe
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4594,7 +4821,7 @@ vkGetDeviceQueueSafe
 -- >     , VkQueue* pQueue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4634,7 +4861,7 @@ vkGetDeviceQueue = vkGetDeviceQueueSafe
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceQueue vkGetDeviceQueue registry at www.khronos.org>
 type HS_vkGetDeviceQueue =
      VkDevice -- ^ device
               -> Word32 -- ^ queueFamilyIndex
@@ -4692,7 +4919,7 @@ type VkQueueSubmit = "vkQueueSubmit"
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4745,7 +4972,7 @@ vkQueueSubmitUnsafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4798,7 +5025,7 @@ vkQueueSubmitSafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4842,7 +5069,7 @@ vkQueueSubmit = vkQueueSubmitSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueSubmit vkQueueSubmit registry at www.khronos.org>
 type HS_vkQueueSubmit =
      VkQueue -- ^ queue
              -> Word32 -- ^ submitCount
@@ -4897,7 +5124,7 @@ type VkQueueWaitIdle = "vkQueueWaitIdle"
 -- >     ( VkQueue queue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4940,7 +5167,7 @@ vkQueueWaitIdleUnsafe
 -- >     ( VkQueue queue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -4983,7 +5210,7 @@ vkQueueWaitIdleSafe
 -- >     ( VkQueue queue
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5020,7 +5247,7 @@ vkQueueWaitIdle = vkQueueWaitIdleSafe
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueWaitIdle vkQueueWaitIdle registry at www.khronos.org>
 type HS_vkQueueWaitIdle = VkQueue -- ^ queue
                                   -> IO VkResult
 
@@ -5071,7 +5298,7 @@ type VkDeviceWaitIdle = "vkDeviceWaitIdle"
 -- >     ( VkDevice device
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5114,7 +5341,7 @@ vkDeviceWaitIdleUnsafe
 -- >     ( VkDevice device
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5157,7 +5384,7 @@ vkDeviceWaitIdleSafe
 -- >     ( VkDevice device
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5194,7 +5421,7 @@ vkDeviceWaitIdle = vkDeviceWaitIdleSafe
 --   >     ( VkDevice device
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDeviceWaitIdle vkDeviceWaitIdle registry at www.khronos.org>
 type HS_vkDeviceWaitIdle = VkDevice -- ^ device
                                     -> IO VkResult
 
@@ -5239,7 +5466,7 @@ type VkAllocateMemory = "vkAllocateMemory"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkAllocateMemory
 -- >     ( VkDevice device
@@ -5248,7 +5475,7 @@ type VkAllocateMemory = "vkAllocateMemory"
 -- >     , VkDeviceMemory* pMemory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5297,7 +5524,7 @@ vkAllocateMemoryUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkAllocateMemory
 -- >     ( VkDevice device
@@ -5306,7 +5533,7 @@ vkAllocateMemoryUnsafe
 -- >     , VkDeviceMemory* pMemory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5355,7 +5582,7 @@ vkAllocateMemorySafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkAllocateMemory
 -- >     ( VkDevice device
@@ -5364,7 +5591,7 @@ vkAllocateMemorySafe
 -- >     , VkDeviceMemory* pMemory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5401,7 +5628,7 @@ vkAllocateMemory = vkAllocateMemorySafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 --   > VkResult vkAllocateMemory
 --   >     ( VkDevice device
@@ -5410,7 +5637,7 @@ vkAllocateMemory = vkAllocateMemorySafe
 --   >     , VkDeviceMemory* pMemory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateMemory vkAllocateMemory registry at www.khronos.org>
 type HS_vkAllocateMemory =
      VkDevice -- ^ device
               ->
@@ -5465,7 +5692,7 @@ type VkFreeMemory = "vkFreeMemory"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5511,7 +5738,7 @@ vkFreeMemoryUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5557,7 +5784,7 @@ vkFreeMemorySafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5595,7 +5822,7 @@ vkFreeMemory = vkFreeMemorySafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeMemory vkFreeMemory registry at www.khronos.org>
 type HS_vkFreeMemory =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -5654,7 +5881,7 @@ type VkMapMemory = "vkMapMemory"
 -- >     , void** ppData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5719,7 +5946,7 @@ vkMapMemoryUnsafe
 -- >     , void** ppData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5784,7 +6011,7 @@ vkMapMemorySafe
 -- >     , void** ppData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5835,7 +6062,7 @@ vkMapMemory = vkMapMemorySafe
 --   >     , void** ppData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMapMemory vkMapMemory registry at www.khronos.org>
 type HS_vkMapMemory =
      VkDevice -- ^ device
               ->
@@ -5892,7 +6119,7 @@ type VkUnmapMemory = "vkUnmapMemory"
 -- >     , VkDeviceMemory memory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5934,7 +6161,7 @@ vkUnmapMemoryUnsafe
 -- >     , VkDeviceMemory memory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -5976,7 +6203,7 @@ vkUnmapMemorySafe
 -- >     , VkDeviceMemory memory
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6011,7 +6238,7 @@ vkUnmapMemory = vkUnmapMemorySafe
 --   >     , VkDeviceMemory memory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUnmapMemory vkUnmapMemory registry at www.khronos.org>
 type HS_vkUnmapMemory = VkDevice -- ^ device
                                  -> VkDeviceMemory -- ^ memory
                                                    -> IO ()
@@ -6067,7 +6294,7 @@ type VkFlushMappedMemoryRanges = "vkFlushMappedMemoryRanges"
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6119,7 +6346,7 @@ vkFlushMappedMemoryRangesUnsafe
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6170,7 +6397,7 @@ vkFlushMappedMemoryRangesSafe
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6212,7 +6439,7 @@ vkFlushMappedMemoryRanges = vkFlushMappedMemoryRangesSafe
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges registry at www.khronos.org>
 type HS_vkFlushMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -6276,7 +6503,7 @@ type VkInvalidateMappedMemoryRanges =
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6328,7 +6555,7 @@ vkInvalidateMappedMemoryRangesUnsafe
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6380,7 +6607,7 @@ vkInvalidateMappedMemoryRangesSafe
 -- >     , const VkMappedMemoryRange* pMemoryRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6423,7 +6650,7 @@ vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRangesSafe
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges registry at www.khronos.org>
 type HS_vkInvalidateMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -6484,7 +6711,7 @@ type VkGetDeviceMemoryCommitment = "vkGetDeviceMemoryCommitment"
 -- >     , VkDeviceSize* pCommittedMemoryInBytes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6532,7 +6759,7 @@ vkGetDeviceMemoryCommitmentUnsafe
 -- >     , VkDeviceSize* pCommittedMemoryInBytes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6580,7 +6807,7 @@ vkGetDeviceMemoryCommitmentSafe
 -- >     , VkDeviceSize* pCommittedMemoryInBytes
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6618,7 +6845,7 @@ vkGetDeviceMemoryCommitment = vkGetDeviceMemoryCommitmentSafe
 --   >     , VkDeviceSize* pCommittedMemoryInBytes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment registry at www.khronos.org>
 type HS_vkGetDeviceMemoryCommitment =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -6670,7 +6897,7 @@ type VkBindBufferMemory = "vkBindBufferMemory"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory
 -- >     ( VkDevice device
@@ -6679,7 +6906,7 @@ type VkBindBufferMemory = "vkBindBufferMemory"
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6726,7 +6953,7 @@ vkBindBufferMemoryUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory
 -- >     ( VkDevice device
@@ -6735,7 +6962,7 @@ vkBindBufferMemoryUnsafe
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6782,7 +7009,7 @@ vkBindBufferMemorySafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkBindBufferMemory
 -- >     ( VkDevice device
@@ -6791,7 +7018,7 @@ vkBindBufferMemorySafe
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6827,7 +7054,7 @@ vkBindBufferMemory = vkBindBufferMemorySafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 --   > VkResult vkBindBufferMemory
 --   >     ( VkDevice device
@@ -6836,7 +7063,7 @@ vkBindBufferMemory = vkBindBufferMemorySafe
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindBufferMemory vkBindBufferMemory registry at www.khronos.org>
 type HS_vkBindBufferMemory =
      VkDevice -- ^ device
               ->
@@ -6896,7 +7123,7 @@ type VkBindImageMemory = "vkBindImageMemory"
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -6952,7 +7179,7 @@ vkBindImageMemoryUnsafe
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7008,7 +7235,7 @@ vkBindImageMemorySafe
 -- >     , VkDeviceSize memoryOffset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7053,7 +7280,7 @@ vkBindImageMemory = vkBindImageMemorySafe
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBindImageMemory vkBindImageMemory registry at www.khronos.org>
 type HS_vkBindImageMemory =
      VkDevice -- ^ device
               ->
@@ -7111,7 +7338,7 @@ type VkGetBufferMemoryRequirements =
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7159,7 +7386,7 @@ vkGetBufferMemoryRequirementsUnsafe
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7207,7 +7434,7 @@ vkGetBufferMemoryRequirementsSafe
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7245,7 +7472,7 @@ vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirementsSafe
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -7306,7 +7533,7 @@ type VkGetImageMemoryRequirements = "vkGetImageMemoryRequirements"
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7354,7 +7581,7 @@ vkGetImageMemoryRequirementsUnsafe
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7402,7 +7629,7 @@ vkGetImageMemoryRequirementsSafe
 -- >     , VkMemoryRequirements* pMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7440,7 +7667,7 @@ vkGetImageMemoryRequirements = vkGetImageMemoryRequirementsSafe
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageMemoryRequirements vkGetImageMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -7502,7 +7729,7 @@ type VkGetImageSparseMemoryRequirements =
 -- >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7558,7 +7785,7 @@ vkGetImageSparseMemoryRequirementsUnsafe
 -- >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7614,7 +7841,7 @@ vkGetImageSparseMemoryRequirementsSafe
 -- >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7658,7 +7885,7 @@ vkGetImageSparseMemoryRequirements
 --   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements =
      VkDevice -- ^ device
               ->
@@ -7732,7 +7959,7 @@ type VkGetPhysicalDeviceSparseImageFormatProperties =
 -- >     , VkSparseImageFormatProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7810,7 +8037,7 @@ vkGetPhysicalDeviceSparseImageFormatPropertiesUnsafe
 -- >     , VkSparseImageFormatProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7887,7 +8114,7 @@ vkGetPhysicalDeviceSparseImageFormatPropertiesSafe
 -- >     , VkSparseImageFormatProperties* pProperties
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -7945,7 +8172,7 @@ vkGetPhysicalDeviceSparseImageFormatProperties
 --   >     , VkSparseImageFormatProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSparseImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -8025,7 +8252,7 @@ type VkQueueBindSparse = "vkQueueBindSparse"
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8081,7 +8308,7 @@ vkQueueBindSparseUnsafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8137,7 +8364,7 @@ vkQueueBindSparseSafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8183,7 +8410,7 @@ vkQueueBindSparse = vkQueueBindSparseSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkQueueBindSparse vkQueueBindSparse registry at www.khronos.org>
 type HS_vkQueueBindSparse =
      VkQueue -- ^ queue
              -> Word32 -- ^ bindInfoCount
@@ -8241,7 +8468,7 @@ type VkCreateFence = "vkCreateFence"
 -- >     , VkFence* pFence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8298,7 +8525,7 @@ vkCreateFenceUnsafe
 -- >     , VkFence* pFence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8355,7 +8582,7 @@ vkCreateFenceSafe
 -- >     , VkFence* pFence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8401,7 +8628,7 @@ vkCreateFence = vkCreateFenceSafe
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFence vkCreateFence registry at www.khronos.org>
 type HS_vkCreateFence =
      VkDevice -- ^ device
               ->
@@ -8456,7 +8683,7 @@ type VkDestroyFence = "vkDestroyFence"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8502,7 +8729,7 @@ vkDestroyFenceUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8548,7 +8775,7 @@ vkDestroyFenceSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8586,7 +8813,7 @@ vkDestroyFence = vkDestroyFenceSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFence vkDestroyFence registry at www.khronos.org>
 type HS_vkDestroyFence =
      VkDevice -- ^ device
               -> VkFence -- ^ fence
@@ -8634,7 +8861,7 @@ type VkResetFences = "vkResetFences"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetFences
 -- >     ( VkDevice device
@@ -8642,7 +8869,7 @@ type VkResetFences = "vkResetFences"
 -- >     , const VkFence* pFences
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8684,7 +8911,7 @@ vkResetFencesUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetFences
 -- >     ( VkDevice device
@@ -8692,7 +8919,7 @@ vkResetFencesUnsafe
 -- >     , const VkFence* pFences
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8734,7 +8961,7 @@ vkResetFencesSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetFences
 -- >     ( VkDevice device
@@ -8742,7 +8969,7 @@ vkResetFencesSafe
 -- >     , const VkFence* pFences
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8775,7 +9002,7 @@ vkResetFences = vkResetFencesSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkResetFences
 --   >     ( VkDevice device
@@ -8783,7 +9010,7 @@ vkResetFences = vkResetFencesSafe
 --   >     , const VkFence* pFences
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetFences vkResetFences registry at www.khronos.org>
 type HS_vkResetFences =
      VkDevice -- ^ device
               -> Word32 -- ^ fenceCount
@@ -8838,7 +9065,7 @@ type VkGetFenceStatus = "vkGetFenceStatus"
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8884,7 +9111,7 @@ vkGetFenceStatusUnsafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8930,7 +9157,7 @@ vkGetFenceStatusSafe
 -- >     , VkFence fence
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -8969,7 +9196,7 @@ vkGetFenceStatus = vkGetFenceStatusSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetFenceStatus vkGetFenceStatus registry at www.khronos.org>
 type HS_vkGetFenceStatus = VkDevice -- ^ device
                                     -> VkFence -- ^ fence
                                                -> IO VkResult
@@ -9025,7 +9252,7 @@ type VkWaitForFences = "vkWaitForFences"
 -- >     , uint64_t timeout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9084,7 +9311,7 @@ vkWaitForFencesUnsafe
 -- >     , uint64_t timeout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9142,7 +9369,7 @@ vkWaitForFencesSafe
 -- >     , uint64_t timeout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9189,7 +9416,7 @@ vkWaitForFences = vkWaitForFencesSafe
 --   >     , uint64_t timeout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkWaitForFences vkWaitForFences registry at www.khronos.org>
 type HS_vkWaitForFences =
      VkDevice -- ^ device
               ->
@@ -9249,7 +9476,7 @@ type VkCreateSemaphore = "vkCreateSemaphore"
 -- >     , VkSemaphore* pSemaphore
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9307,7 +9534,7 @@ vkCreateSemaphoreUnsafe
 -- >     , VkSemaphore* pSemaphore
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9365,7 +9592,7 @@ vkCreateSemaphoreSafe
 -- >     , VkSemaphore* pSemaphore
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9411,7 +9638,7 @@ vkCreateSemaphore = vkCreateSemaphoreSafe
 --   >     , VkSemaphore* pSemaphore
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSemaphore vkCreateSemaphore registry at www.khronos.org>
 type HS_vkCreateSemaphore =
      VkDevice -- ^ device
               ->
@@ -9466,7 +9693,7 @@ type VkDestroySemaphore = "vkDestroySemaphore"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9513,7 +9740,7 @@ vkDestroySemaphoreUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9560,7 +9787,7 @@ vkDestroySemaphoreSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9598,7 +9825,7 @@ vkDestroySemaphore = vkDestroySemaphoreSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySemaphore vkDestroySemaphore registry at www.khronos.org>
 type HS_vkDestroySemaphore =
      VkDevice -- ^ device
               -> VkSemaphore -- ^ semaphore
@@ -9656,7 +9883,7 @@ type VkCreateEvent = "vkCreateEvent"
 -- >     , VkEvent* pEvent
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9713,7 +9940,7 @@ vkCreateEventUnsafe
 -- >     , VkEvent* pEvent
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9770,7 +9997,7 @@ vkCreateEventSafe
 -- >     , VkEvent* pEvent
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9816,7 +10043,7 @@ vkCreateEvent = vkCreateEventSafe
 --   >     , VkEvent* pEvent
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateEvent vkCreateEvent registry at www.khronos.org>
 type HS_vkCreateEvent =
      VkDevice -- ^ device
               ->
@@ -9871,7 +10098,7 @@ type VkDestroyEvent = "vkDestroyEvent"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9917,7 +10144,7 @@ vkDestroyEventUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -9963,7 +10190,7 @@ vkDestroyEventSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10001,7 +10228,7 @@ vkDestroyEvent = vkDestroyEventSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyEvent vkDestroyEvent registry at www.khronos.org>
 type HS_vkDestroyEvent =
      VkDevice -- ^ device
               -> VkEvent -- ^ event
@@ -10056,7 +10283,7 @@ type VkGetEventStatus = "vkGetEventStatus"
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10102,7 +10329,7 @@ vkGetEventStatusUnsafe
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10148,7 +10375,7 @@ vkGetEventStatusSafe
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10187,7 +10414,7 @@ vkGetEventStatus = vkGetEventStatusSafe
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetEventStatus vkGetEventStatus registry at www.khronos.org>
 type HS_vkGetEventStatus = VkDevice -- ^ device
                                     -> VkEvent -- ^ event
                                                -> IO VkResult
@@ -10240,7 +10467,7 @@ type VkSetEvent = "vkSetEvent"
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10286,7 +10513,7 @@ vkSetEventUnsafe
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10331,7 +10558,7 @@ vkSetEventSafe = unsafeDupablePerformIO (vkGetProcSafe @VkSetEvent)
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10370,7 +10597,7 @@ vkSetEvent = vkSetEventSafe
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkSetEvent vkSetEvent registry at www.khronos.org>
 type HS_vkSetEvent = VkDevice -- ^ device
                               -> VkEvent -- ^ event
                                          -> IO VkResult
@@ -10416,14 +10643,14 @@ type VkResetEvent = "vkResetEvent"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetEvent
 -- >     ( VkDevice device
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10462,14 +10689,14 @@ vkResetEventUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetEvent
 -- >     ( VkDevice device
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10508,14 +10735,14 @@ vkResetEventSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetEvent
 -- >     ( VkDevice device
 -- >     , VkEvent event
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10547,14 +10774,14 @@ vkResetEvent = vkResetEventSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkResetEvent
 --   >     ( VkDevice device
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetEvent vkResetEvent registry at www.khronos.org>
 type HS_vkResetEvent = VkDevice -- ^ device
                                 -> VkEvent -- ^ event
                                            -> IO VkResult
@@ -10609,7 +10836,7 @@ type VkCreateQueryPool = "vkCreateQueryPool"
 -- >     , VkQueryPool* pQueryPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10667,7 +10894,7 @@ vkCreateQueryPoolUnsafe
 -- >     , VkQueryPool* pQueryPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10725,7 +10952,7 @@ vkCreateQueryPoolSafe
 -- >     , VkQueryPool* pQueryPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10771,7 +10998,7 @@ vkCreateQueryPool = vkCreateQueryPoolSafe
 --   >     , VkQueryPool* pQueryPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateQueryPool vkCreateQueryPool registry at www.khronos.org>
 type HS_vkCreateQueryPool =
      VkDevice -- ^ device
               ->
@@ -10826,7 +11053,7 @@ type VkDestroyQueryPool = "vkDestroyQueryPool"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10873,7 +11100,7 @@ vkDestroyQueryPoolUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10920,7 +11147,7 @@ vkDestroyQueryPoolSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -10958,7 +11185,7 @@ vkDestroyQueryPool = vkDestroyQueryPoolSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyQueryPool vkDestroyQueryPool registry at www.khronos.org>
 type HS_vkDestroyQueryPool =
      VkDevice -- ^ device
               -> VkQueryPool -- ^ queryPool
@@ -11021,7 +11248,7 @@ type VkGetQueryPoolResults = "vkGetQueryPoolResults"
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11097,7 +11324,7 @@ vkGetQueryPoolResultsUnsafe
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11173,7 +11400,7 @@ vkGetQueryPoolResultsSafe
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11230,7 +11457,7 @@ vkGetQueryPoolResults = vkGetQueryPoolResultsSafe
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetQueryPoolResults vkGetQueryPoolResults registry at www.khronos.org>
 type HS_vkGetQueryPoolResults =
      VkDevice -- ^ device
               ->
@@ -11289,7 +11516,7 @@ type VkCreateBuffer = "vkCreateBuffer"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkCreateBuffer
 -- >     ( VkDevice device
@@ -11298,7 +11525,7 @@ type VkCreateBuffer = "vkCreateBuffer"
 -- >     , VkBuffer* pBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11347,7 +11574,7 @@ vkCreateBufferUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkCreateBuffer
 -- >     ( VkDevice device
@@ -11356,7 +11583,7 @@ vkCreateBufferUnsafe
 -- >     , VkBuffer* pBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11404,7 +11631,7 @@ vkCreateBufferSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 -- > VkResult vkCreateBuffer
 -- >     ( VkDevice device
@@ -11413,7 +11640,7 @@ vkCreateBufferSafe
 -- >     , VkBuffer* pBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11450,7 +11677,7 @@ vkCreateBuffer = vkCreateBufferSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR'.
 --
 --   > VkResult vkCreateBuffer
 --   >     ( VkDevice device
@@ -11459,7 +11686,7 @@ vkCreateBuffer = vkCreateBufferSafe
 --   >     , VkBuffer* pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBuffer vkCreateBuffer registry at www.khronos.org>
 type HS_vkCreateBuffer =
      VkDevice -- ^ device
               ->
@@ -11514,7 +11741,7 @@ type VkDestroyBuffer = "vkDestroyBuffer"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11560,7 +11787,7 @@ vkDestroyBufferUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11606,7 +11833,7 @@ vkDestroyBufferSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11644,7 +11871,7 @@ vkDestroyBuffer = vkDestroyBufferSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBuffer vkDestroyBuffer registry at www.khronos.org>
 type HS_vkDestroyBuffer =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -11701,7 +11928,7 @@ type VkCreateBufferView = "vkCreateBufferView"
 -- >     , VkBufferView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11759,7 +11986,7 @@ vkCreateBufferViewUnsafe
 -- >     , VkBufferView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11817,7 +12044,7 @@ vkCreateBufferViewSafe
 -- >     , VkBufferView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11863,7 +12090,7 @@ vkCreateBufferView = vkCreateBufferViewSafe
 --   >     , VkBufferView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateBufferView vkCreateBufferView registry at www.khronos.org>
 type HS_vkCreateBufferView =
      VkDevice -- ^ device
               ->
@@ -11919,7 +12146,7 @@ type VkDestroyBufferView = "vkDestroyBufferView"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -11966,7 +12193,7 @@ vkDestroyBufferViewUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12013,7 +12240,7 @@ vkDestroyBufferViewSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12051,7 +12278,7 @@ vkDestroyBufferView = vkDestroyBufferViewSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyBufferView vkDestroyBufferView registry at www.khronos.org>
 type HS_vkDestroyBufferView =
      VkDevice -- ^ device
               -> VkBufferView -- ^ bufferView
@@ -12109,7 +12336,7 @@ type VkCreateImage = "vkCreateImage"
 -- >     , VkImage* pImage
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12166,7 +12393,7 @@ vkCreateImageUnsafe
 -- >     , VkImage* pImage
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12223,7 +12450,7 @@ vkCreateImageSafe
 -- >     , VkImage* pImage
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12269,7 +12496,7 @@ vkCreateImage = vkCreateImageSafe
 --   >     , VkImage* pImage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImage vkCreateImage registry at www.khronos.org>
 type HS_vkCreateImage =
      VkDevice -- ^ device
               ->
@@ -12324,7 +12551,7 @@ type VkDestroyImage = "vkDestroyImage"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12370,7 +12597,7 @@ vkDestroyImageUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12416,7 +12643,7 @@ vkDestroyImageSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12454,7 +12681,7 @@ vkDestroyImage = vkDestroyImageSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImage vkDestroyImage registry at www.khronos.org>
 type HS_vkDestroyImage =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -12510,7 +12737,7 @@ type VkGetImageSubresourceLayout = "vkGetImageSubresourceLayout"
 -- >     , VkSubresourceLayout* pLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12565,7 +12792,7 @@ vkGetImageSubresourceLayoutUnsafe
 -- >     , VkSubresourceLayout* pLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12620,7 +12847,7 @@ vkGetImageSubresourceLayoutSafe
 -- >     , VkSubresourceLayout* pLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12662,7 +12889,7 @@ vkGetImageSubresourceLayout = vkGetImageSubresourceLayoutSafe
 --   >     , VkSubresourceLayout* pLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetImageSubresourceLayout vkGetImageSubresourceLayout registry at www.khronos.org>
 type HS_vkGetImageSubresourceLayout =
      VkDevice -- ^ device
               ->
@@ -12726,7 +12953,7 @@ type VkCreateImageView = "vkCreateImageView"
 -- >     , VkImageView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12784,7 +13011,7 @@ vkCreateImageViewUnsafe
 -- >     , VkImageView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12842,7 +13069,7 @@ vkCreateImageViewSafe
 -- >     , VkImageView* pView
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12888,7 +13115,7 @@ vkCreateImageView = vkCreateImageViewSafe
 --   >     , VkImageView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateImageView vkCreateImageView registry at www.khronos.org>
 type HS_vkCreateImageView =
      VkDevice -- ^ device
               ->
@@ -12943,7 +13170,7 @@ type VkDestroyImageView = "vkDestroyImageView"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -12990,7 +13217,7 @@ vkDestroyImageViewUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13037,7 +13264,7 @@ vkDestroyImageViewSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13075,7 +13302,7 @@ vkDestroyImageView = vkDestroyImageViewSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyImageView vkDestroyImageView registry at www.khronos.org>
 type HS_vkDestroyImageView =
      VkDevice -- ^ device
               -> VkImageView -- ^ imageView
@@ -13134,7 +13361,7 @@ type VkCreateShaderModule = "vkCreateShaderModule"
 -- >     , VkShaderModule* pShaderModule
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13192,7 +13419,7 @@ vkCreateShaderModuleUnsafe
 -- >     , VkShaderModule* pShaderModule
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13250,7 +13477,7 @@ vkCreateShaderModuleSafe
 -- >     , VkShaderModule* pShaderModule
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13296,7 +13523,7 @@ vkCreateShaderModule = vkCreateShaderModuleSafe
 --   >     , VkShaderModule* pShaderModule
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateShaderModule vkCreateShaderModule registry at www.khronos.org>
 type HS_vkCreateShaderModule =
      VkDevice -- ^ device
               ->
@@ -13353,7 +13580,7 @@ type VkDestroyShaderModule = "vkDestroyShaderModule"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13400,7 +13627,7 @@ vkDestroyShaderModuleUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13447,7 +13674,7 @@ vkDestroyShaderModuleSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13485,7 +13712,7 @@ vkDestroyShaderModule = vkDestroyShaderModuleSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyShaderModule vkDestroyShaderModule registry at www.khronos.org>
 type HS_vkDestroyShaderModule =
      VkDevice -- ^ device
               -> VkShaderModule -- ^ shaderModule
@@ -13544,7 +13771,7 @@ type VkCreatePipelineCache = "vkCreatePipelineCache"
 -- >     , VkPipelineCache* pPipelineCache
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13602,7 +13829,7 @@ vkCreatePipelineCacheUnsafe
 -- >     , VkPipelineCache* pPipelineCache
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13660,7 +13887,7 @@ vkCreatePipelineCacheSafe
 -- >     , VkPipelineCache* pPipelineCache
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13706,7 +13933,7 @@ vkCreatePipelineCache = vkCreatePipelineCacheSafe
 --   >     , VkPipelineCache* pPipelineCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineCache vkCreatePipelineCache registry at www.khronos.org>
 type HS_vkCreatePipelineCache =
      VkDevice -- ^ device
               ->
@@ -13764,7 +13991,7 @@ type VkDestroyPipelineCache = "vkDestroyPipelineCache"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13811,7 +14038,7 @@ vkDestroyPipelineCacheUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13858,7 +14085,7 @@ vkDestroyPipelineCacheSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -13896,7 +14123,7 @@ vkDestroyPipelineCache = vkDestroyPipelineCacheSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineCache vkDestroyPipelineCache registry at www.khronos.org>
 type HS_vkDestroyPipelineCache =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -13958,7 +14185,7 @@ type VkGetPipelineCacheData = "vkGetPipelineCacheData"
 -- >     , void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14012,7 +14239,7 @@ vkGetPipelineCacheDataUnsafe
 -- >     , void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14066,7 +14293,7 @@ vkGetPipelineCacheDataSafe
 -- >     , void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14110,7 +14337,7 @@ vkGetPipelineCacheData = vkGetPipelineCacheDataSafe
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPipelineCacheData vkGetPipelineCacheData registry at www.khronos.org>
 type HS_vkGetPipelineCacheData =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -14172,7 +14399,7 @@ type VkMergePipelineCaches = "vkMergePipelineCaches"
 -- >     , const VkPipelineCache* pSrcCaches
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14228,7 +14455,7 @@ vkMergePipelineCachesUnsafe
 -- >     , const VkPipelineCache* pSrcCaches
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14284,7 +14511,7 @@ vkMergePipelineCachesSafe
 -- >     , const VkPipelineCache* pSrcCaches
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14329,7 +14556,7 @@ vkMergePipelineCaches = vkMergePipelineCachesSafe
 --   >     , const VkPipelineCache* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkMergePipelineCaches vkMergePipelineCaches registry at www.khronos.org>
 type HS_vkMergePipelineCaches =
      VkDevice -- ^ device
               ->
@@ -14380,7 +14607,7 @@ is_VkCreateGraphicsPipelines
 type VkCreateGraphicsPipelines = "vkCreateGraphicsPipelines"
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14393,7 +14620,7 @@ type VkCreateGraphicsPipelines = "vkCreateGraphicsPipelines"
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14449,7 +14676,7 @@ vkCreateGraphicsPipelinesUnsafe
 ##endif
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14462,7 +14689,7 @@ vkCreateGraphicsPipelinesUnsafe
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14517,7 +14744,7 @@ vkCreateGraphicsPipelinesSafe
 ##endif
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14530,7 +14757,7 @@ vkCreateGraphicsPipelinesSafe
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14569,7 +14796,7 @@ vkCreateGraphicsPipelines = vkCreateGraphicsPipelinesSafe
 ##endif
 {-# INLINE vkCreateGraphicsPipelines #-}
 
--- | Success codes: 'VK_SUCCESS'.
+-- | Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14582,7 +14809,7 @@ vkCreateGraphicsPipelines = vkCreateGraphicsPipelinesSafe
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateGraphicsPipelines vkCreateGraphicsPipelines registry at www.khronos.org>
 type HS_vkCreateGraphicsPipelines =
      VkDevice -- ^ device
               ->
@@ -14641,7 +14868,7 @@ is_VkCreateComputePipelines
 type VkCreateComputePipelines = "vkCreateComputePipelines"
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14654,7 +14881,7 @@ type VkCreateComputePipelines = "vkCreateComputePipelines"
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14710,7 +14937,7 @@ vkCreateComputePipelinesUnsafe
 ##endif
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14723,7 +14950,7 @@ vkCreateComputePipelinesUnsafe
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14778,7 +15005,7 @@ vkCreateComputePipelinesSafe
 ##endif
 
 -- |
--- Success codes: 'VK_SUCCESS'.
+-- Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 -- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14791,7 +15018,7 @@ vkCreateComputePipelinesSafe
 -- >     , VkPipeline* pPipelines
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14830,7 +15057,7 @@ vkCreateComputePipelines = vkCreateComputePipelinesSafe
 ##endif
 {-# INLINE vkCreateComputePipelines #-}
 
--- | Success codes: 'VK_SUCCESS'.
+-- | Success codes: 'VK_SUCCESS', 'VK_PIPELINE_COMPILE_REQUIRED_EXT'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INVALID_SHADER_NV'.
 --
@@ -14843,7 +15070,7 @@ vkCreateComputePipelines = vkCreateComputePipelinesSafe
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateComputePipelines vkCreateComputePipelines registry at www.khronos.org>
 type HS_vkCreateComputePipelines =
      VkDevice -- ^ device
               ->
@@ -14906,7 +15133,7 @@ type VkDestroyPipeline = "vkDestroyPipeline"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14953,7 +15180,7 @@ vkDestroyPipelineUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -14999,7 +15226,7 @@ vkDestroyPipelineSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15037,7 +15264,7 @@ vkDestroyPipeline = vkDestroyPipelineSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipeline vkDestroyPipeline registry at www.khronos.org>
 type HS_vkDestroyPipeline =
      VkDevice -- ^ device
               -> VkPipeline -- ^ pipeline
@@ -15096,7 +15323,7 @@ type VkCreatePipelineLayout = "vkCreatePipelineLayout"
 -- >     , VkPipelineLayout* pPipelineLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15154,7 +15381,7 @@ vkCreatePipelineLayoutUnsafe
 -- >     , VkPipelineLayout* pPipelineLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15212,7 +15439,7 @@ vkCreatePipelineLayoutSafe
 -- >     , VkPipelineLayout* pPipelineLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15258,7 +15485,7 @@ vkCreatePipelineLayout = vkCreatePipelineLayoutSafe
 --   >     , VkPipelineLayout* pPipelineLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreatePipelineLayout vkCreatePipelineLayout registry at www.khronos.org>
 type HS_vkCreatePipelineLayout =
      VkDevice -- ^ device
               ->
@@ -15318,7 +15545,7 @@ type VkDestroyPipelineLayout = "vkDestroyPipelineLayout"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15365,7 +15592,7 @@ vkDestroyPipelineLayoutUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15412,7 +15639,7 @@ vkDestroyPipelineLayoutSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15450,7 +15677,7 @@ vkDestroyPipelineLayout = vkDestroyPipelineLayoutSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyPipelineLayout vkDestroyPipelineLayout registry at www.khronos.org>
 type HS_vkDestroyPipelineLayout =
      VkDevice -- ^ device
               -> VkPipelineLayout -- ^ pipelineLayout
@@ -15502,7 +15729,7 @@ type VkCreateSampler = "vkCreateSampler"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkCreateSampler
 -- >     ( VkDevice device
@@ -15511,7 +15738,7 @@ type VkCreateSampler = "vkCreateSampler"
 -- >     , VkSampler* pSampler
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15560,7 +15787,7 @@ vkCreateSamplerUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkCreateSampler
 -- >     ( VkDevice device
@@ -15569,7 +15796,7 @@ vkCreateSamplerUnsafe
 -- >     , VkSampler* pSampler
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15617,7 +15844,7 @@ vkCreateSamplerSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+-- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkCreateSampler
 -- >     ( VkDevice device
@@ -15626,7 +15853,7 @@ vkCreateSamplerSafe
 -- >     , VkSampler* pSampler
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15663,7 +15890,7 @@ vkCreateSampler = vkCreateSamplerSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_TOO_MANY_OBJECTS'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkCreateSampler
 --   >     ( VkDevice device
@@ -15672,7 +15899,7 @@ vkCreateSampler = vkCreateSamplerSafe
 --   >     , VkSampler* pSampler
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateSampler vkCreateSampler registry at www.khronos.org>
 type HS_vkCreateSampler =
      VkDevice -- ^ device
               ->
@@ -15727,7 +15954,7 @@ type VkDestroySampler = "vkDestroySampler"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15774,7 +16001,7 @@ vkDestroySamplerUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15820,7 +16047,7 @@ vkDestroySamplerSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15858,7 +16085,7 @@ vkDestroySampler = vkDestroySamplerSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroySampler vkDestroySampler registry at www.khronos.org>
 type HS_vkDestroySampler =
      VkDevice -- ^ device
               -> VkSampler -- ^ sampler
@@ -15918,7 +16145,7 @@ type VkCreateDescriptorSetLayout = "vkCreateDescriptorSetLayout"
 -- >     , VkDescriptorSetLayout* pSetLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -15979,7 +16206,7 @@ vkCreateDescriptorSetLayoutUnsafe
 -- >     , VkDescriptorSetLayout* pSetLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16040,7 +16267,7 @@ vkCreateDescriptorSetLayoutSafe
 -- >     , VkDescriptorSetLayout* pSetLayout
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16087,7 +16314,7 @@ vkCreateDescriptorSetLayout = vkCreateDescriptorSetLayoutSafe
 --   >     , VkDescriptorSetLayout* pSetLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout registry at www.khronos.org>
 type HS_vkCreateDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -16150,7 +16377,7 @@ type VkDestroyDescriptorSetLayout = "vkDestroyDescriptorSetLayout"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16200,7 +16427,7 @@ vkDestroyDescriptorSetLayoutUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16250,7 +16477,7 @@ vkDestroyDescriptorSetLayoutSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16289,7 +16516,7 @@ vkDestroyDescriptorSetLayout = vkDestroyDescriptorSetLayoutSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout registry at www.khronos.org>
 type HS_vkDestroyDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -16353,7 +16580,7 @@ type VkCreateDescriptorPool = "vkCreateDescriptorPool"
 -- >     , VkDescriptorPool* pDescriptorPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16411,7 +16638,7 @@ vkCreateDescriptorPoolUnsafe
 -- >     , VkDescriptorPool* pDescriptorPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16469,7 +16696,7 @@ vkCreateDescriptorPoolSafe
 -- >     , VkDescriptorPool* pDescriptorPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16515,7 +16742,7 @@ vkCreateDescriptorPool = vkCreateDescriptorPoolSafe
 --   >     , VkDescriptorPool* pDescriptorPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateDescriptorPool vkCreateDescriptorPool registry at www.khronos.org>
 type HS_vkCreateDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -16575,7 +16802,7 @@ type VkDestroyDescriptorPool = "vkDestroyDescriptorPool"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16622,7 +16849,7 @@ vkDestroyDescriptorPoolUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16669,7 +16896,7 @@ vkDestroyDescriptorPoolSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16707,7 +16934,7 @@ vkDestroyDescriptorPool = vkDestroyDescriptorPoolSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyDescriptorPool vkDestroyDescriptorPool registry at www.khronos.org>
 type HS_vkDestroyDescriptorPool =
      VkDevice -- ^ device
               -> VkDescriptorPool -- ^ descriptorPool
@@ -16760,15 +16987,13 @@ type VkResetDescriptorPool = "vkResetDescriptorPool"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkResetDescriptorPool
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
 -- >     , VkDescriptorPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16813,15 +17038,13 @@ vkResetDescriptorPoolUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkResetDescriptorPool
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
 -- >     , VkDescriptorPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16866,15 +17089,13 @@ vkResetDescriptorPoolSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkResetDescriptorPool
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
 -- >     , VkDescriptorPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -16909,15 +17130,13 @@ vkResetDescriptorPool = vkResetDescriptorPoolSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 --   > VkResult vkResetDescriptorPool
 --   >     ( VkDevice device
 --   >     , VkDescriptorPool descriptorPool
 --   >     , VkDescriptorPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetDescriptorPool vkResetDescriptorPool registry at www.khronos.org>
 type HS_vkResetDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -16977,7 +17196,7 @@ type VkAllocateDescriptorSets = "vkAllocateDescriptorSets"
 -- >     , VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17033,7 +17252,7 @@ vkAllocateDescriptorSetsUnsafe
 -- >     , VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17088,7 +17307,7 @@ vkAllocateDescriptorSetsSafe
 -- >     , VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17132,7 +17351,7 @@ vkAllocateDescriptorSets = vkAllocateDescriptorSetsSafe
 --   >     , VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateDescriptorSets vkAllocateDescriptorSets registry at www.khronos.org>
 type HS_vkAllocateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -17187,8 +17406,6 @@ type VkFreeDescriptorSets = "vkFreeDescriptorSets"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkFreeDescriptorSets
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
@@ -17196,7 +17413,7 @@ type VkFreeDescriptorSets = "vkFreeDescriptorSets"
 -- >     , const VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17243,8 +17460,6 @@ vkFreeDescriptorSetsUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkFreeDescriptorSets
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
@@ -17252,7 +17467,7 @@ vkFreeDescriptorSetsUnsafe
 -- >     , const VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17299,8 +17514,6 @@ vkFreeDescriptorSetsSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 -- > VkResult vkFreeDescriptorSets
 -- >     ( VkDevice device
 -- >     , VkDescriptorPool descriptorPool
@@ -17308,7 +17521,7 @@ vkFreeDescriptorSetsSafe
 -- >     , const VkDescriptorSet* pDescriptorSets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17344,8 +17557,6 @@ vkFreeDescriptorSets = vkFreeDescriptorSetsSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
 --   > VkResult vkFreeDescriptorSets
 --   >     ( VkDevice device
 --   >     , VkDescriptorPool descriptorPool
@@ -17353,7 +17564,7 @@ vkFreeDescriptorSets = vkFreeDescriptorSetsSafe
 --   >     , const VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeDescriptorSets vkFreeDescriptorSets registry at www.khronos.org>
 type HS_vkFreeDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -17412,7 +17623,7 @@ type VkUpdateDescriptorSets = "vkUpdateDescriptorSets"
 -- >     , const VkCopyDescriptorSet* pDescriptorCopies
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17471,7 +17682,7 @@ vkUpdateDescriptorSetsUnsafe
 -- >     , const VkCopyDescriptorSet* pDescriptorCopies
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17530,7 +17741,7 @@ vkUpdateDescriptorSetsSafe
 -- >     , const VkCopyDescriptorSet* pDescriptorCopies
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17575,7 +17786,7 @@ vkUpdateDescriptorSets = vkUpdateDescriptorSetsSafe
 --   >     , const VkCopyDescriptorSet* pDescriptorCopies
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkUpdateDescriptorSets vkUpdateDescriptorSets registry at www.khronos.org>
 type HS_vkUpdateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -17640,7 +17851,7 @@ type VkCreateFramebuffer = "vkCreateFramebuffer"
 -- >     , VkFramebuffer* pFramebuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17698,7 +17909,7 @@ vkCreateFramebufferUnsafe
 -- >     , VkFramebuffer* pFramebuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17756,7 +17967,7 @@ vkCreateFramebufferSafe
 -- >     , VkFramebuffer* pFramebuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17802,7 +18013,7 @@ vkCreateFramebuffer = vkCreateFramebufferSafe
 --   >     , VkFramebuffer* pFramebuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateFramebuffer vkCreateFramebuffer registry at www.khronos.org>
 type HS_vkCreateFramebuffer =
      VkDevice -- ^ device
               ->
@@ -17859,7 +18070,7 @@ type VkDestroyFramebuffer = "vkDestroyFramebuffer"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17906,7 +18117,7 @@ vkDestroyFramebufferUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17953,7 +18164,7 @@ vkDestroyFramebufferSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -17991,7 +18202,7 @@ vkDestroyFramebuffer = vkDestroyFramebufferSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyFramebuffer vkDestroyFramebuffer registry at www.khronos.org>
 type HS_vkDestroyFramebuffer =
      VkDevice -- ^ device
               -> VkFramebuffer -- ^ framebuffer
@@ -18049,7 +18260,7 @@ type VkCreateRenderPass = "vkCreateRenderPass"
 -- >     , VkRenderPass* pRenderPass
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18107,7 +18318,7 @@ vkCreateRenderPassUnsafe
 -- >     , VkRenderPass* pRenderPass
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18165,7 +18376,7 @@ vkCreateRenderPassSafe
 -- >     , VkRenderPass* pRenderPass
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18211,7 +18422,7 @@ vkCreateRenderPass = vkCreateRenderPassSafe
 --   >     , VkRenderPass* pRenderPass
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateRenderPass vkCreateRenderPass registry at www.khronos.org>
 type HS_vkCreateRenderPass =
      VkDevice -- ^ device
               ->
@@ -18267,7 +18478,7 @@ type VkDestroyRenderPass = "vkDestroyRenderPass"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18314,7 +18525,7 @@ vkDestroyRenderPassUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18361,7 +18572,7 @@ vkDestroyRenderPassSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18399,7 +18610,7 @@ vkDestroyRenderPass = vkDestroyRenderPassSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyRenderPass vkDestroyRenderPass registry at www.khronos.org>
 type HS_vkDestroyRenderPass =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -18454,7 +18665,7 @@ type VkGetRenderAreaGranularity = "vkGetRenderAreaGranularity"
 -- >     , VkExtent2D* pGranularity
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18502,7 +18713,7 @@ vkGetRenderAreaGranularityUnsafe
 -- >     , VkExtent2D* pGranularity
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18550,7 +18761,7 @@ vkGetRenderAreaGranularitySafe
 -- >     , VkExtent2D* pGranularity
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18588,7 +18799,7 @@ vkGetRenderAreaGranularity = vkGetRenderAreaGranularitySafe
 --   >     , VkExtent2D* pGranularity
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetRenderAreaGranularity vkGetRenderAreaGranularity registry at www.khronos.org>
 type HS_vkGetRenderAreaGranularity =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -18649,7 +18860,7 @@ type VkCreateCommandPool = "vkCreateCommandPool"
 -- >     , VkCommandPool* pCommandPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18707,7 +18918,7 @@ vkCreateCommandPoolUnsafe
 -- >     , VkCommandPool* pCommandPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18765,7 +18976,7 @@ vkCreateCommandPoolSafe
 -- >     , VkCommandPool* pCommandPool
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18811,7 +19022,7 @@ vkCreateCommandPool = vkCreateCommandPoolSafe
 --   >     , VkCommandPool* pCommandPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCreateCommandPool vkCreateCommandPool registry at www.khronos.org>
 type HS_vkCreateCommandPool =
      VkDevice -- ^ device
               ->
@@ -18868,7 +19079,7 @@ type VkDestroyCommandPool = "vkDestroyCommandPool"
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18915,7 +19126,7 @@ vkDestroyCommandPoolUnsafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -18962,7 +19173,7 @@ vkDestroyCommandPoolSafe
 -- >     , const VkAllocationCallbacks* pAllocator
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19000,7 +19211,7 @@ vkDestroyCommandPool = vkDestroyCommandPoolSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkDestroyCommandPool vkDestroyCommandPool registry at www.khronos.org>
 type HS_vkDestroyCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -19049,7 +19260,7 @@ type VkResetCommandPool = "vkResetCommandPool"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandPool
 -- >     ( VkDevice device
@@ -19057,7 +19268,7 @@ type VkResetCommandPool = "vkResetCommandPool"
 -- >     , VkCommandPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19100,7 +19311,7 @@ vkResetCommandPoolUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandPool
 -- >     ( VkDevice device
@@ -19108,7 +19319,7 @@ vkResetCommandPoolUnsafe
 -- >     , VkCommandPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19151,7 +19362,7 @@ vkResetCommandPoolSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandPool
 -- >     ( VkDevice device
@@ -19159,7 +19370,7 @@ vkResetCommandPoolSafe
 -- >     , VkCommandPoolResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19193,7 +19404,7 @@ vkResetCommandPool = vkResetCommandPoolSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkResetCommandPool
 --   >     ( VkDevice device
@@ -19201,7 +19412,7 @@ vkResetCommandPool = vkResetCommandPoolSafe
 --   >     , VkCommandPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandPool vkResetCommandPool registry at www.khronos.org>
 type HS_vkResetCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -19260,7 +19471,7 @@ type VkAllocateCommandBuffers = "vkAllocateCommandBuffers"
 -- >     , VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19316,7 +19527,7 @@ vkAllocateCommandBuffersUnsafe
 -- >     , VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19371,7 +19582,7 @@ vkAllocateCommandBuffersSafe
 -- >     , VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19415,7 +19626,7 @@ vkAllocateCommandBuffers = vkAllocateCommandBuffersSafe
 --   >     , VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkAllocateCommandBuffers vkAllocateCommandBuffers registry at www.khronos.org>
 type HS_vkAllocateCommandBuffers =
      VkDevice -- ^ device
               ->
@@ -19475,7 +19686,7 @@ type VkFreeCommandBuffers = "vkFreeCommandBuffers"
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19525,7 +19736,7 @@ vkFreeCommandBuffersUnsafe
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19575,7 +19786,7 @@ vkFreeCommandBuffersSafe
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19615,7 +19826,7 @@ vkFreeCommandBuffers = vkFreeCommandBuffersSafe
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkFreeCommandBuffers vkFreeCommandBuffers registry at www.khronos.org>
 type HS_vkFreeCommandBuffers =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -19673,7 +19884,7 @@ type VkBeginCommandBuffer = "vkBeginCommandBuffer"
 -- >     , const VkCommandBufferBeginInfo* pBeginInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19721,7 +19932,7 @@ vkBeginCommandBufferUnsafe
 -- >     , const VkCommandBufferBeginInfo* pBeginInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19769,7 +19980,7 @@ vkBeginCommandBufferSafe
 -- >     , const VkCommandBufferBeginInfo* pBeginInfo
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19809,7 +20020,7 @@ vkBeginCommandBuffer = vkBeginCommandBufferSafe
 --   >     , const VkCommandBufferBeginInfo* pBeginInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkBeginCommandBuffer vkBeginCommandBuffer registry at www.khronos.org>
 type HS_vkBeginCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
@@ -19863,7 +20074,7 @@ type VkEndCommandBuffer = "vkEndCommandBuffer"
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19906,7 +20117,7 @@ vkEndCommandBufferUnsafe
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19949,7 +20160,7 @@ vkEndCommandBufferSafe
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -19986,7 +20197,7 @@ vkEndCommandBuffer = vkEndCommandBufferSafe
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkEndCommandBuffer vkEndCommandBuffer registry at www.khronos.org>
 type HS_vkEndCommandBuffer = VkCommandBuffer -- ^ commandBuffer
                                              -> IO VkResult
 
@@ -20033,14 +20244,14 @@ type VkResetCommandBuffer = "vkResetCommandBuffer"
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandBuffer
 -- >     ( VkCommandBuffer commandBuffer
 -- >     , VkCommandBufferResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20081,14 +20292,14 @@ vkResetCommandBufferUnsafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandBuffer
 -- >     ( VkCommandBuffer commandBuffer
 -- >     , VkCommandBufferResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20129,14 +20340,14 @@ vkResetCommandBufferSafe
 -- |
 -- Success codes: 'VK_SUCCESS'.
 --
--- Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+-- Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 -- > VkResult vkResetCommandBuffer
 -- >     ( VkCommandBuffer commandBuffer
 -- >     , VkCommandBufferResetFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20169,14 +20380,14 @@ vkResetCommandBuffer = vkResetCommandBufferSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--   Error codes: 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkResetCommandBuffer
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkCommandBufferResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkResetCommandBuffer vkResetCommandBuffer registry at www.khronos.org>
 type HS_vkResetCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkCommandBufferResetFlags -- ^ flags
@@ -20232,7 +20443,7 @@ type VkCmdBindPipeline = "vkCmdBindPipeline"
 -- >     , VkPipeline pipeline
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20283,7 +20494,7 @@ vkCmdBindPipelineUnsafe
 -- >     , VkPipeline pipeline
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20333,7 +20544,7 @@ vkCmdBindPipelineSafe
 -- >     , VkPipeline pipeline
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20375,7 +20586,7 @@ vkCmdBindPipeline = vkCmdBindPipelineSafe
 --   >     , VkPipeline pipeline
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindPipeline vkCmdBindPipeline registry at www.khronos.org>
 type HS_vkCmdBindPipeline =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkPipelineBindPoint -- ^ pipelineBindPoint
@@ -20432,7 +20643,7 @@ type VkCmdSetViewport = "vkCmdSetViewport"
 -- >     , const VkViewport* pViewports
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20486,7 +20697,7 @@ vkCmdSetViewportUnsafe
 -- >     , const VkViewport* pViewports
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20539,7 +20750,7 @@ vkCmdSetViewportSafe
 -- >     , const VkViewport* pViewports
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20583,7 +20794,7 @@ vkCmdSetViewport = vkCmdSetViewportSafe
 --   >     , const VkViewport* pViewports
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetViewport vkCmdSetViewport registry at www.khronos.org>
 type HS_vkCmdSetViewport =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstViewport
@@ -20641,7 +20852,7 @@ type VkCmdSetScissor = "vkCmdSetScissor"
 -- >     , const VkRect2D* pScissors
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20694,7 +20905,7 @@ vkCmdSetScissorUnsafe
 -- >     , const VkRect2D* pScissors
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20747,7 +20958,7 @@ vkCmdSetScissorSafe
 -- >     , const VkRect2D* pScissors
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20791,7 +21002,7 @@ vkCmdSetScissor = vkCmdSetScissorSafe
 --   >     , const VkRect2D* pScissors
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetScissor vkCmdSetScissor registry at www.khronos.org>
 type HS_vkCmdSetScissor =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstScissor
@@ -20847,7 +21058,7 @@ type VkCmdSetLineWidth = "vkCmdSetLineWidth"
 -- >     , float lineWidth
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20893,7 +21104,7 @@ vkCmdSetLineWidthUnsafe
 -- >     , float lineWidth
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20938,7 +21149,7 @@ vkCmdSetLineWidthSafe
 -- >     , float lineWidth
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -20977,7 +21188,7 @@ vkCmdSetLineWidth = vkCmdSetLineWidthSafe
 --   >     , float lineWidth
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetLineWidth vkCmdSetLineWidth registry at www.khronos.org>
 type HS_vkCmdSetLineWidth =
      VkCommandBuffer -- ^ commandBuffer
                      -> #{type float} -> IO ()
@@ -21032,7 +21243,7 @@ type VkCmdSetDepthBias = "vkCmdSetDepthBias"
 -- >     , float depthBiasSlopeFactor
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21084,7 +21295,7 @@ vkCmdSetDepthBiasUnsafe
 -- >     , float depthBiasSlopeFactor
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21136,7 +21347,7 @@ vkCmdSetDepthBiasSafe
 -- >     , float depthBiasSlopeFactor
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21179,7 +21390,7 @@ vkCmdSetDepthBias = vkCmdSetDepthBiasSafe
 --   >     , float depthBiasSlopeFactor
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBias vkCmdSetDepthBias registry at www.khronos.org>
 type HS_vkCmdSetDepthBias =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -21236,7 +21447,7 @@ type VkCmdSetBlendConstants = "vkCmdSetBlendConstants"
 -- >     , const float blendConstants[4]
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21284,7 +21495,7 @@ vkCmdSetBlendConstantsUnsafe
 -- >     , const float blendConstants[4]
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21332,7 +21543,7 @@ vkCmdSetBlendConstantsSafe
 -- >     , const float blendConstants[4]
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21372,7 +21583,7 @@ vkCmdSetBlendConstants = vkCmdSetBlendConstantsSafe
 --   >     , const float blendConstants[4]
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetBlendConstants vkCmdSetBlendConstants registry at www.khronos.org>
 type HS_vkCmdSetBlendConstants =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr #{type float} -- ^ blendConstants
@@ -21430,7 +21641,7 @@ type VkCmdSetDepthBounds = "vkCmdSetDepthBounds"
 -- >     , float maxDepthBounds
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21479,7 +21690,7 @@ vkCmdSetDepthBoundsUnsafe
 -- >     , float maxDepthBounds
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21528,7 +21739,7 @@ vkCmdSetDepthBoundsSafe
 -- >     , float maxDepthBounds
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21569,7 +21780,7 @@ vkCmdSetDepthBounds = vkCmdSetDepthBoundsSafe
 --   >     , float maxDepthBounds
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetDepthBounds vkCmdSetDepthBounds registry at www.khronos.org>
 type HS_vkCmdSetDepthBounds =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -21627,7 +21838,7 @@ type VkCmdSetStencilCompareMask = "vkCmdSetStencilCompareMask"
 -- >     , uint32_t compareMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21679,7 +21890,7 @@ vkCmdSetStencilCompareMaskUnsafe
 -- >     , uint32_t compareMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21731,7 +21942,7 @@ vkCmdSetStencilCompareMaskSafe
 -- >     , uint32_t compareMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21773,7 +21984,7 @@ vkCmdSetStencilCompareMask = vkCmdSetStencilCompareMaskSafe
 --   >     , uint32_t compareMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask registry at www.khronos.org>
 type HS_vkCmdSetStencilCompareMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -21835,7 +22046,7 @@ type VkCmdSetStencilWriteMask = "vkCmdSetStencilWriteMask"
 -- >     , uint32_t writeMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21887,7 +22098,7 @@ vkCmdSetStencilWriteMaskUnsafe
 -- >     , uint32_t writeMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21938,7 +22149,7 @@ vkCmdSetStencilWriteMaskSafe
 -- >     , uint32_t writeMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -21980,7 +22191,7 @@ vkCmdSetStencilWriteMask = vkCmdSetStencilWriteMaskSafe
 --   >     , uint32_t writeMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask registry at www.khronos.org>
 type HS_vkCmdSetStencilWriteMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -22042,7 +22253,7 @@ type VkCmdSetStencilReference = "vkCmdSetStencilReference"
 -- >     , uint32_t reference
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22094,7 +22305,7 @@ vkCmdSetStencilReferenceUnsafe
 -- >     , uint32_t reference
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22145,7 +22356,7 @@ vkCmdSetStencilReferenceSafe
 -- >     , uint32_t reference
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22187,7 +22398,7 @@ vkCmdSetStencilReference = vkCmdSetStencilReferenceSafe
 --   >     , uint32_t reference
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetStencilReference vkCmdSetStencilReference registry at www.khronos.org>
 type HS_vkCmdSetStencilReference =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -22254,7 +22465,7 @@ type VkCmdBindDescriptorSets = "vkCmdBindDescriptorSets"
 -- >     , const uint32_t* pDynamicOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22328,7 +22539,7 @@ vkCmdBindDescriptorSetsUnsafe
 -- >     , const uint32_t* pDynamicOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22402,7 +22613,7 @@ vkCmdBindDescriptorSetsSafe
 -- >     , const uint32_t* pDynamicOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22458,7 +22669,7 @@ vkCmdBindDescriptorSets = vkCmdBindDescriptorSetsSafe
 --   >     , const uint32_t* pDynamicOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindDescriptorSets vkCmdBindDescriptorSets registry at www.khronos.org>
 type HS_vkCmdBindDescriptorSets =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -22529,7 +22740,7 @@ type VkCmdBindIndexBuffer = "vkCmdBindIndexBuffer"
 -- >     , VkIndexType indexType
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22583,7 +22794,7 @@ vkCmdBindIndexBufferUnsafe
 -- >     , VkIndexType indexType
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22637,7 +22848,7 @@ vkCmdBindIndexBufferSafe
 -- >     , VkIndexType indexType
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22681,7 +22892,7 @@ vkCmdBindIndexBuffer = vkCmdBindIndexBufferSafe
 --   >     , VkIndexType indexType
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindIndexBuffer vkCmdBindIndexBuffer registry at www.khronos.org>
 type HS_vkCmdBindIndexBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -22743,7 +22954,7 @@ type VkCmdBindVertexBuffers = "vkCmdBindVertexBuffers"
 -- >     , const VkDeviceSize* pOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22802,7 +23013,7 @@ vkCmdBindVertexBuffersUnsafe
 -- >     , const VkDeviceSize* pOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22861,7 +23072,7 @@ vkCmdBindVertexBuffersSafe
 -- >     , const VkDeviceSize* pOffsets
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -22908,7 +23119,7 @@ vkCmdBindVertexBuffers = vkCmdBindVertexBuffersSafe
 --   >     , const VkDeviceSize* pOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBindVertexBuffers vkCmdBindVertexBuffers registry at www.khronos.org>
 type HS_vkCmdBindVertexBuffers =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -22974,7 +23185,7 @@ type VkCmdDraw = "vkCmdDraw"
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23032,7 +23243,7 @@ vkCmdDrawUnsafe
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23089,7 +23300,7 @@ vkCmdDrawSafe = unsafeDupablePerformIO (vkGetProcSafe @VkCmdDraw)
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23137,7 +23348,7 @@ vkCmdDraw = vkCmdDrawSafe
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDraw vkCmdDraw registry at www.khronos.org>
 type HS_vkCmdDraw =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ vertexCount
@@ -23200,7 +23411,7 @@ type VkCmdDrawIndexed = "vkCmdDrawIndexed"
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23264,7 +23475,7 @@ vkCmdDrawIndexedUnsafe
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23328,7 +23539,7 @@ vkCmdDrawIndexedSafe
 -- >     , uint32_t firstInstance
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23379,7 +23590,7 @@ vkCmdDrawIndexed = vkCmdDrawIndexedSafe
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexed vkCmdDrawIndexed registry at www.khronos.org>
 type HS_vkCmdDrawIndexed =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -23443,7 +23654,7 @@ type VkCmdDrawIndirect = "vkCmdDrawIndirect"
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23504,7 +23715,7 @@ vkCmdDrawIndirectUnsafe
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23565,7 +23776,7 @@ vkCmdDrawIndirectSafe
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23614,7 +23825,7 @@ vkCmdDrawIndirect = vkCmdDrawIndirectSafe
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndirect vkCmdDrawIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -23679,7 +23890,7 @@ type VkCmdDrawIndexedIndirect = "vkCmdDrawIndexedIndirect"
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23741,7 +23952,7 @@ vkCmdDrawIndexedIndirectUnsafe
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23802,7 +24013,7 @@ vkCmdDrawIndexedIndirectSafe
 -- >     , uint32_t stride
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23851,7 +24062,7 @@ vkCmdDrawIndexedIndirect = vkCmdDrawIndexedIndirectSafe
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndexedIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -23917,7 +24128,7 @@ type VkCmdDispatch = "vkCmdDispatch"
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -23972,7 +24183,7 @@ vkCmdDispatchUnsafe
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24027,7 +24238,7 @@ vkCmdDispatchSafe
 -- >     , uint32_t groupCountZ
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24073,7 +24284,7 @@ vkCmdDispatch = vkCmdDispatchSafe
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatch vkCmdDispatch registry at www.khronos.org>
 type HS_vkCmdDispatch =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ groupCountX
@@ -24133,7 +24344,7 @@ type VkCmdDispatchIndirect = "vkCmdDispatchIndirect"
 -- >     , VkDeviceSize offset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24186,7 +24397,7 @@ vkCmdDispatchIndirectUnsafe
 -- >     , VkDeviceSize offset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24239,7 +24450,7 @@ vkCmdDispatchIndirectSafe
 -- >     , VkDeviceSize offset
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24283,7 +24494,7 @@ vkCmdDispatchIndirect = vkCmdDispatchIndirectSafe
 --   >     , VkDeviceSize offset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdDispatchIndirect vkCmdDispatchIndirect registry at www.khronos.org>
 type HS_vkCmdDispatchIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -24344,7 +24555,7 @@ type VkCmdCopyBuffer = "vkCmdCopyBuffer"
 -- >     , const VkBufferCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24405,7 +24616,7 @@ vkCmdCopyBufferUnsafe
 -- >     , const VkBufferCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24465,7 +24676,7 @@ vkCmdCopyBufferSafe
 -- >     , const VkBufferCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24514,7 +24725,7 @@ vkCmdCopyBuffer = vkCmdCopyBufferSafe
 --   >     , const VkBufferCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBuffer vkCmdCopyBuffer registry at www.khronos.org>
 type HS_vkCmdCopyBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -24579,7 +24790,7 @@ type VkCmdCopyImage = "vkCmdCopyImage"
 -- >     , const VkImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24650,7 +24861,7 @@ vkCmdCopyImageUnsafe
 -- >     , const VkImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24720,7 +24931,7 @@ vkCmdCopyImageSafe
 -- >     , const VkImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24775,7 +24986,7 @@ vkCmdCopyImage = vkCmdCopyImageSafe
 --   >     , const VkImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImage vkCmdCopyImage registry at www.khronos.org>
 type HS_vkCmdCopyImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -24845,7 +25056,7 @@ type VkCmdBlitImage = "vkCmdBlitImage"
 -- >     , VkFilter filter
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24921,7 +25132,7 @@ vkCmdBlitImageUnsafe
 -- >     , VkFilter filter
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -24996,7 +25207,7 @@ vkCmdBlitImageSafe
 -- >     , VkFilter filter
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25054,7 +25265,7 @@ vkCmdBlitImage = vkCmdBlitImageSafe
 --   >     , VkFilter filter
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBlitImage vkCmdBlitImage registry at www.khronos.org>
 type HS_vkCmdBlitImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -25126,7 +25337,7 @@ type VkCmdCopyBufferToImage = "vkCmdCopyBufferToImage"
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25194,7 +25405,7 @@ vkCmdCopyBufferToImageUnsafe
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25262,7 +25473,7 @@ vkCmdCopyBufferToImageSafe
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25315,7 +25526,7 @@ vkCmdCopyBufferToImage = vkCmdCopyBufferToImageSafe
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyBufferToImage vkCmdCopyBufferToImage registry at www.khronos.org>
 type HS_vkCmdCopyBufferToImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -25387,7 +25598,7 @@ type VkCmdCopyImageToBuffer = "vkCmdCopyImageToBuffer"
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25455,7 +25666,7 @@ vkCmdCopyImageToBufferUnsafe
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25523,7 +25734,7 @@ vkCmdCopyImageToBufferSafe
 -- >     , const VkBufferImageCopy* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25576,7 +25787,7 @@ vkCmdCopyImageToBuffer = vkCmdCopyImageToBufferSafe
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer registry at www.khronos.org>
 type HS_vkCmdCopyImageToBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -25645,7 +25856,7 @@ type VkCmdUpdateBuffer = "vkCmdUpdateBuffer"
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25706,7 +25917,7 @@ vkCmdUpdateBufferUnsafe
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25767,7 +25978,7 @@ vkCmdUpdateBufferSafe
 -- >     , const void* pData
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25816,7 +26027,7 @@ vkCmdUpdateBuffer = vkCmdUpdateBufferSafe
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdUpdateBuffer vkCmdUpdateBuffer registry at www.khronos.org>
 type HS_vkCmdUpdateBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -25881,7 +26092,7 @@ type VkCmdFillBuffer = "vkCmdFillBuffer"
 -- >     , uint32_t data
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -25944,7 +26155,7 @@ vkCmdFillBufferUnsafe
 -- >     , uint32_t data
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26006,7 +26217,7 @@ vkCmdFillBufferSafe
 -- >     , uint32_t data
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26057,7 +26268,7 @@ vkCmdFillBuffer = vkCmdFillBufferSafe
 --   >     , uint32_t data
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdFillBuffer vkCmdFillBuffer registry at www.khronos.org>
 type HS_vkCmdFillBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -26122,7 +26333,7 @@ type VkCmdClearColorImage = "vkCmdClearColorImage"
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26192,7 +26403,7 @@ vkCmdClearColorImageUnsafe
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26262,7 +26473,7 @@ vkCmdClearColorImageSafe
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26316,7 +26527,7 @@ vkCmdClearColorImage = vkCmdClearColorImageSafe
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearColorImage vkCmdClearColorImage registry at www.khronos.org>
 type HS_vkCmdClearColorImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -26388,7 +26599,7 @@ type VkCmdClearDepthStencilImage = "vkCmdClearDepthStencilImage"
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26459,7 +26670,7 @@ vkCmdClearDepthStencilImageUnsafe
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26530,7 +26741,7 @@ vkCmdClearDepthStencilImageSafe
 -- >     , const VkImageSubresourceRange* pRanges
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26584,7 +26795,7 @@ vkCmdClearDepthStencilImage = vkCmdClearDepthStencilImageSafe
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage registry at www.khronos.org>
 type HS_vkCmdClearDepthStencilImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -26656,7 +26867,7 @@ type VkCmdClearAttachments = "vkCmdClearAttachments"
 -- >     , const VkClearRect* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26719,7 +26930,7 @@ vkCmdClearAttachmentsUnsafe
 -- >     , const VkClearRect* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26782,7 +26993,7 @@ vkCmdClearAttachmentsSafe
 -- >     , const VkClearRect* pRects
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26832,7 +27043,7 @@ vkCmdClearAttachments = vkCmdClearAttachmentsSafe
 --   >     , const VkClearRect* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdClearAttachments vkCmdClearAttachments registry at www.khronos.org>
 type HS_vkCmdClearAttachments =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -26899,7 +27110,7 @@ type VkCmdResolveImage = "vkCmdResolveImage"
 -- >     , const VkImageResolve* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -26970,7 +27181,7 @@ vkCmdResolveImageUnsafe
 -- >     , const VkImageResolve* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27041,7 +27252,7 @@ vkCmdResolveImageSafe
 -- >     , const VkImageResolve* pRegions
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27096,7 +27307,7 @@ vkCmdResolveImage = vkCmdResolveImageSafe
 --   >     , const VkImageResolve* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResolveImage vkCmdResolveImage registry at www.khronos.org>
 type HS_vkCmdResolveImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -27159,7 +27370,7 @@ type VkCmdSetEvent = "vkCmdSetEvent"
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27209,7 +27420,7 @@ vkCmdSetEventUnsafe
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27259,7 +27470,7 @@ vkCmdSetEventSafe
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27301,7 +27512,7 @@ vkCmdSetEvent = vkCmdSetEventSafe
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdSetEvent vkCmdSetEvent registry at www.khronos.org>
 type HS_vkCmdSetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -27357,7 +27568,7 @@ type VkCmdResetEvent = "vkCmdResetEvent"
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27407,7 +27618,7 @@ vkCmdResetEventUnsafe
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27457,7 +27668,7 @@ vkCmdResetEventSafe
 -- >     , VkPipelineStageFlags stageMask
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27499,7 +27710,7 @@ vkCmdResetEvent = vkCmdResetEventSafe
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetEvent vkCmdResetEvent registry at www.khronos.org>
 type HS_vkCmdResetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -27563,7 +27774,7 @@ type VkCmdWaitEvents = "vkCmdWaitEvents"
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27656,7 +27867,7 @@ vkCmdWaitEventsUnsafe
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27748,7 +27959,7 @@ vkCmdWaitEventsSafe
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27815,7 +28026,7 @@ vkCmdWaitEvents = vkCmdWaitEventsSafe
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWaitEvents vkCmdWaitEvents registry at www.khronos.org>
 type HS_vkCmdWaitEvents =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -27896,7 +28107,7 @@ type VkCmdPipelineBarrier = "vkCmdPipelineBarrier"
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -27984,7 +28195,7 @@ vkCmdPipelineBarrierUnsafe
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28072,7 +28283,7 @@ vkCmdPipelineBarrierSafe
 -- >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28136,7 +28347,7 @@ vkCmdPipelineBarrier = vkCmdPipelineBarrierSafe
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPipelineBarrier vkCmdPipelineBarrier registry at www.khronos.org>
 type HS_vkCmdPipelineBarrier =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -28209,7 +28420,7 @@ type VkCmdBeginQuery = "vkCmdBeginQuery"
 -- >     , VkQueryControlFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28265,7 +28476,7 @@ vkCmdBeginQueryUnsafe
 -- >     , VkQueryControlFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28320,7 +28531,7 @@ vkCmdBeginQuerySafe
 -- >     , VkQueryControlFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28365,7 +28576,7 @@ vkCmdBeginQuery = vkCmdBeginQuerySafe
 --   >     , VkQueryControlFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginQuery vkCmdBeginQuery registry at www.khronos.org>
 type HS_vkCmdBeginQuery =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -28423,7 +28634,7 @@ type VkCmdEndQuery = "vkCmdEndQuery"
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28473,7 +28684,7 @@ vkCmdEndQueryUnsafe
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28523,7 +28734,7 @@ vkCmdEndQuerySafe
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28564,7 +28775,7 @@ vkCmdEndQuery = vkCmdEndQuerySafe
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndQuery vkCmdEndQuery registry at www.khronos.org>
 type HS_vkCmdEndQuery =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -28621,7 +28832,7 @@ type VkCmdResetQueryPool = "vkCmdResetQueryPool"
 -- >     , uint32_t queryCount
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28675,7 +28886,7 @@ vkCmdResetQueryPoolUnsafe
 -- >     , uint32_t queryCount
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28729,7 +28940,7 @@ vkCmdResetQueryPoolSafe
 -- >     , uint32_t queryCount
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28773,7 +28984,7 @@ vkCmdResetQueryPool = vkCmdResetQueryPoolSafe
 --   >     , uint32_t queryCount
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdResetQueryPool vkCmdResetQueryPool registry at www.khronos.org>
 type HS_vkCmdResetQueryPool =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -28834,7 +29045,7 @@ type VkCmdWriteTimestamp = "vkCmdWriteTimestamp"
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28892,7 +29103,7 @@ vkCmdWriteTimestampUnsafe
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28950,7 +29161,7 @@ vkCmdWriteTimestampSafe
 -- >     , uint32_t query
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -28997,7 +29208,7 @@ vkCmdWriteTimestamp = vkCmdWriteTimestampSafe
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdWriteTimestamp vkCmdWriteTimestamp registry at www.khronos.org>
 type HS_vkCmdWriteTimestamp =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -29065,7 +29276,7 @@ type VkCmdCopyQueryPoolResults = "vkCmdCopyQueryPoolResults"
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29145,7 +29356,7 @@ vkCmdCopyQueryPoolResultsUnsafe
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29223,7 +29434,7 @@ vkCmdCopyQueryPoolResultsSafe
 -- >     , VkQueryResultFlags flags
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29282,7 +29493,7 @@ vkCmdCopyQueryPoolResults = vkCmdCopyQueryPoolResultsSafe
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults registry at www.khronos.org>
 type HS_vkCmdCopyQueryPoolResults =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -29355,7 +29566,7 @@ type VkCmdPushConstants = "vkCmdPushConstants"
 -- >     , const void* pValues
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29419,7 +29630,7 @@ vkCmdPushConstantsUnsafe
 -- >     , const void* pValues
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29483,7 +29694,7 @@ vkCmdPushConstantsSafe
 -- >     , const void* pValues
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29533,7 +29744,7 @@ vkCmdPushConstants = vkCmdPushConstantsSafe
 --   >     , const void* pValues
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdPushConstants vkCmdPushConstants registry at www.khronos.org>
 type HS_vkCmdPushConstants =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -29598,7 +29809,7 @@ type VkCmdBeginRenderPass = "vkCmdBeginRenderPass"
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29653,7 +29864,7 @@ vkCmdBeginRenderPassUnsafe
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29708,7 +29919,7 @@ vkCmdBeginRenderPassSafe
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29753,7 +29964,7 @@ vkCmdBeginRenderPass = vkCmdBeginRenderPassSafe
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdBeginRenderPass vkCmdBeginRenderPass registry at www.khronos.org>
 type HS_vkCmdBeginRenderPass =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -29812,7 +30023,7 @@ type VkCmdNextSubpass = "vkCmdNextSubpass"
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29862,7 +30073,7 @@ vkCmdNextSubpassUnsafe
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29911,7 +30122,7 @@ vkCmdNextSubpassSafe
 -- >     , VkSubpassContents contents
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -29952,7 +30163,7 @@ vkCmdNextSubpass = vkCmdNextSubpassSafe
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdNextSubpass vkCmdNextSubpass registry at www.khronos.org>
 type HS_vkCmdNextSubpass =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkSubpassContents -- ^ contents
@@ -30007,7 +30218,7 @@ type VkCmdEndRenderPass = "vkCmdEndRenderPass"
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30052,7 +30263,7 @@ vkCmdEndRenderPassUnsafe
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30097,7 +30308,7 @@ vkCmdEndRenderPassSafe
 -- >     ( VkCommandBuffer commandBuffer
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30136,7 +30347,7 @@ vkCmdEndRenderPass = vkCmdEndRenderPassSafe
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdEndRenderPass vkCmdEndRenderPass registry at www.khronos.org>
 type HS_vkCmdEndRenderPass = VkCommandBuffer -- ^ commandBuffer
                                              -> IO ()
 
@@ -30191,7 +30402,7 @@ type VkCmdExecuteCommands = "vkCmdExecuteCommands"
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30242,7 +30453,7 @@ vkCmdExecuteCommandsUnsafe
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30293,7 +30504,7 @@ vkCmdExecuteCommandsSafe
 -- >     , const VkCommandBuffer* pCommandBuffers
 -- >     )
 --
--- <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+-- <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
 --
 -- __Note:__ When @useNativeFFI-1-0@ cabal flag is enabled, this function is linked statically
 --           as a @foreign import@ call to C Vulkan loader.
@@ -30335,7 +30546,7 @@ vkCmdExecuteCommands = vkCmdExecuteCommandsSafe
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkCmdExecuteCommands vkCmdExecuteCommands registry at www.khronos.org>
 type HS_vkCmdExecuteCommands =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ commandBufferCount

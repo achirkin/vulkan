@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     const void*                                    pView;
 --   > } VkIOSSurfaceCreateInfoMVK;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkIOSSurfaceCreateInfoMVK VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkIOSSurfaceCreateInfoMVK VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
 type VkIOSSurfaceCreateInfoMVK =
      VkStruct VkIOSSurfaceCreateInfoMVK' -- ' closing tick for hsc2hs
 

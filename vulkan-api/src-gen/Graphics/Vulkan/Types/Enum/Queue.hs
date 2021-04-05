@@ -102,7 +102,7 @@ pattern VK_QUEUE_SPARSE_BINDING_BIT = VkQueueBitmask 8
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkQueueGlobalPriorityEXT VkQueueGlobalPriorityEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkQueueGlobalPriorityEXT VkQueueGlobalPriorityEXT registry at www.khronos.org>
 newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
                                    deriving (Eq, Ord, Enum, Storable)
 

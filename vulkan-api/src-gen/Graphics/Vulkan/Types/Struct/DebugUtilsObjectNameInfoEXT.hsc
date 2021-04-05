@@ -9,7 +9,7 @@ module Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT
        (VkDebugUtilsObjectNameInfoEXT) where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Enum.Object        (VkObjectType)
+import Graphics.Vulkan.Types.Enum.ObjectType    (VkObjectType)
 import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 
 -- | > typedef struct VkDebugUtilsObjectNameInfoEXT {
@@ -20,7 +20,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     const char*      pObjectName;
 --   > } VkDebugUtilsObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsObjectNameInfoEXT VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugUtilsObjectNameInfoEXT VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
 type VkDebugUtilsObjectNameInfoEXT =
      VkStruct VkDebugUtilsObjectNameInfoEXT' -- ' closing tick for hsc2hs
 

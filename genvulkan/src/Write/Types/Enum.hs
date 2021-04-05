@@ -347,6 +347,19 @@ bitmaskPattern tnameTxt constrTxt
   where
     patVal = T.pack $ show n
     rezComment = preComment $ T.unpack comm
+bitmaskPattern tnameTxt _
+  VkEnum
+  { _vkEnumName = VkEnumName patnameTxt
+  , _vkEnumComment = comm
+  , _vkEnumValue = VkEnumAlias patAlias
+  } = do
+    writeDecl . setComment rezComment
+              $ parseDecl' [text|pattern $patnameTxt :: $tnameTxt|]
+    writeDecl $ parseDecl' [text|pattern $patnameTxt = $patVal|]
+    return patnameTxt
+  where
+    patVal = unVkEnumName patAlias
+    rezComment = preComment $ T.unpack comm
 bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 

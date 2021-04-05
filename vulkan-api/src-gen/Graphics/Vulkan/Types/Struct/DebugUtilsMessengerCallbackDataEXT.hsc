@@ -22,14 +22,14 @@ import Graphics.Vulkan.Types.Struct.DebugUtilsObjectNameInfoEXT (VkDebugUtilsObj
 --   >     int32_t                                                            messageIdNumber;
 --   >     const char*                                                  pMessage;
 --   >     uint32_t                                                           queueLabelCount;
---   >     VkDebugUtilsLabelEXT*  pQueueLabels;
+--   >     const VkDebugUtilsLabelEXT*                  pQueueLabels;
 --   >     uint32_t                                                           cmdBufLabelCount;
---   >     VkDebugUtilsLabelEXT* pCmdBufLabels;
---   >     uint32_t                                                                           objectCount;
---   >     VkDebugUtilsObjectNameInfoEXT*             pObjects;
+--   >     const VkDebugUtilsLabelEXT*                 pCmdBufLabels;
+--   >     uint32_t                                                           objectCount;
+--   >     const VkDebugUtilsObjectNameInfoEXT*             pObjects;
 --   > } VkDebugUtilsMessengerCallbackDataEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDebugUtilsMessengerCallbackDataEXT VkDebugUtilsMessengerCallbackDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDebugUtilsMessengerCallbackDataEXT VkDebugUtilsMessengerCallbackDataEXT registry at www.khronos.org>
 type VkDebugUtilsMessengerCallbackDataEXT =
      VkStruct VkDebugUtilsMessengerCallbackDataEXT' -- ' closing tick for hsc2hs
 
@@ -76,7 +76,7 @@ instance VulkanMarshal VkDebugUtilsMessengerCallbackDataEXT where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pQueueLabels" (Ptr VkDebugUtilsLabelEXT) 'True
+             ('FieldMeta "pQueueLabels" (Ptr VkDebugUtilsLabelEXT) 'False
                 #{offset VkDebugUtilsMessengerCallbackDataEXT, pQueueLabels}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -86,13 +86,13 @@ instance VulkanMarshal VkDebugUtilsMessengerCallbackDataEXT where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pCmdBufLabels" (Ptr VkDebugUtilsLabelEXT) 'True
+             ('FieldMeta "pCmdBufLabels" (Ptr VkDebugUtilsLabelEXT) 'False
                 #{offset VkDebugUtilsMessengerCallbackDataEXT, pCmdBufLabels}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "objectCount" Word32 'False 
-                                                     #{offset VkDebugUtilsMessengerCallbackDataEXT, objectCount}
+             ('FieldMeta "objectCount" Word32 'True 
+                                                    #{offset VkDebugUtilsMessengerCallbackDataEXT, objectCount}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs

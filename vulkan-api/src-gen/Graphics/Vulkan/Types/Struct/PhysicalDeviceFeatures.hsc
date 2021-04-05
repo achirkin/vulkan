@@ -69,7 +69,7 @@ import Graphics.Vulkan.Types.BaseTypes  (VkBool32)
 --   >     VkBool32               inheritedQueries;
 --   > } VkPhysicalDeviceFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkPhysicalDeviceFeatures VkPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkPhysicalDeviceFeatures VkPhysicalDeviceFeatures registry at www.khronos.org>
 type VkPhysicalDeviceFeatures = VkStruct VkPhysicalDeviceFeatures' -- ' closing tick for hsc2hs
 
 data VkPhysicalDeviceFeatures' -- ' closing tick for hsc2hs

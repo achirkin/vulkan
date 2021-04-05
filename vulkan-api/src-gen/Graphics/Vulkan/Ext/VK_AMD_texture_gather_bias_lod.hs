@@ -5,10 +5,11 @@
 {-# LANGUAGE Strict          #-}
 {-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
-       (VkBool32(..), VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
-        VkExtent3D, VkImageFormatProperties, VkImageFormatProperties2,
-        VkSampleCountBitmask(..), VkSampleCountFlagBits(),
-        VkSampleCountFlags(), VkStructureType(..),
+       (AHardwareBuffer(), ANativeWindow(), CAMetalLayer(), VkBool32(..),
+        VkDeviceAddress(..), VkDeviceSize(..), VkFlags(..),
+        VkSampleMask(..), VkExtent3D, VkImageFormatProperties,
+        VkImageFormatProperties2, VkSampleCountBitmask(..),
+        VkSampleCountFlagBits(), VkSampleCountFlags(), VkStructureType(..),
         VkTextureLODGatherFormatPropertiesAMD,
         -- > #include "vk_platform.h"
         VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION,

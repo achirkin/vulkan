@@ -14,10 +14,10 @@ module Graphics.Vulkan.Types.Struct.PlatformAndroidKhr
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
+import Graphics.Vulkan.Types.BaseTypes               (AHardwareBuffer,
+                                                      ANativeWindow,
+                                                      VkDeviceSize)
 import Graphics.Vulkan.Types.Bitmasks                (VkAndroidSurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Defines                 (AHardwareBuffer,
-                                                      ANativeWindow)
 import Graphics.Vulkan.Types.Enum.ChromaLocation     (VkChromaLocation)
 import Graphics.Vulkan.Types.Enum.Format             (VkFormat,
                                                       VkFormatFeatureFlags)
@@ -44,7 +44,7 @@ import Graphics.Vulkan.Types.Struct.Sampler          (VkSamplerYcbcrConversionCr
 --   >     VkChromaLocation                   suggestedYChromaOffset;
 --   > } VkAndroidHardwareBufferFormatPropertiesANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferFormatPropertiesANDROID VkAndroidHardwareBufferFormatPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAndroidHardwareBufferFormatPropertiesANDROID VkAndroidHardwareBufferFormatPropertiesANDROID registry at www.khronos.org>
 type VkAndroidHardwareBufferFormatPropertiesANDROID =
      VkStruct VkAndroidHardwareBufferFormatPropertiesANDROID' -- ' closing tick for hsc2hs
 
@@ -121,7 +121,7 @@ instance VulkanMarshal
 --   >     uint32_t                           memoryTypeBits;
 --   > } VkAndroidHardwareBufferPropertiesANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferPropertiesANDROID VkAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAndroidHardwareBufferPropertiesANDROID VkAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
 type VkAndroidHardwareBufferPropertiesANDROID =
      VkStruct VkAndroidHardwareBufferPropertiesANDROID' -- ' closing tick for hsc2hs
 
@@ -164,7 +164,7 @@ instance VulkanMarshal VkAndroidHardwareBufferPropertiesANDROID
 --   >     uint64_t                           androidHardwareBufferUsage;
 --   > } VkAndroidHardwareBufferUsageANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidHardwareBufferUsageANDROID VkAndroidHardwareBufferUsageANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAndroidHardwareBufferUsageANDROID VkAndroidHardwareBufferUsageANDROID registry at www.khronos.org>
 type VkAndroidHardwareBufferUsageANDROID =
      VkStruct VkAndroidHardwareBufferUsageANDROID' -- ' closing tick for hsc2hs
 
@@ -202,7 +202,7 @@ instance VulkanMarshal VkAndroidHardwareBufferUsageANDROID where
 --   >     struct ANativeWindow*    window;
 --   > } VkAndroidSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkAndroidSurfaceCreateInfoKHR VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkAndroidSurfaceCreateInfoKHR VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
 type VkAndroidSurfaceCreateInfoKHR =
      VkStruct VkAndroidSurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 
@@ -244,7 +244,7 @@ instance VulkanMarshal VkAndroidSurfaceCreateInfoKHR where
 --   >     uint64_t                           externalFormat;
 --   > } VkExternalFormatANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExternalFormatANDROID VkExternalFormatANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExternalFormatANDROID VkExternalFormatANDROID registry at www.khronos.org>
 type VkExternalFormatANDROID = VkStruct VkExternalFormatANDROID' -- ' closing tick for hsc2hs
 
 data VkExternalFormatANDROID' -- ' closing tick for hsc2hs
@@ -279,7 +279,7 @@ instance VulkanMarshal VkExternalFormatANDROID where
 --   >     struct AHardwareBuffer*            buffer;
 --   > } VkImportAndroidHardwareBufferInfoANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportAndroidHardwareBufferInfoANDROID VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportAndroidHardwareBufferInfoANDROID VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
 type VkImportAndroidHardwareBufferInfoANDROID =
      VkStruct VkImportAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
 
@@ -317,7 +317,7 @@ instance VulkanMarshal VkImportAndroidHardwareBufferInfoANDROID
 --   >     VkDeviceMemory                     memory;
 --   > } VkMemoryGetAndroidHardwareBufferInfoANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetAndroidHardwareBufferInfoANDROID VkMemoryGetAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryGetAndroidHardwareBufferInfoANDROID VkMemoryGetAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
 type VkMemoryGetAndroidHardwareBufferInfoANDROID =
      VkStruct VkMemoryGetAndroidHardwareBufferInfoANDROID' -- ' closing tick for hsc2hs
 

@@ -22,7 +22,7 @@ import Graphics.Vulkan.Types.Enum.Stencil   (VkStencilOp)
 --   >     uint32_t               reference;
 --   > } VkStencilOpState;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkStencilOpState VkStencilOpState registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkStencilOpState VkStencilOpState registry at www.khronos.org>
 type VkStencilOpState = VkStruct VkStencilOpState' -- ' closing tick for hsc2hs
 
 data VkStencilOpState' -- ' closing tick for hsc2hs

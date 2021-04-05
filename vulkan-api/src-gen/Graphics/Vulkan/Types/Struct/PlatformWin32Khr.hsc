@@ -13,28 +13,37 @@ module Graphics.Vulkan.Types.Struct.PlatformWin32Khr
         VkImportMemoryWin32HandleInfoNV,
         VkImportSemaphoreWin32HandleInfoKHR, VkMemoryGetWin32HandleInfoKHR,
         VkMemoryWin32HandlePropertiesKHR, VkSemaphoreGetWin32HandleInfoKHR,
+        VkSurfaceCapabilitiesFullScreenExclusiveEXT,
+        VkSurfaceFullScreenExclusiveInfoEXT,
+        VkSurfaceFullScreenExclusiveWin32InfoEXT,
         VkWin32KeyedMutexAcquireReleaseInfoKHR,
         VkWin32KeyedMutexAcquireReleaseInfoNV, VkWin32SurfaceCreateInfoKHR)
        where
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
-import Graphics.Vulkan.Types.Bitmasks                 (VkWin32SurfaceCreateFlagsKHR)
-import Graphics.Vulkan.Types.Enum.External            (VkExternalFenceHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagBits,
-                                                       VkExternalMemoryHandleTypeFlagsNV,
-                                                       VkExternalSemaphoreHandleTypeFlagBits)
-import Graphics.Vulkan.Types.Enum.Fence               (VkFenceImportFlags)
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag (VkSemaphoreImportFlags)
-import Graphics.Vulkan.Types.Enum.StructureType       (VkStructureType)
-import Graphics.Vulkan.Types.Handles                  (VkDeviceMemory, VkFence,
-                                                       VkSemaphore)
-import Graphics.Vulkan.Types.Include                  (DWORD, HANDLE, HINSTANCE,
-                                                       HWND, LPCWSTR,
-                                                       SECURITY_ATTRIBUTES)
-import Graphics.Vulkan.Types.Struct.Fence             (VkFenceCreateInfo)
-import Graphics.Vulkan.Types.Struct.Memory            (VkMemoryAllocateInfo)
-import Graphics.Vulkan.Types.Struct.Semaphore         (VkSemaphoreCreateInfo)
-import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
+import Graphics.Vulkan.Types.BaseTypes                   (VkBool32)
+import Graphics.Vulkan.Types.Bitmasks                    (VkWin32SurfaceCreateFlagsKHR)
+import Graphics.Vulkan.Types.Enum.External               (VkExternalFenceHandleTypeFlagBits,
+                                                          VkExternalMemoryHandleTypeFlagBits,
+                                                          VkExternalMemoryHandleTypeFlagsNV,
+                                                          VkExternalSemaphoreHandleTypeFlagBits)
+import Graphics.Vulkan.Types.Enum.Fence                  (VkFenceImportFlags)
+import Graphics.Vulkan.Types.Enum.FullScreenExclusiveEXT (VkFullScreenExclusiveEXT)
+import Graphics.Vulkan.Types.Enum.Semaphore              (VkSemaphoreImportFlags)
+import Graphics.Vulkan.Types.Enum.StructureType          (VkStructureType)
+import Graphics.Vulkan.Types.Handles                     (VkDeviceMemory,
+                                                          VkFence, VkSemaphore)
+import Graphics.Vulkan.Types.Include                     (DWORD, HANDLE,
+                                                          HINSTANCE, HMONITOR,
+                                                          HWND, LPCWSTR,
+                                                          SECURITY_ATTRIBUTES)
+import Graphics.Vulkan.Types.Struct.Fence                (VkFenceCreateInfo)
+import Graphics.Vulkan.Types.Struct.Memory               (VkMemoryAllocateInfo)
+import Graphics.Vulkan.Types.Struct.PhysicalDevice       (VkPhysicalDeviceSurfaceInfo2KHR)
+import Graphics.Vulkan.Types.Struct.Semaphore            (VkSemaphoreCreateInfo)
+import Graphics.Vulkan.Types.Struct.SubmitInfo           (VkSubmitInfo)
+import Graphics.Vulkan.Types.Struct.Surface              (VkSurfaceCapabilities2KHR)
+import Graphics.Vulkan.Types.Struct.Swapchain            (VkSwapchainCreateInfoKHR)
 
 -- | > typedef struct VkD3D12FenceSubmitInfoKHR {
 --   >     VkStructureType sType;
@@ -45,7 +54,7 @@ import Graphics.Vulkan.Types.Struct.SubmitInfo        (VkSubmitInfo)
 --   >     const uint64_t* pSignalSemaphoreValues;
 --   > } VkD3D12FenceSubmitInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkD3D12FenceSubmitInfoKHR VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkD3D12FenceSubmitInfoKHR VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
 type VkD3D12FenceSubmitInfoKHR =
      VkStruct VkD3D12FenceSubmitInfoKHR' -- ' closing tick for hsc2hs
 
@@ -98,7 +107,7 @@ instance VulkanMarshal VkD3D12FenceSubmitInfoKHR where
 --   >     LPCWSTR                                    name;
 --   > } VkExportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportFenceWin32HandleInfoKHR VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportFenceWin32HandleInfoKHR VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
 type VkExportFenceWin32HandleInfoKHR =
      VkStruct VkExportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -147,7 +156,7 @@ instance VulkanMarshal VkExportFenceWin32HandleInfoKHR where
 --   >     LPCWSTR                          name;
 --   > } VkExportMemoryWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoKHR VkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoKHR VkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 type VkExportMemoryWin32HandleInfoKHR =
      VkStruct VkExportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -195,7 +204,7 @@ instance VulkanMarshal VkExportMemoryWin32HandleInfoKHR where
 --   >     DWORD                            dwAccess;
 --   > } VkExportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoNV VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportMemoryWin32HandleInfoNV VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
 type VkExportMemoryWin32HandleInfoNV =
      VkStruct VkExportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
 
@@ -239,7 +248,7 @@ instance VulkanMarshal VkExportMemoryWin32HandleInfoNV where
 --   >     LPCWSTR                          name;
 --   > } VkExportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkExportSemaphoreWin32HandleInfoKHR VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkExportSemaphoreWin32HandleInfoKHR VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 type VkExportSemaphoreWin32HandleInfoKHR =
      VkStruct VkExportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -287,7 +296,7 @@ instance VulkanMarshal VkExportSemaphoreWin32HandleInfoKHR where
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkFenceGetWin32HandleInfoKHR VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkFenceGetWin32HandleInfoKHR VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 type VkFenceGetWin32HandleInfoKHR =
      VkStruct VkFenceGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -333,7 +342,7 @@ instance VulkanMarshal VkFenceGetWin32HandleInfoKHR where
 --   >     LPCWSTR                            name;
 --   > } VkImportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportFenceWin32HandleInfoKHR VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportFenceWin32HandleInfoKHR VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
 type VkImportFenceWin32HandleInfoKHR =
      VkStruct VkImportFenceWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -392,7 +401,7 @@ instance VulkanMarshal VkImportFenceWin32HandleInfoKHR where
 --   >     LPCWSTR          name;
 --   > } VkImportMemoryWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoKHR VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoKHR VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 type VkImportMemoryWin32HandleInfoKHR =
      VkStruct VkImportMemoryWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -440,7 +449,7 @@ instance VulkanMarshal VkImportMemoryWin32HandleInfoKHR where
 --   >     HANDLE                           handle;
 --   > } VkImportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoNV VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportMemoryWin32HandleInfoNV VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
 type VkImportMemoryWin32HandleInfoNV =
      VkStruct VkImportMemoryWin32HandleInfoNV' -- ' closing tick for hsc2hs
 
@@ -486,7 +495,7 @@ instance VulkanMarshal VkImportMemoryWin32HandleInfoNV where
 --   >     LPCWSTR          name;
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkImportSemaphoreWin32HandleInfoKHR VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkImportSemaphoreWin32HandleInfoKHR VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 type VkImportSemaphoreWin32HandleInfoKHR =
      VkStruct VkImportSemaphoreWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -545,7 +554,7 @@ instance VulkanMarshal VkImportSemaphoreWin32HandleInfoKHR where
 --   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   > } VkMemoryGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryGetWin32HandleInfoKHR VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryGetWin32HandleInfoKHR VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
 type VkMemoryGetWin32HandleInfoKHR =
      VkStruct VkMemoryGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -587,7 +596,7 @@ instance VulkanMarshal VkMemoryGetWin32HandleInfoKHR where
 --   >     uint32_t                         memoryTypeBits;
 --   > } VkMemoryWin32HandlePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkMemoryWin32HandlePropertiesKHR VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkMemoryWin32HandlePropertiesKHR VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 type VkMemoryWin32HandlePropertiesKHR =
      VkStruct VkMemoryWin32HandlePropertiesKHR' -- ' closing tick for hsc2hs
 
@@ -625,7 +634,7 @@ instance VulkanMarshal VkMemoryWin32HandlePropertiesKHR where
 --   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   > } VkSemaphoreGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSemaphoreGetWin32HandleInfoKHR VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSemaphoreGetWin32HandleInfoKHR VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
 type VkSemaphoreGetWin32HandleInfoKHR =
      VkStruct VkSemaphoreGetWin32HandleInfoKHR' -- ' closing tick for hsc2hs
 
@@ -662,6 +671,119 @@ instance VulkanMarshal VkSemaphoreGetWin32HandleInfoKHR where
            'False -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs
 
+-- | > typedef struct VkSurfaceCapabilitiesFullScreenExclusiveEXT {
+--   >     VkStructureType sType;
+--   >     void*            pNext;
+--   >     VkBool32         fullScreenExclusiveSupported;
+--   > } VkSurfaceCapabilitiesFullScreenExclusiveEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceCapabilitiesFullScreenExclusiveEXT VkSurfaceCapabilitiesFullScreenExclusiveEXT registry at www.khronos.org>
+type VkSurfaceCapabilitiesFullScreenExclusiveEXT =
+     VkStruct VkSurfaceCapabilitiesFullScreenExclusiveEXT' -- ' closing tick for hsc2hs
+
+data VkSurfaceCapabilitiesFullScreenExclusiveEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkSurfaceCapabilitiesFullScreenExclusiveEXT
+         where
+    type StructRep VkSurfaceCapabilitiesFullScreenExclusiveEXT =
+         'StructMeta "VkSurfaceCapabilitiesFullScreenExclusiveEXT" -- ' closing tick for hsc2hs
+           VkSurfaceCapabilitiesFullScreenExclusiveEXT
+           #{size VkSurfaceCapabilitiesFullScreenExclusiveEXT}
+           #{alignment VkSurfaceCapabilitiesFullScreenExclusiveEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkSurfaceCapabilitiesFullScreenExclusiveEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkSurfaceCapabilitiesFullScreenExclusiveEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "fullScreenExclusiveSupported" VkBool32 'False
+                #{offset VkSurfaceCapabilitiesFullScreenExclusiveEXT, fullScreenExclusiveSupported}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkSurfaceCapabilities2KHR] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkSurfaceFullScreenExclusiveInfoEXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkFullScreenExclusiveEXT         fullScreenExclusive;
+--   > } VkSurfaceFullScreenExclusiveInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceFullScreenExclusiveInfoEXT VkSurfaceFullScreenExclusiveInfoEXT registry at www.khronos.org>
+type VkSurfaceFullScreenExclusiveInfoEXT =
+     VkStruct VkSurfaceFullScreenExclusiveInfoEXT' -- ' closing tick for hsc2hs
+
+data VkSurfaceFullScreenExclusiveInfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkSurfaceFullScreenExclusiveInfoEXT where
+    type StructRep VkSurfaceFullScreenExclusiveInfoEXT =
+         'StructMeta "VkSurfaceFullScreenExclusiveInfoEXT" -- ' closing tick for hsc2hs
+           VkSurfaceFullScreenExclusiveInfoEXT
+           #{size VkSurfaceFullScreenExclusiveInfoEXT}
+           #{alignment VkSurfaceFullScreenExclusiveInfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkSurfaceFullScreenExclusiveInfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkSurfaceFullScreenExclusiveInfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "fullScreenExclusive" VkFullScreenExclusiveEXT 'False
+                #{offset VkSurfaceFullScreenExclusiveInfoEXT, fullScreenExclusive}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkPhysicalDeviceSurfaceInfo2KHR, VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
+
+-- | > typedef struct VkSurfaceFullScreenExclusiveWin32InfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*      pNext;
+--   >     HMONITOR         hmonitor;
+--   > } VkSurfaceFullScreenExclusiveWin32InfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSurfaceFullScreenExclusiveWin32InfoEXT VkSurfaceFullScreenExclusiveWin32InfoEXT registry at www.khronos.org>
+type VkSurfaceFullScreenExclusiveWin32InfoEXT =
+     VkStruct VkSurfaceFullScreenExclusiveWin32InfoEXT' -- ' closing tick for hsc2hs
+
+data VkSurfaceFullScreenExclusiveWin32InfoEXT' -- ' closing tick for hsc2hs
+
+instance VulkanMarshal VkSurfaceFullScreenExclusiveWin32InfoEXT
+         where
+    type StructRep VkSurfaceFullScreenExclusiveWin32InfoEXT =
+         'StructMeta "VkSurfaceFullScreenExclusiveWin32InfoEXT" -- ' closing tick for hsc2hs
+           VkSurfaceFullScreenExclusiveWin32InfoEXT
+           #{size VkSurfaceFullScreenExclusiveWin32InfoEXT}
+           #{alignment VkSurfaceFullScreenExclusiveWin32InfoEXT}
+           '[('FieldMeta "sType" VkStructureType 'False  -- ' closing tick for hsc2hs
+                                                        #{offset VkSurfaceFullScreenExclusiveWin32InfoEXT, sType}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "pNext" (Ptr Void) 'False 
+                                                   #{offset VkSurfaceFullScreenExclusiveWin32InfoEXT, pNext}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True), -- ' closing tick for hsc2hs
+             ('FieldMeta "hmonitor" HMONITOR 'False 
+                                                    #{offset VkSurfaceFullScreenExclusiveWin32InfoEXT, hmonitor}
+                1
+                'True -- ' closing tick for hsc2hs
+                'True)] -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           'False -- ' closing tick for hsc2hs
+           '[VkPhysicalDeviceSurfaceInfo2KHR, VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
+
 -- | > typedef struct VkWin32KeyedMutexAcquireReleaseInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
@@ -674,7 +796,7 @@ instance VulkanMarshal VkSemaphoreGetWin32HandleInfoKHR where
 --   >     const uint64_t* pReleaseKeys;
 --   > } VkWin32KeyedMutexAcquireReleaseInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoKHR VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoKHR VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
 type VkWin32KeyedMutexAcquireReleaseInfoKHR =
      VkStruct VkWin32KeyedMutexAcquireReleaseInfoKHR' -- ' closing tick for hsc2hs
 
@@ -747,7 +869,7 @@ instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoKHR where
 --   >     const uint64_t*                  pReleaseKeys;
 --   > } VkWin32KeyedMutexAcquireReleaseInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoNV VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkWin32KeyedMutexAcquireReleaseInfoNV VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
 type VkWin32KeyedMutexAcquireReleaseInfoNV =
      VkStruct VkWin32KeyedMutexAcquireReleaseInfoNV' -- ' closing tick for hsc2hs
 
@@ -816,7 +938,7 @@ instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoNV where
 --   >     HWND                             hwnd;
 --   > } VkWin32SurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkWin32SurfaceCreateInfoKHR VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkWin32SurfaceCreateInfoKHR VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
 type VkWin32SurfaceCreateInfoKHR =
      VkStruct VkWin32SurfaceCreateInfoKHR' -- ' closing tick for hsc2hs
 

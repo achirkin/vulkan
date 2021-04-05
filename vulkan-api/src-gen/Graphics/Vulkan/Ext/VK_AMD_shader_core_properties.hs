@@ -22,9 +22,11 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkPhysicalDeviceLimits,
-        VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkPhysicalDeviceLimits, VkPhysicalDeviceProperties,
+        VkPhysicalDeviceProperties2,
         VkPhysicalDeviceShaderCorePropertiesAMD,
         VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),
         VkSampleCountBitmask(..), VkSampleCountFlagBits(),
@@ -51,9 +53,9 @@ import Graphics.Vulkan.Types.Struct.PhysicalDevice   (VkPhysicalDeviceLimits,
 pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION = 1
+pattern VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION = 2
 
-type VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION = 1
+type VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION = 2
 
 pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME :: CString
 

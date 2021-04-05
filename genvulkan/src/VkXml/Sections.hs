@@ -107,7 +107,7 @@ parseVkXml = fmap fixVkXml . execStateC
 --   The data type is foldable and traversable functor
 data VkXml
   = VkXml
-  { globVendorIds  :: VendorIds
+  { globVendorIds  :: Maybe VendorIds
   , globPlatforms  :: VkPlatforms
   , globTags       :: VkTags
   , globTypes      :: Map VkTypeName VkType
@@ -133,7 +133,7 @@ data VkXmlPartial
 fixVkXml :: VkXmlPartial
          -> VkXml
 fixVkXml VkXmlPartial
-  { gpVendorIds  = Seq.Empty Seq.:|> pVendorIds
+  { gpVendorIds  = pVendorIds
   , gpPlatforms  = Seq.Empty Seq.:|> pPlatforms
   , gpTags       = Seq.Empty Seq.:|> pTags
   , gpTypes      = Seq.Empty Seq.:|> pTypes
@@ -141,8 +141,11 @@ fixVkXml VkXmlPartial
   , gpCommands   = Seq.Empty Seq.:|> pCommands
   , gpFeature    = pFeatures
   , gpExtensions = Seq.Empty Seq.:|> pExtensions
-  } = VkXml
-  { globVendorIds  = pVendorIds
+  } | Seq.length pVendorIds <= 1
+  = VkXml
+  { globVendorIds  = case pVendorIds of
+      Seq.Empty Seq.:|> vs -> Just vs
+      _                    -> Nothing
   , globPlatforms  = pPlatforms
   , globTags       = pTags
   , globTypes      = pTypes
@@ -154,7 +157,15 @@ fixVkXml VkXmlPartial
   , globFeature    = toList pFeatures
   , globExtensions = pExtensions
   }
-fixVkXml _ = error "Unexpected number of sections in vk.xml"
+fixVkXml VkXmlPartial {..} = error $ "Unexpected number of sections in vk.xml "
+  ++ "\ngpVendorIds:  " ++ show (Seq.length gpVendorIds)
+  ++ "\ngpPlatforms:  " ++ show (Seq.length gpPlatforms)
+  ++ "\ngpTags:       " ++ show (Seq.length gpTags)
+  ++ "\ngpTypes:      " ++ show (Seq.length gpTypes)
+  ++ "\ngpEnums:      " ++ show (Seq.length gpEnums)
+  ++ "\ngpCommands:   " ++ show (Seq.length gpCommands)
+  ++ "\ngpFeature:    " ++ show (Seq.length gpFeature)
+  ++ "\ngpExtensions: " ++ show (Seq.length gpExtensions)
 
 
 reexportedTypesRequire :: VkXml -> VkRequire -> [VkTypeName]

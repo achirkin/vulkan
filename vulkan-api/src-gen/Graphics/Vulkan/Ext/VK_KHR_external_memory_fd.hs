@@ -28,8 +28,10 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         --
 
         -- ** Required extensions: 'VK_KHR_external_memory'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkExternalFenceFeatureBitmask(..),
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkExternalFenceFeatureBitmask(..),
         VkExternalFenceHandleTypeBitmask(..),
         VkExternalMemoryFeatureBitmask(..),
         VkExternalMemoryFeatureBitmaskNV(..),
@@ -63,11 +65,14 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
         PFN_vkGetMemoryFdKHR, VkGetMemoryFdPropertiesKHR,
         pattern VkGetMemoryFdPropertiesKHR, HS_vkGetMemoryFdPropertiesKHR,
-        PFN_vkGetMemoryFdPropertiesKHR, VkResult(..), VkBuffer,
+        PFN_vkGetMemoryFdPropertiesKHR, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -77,22 +82,27 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfoKHR,
         VkMemoryBarrier, VkMemoryDedicatedAllocateInfo,
         VkMemoryDedicatedAllocateInfoKHR, VkMemoryDedicatedRequirements,
         VkMemoryDedicatedRequirementsKHR, VkMemoryHeap,
-        VkMemoryHostPointerPropertiesEXT, VkMemoryRequirements,
+        VkMemoryHostPointerPropertiesEXT,
+        VkMemoryOpaqueCaptureAddressAllocateInfo,
+        VkMemoryOpaqueCaptureAddressAllocateInfoKHR,
+        VkMemoryPriorityAllocateInfoEXT, VkMemoryRequirements,
         VkMemoryRequirements2, VkMemoryRequirements2KHR, VkMemoryType,
         VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
@@ -141,7 +151,7 @@ type VkGetMemoryFdKHR = "vkGetMemoryFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdKHR vkGetMemoryFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryFdKHR vkGetMemoryFdKHR registry at www.khronos.org>
 type HS_vkGetMemoryFdKHR =
      VkDevice -- ^ device
               -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
@@ -190,7 +200,7 @@ type VkGetMemoryFdPropertiesKHR = "vkGetMemoryFdPropertiesKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryFdPropertiesKHR
 --   >     ( VkDevice device
@@ -199,7 +209,7 @@ type VkGetMemoryFdPropertiesKHR = "vkGetMemoryFdPropertiesKHR"
 --   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
 type HS_vkGetMemoryFdPropertiesKHR =
      VkDevice -- ^ device
               ->

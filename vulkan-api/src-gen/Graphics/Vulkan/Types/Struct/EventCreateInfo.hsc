@@ -18,7 +18,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     VkEventCreateFlags     flags;
 --   > } VkEventCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkEventCreateInfo VkEventCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkEventCreateInfo VkEventCreateInfo registry at www.khronos.org>
 type VkEventCreateInfo = VkStruct VkEventCreateInfo' -- ' closing tick for hsc2hs
 
 data VkEventCreateInfo' -- ' closing tick for hsc2hs

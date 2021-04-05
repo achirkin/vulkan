@@ -54,21 +54,28 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         VkExternalSemaphoreFeatureFlags(),
         VkExternalSemaphoreHandleTypeFlagBits(),
         VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
-        VkExternalSemaphoreHandleTypeFlags(), VkBool32(..),
+        VkExternalSemaphoreHandleTypeFlags(), AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkImportSemaphoreFdInfoKHR, VkSemaphoreGetFdInfoKHR,
-        VkSemaphoreImportBitmask(..), VkSemaphoreImportFlagBits(),
+        VkSemaphoreImportBitmask(..), VkSemaphoreType(..),
+        VkSemaphoreWaitBitmask(..), VkSemaphoreImportFlagBits(),
         VkSemaphoreImportFlagBitsKHR(..), VkSemaphoreImportFlags(),
+        VkSemaphoreTypeKHR(..), VkSemaphoreWaitFlagBits(),
+        VkSemaphoreWaitFlagBitsKHR(..), VkSemaphoreWaitFlags(),
         VkStructureType(..), -- > #include "vk_platform.h"
                              VkImportSemaphoreFdKHR,
         pattern VkImportSemaphoreFdKHR, HS_vkImportSemaphoreFdKHR,
         PFN_vkImportSemaphoreFdKHR, VkGetSemaphoreFdKHR,
         pattern VkGetSemaphoreFdKHR, HS_vkGetSemaphoreFdKHR,
-        PFN_vkGetSemaphoreFdKHR, VkResult(..), VkBuffer, VkBufferView,
+        PFN_vkGetSemaphoreFdKHR, VkResult(..), VkAccelerationStructureKHR,
+        VkAccelerationStructureKHR_T(), VkAccelerationStructureNV,
+        VkAccelerationStructureNV_T(), VkBuffer, VkBufferView,
         VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -78,19 +85,24 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(),
         VkImportFenceFdInfoKHR, VkImportMemoryFdInfoKHR,
         VkImportMemoryHostPointerInfoEXT, VkSemaphoreCreateInfo,
+        VkSemaphoreSignalInfo, VkSemaphoreSignalInfoKHR,
+        VkSemaphoreTypeCreateInfo, VkSemaphoreTypeCreateInfoKHR,
+        VkSemaphoreWaitInfo, VkSemaphoreWaitInfoKHR,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME,
@@ -98,13 +110,13 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR)
        where
-import GHC.Ptr                                        (Ptr (..))
+import GHC.Ptr                                  (Ptr (..))
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Marshal.Proc                   (VulkanProc (..))
+import Graphics.Vulkan.Marshal.Proc             (VulkanProc (..))
 import Graphics.Vulkan.Types.BaseTypes
 import Graphics.Vulkan.Types.Enum.External
 import Graphics.Vulkan.Types.Enum.Result
-import Graphics.Vulkan.Types.Enum.SemaphoreImportFlag
+import Graphics.Vulkan.Types.Enum.Semaphore
 import Graphics.Vulkan.Types.Enum.StructureType
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Struct.Import
@@ -139,7 +151,7 @@ type VkImportSemaphoreFdKHR = "vkImportSemaphoreFdKHR"
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreFdKHR vkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkImportSemaphoreFdKHR vkImportSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreFdInfoKHR -- ^ pImportSemaphoreFdInfo
@@ -196,7 +208,7 @@ type VkGetSemaphoreFdKHR = "vkGetSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreFdKHR vkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetSemaphoreFdKHR vkGetSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo

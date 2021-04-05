@@ -11,7 +11,8 @@ module Graphics.Vulkan.Types.Enum.Result
                  VK_ERROR_MEMORY_MAP_FAILED, VK_ERROR_LAYER_NOT_PRESENT,
                  VK_ERROR_EXTENSION_NOT_PRESENT, VK_ERROR_FEATURE_NOT_PRESENT,
                  VK_ERROR_INCOMPATIBLE_DRIVER, VK_ERROR_TOO_MANY_OBJECTS,
-                 VK_ERROR_FORMAT_NOT_SUPPORTED, VK_ERROR_FRAGMENTED_POOL))
+                 VK_ERROR_FORMAT_NOT_SUPPORTED, VK_ERROR_FRAGMENTED_POOL,
+                 VK_ERROR_UNKNOWN))
        where
 import Foreign.Storable                (Storable)
 import GHC.Read                        (choose, expectP)
@@ -25,7 +26,7 @@ import Text.Read.Lex                   (Lexeme (..))
 --   type = @enum@
 --
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkResult VkResult registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkResult VkResult registry at www.khronos.org>
 newtype VkResult = VkResult Int32
                    deriving (Eq, Ord, Enum, Storable)
 
@@ -60,6 +61,7 @@ instance Show VkResult where
       = showString "VK_ERROR_FORMAT_NOT_SUPPORTED"
     showsPrec _ VK_ERROR_FRAGMENTED_POOL
       = showString "VK_ERROR_FRAGMENTED_POOL"
+    showsPrec _ VK_ERROR_UNKNOWN = showString "VK_ERROR_UNKNOWN"
     showsPrec p (VkResult x)
       = showParen (p >= 11) (showString "VkResult " . showsPrec 11 x)
 
@@ -90,7 +92,8 @@ instance Read VkResult where
               ("VK_ERROR_TOO_MANY_OBJECTS", pure VK_ERROR_TOO_MANY_OBJECTS),
               ("VK_ERROR_FORMAT_NOT_SUPPORTED",
                pure VK_ERROR_FORMAT_NOT_SUPPORTED),
-              ("VK_ERROR_FRAGMENTED_POOL", pure VK_ERROR_FRAGMENTED_POOL)]
+              ("VK_ERROR_FRAGMENTED_POOL", pure VK_ERROR_FRAGMENTED_POOL),
+              ("VK_ERROR_UNKNOWN", pure VK_ERROR_UNKNOWN)]
              +++
              prec 10
                (expectP (Ident "VkResult") >> (VkResult <$> step readPrec)))
@@ -184,3 +187,8 @@ pattern VK_ERROR_FORMAT_NOT_SUPPORTED = VkResult (-11)
 pattern VK_ERROR_FRAGMENTED_POOL :: VkResult
 
 pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
+
+-- | An unknown error has occurred, due to an implementation or application bug
+pattern VK_ERROR_UNKNOWN :: VkResult
+
+pattern VK_ERROR_UNKNOWN = VkResult (-13)

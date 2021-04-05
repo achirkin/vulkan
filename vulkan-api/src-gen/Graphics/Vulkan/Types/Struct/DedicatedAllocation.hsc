@@ -25,7 +25,7 @@ import Graphics.Vulkan.Types.Struct.Memory      (VkMemoryAllocateInfo)
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationBufferCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationBufferCreateInfoNV VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDedicatedAllocationBufferCreateInfoNV VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
 type VkDedicatedAllocationBufferCreateInfoNV =
      VkStruct VkDedicatedAllocationBufferCreateInfoNV' -- ' closing tick for hsc2hs
 
@@ -63,7 +63,7 @@ instance VulkanMarshal VkDedicatedAllocationBufferCreateInfoNV
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationImageCreateInfoNV VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDedicatedAllocationImageCreateInfoNV VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
 type VkDedicatedAllocationImageCreateInfoNV =
      VkStruct VkDedicatedAllocationImageCreateInfoNV' -- ' closing tick for hsc2hs
 
@@ -101,7 +101,7 @@ instance VulkanMarshal VkDedicatedAllocationImageCreateInfoNV where
 --   >     VkBuffer         buffer;
 --   > } VkDedicatedAllocationMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDedicatedAllocationMemoryAllocateInfoNV VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDedicatedAllocationMemoryAllocateInfoNV VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
 type VkDedicatedAllocationMemoryAllocateInfoNV =
      VkStruct VkDedicatedAllocationMemoryAllocateInfoNV' -- ' closing tick for hsc2hs
 

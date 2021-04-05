@@ -16,7 +16,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     float   y;
 --   > } VkXYColorEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkXYColorEXT VkXYColorEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkXYColorEXT VkXYColorEXT registry at www.khronos.org>
 type VkXYColorEXT = VkStruct VkXYColorEXT' -- ' closing tick for hsc2hs
 
 data VkXYColorEXT' -- ' closing tick for hsc2hs

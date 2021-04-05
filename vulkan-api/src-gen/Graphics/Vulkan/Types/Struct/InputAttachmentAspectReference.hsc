@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Enum.Image (VkImageAspectFlags)
 --   >     VkImageAspectFlags              aspectMask;
 --   > } VkInputAttachmentAspectReference;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkInputAttachmentAspectReference VkInputAttachmentAspectReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkInputAttachmentAspectReference VkInputAttachmentAspectReference registry at www.khronos.org>
 type VkInputAttachmentAspectReference =
      VkStruct VkInputAttachmentAspectReference' -- ' closing tick for hsc2hs
 

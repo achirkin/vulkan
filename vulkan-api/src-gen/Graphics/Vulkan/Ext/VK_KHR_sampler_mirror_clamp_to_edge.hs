@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -21,18 +22,19 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
         pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION,
         VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME,
         pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME,
-        pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE)
+        pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE,
+        pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR)
        where
-import GHC.Ptr                            (Ptr (..))
+import GHC.Ptr                  (Ptr (..))
+import Graphics.Vulkan.Core_1_2 (pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE)
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Types.Enum.Sampler (VkSamplerAddressMode (..))
 
 pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION ::
         (Num a, Eq a) => a
 
-pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION = 1
+pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION = 3
 
-type VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION = 1
+type VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION = 3
 
 pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME ::
         CString
@@ -61,9 +63,6 @@ is_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
 type VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME =
      "VK_KHR_sampler_mirror_clamp_to_edge"
 
--- | Note that this defines what was previously a core enum, and so uses the 'value' attribute rather than 'offset', and does not have a suffix. This is a special case, and should not be repeated
-pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE ::
-        VkSamplerAddressMode
-
-pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE =
-        VkSamplerAddressMode 4
+-- | Alias introduced for consistency with extension suffixing rules
+pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR =
+        VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE

@@ -22,8 +22,10 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         --
 
         -- ** Required extensions: 'VK_KHR_multiview'.
-        module Graphics.Vulkan.Marshal, VkBool32(..), VkDeviceSize(..),
-        VkFlags(..), VkSampleMask(..), VkPhysicalDeviceLimits,
+        module Graphics.Vulkan.Marshal, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
+        VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
+        VkPhysicalDeviceLimits,
         VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
         VkPhysicalDeviceProperties, VkPhysicalDeviceProperties2,
         VkPhysicalDeviceSparseProperties, VkPhysicalDeviceType(..),

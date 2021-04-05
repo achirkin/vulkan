@@ -46,6 +46,21 @@ Tested using `stack` on:
     See `README-macOS.md` for the Mac OS setup tutorial.
   * Ubuntu 17.10 x64 with [LunarG Vulkan SDK](https://vulkan.lunarg.com/sdk/home#linux)
 
+## Status update vulan-api-1.4 (2021.04.05)
+
+Vulkan-Docs changed between version 1.1 and 1.2 a lot, which made adapting genvulkan
+rather hard.
+At this point, I decided to modify the generated code manually until I come up with a better way
+to generate haskell code fully automatically (I expect this would require a rather large refactoring).
+
+The current semi-generated code matches v. 1.2.174 of Vulkan-Docs vk.xml.
+Here are some manual adjustments I've had to make:
+
+  - `VkAccelerationStructureInstanceKHR` has bitfields and not processed by hsc2hs and does not fit `VulkanMarshal.StructRep`;
+    the manual class instance workarounds this (rather inconveniently).
+  - A few new cyclic module dependencies must have been fixed with manual .hs-boot
+  - `Graphics.Vulkan.Ext.VK_NV_ray_tracing` and some related structs are hidden behind `enableBetaExtensions` flag
+    (seems to compile with the flag enabled though)
 
 # genvulkan
 

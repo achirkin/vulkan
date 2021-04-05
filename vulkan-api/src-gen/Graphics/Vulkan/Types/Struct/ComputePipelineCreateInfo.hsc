@@ -12,7 +12,7 @@ import Graphics.Vulkan.Marshal.Internal
 import Graphics.Vulkan.Types.Enum.Pipeline      (VkPipelineCreateFlags)
 import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 import Graphics.Vulkan.Types.Handles            (VkPipeline, VkPipelineLayout)
-import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo)
+import {-# SOURCE #-} Graphics.Vulkan.Types.Struct.Pipeline (VkPipelineShaderStageCreateInfo)
 
 -- | > typedef struct VkComputePipelineCreateInfo {
 --   >     VkStructureType sType;
@@ -24,7 +24,7 @@ import Graphics.Vulkan.Types.Struct.Pipeline    (VkPipelineShaderStageCreateInfo
 --   >     int32_t                basePipelineIndex;
 --   > } VkComputePipelineCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkComputePipelineCreateInfo VkComputePipelineCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkComputePipelineCreateInfo VkComputePipelineCreateInfo registry at www.khronos.org>
 type VkComputePipelineCreateInfo =
      VkStruct VkComputePipelineCreateInfo' -- ' closing tick for hsc2hs
 
@@ -41,12 +41,12 @@ instance VulkanMarshal VkComputePipelineCreateInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "pNext" (Ptr Void) 'False 
+             ('FieldMeta "pNext" (Ptr Void) 'False
                                                    #{offset VkComputePipelineCreateInfo, pNext}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "flags" VkPipelineCreateFlags 'True 
+             ('FieldMeta "flags" VkPipelineCreateFlags 'True
                                                              #{offset VkComputePipelineCreateInfo, flags}
                 1
                 'True -- ' closing tick for hsc2hs
@@ -56,17 +56,17 @@ instance VulkanMarshal VkComputePipelineCreateInfo where
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "layout" VkPipelineLayout 'False 
+             ('FieldMeta "layout" VkPipelineLayout 'False
                                                           #{offset VkComputePipelineCreateInfo, layout}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "basePipelineHandle" VkPipeline 'True 
+             ('FieldMeta "basePipelineHandle" VkPipeline 'True
                                                                #{offset VkComputePipelineCreateInfo, basePipelineHandle}
                 1
                 'True -- ' closing tick for hsc2hs
                 'True), -- ' closing tick for hsc2hs
-             ('FieldMeta "basePipelineIndex" Int32 'False 
+             ('FieldMeta "basePipelineIndex" Int32 'False
                                                           #{offset VkComputePipelineCreateInfo, basePipelineIndex}
                 1
                 'True -- ' closing tick for hsc2hs

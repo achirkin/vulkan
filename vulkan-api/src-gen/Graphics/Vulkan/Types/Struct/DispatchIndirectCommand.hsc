@@ -11,12 +11,12 @@ import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Marshal.Internal
 
 -- | > typedef struct VkDispatchIndirectCommand {
---   >     uint32_t               x;
---   >     uint32_t               y;
---   >     uint32_t               z;
+--   >     uint32_t x;
+--   >     uint32_t y;
+--   >     uint32_t z;
 --   > } VkDispatchIndirectCommand;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDispatchIndirectCommand VkDispatchIndirectCommand registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDispatchIndirectCommand VkDispatchIndirectCommand registry at www.khronos.org>
 type VkDispatchIndirectCommand =
      VkStruct VkDispatchIndirectCommand' -- ' closing tick for hsc2hs
 

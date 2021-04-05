@@ -29,14 +29,17 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
 
         -- ** Required extensions: 'VK_KHR_display'.
         VkCompositeAlphaBitmaskKHR(..), VkCompositeAlphaFlagBitsKHR(),
-        VkCompositeAlphaFlagsKHR(), VkExtent2D, VkBool32(..),
+        VkCompositeAlphaFlagsKHR(), VkExtent2D, AHardwareBuffer(),
+        ANativeWindow(), CAMetalLayer(), VkBool32(..), VkDeviceAddress(..),
         VkDeviceSize(..), VkFlags(..), VkSampleMask(..),
         VkImageAspectBitmask(..), VkImageCreateBitmask(..),
         VkImageLayout(..), VkImageTiling(..), VkImageType(..),
         VkImageUsageBitmask(..), VkImageViewType(..),
         VkImageAspectFlagBits(), VkImageAspectFlags(),
         VkImageCreateFlagBits(), VkImageCreateFlags(),
-        VkImageUsageFlagBits(), VkImageUsageFlags(), VkStructureType(..),
+        VkImageUsageFlagBits(), VkImageUsageFlags(),
+        VkImageViewCreateBitmask(..), VkImageViewCreateFlagBits(),
+        VkImageViewCreateFlags(), VkStructureType(..),
         VkSurfaceCapabilities2EXT, VkSurfaceCounterBitmaskEXT(..),
         VkSurfaceTransformBitmaskKHR(..), VkSurfaceCounterFlagBitsEXT(),
         VkSurfaceCounterFlagsEXT(), VkSurfaceTransformFlagBitsKHR(),
@@ -46,11 +49,14 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         pattern VkGetPhysicalDeviceSurfaceCapabilities2EXT,
         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
-        module Graphics.Vulkan.Marshal, VkResult(..), VkBuffer,
+        module Graphics.Vulkan.Marshal, VkResult(..),
+        VkAccelerationStructureKHR, VkAccelerationStructureKHR_T(),
+        VkAccelerationStructureNV, VkAccelerationStructureNV_T(), VkBuffer,
         VkBufferView, VkBufferView_T(), VkBuffer_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkCommandPool, VkCommandPool_T(),
         VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
         VkDebugUtilsMessengerEXT, VkDebugUtilsMessengerEXT_T(),
+        VkDeferredOperationKHR, VkDeferredOperationKHR_T(),
         VkDescriptorPool, VkDescriptorPool_T(), VkDescriptorSet,
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
         VkDescriptorSet_T(), VkDescriptorUpdateTemplate,
@@ -60,19 +66,22 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         VkDisplayModeKHR, VkDisplayModeKHR_T(), VkEvent, VkEvent_T(),
         VkFence, VkFence_T(), VkFramebuffer, VkFramebuffer_T(), VkImage,
         VkImageView, VkImageView_T(), VkImage_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkInstance, VkInstance_T(), VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkPhysicalDevice, VkPhysicalDevice_T(), VkPipeline,
-        VkPipelineCache, VkPipelineCache_T(), VkPipelineLayout,
-        VkPipelineLayout_T(), VkPipeline_T(), VkQueryPool, VkQueryPool_T(),
-        VkQueue, VkQueue_T(), VkRenderPass, VkRenderPass_T(), VkSampler,
-        VkSamplerYcbcrConversion, VkSamplerYcbcrConversionKHR,
-        VkSamplerYcbcrConversionKHR_T(), VkSamplerYcbcrConversion_T(),
-        VkSampler_T(), VkSemaphore, VkSemaphore_T(), VkShaderModule,
-        VkShaderModule_T(), VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR,
-        VkSwapchainKHR_T(), VkValidationCacheEXT, VkValidationCacheEXT_T(),
-        VkExtent3D, VkSurfaceCapabilities2KHR, VkSurfaceCapabilitiesKHR,
+        VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV_T(),
+        VkInstance, VkInstance_T(), VkPerformanceConfigurationINTEL,
+        VkPerformanceConfigurationINTEL_T(), VkPhysicalDevice,
+        VkPhysicalDevice_T(), VkPipeline, VkPipelineCache,
+        VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
+        VkPipeline_T(), VkPrivateDataSlotEXT, VkPrivateDataSlotEXT_T(),
+        VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
+        VkRenderPass_T(), VkSampler, VkSamplerYcbcrConversion,
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        VkSamplerYcbcrConversion_T(), VkSampler_T(), VkSemaphore,
+        VkSemaphore_T(), VkShaderModule, VkShaderModule_T(), VkSurfaceKHR,
+        VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
+        VkValidationCacheEXT, VkValidationCacheEXT_T(), VkExtent3D,
+        VkSurfaceCapabilities2KHR, VkSurfaceCapabilitiesKHR,
         VkSurfaceFormat2KHR, VkSurfaceFormatKHR,
+        VkSurfaceProtectedCapabilitiesKHR,
         VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
         pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION,
         VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME,
@@ -126,7 +135,7 @@ type VkGetPhysicalDeviceSurfaceCapabilities2EXT =
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -200,5 +209,6 @@ pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT ::
 pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT =
         VkStructureType 1000090000
 
+-- | Backwards-compatible alias containing a typo
 pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT =
         VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT

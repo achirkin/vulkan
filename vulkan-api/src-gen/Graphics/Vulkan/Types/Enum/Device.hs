@@ -9,6 +9,14 @@
 {-# LANGUAGE TypeSynonymInstances       #-}
 module Graphics.Vulkan.Types.Enum.Device
        (VkDeviceCreateFlagBits(..),
+        VkDeviceDiagnosticsConfigBitmaskNV(VkDeviceDiagnosticsConfigBitmaskNV,
+                                           VkDeviceDiagnosticsConfigFlagsNV,
+                                           VkDeviceDiagnosticsConfigFlagBitsNV,
+                                           VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV,
+                                           VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV,
+                                           VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV),
+        VkDeviceDiagnosticsConfigFlagsNV,
+        VkDeviceDiagnosticsConfigFlagBitsNV,
         VkDeviceEventTypeEXT(VkDeviceEventTypeEXT,
                              VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT),
         VkDeviceGroupPresentModeBitmaskKHR(VkDeviceGroupPresentModeBitmaskKHR,
@@ -45,9 +53,91 @@ instance Read VkDeviceCreateFlagBits where
     {-# INLINE readsPrec #-}
     readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+newtype VkDeviceDiagnosticsConfigBitmaskNV (a ::
+                                              FlagType) = VkDeviceDiagnosticsConfigBitmaskNV VkFlags
+                                                          deriving (Eq, Ord, Storable)
+
+type VkDeviceDiagnosticsConfigFlagsNV =
+     VkDeviceDiagnosticsConfigBitmaskNV FlagMask
+
+type VkDeviceDiagnosticsConfigFlagBitsNV =
+     VkDeviceDiagnosticsConfigBitmaskNV FlagBit
+
+pattern VkDeviceDiagnosticsConfigFlagBitsNV ::
+        VkFlags -> VkDeviceDiagnosticsConfigBitmaskNV FlagBit
+
+pattern VkDeviceDiagnosticsConfigFlagBitsNV n =
+        VkDeviceDiagnosticsConfigBitmaskNV n
+
+pattern VkDeviceDiagnosticsConfigFlagsNV ::
+        VkFlags -> VkDeviceDiagnosticsConfigBitmaskNV FlagMask
+
+pattern VkDeviceDiagnosticsConfigFlagsNV n =
+        VkDeviceDiagnosticsConfigBitmaskNV n
+
+deriving instance
+         Bits (VkDeviceDiagnosticsConfigBitmaskNV FlagMask)
+
+deriving instance
+         FiniteBits (VkDeviceDiagnosticsConfigBitmaskNV FlagMask)
+
+instance Show (VkDeviceDiagnosticsConfigBitmaskNV a) where
+    showsPrec _
+      VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV
+      = showString
+          "VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV"
+    showsPrec _
+      VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV
+      = showString
+          "VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV"
+    showsPrec _
+      VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV
+      = showString
+          "VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV"
+    showsPrec p (VkDeviceDiagnosticsConfigBitmaskNV x)
+      = showParen (p >= 11)
+          (showString "VkDeviceDiagnosticsConfigBitmaskNV " . showsPrec 11 x)
+
+instance Read (VkDeviceDiagnosticsConfigBitmaskNV a) where
+    readPrec
+      = parens
+          (choose
+             [("VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV",
+               pure VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV),
+              ("VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV",
+               pure VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV),
+              ("VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV",
+               pure
+                 VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV)]
+             +++
+             prec 10
+               (expectP (Ident "VkDeviceDiagnosticsConfigBitmaskNV") >>
+                  (VkDeviceDiagnosticsConfigBitmaskNV <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV
+        :: VkDeviceDiagnosticsConfigBitmaskNV a
+
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV
+        = VkDeviceDiagnosticsConfigBitmaskNV 1
+
+-- | bitpos = @1@
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV
+        :: VkDeviceDiagnosticsConfigBitmaskNV a
+
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV
+        = VkDeviceDiagnosticsConfigBitmaskNV 2
+
+-- | bitpos = @2@
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV
+        :: VkDeviceDiagnosticsConfigBitmaskNV a
+
+pattern VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV
+        = VkDeviceDiagnosticsConfigBitmaskNV 4
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkDeviceEventTypeEXT VkDeviceEventTypeEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkDeviceEventTypeEXT VkDeviceEventTypeEXT registry at www.khronos.org>
 newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
                                deriving (Eq, Ord, Enum, Storable)
 

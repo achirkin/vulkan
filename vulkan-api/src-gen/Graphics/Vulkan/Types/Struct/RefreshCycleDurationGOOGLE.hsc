@@ -14,7 +14,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     uint64_t                         refreshDuration;
 --   > } VkRefreshCycleDurationGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkRefreshCycleDurationGOOGLE VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkRefreshCycleDurationGOOGLE VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
 type VkRefreshCycleDurationGOOGLE =
      VkStruct VkRefreshCycleDurationGOOGLE' -- ' closing tick for hsc2hs
 
@@ -32,5 +32,5 @@ instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
                 'True -- ' closing tick for hsc2hs
                 'True)] -- ' closing tick for hsc2hs
            'False -- ' closing tick for hsc2hs
-           'False -- ' closing tick for hsc2hs
+           'True -- ' closing tick for hsc2hs
            '[] -- ' closing tick for hsc2hs

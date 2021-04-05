@@ -21,7 +21,7 @@ import Graphics.Vulkan.Types.Enum.StructureType (VkStructureType)
 --   >     uint32_t        apiVersion;
 --   > } VkApplicationInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkApplicationInfo VkApplicationInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkApplicationInfo VkApplicationInfo registry at www.khronos.org>
 type VkApplicationInfo = VkStruct VkApplicationInfo' -- ' closing tick for hsc2hs
 
 data VkApplicationInfo' -- ' closing tick for hsc2hs

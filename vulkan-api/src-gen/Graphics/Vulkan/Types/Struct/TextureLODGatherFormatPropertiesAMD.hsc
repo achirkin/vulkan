@@ -19,7 +19,7 @@ import Graphics.Vulkan.Types.Struct.Image       (VkImageFormatProperties2)
 --   >     VkBool32                         supportsTextureGatherLODBiasAMD;
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkTextureLODGatherFormatPropertiesAMD VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkTextureLODGatherFormatPropertiesAMD VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 type VkTextureLODGatherFormatPropertiesAMD =
      VkStruct VkTextureLODGatherFormatPropertiesAMD' -- ' closing tick for hsc2hs
 

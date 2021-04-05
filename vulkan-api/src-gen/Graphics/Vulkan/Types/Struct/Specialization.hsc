@@ -17,7 +17,7 @@ import Graphics.Vulkan.Marshal.Internal
 --   >     const void*            pData;
 --   > } VkSpecializationInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSpecializationInfo VkSpecializationInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSpecializationInfo VkSpecializationInfo registry at www.khronos.org>
 type VkSpecializationInfo = VkStruct VkSpecializationInfo' -- ' closing tick for hsc2hs
 
 data VkSpecializationInfo' -- ' closing tick for hsc2hs
@@ -52,12 +52,12 @@ instance VulkanMarshal VkSpecializationInfo where
            '[] -- ' closing tick for hsc2hs
 
 -- | > typedef struct VkSpecializationMapEntry {
---   >     uint32_t               constantID;
---   >     uint32_t               offset;
---   >     size_t                 size;
+--   >     uint32_t                     constantID;
+--   >     uint32_t                     offset;
+--   >     size_t size;
 --   > } VkSpecializationMapEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSpecializationMapEntry VkSpecializationMapEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VkSpecializationMapEntry VkSpecializationMapEntry registry at www.khronos.org>
 type VkSpecializationMapEntry = VkStruct VkSpecializationMapEntry' -- ' closing tick for hsc2hs
 
 data VkSpecializationMapEntry' -- ' closing tick for hsc2hs
